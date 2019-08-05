@@ -1,0 +1,5 @@
+!.eslintrc*.js
+dist/
+node/
+target/
+coverage/
