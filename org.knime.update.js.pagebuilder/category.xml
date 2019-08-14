@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.knime.features.js.pagebuilder_4.0.0.qualifier.jar" id="org.knime.features.js.pagebuilder" version="4.0.0.qualifier"/>
+</site>

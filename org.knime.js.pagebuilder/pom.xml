@@ -4,19 +4,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.knime.enterprise</groupId>
-        <artifactId>mavenconfig</artifactId>
-        <version>4.10.0-SNAPSHOT</version>
-        <relativePath>../../knime-com-shared/com.knime.enterprise.mavenconfig/pom.xml</relativePath>
+        <groupId>org.knime</groupId>
+        <artifactId>js-pagebuilder-aggregator</artifactId>
+        <version>4.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>knime-js-pagebuilder</artifactId>
+    <artifactId>org.knime.js.pagebuilder</artifactId>
     <name>KNIME JS PageBuilder</name>
-    <description>KNIME PageBuilder based on Nuxt and Vue.js</description>
-    <packaging>jar</packaging>
+    <description>KNIME PageBuilder based on Vue.js</description>
+    <version>4.0.0-SNAPSHOT</version>
+    <packaging>eclipse-plugin</packaging>
+
+    <properties>
+        <node.version>v12.8.0</node.version>
+        <npm.version>6.10.2</npm.version>
+    </properties>
 
     <build>
-        <finalName>${project.groupId}.${project.artifactId}_${project.version}</finalName>
         <resources>
             <resource>
                 <directory>dist</directory>
@@ -37,8 +42,8 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v12.8.0</nodeVersion>
-                            <npmVersion>6.10.2</npmVersion>
+                            <nodeVersion>${node.version}</nodeVersion>
+                            <npmVersion>${npm.version}</npmVersion>
                         </configuration>
                     </execution>
 
@@ -48,7 +53,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>ci</arguments>
                         </configuration>
                     </execution>
 
@@ -85,15 +90,19 @@
                             <directory>node</directory>
                         </fileset>
                         <fileset>
-                            <directory>node_modules</directory>
-                        </fileset>
-                        <fileset>
                             <directory>dist</directory>
                         </fileset>
                     </filesets>
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <extensions>true</extensions>
+            </plugin>
+
         </plugins>
+
     </build>
 </project>

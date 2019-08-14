@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.knime.maven</groupId>
+        <artifactId>parent-pom</artifactId>
+        <version>4.1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.knime</groupId>
+    <artifactId>js-pagebuilder-aggregator</artifactId>
+    <version>4.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>org.knime.js.pagebuilder</module>
+        <module>org.knime.features.js.pagebuilder</module>
+        <module>org.knime.update.js.pagebuilder</module>
+    </modules>
+
+    <!-- List all required repositories here. The variables are defined in knime-maven-parent/pom.xml. -->
+    <repositories>
+        <repository>
+            <id>p2-knime-tp</id>
+            <layout>p2</layout>
+            <url>${knime.tp.p2}</url>
+        </repository>
+    </repositories>
+
+    <!-- This whole block is only needed if the repository contains plug-ins that don't have any sources. If it is omitted
+         Tycho will complain. -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.tycho.extras</groupId>
+                <artifactId>tycho-source-feature-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>source-feature</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>source-feature</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludes>
+                        <!-- List all plug-in that do NOT contain sources here. -->
+                        <plugin id="org.knime.js.pagebuilder" />
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
