@@ -12,13 +12,12 @@
     </parent>
 
     <groupId>org.knime</groupId>
-    <artifactId>js-pagebuilder-aggregator</artifactId>
+    <artifactId>knime-js-pagebuilder</artifactId>
     <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>org.knime.js.pagebuilder</module>
-        <module>org.knime.features.js.pagebuilder</module>
         <module>org.knime.update.js.pagebuilder</module>
     </modules>
 

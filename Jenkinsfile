@@ -8,34 +8,35 @@ properties([
     disableConcurrentBuilds()
 ])
 
+
 try {
-    // provide the name of the update site project
     knimetools.defaultTychoBuild('org.knime.update.js.pagebuilder')
 
-//    workflowTests.runTests(
-//        // The name of the feature that pulls in all required dependencies for running workflow tests.
-//        // You can also provide a list here but separating it into one feature makes it clearer and allows
-//        // pulling in independant plug-ins, too.
-//        "org.knime.features.ap-repository-template.testing.feature.group",
-//        // with or without assertions
-//        false,
-//        // a list of upstream jobs to look for when getting dependencies
-//        ["knime-core", "knime-shared", "knime-tp"],
-//        // optional list of test configurations
-//        testConfigurations
-//    )
-//
-//    stage('Sonarqube analysis') {
-//        env.lastStage = env.STAGE_NAME
-//        // passing the test configuration is optional but must be done when they are
-//        // used above in the workflow tests
-//        workflowTests.runSonar(testConfigurations)
-//    }
+    if (BRANCH_NAME == "master") {
+        node('nodejs') {
+            checkout scm
+            dir('org.knime.js.pagebuilder') {
+                stage('Generate Coverage data') {
+					env.lastStage = env.STAGE_NAME
+                    sh '''
+                          npm ci
+                          npm run coverage
+                        '''
+                }
+                stage('Upload Coverage data') {
+					env.lastStage = env.STAGE_NAME
+                    withCredentials([usernamePassword(credentialsId: 'SONAR_CREDENTIALS', passwordVariable: 'SONAR_PASSWORD', usernameVariable: 'SONAR_LOGIN')]) {
+                        sh '''
+                              npm run sendcoverage
+                            '''
+                    }
+                }
+            }
+        }
+    }
 } catch (ex) {
     currentBuild.result = 'FAILED'
     throw ex
 } finally {
     notifications.notifyBuild(currentBuild.result);
 }
-
-/* vim: set ts=4: */

@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>org.knime</groupId>
-        <artifactId>js-pagebuilder-aggregator</artifactId>
+        <artifactId>knime-js-pagebuilder</artifactId>
         <version>4.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -68,12 +68,12 @@
                     </execution>
 
                     <execution>
-                        <id>npm run coverage</id>
+                        <id>npm run test:unit</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run coverage</arguments>
+                            <arguments>run test:unit</arguments>
                         </configuration>
                         <phase>compile</phase>
                     </execution>
