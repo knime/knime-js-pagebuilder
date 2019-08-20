@@ -17,18 +17,16 @@ try {
             checkout scm
             dir('org.knime.js.pagebuilder') {
                 stage('Generate Coverage data') {
-					env.lastStage = env.STAGE_NAME
                     sh '''
-                          npm ci
-                          npm run coverage
-                        '''
+                      npm ci
+                      npm run coverage
+                    '''
                 }
                 stage('Upload Coverage data') {
-					env.lastStage = env.STAGE_NAME
                     withCredentials([usernamePassword(credentialsId: 'SONAR_CREDENTIALS', passwordVariable: 'SONAR_PASSWORD', usernameVariable: 'SONAR_LOGIN')]) {
                         sh '''
-                              npm run sendcoverage
-                            '''
+                          npm run sendcoverage
+                        '''
                     }
                 }
             }
