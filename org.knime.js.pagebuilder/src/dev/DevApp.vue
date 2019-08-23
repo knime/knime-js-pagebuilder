@@ -42,6 +42,8 @@ export default {
 </template>
 
 <style lang="postcss">
+@import "webapps-common/ui/css/variables";
+
 body {
   font-family: "Roboto", "Arial", sans-serif;
   font-weight: 300;

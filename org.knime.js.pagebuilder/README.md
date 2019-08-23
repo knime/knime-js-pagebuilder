@@ -135,6 +135,8 @@ The PageBuilder expects that the embedding app provides the following:
 
 - Vue, Vuex and Consola compatible to the versions defined in [`package.json`](package.json)
 - global `window.consola` instance for logging
+- CSS variables as defined in the `webapps-common` project.
+  They are not included in the build in order to avoid duplication
 - an `action` property as described in the next section
 
 ### API

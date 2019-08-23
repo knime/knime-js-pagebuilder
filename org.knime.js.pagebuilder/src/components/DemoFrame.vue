@@ -1,6 +1,17 @@
+<!-- This file is just a placeholder to demonstrate basic functionality -->
+
 <script>
+import DownloadIcon from '~/webapps-common/ui/assets/img/icons/arrow-download.svg?inline';
+import ArrowsIcon from '~/webapps-common/ui/assets/img/icons/arrows-order.svg?inline';
+import Button from '~/webapps-common/ui/components/Button';
+
 export default {
     name: 'DemoFrame',
+    components: {
+        DownloadIcon,
+        Button,
+        ArrowsIcon
+    },
     computed: {
         value() {
             return this.$store.state.pagebuilder.demo;
@@ -23,10 +34,25 @@ export default {
   <div>
     <h2>PageBuilder</h2>
     Value from store: {{ value }}<br>
-    <button @click="setDemo">update own store</button><br>
-    <button @click="messageParent">message outer app</button>
+    <Button @click="setDemo"><DownloadIcon /> update own store</Button>
+    <br>
+    <Button @click="messageParent"><ArrowsIcon /> message outer app</Button>
   </div>
 </template>
 
 <style lang="postcss" scoped>
+@import "webapps-common/ui/css/variables";
+
+svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  stroke-width: calc(32px / 20);
+  margin-right: 0.3em;
+}
+
+button:hover svg {
+  stroke: var(--theme-color-3);
+}
 </style>
