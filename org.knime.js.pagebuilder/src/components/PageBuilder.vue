@@ -4,7 +4,7 @@ import validKeys from '~/store/keys';
 import DemoFrame from './DemoFrame';
 
 export default {
-    name: 'PageBuilder',
+    name: 'PageBuilder2',
     components: {
         DemoFrame
     },

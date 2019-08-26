@@ -36,11 +36,10 @@ module.exports = {
     ],
     coveragePathIgnorePatterns: [
         '^<rootDir>/(coverage|dist|test|target|node_modules|webapps-common)/'
-
     ],
     testURL: 'http://test.example/',
     testMatch: [
-        '**/test/unit/**/*.test.(js|jsx|ts|tsx)'
+        '<rootDir>/test/unit/**/*.test.js'
     ],
     watchPlugins: [
         'jest-watch-typeahead/filename',
