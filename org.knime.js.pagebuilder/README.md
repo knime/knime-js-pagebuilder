@@ -110,21 +110,6 @@ mvn clean install
 
 The PageBuilder can be used in Vue/Nuxt apps like a regular Vue component.
 In the KNIME WebPortal the built version is loaded during runtime via HTTP.
-
-For example, in a Nuxt+Axios app, the following Code creates the `PageBuilder` component globally:
-
-```js
-export default { // some page…
-    async fetch({ $axios }) {
-        if (window['knime-pagebuilder']) {
-            return;
-        }
-        // `url` needs to point to the built component file (`knime-pagebuilder.umd.min.js`)
-        eval(await $axios.$get(url, { headers: { 'Accept': 'application/javascript' } }));
-        Vue.component('PageBuilder', window['knime-pagebuilder']);
-    }
-}
-```
  
 Integrating the source as a Git submodule and building it with the embedding app should also work, but was not tested
 yet.
@@ -137,20 +122,63 @@ The PageBuilder expects that the embedding app provides the following:
 - global `window.consola` instance for logging
 - CSS variables as defined in the `webapps-common` project.
   They are not included in the build in order to avoid duplication
-- an `action` property as described in the next section
+- calls the method 'initStore' as described in the next section, before PageBuilder store actions and the component are beeing used
+
+### Usage example
+
+For example, in a Nuxt app, the following middleware registers the `PageBuilder` component globally and initializes
+the PageBuilder store:
+
+```js
+import Vue from 'vue';
+import { pagebuilderURL } from '~/app.config';
+import actions from '~/pagebuilder-store-api';
+import PageBuilderError from '~/components/PageBuilderError';
+
+export default async function ({ app }) {
+    if (window['knime-pagebuilder']) {
+        return;
+    }
+
+    consola.trace(`Loading PageBuilder from ${pagebuilderURL}`);
+    try {
+        let PageBuilder = await new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.async = true;
+            script.addEventListener('load', () => {
+                let componentConfig = window['knime-pagebuilder'];
+                if (componentConfig) {
+                    resolve(componentConfig);
+                } else {
+                    reject(new Error('PageBuilder script invalid'));
+                }
+            });
+            script.addEventListener('error', () => {
+                reject(new Error('PageBuilder script loading failed'));
+            });
+            script.src = pagebuilderURL;
+            document.head.appendChild(script);
+        });
+        PageBuilder.initStore(actions, app.store);
+        Vue.component('PageBuilder', PageBuilder);
+    } catch (e) {
+        consola.error('Loading of PageBuilder failed');
+        Vue.component('PageBuilder', PageBuilderError);
+    }
+}
+```
+Then the component can be used in templates:
+
+```
+<template>
+    <PageBuilder />
+</template>
+```
 
 ### API
 The component provides a store module namespaced as `pagebuilder`. All communication with the embedding app is achieved
-via store actions. Therefore, the app must provide well-defined action implementations and pass them to the PageBuilder
-component as an `action` prop like so:
-
-```js
-import actions from '~/pagebuilder-api/actions'; // must contain the outbound actions described below
-```
-
-```xml
-<PageBuilder :actions="actions" />
-```
+via store actions. Therefore, the app must provide well-defined implementations for the in
+[`store/keys.js`](store/keys.js) defined actions.
 
 
 #### Outbound (interface)
@@ -169,7 +197,7 @@ Receives a generic message from the PageBuilder.
 
 ```js
 // pagebuilder-api/actions.js
-export const actions = {
+export default {
     messageToParent({ commit }, value) {
         consola.trace('Message from inside:', value);
         commit('setGlobal', value, { root: true }); // dummy store action on the global (non-namespaced) store

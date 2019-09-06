@@ -1,23 +1,40 @@
 export const namespaced = true;
 
 export const state = () => ({
-    demo: 'Hello world!'
+    viewState: null,
+    page: null
 });
 
 export const mutations = {
-    setDemo(state, val) {
-        state.demo = val;
+    setViewState(state, viewState) {
+        state.viewState = viewState;
+    },
+
+    setPage(state, page) {
+        state.page = page;
     }
 };
 
 export const actions = {
-    messageFromOutside({ commit }, value) {
-        consola.trace('Value set via action: ', value);
-        commit('setDemo', value);
+    setViewState({ commit }, { viewState }) {
+        consola.trace('PageBuilder: Set state via action: ', viewState);
+        commit('setViewState', viewState);
     },
 
-    proxyToParent({ dispatch }, value) {
-        consola.trace('Proxying message:', value);
-        dispatch('outbound/messageToParent', value);
+    setPage({ commit }, { page }) {
+        consola.trace('PageBuilder: Set page via action: ', page);
+        commit('setPage', page);
+    },
+
+    
+    // only for PageBuilder-internal usage
+    nextPage({ dispatch }) {
+        consola.trace('PageBuilder: Proxying call for next page');
+        dispatch('outbound/nextPage');
+    },
+
+    previousPage({ dispatch }) {
+        consola.trace('PageBuilder: Proxying call for previous page');
+        dispatch('outbound/previousPage');
     }
 };
