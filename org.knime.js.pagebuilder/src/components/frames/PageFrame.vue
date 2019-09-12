@@ -23,6 +23,3 @@ export default {
     :layout="layout"
   />
 </template>
-
-<style lang="postcss" scoped>
-</style>

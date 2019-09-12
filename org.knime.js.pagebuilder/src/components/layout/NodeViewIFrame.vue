@@ -1,6 +1,4 @@
 <script>
-// import { jobWebResources } from '~/api/serviceUrls';
-// import { restApiURL } from '~/config/api.config';
 
 export default {
     props: {

@@ -17,13 +17,13 @@ export default {
         },
         classes() {
             let classes = ['row'];
-            if (this.row.additionalClasses) {
-                classes.concat(this.row.additionalClasses);
+            if (Array.isArray(this.row.additionalClasses)) {
+                classes = classes.concat(this.row.additionalClasses);
             }
             return classes;
         },
         styles() {
-            if (this.row.additionalStyles) {
+            if (Array.isArray(this.row.additionalStyles)) {
                 return this.row.additionalStyles.join(' ');
             }
             return null;
@@ -44,12 +44,3 @@ export default {
     />
   </div>
 </template>
-
-
-<style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
-.row {
-  border: 4px solid var(--knime-yellow);
-}
-</style>

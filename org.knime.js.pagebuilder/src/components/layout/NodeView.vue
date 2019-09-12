@@ -1,10 +1,15 @@
 <script>
-import ViewIFrame from './ViewIFrame';
+import NodeViewIFrame from './NodeViewIFrame';
 
 export default {
-    components: { ViewIFrame },
+    components: {
+        NodeViewIFrame
+    },
     props: {
-        view: { default: () => [], type: Object }
+        view: {
+            default: () => [],
+            type: Object
+        }
     },
     computed: {
         webNode() {
@@ -40,17 +45,17 @@ export default {
 
 <template>
   <div
-    :class="['knimeView', resizeClass, 'd-flex align-items-center']"
+    :class="['view', resizeClass, 'd-flex align-items-center']"
     :style="style"
   >
-    <ViewIFrame :web-node="webNode" />
+    <NodeViewIFrame :web-node="webNode" />
   </div>
 </template>
 
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
-.knimeView {
+.view {
   background-color: var(--theme-color-11);
 
   &.aspectRatio16by9,

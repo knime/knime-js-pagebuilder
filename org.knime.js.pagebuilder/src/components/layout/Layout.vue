@@ -15,7 +15,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="container-fluid">
     <Row
       v-for="(row, index) in layout.rows"
       :key="index"
@@ -24,10 +24,6 @@ export default {
   </div>
 </template>
 
-
 <style lang="postcss">
 /* @import "bootstrap/dist/css/bootstrap-grid.css"; */
-</style>
-
-<style lang="postcss" scoped>
 </style>
