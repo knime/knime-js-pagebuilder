@@ -32,9 +32,16 @@ try {
 
             if (BRANCH_NAME == "master") {
                 stage('Generate Coverage data') {
-                    sh '''
-                      npm run coverage
-                    '''
+                    try {
+                        // trows exception on failing test
+                        sh '''
+                        npm run coverage -- --ci
+                        '''
+                    } catch (ignore) {
+                        // failing tests should not result in a pipeline exception
+                    } finally {
+                        junit 'coverage/junit.xml'
+                    }
                 }
                 stage('Upload Coverage data') {
                     withCredentials([usernamePassword(credentialsId: 'SONAR_CREDENTIALS', passwordVariable: 'SONAR_PASSWORD', usernameVariable: 'SONAR_LOGIN')]) {
