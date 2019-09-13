@@ -47,7 +47,8 @@ try {
         }
     }
 
-    knimetools.defaultTychoBuild('org.knime.update.js.pagebuilder')
+    // For now we can't build the plugin because the org.knime.js.core dependency can't be resolved (yet)
+    //knimetools.defaultTychoBuild('org.knime.update.js.pagebuilder')
 
 } catch (ex) {
     currentBuild.result = 'FAILED'
