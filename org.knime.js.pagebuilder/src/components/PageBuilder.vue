@@ -6,7 +6,7 @@ import ExecutionFrame from './frames/ExecutionFrame';
 import PageFrame from './frames/PageFrame';
 import ResultFrame from './frames/ResultFrame';
 
-const supportedViewStates = ['PAGE', 'EXECUTING', 'RESULT'];
+const supportedViewStates = ['page', 'executing', 'result'];
 
 export default {
     components: {
@@ -50,9 +50,9 @@ export default {
 
 <template>
   <div v-if="showPageBuilder">
-    <PageFrame v-if="viewState === 'PAGE'" />
-    <ExecutionFrame v-else-if="viewState === 'EXECUTING'" />
-    <ResultFrame v-else-if="viewState === 'RESULT'" />
+    <PageFrame v-if="viewState === 'page'" />
+    <ExecutionFrame v-else-if="viewState === 'executing'" />
+    <ResultFrame v-else-if="viewState === 'result'" />
 
     <Controls />
   </div>

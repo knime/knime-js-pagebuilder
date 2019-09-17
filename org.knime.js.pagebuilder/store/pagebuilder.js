@@ -28,13 +28,13 @@ export const actions = {
 
     
     // only for PageBuilder-internal usage
-    nextPage({ dispatch }) {
+    async nextPage({ dispatch }) {
         consola.trace('PageBuilder: Proxying call for next page');
-        dispatch('outbound/nextPage');
+        await dispatch('outbound/nextPage');
     },
 
-    previousPage({ dispatch }) {
+    async previousPage({ dispatch }) {
         consola.trace('PageBuilder: Proxying call for previous page');
-        dispatch('outbound/previousPage');
+        await dispatch('outbound/previousPage');
     }
 };

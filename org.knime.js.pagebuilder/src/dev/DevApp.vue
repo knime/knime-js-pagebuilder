@@ -1,19 +1,45 @@
 <script>
 import PageBuilder from '../components/PageBuilder.vue';
 
+const supportedViewStates = ['page', 'executing', 'result'];
+
 export default {
     components: {
         PageBuilder
     },
-    data() {
-        return {
-            actions: {
-                messageToParent: (store, message) => {
-                    this.content = `${message} — ${Date.now()}`;
-                }
+    computed: {
+        supportedViewStates() {
+            return supportedViewStates;
+        },
+        pageMocks() {
+            const mocks = require.context('../../mocks', false, /.json$/); // eslint-disable-line no-undef
+            return mocks.keys().sort().map(x => ({
+                name: x.replace('./', ''),
+                src: mocks(x)
+            }));
+        }
+    },
+    created() {
+        let store = this.$store;
+        let pageMocks = this.pageMocks;
+        const delay = 500;
+        let setRandomPage = () => new Promise((resolve) => {
+            window.setTimeout(() => {
+                let randomPage = pageMocks[Math.floor(Math.random() * pageMocks.length)];
+                store.dispatch('pagebuilder/setPage', { page: randomPage.src });
+                resolve();
+            }, delay);
+        });
+        PageBuilder.initStore({
+            async nextPage() {
+                consola.trace('PageBuilder: Proxying call for next page');
+                await setRandomPage();
             },
-            content: '(unset)'
-        };
+            async previousPage() {
+                consola.trace('PageBuilder: Proxying call for previous page');
+                await setRandomPage();
+            }
+        }, store);
     }
 };
 </script>
@@ -32,12 +58,33 @@ export default {
     <p>
       See the README file for details.
     </p>
-    <div class="frame">
-      <PageBuilder :actions="actions" />
-    </div>
     <p>
-      message from PageBuilder: {{ content }}
+      View state: <select v-model="$store.state.pagebuilder.viewState">
+        <option :value="null">-</option>
+        <option
+          v-for="state in supportedViewStates"
+          :key="state"
+          :value="state"
+        >
+          {{ state }}
+        </option>
+      </select>
+      Page mock:
+      <select v-model="$store.state.pagebuilder.page">
+        <option :value="null">-</option>
+        <option
+          v-for="page in pageMocks"
+          :key="page.name"
+          :value="page.src"
+        >
+          {{ page.name }}
+        </option>
+      </select>
     </p>
+    
+    <div class="frame">
+      <PageBuilder />
+    </div>
   </div>
 </template>
 
