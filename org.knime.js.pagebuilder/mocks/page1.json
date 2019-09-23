@@ -1,1 +1,104 @@
-{"@class":"org.knime.js.core.JSONWebNodePage","webNodePageConfiguration":{"@class":"org.knime.js.core.JSONWebNodePageConfiguration","layout":{"rows":[{"type":"row","additionalClasses":[],"additionalStyles":[],"columns":[{"widthXS":12,"widthSM":null,"widthMD":null,"widthLG":null,"widthXL":null,"content":[{"type":"view","resizeMethod":"viewLowestElement","minHeight":null,"maxHeight":null,"maxWidth":null,"minWidth":null,"resizeInterval":null,"resizeTolerance":5,"autoResize":true,"scrolling":false,"sizeHeight":true,"sizeWidth":false,"nodeID":"9:0:4","additionalClasses":[],"additionalStyles":[]}],"additionalClasses":[],"additionalStyles":[]}]}]},"blackBoard":null,"selectionTranslators":null,"version":"4.1.0.v201908271559"},"webNodes":{"9:0:4":{"@class":"org.knime.js.core.JSONWebNode","viewValue":{"@class":"org.knime.js.base.node.quickform.input.dbl.DoubleInputQuickFormValue","double":0.0},"viewRepresentation":{"@class":"org.knime.js.base.node.quickform.input.dbl.DoubleInputQuickFormRepresentation","label":"Label","description":"Enter Description","required":true,"defaultValue":{"@class":"org.knime.js.base.node.quickform.input.dbl.DoubleInputQuickFormValue","double":0.0},"currentValue":{"@class":"org.knime.js.base.node.quickform.input.dbl.DoubleInputQuickFormValue","double":0.0},"usemin":false,"usemax":false,"min":0.0,"max":1.0},"nodeInfo":{"@class":"org.knime.js.core.JSONWebNodeInfo","displayPossible":true,"nodeErrorMessage":null,"nodeWarnMessage":null,"nodeName":"Double Input","nodeAnnotation":"","nodeState":"executed"},"javascriptLibraries":["/js-lib/knime/service/knime_service_1_0_0.js","/js-lib/jQuery/jquery-1.11.0.min.js","/js-lib/jQueryUI/min/ui/jquery-ui.min.js","/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js","/org/knime/js/base/node/quickform/input/dbl/DoubleInput.js"],"stylesheets":["/js-lib/font-awesome/4_7_0/css/font-awesome.min.css","/js-lib/knime/service/knime.css","/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css","/org/knime/js/base/util/quickform/quickformStyles.css"],"getViewValueMethodName":"value","initMethodName":"init","validateMethodName":"validate","setValidationErrorMethodName":"setValidationErrorMessage","customCSS":"","namespace":"org_knime_js_base_node_quickform_input_dbl"}},"version":"4.1.0.v201908271559"}
+{
+  "@class": "org.knime.js.core.JSONWebNodePage",
+  "webNodePageConfiguration": {
+    "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+    "layout": {
+      "rows": [
+        {
+          "type": "row",
+          "additionalClasses": [],
+          "additionalStyles": [],
+          "columns": [
+            {
+              "widthXS": 12,
+              "widthSM": null,
+              "widthMD": null,
+              "widthLG": null,
+              "widthXL": null,
+              "content": [
+                {
+                  "type": "view",
+                  "resizeMethod": "viewLowestElement",
+                  "minHeight": null,
+                  "maxHeight": null,
+                  "maxWidth": null,
+                  "minWidth": null,
+                  "resizeInterval": null,
+                  "resizeTolerance": 5,
+                  "autoResize": true,
+                  "scrolling": false,
+                  "sizeHeight": true,
+                  "sizeWidth": false,
+                  "nodeID": "9:0:4",
+                  "additionalClasses": [],
+                  "additionalStyles": []
+                }
+              ],
+              "additionalClasses": [],
+              "additionalStyles": []
+            }
+          ]
+        }
+      ]
+    },
+    "blackBoard": null,
+    "selectionTranslators": null,
+    "version": "4.1.0.v201908271559"
+  },
+  "webNodes": {
+    "9:0:4": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": {
+        "@class": "org.knime.js.base.node.quickform.input.dbl.DoubleInputQuickFormValue",
+        "double": 0.0
+      },
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.quickform.input.dbl.DoubleInputQuickFormRepresentation",
+        "label": "Label",
+        "description": "Enter Description",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.quickform.input.dbl.DoubleInputQuickFormValue",
+          "double": 0.0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.quickform.input.dbl.DoubleInputQuickFormValue",
+          "double": 0.0
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "displayPossible": true,
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "nodeName": "Double Input",
+        "nodeAnnotation": "",
+        "nodeState": "executed"
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/quickform/input/dbl/DoubleInput.js"
+      ],
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "getViewValueMethodName": "value",
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "customCSS": "",
+      "namespace": "org_knime_js_base_node_quickform_input_dbl"
+    }
+  },
+  "version": "4.1.0.v201908271559"
+}

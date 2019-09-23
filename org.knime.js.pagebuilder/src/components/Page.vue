@@ -1,7 +1,8 @@
 <script>
-import Layout from '../layout/Layout';
+import Layout from './layout/Layout';
 
 export default {
+    name: 'Page',
     components: {
         Layout
     },
@@ -19,7 +20,6 @@ export default {
 <template>
   <Layout
     v-if="page"
-    class="container-fluid"
     :layout="layout"
   />
 </template>

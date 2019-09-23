@@ -7,7 +7,7 @@ export default {
     },
     props: {
         row: {
-            default: () => {},
+            default: () => ({}),
             type: Object
         }
     },
@@ -24,7 +24,7 @@ export default {
         },
         styles() {
             if (Array.isArray(this.row.additionalStyles)) {
-                return this.row.additionalStyles.join(' ');
+                return this.row.additionalStyles.join('; ').replace(/;;/g, ';');
             }
             return null;
         }
@@ -44,3 +44,14 @@ export default {
     />
   </div>
 </template>
+
+<style lang="postcss" scoped>
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+</style>

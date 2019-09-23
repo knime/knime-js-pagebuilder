@@ -45,7 +45,7 @@ export default {
 
 <template>
   <div
-    :class="['view', resizeClass, 'd-flex align-items-center']"
+    :class="['view', resizeClass]"
     :style="style"
   >
     <NodeViewIFrame :web-node="webNode" />

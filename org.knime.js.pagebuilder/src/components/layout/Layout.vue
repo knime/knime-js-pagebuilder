@@ -7,7 +7,7 @@ export default {
     },
     props: {
         layout: {
-            default: () => {},
+            default: () => ({}),
             type: Object
         }
     }
@@ -24,6 +24,15 @@ export default {
   </div>
 </template>
 
-<style lang="postcss">
-/* @import "bootstrap/dist/css/bootstrap-grid.css"; */
+<style lang="postcss" scoped>
+.container-fluid {
+  width: 100%;
+
+  &,
+  & >>> *,
+  & >>> *::before,
+  & >>> *::after {
+    box-sizing: border-box;
+  }
+}
 </style>

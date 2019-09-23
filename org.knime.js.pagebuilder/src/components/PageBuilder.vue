@@ -2,18 +2,18 @@
 import validKeys from '~/store/keys';
 import * as storeConfig from '~/store/pagebuilder';
 import Controls from './Controls';
-import ExecutionFrame from './frames/ExecutionFrame';
-import PageFrame from './frames/PageFrame';
-import ResultFrame from './frames/ResultFrame';
+import Progress from '~/src/components/Progress';
+import Page from '~/src/components/Page';
+import Result from '~/src/components/Result';
 
 const supportedViewStates = ['page', 'executing', 'result'];
 
 export default {
     components: {
         Controls,
-        ExecutionFrame,
-        PageFrame,
-        ResultFrame
+        Progress,
+        Page,
+        Result
     },
 
     initStore(actions, store) { // this method is to be called by the embedding app, cf. README
@@ -52,9 +52,9 @@ export default {
 
 <template>
   <div v-if="showPageBuilder">
-    <PageFrame v-if="viewState === 'page'" />
-    <ExecutionFrame v-else-if="viewState === 'executing'" />
-    <ResultFrame v-else-if="viewState === 'result'" />
+    <Page v-if="viewState === 'page'" />
+    <Progress v-else-if="viewState === 'executing'" />
+    <Result v-else-if="viewState === 'result'" />
 
     <Controls />
   </div>
