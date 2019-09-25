@@ -35,7 +35,7 @@ module.exports = {
         '!.stylelintrc.js'
     ],
     coveragePathIgnorePatterns: [
-        '^<rootDir>/(coverage|dist|test|target|node_modules|webapps-common)/'
+        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|src/dev)/'
     ],
     testURL: 'http://test.example/',
     testMatch: [
