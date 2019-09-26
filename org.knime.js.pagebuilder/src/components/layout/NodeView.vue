@@ -101,6 +101,7 @@ export default {
       :node-config="webNodeConfig"
       :auto-height="autoHeight"
       :poll-height="pollHeight"
+      :scrolling="viewConfig.scrolling"
       @heightChange="updateHeight"
     />
   </div>

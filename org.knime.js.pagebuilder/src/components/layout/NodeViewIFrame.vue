@@ -7,15 +7,31 @@ const heightPollInterval = 200; // ms
  */
 export default {
     props: {
+        /**
+         * Node configuration as received by API
+         */
         nodeConfig: {
             default: () => ({}),
             type: Object
         },
+        /**
+         * Set height automatically depending on content?
+         */
         autoHeight: {
             type: Boolean,
             default: false
         },
+        /**
+         * Update height automatically when content size changes?
+         */
         pollHeight: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Render inner scrollbars?
+         */
+        scrolling: {
             type: Boolean,
             default: false
         }
@@ -26,8 +42,32 @@ export default {
         };
     },
 
+    computed: {
+        innerStyle() {
+            // prevent margin collapsation of body’s children, which causes incorrect height detection
+            let style = 'body { display: inline-block; }';
+            if (this.scrolling) {
+                if (this.pollHeight) {
+                    // in case of auto height, a vertical scrollbar can interfere with the height calculation (in
+                    // combination with a horizontal scrollbar)
+                    style += 'html { overflow-y: hidden; }';
+                }
+            } else {
+                style += 'html { overflow: hidden; }';
+            }
+            return style;
+        }
+    },
+
     watch: {
         height(newHeight) {
+            /**
+             * Fired when the iframe detects that its content’s height size has changed.
+             * Requires the `pollHeight` prop to be set to `true`.
+             *
+             * @event heightChange
+             * @type {number}
+             */
             this.$emit('heightChange', newHeight);
         }
     },
@@ -53,22 +93,19 @@ export default {
     methods: {
         injectContent() {
 
-            // TODO: configurable scrolling? AP-12266
+            this.document.write(`<!doctype html><style>${this.innerStyle}</style>` +
 
-            this.document.write(`<!doctype html><style>html{overflow-y:hidden;}body{display:inline-block;}</style>
-              <pre>${JSON.stringify(this.nodeConfig, null, 2).replace(/</g, '&lt;')}</pre>`);
+              `<pre>${JSON.stringify(this.nodeConfig, null, 2).replace(/</g, '&lt;')}</pre>`);
             /* TODO inject ressources AP-12648
-             const jobId = this.$route.query.exec; // hack
-             const head = doc.head;
-
-             this.webNode.stylesheets.forEach(stylesheet => {
+             this.nodeConfig.stylesheets.forEach(stylesheet => {
              const link = doc.createElement('link');
              link.setAttribute('type', 'style/css');
              link.href = `/${restApiURL}/${jobWebResources({ jobId, webResource: stylesheet })[0]}`;
              head.appendChild(link);
              });
 
-             this.webNode.javascriptLibraries.forEach(lib => {
+             this.nodeConfig.javascriptLibraries.forEach(lib => {
+             // TODO: ensure order of execution AP-12648
              const script = doc.createElement('script');
              script.src = `/${restApiURL}/${jobWebResources({ jobId, webResource: lib })[0]}`;
              head.appendChild(script);

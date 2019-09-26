@@ -85,6 +85,17 @@ describe('NodeView.vue', () => {
         });
 
         expect(wrapper.find(NodeViewIFrame).props('nodeConfig')).toEqual({ foo: 'bar' });
+        expect(wrapper.find(NodeViewIFrame).props('scrolling')).toBeFalsy();
+
+        wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig: {
+                    scrolling: true
+                }
+            }
+        });
+        expect(wrapper.find(NodeViewIFrame).props('scrolling')).toBe(true);
     });
 
     it('detects autoHeight', () => {
@@ -127,6 +138,22 @@ describe('NodeView.vue', () => {
         });
         expect(wrapper.attributes('class')).toEqual('view aspectRatio1by1 class1 class2');
         expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
+    });
+
+    it('reacts to the heightChange event', () => {
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig: {
+                    resizeMethod: 'viewLowestElement',
+                    autoResize: true
+                }
+            }
+        });
+
+        wrapper.find(NodeViewIFrame).vm.$emit('heightChange', '342');
+
+        expect(wrapper.attributes('style')).toEqual('height: 342px;');
     });
 
 });

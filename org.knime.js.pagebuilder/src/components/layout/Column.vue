@@ -68,7 +68,6 @@ export default {
         classes() {
             let classes = ['col'];
 
-
             let hasSize = false;
             ['XS', 'SM', 'MD', 'LG', 'XL'].forEach(size => {
                 const sizeDefinition = this.columnConfig[`width${size}`];
