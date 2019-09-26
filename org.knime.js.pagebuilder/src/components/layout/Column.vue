@@ -106,20 +106,21 @@ export default {
       <NodeView
         v-if="item.type === 'view'"
         :key="index"
-        :viewConfig="item"
+        :view-config="item"
       />
       <Row
         v-else-if="item.type === 'row'"
         :key="index"
-        :rowConfig="item"
+        :row-config="item"
       />
       <template v-else-if="item.type === 'nestedLayout'">
         <Row
           v-for="(row, rowIndex) in item.layout.rows"
           :key="rowIndex"
-          :rowConfig="row"
+          :row-config="row"
         />
       </template>
+      <!-- eslint-disable vue/no-v-html  -->
       <div
         v-else-if="item.type === 'html'"
         :key="index"

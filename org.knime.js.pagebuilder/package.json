@@ -48,6 +48,6 @@
     "webapps-common": "file:webapps-common"
   },
   "engines": {
-    "node": "12.x"
+    "node": "12.8.0"
   }
 }

@@ -23,8 +23,8 @@ describe('Layout.vue', () => {
 
         let rows = wrapper.findAll(Row);
         expect(rows.length).toBe(2);
-        expect(rows.at(0).props().row).toEqual({ dummy: 'dummy' });
-        expect(rows.at(1).props().row).toEqual({ foo: 'foo' });
+        expect(rows.at(0).props().rowConfig).toEqual({ dummy: 'dummy' });
+        expect(rows.at(1).props().rowConfig).toEqual({ foo: 'foo' });
     });
 
 });

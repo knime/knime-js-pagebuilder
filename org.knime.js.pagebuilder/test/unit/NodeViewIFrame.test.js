@@ -45,9 +45,10 @@ describe('NodeViewIframe.vue', () => {
     });
 
     it('adjusts height initially', () => {
+        const fakeHeight = 5;
         jest.spyOn(NodeViewIFrame.methods, 'setHeight').mockImplementation(function () {
             // eslint-disable-next-line no-invalid-this
-            this.height = 5;
+            this.height = fakeHeight;
         });
         let wrapper = shallowMount(NodeViewIFrame, {
             attachToDocument: true,
@@ -57,7 +58,7 @@ describe('NodeViewIframe.vue', () => {
         });
         expect(NodeViewIFrame.methods.setHeight).toHaveBeenCalled();
         expect(wrapper.emitted().heightChange).toBeTruthy();
-        expect(wrapper.emitted().heightChange[0]).toEqual([5]);
+        expect(wrapper.emitted().heightChange[0]).toEqual([fakeHeight]);
     });
 
     it('does not adjust height if autoHeight is not true', () => {
