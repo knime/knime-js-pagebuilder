@@ -1,14 +1,46 @@
 <script>
 import Row from './Row';
 
+/**
+ * Layout container for combining multiple views to one page
+ *
+ * The layout follows the well-known row-column grid structure from Bootstrap 4
+ *
+ * @example
+    +Layout------------------------------------+
+    | +Row-----------------------------------+ |
+    | | +-------+ +-------+ +-------+        | |
+    | | |Column | |Column | |Column |        | |
+    | | |       | |       | |       | ...    | |
+    | | |       | |       | |       |        | |
+    | | +-------+ +-------+ +-------+        | |
+    | +--------------------------------------+ |
+    |  .                                       |
+    |  .                                       |
+    |  .                                       |
+    |                                          |
+    +------------------------------------------+
+ */
 export default {
     components: {
         Row
     },
     props: {
+        /**
+         * Layout configuration as received from the REST API
+         */
         layout: {
             default: () => ({}),
-            type: Object
+            type: Object,
+            validate(rowConfig) {
+                if (typeof rowConfig !== 'object') {
+                    return false;
+                }
+                if (!rowConfig.hasOwnProperty('rows')) {
+                    return false;
+                }
+                return true;
+            }
         }
     }
 };
@@ -19,7 +51,7 @@ export default {
     <Row
       v-for="(row, index) in layout.rows"
       :key="index"
-      :row="row"
+      :row-config="row"
     />
   </div>
 </template>

@@ -81,7 +81,7 @@ export default {
         </option>
       </select>
     </p>
-    
+
     <div class="frame">
       <PageBuilder />
     </div>

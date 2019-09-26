@@ -1,13 +1,14 @@
+import { shallowMount } from '@vue/test-utils';
+
 import Row from '@/components/layout/Row';
 import Column from '@/components/layout/Column';
-import { mount, shallowMount } from '@vue/test-utils';
 
 describe('Row.vue', () => {
 
     it('renders without classes and styles', () => {
         let wrapper = shallowMount(Row, {
             propsData: {
-                row: {
+                rowConfig: {
                     type: 'row',
                     additionalClasses: [],
                     additionalStyles: [],
@@ -23,7 +24,7 @@ describe('Row.vue', () => {
     it('renders with classes and styles', () => {
         let wrapper = shallowMount(Row, {
             propsData: {
-                row: {
+                rowConfig: {
                     type: 'row',
                     additionalClasses: ['class1', 'class2'],
                     additionalStyles: ['color: red;', 'border: 1px solid green;'],
@@ -41,9 +42,9 @@ describe('Row.vue', () => {
             { widthXS: 12 }
         ];
 
-        let wrapper = mount(Row, {
+        let wrapper = shallowMount(Row, {
             propsData: {
-                row: {
+                rowConfig: {
                     type: 'row',
                     columns
                 }
@@ -55,7 +56,7 @@ describe('Row.vue', () => {
         columns.forEach((column, i) => {
             let columnComponent = columnArray.at(i);
             expect(columnComponent.is(Column)).toBe(true);
-            expect(columnComponent.props('column')).toEqual(columns[i]);
+            expect(columnComponent.props('columnConfig')).toEqual(columns[i]);
         });
     });
 

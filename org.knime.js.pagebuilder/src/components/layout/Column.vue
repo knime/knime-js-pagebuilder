@@ -3,6 +3,40 @@ import NodeView from './NodeView';
 
 const maxGridWidth = 12;
 
+/**
+ * Column container (part of a row inside a page layout).
+ * It holds one or more items of one of the types
+ * - view
+ * - html
+ * - row (a nested layout translates to multiple rows here)
+ *
+ * @example
+    +-----------------+
+    |                 |
+    |      html       |
+    |                 |
+    +-----------------+
+    |.-----row-------.|
+    ||  |  ...    |  ||
+    ||  |         |  ||
+    |°---------------°|
+    +-----------------+
+    |                 |
+    |      view       |
+    |                 |
+    +-----------------+
+    |.-----row-------.<-- nestedLayout
+    ||  |  ...    |  ||
+    ||  |         |  ||
+    ||-----row-------||
+    ||  |  ...    |  ||
+    ||  |         |  ||
+    ||---------------||
+    ||      ⋮        ||
+    |°---------------°|
+    +-----------------+
+ *
+ */
 export default {
     components: {
         NodeView,
@@ -10,39 +44,53 @@ export default {
         Row: () => import('./Row')
     },
     props: {
-        column: {
+        /**
+         * Column configuration as received from the REST API
+         */
+        columnConfig: {
             default: () => ({}),
-            type: Object
+            type: Object,
+            validate(columnConfig) {
+                if (typeof columnConfig !== 'object') {
+                    return false;
+                }
+                if (!columnConfig.hasOwnProperty('content')) {
+                    return false;
+                }
+                return true;
+            }
         }
     },
     computed: {
         content() {
-            return this.column.content;
+            return this.columnConfig.content;
         },
         classes() {
+            let classes = ['col'];
 
-            let classes = [];
+
+            let hasSize = false;
             ['XS', 'SM', 'MD', 'LG', 'XL'].forEach(size => {
-                const sizeDefinition = this.column[`width${size}`];
+                const sizeDefinition = this.columnConfig[`width${size}`];
                 if (sizeDefinition > 0 && sizeDefinition <= maxGridWidth) {
+                    hasSize = true;
                     classes.push(`col-${size.toLowerCase()}-${sizeDefinition}`);
                 }
             });
-            if (!classes.length) {
+
+            if (!hasSize) {
                 classes.push('col-xs-12'); // default if no width defined
             }
 
-            if (Array.isArray(this.column.additionalClasses)) {
-                classes = classes.concat(this.column.additionalClasses);
+            if (Array.isArray(this.columnConfig.additionalClasses)) {
+                classes = classes.concat(this.columnConfig.additionalClasses);
             }
-
-            classes.push('col');
 
             return classes;
         },
         styles() {
-            if (Array.isArray(this.column.additionalStyles)) {
-                return this.column.additionalStyles.join(' ');
+            if (Array.isArray(this.columnConfig.additionalStyles)) {
+                return this.columnConfig.additionalStyles.join('; ').replace(/;;/g, ';');
             }
             return null;
         }
@@ -59,18 +107,18 @@ export default {
       <NodeView
         v-if="item.type === 'view'"
         :key="index"
-        :view="item"
+        :viewConfig="item"
       />
       <Row
         v-else-if="item.type === 'row'"
         :key="index"
-        :row="item"
+        :rowConfig="item"
       />
       <template v-else-if="item.type === 'nestedLayout'">
         <Row
-          v-for="(row, indexRow) in item.layout.rows"
-          :key="indexRow"
-          :row="row"
+          v-for="(row, rowIndex) in item.layout.rows"
+          :key="rowIndex"
+          :rowConfig="row"
         />
       </template>
       <div
@@ -99,8 +147,6 @@ export default {
   & > * {
     flex: 0 0 auto;
   }
-
-  outline: 1px dashed red;
 }
 
 @media (min-width: 576px) {
@@ -159,9 +205,9 @@ export default {
   }
 
   .col-sm-10 {
-    -ms-flex: 0 0 calc(9 * 100% / 12);
-    flex: 0 0 calc(9 * 100% / 12);
-    max-width: calc(9 * 100% / 12);
+    -ms-flex: 0 0 calc(10 * 100% / 12);
+    flex: 0 0 calc(10 * 100% / 12);
+    max-width: calc(10 * 100% / 12);
   }
 
   .col-sm-11 {
@@ -233,9 +279,9 @@ export default {
   }
 
   .col-md-10 {
-    -ms-flex: 0 0 calc(9 * 100% / 12);
-    flex: 0 0 calc(9 * 100% / 12);
-    max-width: calc(9 * 100% / 12);
+    -ms-flex: 0 0 calc(10 * 100% / 12);
+    flex: 0 0 calc(10 * 100% / 12);
+    max-width: calc(10 * 100% / 12);
   }
 
   .col-md-11 {
@@ -307,9 +353,9 @@ export default {
   }
 
   .col-lg-10 {
-    -ms-flex: 0 0 calc(9 * 100% / 12);
-    flex: 0 0 calc(9 * 100% / 12);
-    max-width: calc(9 * 100% / 12);
+    -ms-flex: 0 0 calc(10 * 100% / 12);
+    flex: 0 0 calc(10 * 100% / 12);
+    max-width: calc(10 * 100% / 12);
   }
 
   .col-lg-11 {
@@ -381,9 +427,9 @@ export default {
   }
 
   .col-xl-10 {
-    -ms-flex: 0 0 calc(9 * 100% / 12);
-    flex: 0 0 calc(9 * 100% / 12);
-    max-width: calc(9 * 100% / 12);
+    -ms-flex: 0 0 calc(10 * 100% / 12);
+    flex: 0 0 calc(10 * 100% / 12);
+    max-width: calc(10 * 100% / 12);
   }
 
   .col-xl-11 {

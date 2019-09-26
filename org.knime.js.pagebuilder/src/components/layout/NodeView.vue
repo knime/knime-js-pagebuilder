@@ -1,43 +1,92 @@
 <script>
 import NodeViewIFrame from './NodeViewIFrame';
 
+/**
+ * Wrapper for a single node view iframe
+ */
 export default {
     components: {
         NodeViewIFrame
     },
     props: {
-        view: {
-            default: () => [],
-            type: Object
+        /**
+         * View configuration as received from the REST API
+         */
+        viewConfig: {
+            default: () => ({}),
+            type: Object,
+            validate(viewConfig) {
+                if (typeof viewConfig !== 'object') {
+                    return false;
+                }
+                if (!viewConfig.hasOwnProperty('nodeID')) {
+                    return false;
+                }
+                return true;
+            }
         }
     },
+    data() {
+        return {
+            height: null
+        };
+    },
     computed: {
-        webNode() {
-            return this.$store.state.pagebuilder.page.webNodes[this.view.nodeID];
+        autoHeight() {
+            // legacy implementation used the prefix `view` for various resizing detection methods.
+            // The current implementation uses only one method, so the only information needed is whether or not to use
+            // resizing detection at all
+            return this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('view');
         },
-        resizeClass() {
-            if (!this.view.resizeMethod) {
-                return null;
+        pollHeight() {
+            return this.viewConfig.autoResize !== false;
+        },
+        webNodeConfig() {
+            let nodeConfigs = this.$store.state.pagebuilder.page.webNodes;
+            let { nodeID } = this.viewConfig;
+            return nodeConfigs[nodeID];
+        },
+        classes() {
+            let classes = ['view'];
+            if (this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
+                classes.push(this.viewConfig.resizeMethod);
             }
-            return this.view.resizeMethod;
+            if (Array.isArray(this.viewConfig.additionalClasses)) {
+                classes = classes.concat(this.viewConfig.additionalClasses);
+            }
+            return classes;
         },
         style() {
             const styleProps = ['minWidth', 'maxWidth', 'minHeight', 'maxHeight'];
 
-            // extract style props
-            const style = {};
+            let style = [];
             styleProps.forEach(prop => {
-                if (this.view.hasOwnProperty(prop)) {
-                    let value = this.view[prop];
+                if (this.viewConfig.hasOwnProperty(prop)) {
+                    let value = this.viewConfig[prop];
                     if (value) {
+                        let key = prop.replace(/[WH]/, x => `-${x.toLowerCase()}`);
                         if (!value.toString().includes('px')) {
                             value = `${value}px`;
                         }
-                        style[prop] = value;
+                        style.push(`${key}:${value};`);
                     }
                 }
             });
-            return style;
+
+            if (this.viewConfig.additionalStyles) {
+                style = style.concat(this.viewConfig.additionalStyles);
+            }
+
+            if (this.height !== null) {
+                style.push(`height:${this.height}px;`);
+            }
+
+            return style.join(';');
+        }
+    },
+    methods: {
+        updateHeight(height) {
+            this.height = height;
         }
     }
 };
@@ -45,10 +94,15 @@ export default {
 
 <template>
   <div
-    :class="['view', resizeClass]"
+    :class="classes"
     :style="style"
   >
-    <NodeViewIFrame :web-node="webNode" />
+    <NodeViewIFrame
+      :node-config="webNodeConfig"
+      :auto-height="autoHeight"
+      :poll-height="pollHeight"
+      @heightChange="updateHeight"
+    />
   </div>
 </template>
 
