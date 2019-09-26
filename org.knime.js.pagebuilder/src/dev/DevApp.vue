@@ -99,4 +99,9 @@ body {
 .frame {
   border: 5px solid orange;
 }
+
+.container-fluid:hover iframe {
+  outline: 2px dotted dodgerblue;
+  box-shadow: 0 0 5px cyan;
+}
 </style>
