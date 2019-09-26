@@ -15,27 +15,44 @@ properties([
     disableConcurrentBuilds()
 ])
 
-try {
+timeout(time: 15, unit: 'MINUTES') {
+    try {
 
-    node('nodejs') {
-        checkout scm
+        node('nodejs') {
+            cleanWs()
+            checkout scm
 
-        dir('org.knime.js.pagebuilder') {
-            stage('Verify checked-in files') {
-                sh '''
-                  npm ci
-                  npm run build
-                  git status --porcelain dist/ | grep -q "^ *M" && exit 1
-                  echo OK, compiled JS files have been checked in.
-                '''
-            }
+            dir('org.knime.js.pagebuilder') {
+                stage('Install npm Dependencies') {
+                    sh '''
+                        npm ci
+                    '''
+                }
+                stage('npm Security Audit') {
+                    retry(3) {
+                        sh '''
+                            npm audit
+                        '''
+                    }
+                }
 
-            if (BRANCH_NAME == "master") {
-                stage('Generate Coverage data') {
+                stage('Static Code Analysis') {
+                    sh '''
+                        npm run lint
+                    '''
+                }
+                stage('Verify checked-in files') {
+                    sh '''
+                        npm run build
+                        git status --porcelain dist/ | grep -q "^ *M" && exit 1
+                        echo OK, compiled JS files have been checked in.
+                    '''
+                }
+                stage('Unit Tests') {
                     try {
                         // trows exception on failing test
                         sh '''
-                        npm run coverage -- --ci
+                            npm run coverage -- --ci
                         '''
                     } catch (ignore) {
                         // failing tests should not result in a pipeline exception
@@ -43,23 +60,26 @@ try {
                         junit 'coverage/junit.xml'
                     }
                 }
-                stage('Upload Coverage data') {
-                    withCredentials([usernamePassword(credentialsId: 'SONAR_CREDENTIALS', passwordVariable: 'SONAR_PASSWORD', usernameVariable: 'SONAR_LOGIN')]) {
-                        sh '''
-                          npm run sendcoverage
-                        '''
+
+                if (BRANCH_NAME == "master") {
+                    stage('Upload Coverage data') {
+                        withCredentials([usernamePassword(credentialsId: 'SONAR_CREDENTIALS', passwordVariable: 'SONAR_PASSWORD', usernameVariable: 'SONAR_LOGIN')]) {
+                            sh '''
+                                npm run sendcoverage
+                            '''
+                        }
                     }
                 }
             }
         }
+
+        // For now we can't build the plugin because the org.knime.js.core dependency can't be resolved (yet)
+        //knimetools.defaultTychoBuild('org.knime.update.js.pagebuilder')
+
+    } catch (ex) {
+        currentBuild.result = 'FAILED'
+        throw ex
+    } finally {
+        notifications.notifyBuild(currentBuild.result);
     }
-
-    // For now we can't build the plugin because the org.knime.js.core dependency can't be resolved (yet)
-    //knimetools.defaultTychoBuild('org.knime.update.js.pagebuilder')
-
-} catch (ex) {
-    currentBuild.result = 'FAILED'
-    throw ex
-} finally {
-    notifications.notifyBuild(currentBuild.result);
 }
