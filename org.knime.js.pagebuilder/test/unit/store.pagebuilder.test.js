@@ -22,7 +22,7 @@ describe('PageBuilder store', () => {
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
         store.registerModule('outbound', outboundStoreConfig);
-        jest.restoreAllMocks();
+        jest.resetAllMocks();
     });
 
     it('creates an empty store', () => {

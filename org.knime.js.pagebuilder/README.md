@@ -73,8 +73,8 @@ The following command allows you to upload the coverage data to SonarQube:
 ```sh
 npm run sendcoverage
 ```
-It requires the `SONAR_TOKEN` environment variable to be set, and contain a valid SonarQube authentication token.
-Such token can be obtained from `https://<YOUR_SONARQUBE_HOST>/account/security/`.
+It requires the `SONAR_LOGIN` and `SONAR_PASSWORD` environment variables to be set, which must be valid credentials
+for the SonarQube instance configured in `sonar-project.properties`.
 
 
 ### Running security audit
@@ -100,7 +100,7 @@ npm run build
 
 Results are saved to `/dist`.
 
-This project can also be build via a maven build wrapper
+This project can also be built via a maven build wrapper
 
 ```sh
 mvn clean install

@@ -15,13 +15,14 @@ export default {
         PageFrame,
         ResultFrame
     },
-    initStore(actions, store) { // this method is to be called by the embedding app
+
+    initStore(actions, store) { // this method is to be called by the embedding app, cf. README
         consola.debug('PageBuilder initStore');
-        
+
         // validate store API
         let actualKeys = JSON.stringify(Object.keys(actions).sort());
         let expectedKeys = JSON.stringify([...validKeys].sort());
-        consola.debug(actualKeys, expectedKeys);
+        consola.debug('Validating store actions', actualKeys, expectedKeys);
         if (actualKeys !== expectedKeys) {
             throw new Error(`Validation of PageBuilder actions ${actualKeys} failed (expecting ${expectedKeys})`);
         }
@@ -33,6 +34,7 @@ export default {
             actions
         });
     },
+
     computed: {
         viewState() {
             let viewState = this.$store.state.pagebuilder.viewState;

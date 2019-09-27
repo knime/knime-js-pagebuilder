@@ -1,3 +1,5 @@
+// Development app launcher. Not included in production build.
+
 import Vue from 'vue';
 import c from 'consola';
 import { logToConsole as enable, level } from '../logger.config';
