@@ -169,7 +169,7 @@ export default async function ({ app }) {
 ```
 Then the component can be used in templates:
 
-```
+```xml
 <template>
     <PageBuilder />
 </template>
@@ -177,33 +177,55 @@ Then the component can be used in templates:
 
 ### API
 The component provides a store module namespaced as `pagebuilder`. All communication with the embedding app is achieved
-via store actions. Therefore, the app must provide well-defined implementations for the in
-[`store/keys.js`](store/keys.js) defined actions.
+via store actions. Therefore, the app must provide well-defined implementations for the actions defined in
+[`store/keys.js`](store/keys.js).
 
 
 #### Outbound (interface)
 
 The following actions are required to be implemented by the embedding application:
 
-##### `messageToParent` (example)
+##### `nextPage`
 
-Receives a generic message from the PageBuilder.
+Triggers execution of the workflow up to the next page (or to the end, if no more pages are present).
 
 ###### Parameters:
 
-* anything
+(none)
 
 ###### Example:
 
 ```js
 // pagebuilder-api/actions.js
 export default {
-    messageToParent({ commit }, value) {
-        consola.trace('Message from inside:', value);
-        commit('setGlobal', value, { root: true }); // dummy store action on the global (non-namespaced) store
+    nextPage({ commit }) {
+        consola.trace('Pagebuilder requested next page');
+        this.$api.proceedToNextPage();
     }
+    // …
 };
 
+```
+
+##### `previousPage`
+
+Triggers rollback of the workflow to the previous page
+
+###### Parameters:
+
+(none)
+
+###### Example:
+
+```js
+// pagebuilder-api/actions.js
+export default {
+    previousPage({ commit }) {
+        consola.trace('Pagebuilder requested previous page');
+        this.$api.proceedToNextPage();
+    }
+    // …
+};
 ```
 
 
@@ -211,18 +233,46 @@ export default {
 
 These actions are implemented by the PageBuilder and can be dispatched by the embedding application:
 
-##### `pagebuilder/messageFromOutside` (example)
+##### `setPage`
 
-Sends a generic message to the PageBuilder.
+Sets the current page object required to render a page.
 
 ###### Parameters:
 
-* anything
+* `{ page }`  
+  Page configuration parameter as provided by the Job API
 
 ###### Example:
 
 ```js
-this.$store.dispatch('pagebuilder/messageFromOutside', 'Hello World!');
+this.$store.dispatch('pagebuilder/setPage', {
+    page: {
+        '@class': 'org.knime.js.core.JSONWebNodePage',
+        webNodePageConfiguration: { /* … */ },
+        webNodes: { /* … */ },
+        version: '1.2.3.4'
+    }
+});
+```
+
+##### `pagebuilder/setViewState`
+
+Sets the view state in PageBuilder.
+
+###### Parameters:
+
+* `{ viewState }`  
+  Three view states are supported: `page`, `executing`, `result`
+
+    * `page`: The workflow is currently at a view node. The pagebuilder displays the HTML view for that node.  
+      Requires a page object (which can be provided by `setPage`; see above).
+    * `executing`: Some node in the workflow is currently being executed. The pagebuilder displays a progress view.
+    * `result`: The workflow is executed. The pagebuilder displays a success / error summary page.
+
+###### Example:
+
+```js
+this.$store.dispatch('pagebuilder/setViewState', { viewState: 'executing' });
 ```
 
 
