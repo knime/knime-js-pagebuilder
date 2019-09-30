@@ -2,9 +2,9 @@ import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import PageBuilder from '@/components/PageBuilder';
-import PageFrame from '@/components/frames/PageFrame';
-import ExecutionFrame from '@/components/frames/ExecutionFrame';
-import ResultFrame from '@/components/frames/ResultFrame';
+import Page from '@/components/Page';
+import Progress from '@/components/Progress';
+import Result from '@/components/Result';
 
 describe('PageBuilder.vue', () => {
 
@@ -41,7 +41,7 @@ describe('PageBuilder.vue', () => {
 
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.find(PageFrame).exists()).toBeTruthy();
+        expect(wrapper.find(Page).exists()).toBeTruthy();
     });
 
     it('renders Execution if viewState is "executing"', () => {
@@ -49,7 +49,7 @@ describe('PageBuilder.vue', () => {
 
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.find(ExecutionFrame).exists()).toBeTruthy();
+        expect(wrapper.find(Progress).exists()).toBeTruthy();
     });
 
     it('renders Result if viewState is "result"', () => {
@@ -57,7 +57,7 @@ describe('PageBuilder.vue', () => {
 
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.find(ResultFrame).exists()).toBeTruthy();
+        expect(wrapper.find(Result).exists()).toBeTruthy();
     });
 
 });

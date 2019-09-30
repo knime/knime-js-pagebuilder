@@ -17,16 +17,16 @@ export const mutations = {
 
 export const actions = {
     setViewState({ commit }, { viewState }) {
-        consola.trace('PageBuilder: Set state via action: ', viewState);
+        consola.trace('PageBuilder: Set state via action:', viewState);
         commit('setViewState', viewState);
     },
 
     setPage({ commit }, { page }) {
-        consola.trace('PageBuilder: Set page via action: ', page);
+        consola.trace('PageBuilder: Set page via action:', page);
         commit('setPage', page);
     },
 
-    
+
     // only for PageBuilder-internal usage
     async nextPage({ dispatch }) {
         consola.trace('PageBuilder: Proxying call for next page');
