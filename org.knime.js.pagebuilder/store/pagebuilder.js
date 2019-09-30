@@ -2,7 +2,8 @@ export const namespaced = true;
 
 export const state = () => ({
     viewState: null,
-    page: null
+    page: null,
+    resourceBaseUrl: ''
 });
 
 export const mutations = {
@@ -12,6 +13,10 @@ export const mutations = {
 
     setPage(state, page) {
         state.page = page;
+    },
+
+    setResourceBaseUrl(state, resourceBaseUrl) {
+        state.resourceBaseUrl = resourceBaseUrl;
     }
 };
 
@@ -24,6 +29,11 @@ export const actions = {
     setPage({ commit }, { page }) {
         consola.trace('PageBuilder: Set page via action:', page);
         commit('setPage', page);
+    },
+
+    setResourceBaseUrl({ commit }, { resourceBaseUrl }) {
+        consola.trace('PageBuilder: Set resourceBaseUrl via action:', resourceBaseUrl);
+        commit('setResourceBaseUrl', resourceBaseUrl);
     },
 
 

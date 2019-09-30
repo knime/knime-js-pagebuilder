@@ -106,6 +106,7 @@ export default {
   >
     <NodeViewIFrame
       v-if="webNodeAvailable"
+      :node-id="viewConfig.nodeID"
       :node-config="webNodeConfig"
       :auto-height="autoHeight"
       :poll-height="pollHeight"

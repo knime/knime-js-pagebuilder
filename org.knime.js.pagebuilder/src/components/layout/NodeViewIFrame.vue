@@ -8,6 +8,13 @@ const heightPollInterval = 200; // ms
 export default {
     props: {
         /**
+         * Node id
+         */
+        nodeId: {
+            default: () => null,
+            type: String
+        },
+        /**
          * Node configuration as received by API
          */
         nodeConfig: {
@@ -73,6 +80,8 @@ export default {
     },
 
     mounted() {
+        window.addEventListener('message', this.messageFromIframe);
+
         this.document = this.$el.contentDocument;
         this.injectContent();
         if (this.autoHeight) { // TODO: defer until after init() AP-12648
@@ -85,6 +94,8 @@ export default {
     },
 
     beforeDestroy() {
+        window.removeEventListener('message', this.messageFromIframe);
+
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
@@ -92,18 +103,74 @@ export default {
 
     methods: {
         injectContent() {
+            const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
 
-            this.document.write(`<!doctype html><style>${this.innerStyle}</style>` +
+            // stylesheets
+            let styles = this.nodeConfig.stylesheets.map(
+                stylesheet => `<link type="style/css" href="${resourceBaseUrl}${stylesheet}">`
+            ).join('');
+            // further styles needed for sizing
+            styles += `<style>${this.innerStyle}</style>`;
+            // custom CSS
+            if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
+                styles += `<style>${this.nodeConfig.customCSS}</style>`;
+            }
+            
 
-              `<pre>${JSON.stringify(this.nodeConfig, null, 2).replace(/</g, '&lt;')}</pre>`);
+            // scripts
+            let scriptLoader = `<script>
+                window.knimeLoader = function () {
+                    var win = window;
+                    var parent = win.parent;
+                    window.addEventListener('unload', function () {
+                        win = null;
+                        parent = null;
+                    });
+                    var origin = win.origin;
+                    var namespace = '${this.nodeConfig.namespace}';
+                    var nodeId = '${this.nodeId}';
+                    var viewRepresentation = ${JSON.stringify(this.nodeConfig.viewRepresentation)};
+                    var viewValue = ${JSON.stringify(this.nodeConfig.viewValue)};
+                    var initMethodName = '${this.nodeConfig.initMethodName}';
+
+                    var knimeLoaderCount = ${this.nodeConfig.javascriptLibraries.length};
+                    return function knimeLoader() {
+                        knimeLoaderCount--;
+                        console.log(nodeId, knimeLoaderCount);
+                        if (knimeLoaderCount === 0) {
+                            var view = win[namespace];
+                            if (!view) {
+                                throw new Error('no view found under namespace ' + namespace);
+                            }
+                            parent.postMessage({nodeId: nodeId, type: 'load'}, origin);
+                            
+                            //debugger;
+                            view[initMethodName](viewRepresentation, viewValue);
+                        }
+                    };
+                }();
+            <\/script>`; // eslint-disable-line no-useless-escape
+            let scripts = this.nodeConfig.javascriptLibraries.map(
+                // eslint-disable-next-line no-useless-escape
+                lib => `<script src="${resourceBaseUrl}${lib}" onload="knimeLoader()"><\/script>`
+            ).join('');
+
+            this.document.write(`<!doctype html><head>${styles}${scriptLoader}${scripts}</head><body></body>`);// +
+            // `<pre>${JSON.stringify(this.nodeConfig, null, 2).replace(/</g, '&lt;')}</pre></body>`);
+
+
+            /*
+            const head = this.document.head;
+            this.nodeConfig.stylesheets.forEach(stylesheet => {
+                const script = this.document.createElement('link');
+                script.setAttribute('type', 'style/css');
+                script.href = `${resourceBaseUrl}${stylesheet}`;
+                head.appendChild(script);
+            });
+            */
+
+                
             /* TODO inject ressources AP-12648
-             this.nodeConfig.stylesheets.forEach(stylesheet => {
-             const link = doc.createElement('link');
-             link.setAttribute('type', 'style/css');
-             link.href = `/${restApiURL}/${jobWebResources({ jobId, webResource: stylesheet })[0]}`;
-             head.appendChild(link);
-             });
-
              this.nodeConfig.javascriptLibraries.forEach(lib => {
              // TODO: ensure order of execution AP-12648
              const script = doc.createElement('script');
@@ -126,7 +193,29 @@ export default {
             this.height = document.body.scrollHeight +
                 parseInt(htmlStyle.paddingTop, 10) + parseInt(htmlStyle.paddingBottom, 10) +
                 parseInt(bodyStyle.marginTop, 10) + parseInt(bodyStyle.marginBottom, 10);
+        },
+
+        messageFromIframe(event) {
+            debugger;
+            if (event.origin !== window.origin) {
+                return;
+            }
+            if (!event.data || event.data.nodeId !== this.nodeId) {
+                // start resize
+            }
+            
+            // this.initView();
         }
+
+        /*
+        initView() {
+            this.$el.contentWindow.postMessage({
+                type: 'init',
+                viewValue: this.nodeConfig.viewValue,
+                viewRepresentation: this.nodeConfig.viewRepresentation
+            });
+        }
+        */
     }
 };
 </script>
