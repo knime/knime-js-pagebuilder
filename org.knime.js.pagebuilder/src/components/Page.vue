@@ -11,7 +11,7 @@ export default {
             return this.$store.state.pagebuilder.page;
         },
         layout() {
-            return this.page && this.page.webNodePageConfiguration.layout;
+            return this.page && this.page.webNodePageConfiguration && this.page.webNodePageConfiguration.layout;
         }
     }
 };

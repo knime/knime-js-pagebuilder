@@ -1,0 +1,2697 @@
+{
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "JSONLayoutRow",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
+              {
+                "widthXS": 6,
+                "widthXL": 6,
+                "widthLG": 6,
+                "widthMD": 6,
+                "widthSM": 6,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "scrolling": false,
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "6:0:3",
+                    "resizeMethod": "viewLowestElement",
+                    "autoResize": true,
+                    "sizeHeight": true,
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              },
+              {
+                "widthXS": 6,
+                "widthXL": 6,
+                "widthLG": 6,
+                "widthMD": 6,
+                "widthSM": 6,
+                "content": [
+                  {
+                    "type": "JSONNestedLayout",
+                    "nodeID": "6:0:9",
+                    "layout": {
+                      "rows": [
+                        {
+                          "type": "JSONLayoutRow",
+                          "additionalClasses": [],
+                          "additionalStyles": [],
+                          "columns": [
+                            {
+                              "widthXS": 12,
+                              "widthXL": 12,
+                              "widthLG": 12,
+                              "widthMD": 12,
+                              "widthSM": 12,
+                              "content": [
+                                {
+                                  "type": "JSONLayoutViewContent",
+                                  "scrolling": false,
+                                  "maxHeight": null,
+                                  "maxWidth": null,
+                                  "minHeight": null,
+                                  "minWidth": null,
+                                  "nodeID": "6:0:9:0:8",
+                                  "resizeMethod": "aspectRatio16by9",
+                                  "autoResize": true,
+                                  "sizeHeight": true,
+                                  "resizeInterval": null,
+                                  "sizeWidth": false,
+                                  "resizeTolerance": 5,
+                                  "additionalClasses": [],
+                                  "additionalStyles": []
+                                }
+                              ],
+                              "additionalClasses": [],
+                              "additionalStyles": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
+              {
+                "widthXS": 12,
+                "widthXL": 12,
+                "widthLG": 12,
+                "widthMD": 12,
+                "widthSM": 12,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "scrolling": false,
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "6:0:5",
+                    "resizeMethod": "aspectRatio16by9",
+                    "autoResize": true,
+                    "sizeHeight": true,
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
+              {
+                "widthXS": 12,
+                "widthXL": 12,
+                "widthLG": 12,
+                "widthMD": 12,
+                "widthSM": 12,
+                "content": [
+                  {
+                    "type": "JSONNestedLayout",
+                    "nodeID": "6:0:13",
+                    "layout": {
+                      "rows": [
+                        {
+                          "type": "JSONLayoutRow",
+                          "additionalClasses": [],
+                          "additionalStyles": [],
+                          "columns": [
+                            {
+                              "widthXS": 12,
+                              "widthXL": 12,
+                              "widthLG": 12,
+                              "widthMD": 12,
+                              "widthSM": 12,
+                              "content": [
+                                {
+                                  "type": "JSONNestedLayout",
+                                  "nodeID": "6:0:13:0:16",
+                                  "layout": {
+                                    "rows": [
+                                      {
+                                        "type": "JSONLayoutRow",
+                                        "additionalClasses": [],
+                                        "additionalStyles": [],
+                                        "columns": [
+                                          {
+                                            "widthXS": 12,
+                                            "widthXL": 12,
+                                            "widthLG": 12,
+                                            "widthMD": 12,
+                                            "widthSM": 12,
+                                            "content": [
+                                              {
+                                                "type": "JSONLayoutViewContent",
+                                                "scrolling": false,
+                                                "maxHeight": null,
+                                                "maxWidth": null,
+                                                "minHeight": null,
+                                                "minWidth": null,
+                                                "nodeID": "6:0:13:0:16:0:15",
+                                                "resizeMethod": "viewLowestElement",
+                                                "autoResize": true,
+                                                "sizeHeight": true,
+                                                "resizeInterval": null,
+                                                "sizeWidth": false,
+                                                "resizeTolerance": 5,
+                                                "additionalClasses": [],
+                                                "additionalStyles": []
+                                              }
+                                            ],
+                                            "additionalClasses": [],
+                                            "additionalStyles": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "additionalClasses": [],
+                                  "additionalStyles": []
+                                }
+                              ],
+                              "additionalClasses": [],
+                              "additionalStyles": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              }
+            ]
+          }
+        ]
+      },
+      "blackBoard": null,
+      "selectionTranslators": [
+        {
+          "forward": false,
+          "sourceID": "7a2916de-ee07-433a-b8ed-87c1485d0a15",
+          "mapping": null,
+          "targetIDs": [
+            "1e68e76e-7cdf-4755-9acb-e7f18a3e5526"
+          ]
+        }
+      ],
+      "version": "4.1.0.qualifier"
+    },
+    "webNodes": {
+      "6:0:3": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimePagedTable",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/bootstrap/3_3_6/min/css/bootstrap.min.css",
+          "/js-lib/dataTables/1_10_11/bootstrap/datatables.min.css",
+          "/js-lib/knime/tableViewer/knime_table_viewer.css"
+        ],
+        "validateMethodName": "validate",
+        "viewValue": {
+          "@class": "org.knime.js.base.node.viz.pagedTable.PagedTableViewValue",
+          "selection": null,
+          "currentPage": 0,
+          "selectAll": false,
+          "selectAllIndeterminate": false,
+          "pageSize": 0,
+          "filterString": null,
+          "columnFilterStrings": null,
+          "currentOrder": [],
+          "publishSelection": true,
+          "hideUnselected": true,
+          "subscribeSelection": true,
+          "publishFilter": true,
+          "subscribeFilter": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.viz.pagedTable.PagedTableViewRepresentation",
+          "title": "Table title",
+          "table": {
+            "@class": "org.knime.js.core.JSONDataTable",
+            "fragment": false,
+            "rows": [
+              {
+                "data": [
+                  0.24007350987935722,
+                  0.8590820795583765,
+                  0.5406513775186206,
+                  0.2526426216642531,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row25"
+              },
+              {
+                "data": [
+                  0.4894648935820661,
+                  0.26396378259038944,
+                  0.6795385653690925,
+                  0.5432860207797452,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row4"
+              },
+              {
+                "data": [
+                  0.9599124659469582,
+                  0.7523338569765342,
+                  0.03294997550570346,
+                  0.24020864550446164,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row36"
+              },
+              {
+                "data": [
+                  0.32651277475799473,
+                  0.9264056937225693,
+                  0.9633837531612074,
+                  0.8714630547066019,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row19"
+              },
+              {
+                "data": [
+                  0.21898872550000903,
+                  0.6322386767423817,
+                  0.8307312458639293,
+                  0.674422635109325,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row50"
+              },
+              {
+                "data": [
+                  0.2946561564751655,
+                  0.24758200106719558,
+                  0.626665876390006,
+                  0.171959748717042,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row1"
+              },
+              {
+                "data": [
+                  0.31865849168986005,
+                  0.14085907817294477,
+                  0.5528754498928918,
+                  0.615500705806214,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row2"
+              },
+              {
+                "data": [
+                  0.3750442428161408,
+                  0.03275524357601689,
+                  0.8736075685797766,
+                  0.36318348726400906,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row41"
+              },
+              {
+                "data": [
+                  0.42899623228774025,
+                  0.22929318987610425,
+                  0.2241873942150424,
+                  0.9285112991848689,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row7"
+              },
+              {
+                "data": [
+                  0.29799501986085203,
+                  0.23402223364005376,
+                  0.1887749816620944,
+                  0.6004663282458474,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row11"
+              },
+              {
+                "data": [
+                  0.1967857496795659,
+                  0.8286771354059185,
+                  0.5693342888020912,
+                  0.15749334089801548,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row16"
+              },
+              {
+                "data": [
+                  0.5786327305339103,
+                  0.7421984292975277,
+                  0.11292762570810945,
+                  0.3245964912968341,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row35"
+              },
+              {
+                "data": [
+                  0.3456135183913613,
+                  0.40538921237365416,
+                  0.046100744797851645,
+                  0.7409126012364884,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row5"
+              },
+              {
+                "data": [
+                  0.8294129018043164,
+                  0.7814446166183766,
+                  0.20321625601585405,
+                  0.24143135939973204,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row29"
+              },
+              {
+                "data": [
+                  0.4463157122564705,
+                  0.36933872085139374,
+                  0.32398582247849345,
+                  0.25069978187565783,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row37"
+              },
+              {
+                "data": [
+                  0.013682451320327083,
+                  0.9450677737519102,
+                  0.21198114842492594,
+                  0.2669332371928982,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row27"
+              },
+              {
+                "data": [
+                  0.14382875053401112,
+                  0.6569764518650548,
+                  0.816494371467346,
+                  0.47397234177387626,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row49"
+              },
+              {
+                "data": [
+                  0.9540234609579109,
+                  0.18906487915018722,
+                  0.11253673979377712,
+                  0.311409056797745,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row32"
+              },
+              {
+                "data": [
+                  0.08479703686092299,
+                  0.020102643950051347,
+                  0.1882417659923133,
+                  0.29799003887580366,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row30"
+              },
+              {
+                "data": [
+                  0.37901022428105513,
+                  0.3383381159233039,
+                  0.026569474554673067,
+                  0.6262417638745128,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row9"
+              },
+              {
+                "data": [
+                  0.06794047769665557,
+                  0.5021927265977241,
+                  0.8543853837700323,
+                  0.6241069844708114,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row51"
+              },
+              {
+                "data": [
+                  0.0862733988928242,
+                  0.3496128735805839,
+                  0.7383505611996893,
+                  0.5135828169603448,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row3"
+              },
+              {
+                "data": [
+                  0.05404338688396515,
+                  0.37682872833083914,
+                  0.8664668092386729,
+                  0.468800156434207,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row48"
+              },
+              {
+                "data": [
+                  0.3626168980164021,
+                  0.6627019051194405,
+                  0.43563110080626066,
+                  0.6911968482309814,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row13"
+              },
+              {
+                "data": [
+                  0.32303460675010415,
+                  0.745556529099404,
+                  0.09155206256020987,
+                  0.06905056594825965,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row22"
+              },
+              {
+                "data": [
+                  0.4666599223913094,
+                  0.17945478625803657,
+                  0.18707982557475655,
+                  0.3936393963062595,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row31"
+              },
+              {
+                "data": [
+                  0.36485452097309395,
+                  0.8503131992572039,
+                  0.23078435818966447,
+                  0.9635092090561846,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row23"
+              },
+              {
+                "data": [
+                  0.2946505481457674,
+                  0.6931569496495976,
+                  0.9337657205564919,
+                  0.5865732154947809,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row21"
+              },
+              {
+                "data": [
+                  0.1814847961129395,
+                  0.8903158436578608,
+                  0.9532627436791461,
+                  0.37077899436554507,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row15"
+              },
+              {
+                "data": [
+                  0.40150085336090546,
+                  0.07311293879966518,
+                  0.782813400828749,
+                  0.3445959807623983,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row44"
+              },
+              {
+                "data": [
+                  0.2637176430815489,
+                  0.12385426170350045,
+                  0.10699494430013404,
+                  0.43060535199284966,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row38"
+              },
+              {
+                "data": [
+                  0.2543494756881464,
+                  0.27783788330504955,
+                  0.9486427247176766,
+                  0.020819263742489102,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row10"
+              },
+              {
+                "data": [
+                  0.36954993608352676,
+                  0.9036478126530092,
+                  0.32624600862710595,
+                  0.009769735695399628,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row17"
+              },
+              {
+                "data": [
+                  0.3523021240192974,
+                  0.056992923073784785,
+                  0.29269216183213465,
+                  0.5595607668858442,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row6"
+              },
+              {
+                "data": [
+                  0.2023195509642376,
+                  0.9052583917789162,
+                  0.18454735166826558,
+                  0.46543567213215953,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row34"
+              },
+              {
+                "data": [
+                  0.44024478251152976,
+                  0.6137268652171018,
+                  0.8664484016203602,
+                  0.319466823378151,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row40"
+              },
+              {
+                "data": [
+                  0.1854771017175607,
+                  0.3152160588515036,
+                  0.6665902446508619,
+                  0.33168628124584476,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row46"
+              },
+              {
+                "data": [
+                  0.34876224512608994,
+                  0.25132260772528936,
+                  0.9310269836756553,
+                  0.6332717436693047,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row0"
+              },
+              {
+                "data": [
+                  0.006288685670319372,
+                  0.41642476697102226,
+                  0.8002135431934723,
+                  0.3860633398749928,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row43"
+              },
+              {
+                "data": [
+                  0.22540669790583437,
+                  0.9153394546377376,
+                  0.6157445997252893,
+                  0.3729973073984404,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row20"
+              },
+              {
+                "data": [
+                  0.6297373364322669,
+                  0.07608261467842226,
+                  0.6475807050353348,
+                  0.5903733802384581,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row47"
+              },
+              {
+                "data": [
+                  0.5041147519838203,
+                  0.18170175970570124,
+                  0.14831239011917258,
+                  0.3024054742189225,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row33"
+              },
+              {
+                "data": [
+                  0.20678305223779805,
+                  0.25836986922057503,
+                  0.6052051604707122,
+                  0.5286602528684379,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row8"
+              },
+              {
+                "data": [
+                  0.3234087489364107,
+                  0.26732570706052705,
+                  0.8836564742988886,
+                  0.8666307446667315,
+                  "Cluster_0"
+                ],
+                "rowKey": "Row12"
+              },
+              {
+                "data": [
+                  0.7059917992335779,
+                  0.9594043339108146,
+                  0.05867610964438777,
+                  0.2631574989841863,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row28"
+              },
+              {
+                "data": [
+                  0.12819727599863817,
+                  0.8137821387961619,
+                  0.739726731685445,
+                  0.4034837162247131,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row45"
+              },
+              {
+                "data": [
+                  0.4367610485368417,
+                  0.8402582224079425,
+                  0.3215520129194436,
+                  0.3047578328807927,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row24"
+              },
+              {
+                "data": [
+                  0.9761012565023037,
+                  0.6777050306777028,
+                  0.024755930198394394,
+                  0.4025261420284781,
+                  "Cluster_2"
+                ],
+                "rowKey": "Row26"
+              },
+              {
+                "data": [
+                  0.4401853398918658,
+                  0.9286867833930099,
+                  0.04875350791428934,
+                  0.13530325576843683,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row18"
+              },
+              {
+                "data": [
+                  0.6769113435080788,
+                  0.4959767527907074,
+                  0.7566050938902039,
+                  0.6422482824747321,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row42"
+              },
+              {
+                "data": [
+                  0.19513718159720927,
+                  0.4059961849192898,
+                  0.661405955019614,
+                  0.5166408194135124,
+                  "Cluster_3"
+                ],
+                "rowKey": "Row39"
+              },
+              {
+                "data": [
+                  0.19529208698121853,
+                  0.7988440166091628,
+                  0.5531981922391183,
+                  0.34496440333603406,
+                  "Cluster_1"
+                ],
+                "rowKey": "Row14"
+              }
+            ],
+            "spec": {
+              "@class": "org.knime.js.core.JSONDataTableSpec",
+              "numRows": 52,
+              "possibleValues": [
+                null,
+                null,
+                null,
+                null,
+                [
+                  "Cluster_1",
+                  "Cluster_0",
+                  "Cluster_2",
+                  "Cluster_3"
+                ]
+              ],
+              "numColumns": 5,
+              "knimeTypes": [
+                "Number (double)",
+                "Number (double)",
+                "Number (double)",
+                "Number (double)",
+                "String"
+              ],
+              "rowColorValues": [
+                "#56B4E9",
+                "#E69F00",
+                "#009E73",
+                "#56B4E9",
+                "#404040",
+                "#E69F00",
+                "#E69F00",
+                "#404040",
+                "#E69F00",
+                "#E69F00",
+                "#56B4E9",
+                "#009E73",
+                "#E69F00",
+                "#009E73",
+                "#009E73",
+                "#009E73",
+                "#404040",
+                "#009E73",
+                "#009E73",
+                "#E69F00",
+                "#404040",
+                "#E69F00",
+                "#404040",
+                "#56B4E9",
+                "#56B4E9",
+                "#009E73",
+                "#56B4E9",
+                "#56B4E9",
+                "#56B4E9",
+                "#404040",
+                "#009E73",
+                "#E69F00",
+                "#56B4E9",
+                "#E69F00",
+                "#009E73",
+                "#404040",
+                "#404040",
+                "#E69F00",
+                "#404040",
+                "#56B4E9",
+                "#404040",
+                "#009E73",
+                "#E69F00",
+                "#E69F00",
+                "#009E73",
+                "#404040",
+                "#56B4E9",
+                "#009E73",
+                "#56B4E9",
+                "#404040",
+                "#404040",
+                "#56B4E9"
+              ],
+              "colTypes": [
+                "number",
+                "number",
+                "number",
+                "number",
+                "string"
+              ],
+              "colorModels": [
+                {
+                  "type": "nominal",
+                  "colors": [
+                    "#E69F00",
+                    "#56B4E9",
+                    "#009E73",
+                    "#404040"
+                  ],
+                  "labels": [
+                    "Cluster_0",
+                    "Cluster_1",
+                    "Cluster_2",
+                    "Cluster_3"
+                  ],
+                  "title": "Cluster Membership"
+                }
+              ],
+              "colNames": [
+                "Universe_0_0",
+                "Universe_0_1",
+                "Universe_1_0",
+                "Universe_1_1",
+                "Cluster Membership"
+              ],
+              "hiddenColumns": [],
+              "minValues": [
+                0.006288685670319372,
+                0.020102643950051347,
+                0.024755930198394394,
+                0.009769735695399628,
+                "Cluster_0"
+              ],
+              "maxValues": [
+                0.9761012565023037,
+                0.9594043339108146,
+                0.9633837531612074,
+                0.9635092090561846,
+                "Cluster_3"
+              ],
+              "rowSizeValues": null,
+              "filterIds": [
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "containsMissingValues": [
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "numExtensions": 0,
+              "extensionTypes": [],
+              "extensionNames": []
+            },
+            "filtered": false,
+            "fragmentFirstRowIndex": 0,
+            "totalFilteredRows": 0,
+            "totalRows": 0,
+            "dataHash": null,
+            "id": "1e68e76e-7cdf-4755-9acb-e7f18a3e5526"
+          },
+          "singleSelection": false,
+          "enableSelection": true,
+          "maxRows": 100000,
+          "subscriptionFilterIds": [],
+          "enablePaging": true,
+          "pageSizeShowAll": false,
+          "enableSorting": true,
+          "enableSearching": true,
+          "enableColumnSearching": false,
+          "enableHideUnselected": true,
+          "enableLazyLoading": false,
+          "initialPageSize": 10,
+          "enablePageSizeChange": true,
+          "allowedPageSizes": [
+            10,
+            25,
+            50,
+            100
+          ],
+          "enableJumpToPage": false,
+          "displayRowColors": true,
+          "displayRowIds": true,
+          "displayColumnHeaders": true,
+          "enableGlobalNumberFormat": false,
+          "globalNumberFormatDecimals": 2,
+          "displayMissingValueAsQuestionMark": true,
+          "publishFilterId": null,
+          "displayRowIndex": false,
+          "displayFullscreenButton": true,
+          "fixedHeaders": false,
+          "subtitle": "",
+          "enableClearSelectionButton": true,
+          "enableClearSortButton": false,
+          "dateTimeFormats": {
+            "@class": "org.knime.js.core.components.datetime.SettingsModelDateTimeOptions$JSONDateTimeOptions",
+            "timezone": "Europe/Berlin",
+            "globalLocalTimeFormat": "HH:mm:ss",
+            "globalZonedDateTimeFormat": "YYYY-MM-DD z",
+            "globalDateTimeLocale": "en",
+            "globalDateTimeFormat": "YYYY-MM-DD",
+            "globalLocalDateTimeFormat": "YYYY-MM-DD",
+            "globalLocalDateFormat": "YYYY-MM-DD"
+          }
+        },
+        "customCSS": "",
+        "setValidationErrorMethodName": "setValidationError",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "displayPossible": true,
+          "nodeAnnotation": "",
+          "nodeName": "Table View",
+          "nodeState": "executed",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null
+        },
+        "getViewValueMethodName": "getComponentValue",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/org/knime/core/require.js",
+          "/js-lib/knime/service/knime_service_load_conditionally.js",
+          "/js-lib/knime/lazyLoading/knime_service_lazy_loading_loader.js",
+          "/js-lib/knime/knime_table_1_0_0.js",
+          "/js-lib/moment/2_17/locales/moment-with-locales.min.js",
+          "/js-lib/moment/2_17/timezone/moment-timezone-with-data.min.js",
+          "/js-lib/jQuery/jquery-1.11.3.min.js",
+          "/js-lib/bootstrap/3_3_6/min/js/bootstrap.min.js",
+          "/js-lib/dataTables/1_10_11/bootstrap/datatables.min.js",
+          "/js-lib/knime/tableViewer/knime_base_table_viewer_1_0_0.js",
+          "/org/knime/js/base/node/viz/pagedTable/knime-paged-table.js"
+        ],
+        "initMethodName": "init"
+      },
+      "6:0:13:0:16:0:15": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimePagedTable",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/bootstrap/3_3_6/min/css/bootstrap.min.css",
+          "/js-lib/dataTables/1_10_11/bootstrap/datatables.min.css",
+          "/js-lib/knime/tableViewer/knime_table_viewer.css"
+        ],
+        "validateMethodName": "validate",
+        "viewValue": {
+          "@class": "org.knime.js.base.node.viz.pagedTable.PagedTableViewValue",
+          "selection": null,
+          "currentPage": 0,
+          "selectAll": false,
+          "selectAllIndeterminate": false,
+          "pageSize": 0,
+          "filterString": null,
+          "columnFilterStrings": null,
+          "currentOrder": [],
+          "publishSelection": true,
+          "hideUnselected": false,
+          "subscribeSelection": true,
+          "publishFilter": true,
+          "subscribeFilter": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.viz.pagedTable.PagedTableViewRepresentation",
+          "title": "",
+          "table": {
+            "@class": "org.knime.js.core.JSONDataTable",
+            "fragment": false,
+            "rows": [
+              {
+                "data": [
+                  0.24007350987935722,
+                  0.8590820795583765,
+                  0.5406513775186206,
+                  0.2526426216642531,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row25"
+              },
+              {
+                "data": [
+                  0.4894648935820661,
+                  0.26396378259038944,
+                  0.6795385653690925,
+                  0.5432860207797452,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row4"
+              },
+              {
+                "data": [
+                  0.9599124659469582,
+                  0.7523338569765342,
+                  0.03294997550570346,
+                  0.24020864550446164,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row36"
+              },
+              {
+                "data": [
+                  0.32651277475799473,
+                  0.9264056937225693,
+                  0.9633837531612074,
+                  0.8714630547066019,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row19"
+              },
+              {
+                "data": [
+                  0.21898872550000903,
+                  0.6322386767423817,
+                  0.8307312458639293,
+                  0.674422635109325,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row50"
+              },
+              {
+                "data": [
+                  0.2946561564751655,
+                  0.24758200106719558,
+                  0.626665876390006,
+                  0.171959748717042,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row1"
+              },
+              {
+                "data": [
+                  0.31865849168986005,
+                  0.14085907817294477,
+                  0.5528754498928918,
+                  0.615500705806214,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row2"
+              },
+              {
+                "data": [
+                  0.3750442428161408,
+                  0.03275524357601689,
+                  0.8736075685797766,
+                  0.36318348726400906,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row41"
+              },
+              {
+                "data": [
+                  0.42899623228774025,
+                  0.22929318987610425,
+                  0.2241873942150424,
+                  0.9285112991848689,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row7"
+              },
+              {
+                "data": [
+                  0.29799501986085203,
+                  0.23402223364005376,
+                  0.1887749816620944,
+                  0.6004663282458474,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row11"
+              },
+              {
+                "data": [
+                  0.1967857496795659,
+                  0.8286771354059185,
+                  0.5693342888020912,
+                  0.15749334089801548,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row16"
+              },
+              {
+                "data": [
+                  0.5786327305339103,
+                  0.7421984292975277,
+                  0.11292762570810945,
+                  0.3245964912968341,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row35"
+              },
+              {
+                "data": [
+                  0.3456135183913613,
+                  0.40538921237365416,
+                  0.046100744797851645,
+                  0.7409126012364884,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row5"
+              },
+              {
+                "data": [
+                  0.8294129018043164,
+                  0.7814446166183766,
+                  0.20321625601585405,
+                  0.24143135939973204,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row29"
+              },
+              {
+                "data": [
+                  0.4463157122564705,
+                  0.36933872085139374,
+                  0.32398582247849345,
+                  0.25069978187565783,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row37"
+              },
+              {
+                "data": [
+                  0.013682451320327083,
+                  0.9450677737519102,
+                  0.21198114842492594,
+                  0.2669332371928982,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row27"
+              },
+              {
+                "data": [
+                  0.14382875053401112,
+                  0.6569764518650548,
+                  0.816494371467346,
+                  0.47397234177387626,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row49"
+              },
+              {
+                "data": [
+                  0.9540234609579109,
+                  0.18906487915018722,
+                  0.11253673979377712,
+                  0.311409056797745,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row32"
+              },
+              {
+                "data": [
+                  0.08479703686092299,
+                  0.020102643950051347,
+                  0.1882417659923133,
+                  0.29799003887580366,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row30"
+              },
+              {
+                "data": [
+                  0.37901022428105513,
+                  0.3383381159233039,
+                  0.026569474554673067,
+                  0.6262417638745128,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row9"
+              },
+              {
+                "data": [
+                  0.06794047769665557,
+                  0.5021927265977241,
+                  0.8543853837700323,
+                  0.6241069844708114,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row51"
+              },
+              {
+                "data": [
+                  0.0862733988928242,
+                  0.3496128735805839,
+                  0.7383505611996893,
+                  0.5135828169603448,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row3"
+              },
+              {
+                "data": [
+                  0.05404338688396515,
+                  0.37682872833083914,
+                  0.8664668092386729,
+                  0.468800156434207,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row48"
+              },
+              {
+                "data": [
+                  0.3626168980164021,
+                  0.6627019051194405,
+                  0.43563110080626066,
+                  0.6911968482309814,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row13"
+              },
+              {
+                "data": [
+                  0.32303460675010415,
+                  0.745556529099404,
+                  0.09155206256020987,
+                  0.06905056594825965,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row22"
+              },
+              {
+                "data": [
+                  0.4666599223913094,
+                  0.17945478625803657,
+                  0.18707982557475655,
+                  0.3936393963062595,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row31"
+              },
+              {
+                "data": [
+                  0.36485452097309395,
+                  0.8503131992572039,
+                  0.23078435818966447,
+                  0.9635092090561846,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row23"
+              },
+              {
+                "data": [
+                  0.2946505481457674,
+                  0.6931569496495976,
+                  0.9337657205564919,
+                  0.5865732154947809,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row21"
+              },
+              {
+                "data": [
+                  0.1814847961129395,
+                  0.8903158436578608,
+                  0.9532627436791461,
+                  0.37077899436554507,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row15"
+              },
+              {
+                "data": [
+                  0.40150085336090546,
+                  0.07311293879966518,
+                  0.782813400828749,
+                  0.3445959807623983,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row44"
+              },
+              {
+                "data": [
+                  0.2637176430815489,
+                  0.12385426170350045,
+                  0.10699494430013404,
+                  0.43060535199284966,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row38"
+              },
+              {
+                "data": [
+                  0.2543494756881464,
+                  0.27783788330504955,
+                  0.9486427247176766,
+                  0.020819263742489102,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row10"
+              },
+              {
+                "data": [
+                  0.36954993608352676,
+                  0.9036478126530092,
+                  0.32624600862710595,
+                  0.009769735695399628,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row17"
+              },
+              {
+                "data": [
+                  0.3523021240192974,
+                  0.056992923073784785,
+                  0.29269216183213465,
+                  0.5595607668858442,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row6"
+              },
+              {
+                "data": [
+                  0.2023195509642376,
+                  0.9052583917789162,
+                  0.18454735166826558,
+                  0.46543567213215953,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row34"
+              },
+              {
+                "data": [
+                  0.44024478251152976,
+                  0.6137268652171018,
+                  0.8664484016203602,
+                  0.319466823378151,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row40"
+              },
+              {
+                "data": [
+                  0.1854771017175607,
+                  0.3152160588515036,
+                  0.6665902446508619,
+                  0.33168628124584476,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row46"
+              },
+              {
+                "data": [
+                  0.34876224512608994,
+                  0.25132260772528936,
+                  0.9310269836756553,
+                  0.6332717436693047,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row0"
+              },
+              {
+                "data": [
+                  0.006288685670319372,
+                  0.41642476697102226,
+                  0.8002135431934723,
+                  0.3860633398749928,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row43"
+              },
+              {
+                "data": [
+                  0.22540669790583437,
+                  0.9153394546377376,
+                  0.6157445997252893,
+                  0.3729973073984404,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row20"
+              },
+              {
+                "data": [
+                  0.6297373364322669,
+                  0.07608261467842226,
+                  0.6475807050353348,
+                  0.5903733802384581,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row47"
+              },
+              {
+                "data": [
+                  0.5041147519838203,
+                  0.18170175970570124,
+                  0.14831239011917258,
+                  0.3024054742189225,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row33"
+              },
+              {
+                "data": [
+                  0.20678305223779805,
+                  0.25836986922057503,
+                  0.6052051604707122,
+                  0.5286602528684379,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row8"
+              },
+              {
+                "data": [
+                  0.3234087489364107,
+                  0.26732570706052705,
+                  0.8836564742988886,
+                  0.8666307446667315,
+                  "Cluster_0",
+                  false
+                ],
+                "rowKey": "Row12"
+              },
+              {
+                "data": [
+                  0.7059917992335779,
+                  0.9594043339108146,
+                  0.05867610964438777,
+                  0.2631574989841863,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row28"
+              },
+              {
+                "data": [
+                  0.12819727599863817,
+                  0.8137821387961619,
+                  0.739726731685445,
+                  0.4034837162247131,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row45"
+              },
+              {
+                "data": [
+                  0.4367610485368417,
+                  0.8402582224079425,
+                  0.3215520129194436,
+                  0.3047578328807927,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row24"
+              },
+              {
+                "data": [
+                  0.9761012565023037,
+                  0.6777050306777028,
+                  0.024755930198394394,
+                  0.4025261420284781,
+                  "Cluster_2",
+                  false
+                ],
+                "rowKey": "Row26"
+              },
+              {
+                "data": [
+                  0.4401853398918658,
+                  0.9286867833930099,
+                  0.04875350791428934,
+                  0.13530325576843683,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row18"
+              },
+              {
+                "data": [
+                  0.6769113435080788,
+                  0.4959767527907074,
+                  0.7566050938902039,
+                  0.6422482824747321,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row42"
+              },
+              {
+                "data": [
+                  0.19513718159720927,
+                  0.4059961849192898,
+                  0.661405955019614,
+                  0.5166408194135124,
+                  "Cluster_3",
+                  false
+                ],
+                "rowKey": "Row39"
+              },
+              {
+                "data": [
+                  0.19529208698121853,
+                  0.7988440166091628,
+                  0.5531981922391183,
+                  0.34496440333603406,
+                  "Cluster_1",
+                  false
+                ],
+                "rowKey": "Row14"
+              }
+            ],
+            "spec": {
+              "@class": "org.knime.js.core.JSONDataTableSpec",
+              "numRows": 52,
+              "possibleValues": [
+                null,
+                null,
+                null,
+                null,
+                [
+                  "Cluster_1",
+                  "Cluster_0",
+                  "Cluster_2",
+                  "Cluster_3"
+                ],
+                [
+                  false
+                ]
+              ],
+              "numColumns": 6,
+              "knimeTypes": [
+                "Number (double)",
+                "Number (double)",
+                "Number (double)",
+                "Number (double)",
+                "String",
+                "Boolean value"
+              ],
+              "rowColorValues": [
+                "#56B4E9",
+                "#E69F00",
+                "#009E73",
+                "#56B4E9",
+                "#404040",
+                "#E69F00",
+                "#E69F00",
+                "#404040",
+                "#E69F00",
+                "#E69F00",
+                "#56B4E9",
+                "#009E73",
+                "#E69F00",
+                "#009E73",
+                "#009E73",
+                "#009E73",
+                "#404040",
+                "#009E73",
+                "#009E73",
+                "#E69F00",
+                "#404040",
+                "#E69F00",
+                "#404040",
+                "#56B4E9",
+                "#56B4E9",
+                "#009E73",
+                "#56B4E9",
+                "#56B4E9",
+                "#56B4E9",
+                "#404040",
+                "#009E73",
+                "#E69F00",
+                "#56B4E9",
+                "#E69F00",
+                "#009E73",
+                "#404040",
+                "#404040",
+                "#E69F00",
+                "#404040",
+                "#56B4E9",
+                "#404040",
+                "#009E73",
+                "#E69F00",
+                "#E69F00",
+                "#009E73",
+                "#404040",
+                "#56B4E9",
+                "#009E73",
+                "#56B4E9",
+                "#404040",
+                "#404040",
+                "#56B4E9"
+              ],
+              "colTypes": [
+                "number",
+                "number",
+                "number",
+                "number",
+                "string",
+                "boolean"
+              ],
+              "colorModels": [
+                {
+                  "type": "nominal",
+                  "colors": [
+                    "#E69F00",
+                    "#56B4E9",
+                    "#009E73",
+                    "#404040"
+                  ],
+                  "labels": [
+                    "Cluster_0",
+                    "Cluster_1",
+                    "Cluster_2",
+                    "Cluster_3"
+                  ],
+                  "title": "Cluster Membership"
+                }
+              ],
+              "colNames": [
+                "Universe_0_0",
+                "Universe_0_1",
+                "Universe_1_0",
+                "Universe_1_1",
+                "Cluster Membership",
+                "Selected (Scatter Plot)"
+              ],
+              "hiddenColumns": [],
+              "minValues": [
+                0.006288685670319372,
+                0.020102643950051347,
+                0.024755930198394394,
+                0.009769735695399628,
+                "Cluster_0",
+                false
+              ],
+              "maxValues": [
+                0.9761012565023037,
+                0.9594043339108146,
+                0.9633837531612074,
+                0.9635092090561846,
+                "Cluster_3",
+                false
+              ],
+              "rowSizeValues": null,
+              "filterIds": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "containsMissingValues": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              "numExtensions": 0,
+              "extensionTypes": [],
+              "extensionNames": []
+            },
+            "filtered": false,
+            "fragmentFirstRowIndex": 0,
+            "totalFilteredRows": 0,
+            "totalRows": 0,
+            "dataHash": null,
+            "id": "1e68e76e-7cdf-4755-9acb-e7f18a3e5526"
+          },
+          "singleSelection": false,
+          "enableSelection": true,
+          "maxRows": 100000,
+          "subscriptionFilterIds": [],
+          "enablePaging": true,
+          "pageSizeShowAll": false,
+          "enableSorting": true,
+          "enableSearching": true,
+          "enableColumnSearching": false,
+          "enableHideUnselected": true,
+          "enableLazyLoading": false,
+          "initialPageSize": 10,
+          "enablePageSizeChange": true,
+          "allowedPageSizes": [
+            10,
+            25,
+            50,
+            100
+          ],
+          "enableJumpToPage": false,
+          "displayRowColors": true,
+          "displayRowIds": true,
+          "displayColumnHeaders": true,
+          "enableGlobalNumberFormat": false,
+          "globalNumberFormatDecimals": 2,
+          "displayMissingValueAsQuestionMark": true,
+          "publishFilterId": null,
+          "displayRowIndex": false,
+          "displayFullscreenButton": true,
+          "fixedHeaders": false,
+          "subtitle": "",
+          "enableClearSelectionButton": true,
+          "enableClearSortButton": false,
+          "dateTimeFormats": {
+            "@class": "org.knime.js.core.components.datetime.SettingsModelDateTimeOptions$JSONDateTimeOptions",
+            "timezone": "Europe/Berlin",
+            "globalLocalTimeFormat": "HH:mm:ss",
+            "globalZonedDateTimeFormat": "YYYY-MM-DD z",
+            "globalDateTimeLocale": "en",
+            "globalDateTimeFormat": "YYYY-MM-DD",
+            "globalLocalDateTimeFormat": "YYYY-MM-DD",
+            "globalLocalDateFormat": "YYYY-MM-DD"
+          }
+        },
+        "customCSS": "",
+        "setValidationErrorMethodName": "setValidationError",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "displayPossible": true,
+          "nodeAnnotation": "",
+          "nodeName": "Table View",
+          "nodeState": "executed",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null
+        },
+        "getViewValueMethodName": "getComponentValue",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/org/knime/core/require.js",
+          "/js-lib/knime/service/knime_service_load_conditionally.js",
+          "/js-lib/knime/lazyLoading/knime_service_lazy_loading_loader.js",
+          "/js-lib/knime/knime_table_1_0_0.js",
+          "/js-lib/moment/2_17/locales/moment-with-locales.min.js",
+          "/js-lib/moment/2_17/timezone/moment-timezone-with-data.min.js",
+          "/js-lib/jQuery/jquery-1.11.3.min.js",
+          "/js-lib/bootstrap/3_3_6/min/js/bootstrap.min.js",
+          "/js-lib/dataTables/1_10_11/bootstrap/datatables.min.js",
+          "/js-lib/knime/tableViewer/knime_base_table_viewer_1_0_0.js",
+          "/org/knime/js/base/node/viz/pagedTable/knime-paged-table.js"
+        ],
+        "initMethodName": "init"
+      },
+      "6:0:9:0:8": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "dynamicJSNode",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css"
+        ],
+        "validateMethodName": "validate",
+        "viewValue": {
+          "@class": "org.knime.dynamic.js.v30.DynamicJSViewValue",
+          "flowVariables": {},
+          "outColumns": {},
+          "tables": {},
+          "options": {
+            "subscribeFilter": true,
+            "columns": [
+              "Universe_0_0",
+              "Universe_0_1",
+              "Universe_1_0",
+              "Universe_1_1",
+              "Cluster Membership"
+            ],
+            "subtitle": "",
+            "lThickness": 0.5,
+            "title": "Parallel Coordinates Plot",
+            "subscribeSelection": true,
+            "publishSelection": true,
+            "mValues": "Skip rows with missing values",
+            "lType": "Curved"
+          }
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.dynamic.js.v30.DynamicJSViewRepresentation",
+          "runningInView": true,
+          "errorMessage": "",
+          "flowVariables": {
+            "knime.workspace": "/Users/albrecht/Documents/KNIME/knime-dev-workspace"
+          },
+          "inObjects": [
+            {
+              "fragment": false,
+              "rows": [
+                {
+                  "data": [
+                    0.24007350987935722,
+                    0.8590820795583765,
+                    0.5406513775186206,
+                    0.2526426216642531,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row25"
+                },
+                {
+                  "data": [
+                    0.4894648935820661,
+                    0.26396378259038944,
+                    0.6795385653690925,
+                    0.5432860207797452,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row4"
+                },
+                {
+                  "data": [
+                    0.9599124659469582,
+                    0.7523338569765342,
+                    0.03294997550570346,
+                    0.24020864550446164,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row36"
+                },
+                {
+                  "data": [
+                    0.32651277475799473,
+                    0.9264056937225693,
+                    0.9633837531612074,
+                    0.8714630547066019,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row19"
+                },
+                {
+                  "data": [
+                    0.21898872550000903,
+                    0.6322386767423817,
+                    0.8307312458639293,
+                    0.674422635109325,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row50"
+                },
+                {
+                  "data": [
+                    0.2946561564751655,
+                    0.24758200106719558,
+                    0.626665876390006,
+                    0.171959748717042,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row1"
+                },
+                {
+                  "data": [
+                    0.31865849168986005,
+                    0.14085907817294477,
+                    0.5528754498928918,
+                    0.615500705806214,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row2"
+                },
+                {
+                  "data": [
+                    0.3750442428161408,
+                    0.03275524357601689,
+                    0.8736075685797766,
+                    0.36318348726400906,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row41"
+                },
+                {
+                  "data": [
+                    0.42899623228774025,
+                    0.22929318987610425,
+                    0.2241873942150424,
+                    0.9285112991848689,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row7"
+                },
+                {
+                  "data": [
+                    0.29799501986085203,
+                    0.23402223364005376,
+                    0.1887749816620944,
+                    0.6004663282458474,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row11"
+                },
+                {
+                  "data": [
+                    0.1967857496795659,
+                    0.8286771354059185,
+                    0.5693342888020912,
+                    0.15749334089801548,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row16"
+                },
+                {
+                  "data": [
+                    0.5786327305339103,
+                    0.7421984292975277,
+                    0.11292762570810945,
+                    0.3245964912968341,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row35"
+                },
+                {
+                  "data": [
+                    0.3456135183913613,
+                    0.40538921237365416,
+                    0.046100744797851645,
+                    0.7409126012364884,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row5"
+                },
+                {
+                  "data": [
+                    0.8294129018043164,
+                    0.7814446166183766,
+                    0.20321625601585405,
+                    0.24143135939973204,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row29"
+                },
+                {
+                  "data": [
+                    0.4463157122564705,
+                    0.36933872085139374,
+                    0.32398582247849345,
+                    0.25069978187565783,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row37"
+                },
+                {
+                  "data": [
+                    0.013682451320327083,
+                    0.9450677737519102,
+                    0.21198114842492594,
+                    0.2669332371928982,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row27"
+                },
+                {
+                  "data": [
+                    0.14382875053401112,
+                    0.6569764518650548,
+                    0.816494371467346,
+                    0.47397234177387626,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row49"
+                },
+                {
+                  "data": [
+                    0.9540234609579109,
+                    0.18906487915018722,
+                    0.11253673979377712,
+                    0.311409056797745,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row32"
+                },
+                {
+                  "data": [
+                    0.08479703686092299,
+                    0.020102643950051347,
+                    0.1882417659923133,
+                    0.29799003887580366,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row30"
+                },
+                {
+                  "data": [
+                    0.37901022428105513,
+                    0.3383381159233039,
+                    0.026569474554673067,
+                    0.6262417638745128,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row9"
+                },
+                {
+                  "data": [
+                    0.06794047769665557,
+                    0.5021927265977241,
+                    0.8543853837700323,
+                    0.6241069844708114,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row51"
+                },
+                {
+                  "data": [
+                    0.0862733988928242,
+                    0.3496128735805839,
+                    0.7383505611996893,
+                    0.5135828169603448,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row3"
+                },
+                {
+                  "data": [
+                    0.05404338688396515,
+                    0.37682872833083914,
+                    0.8664668092386729,
+                    0.468800156434207,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row48"
+                },
+                {
+                  "data": [
+                    0.3626168980164021,
+                    0.6627019051194405,
+                    0.43563110080626066,
+                    0.6911968482309814,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row13"
+                },
+                {
+                  "data": [
+                    0.32303460675010415,
+                    0.745556529099404,
+                    0.09155206256020987,
+                    0.06905056594825965,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row22"
+                },
+                {
+                  "data": [
+                    0.4666599223913094,
+                    0.17945478625803657,
+                    0.18707982557475655,
+                    0.3936393963062595,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row31"
+                },
+                {
+                  "data": [
+                    0.36485452097309395,
+                    0.8503131992572039,
+                    0.23078435818966447,
+                    0.9635092090561846,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row23"
+                },
+                {
+                  "data": [
+                    0.2946505481457674,
+                    0.6931569496495976,
+                    0.9337657205564919,
+                    0.5865732154947809,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row21"
+                },
+                {
+                  "data": [
+                    0.1814847961129395,
+                    0.8903158436578608,
+                    0.9532627436791461,
+                    0.37077899436554507,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row15"
+                },
+                {
+                  "data": [
+                    0.40150085336090546,
+                    0.07311293879966518,
+                    0.782813400828749,
+                    0.3445959807623983,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row44"
+                },
+                {
+                  "data": [
+                    0.2637176430815489,
+                    0.12385426170350045,
+                    0.10699494430013404,
+                    0.43060535199284966,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row38"
+                },
+                {
+                  "data": [
+                    0.2543494756881464,
+                    0.27783788330504955,
+                    0.9486427247176766,
+                    0.020819263742489102,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row10"
+                },
+                {
+                  "data": [
+                    0.36954993608352676,
+                    0.9036478126530092,
+                    0.32624600862710595,
+                    0.009769735695399628,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row17"
+                },
+                {
+                  "data": [
+                    0.3523021240192974,
+                    0.056992923073784785,
+                    0.29269216183213465,
+                    0.5595607668858442,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row6"
+                },
+                {
+                  "data": [
+                    0.2023195509642376,
+                    0.9052583917789162,
+                    0.18454735166826558,
+                    0.46543567213215953,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row34"
+                },
+                {
+                  "data": [
+                    0.44024478251152976,
+                    0.6137268652171018,
+                    0.8664484016203602,
+                    0.319466823378151,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row40"
+                },
+                {
+                  "data": [
+                    0.1854771017175607,
+                    0.3152160588515036,
+                    0.6665902446508619,
+                    0.33168628124584476,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row46"
+                },
+                {
+                  "data": [
+                    0.34876224512608994,
+                    0.25132260772528936,
+                    0.9310269836756553,
+                    0.6332717436693047,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row0"
+                },
+                {
+                  "data": [
+                    0.006288685670319372,
+                    0.41642476697102226,
+                    0.8002135431934723,
+                    0.3860633398749928,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row43"
+                },
+                {
+                  "data": [
+                    0.22540669790583437,
+                    0.9153394546377376,
+                    0.6157445997252893,
+                    0.3729973073984404,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row20"
+                },
+                {
+                  "data": [
+                    0.6297373364322669,
+                    0.07608261467842226,
+                    0.6475807050353348,
+                    0.5903733802384581,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row47"
+                },
+                {
+                  "data": [
+                    0.5041147519838203,
+                    0.18170175970570124,
+                    0.14831239011917258,
+                    0.3024054742189225,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row33"
+                },
+                {
+                  "data": [
+                    0.20678305223779805,
+                    0.25836986922057503,
+                    0.6052051604707122,
+                    0.5286602528684379,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row8"
+                },
+                {
+                  "data": [
+                    0.3234087489364107,
+                    0.26732570706052705,
+                    0.8836564742988886,
+                    0.8666307446667315,
+                    "Cluster_0"
+                  ],
+                  "rowKey": "Row12"
+                },
+                {
+                  "data": [
+                    0.7059917992335779,
+                    0.9594043339108146,
+                    0.05867610964438777,
+                    0.2631574989841863,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row28"
+                },
+                {
+                  "data": [
+                    0.12819727599863817,
+                    0.8137821387961619,
+                    0.739726731685445,
+                    0.4034837162247131,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row45"
+                },
+                {
+                  "data": [
+                    0.4367610485368417,
+                    0.8402582224079425,
+                    0.3215520129194436,
+                    0.3047578328807927,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row24"
+                },
+                {
+                  "data": [
+                    0.9761012565023037,
+                    0.6777050306777028,
+                    0.024755930198394394,
+                    0.4025261420284781,
+                    "Cluster_2"
+                  ],
+                  "rowKey": "Row26"
+                },
+                {
+                  "data": [
+                    0.4401853398918658,
+                    0.9286867833930099,
+                    0.04875350791428934,
+                    0.13530325576843683,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row18"
+                },
+                {
+                  "data": [
+                    0.6769113435080788,
+                    0.4959767527907074,
+                    0.7566050938902039,
+                    0.6422482824747321,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row42"
+                },
+                {
+                  "data": [
+                    0.19513718159720927,
+                    0.4059961849192898,
+                    0.661405955019614,
+                    0.5166408194135124,
+                    "Cluster_3"
+                  ],
+                  "rowKey": "Row39"
+                },
+                {
+                  "data": [
+                    0.19529208698121853,
+                    0.7988440166091628,
+                    0.5531981922391183,
+                    0.34496440333603406,
+                    "Cluster_1"
+                  ],
+                  "rowKey": "Row14"
+                }
+              ],
+              "spec": {
+                "@class": "org.knime.js.core.JSONDataTableSpec",
+                "numRows": 52,
+                "possibleValues": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  [
+                    "Cluster_1",
+                    "Cluster_0",
+                    "Cluster_2",
+                    "Cluster_3"
+                  ]
+                ],
+                "numColumns": 5,
+                "knimeTypes": [
+                  "Number (double)",
+                  "Number (double)",
+                  "Number (double)",
+                  "Number (double)",
+                  "String"
+                ],
+                "rowColorValues": [
+                  "#56B4E9",
+                  "#E69F00",
+                  "#009E73",
+                  "#56B4E9",
+                  "#404040",
+                  "#E69F00",
+                  "#E69F00",
+                  "#404040",
+                  "#E69F00",
+                  "#E69F00",
+                  "#56B4E9",
+                  "#009E73",
+                  "#E69F00",
+                  "#009E73",
+                  "#009E73",
+                  "#009E73",
+                  "#404040",
+                  "#009E73",
+                  "#009E73",
+                  "#E69F00",
+                  "#404040",
+                  "#E69F00",
+                  "#404040",
+                  "#56B4E9",
+                  "#56B4E9",
+                  "#009E73",
+                  "#56B4E9",
+                  "#56B4E9",
+                  "#56B4E9",
+                  "#404040",
+                  "#009E73",
+                  "#E69F00",
+                  "#56B4E9",
+                  "#E69F00",
+                  "#009E73",
+                  "#404040",
+                  "#404040",
+                  "#E69F00",
+                  "#404040",
+                  "#56B4E9",
+                  "#404040",
+                  "#009E73",
+                  "#E69F00",
+                  "#E69F00",
+                  "#009E73",
+                  "#404040",
+                  "#56B4E9",
+                  "#009E73",
+                  "#56B4E9",
+                  "#404040",
+                  "#404040",
+                  "#56B4E9"
+                ],
+                "colTypes": [
+                  "number",
+                  "number",
+                  "number",
+                  "number",
+                  "string"
+                ],
+                "colorModels": [
+                  {
+                    "type": "nominal",
+                    "colors": [
+                      "#E69F00",
+                      "#56B4E9",
+                      "#009E73",
+                      "#404040"
+                    ],
+                    "labels": [
+                      "Cluster_0",
+                      "Cluster_1",
+                      "Cluster_2",
+                      "Cluster_3"
+                    ],
+                    "title": "Cluster Membership"
+                  }
+                ],
+                "colNames": [
+                  "Universe_0_0",
+                  "Universe_0_1",
+                  "Universe_1_0",
+                  "Universe_1_1",
+                  "Cluster Membership"
+                ],
+                "hiddenColumns": [],
+                "minValues": [
+                  0.006288685670319372,
+                  0.020102643950051347,
+                  0.024755930198394394,
+                  0.009769735695399628,
+                  "Cluster_0"
+                ],
+                "maxValues": [
+                  0.9761012565023037,
+                  0.9594043339108146,
+                  0.9633837531612074,
+                  0.9635092090561846,
+                  "Cluster_3"
+                ],
+                "rowSizeValues": null,
+                "filterIds": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "containsMissingValues": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ],
+                "numExtensions": 0,
+                "extensionTypes": [],
+                "extensionNames": []
+              },
+              "filtered": false,
+              "fragmentFirstRowIndex": 0,
+              "totalFilteredRows": 0,
+              "totalRows": 0,
+              "dataHash": null,
+              "id": "1e68e76e-7cdf-4755-9acb-e7f18a3e5526"
+            }
+          ],
+          "tableIds": [
+            null
+          ],
+          "warnMessage": "",
+          "jsNamespace": "parallelcoords_namespace",
+          "jsDependencies": [
+            {
+              "path": "js-lib/d3/d3.v3_2_8.min.js",
+              "local": true,
+              "exports": null,
+              "dependencies": [],
+              "usesDefine": false,
+              "name": "D3"
+            },
+            {
+              "path": "org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+              "local": true,
+              "exports": null,
+              "dependencies": [
+                "jQuery_1.11.0",
+                "KnimeTwinlist_1.0.0"
+              ],
+              "usesDefine": false,
+              "name": "MultipleSelections"
+            },
+            {
+              "path": "org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+              "local": true,
+              "exports": null,
+              "dependencies": [
+                "jQuery_1.11.0",
+                "KnimeTwinlist_1.0.0"
+              ],
+              "usesDefine": false,
+              "name": "MultipleSelections"
+            },
+            {
+              "path": "org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+              "local": true,
+              "exports": null,
+              "dependencies": [
+                "jQuery_1.11.0",
+                "KnimeTwinlist_1.0.0"
+              ],
+              "usesDefine": false,
+              "name": "MultipleSelections"
+            },
+            {
+              "path": "js-lib/jQuery/jquery-1.11.0.min.js",
+              "local": true,
+              "exports": null,
+              "dependencies": [],
+              "usesDefine": false,
+              "name": "jQuery_1.11.0"
+            },
+            {
+              "path": "js-lib/knime/knime_twinlist_1_0_0.js",
+              "local": true,
+              "exports": null,
+              "dependencies": [
+                "jQuery_1.11.0"
+              ],
+              "usesDefine": false,
+              "name": "KnimeTwinlist_1.0.0"
+            },
+            {
+              "path": "js-lib/jQuery/jquery-1.11.0.min.js",
+              "local": true,
+              "exports": null,
+              "dependencies": [],
+              "usesDefine": false,
+              "name": "jQuery_1.11.0"
+            }
+          ],
+          "jsCode": [
+            "window.parallelcoords_namespace = (function () {\n    var extraRows, getExtents, applyFilter, filterChanged, saveSelected, selectRows, drawSavedBrushes, createXAxis,\n        drawBrushes, brushstart, getLine, drawElements, position, refreshView, brush, noBrushes, saveSelectedRows,\n        saveSettingsToValue, containMissing, clearBrushes, checkClearSelectionButton, drawChart, createControls,\n        getDataColumnID, createData, publishCurrentSelection, selectionChanged, mzd, w, h, plotG, bottomBar, scales,\n        escapeId, scaleCols, extents, _data, layoutContainer, _representation, _value, line, colors, oldHeight,\n        oldWidth, ordinalScale, xBrushScale, xBrush, xExtent, legendWidth, maxLeftLabelWidth, firstColumn;\n\n    var MIN_HEIGHT = 100;\n    var MIN_WIDTH = 100;\n    var MISSING_VALUE_MODE = 'Show\\u00A0missing\\u00A0values';\n\n    var leftLabelsMaxPercentage = 0.33;\n    var pcPlot = {};\n\n    var brushes = {};\n    var draggingNow = false;\n    var dragging = {};\n    var rowsSelected = false;\n    var sortedCols = [];\n    var filterIds = [];\n    var currentFilter = null;\n\n    var knimeTable;\n\n    pcPlot.init = function (representation, value) {\n        _value = value;\n        _representation = representation;\n\n        knimeTable = new kt();\n        knimeTable.setDataTable(_representation.inObjects[0]);\n\n        d3.select('html').style('width', '100%').style('height', '100%');\n        d3.select('body').style('width', '100%').style('height', '100%');\n\n        var body = d3.select('body');\n\n        _data = createData(representation);\n        // initially included columns\n        sortedCols = _data.colNames;\n\n        layoutContainer = body.append('div')\n            .attr('id', 'layoutContainer')\n            .attr('class', 'knime-layout-container')\n            .style('min-width', MIN_WIDTH + 'px');\n\n        if (_representation.options.svg.fullscreen && _representation.runningInView) {\n            layoutContainer.style('width', '100%').style('height', '100%');\n        } else {\n            layoutContainer.style('width', _representation.options.svg.width + 'px')\n                .style('height', _representation.options.svg.height + 'px');\n        }\n\n        createControls();\n\n        var div = layoutContainer.append('div')\n            .attr('id', 'svgContainer')\n            .attr('class', 'knime-svg-container')\n            .style('min-width', MIN_WIDTH + 'px')\n            .style('min-height', MIN_HEIGHT + 'px');\n\n        var svg1 = document.createElementNS('http://www.w3.org/2000/svg', 'svg');\n        div[0][0].appendChild(svg1);\n\n        var d3svg = d3.select('svg');\n        d3svg.append('rect').attr('id', 'bgr').attr('fill', _representation.options.backgroundColor);\n\n        var plotG = d3svg.append('g').attr('id', 'plotG');\n        plotG.append('rect').attr('id', 'da').attr('fill', _representation.options.daColor);\n\n        d3svg.append('text')\n            .attr('id', 'title')\n            .attr('class', 'knime-title')\n            .attr('x', 20)\n            .attr('y', 30)\n            .text(_value.options.title);\n\n        d3svg.append('text')\n            .attr('id', 'subtitle')\n            .attr('class', 'knime-subtitle')\n            .attr('x', 20)\n            .attr('y', 46)\n            .text(_value.options.subtitle);\n\n        plotG.append('line')\n            .attr('stroke', 'rgba(0,0,0,0.5)')\n            .attr('stroke-width', '2')\n            .attr('id', 'yMarker')\n            .attr('visibility', 'hidden');\n\n        drawChart();\n\n        // draw saved brushes\n        if (_representation.options.enableSelection && _representation.options.enableBrushing) {\n            drawSavedBrushes();\n        }\n        // select saved (selected) rows\n        if (_representation.options.enableSelection && _representation.options.enableBrushing && !_value.options.selections) {\n            selectRows();\n        }\n        if (_representation.options.enableSelection && _value.options.selectedrows) {\n            selectRows();\n        }\n        checkClearSelectionButton();\n        saveSelected();\n    };\n\n    function sortArray(sorted, toInclude) {\n        var array = [];\n        for (var i = 0; i < sorted.length; i++) {\n            for (var j = 0; j < toInclude.length; j++) {\n                if (sorted[i] == toInclude[j]) {\n                    array.push(sorted[i]);\n                }\n            }\n        }\n        return array;\n    }\n\n    function filterColumns(cols) {\n        var includedColumns = [];\n        for (var col = 0; col < cols.length; col++) {\n            var idx = getDataColumnID(cols[col], _representation.inObjects[0]);\n            if (_representation.inObjects[0].spec.colTypes[idx] === 'string' || _representation.inObjects[0].spec.colTypes[idx] === 'number' ||\n                _representation.inObjects[0].spec.colTypes[idx] === 'dateTime') {\n                includedColumns.push(cols[col]);\n            }\n        }\n        return includedColumns;\n    }\n\n    createData = function (representation) {\n        var data = { objects: [], colNames: [], colTypes: {}, domains: {}, minmax: {} };\n        var table = representation.inObjects[0];\n        var key, val, col;\n\n        filterIds = [];\n        for (var i = 0; i < table.spec.filterIds.length; i++) {\n            if (table.spec.filterIds[i]) {\n                filterIds.push(table.spec.filterIds[i]);\n            }\n        }\n        if (filterIds.length < 1) {\n            filterIds = null;\n        }\n\n        var catColIdx = getDataColumnID(_representation.options.catCol, table);\n        var indices = {};\n\n        var columnNames;\n        if (_representation.options.enableAxesSwapping && _value.options.sortedCols &&\n            _value.options.sortedCols.length > 0 && !_value.options.columns) {\n            columnNames = _value.options.sortedCols;\n        }\n        if (_representation.options.enableAxesSwapping && _value.options.sortedCols &&\n            _value.options.sortedCols.length > 0 && _value.options.columns) {\n            if (_value.options.sortedCols.length < _value.options.columns.length) {\n                columnNames = sortArray(sortedCols, _value.options.columns);\n            } else {\n                columnNames = sortArray(_value.options.sortedCols, _value.options.columns);\n                // sortedCols[_value.options.sortedCols.length] = _value.options.sortedCols;\n            }\n            /* if (_value.options.sortedCols.length == _data.colNames.length){\n                sortedCols =_value.options.sortedCols;\n            } */\n        } else {\n            columnNames = filterColumns(_value.options.columns);\n        }\n\n\n        for (col = 0; col < columnNames.length; col++) {\n            var columnName;\n            columnName = columnNames[col];\n            data.colNames.push(columnName);\n            var idx = getDataColumnID(columnName, table);\n            indices[columnName] = idx;\n            data.colTypes[columnName] = table.spec.colTypes[idx];\n            if (table.spec.colTypes[idx] === 'string') {\n                data.domains[columnName] = d3.set();\n            } else {\n                data.minmax[columnName] = [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];\n            }\n        }\n\n        if (catColIdx != null) {\n            data.domains[_representation.options.catCol] = d3.set();\n        }\n        for (var r = 0; r < table.rows.length; r++) {\n            var row = table.rows[r].data;\n            var obj = {};\n            for (col = 0; col < _value.options.columns.length; col++) {\n                obj[_value.options.columns[col]] = row[indices[_value.options.columns[col]]];\n                if (obj[_value.options.columns[col]] === null) {\n                    obj.containsMissing = true;\n                }\n\n            }\n            if (_representation.options.useColors) {\n                obj.color = table.spec.rowColorValues[r];\n            } else if (catColIdx) {\n                obj.color = row[catColIdx];\n            }\n\n            for (key in data.domains) {\n                val = row[indices[key]];\n                if (val != null) {\n                    data.domains[key].add(val);\n                }\n            }\n            for (key in data.minmax) {\n                val = row[indices[key]];\n                if (val != null) {\n                    data.minmax[key][0] = Math.min(data.minmax[key][0], val);\n                    data.minmax[key][1] = Math.max(data.minmax[key][1], val);\n                }\n            }\n            obj.id = table.rows[r].rowKey;\n            data.objects.push(obj);\n        }\n\n        return data;\n    };\n\n    getDataColumnID = function (columnName, table) {\n        var colID = null;\n        for (var i = 0; i < table.spec.numColumns; i++) {\n            if (table.spec.colNames[i] === columnName) {\n                colID = i;\n                break;\n            }\n\n        }\n\n        return colID;\n    };\n\n    createControls = function () {\n\n        // -- Buttons --\n        if (_representation.options.displayFullscreenButton) {\n            knimeService.allowFullscreen();\n        }\n\n        if (_representation.options.displayClearSelectionButton && _representation.options.enableSelection) {\n            knimeService.addButton('clearSelectionButton', 'minus-square-o', 'Clear selection', function () {\n                d3.selectAll('.row').classed({ selected: false, 'knime-selected': false, unselected: false });\n                clearBrushes();\n                publishCurrentSelection();\n            });\n            d3.select('#clearSelectionButton').classed('inactive', true);\n        }\n\n        // -- Initial interactivity settings --\n        if (knimeService.isInteractivityAvailable()) {\n            if (_representation.options.enableSelection && _value.options.subscribeSelection) {\n                knimeService.subscribeToSelection(_representation.inObjects[0].id, selectionChanged);\n            }\n            if (filterIds && _value.options.subscribeFilter) {\n                knimeService.subscribeToFilter(_representation.inObjects[0].id, filterChanged, filterIds);\n            }\n        }\n\n        // -- Menu Items --\n        if (!_representation.options.enableViewControls) {\n            return;\n        }\n\n        if (_representation.options.enableTitleEdit) {\n            var plotTitleText = knimeService.createMenuTextField('plotTitleText', _value.options.title, function () {\n                var hadTitles = _value.options.title.length > 0 || _value.options.subtitle.length > 0;\n                _value.options.title = this.value;\n                var hasTitles = _value.options.title.length > 0 || _value.options.subtitle.length > 0;\n                d3.select('#title').text(this.value);\n                if (hasTitles != hadTitles) {\n                    drawChart();\n                    applyFilter();\n                }\n            }, true);\n            knimeService.addMenuItem('Plot Title:', 'header', plotTitleText);\n        }\n\n\n        if (_representation.options.enableSubtitleEdit) {\n            var plotSubtitleText = knimeService.createMenuTextField('plotSubtitleText', _value.options.subtitle, function () {\n                var hadTitles = _value.options.title.length > 0 || _value.options.subtitle.length > 0;\n                _value.options.subtitle = this.value;\n                var hasTitles = _value.options.title.length > 0 || _value.options.subtitle.length > 0;\n                d3.select('#subtitle').text(this.value);\n                if (hasTitles != hadTitles) {\n                    drawChart();\n                    applyFilter();\n                }\n            }, true);\n            knimeService.addMenuItem('Plot Subtitle:', 'header', plotSubtitleText, null, knimeService.SMALL_ICON);\n        }\n        if (_representation.options.enableTitleEdit || _representation.options.enableSubtitleEdit ||\n            _representation.options.enableMValuesHandling && containMissing()) {\n            knimeService.addMenuDivider();\n        }\n        if (_representation.options.enableMValuesHandling && containMissing()) {\n\n\n            var missingMenuSelect = knimeService.createMenuSelect('missingMenuSelect', 'Skip\\u00A0rows\\u00A0with\\u00A0missing\\u00A0values', ['Skip\\u00A0rows\\u00A0with\\u00A0missing\\u00A0values', 'Skip\\u00A0missing\\u00A0values', MISSING_VALUE_MODE], function () {\n                _value.options.mValues = this.value;\n                if (this.value == 'Skip\\u00A0rows\\u00A0with\\u00A0missing\\u00A0values') {\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing &&\n                        noBrushes() && !d3.selectAll('.row.selected').empty()) {\n                        saveSelectedRows();\n                    }\n                    if (_representation.options.enableSelection && !_representation.options.enableBrushing &&\n                        !d3.selectAll('.row.selected').empty()) {\n                        saveSelectedRows();\n                    }\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n                        getExtents();\n                    }\n\n                    drawChart();\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n                        drawBrushes();\n                        brush();\n                    }\n\n                    applyFilter();\n                }\n                if (this.value == 'Skip\\u00A0missing\\u00A0values') {\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing &&\n                        noBrushes() && !d3.selectAll('.row.selected').empty()) {\n                        saveSelectedRows();\n                    }\n                    if (_representation.options.enableSelection && !_representation.options.enableBrushing &&\n                        !d3.selectAll('.row.selected').empty()) {\n                        saveSelectedRows();\n                    }\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n                        getExtents();\n                    }\n\n                    drawChart();\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n                        drawBrushes();\n                        brush();\n                    }\n\n                    extraRows();\n                    applyFilter();\n                }\n                if (this.value == MISSING_VALUE_MODE) {\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing &&\n                        noBrushes() && !d3.selectAll('.row.selected').empty()) {\n                        saveSelectedRows();\n                    }\n\n                    if (_representation.options.enableSelection && !_representation.options.enableBrushing &&\n                        !d3.selectAll('.row.selected').empty()) {\n                        saveSelectedRows();\n                    }\n\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n                        getExtents();\n                    }\n\n                    drawChart();\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n                        drawBrushes();\n                        brush();\n                    }\n\n                    extraRows();\n                    applyFilter();\n                }\n            });\n            knimeService.addMenuItem('Missing values:', 'braille', missingMenuSelect);\n        }\n\n        if ((_representation.options.enableTitleEdit || _representation.options.enableSubtitleEdit) &&\n            _representation.options.enableMValuesHandling && containMissing()) {\n            knimeService.addMenuDivider();\n        }\n\n        if (_representation.options.enableLineChange) {\n            var lineTypeRadio = knimeService.createInlineMenuRadioButtons('lineType', 'lineType',\n                _value.options.lType, ['Straight', 'Curved'], function () {\n                    _value.options.lType = this.value;\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing &&\n                        noBrushes() && !d3.selectAll('.row.selected').empty()) {\n                        saveSelectedRows();\n                    }\n                    if (_representation.options.enableSelection && !_representation.options.enableBrushing &&\n                        !d3.selectAll('.row.selected').empty()) {\n                        saveSelectedRows();\n                    }\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n                        getExtents();\n                    }\n\n                    drawChart();\n                    if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n                        drawBrushes();\n                        brush();\n                    }\n\n                    applyFilter();\n                });\n            knimeService.addMenuItem('Line type:', 'bars', lineTypeRadio);\n\n            var lineThicknessSpin = knimeService.createMenuNumberField('lineThickness', _value.options.lThickness, 0.1, 100, 0.1, function () {\n                _value.options.lThickness = Number(this.value);\n                d3.selectAll('.row').attr('stroke-width', this.value);\n            }, true);\n            knimeService.addMenuItem('Line thickness:', 'minus', lineThicknessSpin);\n        }\n\n        // temporarily use controlContainer to solve th resizing problem with ySelect\n        if (_representation.options.enableColumnSelection) {\n            var layoutContainer = 'layoutContainer';\n            var containerID = 'plotContainer';\n            var controlContainer = d3.select('#' + layoutContainer).insert('table', '#' + containerID + ' ~ *')\n                .attr('id', 'plotControls')\n                .style('width', '100%')\n                .style('padding', '10px')\n                .style('margin', '0 auto')\n                .style('box-sizing', 'border-box')\n                .style('border-spacing', 0)\n                .style('border-collapse', 'collapse');\n\n            var columnChangeContainer = controlContainer.append('tr');\n            var ySelect = new twinlistMultipleSelections();\n            var ySelectComponent = ySelect.getComponent().get(0);\n            columnChangeContainer.append('td').attr('colspan', '3').node().appendChild(ySelectComponent);\n            ySelect.setChoices(filterColumns(_value.options.columns));\n            ySelect.setSelections(filterColumns(_value.options.columns));\n            ySelect.addValueChangedListener(function () {\n                _value.options.columns = ySelect.getSelections();\n                saveSettingsToValue();\n                _data = createData(_representation);\n                drawChart();\n                applyFilter();\n                if (_representation.options.enableSelection && _representation.options.enableBrushing) {\n                    drawSavedBrushes();\n                }\n                // select saved (selected) rows\n                if (_representation.options.enableSelection && _representation.options.enableBrushing && !_value.options.selections) {\n                    selectRows();\n                }\n                if (_representation.options.enableSelection && _value.options.selectedrows) {\n                    selectRows();\n                }\n            });\n\n            knimeService.addMenuItem('Axes:', 'long-arrow-up', ySelectComponent);\n            ySelectComponent.style.margin = '0';\n            ySelectComponent.style.outlineOffset = '-3px';\n            ySelectComponent.style.width = '';\n            ySelectComponent.style.height = '';\n            controlContainer.remove();\n        }\n\n        if (_representation.options.enableTitleEdit || _representation.options.enableSubtitleEdit ||\n            _representation.options.enableMValuesHandling && containMissing() || _representation.options.enableLineChange &&\n            knimeService.isInteractivityAvailable() && _representation.options.enableSelection) {\n            knimeService.addMenuDivider();\n        }\n\n        if (knimeService.isInteractivityAvailable()) {\n            if (_representation.options.enableSelection) {\n                var pubSelIcon = knimeService.createStackedIcon('check-square-o', 'angle-right', 'faded left sm', 'right bold');\n                var pubSelCheckbox = knimeService.createMenuCheckbox('publishSelectionCheckbox', _value.options.publishSelection, function () {\n                    if (this.checked) {\n                        _value.options.publishSelection = true;\n                        publishCurrentSelection();\n                    } else {\n                        _value.publishSelection = false;\n                    }\n                });\n                knimeService.addMenuItem('Publish selection', pubSelIcon, pubSelCheckbox);\n                var subSelIcon = knimeService.createStackedIcon('check-square-o', 'angle-double-right', 'faded right sm', 'left bold');\n                var subSelCheckbox = knimeService.createMenuCheckbox('subscribeSelectionCheckbox', _value.options.subscribeSelection, function () {\n                    if (this.checked) {\n                        knimeService.subscribeToSelection(_representation.inObjects[0].id, selectionChanged);\n                    } else {\n                        knimeService.unsubscribeSelection(_representation.inObjects[0].id, selectionChanged);\n                    }\n                });\n                knimeService.addMenuItem('Subscribe to selection', subSelIcon, subSelCheckbox);\n            }\n        }\n\n        if (filterIds) { // .length > 0\n            if (_representation.enableSelection) {\n                knimeService.addMenuDivider();\n            }\n            var subFilIcon = knimeService.createStackedIcon('filter', 'angle-double-right', 'faded right sm', 'left bold');\n            var subFilCheckbox = knimeService.createMenuCheckbox('subscribeFilterCheckbox', _value.options.subscribeFilter, function () {\n                if (this.checked) {\n                    knimeService.subscribeToFilter(_representation.inObjects[0].id, filterChanged, filterIds);\n                } else {\n                    knimeService.unsubscribeFilter(_representation.inObjects[0].id, filterChanged);\n                }\n            });\n            knimeService.addMenuItem('Subscribe to filter', subFilIcon, subFilCheckbox);\n        }\n    };\n\n    filterChanged = function (data) {\n        currentFilter = data;\n        applyFilter(true);\n    };\n\n    applyFilter = function (clear) {\n        if (currentFilter) {\n            d3.selectAll('.row').each(function (d) {\n                var included = knimeTable.isRowIncludedInFilter(d.id, currentFilter);\n                d3.select(this).classed('filtered', !included);\n            });\n            if (clear) {\n                clearBrushes();\n            }\n        }\n\n    };\n\n\n    publishCurrentSelection = function () {\n        if (knimeService && knimeService.isInteractivityAvailable() && _value.options.publishSelection) {\n            var selArray = [];\n            // set to true selected\n            d3.selectAll('.row').filter('.selected').each(function (row) {\n                selArray.push(row.id);\n            });\n            knimeService.setSelectedRows(_representation.inObjects[0].id, selArray, selectionChanged);\n        }\n        checkClearSelectionButton();\n    };\n\n    checkClearSelectionButton = function () {\n        var button = d3.select('#clearSelectionButton');\n        if (!button.empty()) {\n            button.classed('inactive', function () { return d3.select('.row.selected').empty(); });\n        }\n    };\n\n    selectionChanged = function (data) {\n        var i, row;\n        clearBrushes();\n        if (data.changeSet) {\n            if (data.changeSet.removed) {\n                for (i = 0; i < data.changeSet.removed.length; i++) {\n                    var removedId = data.changeSet.removed[i];\n                    row = d3.select('#' + knimeService.cssEscapeId(removedId));\n                    if (!row.empty() && !row.classed('filtered')) {\n                        row.classed({ unselected: true, selected: false, 'knime-selected': false });\n                    }\n                }\n                rowsSelected = !d3.selectAll('.selected').empty();\n                if (!rowsSelected) {\n                    d3.selectAll('.row').classed('unselected', false);\n                }\n            }\n            if (data.changeSet.added) {\n                for (i = 0; i < data.changeSet.added.length; i++) {\n                    var addedId = data.changeSet.added[i];\n                    row = d3.select('#' + knimeService.cssEscapeId(addedId));\n                    if (!row.empty() && !row.classed('filtered')) {\n                        if (d3.selectAll('.selected').empty()) {\n                            d3.selectAll('.row').classed('unselected', true);\n                        }\n                        row.classed({ selected: true, 'knime-selected': true, unselected: false });\n                        rowsSelected = true;\n                    }\n                }\n            }\n            saveSelectedRows();\n        }\n        checkClearSelectionButton();\n    };\n\n    var drawLegend = function (d3svg, mTop) {\n        d3.select('.legend').remove();\n        legendWidth = 0;\n        if (_representation.options.catCol && _representation.options.showLegend && !_representation.options.useColors) {\n            var legendG = d3svg.append('g').attr('class', 'legend knime-legend');\n            var catValues = _data.domains[_representation.options.catCol].values();\n            for (var i = 0; i < catValues.length; i++) {\n                var cat = catValues[i];\n                var txt = legendG.append('text')\n                    .attr('class', 'knime-legend-label')\n                    .attr('x', 20)\n                    .attr('y', i * 23)\n                    .text(cat);\n                legendWidth = Math.max(legendWidth, txt.node().getComputedTextLength());\n                legendG.append('circle')\n                    .attr('class', 'knime-legend-symbol')\n                    .attr('cx', 5)\n                    .attr('cy', i * 23 - 4)\n                    .attr('r', 5)\n                    .attr('fill', colors(cat));\n            }\n            var svgWidth = parseInt(d3svg.style('width'), 10);\n            legendWidth += 35;\n            legendWidth = Math.min(svgWidth / 2, legendWidth);\n            legendG.attr('transform', 'translate(' + (svgWidth - legendWidth) + ',' + (mTop + 20) + ')');\n        }\n    };\n\n    var makeScales = function (d3svg) {\n        scales = {};\n        maxLeftLabelWidth = 0;\n\n        for (var c = 0; c < _data.colNames.length; c++) {\n            var colName = _data.colNames[c];\n            var scale;\n            if (_data.colTypes[colName] === 'number' || _data.colTypes[colName] === 'dateTime') {\n                scale = d3.scale.linear().range([h, 0]).domain(_data.minmax[colName]).nice();\n            } else {\n                // sort domain alphabetically, needs to be reverse to fit the axis top to bottom (AP-10540)\n                var colDomain = _data.domains[colName].values().sort(function (val1, val2) {\n                    return val2.localeCompare(val1);\n                });\n                scale = d3.scale.ordinal().domain(colDomain).rangePoints([h, 0], 1.0);\n            }\n            scales[colName] = scale;\n            if (c === 0) { // measure label widths of leftmost axis\n                var tickNumber = d3.svg.axis().scale(scale).ticks();\n                var labels = scale.ticks ? scale.ticks(tickNumber) : scale.domain();\n                maxLeftLabelWidth = knimeService.measureAndTruncate(labels, {\n                    container: d3svg.node(),\n                    tempContainerClasses: 'axis knime-axis knime-y',\n                    classes: 'knime-tick-label',\n                    maxWidth: d3svg.node().getBoundingClientRect().width * leftLabelsMaxPercentage\n                }).max.maxWidth;\n            }\n        }\n\n    };\n\n\n    drawChart = function () {\n\n        var transition;\n        var naturalChartWidth = Math.max(MIN_WIDTH, _representation.options.svg.width);\n        var naturalChartHeight = Math.max(MIN_HEIGHT, _representation.options.svg.height);\n        var chartWidth = naturalChartWidth + 'px';\n        var chartHeight = naturalChartHeight + 'px';\n\n        if (_representation.options.svg.fullscreen && _representation.runningInView) {\n            chartWidth = '100%';\n            chartHeight = '100%';\n        }\n\n        d3.select('#svgContainer')\n            .style('height', chartHeight)\n            .style('width', chartWidth);\n\n        var d3svg = d3.select('svg').attr({ width: naturalChartWidth, height: naturalChartHeight }).style({ width: chartWidth, height: chartHeight });\n\n\n        colors = _representation.options.catCol\n            ? d3.scale.category10().domain(_data.domains[_representation.options.catCol].values())\n            : null;\n\n        var mTop = _value.options.subtitle || _value.options.title ? 80 : 30;\n\n        drawLegend(d3svg, mTop);\n\n        var bottomMargin = (_value.options.mValues == MISSING_VALUE_MODE && containMissing()) ? 60 : 30;\n\n        var margin = { top: mTop, bottom: bottomMargin, right: 10 + legendWidth };\n\n        h = Math.max(50, parseInt(d3svg.style('height'), 10) - margin.top - margin.bottom);\n\n        makeScales(d3svg);\n\n        margin.left = Math.max(40,  maxLeftLabelWidth);\n        \n        plotG = d3svg.select('#plotG')\n            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');\n\n        var svgWidth = parseInt(d3svg.style('width'), 10);\n        w = Math.max(50, svgWidth - margin.left - margin.right);\n\n        plotG.select('#da').attr({ y: -10, width: w, height: h + 45 });\n        d3svg.select('#bgr').attr({ width: w + margin.left + margin.right, height: h + margin.top + margin.bottom });\n\n        scaleCols = d3.scale.ordinal().domain(_data.colNames).rangePoints([0, w], 0.5);\n\n        mzd = _data.objects;\n\n        plotG.selectAll('text, path, .axis, .xAxis').remove();\n\n        // create an additional axis for the missing values selection\n        if (_representation.options.enableMValuesHandling &&\n                _representation.options.enableViewControls &&\n                _representation.runningInView && _value.options.mValues == MISSING_VALUE_MODE &&\n                _representation.options.enableSelection &&\n                _representation.options.enableBrushing && containMissing()) {\n            createXAxis();\n        }\n\n\n        var g;\n        var axisPositions = [];\n        g = plotG.selectAll('g.axis')\n            .data(_data.colNames, function (d) { return d; })\n            .enter().append('g').attr('class', 'axis knime-axis knime-y')\n            .attr('id', function (d) { return knimeService.cssEscapeId(d); })\n            .attr('transform', function (d) {\n                axisPositions.push(scaleCols(d));\n                return 'translate(' + scaleCols(d) + ',0)';\n            });\n        \n        // calculate distances of first and second axis as other distances are the same\n        var axisDistance = axisPositions[0] && axisPositions[1] ? axisPositions[1] - axisPositions[0] : 0;\n        var axisLabelsBuffer = 15;\n        \n        var svgNS = 'http://www.w3.org/2000/svg';\n\n        plotG.selectAll('g.axis')\n            .each(function (d) {\n                var scale = scales[d];\n                var isFirstCol = d === Object.keys(scales)[0];\n                var tickNumber = d3.svg.axis().scale(scale).ticks();\n                var labels = scale.ticks ? scale.ticks(tickNumber) : scale.domain();\n\n                var measuredLabels = knimeService.measureAndTruncate(labels, {\n                    container: d3svg.node(),\n                    tempContainerClasses: 'axis knime-axis knime-y',\n                    classes: 'knime-tick-label',\n                    maxWidth: isFirstCol ? maxLeftLabelWidth : axisDistance - axisLabelsBuffer\n                });\n\n                var axis = d3.svg.axis()\n                    .scale(scale)\n                    .tickFormat(function (d) {\n                        var label = measuredLabels.values.filter(function (value) {\n                            return value && value.originalData === d;\n                        })[0];\n                        var title = document.createElementNS(svgNS, 'title');\n                        title.innerHTML = d;\n                        this.parentNode.appendChild(title);\n                        return label && label.truncated ? label.truncated : d;\n                    })\n                    .orient('left');\n                d3.select(this).call(axis);\n            })\n            .each(function (d, i) {\n                d3.select(this).append('text').datum(_data.colNames[i])\n                    .attr('class', 'label knime-axis-label').attr('text-anchor', 'middle')\n                    .attr('transform', function (d) { return 'translate(0, -15)'; })// h + 40\n                    .attr('text-anchor', 'middle')\n                    .text(function (d) { \n                        // Axis labels are positioned in the middle of an axis,\n                        // so they as well can take up the space of the distances of axis \n                        var measuredLabels = knimeService.measureAndTruncate([d], {\n                            container: d3svg.node(),\n                            tempContainerClasses: 'axis knime-axis knime-y',\n                            classes: 'label knime-axis-label',\n                            maxWidth: axisDistance - axisLabelsBuffer\n                        });\n                        var label = measuredLabels.values[0];\n                        var title = document.createElementNS(svgNS, 'title');\n                        title.innerHTML = d;\n                        this.parentNode.appendChild(title);\n                        return label && label.truncated ? label.truncated : d;\n                     });\n            });\n\n        d3.selectAll('.domain')\n            .classed('knime-axis-line', true);\n        var ticks = d3.selectAll('.tick')\n            .classed('knime-tick', true);\n        ticks.selectAll('line')\n            .classed('knime-tick-line', true);\n        ticks.selectAll('text')\n            .classed('knime-tick-label', true);\n\n        if (_representation.options.enableAxesSwapping) {\n            g.call(d3.behavior.drag()\n                .origin(function (d) {\n                    return { x: scaleCols(d) };\n                })\n                .on('dragstart', function (d) {\n                    firstColumn = _data.colNames[0];\n                    dragging[d] = scaleCols(d);\n                    draggingNow = true;\n                })\n                .on('drag', function (d) {\n                    if (draggingNow) {\n                        dragging[d] = Math.min(w, Math.max(0, d3.event.x));\n                        _data.colNames.sort(function (a, b) { return position(a) - position(b); });\n                        scaleCols.domain(_data.colNames);\n                        d3.selectAll('.row').attr('d', getLine);\n                        g.attr('transform', function (d) { return 'translate(' + position(d) + ',0)'; });\n                    }\n                })\n                .on('dragend', function (d) {\n                    delete dragging[d];\n                    draggingNow = false;\n                    if (_data.colNames[0] !== firstColumn) {\n                        // if the leftmost column has changed, we redraw the whole diagram because the labels might\n                        // need different spacing on the left\n                        refreshView();\n                        return;\n                    }\n                    transition(d3.select(this)).attr('transform', 'translate(' + scaleCols(d) + ')');\n                    transition(d3.selectAll('.row')).attr('d', getLine);\n                    if (_value.options.mValues == MISSING_VALUE_MODE && containMissing()) {\n                        if (!xBrush.empty()) {\n                            xBrush.extent(xBrush.extent());\n                            d3.select('.xBrush').call(xBrush);\n                            brush();\n                        }\n                    }\n\n                }));\n            d3.selectAll('.label').style('cursor', 'move');\n            if (_data.colNames.length == sortedCols.length) {\n                sortedCols = _data.colNames;\n            }\n\n\n        }\n\n        d3.selectAll('.axis path').attr('stroke-width', 1).attr('stroke', 'black').attr('fill', 'none');\n\n        // brush - rows selection\n        if (_representation.options.enableSelection && _representation.options.enableBrushing) {\n            g.append('g')\n                .attr('class', 'brush')\n                .each(function (d, i) {\n                    d3.select(this).call(brushes[d] = d3.svg.brush().y(scales[d]).on('brush', brush)\n                        .on('brushend', publishCurrentSelection).on('brushstart', brushstart));\n                    d3.select(this).attr('id', knimeService.cssEscapeId(i));\n                })\n                .selectAll('rect')\n                .attr('x', -8)\n                .attr('width', 16)\n                .attr('fill-opacity', '0.2')\n                .attr('stroke', '#fff')\n                .attr('shape-rendering', 'crispEdges');\n        }\n\n\n        transition = function (g) {\n            return g.transition().duration(500);\n        };\n\n        // representation.options.enableViewControls\n        // && _representation.runningInView_\n\n        if (_representation.options.enableMValuesHandling && containMissing()) {\n            bottomBar = _value.options.mValues == MISSING_VALUE_MODE;\n        }\n\n        if (bottomBar) {\n            plotG.append('text')\n                .attr('id', 'missingVtitle')\n                .attr('class', 'knime-label')\n                .attr('x', -30)\n                .attr('y', h + 38)\n                .text('Miss.values');\n        }\n\n\n        line = d3.svg.line()\n            .x(function (d, i) {\n                return position(_data.colNames[i]);\n            })\n            .y(function (d, i) {\n                if (bottomBar && d === null) {\n                    return h + 40;\n                } else if (d === null) {\n                    return h;\n                }\n                return scales[_data.colNames[i]](d);\n            });\n\n        // Skipping missing cells\n        if (_representation.options.enableMValuesHandling &&\n            _representation.options.enableViewControls &&\n            _representation.runningInView) {\n            if (_value.options.mValues == 'Skip\\u00A0missing\\u00A0values') {\n                line.defined(function (d) {\n                    return d != null;\n                });\n            }\n\n        }\n\n\n        if (_representation.options.enableMValuesHandling &&\n            _representation.options.enableViewControls &&\n            _representation.runningInView) {\n            if (_value.options.mValues == 'Skip\\u00A0rows\\u00A0with\\u00A0missing\\u00A0values') {\n                mzd = mzd.filter(function (d) {\n                    return !d.containsMissing;\n                });\n            }\n\n        }\n\n\n        // Curved lines\n        if (_representation.options.enableLineChange &&\n            _representation.options.enableViewControls &&\n            _representation.runningInView) {\n            if (_value.options.lType == 'Curved') {\n                line.interpolate('monotone');\n            }\n\n        }\n\n\n        plotG.selectAll('path.row').each(function (d, i) {\n            d3.select(this).datum(mzd[i]);\n        });\n\n        drawElements(mzd);\n\n        if (_representation.options.svg.fullscreen) {\n            var win = document.defaultView || document.parentWindow;\n            win.onresize = refreshView;\n        }\n\n    };\n\n    getLine = function (dp) {\n        return line(_data.colNames.map(function (col) {\n            return dp[col];\n        }));\n    };\n\n    drawElements = function (data) {\n        var rows = plotG.selectAll('path.row').data(data).enter()\n            .insert('path', '.axis').attr('class', 'row')\n            .attr('id', function (d) { return knimeService.cssEscapeId(d.id); })\n            .attr('d', getLine)\n            .attr('stroke', function (d) {\n                if (_representation.options.useColors) {\n                    return d.color;\n                } else if (_representation.options.catCol) {\n                    return colors(d[_representation.options.catCol]);\n                } else {\n                    return 'black';\n                }\n            })\n            .attr('stroke-width', function () {\n                if (_representation.options.enableLineChange) {\n                    return _value.options.lThickness;\n                } else {\n                    return 1;\n                }\n            })\n            .attr('stroke-opacity', 0.9)\n            .attr('fill', 'none');\n\n        if (_representation.options.enableSelection) {\n            rows.on('click', function (d, i) {\n                // eslint-disable-next-line no-negated-condition\n                if (!d3.event.shiftKey) {\n                    d3.selectAll('.selected').classed({ selected: false, 'knime-selected': false });\n                    d3.selectAll('.row').classed('unselected', true);\n                    d3.select(this).classed({ selected: true, 'knime-selected': true, unselected: false });\n                    rowsSelected = true;\n                    if (knimeService && knimeService.isInteractivityAvailable() && _value.options.publishSelection) {\n                        knimeService.setSelectedRows(_representation.inObjects[0].id, [this.getAttribute('id')], selectionChanged);\n                    }\n                } else {\n                    var selected = d3.select(this).classed('selected');\n                    d3.select(this)\n                        .classed({ selected: !selected, 'knime-selected': !selected, unselected: selected });\n                    rowsSelected = !d3.selectAll('.selected').empty();\n                    \n                    if (knimeService && knimeService.isInteractivityAvailable() && _value.options.publishSelection) {\n                        if (selected) {\n                            knimeService.removeRowsFromSelection(_representation.inObjects[0].id, [this.getAttribute('id')], selectionChanged);\n                        } else {\n                            knimeService.addRowsToSelection(_representation.inObjects[0].id, [this.getAttribute('id')], selectionChanged);\n                        }\n                    }\n                    if (!rowsSelected) {\n                        d3.selectAll('.row').classed('unselected', false);\n                        d3.selectAll('.row').datum(function (d) {\n                            delete d.selected;\n                            return d;\n                        });\n                    }\n                }\n\n                clearBrushes();\n                checkClearSelectionButton();\n                d3.event.stopPropagation();\n            }).on('mouseover', function (d, i) {\n                var selected = d3.select(this).classed('selected'); // returns true if selected\n                selected &= d3.event.shiftKey;\n                d3.select(this).classed({ addSelection: !selected, removeSelection: selected });\n            }).on('mouseout', function (d, i) {\n                d3.selectAll('.rows').classed({ addSelection: false, removeSelection: false });\n            });\n        }\n\n\n        // select previously selected rows\n        var selected = false;\n        for (var i = 0; i < data.length; i++) {\n            selected = selected || (data[i].selected == true);\n        }\n\n        if (selected) {\n            rows.classed('selected', function (d) {\n                return d.selected;\n            });\n            rows.classed('knime-selected', function (d) {\n                return d.selected;\n            });\n\n            rows.classed('unselected', function (d) {\n                return d.selected == false;\n            });\n        }\n\n    };\n\n    position = function (d) {\n        var v = dragging[d];\n        return v == null ? scaleCols(d) : v;\n    };\n\n    pcPlot.getSVG = function () {\n        var svgElement = d3.select('svg')[0][0];\n        knimeService.inlineSvgStyles(svgElement);\n        // Return the SVG as a string.\n        return (new XMLSerializer()).serializeToString(svgElement);\n    };\n\n    createXAxis = function () {\n        var xAxis = d3.svg.axis().scale(scaleCols).tickSize(5).orient('bottom');\n        var gx = plotG.append('g').attr('class', 'xAxis knime-axis knime-x')\n            .attr('transform', function (d) { return 'translate(0,' + (h + 40) + ')'; })\n            .attr('stroke', 'transparent')\n            .call(xAxis);\n\n        gx.append('g')\n            .attr('class', 'xBrush')\n            .call(xBrush = d3.svg.brush().x(scaleCols).on('brush', brush).on('brushend', publishCurrentSelection)\n                .on('brushstart', function () { rowsSelected = false; }))\n            .selectAll('rect')\n            .attr('y', -8)\n            .attr('height', 16)\n            .attr('fill-opacity', '0.2')\n            .attr('stroke', '#fff')\n            .attr('shape-rendering', 'crispEdges');\n\n        var dataBg = plotG.select('#da');\n        dataBg.attr({ height: Number(dataBg.attr('height')) + 30 });\n    };\n\n    clearBrushes = function () {\n        if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes) {\n            d3.selectAll('.brush').each(function (d, i) {\n                d3.select(this).call(brushes[_data.colNames[i]].clear());\n                if (extents) {\n                    if (d3.entries(extents).length > 0) {\n                        extents = {};\n                    }\n                }\n            });\n\n            if (_representation.options.enableSelection && _representation.options.enableBrushing &&\n                _value.options.mValues == MISSING_VALUE_MODE && xBrush && containMissing()) {\n                d3.select('.xBrush').call(xBrush.clear());\n                if (xExtent) {\n                    xExtent = [];\n                }\n            }\n\n        }\n\n    };\n\n    brush = function (axis, start, end, par) {\n        par = par || false;\n        extents = _data.colNames.map(function (p) { return brushes[p].extent(); });\n        var missingSelected = xBrush && !xBrush.empty() && _value.options.mValues == MISSING_VALUE_MODE;\n        var xExtent;\n        if (xBrush) {\n            xExtent = xBrush.extent();\n        }\n        var nothingSelected = true;\n        for (var i = 0; i < _data.colNames.length; i++) {\n            nothingSelected &= brushes[_data.colNames[i]].empty();\n        }\n\n        if (_value.options.mValues == MISSING_VALUE_MODE && xBrush && containMissing()) {\n            nothingSelected &= xBrush.empty();\n        }\n        if (nothingSelected) {\n            d3.selectAll('.row').classed({ selected: false, 'knime-selected': false, unselected: false });\n            return;\n        }\n\n        d3.selectAll('.row').each(function (dp) {\n            var row = d3.select(this);\n            if (row.classed('filtered')) {\n                return;\n            }\n\n            var selected = _data.colNames.every(function (p, i) {\n                var extentEmpty = brushes[p].empty();\n                if (xBrush) {\n                    if (extentEmpty && !missingSelected) {\n                        return true;\n                    }\n\n                } else if (extentEmpty) {\n                    return true;\n                }\n                var missValueSelected = false;\n                if (missingSelected) {\n                    var xScale = scaleCols(_data.colNames[i]);\n                    if (par) {\n                        missValueSelected = xBrushScale(xExtent[0]) <= xScale && xScale <= xBrushScale(xExtent[1]);\n                    } else {\n                        missValueSelected = xExtent[0] <= xScale && xScale <= xExtent[1];\n                    }\n\n                    if (extentEmpty && !missValueSelected) {\n                        return true;\n                    }\n\n                }\n\n                if (dp[p] == null) {\n                    return missValueSelected;\n                }\n\n                if (extentEmpty) {\n                    return false;\n                }\n\n                if (_data.colTypes[p] == 'string') {\n                    if (par) {\n                        return ordinalScale(extents[i][0]) <= scales[p](dp[p]) && scales[p](dp[p]) <= ordinalScale(extents[i][1]);\n                    } else {\n                        return extents[i][0] <= scales[p](dp[p]) && scales[p](dp[p]) <= extents[i][1];\n                    }\n                } else if (_data.colTypes[p] == 'number') {\n                    return extents[i][0] <= dp[p] && dp[p] <= extents[i][1];\n                }\n\n            });\n            row.classed({ selected: selected, 'knime-selected': selected, unselected: !selected });\n        });\n    };\n\n    getExtents = function () {\n        extents = {};\n        d3.entries(brushes).forEach(function (brush) {\n            if (!brush.value.empty()) {\n                extents[brush.key] = brush.value.extent();\n            }\n\n        });\n        xExtent = [];\n        if (_value.options.mValues == MISSING_VALUE_MODE && xBrush && containMissing()) {\n            if (!xBrush.empty()) {\n                xExtent = xBrush.extent();\n            }\n\n        }\n\n    };\n\n    drawSavedBrushes = function () {\n        if (_value.options.selections) {\n            var yScale;\n            if (d3.entries(_data.domains).length > 0) {\n                yScale = d3.scale.linear().domain([_value.options.oldHeight, 0]).range([h, 0]);\n            }\n\n            d3.keys(brushes).forEach(function (b) {\n                if (_value.options.selections.extents[b]) {\n                    if (_data.colTypes[b] == 'string' && _value.options.oldHeight) {\n                        brushes[b].extent([yScale(_value.options.selections.extents[b][0]), yScale(_value.options.selections.extents[b][1])]);\n                    } else {\n                        brushes[b].extent(_value.options.selections.extents[b]);\n                    }\n                }\n\n            });\n            d3.selectAll('.brush').each(function (d) {\n                d3.select(this).call(brushes[d]);\n            });\n            // draw xBrush\n            if (_value.options.selections.xBrush) {\n                if (_value.options.oldWidth) {\n                    var xScale = d3.scale.linear().domain([0, _value.options.oldWidth]).range([0, w]);\n                    xBrush.extent([xScale(_value.options.selections.xBrush[0]), xScale(_value.options.selections.xBrush[1])]);\n                } else {\n                    xBrush.extent(_value.options.selections.xBrush);\n                }\n\n                d3.select('.xBrush').call(xBrush);\n            }\n            brush();\n        }\n\n\n    };\n\n    selectRows = function (optSelection) {\n        var selection = optSelection || _value.options.selectedrows;\n        d3.selectAll('.row').each(function (d, i) {\n            var selected = false;\n            var unselected = false;\n            if (selection && selection.length > 0) {\n                selected = selection && selection.indexOf(this.getAttribute('id')) > -1;\n                unselected = !selected;\n\n            }\n            var row = d3.select(this);\n            if (!row.classed('filtered')) {\n                d3.select(this).classed({ selected: selected, 'knime-selected': selected, unselected: unselected });\n            }\n        });\n        if (selection && selection.length > 0) {\n            rowsSelected = true;\n        }\n        if (d3.select('.selected').empty()) {\n            d3.selectAll('.row.unselected').classed('unselected', false);\n            rowsSelected = false;\n        }\n    };\n\n    brushstart = function () {\n        rowsSelected = false;\n        d3.event.sourceEvent.stopPropagation();\n    };\n\n    drawBrushes = function (par) {\n        par = par || false;\n        d3.keys(brushes).forEach(function (b) {\n            if (extents[b]) {\n                if (par && _data.colTypes[b] == 'string') {\n                    brushes[b].extent([ordinalScale(extents[b][0]), ordinalScale(extents[b][1])]);\n                } else {\n                    brushes[b].extent(extents[b]);\n                }\n            }\n        });\n        d3.selectAll('.brush').each(function (d) {\n            d3.select(this).call(brushes[d]);\n        });\n        // draw xBrush\n        if (_value.options.mValues == MISSING_VALUE_MODE && xExtent && containMissing()) {\n            if (par) {\n                xBrush.extent([xBrushScale(xExtent[0]), xBrushScale(xExtent[1])]);\n            } else {\n                xBrush.extent(xExtent);\n            }\n            d3.select('.xBrush').call(xBrush);\n        }\n\n    };\n\n    refreshView = function (event) {\n        if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n            getExtents();\n            oldHeight = h;\n            oldWidth = w;\n        }\n\n        if (_representation.options.enableSelection && _representation.options.enableBrushing &&\n            noBrushes() && !d3.selectAll('.row.selected').empty()) {\n            saveSelectedRows();\n        }\n\n        if (_representation.options.enableSelection && !_representation.options.enableBrushing &&\n            !d3.selectAll('.row.selected').empty()) {\n            saveSelectedRows();\n        }\n        drawChart();\n        if (_representation.options.enableSelection && _representation.options.enableBrushing && brushes && !rowsSelected) {\n            ordinalScale = d3.scale.linear().domain([oldHeight, 0]).range([h, 0]);\n            if (_value.options.mValues == MISSING_VALUE_MODE && xExtent && containMissing()) {\n                xBrushScale = d3.scale.linear().domain([0, oldWidth]).range([0, w]);\n            }\n            drawBrushes(true);\n            brush(null, null, null, true);\n        }\n\n        applyFilter();\n    };\n\n    saveSelected = function () {\n        _value.outColumns.selection = {};\n        // set every RowId to false\n        d3.selectAll('.row').each(function (row) {\n            _value.outColumns.selection[row.id] = false;\n        });\n        // set to true selected\n        d3.selectAll('.row').filter('.selected').each(function (row) {\n            _value.outColumns.selection[row.id] = true;\n        });\n    };\n\n    pcPlot.validate = function () {\n        return true;\n    };\n\n    saveSelectedRows = function () {\n        var selected = d3.selectAll('.row.selected');\n        if (!selected.empty()) {\n            d3.selectAll('.row.selected').datum(function (d) {\n                d.selected = true;\n                return d;\n            });\n            d3.selectAll('.row.knime-selected').datum(function (d) {\n                d.selected = true;\n                return d;\n            });\n            d3.selectAll('.row.unselected').datum(function (d) {\n                d.selected = false;\n                return d;\n            });\n        }\n\n    };\n\n    noBrushes = function () {\n        var noBrushes = true;\n        for (var i = 0; i < _data.colNames.length; i++) {\n            // noBrushes &= brushes[_data.colNames[i]].empty();\n            noBrushes = noBrushes && brushes[_data.colNames[i]].empty();\n        }\n\n        if (_value.options.mValues == MISSING_VALUE_MODE && xBrush && containMissing()) {\n            noBrushes = noBrushes && xBrush.empty();\n        }\n\n        if (xBrush) {\n            noBrushes = noBrushes && xBrush.empty();\n        }\n\n        return noBrushes;\n    };\n\n    extraRows = function () {\n        if (!d3.selectAll('.row.selected').empty()) {\n            d3.selectAll('.row').each(function (d) {\n                if (!d3.select(this).classed('selected') && !d3.select(this).classed('unselected')) {\n                    d3.select(this).classed('unselected', true);\n                }\n\n            });\n        }\n\n    };\n\n    pcPlot.getComponentValue = function () {\n        if (d3.selectAll('.axis').empty()) {\n            return null;\n        }\n        saveSettingsToValue(true);\n        return _value;\n    };\n\n    containMissing = function () {\n        var missing = false;\n        for (var i = 0; i < _data.objects.length; i++) {\n            missing = missing || _data.objects[i].containsMissing == true;\n        }\n\n        return missing;\n    };\n\n    saveSettingsToValue = function (par) {\n        par = par || false;\n        if (_representation.options.enableSelection && _representation.options.enableBrushing) {\n            getExtents();\n            _value.options.selections = {};\n            _value.options.selections.extents = extents;\n            if (_value.options.mValues == MISSING_VALUE_MODE && containMissing()) {\n                if (!xBrush.empty()) {\n                    _value.options.selections.xBrush = xExtent;\n                }\n            }\n            // empty saved single rows selection\n            if (_value.options.selectedrows) {\n                delete _value.options.selectedrows;\n            }\n        }\n\n        if (_representation.options.enableSelection && _representation.options.enableBrushing && noBrushes() &&\n            !d3.selectAll('.row.selected').empty() ||\n            _representation.options.enableSelection && !_representation.options.enableBrushing &&\n            !d3.selectAll('.row.selected').empty()) {\n            _value.options.selectedrows = [];\n            d3.selectAll('.row.selected').each(function (row) {\n                _value.options.selectedrows.push(row.id);\n            });\n            // empty saved brushes\n            if (_value.options.selections) {\n                delete _value.options.selection;\n            }\n\n        }\n\n        if (_representation.options.enableAxesSwapping) {\n            _value.options.sortedCols = _data.colNames;\n        }\n        if (par) {\n            _value.options.oldHeight = h;\n            _value.options.oldWidth = w;\n        }\n        // save selected rows for the node output column\n        saveSelected();\n    };\n\n    return pcPlot;\n\n})();\n"
+          ],
+          "cssCode": [
+            ".row:hover {\n\tstroke-opacity: 1;\n\tstroke-width: 3;\n\n}\n\n.row.selected {\n\tstroke-opacity: 0.9;\n\tstroke-width: 2;\n}\n\n.row.unselected {\n\tstroke-opacity: 0.1;\n}\n\n.row.filtered {\n\tdisplay: none;\n}\n\n.xAxis line,.xAxis path {\n  fill: none;\n  stroke: lightgrey;\n  stroke-opacity: 0.5;\n}\n\n.xAxis text {\n\topacity: 0;\n}"
+          ],
+          "binaryFiles": {},
+          "cssDependencies": [],
+          "options": {
+            "displayFullscreenButton": true,
+            "backgroundColor": "#FFFFFF",
+            "displayClearSelectionButton": true,
+            "enableLineChange": true,
+            "svg": {
+              "height": 600,
+              "width": 800,
+              "fullscreen": true
+            },
+            "showLegend": true,
+            "enableTitleEdit": true,
+            "enableAxesSwapping": true,
+            "enableSelection": true,
+            "enableBrushing": true,
+            "useColors": true,
+            "enableViewControls": true,
+            "enableColumnSelection": true,
+            "enableSubtitleEdit": true,
+            "enableMValuesHandling": true,
+            "daColor": "#FFFFFF"
+          }
+        },
+        "customCSS": "",
+        "setValidationErrorMethodName": "setValidationError",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "displayPossible": true,
+          "nodeAnnotation": "",
+          "nodeName": "Parallel Coordinates Plot",
+          "nodeState": "executed",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null
+        },
+        "getViewValueMethodName": "getComponentValue",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/requireJS/2.1.8/require.js",
+          "/js-lib/knime/knime_table_1_0_0.js",
+          "/org/knime/dynamic/js/dynamicJSNode.js"
+        ],
+        "initMethodName": "init"
+      }
+    },
+    "version": "4.1.0.qualifier"
+  }

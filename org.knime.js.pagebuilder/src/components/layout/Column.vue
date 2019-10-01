@@ -104,16 +104,16 @@ export default {
   >
     <template v-for="(item, index) in content">
       <NodeView
-        v-if="item.type === 'view'"
+        v-if="item.type === 'view' || item.type === 'JSONLayoutViewContent'"
         :key="index"
         :view-config="item"
       />
       <Row
-        v-else-if="item.type === 'row'"
+        v-else-if="item.type === 'row' || item.type === 'JSONLayoutRow'"
         :key="index"
         :row-config="item"
       />
-      <template v-else-if="item.type === 'nestedLayout'">
+      <template v-else-if="item.type === 'nestedLayout' || item.type === 'JSONNestedLayout'">
         <Row
           v-for="(row, rowIndex) in item.layout.rows"
           :key="rowIndex"
@@ -122,7 +122,7 @@ export default {
       </template>
       <!-- eslint-disable vue/no-v-html  -->
       <div
-        v-else-if="item.type === 'html'"
+        v-else-if="item.type === 'html' || item.type === 'JSONLayoutHTMLContent'"
         :key="index"
         v-html="item.value"
       />
