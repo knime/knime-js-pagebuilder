@@ -38,7 +38,7 @@ describe('NodeView.vue', () => {
 
     it('respects resize classes', () => {
         let viewConfig = {
-            nodeID: '123',
+            nodeID: 'id1',
             resizeMethod: 'aspectRatio1by1'
         };
         let wrapper = shallowMount(NodeView, {
@@ -51,9 +51,24 @@ describe('NodeView.vue', () => {
         expect(wrapper.find('div').attributes('class')).toEqual('view aspectRatio1by1');
     });
 
-    it('respects min/max size configuration', () => {
+    it('ignores resize classes when webnode missing', () => {
         let viewConfig = {
             nodeID: '123',
+            resizeMethod: 'aspectRatio1by1'
+        };
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.find('div').attributes('class')).toEqual('view');
+    });
+
+    it('respects min/max size configuration', () => {
+        let viewConfig = {
+            nodeID: 'id1',
             minWidth: 42,
             minHeight: 12,
             maxWidth: 200,
@@ -71,6 +86,25 @@ describe('NodeView.vue', () => {
         expect(style).toContain('min-height: 12px;');
         expect(style).toContain('max-width: 200px;');
         expect(style).toContain('max-height: 1000px;');
+    });
+
+    it('ignores min/max size configuration when webnode missing', () => {
+        let viewConfig = {
+            nodeID: '123',
+            minWidth: 42,
+            minHeight: 12,
+            maxWidth: 200,
+            maxHeight: 1000
+        };
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        let style = wrapper.find('div').attributes('style');
+        expect(style).not.toBeDefined();
     });
 
     it('passes the webNode config to the iframe', () => {
@@ -91,6 +125,7 @@ describe('NodeView.vue', () => {
             ...context,
             propsData: {
                 viewConfig: {
+                    nodeID: 'id1',
                     scrolling: true
                 }
             }
@@ -98,11 +133,26 @@ describe('NodeView.vue', () => {
         expect(wrapper.find(NodeViewIFrame).props('scrolling')).toBe(true);
     });
 
+    it('does not render iframe if webNode config is missing', () => {
+        let viewConfig = {
+            nodeID: '123'
+        };
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.contains(NodeViewIFrame)).toBe(false);
+    });
+
     it('detects autoHeight', () => {
         let wrapper = shallowMount(NodeView, {
             ...context,
             propsData: {
                 viewConfig: {
+                    nodeID: 'id1',
                     resizeMethod: 'somethingIrrelevant',
                     autoResize: false
                 }
@@ -115,6 +165,7 @@ describe('NodeView.vue', () => {
             ...context,
             propsData: {
                 viewConfig: {
+                    nodeID: 'id1',
                     resizeMethod: 'viewLowestElement',
                     autoResize: true
                 }
@@ -124,12 +175,12 @@ describe('NodeView.vue', () => {
         expect(wrapper.find(NodeViewIFrame).props('pollHeight')).toBe(true);
     });
 
-
     it('renders with classes and styles', () => {
         let wrapper = shallowMount(NodeView, {
             ...context,
             propsData: {
                 viewConfig: {
+                    nodeID: 'id1',
                     resizeMethod: 'aspectRatio1by1',
                     additionalClasses: ['class1', 'class2'],
                     additionalStyles: ['color: red;', 'border: 1px solid green;']
@@ -140,11 +191,27 @@ describe('NodeView.vue', () => {
         expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
     });
 
+    it('ignores classes and styles when webnode missing', () => {
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig: {
+                    resizeMethod: 'aspectRatio1by1',
+                    additionalClasses: ['class1', 'class2'],
+                    additionalStyles: ['color: red;', 'border: 1px solid green;']
+                }
+            }
+        });
+        expect(wrapper.attributes('class')).toEqual('view');
+        expect(wrapper.attributes('style')).not.toBeDefined();
+    });
+
     it('reacts to the heightChange event', () => {
         let wrapper = shallowMount(NodeView, {
             ...context,
             propsData: {
                 viewConfig: {
+                    nodeID: 'id1',
                     resizeMethod: 'viewLowestElement',
                     autoResize: true
                 }

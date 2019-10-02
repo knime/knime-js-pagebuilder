@@ -81,7 +81,7 @@ describe('Column.vue', () => {
             type: 'view',
             nodeID: '9:0:4'
         }, {
-            type: 'view',
+            type: 'JSONLayoutViewContent',
             nodeID: '9:0:5'
         }];
 
@@ -107,7 +107,7 @@ describe('Column.vue', () => {
             type: 'row',
             dummy: 'dummy'
         }, {
-            type: 'row',
+            type: 'JSONLayoutRow',
             foo: 'bar'
         }];
 
@@ -124,7 +124,7 @@ describe('Column.vue', () => {
         expect(views.length).toBe(0);
         expect(rows.length).toBe(2);
         expect(rows.at(0).props('rowConfig')).toEqual({ type: 'row', dummy: 'dummy' });
-        expect(rows.at(1).props('rowConfig')).toEqual({ type: 'row', foo: 'bar' });
+        expect(rows.at(1).props('rowConfig')).toEqual({ type: 'JSONLayoutRow', foo: 'bar' });
         expect(divs.length).toBe(0);
     });
 
@@ -140,6 +140,14 @@ describe('Column.vue', () => {
                     foo: 'bar'
                 }]
             }
+        }, {
+            type: 'JSONNestedLayout',
+            layout: {
+                rows: [{
+                    type: 'JSONLayoutRow',
+                    baz: 'qux'
+                }]
+            }
         }];
 
         let wrapper = shallowMount(Column, {
@@ -153,14 +161,16 @@ describe('Column.vue', () => {
 
         const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
         expect(views.length).toBe(0);
-        expect(rows.length).toBe(2);
+        expect(rows.length).toBe(3);
         expect(rows.at(0).props('rowConfig')).toEqual({ type: 'row', dummy: 'dummy' });
         expect(rows.at(1).props('rowConfig')).toEqual({ type: 'row', foo: 'bar' });
+        expect(rows.at(2).props('rowConfig')).toEqual({ type: 'JSONLayoutRow', baz: 'qux' });
         expect(divs.length).toBe(0);
     });
 
     it('renders HTML', () => {
         let html = '<span>foo</span>';
+        let html2 = '<span>bar</span>';
 
         let wrapper = shallowMount(Column, {
             stubs,
@@ -169,6 +179,10 @@ describe('Column.vue', () => {
                     content: [{
                         type: 'html',
                         value: html
+                    },
+                    {
+                        type: 'JSONLayoutHTMLContent',
+                        value: html2
                     }]
                 }
             }
@@ -177,8 +191,9 @@ describe('Column.vue', () => {
         const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
         expect(views.length).toBe(0);
         expect(rows.length).toBe(0);
-        expect(divs.length).toBe(1);
+        expect(divs.length).toBe(2);
         expect(divs.at(0).html()).toEqual(`<div>${html}</div>`);
+        expect(divs.at(1).html()).toEqual(`<div>${html2}</div>`);
     });
 
 });

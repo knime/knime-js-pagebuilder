@@ -46,35 +46,42 @@ export default {
             let { nodeID } = this.viewConfig;
             return nodeConfigs[nodeID];
         },
+        webNodeAvailable() {
+            // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
+            // update the layout configuration, so we get a phantom item
+            return typeof this.webNodeConfig !== 'undefined';
+        },
         classes() {
             let classes = ['view'];
-            if (this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
+            if (this.webNodeAvailable && this.viewConfig.resizeMethod &&
+                this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
                 classes.push(this.viewConfig.resizeMethod);
-            }
-            if (Array.isArray(this.viewConfig.additionalClasses)) {
-                classes = classes.concat(this.viewConfig.additionalClasses);
+                if (Array.isArray(this.viewConfig.additionalClasses)) {
+                    classes = classes.concat(this.viewConfig.additionalClasses);
+                }
             }
             return classes;
         },
         style() {
-            const styleProps = ['minWidth', 'maxWidth', 'minHeight', 'maxHeight'];
-
             let style = [];
-            styleProps.forEach(prop => {
-                if (this.viewConfig.hasOwnProperty(prop)) {
-                    let value = this.viewConfig[prop];
-                    if (value) {
-                        let key = prop.replace(/[WH]/, x => `-${x.toLowerCase()}`);
-                        if (!value.toString().includes('px')) {
-                            value = `${value}px`;
-                        }
-                        style.push(`${key}:${value};`);
-                    }
-                }
-            });
 
-            if (this.viewConfig.additionalStyles) {
-                style = style.concat(this.viewConfig.additionalStyles);
+            if (this.webNodeAvailable) {
+                const styleProps = ['minWidth', 'maxWidth', 'minHeight', 'maxHeight'];
+                styleProps.forEach(prop => {
+                    if (this.viewConfig.hasOwnProperty(prop)) {
+                        let value = this.viewConfig[prop];
+                        if (value) {
+                            let key = prop.replace(/[WH]/, x => `-${x.toLowerCase()}`);
+                            if (!value.toString().includes('px')) {
+                                value = `${value}px`;
+                            }
+                            style.push(`${key}:${value};`);
+                        }
+                    }
+                });
+                if (this.viewConfig.additionalStyles) {
+                    style = style.concat(this.viewConfig.additionalStyles);
+                }
             }
 
             if (this.height !== null) {
@@ -98,6 +105,7 @@ export default {
     :style="style"
   >
     <NodeViewIFrame
+      v-if="webNodeAvailable"
       :node-config="webNodeConfig"
       :auto-height="autoHeight"
       :poll-height="pollHeight"

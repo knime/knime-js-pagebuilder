@@ -116,7 +116,7 @@ export default {
       <template v-else-if="item.type === 'nestedLayout' || item.type === 'JSONNestedLayout'">
         <Row
           v-for="(row, rowIndex) in item.layout.rows"
-          :key="rowIndex"
+          :key="index + '-' + rowIndex"
           :row-config="row"
         />
       </template>
