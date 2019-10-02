@@ -196,7 +196,6 @@ export default {
         },
 
         messageFromIframe(event) {
-            debugger;
             if (event.origin !== window.origin) {
                 return;
             }
