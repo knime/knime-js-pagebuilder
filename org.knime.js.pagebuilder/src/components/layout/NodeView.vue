@@ -119,7 +119,7 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 .view {
-  background-color: var(--theme-color-11);
+  background-color: var(--theme-color-gray-ultra-light);
 
   &.aspectRatio16by9,
   &.aspectRatio4by3,
