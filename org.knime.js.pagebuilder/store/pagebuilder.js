@@ -7,16 +7,16 @@ export const state = () => ({
 });
 
 export const mutations = {
-    setViewState(state, viewState) {
-        state.viewState = viewState;
+    setViewState(storeState, viewState) {
+        storeState.viewState = viewState;
     },
 
-    setPage(state, page) {
-        state.page = page;
+    setPage(storeState, page) {
+        storeState.page = page;
     },
 
-    setResourceBaseUrl(state, resourceBaseUrl) {
-        state.resourceBaseUrl = resourceBaseUrl;
+    setResourceBaseUrl(storeState, resourceBaseUrl) {
+        storeState.resourceBaseUrl = resourceBaseUrl;
     }
 };
 

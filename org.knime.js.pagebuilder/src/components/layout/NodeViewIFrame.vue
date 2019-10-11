@@ -107,77 +107,80 @@ export default {
 
             // stylesheets
             let styles = this.nodeConfig.stylesheets.map(
-                stylesheet => `<link type="style/css" href="${resourceBaseUrl}${stylesheet}">`
+                stylesheet => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${stylesheet}"></link>`
             ).join('');
             // further styles needed for sizing
             styles += `<style>${this.innerStyle}</style>`;
             // custom CSS
             if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
-                styles += `<style>${this.nodeConfig.customCSS}</style>`;
+                styles += `<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`;
             }
-            
 
             // scripts
             let scriptLoader = `<script>
-                window.knimeLoader = function () {
+                window.knimeLoader = (function () {
                     var win = window;
                     var parent = win.parent;
+                    var messageFromParent = function (event) {
+                        if (event.origin !== window.origin || !event.data) {
+                            return;
+                        }
+                        var data = event.data;
+                        if (data.type === 'init') {
+                            var namespace = data.namespace;
+                            var initMethodName = data.initMethodName;
+                            var viewRepresentation = data.viewRepresentation;
+                            var viewValue = data.viewValue;
+                            //TODO: validation?
+                            //debugger;
+                            window[namespace][initMethodName](viewRepresentation, viewValue);
+                        }
+                    }
+                    window.addEventListener('message', messageFromParent);
                     window.addEventListener('unload', function () {
                         win = null;
                         parent = null;
                     });
                     var origin = win.origin;
-                    var namespace = '${this.nodeConfig.namespace}';
-                    var nodeId = '${this.nodeId}';
-                    var viewRepresentation = ${JSON.stringify(this.nodeConfig.viewRepresentation)};
-                    var viewValue = ${JSON.stringify(this.nodeConfig.viewValue)};
-                    var initMethodName = '${this.nodeConfig.initMethodName}';
-
+                    var namespace = ${JSON.stringify(this.nodeConfig.namespace)};
+                    var nodeId = ${JSON.stringify(this.nodeId)};
                     var knimeLoaderCount = ${this.nodeConfig.javascriptLibraries.length};
-                    return function knimeLoader() {
+                    return function knimeLoader(success) {
                         knimeLoaderCount--;
-                        console.log(nodeId, knimeLoaderCount);
+                        if (!success) {
+                            parent.postMessage({ nodeId: nodeId, type: 'error' }, origin);
+                            throw new Error('Script could not be loaded');
+                        }
                         if (knimeLoaderCount === 0) {
                             var view = win[namespace];
                             if (!view) {
+                                parent.postMessage({ nodeId: nodeId, type: 'error' }, origin);
                                 throw new Error('no view found under namespace ' + namespace);
                             }
-                            parent.postMessage({nodeId: nodeId, type: 'load'}, origin);
-                            
-                            //debugger;
-                            view[initMethodName](viewRepresentation, viewValue);
+                            parent.postMessage({ nodeId: nodeId, type: 'load' }, origin);
                         }
                     };
-                }();
+                })();
             <\/script>`; // eslint-disable-line no-useless-escape
+
             let scripts = this.nodeConfig.javascriptLibraries.map(
-                // eslint-disable-next-line no-useless-escape
-                lib => `<script src="${resourceBaseUrl}${lib}" onload="knimeLoader()"><\/script>`
+                lib => `<script
+                    src="${resourceBaseUrl}${lib}"
+                    onload="knimeLoader(true)"
+                    onerror="knimeLoader(false)">
+                    <\/script>` // eslint-disable-line no-useless-escape
             ).join('');
 
-            this.document.write(`<!doctype html><head>${styles}${scriptLoader}${scripts}</head><body></body>`);// +
-            // `<pre>${JSON.stringify(this.nodeConfig, null, 2).replace(/</g, '&lt;')}</pre></body>`);
+            this.document.write(`<!doctype html>
+                <meta charset="utf-8">
+                <head>
+                  ${styles}
+                  ${scriptLoader}
+                  <title></title>
+                </head>
+                <body></body>${scripts}`);
 
-
-            /*
-            const head = this.document.head;
-            this.nodeConfig.stylesheets.forEach(stylesheet => {
-                const script = this.document.createElement('link');
-                script.setAttribute('type', 'style/css');
-                script.href = `${resourceBaseUrl}${stylesheet}`;
-                head.appendChild(script);
-            });
-            */
-
-                
-            /* TODO inject ressources AP-12648
-             this.nodeConfig.javascriptLibraries.forEach(lib => {
-             // TODO: ensure order of execution AP-12648
-             const script = doc.createElement('script');
-             script.src = `/${restApiURL}/${jobWebResources({ jobId, webResource: lib })[0]}`;
-             head.appendChild(script);
-             });
-             */
+            this.document.close();
         },
 
         initHeightPolling() {
@@ -200,21 +203,20 @@ export default {
                 return;
             }
             if (!event.data || event.data.nodeId !== this.nodeId) {
-                // start resize
+                return;
             }
-            
-            // this.initView();
+            if (event.data.type === 'load' && window.frames[0]) {
+                consola.debug(`View resource loading for ${this.nodeId} completed`);
+                window.frames[0].postMessage({
+                    namespace: this.nodeConfig.namespace,
+                    initMethodName: this.nodeConfig.initMethodName,
+                    viewRepresentation: this.nodeConfig.viewRepresentation,
+                    viewValue: this.nodeConfig.viewValue,
+                    type: 'init'
+                }, window.origin);
+            }
         }
 
-        /*
-        initView() {
-            this.$el.contentWindow.postMessage({
-                type: 'init',
-                viewValue: this.nodeConfig.viewValue,
-                viewRepresentation: this.nodeConfig.viewRepresentation
-            });
-        }
-        */
     }
 };
 </script>

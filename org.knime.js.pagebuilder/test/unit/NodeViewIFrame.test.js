@@ -1,15 +1,42 @@
-import { shallowMount } from '@vue/test-utils';
+import Vuex from 'vuex';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
 
+import * as storeConfig from '@/../store/pagebuilder';
+
 describe('NodeViewIframe.vue', () => {
+
+    let store, localVue, context;
+
+    beforeAll(() => {
+        localVue = createLocalVue();
+        localVue.use(Vuex);
+
+        store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        store.commit('pagebuilder/setPage', {
+            webNodes: {
+                id1: {
+                    foo: 'bar'
+                },
+                id2: {
+                    baz: 'qux'
+                }
+            }
+        });
+
+        context = {
+            store,
+            localVue
+        };
+    });
 
     afterEach(() => {
         jest.restoreAllMocks();
     });
 
     it('renders', () => {
-        let wrapper = shallowMount(NodeViewIFrame, { attachToDocument: true });
+        let wrapper = shallowMount(NodeViewIFrame, { ...context, attachToDocument: true  });
         expect(wrapper.html()).toBeTruthy();
     });
 
