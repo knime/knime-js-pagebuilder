@@ -172,13 +172,16 @@ export default {
             ).join('');
 
             this.document.write(`<!doctype html>
+                <html>
                 <meta charset="utf-8">
                 <head>
                   ${styles}
                   ${scriptLoader}
                   <title></title>
                 </head>
-                <body></body>${scripts}`);
+                <body></body>
+                ${scripts}
+                </html>`);
 
             this.document.close();
         },
@@ -190,6 +193,9 @@ export default {
 
         setHeight() {
             let { document } = this;
+            if (!document || !document.body) {
+                return;
+            }
             let { defaultView } = document;
             let htmlStyle = defaultView.getComputedStyle(document.documentElement);
             let bodyStyle = defaultView.getComputedStyle(document.body);
@@ -205,9 +211,9 @@ export default {
             if (!event.data || event.data.nodeId !== this.nodeId) {
                 return;
             }
-            if (event.data.type === 'load' && window.frames[0]) {
+            if (event.data.type === 'load') {
                 consola.debug(`View resource loading for ${this.nodeId} completed`);
-                window.frames[0].postMessage({
+                this.document.defaultView.postMessage({
                     namespace: this.nodeConfig.namespace,
                     initMethodName: this.nodeConfig.initMethodName,
                     viewRepresentation: this.nodeConfig.viewRepresentation,

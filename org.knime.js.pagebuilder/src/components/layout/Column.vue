@@ -73,9 +73,9 @@ export default {
                 const sizeDefinition = this.columnConfig[`width${size}`];
                 if (sizeDefinition > 0 && sizeDefinition <= maxGridWidth) {
                     hasSize = true;
-                    const modifier = i ? size.toLowerCase() : ''; // mobile first: 'XS' is the default
+                    const modifier = i ? `-${size.toLowerCase()}` : ''; // mobile first: 'XS' is the default
                     classes.push(`col-${size.toLowerCase()}-${sizeDefinition}`);
-                    classes.push(`col-${modifier}-${sizeDefinition}`);
+                    classes.push(`col${modifier}-${sizeDefinition}`);
                 }
             });
 
