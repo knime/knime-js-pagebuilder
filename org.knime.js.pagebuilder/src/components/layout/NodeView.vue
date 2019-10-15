@@ -1,12 +1,15 @@
 <script>
 import NodeViewIFrame from './NodeViewIFrame';
+import Widget from '../widgets/Widget';
+import WidgetConfig from '../widgets/config';
 
 /**
- * Wrapper for a single node view iframe
+ * Wrapper for a single node view iframe or widget
  */
 export default {
     components: {
-        NodeViewIFrame
+        NodeViewIFrame,
+        Widget
     },
     props: {
         /**
@@ -89,6 +92,9 @@ export default {
             }
 
             return style.join(';');
+        },
+        isWidget() {
+            return WidgetConfig[this.webNodeConfig.viewRepresentation['@class']];
         }
     },
     methods: {
@@ -104,8 +110,14 @@ export default {
     :class="classes"
     :style="style"
   >
+    <Widget
+      v-if="isWidget && webNodeAvailable"
+      :node-config="webNodeConfig"
+      :node-id="viewConfig.nodeID"
+      @heightChange="updateHeight"
+    />
     <NodeViewIFrame
-      v-if="webNodeAvailable"
+      v-else-if="webNodeAvailable"
       :node-config="webNodeConfig"
       :auto-height="autoHeight"
       :poll-height="pollHeight"

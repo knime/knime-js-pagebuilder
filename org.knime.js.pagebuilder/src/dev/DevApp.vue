@@ -19,6 +19,12 @@ export default {
             }));
         }
     },
+    methods: {
+      onPageSelect(e) {
+        let page = { page: this.pageMocks[e.srcElement.selectedOptions[0].index - 1].src };
+        this.$store.dispatch('pagebuilder/setPage', page);
+      }
+    },
     created() {
         let store = this.$store;
         let pageMocks = this.pageMocks;
@@ -70,7 +76,9 @@ export default {
         </option>
       </select>
       Page mock:
-      <select v-model="$store.state.pagebuilder.page">
+      <select 
+        v-on:change="onPageSelect"
+        >
         <option :value="null">-</option>
         <option
           v-for="page in pageMocks"
