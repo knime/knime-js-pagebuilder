@@ -12,7 +12,7 @@
             webResourceBundleID="knimePageBuilder_2.0.0">
          <webResource
                relativePathSource="dist/knime-pagebuilder.umd.min.js"
-               relativePathTarget="org/knime/core/knime_pagebuilder2.js">
+               relativePathTarget="org/knime/core/knime-pagebuilder2.js">
          </webResource>
       </webResourceBundle>
    </extension>
