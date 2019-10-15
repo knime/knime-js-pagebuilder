@@ -94,7 +94,9 @@ export default {
             return style.join(';');
         },
         isWidget() {
-            return WidgetConfig[this.webNodeConfig.viewRepresentation['@class']];
+            return this.webNodeConfig ? 
+                WidgetConfig[this.webNodeConfig.viewRepresentation['@class']] :
+                false;
         }
     },
     methods: {
@@ -110,20 +112,29 @@ export default {
     :class="classes"
     :style="style"
   >
-    <Widget
-      v-if="isWidget && webNodeAvailable"
-      :node-config="webNodeConfig"
-      :node-id="viewConfig.nodeID"
-      @heightChange="updateHeight"
-    />
-    <NodeViewIFrame
-      v-else-if="webNodeAvailable"
-      :node-config="webNodeConfig"
-      :auto-height="autoHeight"
-      :poll-height="pollHeight"
-      :scrolling="viewConfig.scrolling"
-      @heightChange="updateHeight"
-    />
+    <template v-if="webNodeAvailable">
+        <Widget
+        v-if="isWidget"
+        :node-config="webNodeConfig"
+        :node-id="viewConfig.nodeID"
+        @heightChange="updateHeight"
+        />
+        <NodeViewIFrame
+        v-else
+        :node-config="webNodeConfig"
+        :auto-height="autoHeight"
+        :poll-height="pollHeight"
+        :scrolling="viewConfig.scrolling"
+        @heightChange="updateHeight"
+        />
+    </template>
+    <div v-else>
+        <!-- TODO AP-12850 -->
+        <p>
+            Web Node cannot be displayed.
+        </p>
+        <!-- TODO AP-12850 -->
+    </div>
   </div>
 </template>
 
