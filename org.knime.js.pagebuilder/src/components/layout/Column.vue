@@ -11,30 +11,30 @@ const maxGridWidth = 12;
  * - row (a nested layout translates to multiple rows here)
  *
  * @example
-    +-----------------+
-    |                 |
-    |      html       |
-    |                 |
-    +-----------------+
-    |.-----row-------.|
-    ||  |  ...    |  ||
-    ||  |         |  ||
-    |°---------------°|
-    +-----------------+
-    |                 |
-    |      view       |
-    |                 |
-    +-----------------+
-    |.-----row-------.<-- nestedLayout
-    ||  |  ...    |  ||
-    ||  |         |  ||
-    ||-----row-------||
-    ||  |  ...    |  ||
-    ||  |         |  ||
-    ||---------------||
-    ||      ⋮        ||
-    |°---------------°|
-    +-----------------+
+ +-----------------+
+ |                 |
+ |      html       |
+ |                 |
+ +-----------------+
+ |.-----row-------.|
+ ||  |  ...    |  ||
+ ||  |         |  ||
+ |°---------------°|
+ +-----------------+
+ |                 |
+ |      view       |
+ |                 |
+ +-----------------+
+ |.-----row-------.<-- nestedLayout
+ ||  |  ...    |  ||
+ ||  |         |  ||
+ ||-----row-------||
+ ||  |  ...    |  ||
+ ||  |         |  ||
+ ||---------------||
+ ||      ⋮        ||
+ |°---------------°|
+ +-----------------+
  *
  */
 export default {
@@ -153,76 +153,76 @@ export default {
 
 /* compatible with Bootstrap 4 grid */
 .col-1 {
-    -ms-flex: 0 0 calc(100% / 12);
-    flex: 0 0 calc(100% / 12);
-    max-width: calc(100% / 12);
-  }
+  -ms-flex: 0 0 calc(100% / 12);
+  flex: 0 0 calc(100% / 12);
+  max-width: calc(100% / 12);
+}
 
-  .col-2 {
-    -ms-flex: 0 0 calc(2 * 100% / 12);
-    flex: 0 0 calc(2 * 100% / 12);
-    max-width: calc(2 * 100% / 12);
-  }
+.col-2 {
+  -ms-flex: 0 0 calc(2 * 100% / 12);
+  flex: 0 0 calc(2 * 100% / 12);
+  max-width: calc(2 * 100% / 12);
+}
 
-  .col-xs-3 {
-    -ms-flex: 0 0 calc(3 * 100% / 12);
-    flex: 0 0 calc(3 * 100% / 12);
-    max-width: calc(3 * 100% / 12);
-  }
+.col-xs-3 {
+  -ms-flex: 0 0 calc(3 * 100% / 12);
+  flex: 0 0 calc(3 * 100% / 12);
+  max-width: calc(3 * 100% / 12);
+}
 
-  .col-4 {
-    -ms-flex: 0 0 calc(4 * 100% / 12);
-    flex: 0 0 calc(4 * 100% / 12);
-    max-width: calc(4 * 100% / 12);
-  }
+.col-4 {
+  -ms-flex: 0 0 calc(4 * 100% / 12);
+  flex: 0 0 calc(4 * 100% / 12);
+  max-width: calc(4 * 100% / 12);
+}
 
-  .col-5 {
-    -ms-flex: 0 0 calc(5 * 100% / 12);
-    flex: 0 0 calc(5 * 100% / 12);
-    max-width: calc(5 * 100% / 12);
-  }
+.col-5 {
+  -ms-flex: 0 0 calc(5 * 100% / 12);
+  flex: 0 0 calc(5 * 100% / 12);
+  max-width: calc(5 * 100% / 12);
+}
 
-  .col-6 {
-    -ms-flex: 0 0 calc(6 * 100% / 12);
-    flex: 0 0 calc(6 * 100% / 12);
-    max-width: calc(6 * 100% / 12);
-  }
+.col-6 {
+  -ms-flex: 0 0 calc(6 * 100% / 12);
+  flex: 0 0 calc(6 * 100% / 12);
+  max-width: calc(6 * 100% / 12);
+}
 
-  .col-7 {
-    -ms-flex: 0 0 calc(7 * 100% / 12);
-    flex: 0 0 calc(7 * 100% / 12);
-    max-width: calc(7 * 100% / 12);
-  }
+.col-7 {
+  -ms-flex: 0 0 calc(7 * 100% / 12);
+  flex: 0 0 calc(7 * 100% / 12);
+  max-width: calc(7 * 100% / 12);
+}
 
-  .col-8 {
-    -ms-flex: 0 0 calc(8 * 100% / 12);
-    flex: 0 0 calc(8 * 100% / 12);
-    max-width: calc(8 * 100% / 12);
-  }
+.col-8 {
+  -ms-flex: 0 0 calc(8 * 100% / 12);
+  flex: 0 0 calc(8 * 100% / 12);
+  max-width: calc(8 * 100% / 12);
+}
 
-  .col-9 {
-    -ms-flex: 0 0 calc(9 * 100% / 12);
-    flex: 0 0 calc(9 * 100% / 12);
-    max-width: calc(9 * 100% / 12);
-  }
+.col-9 {
+  -ms-flex: 0 0 calc(9 * 100% / 12);
+  flex: 0 0 calc(9 * 100% / 12);
+  max-width: calc(9 * 100% / 12);
+}
 
-  .col-10 {
-    -ms-flex: 0 0 calc(10 * 100% / 12);
-    flex: 0 0 calc(10 * 100% / 12);
-    max-width: calc(10 * 100% / 12);
-  }
+.col-10 {
+  -ms-flex: 0 0 calc(10 * 100% / 12);
+  flex: 0 0 calc(10 * 100% / 12);
+  max-width: calc(10 * 100% / 12);
+}
 
-  .col-11 {
-    -ms-flex: 0 0 calc(11 * 100% / 12);
-    flex: 0 0 calc(11 * 100% / 12);
-    max-width: calc(11 * 100% / 12);
-  }
+.col-11 {
+  -ms-flex: 0 0 calc(11 * 100% / 12);
+  flex: 0 0 calc(11 * 100% / 12);
+  max-width: calc(11 * 100% / 12);
+}
 
-  .col-12 {
-    -ms-flex: 0 0 100%;
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
+.col-12 {
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
 
 @media (min-width: 576px) {
   .col-sm-1 {
