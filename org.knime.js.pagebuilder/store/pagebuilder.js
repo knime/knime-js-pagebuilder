@@ -1,3 +1,5 @@
+import { setProp } from '../src/util/nestedProperty';
+
 export const namespaced = true;
 
 export const state = () => ({
@@ -36,7 +38,7 @@ export const mutations = {
      */
     setNodeValidity(state, page) {
         if (state.page &&
-            typeof state.page.webNodes === Object &&
+            typeof state.page.webNodes === 'object' &&
             state.page.webNodes !== null) {
             state.pageValidity = {}; // must reset the page validity each time page changes
             Object.keys(state.page.webNodes).forEach((nodeId) => {
@@ -73,27 +75,13 @@ export const mutations = {
     updateWebNode(state, newWebNode) {
         // update the validity of the node
         this._vm.$set(state.pageValidity, newWebNode.nodeId, newWebNode.isValid);
-
-        // may need to update to accommodate arrays; other types
-        const deepModify = (obj, key, val) => {
-            if (typeof key === 'string') {
-                key = key.split('.');
-            }
-            if (key.length > 1) {
-                let newKey = key.shift();
-                obj[newKey] = typeof obj[newKey] === 'object' ? obj[newKey] : {};
-                deepModify(obj[newKey], key, val);
-            } else {
-                obj[key[0]] = val;
-            }
-        };
         
         // only update value if the node is valid
         if (newWebNode.isValid) {
             let currentWebNode = state.page.webNodes[newWebNode.nodeId];
             for (let [key, value] of Object.entries(newWebNode.update)) {
                 try {
-                    deepModify(currentWebNode, key, value);
+                    setProp(currentWebNode, key, value);
                 } catch (e) {
                     // catch deep Object modification errors
                     consola.error(`WebNode[type: ${newWebNode.type}, id: ${
@@ -152,11 +140,16 @@ export const getters = {
 
     // Global page validity method (ex: to enable 'Next Page' button)
     isPageValid(state, getters) {
-        if (!state.page) {return false;}
-        if (getters.numValidatedNodes !== getters.numWebNodes) {return false;}
-        Object.keys(getters.getWebNodes).forEach((key) => {
-            if (!state.pageValidity[key]) {return false;}
+        if (!state.page ||
+            !state.page.webNodes ||
+            !state.pageValidity ||
+            Object.keys(state.page.webNodes).length < 1) {
+            return false;
+        }
+        let isPageValid = true;
+        Object.keys(state.page.webNodes).forEach((key) => {
+            if (!state.pageValidity[key]) isPageValid = false;
         });
-        return true;
+        return isPageValid;
     }
 };

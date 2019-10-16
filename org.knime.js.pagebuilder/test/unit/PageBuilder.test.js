@@ -60,4 +60,126 @@ describe('PageBuilder.vue', () => {
         expect(wrapper.find(Result).exists()).toBeTruthy();
     });
 
+    it('validates individual nodes', () => {
+        store.commit('pagebuilder/setPage', {
+            webNodes: {
+                id1: {
+                    foo: 'bar'
+                }
+            }
+        });
+
+        let wrapper = shallowMount(PageBuilder, context);
+
+        expect(wrapper.vm.$store.getters['pagebuilder/isNodeValid']('id1'))
+            .toEqual(false);
+        
+        store.commit('pagebuilder/updateWebNode', {
+            nodeId: 'id1',
+            isValid: true,
+            update: {
+                foo: 'rod'
+            }
+        });
+
+        expect(wrapper.vm.$store.getters['pagebuilder/isNodeValid']('id1'))
+            .toEqual(true);
+    });
+
+    it('validates page based on individual node validity', () => {
+        const page = {
+            webNodes: {
+                id1: {
+                    foo: 'bar'
+                }
+            }
+        };
+        store.commit('pagebuilder/setPage', page);
+        store.commit('pagebuilder/setNodeValidity', page);
+
+        let wrapper = shallowMount(PageBuilder, context);
+
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid'])
+            .toEqual(false);
+        
+        store.commit('pagebuilder/updateWebNode', {
+            nodeId: 'id1',
+            // isValid: false,
+            isValid: true,
+            update: {
+                foo: 'rod'
+            }
+        });
+
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid'])
+            .toEqual(true);
+    });
+
+    it('returns invalid with empty page', () => {
+        const page = {};
+        store.commit('pagebuilder/setPage', page);
+        store.commit('pagebuilder/setNodeValidity', page);
+
+        let wrapper = shallowMount(PageBuilder, context);
+
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid'])
+            .toEqual(false);
+    });
+
+    it('prevents value modification with invalid node updates', () => {
+        const page = {
+            webNodes: {
+                id1: {
+                    foo: 'bar'
+                }
+            }
+        };
+        store.commit('pagebuilder/setPage', page);
+        store.commit('pagebuilder/setNodeValidity', page);
+        let wrapper = shallowMount(PageBuilder, context);
+        let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
+        
+        expect(node.foo).toEqual('bar');
+
+        let update = {
+            nodeId: 'id1',
+            isValid: false,
+            update: {
+                foo: 'rod'
+            }
+        };
+        
+        store.commit('pagebuilder/updateWebNode', update);
+        expect(node.foo).toEqual('bar');
+        update.isValid = true;
+        store.commit('pagebuilder/updateWebNode', update);
+        expect(node.foo).toEqual('rod');
+    });
+
+    it('prevents value modification with invalid keys', () => {
+        const page = {
+            webNodes: {
+                id1: {
+                    foo: 'bar'
+                }
+            }
+        };
+        store.commit('pagebuilder/setPage', page);
+        store.commit('pagebuilder/setNodeValidity', page);
+        let wrapper = shallowMount(PageBuilder, context);
+        let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
+        
+        expect(node.foo).toEqual('bar');
+
+        let update = {
+            nodeId: 'id1',
+            isValid: true,
+            update: {
+                fooBar: 'rod' // wrong key
+            }
+        };
+        
+        store.commit('pagebuilder/updateWebNode', update);
+        expect(node.foo).toEqual('bar');
+    });
 });
