@@ -60,13 +60,13 @@ export default {
 	},
 	methods: {
 		validate(value) {
-				/**
-				 * TODO: SRV-2626
-				 * 
-				 * insert additional custom widget validation
-				 * currently fake validation
-				 */
-				return true;
+			/**
+			 * TODO: SRV-2626
+			 * 
+			 * insert additional custom widget validation
+			 * currently fake validation
+			 */
+			return true;
 		},
 		publishUpdate(update) {
 			update.isValid = update.isValid && this.validate(update);

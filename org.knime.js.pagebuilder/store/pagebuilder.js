@@ -127,7 +127,6 @@ export const actions = {
     }
 };
 
-// Largely unused. Can be removed after Prototype.
 export const getters = {
 
     // Check individual node validity; *returns function*

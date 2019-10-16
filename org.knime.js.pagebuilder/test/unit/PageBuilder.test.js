@@ -104,7 +104,6 @@ describe('PageBuilder.vue', () => {
         
         store.commit('pagebuilder/updateWebNode', {
             nodeId: 'id1',
-            // isValid: false,
             isValid: true,
             update: {
                 foo: 'rod'

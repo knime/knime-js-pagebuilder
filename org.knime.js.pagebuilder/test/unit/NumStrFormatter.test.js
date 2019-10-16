@@ -65,15 +65,6 @@ describe('numStrFormatter.js', () => {
         expect(format(testValue, configObj)).toEqual('123456789%');
     });
 
-    it('uses provided postfix', () => {
-        let configObj = {
-            postfix: '%'
-        };
-        let testValue = 123456789;
-
-        expect(format(testValue, configObj)).toEqual('123456789%');
-    });
-
     it('uses provided negativeBefore', () => {
         let configObj = {
             negativeBefore: '+/'
