@@ -1,0 +1,802 @@
+{
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+        "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+        "layout": {
+            "rows": [
+                {
+                    "type": "row",
+                    "additionalClasses": [],
+                    "additionalStyles": [],
+                    "columns": [
+                        {
+                            "content": [
+                                {
+                                    "type": "row",
+                                    "additionalClasses": [],
+                                    "additionalStyles": [],
+                                    "columns": [
+                                        {
+                                            "content": [
+                                                {
+                                                    "type": "view",
+                                                    "nodeID": "5:0:1",
+                                                    "resizeMethod": "viewLowestElement",
+                                                    "autoResize": true,
+                                                    "scrolling": false,
+                                                    "sizeHeight": true,
+                                                    "sizeWidth": false,
+                                                    "maxHeight": null,
+                                                    "maxWidth": null,
+                                                    "minHeight": null,
+                                                    "minWidth": null,
+                                                    "resizeInterval": null,
+                                                    "resizeTolerance": 5,
+                                                    "additionalClasses": [],
+                                                    "additionalStyles": []
+                                                }
+                                            ],
+                                            "widthMD": null,
+                                            "widthLG": null,
+                                            "widthXL": null,
+                                            "widthSM": null,
+                                            "widthXS": 3,
+                                            "additionalClasses": [],
+                                            "additionalStyles": []
+                                        },
+                                        {
+                                            "content": [
+                                                {
+                                                    "type": "view",
+                                                    "nodeID": "5:0:7",
+                                                    "resizeMethod": "viewLowestElement",
+                                                    "autoResize": true,
+                                                    "scrolling": false,
+                                                    "sizeHeight": true,
+                                                    "sizeWidth": false,
+                                                    "maxHeight": null,
+                                                    "maxWidth": null,
+                                                    "minHeight": null,
+                                                    "minWidth": null,
+                                                    "resizeInterval": null,
+                                                    "resizeTolerance": 5,
+                                                    "additionalClasses": [],
+                                                    "additionalStyles": []
+                                                }
+                                            ],
+                                            "widthMD": null,
+                                            "widthLG": null,
+                                            "widthXL": null,
+                                            "widthSM": null,
+                                            "widthXS": 3,
+                                            "additionalClasses": [],
+                                            "additionalStyles": []
+                                        },
+                                        {
+                                            "content": [
+                                                {
+                                                    "type": "view",
+                                                    "nodeID": "5:0:8",
+                                                    "resizeMethod": "viewLowestElement",
+                                                    "autoResize": true,
+                                                    "scrolling": false,
+                                                    "sizeHeight": true,
+                                                    "sizeWidth": false,
+                                                    "maxHeight": null,
+                                                    "maxWidth": null,
+                                                    "minHeight": null,
+                                                    "minWidth": null,
+                                                    "resizeInterval": null,
+                                                    "resizeTolerance": 5,
+                                                    "additionalClasses": [],
+                                                    "additionalStyles": []
+                                                }
+                                            ],
+                                            "widthMD": null,
+                                            "widthLG": null,
+                                            "widthXL": null,
+                                            "widthSM": null,
+                                            "widthXS": 3,
+                                            "additionalClasses": [],
+                                            "additionalStyles": []
+                                        },
+                                        {
+                                            "content": [
+                                                {
+                                                    "type": "view",
+                                                    "nodeID": "5:0:11",
+                                                    "resizeMethod": "viewLowestElement",
+                                                    "autoResize": true,
+                                                    "scrolling": false,
+                                                    "sizeHeight": true,
+                                                    "sizeWidth": false,
+                                                    "maxHeight": null,
+                                                    "maxWidth": null,
+                                                    "minHeight": null,
+                                                    "minWidth": null,
+                                                    "resizeInterval": null,
+                                                    "resizeTolerance": 5,
+                                                    "additionalClasses": [],
+                                                    "additionalStyles": []
+                                                }
+                                            ],
+                                            "widthMD": null,
+                                            "widthLG": null,
+                                            "widthXL": null,
+                                            "widthSM": null,
+                                            "widthXS": 3,
+                                            "additionalClasses": [],
+                                            "additionalStyles": []
+                                        }
+                                    ]
+                                }
+                            ],
+                            "widthMD": null,
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthSM": null,
+                            "widthXS": 12,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                        }
+                    ]
+                },
+                {
+                    "type": "row",
+                    "additionalClasses": [],
+                    "additionalStyles": [],
+                    "columns": [
+                        {
+                            "content": [
+                                {
+                                    "type": "view",
+                                    "nodeID": "5:0:9",
+                                    "resizeMethod": "viewLowestElement",
+                                    "autoResize": true,
+                                    "scrolling": false,
+                                    "sizeHeight": true,
+                                    "sizeWidth": false,
+                                    "maxHeight": null,
+                                    "maxWidth": null,
+                                    "minHeight": null,
+                                    "minWidth": null,
+                                    "resizeInterval": null,
+                                    "resizeTolerance": 5,
+                                    "additionalClasses": [],
+                                    "additionalStyles": []
+                                }
+                            ],
+                            "widthMD": null,
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthSM": null,
+                            "widthXS": 6,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                        },
+                        {
+                            "content": [
+                                {
+                                    "type": "view",
+                                    "nodeID": "5:0:10",
+                                    "resizeMethod": "viewLowestElement",
+                                    "autoResize": true,
+                                    "scrolling": false,
+                                    "sizeHeight": true,
+                                    "sizeWidth": false,
+                                    "maxHeight": null,
+                                    "maxWidth": null,
+                                    "minHeight": null,
+                                    "minWidth": null,
+                                    "resizeInterval": null,
+                                    "resizeTolerance": 5,
+                                    "additionalClasses": [],
+                                    "additionalStyles": []
+                                }
+                            ],
+                            "widthMD": null,
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthSM": null,
+                            "widthXS": 6,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                        }
+                    ]
+                }
+            ]
+        },
+        "blackBoard": null,
+        "selectionTranslators": [
+            {
+                "targetIDs": [
+                    "d42bc59c-83ba-4829-9571-c23d1f522876"
+                ],
+                "sourceID": "cfb7c556-6014-4af2-ab51-7f7fe7f6db21",
+                "mapping": null,
+                "forward": false
+            },
+            {
+                "targetIDs": [
+                    "d42bc59c-83ba-4829-9571-c23d1f522876"
+                ],
+                "sourceID": "cfb7c556-6014-4af2-ab51-7f7fe7f6db21",
+                "mapping": null,
+                "forward": false
+            }
+        ],
+        "version": "4.1.0.v201908271559"
+    },
+    "webNodes": {
+        "5:0:10": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "nodeInfo": {
+                "@class": "org.knime.js.core.JSONWebNodeInfo",
+                "nodeState": "executed",
+                "nodeAnnotation": "",
+                "nodeErrorMessage": null,
+                "nodeWarnMessage": null,
+                "displayPossible": true,
+                "nodeName": "Slider Widget"
+            },
+            "namespace": "knimeSliderWidget",
+            "validateMethodName": "validate",
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "viewRepresentation": {
+                "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
+                "sliderSettings": {
+                    "@class": "org.knime.js.core.settings.slider.SliderSettings",
+                    "step": 0.1,
+                    "connect": [
+                        true,
+                        true
+                    ],
+                    "pips": {
+                        "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+                        "format": {
+                            "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        },
+                        "mode": "steps",
+                        "density": 3
+                    },
+                    "direction": "rtl",
+                    "orientation": "horizontal",
+                    "range": {
+                        "min": [
+                            0
+                        ],
+                        "max": [
+                            10
+                        ]
+                    },
+                    "start": [
+                        5
+                    ]
+                },
+                "useCustomMax": true,
+                "useCustomMin": true,
+                "customMax": 100,
+                "customMin": 0,
+                "defaultValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                },
+                "description": "Enter Description",
+                "required": true,
+                "label": "Label",
+                "currentValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                }
+            },
+            "initMethodName": "init",
+            "getViewValueMethodName": "value",
+            "javascriptLibraries": [
+                "/js-lib/knime/service/knime_service_1_0_0.js",
+                "/js-lib/jQuery/jquery-1.11.0.min.js",
+                "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+                "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+                "/js-lib/wNumb/wNumb.js",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
+            ],
+            "viewValue": null,
+            "customCSS": "",
+            "stylesheets": [
+                "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+                "/js-lib/knime/service/knime.css",
+                "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+                "/org/knime/js/base/util/quickform/quickformStyles.css",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
+            ]
+        },
+        "5:0:1": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "nodeInfo": {
+                "@class": "org.knime.js.core.JSONWebNodeInfo",
+                "nodeState": "executed",
+                "nodeAnnotation": "",
+                "nodeErrorMessage": null,
+                "nodeWarnMessage": null,
+                "displayPossible": true,
+                "nodeName": "Slider Widget"
+            },
+            "namespace": "knimeSliderWidget",
+            "validateMethodName": "validate",
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "viewRepresentation": {
+                "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
+                "sliderSettings": {
+                    "@class": "org.knime.js.core.settings.slider.SliderSettings",
+                    "step": 0.1,
+                    "connect": [
+                        true,
+                        true
+                    ],
+                    "tooltips": [
+                        {
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        }
+                    ],
+                    "pips": {
+                        "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+                        "format": {
+                            "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        },
+                        "mode": "values",
+                        "values": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "stepped": true,
+                        "density": 3
+                    },
+                    "direction": "ltr",
+                    "orientation": "vertical",
+                    "range": {
+                        "min": [
+                            0
+                        ],
+                        "max": [
+                            10
+                        ]
+                    },
+                    "start": [
+                        5
+                    ]
+                },
+                "useCustomMax": false,
+                "useCustomMin": false,
+                "customMax": 100,
+                "customMin": 0,
+                "defaultValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                },
+                "description": "Enter Description",
+                "required": true,
+                "label": "Label",
+                "currentValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                }
+            },
+            "initMethodName": "init",
+            "getViewValueMethodName": "value",
+            "javascriptLibraries": [
+                "/js-lib/knime/service/knime_service_1_0_0.js",
+                "/js-lib/jQuery/jquery-1.11.0.min.js",
+                "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+                "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+                "/js-lib/wNumb/wNumb.js",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
+            ],
+            "viewValue": null,
+            "customCSS": "",
+            "stylesheets": [
+                "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+                "/js-lib/knime/service/knime.css",
+                "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+                "/org/knime/js/base/util/quickform/quickformStyles.css",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
+            ]
+        },
+        "5:0:11": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "nodeInfo": {
+                "@class": "org.knime.js.core.JSONWebNodeInfo",
+                "nodeState": "executed",
+                "nodeAnnotation": "",
+                "nodeErrorMessage": null,
+                "nodeWarnMessage": null,
+                "displayPossible": true,
+                "nodeName": "Slider Widget"
+            },
+            "namespace": "knimeSliderWidget",
+            "validateMethodName": "validate",
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "viewRepresentation": {
+                "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
+                "sliderSettings": {
+                    "@class": "org.knime.js.core.settings.slider.SliderSettings",
+                    "step": 0.1,
+                    "connect": [
+                        true,
+                        true
+                    ],
+                    "tooltips": [
+                        {
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        }
+                    ],
+                    "pips": {
+                        "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+                        "format": {
+                            "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        },
+                        "mode": "count",
+                        "values": [
+                            5
+                        ],
+                        "stepped": false,
+                        "density": 3
+                    },
+                    "direction": "ltr",
+                    "orientation": "vertical",
+                    "range": {
+                        "min": [
+                            0
+                        ],
+                        "max": [
+                            10
+                        ]
+                    },
+                    "start": [
+                        5
+                    ]
+                },
+                "useCustomMax": true,
+                "useCustomMin": true,
+                "customMax": 100,
+                "customMin": 0,
+                "defaultValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                },
+                "description": "Enter Description",
+                "required": true,
+                "label": "Label",
+                "currentValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                }
+            },
+            "initMethodName": "init",
+            "getViewValueMethodName": "value",
+            "javascriptLibraries": [
+                "/js-lib/knime/service/knime_service_1_0_0.js",
+                "/js-lib/jQuery/jquery-1.11.0.min.js",
+                "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+                "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+                "/js-lib/wNumb/wNumb.js",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
+            ],
+            "viewValue": null,
+            "customCSS": "",
+            "stylesheets": [
+                "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+                "/js-lib/knime/service/knime.css",
+                "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+                "/org/knime/js/base/util/quickform/quickformStyles.css",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
+            ]
+        },
+        "5:0:8": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "nodeInfo": {
+                "@class": "org.knime.js.core.JSONWebNodeInfo",
+                "nodeState": "executed",
+                "nodeAnnotation": "",
+                "nodeErrorMessage": null,
+                "nodeWarnMessage": null,
+                "displayPossible": true,
+                "nodeName": "Slider Widget"
+            },
+            "namespace": "knimeSliderWidget",
+            "validateMethodName": "validate",
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "viewRepresentation": {
+                "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
+                "sliderSettings": {
+                    "@class": "org.knime.js.core.settings.slider.SliderSettings",
+                    "step": 0.1,
+                    "connect": [
+                        true,
+                        true
+                    ],
+                    "tooltips": [
+                        {
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        }
+                    ],
+                    "pips": {
+                        "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+                        "format": {
+                            "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        },
+                        "mode": "positions",
+                        "values": [
+                            0,
+                            25,
+                            50,
+                            75,
+                            100
+                        ],
+                        "stepped": true,
+                        "density": 3
+                    },
+                    "direction": "ltr",
+                    "orientation": "vertical",
+                    "range": {
+                        "min": [
+                            0
+                        ],
+                        "max": [
+                            10
+                        ]
+                    },
+                    "start": [
+                        5
+                    ]
+                },
+                "useCustomMax": true,
+                "useCustomMin": true,
+                "customMax": 100,
+                "customMin": 0,
+                "defaultValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                },
+                "description": "Enter Description",
+                "required": true,
+                "label": "Label",
+                "currentValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                }
+            },
+            "initMethodName": "init",
+            "getViewValueMethodName": "value",
+            "javascriptLibraries": [
+                "/js-lib/knime/service/knime_service_1_0_0.js",
+                "/js-lib/jQuery/jquery-1.11.0.min.js",
+                "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+                "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+                "/js-lib/wNumb/wNumb.js",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
+            ],
+            "viewValue": null,
+            "customCSS": "",
+            "stylesheets": [
+                "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+                "/js-lib/knime/service/knime.css",
+                "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+                "/org/knime/js/base/util/quickform/quickformStyles.css",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
+            ]
+        },
+        "5:0:7": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "nodeInfo": {
+                "@class": "org.knime.js.core.JSONWebNodeInfo",
+                "nodeState": "executed",
+                "nodeAnnotation": "",
+                "nodeErrorMessage": null,
+                "nodeWarnMessage": null,
+                "displayPossible": true,
+                "nodeName": "Slider Widget"
+            },
+            "namespace": "knimeSliderWidget",
+            "validateMethodName": "validate",
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "viewRepresentation": {
+                "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
+                "sliderSettings": {
+                    "@class": "org.knime.js.core.settings.slider.SliderSettings",
+                    "step": 0.1,
+                    "connect": [
+                        true,
+                        true
+                    ],
+                    "pips": {
+                        "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+                        "format": {
+                            "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        },
+                        "mode": "values",
+                        "values": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "stepped": true,
+                        "density": 3
+                    },
+                    "direction": "rtl",
+                    "orientation": "vertical",
+                    "range": {
+                        "min": [
+                            0
+                        ],
+                        "max": [
+                            10
+                        ]
+                    },
+                    "start": [
+                        5
+                    ]
+                },
+                "useCustomMax": true,
+                "useCustomMin": true,
+                "customMax": 100,
+                "customMin": 0,
+                "defaultValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                },
+                "description": "Enter Description",
+                "required": true,
+                "label": "Label",
+                "currentValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                }
+            },
+            "initMethodName": "init",
+            "getViewValueMethodName": "value",
+            "javascriptLibraries": [
+                "/js-lib/knime/service/knime_service_1_0_0.js",
+                "/js-lib/jQuery/jquery-1.11.0.min.js",
+                "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+                "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+                "/js-lib/wNumb/wNumb.js",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
+            ],
+            "viewValue": null,
+            "customCSS": "",
+            "stylesheets": [
+                "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+                "/js-lib/knime/service/knime.css",
+                "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+                "/org/knime/js/base/util/quickform/quickformStyles.css",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
+            ]
+        },
+        "5:0:9": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "nodeInfo": {
+                "@class": "org.knime.js.core.JSONWebNodeInfo",
+                "nodeState": "executed",
+                "nodeAnnotation": "",
+                "nodeErrorMessage": null,
+                "nodeWarnMessage": null,
+                "displayPossible": true,
+                "nodeName": "Slider Widget"
+            },
+            "namespace": "knimeSliderWidget",
+            "validateMethodName": "validate",
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "viewRepresentation": {
+                "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
+                "sliderSettings": {
+                    "@class": "org.knime.js.core.settings.slider.SliderSettings",
+                    "connect": [
+                        false,
+                        true
+                    ],
+                    "tooltips": [
+                        true
+                    ],
+                    "pips": {
+                        "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+                        "format": {
+                            "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                            "negative": "-",
+                            "decimals": 2,
+                            "mark": "."
+                        },
+                        "mode": "values",
+                        "values": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "stepped": true,
+                        "density": 3
+                    },
+                    "direction": "ltr",
+                    "orientation": "horizontal",
+                    "range": {
+                        "min": [
+                            0
+                        ],
+                        "max": [
+                            10
+                        ]
+                    },
+                    "start": [
+                        5
+                    ]
+                },
+                "useCustomMax": true,
+                "useCustomMin": true,
+                "customMax": 100,
+                "customMin": 0,
+                "defaultValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                },
+                "description": "Enter Description",
+                "required": true,
+                "label": "Label",
+                "currentValue": {
+                    "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+                    "double": 5
+                }
+            },
+            "initMethodName": "init",
+            "getViewValueMethodName": "value",
+            "javascriptLibraries": [
+                "/js-lib/knime/service/knime_service_1_0_0.js",
+                "/js-lib/jQuery/jquery-1.11.0.min.js",
+                "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+                "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+                "/js-lib/wNumb/wNumb.js",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
+            ],
+            "viewValue": null,
+            "customCSS": "",
+            "stylesheets": [
+                "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+                "/js-lib/knime/service/knime.css",
+                "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+                "/org/knime/js/base/util/quickform/quickformStyles.css",
+                "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+                "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
+            ]
+        }
+    },
+    "version": "4.1.0.v201908271559"
+}

@@ -1,6 +1,7 @@
 <script>
 import { mapActions } from 'vuex';
 import widgetConfig from './widgets.config';
+import SliderWidget from './input/SliderWidget';
 
 /**
  * A Widget node view. This top level component sits at
@@ -30,7 +31,9 @@ import widgetConfig from './widgets.config';
  * mapped in a config file.
  */
 export default {
-    components: {},
+    components: {
+        SliderWidget
+    },
     props: {
         /**
          * Node configuration as received by API
