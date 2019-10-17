@@ -3,7 +3,6 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import NodeView from '@/components/layout/NodeView';
 import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
-import Widget from '@/components/widgets/Widget';
 
 import * as storeConfig from '@/../store/pagebuilder';
 

@@ -75,7 +75,7 @@ export const mutations = {
     updateWebNode(state, newWebNode) {
         // update the validity of the node
         this._vm.$set(state.pageValidity, newWebNode.nodeId, newWebNode.isValid);
-        
+
         // only update value if the node is valid
         if (newWebNode.isValid) {
             let currentWebNode = state.page.webNodes[newWebNode.nodeId];
@@ -114,7 +114,7 @@ export const actions = {
             newWebNode.nodeId}]: Updated value via action: `, newWebNode);
         commit('updateWebNode', newWebNode);
     },
-    
+
     // only for PageBuilder-internal usage
     async nextPage({ dispatch }) {
         consola.trace('PageBuilder: Proxying call for next page');
@@ -131,10 +131,7 @@ export const getters = {
 
     // Check individual node validity; *returns function*
     isNodeValid(state, getters) {
-        return (nodeId) => 
-            // avoid undefined
-            state.pageValidity[nodeId] ? true : false
-        ;
+        return (nodeId) => Boolean(state.pageValidity[nodeId]);
     },
 
     // Global page validity method (ex: to enable 'Next Page' button)
@@ -145,10 +142,6 @@ export const getters = {
             Object.keys(state.page.webNodes).length < 1) {
             return false;
         }
-        let isPageValid = true;
-        Object.keys(state.page.webNodes).forEach((key) => {
-            if (!state.pageValidity[key]) isPageValid = false;
-        });
-        return isPageValid;
+        return Object.keys(state.page.webNodes).every(key => state.pageValidity[key]);
     }
 };

@@ -2,15 +2,15 @@
  * This utility function is used for formatting labels
  * in the slider widget. It matches the existing API
  * expected from KNIME AP in the node config.
- * 
+ *
  * The expected configuration object is as follows:
- * 
+ *
  *  obj = {};
  *  obj.decimals = number of significant digits
  *                 ex: obj.decimals = 2;
  *                     num = 1.234 => '1.23'
- *  obj.thousands = the string delimiter for thousands
- *                  ex: obj.thousands = '&';
+ *  obj.thousand = the string delimiter for thousands
+ *                  ex: obj.thousand = '&';
  *                      num = 1000; => '1&000'
  *  obj.mark = the string delimiter between the integer
  *             and the decimal
@@ -30,19 +30,20 @@
  *                 negative numbers
  *                 ex: obj.negative = '+';
  *                     num = -1; => '+1'
- * 
- * @param  {} num the number to be formatted
- * @param  {} obj the label configuration object
- * @returns {} string representation of input number
+ *
+ * @param  {Number} num the number to be formatted
+ * @param  {Object} obj the label configuration object
+ * @returns {String} string representation of input number
  */
 export const format = (num, obj) => {
     let label = obj.decimals
         ? num.toFixed(obj.decimals)
         : num;
     label = label.toString();
-    if (obj.mark) { label = label.replace('.', obj.mark); }
-    if ((num >= 1000 || num <= -1000) &&
-        obj.thousand) {
+    if (obj.mark) {
+        label = label.replace('.', obj.mark);
+    }
+    if (Math.abs(num) >= 1000 && obj.thousand) {
         let thouStr = label.split(obj.mark || '.');
         let newStr = thouStr[0][0];
         for (let i = 1; i < thouStr[0].length; i++) {

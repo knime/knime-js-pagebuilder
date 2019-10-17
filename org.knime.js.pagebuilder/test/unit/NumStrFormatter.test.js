@@ -34,7 +34,7 @@ describe('numStrFormatter.js', () => {
         expect(format(testValue, configObj)).toEqual('123,456,789');
         configObj.thousand = '.';
         expect(format(testValue, configObj)).toEqual('123.456.789');
-        testValue = '1234.56789'
+        testValue = '1234.56789';
         expect(format(testValue, configObj)).toEqual('1.234.56789');
     });
 

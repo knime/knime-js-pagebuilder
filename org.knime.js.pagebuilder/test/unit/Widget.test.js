@@ -36,9 +36,9 @@ describe('Widget.vue', () => {
 
     it('has default props', () => {
         try {
-            let wrapper = shallowMount(Widget, context);
+            shallowMount(Widget, context);
         } catch (e) {
-            expect(e.toString().split(':')[0] === 'TypeError').toEqual(true);
+            expect(e.toString().split(':')[0]).toBe('TypeError');
         }
     });
 
@@ -93,7 +93,7 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.isValid(wrapper.vm.nodeId)).toEqual(false);
+        expect(wrapper.vm.isValid(wrapper.vm.nodeId)).toBe(false);
 
         wrapper.vm.publishUpdate({
             isValid: true,
@@ -103,7 +103,7 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.isValid(wrapper.vm.nodeId)).toEqual(true);
+        expect(wrapper.vm.isValid(wrapper.vm.nodeId)).toBe(true);
     });
 
     // TODO AP-12850: update Widget component level validation
@@ -122,13 +122,13 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.validate()).toEqual(true);
-        expect(wrapper.vm.validate(null)).toEqual(true);
-        expect(wrapper.vm.validate({})).toEqual(true);
-        expect(wrapper.vm.validate('test')).toEqual(true);
-        expect(wrapper.vm.validate([])).toEqual(true);
-        expect(wrapper.vm.validate(0)).toEqual(true);
-        expect(wrapper.vm.validate(10)).toEqual(true);
+        expect(wrapper.vm.validate()).toBe(true);
+        expect(wrapper.vm.validate(null)).toBe(true);
+        expect(wrapper.vm.validate({})).toBe(true);
+        expect(wrapper.vm.validate('test')).toBe(true);
+        expect(wrapper.vm.validate([])).toBe(true);
+        expect(wrapper.vm.validate(0)).toBe(true);
+        expect(wrapper.vm.validate(10)).toBe(true);
     });
 
     it('publishes update to store', () => {

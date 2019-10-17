@@ -17,9 +17,9 @@
  * This is useful when using the kind of deep accessors/properties
  * often found in the knime nodeConfig objects.
  *
- * @param  {} obj the object with the deep/nested property
- * @param  {} key the string key with '.' delimited properties
- * @returns null
+ * @param  {Object} obj the object with the deep/nested property
+ * @param  {String} key the string key with '.' delimited properties
+ * @returns {Object} the value targeted by the key path
  */
 export const getProp = (obj, key) => {
     if (typeof key === 'string') {
@@ -55,10 +55,10 @@ export const getProp = (obj, key) => {
  * This is useful when using the kind of deep accessors/properties
  * often found in the knime nodeConfig objects.
  *
- * @param  {} obj the object with the deep/nested property
- * @param  {} key the string key with '.' delimited properties
- * @param  {} val the value to set as the new value
- * @returns null
+ * @param  {Object} obj the object with the deep/nested property
+ * @param  {String} key the string key with '.' delimited properties
+ * @param  {Object} val the value to set as the new value
+ * @returns {undefined}
  * @throws error if the provided key does not exist in the obj
  */
 export const setProp = (obj, key, val) => {
@@ -70,7 +70,9 @@ export const setProp = (obj, key, val) => {
         obj[newKey] = typeof obj[newKey] === 'object' ? obj[newKey] : {};
         setProp(obj[newKey], key, val);
     } else {
-        if (!obj[key[0]]) throw Error('Provided key does not exist!');
+        if (!obj[key[0]]) {
+            throw Error('Provided key does not exist!');
+        }
         obj[key[0]] = val;
     }
 };

@@ -20,10 +20,10 @@ export default {
         }
     },
     methods: {
-      onPageSelect(e) {
-        let page = { page: this.pageMocks[e.srcElement.selectedOptions[0].index - 1].src };
-        this.$store.dispatch('pagebuilder/setPage', page);
-      }
+        onPageSelect(e) {
+            let page = { page: this.pageMocks[e.target.selectedOptions[0].index - 1].src };
+            this.$store.dispatch('pagebuilder/setPage', page);
+        }
     },
     created() {
         let store = this.$store;
@@ -65,7 +65,8 @@ export default {
       See the README file for details.
     </p>
     <p>
-      View state: <select v-model="$store.state.pagebuilder.viewState">
+      View state:
+      <select v-model="$store.state.pagebuilder.viewState">
         <option :value="null">-</option>
         <option
           v-for="state in supportedViewStates"
@@ -76,9 +77,9 @@ export default {
         </option>
       </select>
       Page mock:
-      <select 
-        v-on:change="onPageSelect"
-        >
+      <select
+        @change="onPageSelect"
+      >
         <option :value="null">-</option>
         <option
           v-for="page in pageMocks"

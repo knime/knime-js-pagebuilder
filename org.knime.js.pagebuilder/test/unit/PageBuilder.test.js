@@ -72,8 +72,8 @@ describe('PageBuilder.vue', () => {
         let wrapper = shallowMount(PageBuilder, context);
 
         expect(wrapper.vm.$store.getters['pagebuilder/isNodeValid']('id1'))
-            .toEqual(false);
-        
+            .toBe(false);
+
         store.commit('pagebuilder/updateWebNode', {
             nodeId: 'id1',
             isValid: true,
@@ -83,7 +83,7 @@ describe('PageBuilder.vue', () => {
         });
 
         expect(wrapper.vm.$store.getters['pagebuilder/isNodeValid']('id1'))
-            .toEqual(true);
+            .toBe(true);
     });
 
     it('validates page based on individual node validity', () => {
@@ -101,7 +101,7 @@ describe('PageBuilder.vue', () => {
 
         expect(wrapper.vm.$store.getters['pagebuilder/isPageValid'])
             .toEqual(false);
-        
+
         store.commit('pagebuilder/updateWebNode', {
             nodeId: 'id1',
             isValid: true,
@@ -111,7 +111,7 @@ describe('PageBuilder.vue', () => {
         });
 
         expect(wrapper.vm.$store.getters['pagebuilder/isPageValid'])
-            .toEqual(true);
+            .toBe(true);
     });
 
     it('returns invalid with empty page', () => {
@@ -137,7 +137,7 @@ describe('PageBuilder.vue', () => {
         store.commit('pagebuilder/setNodeValidity', page);
         let wrapper = shallowMount(PageBuilder, context);
         let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
-        
+
         expect(node.foo).toEqual('bar');
 
         let update = {
@@ -147,7 +147,7 @@ describe('PageBuilder.vue', () => {
                 foo: 'rod'
             }
         };
-        
+
         store.commit('pagebuilder/updateWebNode', update);
         expect(node.foo).toEqual('bar');
         update.isValid = true;
@@ -167,7 +167,7 @@ describe('PageBuilder.vue', () => {
         store.commit('pagebuilder/setNodeValidity', page);
         let wrapper = shallowMount(PageBuilder, context);
         let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
-        
+
         expect(node.foo).toEqual('bar');
 
         let update = {
@@ -177,7 +177,7 @@ describe('PageBuilder.vue', () => {
                 fooBar: 'rod' // wrong key
             }
         };
-        
+
         store.commit('pagebuilder/updateWebNode', update);
         expect(node.foo).toEqual('bar');
     });

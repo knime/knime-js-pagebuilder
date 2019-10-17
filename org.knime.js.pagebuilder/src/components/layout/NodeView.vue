@@ -1,7 +1,7 @@
 <script>
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
-import WidgetConfig from '../widgets/config';
+import WidgetConfig from '../widgets/widgets.config';
 
 /**
  * Wrapper for a single node view iframe or widget
@@ -94,9 +94,7 @@ export default {
             return style.join(';');
         },
         isWidget() {
-            return this.webNodeConfig ? 
-                WidgetConfig[this.webNodeConfig.viewRepresentation['@class']] :
-                false;
+            return this.webNodeConfig && WidgetConfig[this.webNodeConfig.viewRepresentation['@class']];
         }
     },
     methods: {
@@ -113,28 +111,24 @@ export default {
     :style="style"
   >
     <template v-if="webNodeAvailable">
-        <Widget
+      <Widget
         v-if="isWidget"
         :node-config="webNodeConfig"
         :node-id="viewConfig.nodeID"
-        @heightChange="updateHeight"
-        />
-        <NodeViewIFrame
+      />
+      <NodeViewIFrame
         v-else
         :node-config="webNodeConfig"
         :auto-height="autoHeight"
         :poll-height="pollHeight"
         :scrolling="viewConfig.scrolling"
         @heightChange="updateHeight"
-        />
+      />
     </template>
-    <div v-else>
-        <!-- TODO AP-12850 -->
-        <p>
-            Web Node cannot be displayed.
-        </p>
-        <!-- TODO AP-12850 -->
-    </div>
+    <p v-else>
+      <!-- TODO AP-12850 -->
+      Web Node cannot be displayed.
+    </p>
   </div>
 </template>
 
