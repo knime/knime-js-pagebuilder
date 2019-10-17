@@ -31,6 +31,10 @@ describe('NodeView.vue', () => {
         };
     });
 
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     it('renders', () => {
         let wrapper = shallowMount(NodeView, context);
         expect(wrapper.html()).toBeTruthy();

@@ -16,11 +16,15 @@ describe('NodeViewIframe.vue', () => {
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         store.commit('pagebuilder/setPage', {
             webNodes: {
-                id1: {
-                    foo: 'bar'
+                '0.0.7': {
+                    namespace: 'foo',
+                    javascriptLibraries: [],
+                    stylesheets: []
                 },
-                id2: {
-                    baz: 'qux'
+                '0.0.9': {
+                    namespace: 'bar',
+                    javascriptLibraries: [],
+                    stylesheets: []
                 }
             }
         });
@@ -36,12 +40,16 @@ describe('NodeViewIframe.vue', () => {
     });
 
     it('renders', () => {
-        let wrapper = shallowMount(NodeViewIFrame, { ...context, attachToDocument: true  });
+        let wrapper = shallowMount(NodeViewIFrame, {
+            ...context,
+            attachToDocument: true
+        });
         expect(wrapper.html()).toBeTruthy();
     });
 
     it('respects the "scrolling" attribute', () => {
         let wrapper = shallowMount(NodeViewIFrame, {
+            ...context,
             attachToDocument: true,
             propsData: {
                 scrolling: false,
@@ -51,6 +59,7 @@ describe('NodeViewIframe.vue', () => {
         expect(wrapper.vm.$el.contentDocument.documentElement.innerHTML).toContain('html { overflow: hidden; }');
 
         wrapper = shallowMount(NodeViewIFrame, {
+            ...context,
             attachToDocument: true,
             propsData: {
                 scrolling: true,
@@ -60,6 +69,7 @@ describe('NodeViewIframe.vue', () => {
         expect(wrapper.vm.$el.contentDocument.documentElement.innerHTML).toContain('html { overflow-y: hidden; }');
 
         wrapper = shallowMount(NodeViewIFrame, {
+            ...context,
             attachToDocument: true,
             propsData: {
                 scrolling: true,
@@ -78,6 +88,7 @@ describe('NodeViewIframe.vue', () => {
             this.height = fakeHeight;
         });
         let wrapper = shallowMount(NodeViewIFrame, {
+            ...context,
             attachToDocument: true,
             propsData: {
                 autoHeight: true
@@ -91,6 +102,7 @@ describe('NodeViewIframe.vue', () => {
     it('does not adjust height if autoHeight is not true', () => {
         jest.spyOn(NodeViewIFrame.methods, 'setHeight').mockImplementation(() => {});
         shallowMount(NodeViewIFrame, {
+            ...context,
             attachToDocument: true
         });
         expect(NodeViewIFrame.methods.setHeight).not.toHaveBeenCalled();
@@ -99,6 +111,7 @@ describe('NodeViewIframe.vue', () => {
     it('polls on heightChange', () => {
         jest.spyOn(NodeViewIFrame.methods, 'initHeightPolling').mockImplementation(() => {});
         shallowMount(NodeViewIFrame, {
+            ...context,
             attachToDocument: true,
             propsData: {
                 autoHeight: true,
@@ -111,6 +124,7 @@ describe('NodeViewIframe.vue', () => {
     it('does not poll on heightChange if pollHeight is not true', () => {
         jest.spyOn(NodeViewIFrame.methods, 'initHeightPolling').mockImplementation(() => {});
         shallowMount(NodeViewIFrame, {
+            ...context,
             attachToDocument: true,
             propsData: {
                 autoHeight: true

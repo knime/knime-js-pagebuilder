@@ -37,6 +37,9 @@ module.exports = {
     coveragePathIgnorePatterns: [
         '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|src/dev)/'
     ],
+    watchPathIgnorePatterns: [
+        '^<rootDir>/(coverage|dist|target|node_modules|bin|webapps-common)/'
+    ],
     testURL: 'http://test.example/',
     testMatch: [
         '<rootDir>/test/unit/**/*.test.js'

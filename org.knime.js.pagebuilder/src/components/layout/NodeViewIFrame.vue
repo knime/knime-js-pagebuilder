@@ -106,9 +106,12 @@ export default {
             const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
 
             // stylesheets
-            let styles = this.nodeConfig.stylesheets.map(
-                stylesheet => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${stylesheet}"></link>`
-            ).join('');
+            let styles = '';
+            if (this.nodeConfig.stylesheets && this.nodeConfig.stylesheets.length) {
+                styles = this.nodeConfig.stylesheets.map(
+                    style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${style}"></link>`
+                ).join('');
+            }
             // further styles needed for sizing
             styles += `<style>${this.innerStyle}</style>`;
             // custom CSS
@@ -131,8 +134,6 @@ export default {
                             var initMethodName = data.initMethodName;
                             var viewRepresentation = data.viewRepresentation;
                             var viewValue = data.viewValue;
-                            //TODO: validation?
-                            //debugger;
                             window[namespace][initMethodName](viewRepresentation, viewValue);
                         }
                     }
@@ -144,7 +145,9 @@ export default {
                     var origin = win.origin;
                     var namespace = ${JSON.stringify(this.nodeConfig.namespace)};
                     var nodeId = ${JSON.stringify(this.nodeId)};
-                    var knimeLoaderCount = ${this.nodeConfig.javascriptLibraries.length};
+                    var knimeLoaderCount = 
+                        ${this.nodeConfig.javascriptLibraries ? this.nodeConfig.javascriptLibraries.length : 0};
+
                     return function knimeLoader(success) {
                         knimeLoaderCount--;
                         if (!success) {
@@ -163,13 +166,16 @@ export default {
                 })();
             <\/script>`; // eslint-disable-line no-useless-escape
 
-            let scripts = this.nodeConfig.javascriptLibraries.map(
-                lib => `<script
+            let scripts = '';
+            if (this.nodeConfig.javascriptLibraries && this.nodeConfig.javascriptLibraries.length) {
+                scripts = this.nodeConfig.javascriptLibraries.map(
+                    lib => `<script
                     src="${resourceBaseUrl}${lib}"
                     onload="knimeLoader(true)"
                     onerror="knimeLoader(false)">
                     <\/script>` // eslint-disable-line no-useless-escape
-            ).join('');
+                ).join('');
+            }
 
             this.document.write(`<!doctype html>
                 <html>
