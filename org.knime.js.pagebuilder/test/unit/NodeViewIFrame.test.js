@@ -115,7 +115,7 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.emitted().heightChange).toBeTruthy();
             expect(wrapper.emitted().heightChange[0]).toEqual([fakeHeight]);
             done();
-        }, 10);
+        }, 1);
     });
 
     it('does not adjust height if autoHeight is false', () => {

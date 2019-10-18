@@ -17,7 +17,7 @@ window.knimeLoader = (function () {
             var view = window[namespace];
             if (!view) {
                 parent.postMessage({ nodeId: nodeId, type: 'error' }, origin);
-                throw new Error('no view found under namespace ' + namespace);
+                throw new ReferenceError('no view found under namespace ' + namespace);
             }
             parent.postMessage({ nodeId: nodeId, type: 'load' }, origin);
         }
