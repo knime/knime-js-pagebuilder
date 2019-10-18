@@ -57,10 +57,10 @@ export default {
                 if (this.pollHeight) {
                     // in case of auto height, a vertical scrollbar can interfere with the height calculation (in
                     // combination with a horizontal scrollbar)
-                    style += 'html { overflow-y: hidden; }';
+                    style += ' html { overflow-y: hidden; }';
                 }
             } else {
-                style += 'html { overflow: hidden; }';
+                style += ' html { overflow: hidden; }';
             }
             return style;
         }
@@ -84,13 +84,6 @@ export default {
 
         this.document = this.$el.contentDocument;
         this.injectContent();
-        if (this.autoHeight) { // TODO: defer until after init() AP-12648
-            if (this.pollHeight) {
-                this.initHeightPolling();
-            } else {
-                this.setHeight();
-            }
-        }
     },
 
     beforeDestroy() {
@@ -142,11 +135,14 @@ export default {
                         win = null;
                         parent = null;
                     });
-                    var origin = win.origin;
+                    var origin = window.origin;
                     var namespace = ${JSON.stringify(this.nodeConfig.namespace)};
                     var nodeId = ${JSON.stringify(this.nodeId)};
                     var knimeLoaderCount = 
                         ${this.nodeConfig.javascriptLibraries ? this.nodeConfig.javascriptLibraries.length : 0};
+                    if (knimeLoaderCount < 1) {
+                        parent.postMessage({ nodeId: nodeId, type: 'load' }, origin);
+                    }
 
                     return function knimeLoader(success) {
                         knimeLoaderCount--;
@@ -163,6 +159,7 @@ export default {
                             parent.postMessage({ nodeId: nodeId, type: 'load' }, origin);
                         }
                     };
+                    
                 })();
             <\/script>`; // eslint-disable-line no-useless-escape
 
@@ -226,6 +223,13 @@ export default {
                     viewValue: this.nodeConfig.viewValue,
                     type: 'init'
                 }, window.origin);
+                if (this.autoHeight) {
+                    if (this.pollHeight) {
+                        this.initHeightPolling();
+                    } else {
+                        this.setHeight();
+                    }
+                }
             }
         }
 
