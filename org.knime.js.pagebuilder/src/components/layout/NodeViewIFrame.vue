@@ -1,4 +1,6 @@
 <script>
+import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
+import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
 
 const heightPollInterval = 200; // ms
 
@@ -50,6 +52,12 @@ export default {
     },
 
     computed: {
+        nodeJsLibs() {
+            return this.nodeConfig.javascriptLibraries || [];
+        },
+        nodeStylesheets() {
+            return this.nodeConfig.stylesheets || [];
+        },
         innerStyle() {
             // prevent margin collapsation of body’s children, which causes incorrect height detection
             let style = 'body { display: inline-block; }';
@@ -95,90 +103,53 @@ export default {
     },
 
     methods: {
+        /**
+         * Inject all the scripts and stylesheet associated with the node, as well as additional scripts that we use
+         * for cross-frame communication
+         * @return {undefined}
+         */
         injectContent() {
             const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
 
-            // stylesheets
-            let styles = '';
-            if (this.nodeConfig.stylesheets && this.nodeConfig.stylesheets.length) {
-                styles = this.nodeConfig.stylesheets.map(
-                    style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${style}"></link>`
-                ).join('');
-            }
+            // stylesheets from the node view itself
+            let styles = this.nodeStylesheets.map(
+                style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${encodeURI(style)}">`
+            ).join('');
+
             // further styles needed for sizing
             styles += `<style>${this.innerStyle}</style>`;
-            // custom CSS
+
+            // custom CSS from node configuration
             if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
                 styles += `<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`;
             }
 
-            // scripts
-            let scriptLoader = `<script>
-                window.knimeLoader = (function () {
-                    var win = window;
-                    var parent = win.parent;
-                    var messageFromParent = function (event) {
-                        if (event.origin !== window.origin || !event.data) {
-                            return;
-                        }
-                        var data = event.data;
-                        if (data.type === 'init') {
-                            var namespace = data.namespace;
-                            var initMethodName = data.initMethodName;
-                            var viewRepresentation = data.viewRepresentation;
-                            var viewValue = data.viewValue;
-                            window[namespace][initMethodName](viewRepresentation, viewValue);
-                        }
-                    }
-                    window.addEventListener('message', messageFromParent);
-                    window.addEventListener('unload', function () {
-                        win = null;
-                        parent = null;
-                    });
-                    var origin = window.origin;
-                    var namespace = ${JSON.stringify(this.nodeConfig.namespace)};
-                    var nodeId = ${JSON.stringify(this.nodeId)};
-                    var knimeLoaderCount = 
-                        ${this.nodeConfig.javascriptLibraries ? this.nodeConfig.javascriptLibraries.length : 0};
-                    if (knimeLoaderCount < 1) {
-                        parent.postMessage({ nodeId: nodeId, type: 'load' }, origin);
-                    }
+            // script loader
+            let scriptLoader = `<script>${scriptLoaderSrc
+                .replace("'%ORIGIN%'", JSON.stringify(window.origin))
+                .replace("'%NAMESPACE%'", JSON.stringify(this.nodeConfig.namespace))
+                .replace("'%NODEID%'", JSON.stringify(this.nodeId))
+                .replace("'%LIBCOUNT%'", this.nodeJsLibs.length)
+            }<\/script>`; // eslint-disable-line no-useless-escape
 
-                    return function knimeLoader(success) {
-                        knimeLoaderCount--;
-                        if (!success) {
-                            parent.postMessage({ nodeId: nodeId, type: 'error' }, origin);
-                            throw new Error('Script could not be loaded');
-                        }
-                        if (knimeLoaderCount === 0) {
-                            var view = win[namespace];
-                            if (!view) {
-                                parent.postMessage({ nodeId: nodeId, type: 'error' }, origin);
-                                throw new Error('no view found under namespace ' + namespace);
-                            }
-                            parent.postMessage({ nodeId: nodeId, type: 'load' }, origin);
-                        }
-                    };
-                    
-                })();
-            <\/script>`; // eslint-disable-line no-useless-escape
+            // postMessage receiver
+            let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
 
-            let scripts = '';
-            if (this.nodeConfig.javascriptLibraries && this.nodeConfig.javascriptLibraries.length) {
-                scripts = this.nodeConfig.javascriptLibraries.map(
-                    lib => `<script
+            // scripts from the node itself
+            let scripts = this.nodeJsLibs.map(
+                lib => `<script
                     src="${resourceBaseUrl}${lib}"
                     onload="knimeLoader(true)"
                     onerror="knimeLoader(false)">
-                    <\/script>` // eslint-disable-line no-useless-escape
-                ).join('');
-            }
+                <\/script>` // eslint-disable-line no-useless-escape
+            ).join('');
 
             this.document.write(`<!doctype html>
-                <html>
+                <html lang="en-US">
                 <meta charset="utf-8">
                 <head>
                   ${styles}
+                  ${messageListener}
                   ${scriptLoader}
                   <title></title>
                 </head>
