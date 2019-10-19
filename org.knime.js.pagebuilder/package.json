@@ -19,6 +19,7 @@
   "dependencies": {
     "consola": "2.10.1",
     "vue": "2.6.10",
+    "vue-slider-component": "^3.0.41",
     "vuex": "3.0.1"
   },
   "devDependencies": {
