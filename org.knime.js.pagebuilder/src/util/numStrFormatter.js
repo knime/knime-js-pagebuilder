@@ -36,33 +36,49 @@
  * @returns {String} string representation of input number
  */
 export const format = (num, obj) => {
+    // Significant digit rounding and string conversion
     let label = obj.decimals
         ? num.toFixed(obj.decimals)
         : num.toString();
-    if (obj.mark) {
-        label = label.replace('.', obj.mark);
-    }
+    // handling thousands formatting
     if (Math.abs(num) >= 1000 && obj.thousand) {
-        let thouStr = label.split(obj.mark || '.');
+        // separate integer string from decimal string
+        let thouStr = label.split('.');
+        // let thouStr = label.split(obj.mark || '.');
         let newStr = thouStr[0][0];
+        /**
+         * counting backwards, rebuild string with correct
+         * thousands delimiter (every 3rd digit)
+        */
         for (let i = 1; i < thouStr[0].length; i++) {
             newStr += ((thouStr[0].length - i) % 3 === 0
                 ? obj.thousand
                 : '') + thouStr[0][i];
         }
-        if (thouStr.length === 2) {
+        // rebuild decimals if needed
+        if (thouStr[1]) {
             newStr += (obj.mark || '.') + thouStr[1];
         }
+        // update label
         label = newStr;
+    } else if (obj.mark) {
+        // replacing '.' with obj.mark
+        label = label.replace('.', obj.mark);
     }
+    // create prefix string
     let pref = obj.prefix || '';
+    // format negative numbers
     if (num < 0) {
-        pref += obj.negativeBefore || '';
-        if (obj.negative) {
-            label = label.toString().replace('-', obj.negative);
-        }
+        // update prefix with negative options
+        pref += (obj.negativeBefore || '') +
+            (obj.negative || '-');
+        // remove the original negative
+        label = label.substring(1);
     }
+    // add prefix
     label = pref + label;
+    // add postfix
     label += obj.postfix || '';
+    // return formatted label
     return label;
 };

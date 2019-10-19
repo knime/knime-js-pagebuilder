@@ -14,7 +14,7 @@ describe('Widget.vue', () => {
         localVue.use(Vuex);
 
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        store.commit('pagebuilder/setPage', {
+        let page = {
             webNodes: {
                 id1: {
                     foo: 'bar',
@@ -26,8 +26,9 @@ describe('Widget.vue', () => {
                     }
                 }
             }
-        });
-
+        };
+        store.commit('pagebuilder/setPage', page);
+        store.commit('pagebuilder/setNodeValidity', page);
         context = {
             store,
             localVue
@@ -93,7 +94,7 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.isValid(wrapper.vm.nodeId)).toBe(false);
+        expect(wrapper.vm.isValid).toBe(false);
 
         wrapper.vm.publishUpdate({
             isValid: true,
@@ -103,7 +104,7 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.isValid(wrapper.vm.nodeId)).toBe(true);
+        expect(wrapper.vm.isValid).toBe(true);
     });
 
     // TODO AP-12850: update Widget component level validation

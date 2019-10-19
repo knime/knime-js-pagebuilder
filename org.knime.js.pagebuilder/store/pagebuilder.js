@@ -35,6 +35,7 @@ export const mutations = {
      *
      * @param {*} state automatically supplied by vuex
      * @param {*} page not needed, but provided by action
+     * @return {undefined}
      */
     setNodeValidity(state, page) {
         if (state.page &&
@@ -71,6 +72,7 @@ export const mutations = {
      *
      * @param {*} state
      * @param {*} newWebNode
+     * @return {undefined}
      */
     updateWebNode(state, newWebNode) {
         // update the validity of the node
@@ -128,12 +130,6 @@ export const actions = {
 };
 
 export const getters = {
-
-    // Check individual node validity; *returns function*
-    isNodeValid(state, getters) {
-        return (nodeId) => Boolean(state.pageValidity[nodeId]);
-    },
-
     // Global page validity method (ex: to enable 'Next Page' button)
     isPageValid(state, getters) {
         if (!state.page ||

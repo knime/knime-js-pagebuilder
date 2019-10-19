@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import widgetConfig from './widgets.config';
 
 /**
@@ -52,9 +52,9 @@ export default {
         type() {
             return widgetConfig[this.nodeConfig.viewRepresentation['@class']];
         },
-        ...mapGetters({
-            isValid: 'pagebuilder/isNodeValid'
-        })
+        isValid() {
+            return Boolean(this.$store.state.pagebuilder.pageValidity[this.nodeId]);
+        }
     },
     methods: {
         validate(value) {
@@ -82,7 +82,7 @@ export default {
     <Component
       :is="type"
       v-bind="$props"
-      :is-valid="isValid(nodeId)"
+      :is-valid="isValid"
       @updateWidget="publishUpdate"
     />
   </div>

@@ -18,6 +18,15 @@ describe('PageBuilder.vue', () => {
             nextPage: () => {},
             previousPage: () => {}
         }, store);
+        const page = {
+            webNodes: {
+                id1: {
+                    foo: 'bar'
+                }
+            }
+        };
+        store.commit('pagebuilder/setPage', page);
+        store.commit('pagebuilder/setNodeValidity', page);
         context = {
             store,
             localVue
@@ -60,42 +69,7 @@ describe('PageBuilder.vue', () => {
         expect(wrapper.find(Result).exists()).toBeTruthy();
     });
 
-    it('validates individual nodes', () => {
-        store.commit('pagebuilder/setPage', {
-            webNodes: {
-                id1: {
-                    foo: 'bar'
-                }
-            }
-        });
-
-        let wrapper = shallowMount(PageBuilder, context);
-
-        expect(wrapper.vm.$store.getters['pagebuilder/isNodeValid']('id1'))
-            .toBe(false);
-
-        store.commit('pagebuilder/updateWebNode', {
-            nodeId: 'id1',
-            isValid: true,
-            update: {
-                foo: 'rod'
-            }
-        });
-
-        expect(wrapper.vm.$store.getters['pagebuilder/isNodeValid']('id1'))
-            .toBe(true);
-    });
-
     it('validates page based on individual node validity', () => {
-        const page = {
-            webNodes: {
-                id1: {
-                    foo: 'bar'
-                }
-            }
-        };
-        store.commit('pagebuilder/setPage', page);
-        store.commit('pagebuilder/setNodeValidity', page);
 
         let wrapper = shallowMount(PageBuilder, context);
 
@@ -126,15 +100,6 @@ describe('PageBuilder.vue', () => {
     });
 
     it('prevents value modification with invalid node updates', () => {
-        const page = {
-            webNodes: {
-                id1: {
-                    foo: 'bar'
-                }
-            }
-        };
-        store.commit('pagebuilder/setPage', page);
-        store.commit('pagebuilder/setNodeValidity', page);
         let wrapper = shallowMount(PageBuilder, context);
         let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
 
@@ -156,15 +121,6 @@ describe('PageBuilder.vue', () => {
     });
 
     it('prevents value modification with invalid keys', () => {
-        const page = {
-            webNodes: {
-                id1: {
-                    foo: 'bar'
-                }
-            }
-        };
-        store.commit('pagebuilder/setPage', page);
-        store.commit('pagebuilder/setNodeValidity', page);
         let wrapper = shallowMount(PageBuilder, context);
         let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
 
