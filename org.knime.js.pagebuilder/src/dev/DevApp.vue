@@ -40,6 +40,12 @@ export default {
                 await setRandomPage();
             }
         }, store);
+    },
+    methods: {
+        onPageSelect(e) {
+            let page = { page: this.pageMocks[e.target.selectedOptions[0].index - 1].src };
+            this.$store.dispatch('pagebuilder/setPage', page);
+        }
     }
 };
 </script>
@@ -59,7 +65,8 @@ export default {
       See the README file for details.
     </p>
     <p>
-      View state: <select v-model="$store.state.pagebuilder.viewState">
+      View state:
+      <select v-model="$store.state.pagebuilder.viewState">
         <option :value="null">-</option>
         <option
           v-for="state in supportedViewStates"
@@ -70,7 +77,9 @@ export default {
         </option>
       </select>
       Page mock:
-      <select v-model="$store.state.pagebuilder.page">
+      <select
+        @change="onPageSelect"
+      >
         <option :value="null">-</option>
         <option
           v-for="page in pageMocks"

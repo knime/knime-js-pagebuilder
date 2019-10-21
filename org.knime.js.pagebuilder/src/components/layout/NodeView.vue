@@ -1,12 +1,15 @@
 <script>
 import NodeViewIFrame from './NodeViewIFrame';
+import Widget from '../widgets/Widget';
+import WidgetConfig from '../widgets/widgets.config';
 
 /**
- * Wrapper for a single node view iframe
+ * Wrapper for a single node view iframe or widget
  */
 export default {
     components: {
-        NodeViewIFrame
+        NodeViewIFrame,
+        Widget
     },
     props: {
         /**
@@ -89,6 +92,9 @@ export default {
             }
 
             return style.join(';');
+        },
+        isWidget() {
+            return this.webNodeConfig && WidgetConfig[this.webNodeConfig.viewRepresentation['@class']];
         }
     },
     methods: {
@@ -104,16 +110,27 @@ export default {
     :class="classes"
     :style="style"
   >
-    <NodeViewIFrame
-      v-if="webNodeAvailable"
-      
-      :node-id="viewConfig.nodeID"
-      :node-config="webNodeConfig"
-      :auto-height="autoHeight"
-      :poll-height="pollHeight"
-      :scrolling="viewConfig.scrolling"
-      @heightChange="updateHeight"
-    />
+    <template v-if="webNodeAvailable">
+      <Widget
+        v-if="isWidget"
+        :node-config="webNodeConfig"
+        :node-id="viewConfig.nodeID"
+      />
+      <NodeViewIFrame
+        v-if="webNodeAvailable"
+
+        :node-id="viewConfig.nodeID"
+        :node-config="webNodeConfig"
+        :auto-height="autoHeight"
+        :poll-height="pollHeight"
+        :scrolling="viewConfig.scrolling"
+        @heightChange="updateHeight"
+      />
+    </template>
+    <p v-else>
+      <!-- TODO AP-12850 -->
+      Web Node cannot be displayed.
+    </p>
   </div>
 </template>
 

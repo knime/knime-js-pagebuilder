@@ -4,7 +4,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import NodeView from '@/components/layout/NodeView';
 import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
 
-import * as storeConfig from '@/../store/pagebuilder';
+import * as storeConfig from '~/store/pagebuilder';
 
 describe('NodeView.vue', () => {
     let store, localVue, context;
@@ -17,10 +17,16 @@ describe('NodeView.vue', () => {
         store.commit('pagebuilder/setPage', {
             webNodes: {
                 id1: {
-                    foo: 'bar'
+                    foo: 'bar',
+                    viewRepresentation: {
+                        '@class': 'testing.notWidget'
+                    }
                 },
                 id2: {
-                    baz: 'qux'
+                    baz: 'qux',
+                    viewRepresentation: {
+                        '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                    }
                 }
             }
         });
@@ -121,8 +127,14 @@ describe('NodeView.vue', () => {
                 viewConfig
             }
         });
+        let expectedNodeConfig = {
+            foo: 'bar',
+            viewRepresentation: {
+                '@class': 'testing.notWidget'
+            }
+        };
 
-        expect(wrapper.find(NodeViewIFrame).props('nodeConfig')).toEqual({ foo: 'bar' });
+        expect(wrapper.find(NodeViewIFrame).props('nodeConfig')).toEqual(expectedNodeConfig);
         expect(wrapper.find(NodeViewIFrame).props('scrolling')).toBeFalsy();
 
         wrapper = shallowMount(NodeView, {
@@ -135,6 +147,34 @@ describe('NodeView.vue', () => {
             }
         });
         expect(wrapper.find(NodeViewIFrame).props('scrolling')).toBe(true);
+    });
+
+    it('can detect widgets', () => {
+        let viewConfig = {
+            nodeID: 'id2'
+        };
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.isWidget).toBeTruthy();
+    });
+
+    it('can detect non-widgets', () => {
+        let viewConfig = {
+            nodeID: 'id1'
+        };
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.isWidget).toBeFalsy();
     });
 
     it('does not render iframe if webNode config is missing', () => {

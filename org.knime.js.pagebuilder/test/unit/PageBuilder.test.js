@@ -18,6 +18,14 @@ describe('PageBuilder.vue', () => {
             nextPage: () => {},
             previousPage: () => {}
         }, store);
+        const page = {
+            webNodes: {
+                id1: {
+                    foo: 'bar'
+                }
+            }
+        };
+        store.commit('pagebuilder/setPage', page);
         context = {
             store,
             localVue
@@ -60,4 +68,68 @@ describe('PageBuilder.vue', () => {
         expect(wrapper.find(Result).exists()).toBeTruthy();
     });
 
+    it('validates page based on individual node validity', () => {
+
+        let wrapper = shallowMount(PageBuilder, context);
+
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(false);
+
+        store.commit('pagebuilder/updateWebNode', {
+            nodeId: 'id1',
+            isValid: true,
+            update: {
+                foo: 'rod'
+            }
+        });
+
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
+    });
+
+    it('returns valid with empty page', () => {
+        const page = {};
+        store.commit('pagebuilder/setPage', page);
+
+        let wrapper = shallowMount(PageBuilder, context);
+
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
+    });
+
+    it('prevents value modification with invalid node updates', () => {
+        let wrapper = shallowMount(PageBuilder, context);
+        let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
+
+        expect(node.foo).toEqual('bar');
+
+        let update = {
+            nodeId: 'id1',
+            isValid: false,
+            update: {
+                foo: 'rod'
+            }
+        };
+
+        store.commit('pagebuilder/updateWebNode', update);
+        expect(node.foo).toEqual('bar');
+        update.isValid = true;
+        store.commit('pagebuilder/updateWebNode', update);
+        expect(node.foo).toEqual('rod');
+    });
+
+    it('prevents value modification with invalid keys', () => {
+        let wrapper = shallowMount(PageBuilder, context);
+        let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
+
+        expect(node.foo).toEqual('bar');
+
+        let update = {
+            nodeId: 'id1',
+            isValid: true,
+            update: {
+                fooBar: 'rod' // wrong key
+            }
+        };
+
+        store.commit('pagebuilder/updateWebNode', update);
+        expect(node.foo).toEqual('bar');
+    });
 });

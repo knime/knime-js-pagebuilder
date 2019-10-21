@@ -116,7 +116,7 @@ export default {
                 style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${encodeURI(style)}">`
             ).join('');
 
-            // further styles needed for sizing
+            // furthernode styles needed for sizing
             styles += `<style>${this.innerStyle}</style>`;
 
             // custom CSS from node configuration
