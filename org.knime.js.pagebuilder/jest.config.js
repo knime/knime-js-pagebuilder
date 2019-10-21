@@ -16,7 +16,6 @@ module.exports = {
         '/node_modules/'
     ],
     moduleNameMapper: {
-        '^raw-loader!': '<rootDir>/test/unit/assets/stub.txt',
         '\\.(jpg|png)\\?(jpg|webp)': '<rootDir>/test/unit/assets/stub.$2',
         '\\.svg\\?inline$': '<rootDir>/test/unit/assets/stub.svg',
         '\\.svg\\?data$': '<rootDir>/test/unit/assets/stub.data',

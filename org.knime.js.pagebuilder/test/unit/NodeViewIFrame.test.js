@@ -6,6 +6,10 @@ import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
 
 import * as storeConfig from '@/../store/pagebuilder';
 
+jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
+  foo = ['%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
+jest.mock('raw-loader!./injectedScripts/messageListener.js', () => '"messageListener.js mock";', { virtual: true });
+
 describe('NodeViewIframe.vue', () => {
 
     let store, localVue, context;
@@ -15,6 +19,7 @@ describe('NodeViewIframe.vue', () => {
         localVue.use(Vuex);
 
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
             webNodes: {
                 '0.0.7': {
@@ -183,5 +188,74 @@ describe('NodeViewIframe.vue', () => {
         });
 
         expect(NodeViewIFrame.methods.initHeightPolling).not.toHaveBeenCalled();
+    });
+
+    describe('resource injection', () => {
+        it('injects resources', () => {
+            window.origin = new URL(testURL).origin;
+            jest.spyOn(NodeViewIFrame.methods, 'initHeightPolling').mockImplementation(() => {});
+            let wrapper = shallowMount(NodeViewIFrame, {
+                attachToDocument: true,
+                ...context,
+                propsData: {
+                    nodeId: '0.0.7',
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        javascriptLibraries: ['foo/bar.js', 'qux/baz.js'],
+                        stylesheets: ['bla.css', 'narf.css'],
+                        customCSS: 'body { background: red; }'
+                    }
+                }
+            });
+
+            let html = wrapper.vm.document.documentElement.innerHTML;
+            expect(html).toMatch('messageListener.js mock');
+            expect(html).toMatch('scriptLoader.js mock');
+            expect(html)
+                .toMatch(`["${window.origin}", "knimespace", "0.0.7", 2]`);
+            expect(html).toMatch('<script src="http://baseurl.test.example/foo/bar.js" ' +
+                'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
+            expect(html).toMatch('<script src="http://baseurl.test.example/qux/baz.js" ' +
+                'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
+            expect(html).toMatch('<link type="text/css" rel="stylesheet" href="http://baseurl.test.example/bla.css">');
+            expect(html).toMatch('<link type="text/css" rel="stylesheet" href="http://baseurl.test.example/narf.css">');
+            expect(html).toMatch('<style>body { background: red; }</style>');
+        });
+
+
+        it('handles resource loading', () => {
+            let wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    nodeId: '0.0.7',
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        initMethodName: 'initMe',
+                        viewRepresentation: { dummyRepresentation: true },
+                        viewValue: { dummyValue: true }
+                    }
+                }
+            });
+
+            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+
+            window.origin = new URL(testURL).origin;
+
+            // fake resource loading
+            // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'load' }
+            });
+
+            expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                namespace: 'knimespace',
+                initMethodName: 'initMe',
+                viewRepresentation: { dummyRepresentation: true },
+                viewValue: { dummyValue: true },
+                type: 'init'
+            }, window.origin);
+        });
     });
 });

@@ -65,10 +65,10 @@ export default {
                 if (this.pollHeight) {
                     // in case of auto height, a vertical scrollbar can interfere with the height calculation (in
                     // combination with a horizontal scrollbar)
-                    style += ' html { overflow-y: hidden; }';
+                    style += 'html { overflow-y: hidden; }';
                 }
             } else {
-                style += ' html { overflow: hidden; }';
+                style += 'html { overflow: hidden; }';
             }
             return style;
         }
