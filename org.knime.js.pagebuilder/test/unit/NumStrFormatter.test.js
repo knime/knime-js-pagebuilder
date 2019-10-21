@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import { format } from '../../src/util/numStrFormatter';
 
 describe('numStrFormatter.js', () => {

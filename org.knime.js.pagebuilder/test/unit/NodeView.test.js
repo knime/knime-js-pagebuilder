@@ -4,7 +4,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import NodeView from '@/components/layout/NodeView';
 import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
 
-import * as storeConfig from '@/../store/pagebuilder';
+import * as storeConfig from '~/store/pagebuilder';
 
 describe('NodeView.vue', () => {
     let store, localVue, context;

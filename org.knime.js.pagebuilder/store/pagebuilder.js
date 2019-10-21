@@ -13,36 +13,32 @@ export const mutations = {
         state.viewState = viewState;
     },
 
-    setPage(state, page) {
-        state.page = page;
-    },
-
     /**
-     * Store the valid state of all
-     * webNodes in the page as an key/value pair
-     * on the state.pageValidity property.
-     *
-     * Boolean isValid values for each node are
-     * stored with a key of the corresponding nodeID.
-     *
-     * ex: state.pageValidity = {
-     *      1:0:1 : false,
-     *      ...
-     * }
-     *
-     * This mutation is called everytime there is a
-     * new page set.
+     * Set page.
      *
      * @param {*} state automatically supplied by vuex
-     * @param {*} page not needed, but provided by action
+     * @param {*} page new page object
      * @return {undefined}
      */
-    setNodeValidity(state, page) {
-        if (state.page &&
-            typeof state.page.webNodes === 'object' &&
-            state.page.webNodes !== null) {
-            state.pageValidity = {}; // must reset the page validity each time page changes
-            Object.keys(state.page.webNodes).forEach((nodeId) => {
+    setPage(state, page) {
+        state.page = page;
+        /* The `pageValidity` object stores the valid state of all webNodes in the page as an key/value pair.
+         *
+         * Boolean isValid values for each node are stored with a key of the corresponding nodeID.
+         *
+         * ex: state.pageValidity = {
+         *      1:0:1 : false,
+         *      ...
+         * }
+         *
+         * In order to make these properties reactive, they have to be initialized once using `this._vm.$set` whenever
+         * the page changes.
+         */
+        if (page &&
+            typeof page.webNodes === 'object' &&
+            page.webNodes !== null) {
+            state.pageValidity = {};
+            Object.keys(page.webNodes).forEach((nodeId) => {
                 this._vm.$set(state.pageValidity, nodeId, false);
             });
         }
@@ -76,7 +72,7 @@ export const mutations = {
      */
     updateWebNode(state, newWebNode) {
         // update the validity of the node
-        this._vm.$set(state.pageValidity, newWebNode.nodeId, newWebNode.isValid);
+        state.pageValidity[newWebNode.nodeId] = newWebNode.isValid;
 
         // only update value if the node is valid
         if (newWebNode.isValid) {
@@ -86,15 +82,13 @@ export const mutations = {
                     setProp(currentWebNode, key, value);
                 } catch (e) {
                     // catch deep Object modification errors
-                    consola.error(`WebNode[type: ${newWebNode.type}, id: ${
-                        newWebNode.nodeId}]: Value not updated because the ` +
-                        `provided key was invalid. Key: `, key);
+                    consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated` +
+                     `because the provided key was invalid. Key:`, key);
                 }
             }
         } else {
-            consola.error(`WebNode[type: ${newWebNode.type}, id: ${
-                newWebNode.nodeId}]: Value not updated because the ` +
-                `change was invalid. Valid: `, newWebNode.isValid);
+            consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated because` +
+                `the change was invalid. Valid:`, newWebNode.isValid);
         }
     }
 };
@@ -108,12 +102,11 @@ export const actions = {
     setPage({ commit }, { page }) {
         consola.trace('PageBuilder: Set page via action: ', page);
         commit('setPage', page);
-        commit('setNodeValidity', page);
     },
 
     updateWebNode({ commit }, newWebNode) {
-        consola.trace(`WebNode[type: ${newWebNode.type}, id: ${
-            newWebNode.nodeId}]: Updated value via action: `, newWebNode);
+        consola.trace(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Updated value via action:`,
+            newWebNode);
         commit('updateWebNode', newWebNode);
     },
 
@@ -132,11 +125,8 @@ export const actions = {
 export const getters = {
     // Global page validity method (ex: to enable 'Next Page' button)
     isPageValid(state, getters) {
-        if (!state.page ||
-            !state.page.webNodes ||
-            !state.pageValidity ||
-            Object.keys(state.page.webNodes).length < 1) {
-            return false;
+        if (!state.page || !state.page.webNodes || !state.pageValidity) {
+            return true;
         }
         return Object.keys(state.page.webNodes).every(key => state.pageValidity[key]);
     }

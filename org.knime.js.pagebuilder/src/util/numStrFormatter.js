@@ -51,6 +51,7 @@ export const format = (num, obj) => {
          * thousands delimiter (every 3rd digit)
         */
         for (let i = 1; i < thouStr[0].length; i++) {
+            // eslint-disable-next-line no-magic-numbers
             newStr += ((thouStr[0].length - i) % 3 === 0
                 ? obj.thousand
                 : '') + thouStr[0][i];
