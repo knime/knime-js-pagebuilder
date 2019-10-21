@@ -1,7 +1,10 @@
 <script>
 import Slider from '../baseElements/input/Slider';
+import Label from '../baseElements/text/Label';
+import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { format } from '../../../util/numStrFormatter';
 import { getProp } from '../../../util/nestedProperty';
+import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
 
 const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.double';
 const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.double';
@@ -27,7 +30,9 @@ const DEBOUNCER_TIMEOUT = 250;
  */
 export default {
     components: {
-        Slider
+        Label,
+        Slider,
+        ErrorMessage
     },
     props: {
         nodeConfig: {
@@ -51,6 +56,20 @@ export default {
     },
     updateDebouncer: null,
     computed: {
+        label() {
+            return this.viewRep.label;
+        },
+        errorMessage() {
+            if (this.isValid) {
+                return '';
+            } else if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
+                return this.nodeConfig.nodeInfo.nodeErrorMessage;
+            } else if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
+                return this.nodeConfig.nodeInfo.nodeWarnMessage;
+            } else {
+                return 'Current slider value is invalid';
+            }
+        },
         min() {
             if (this.viewRep.useCustomMin) { return this.viewRep.customMin; }
             return this.sliderSettings.range.min[0];
@@ -83,57 +102,20 @@ export default {
         },
         tooltipFormat() {
             const tt = this.sliderSettings.tooltips;
-
             if (tt && typeof tt[0] === 'object') {
                 return (val) => format(val, tt[0]);
             }
-            return "'{value}'";
+            return (val) => val;
         },
         marks() {
-            const config = this.sliderSettings.pips;
-            if (config) {
-                switch (config.mode) {
-                case 'steps':
-                    return (val) => val % this.stepSize === 0
-                        ? { label: `${format(val, config.format)}` }
-                        : null;
-                case 'values': {
-                    const valuesLabels = {};
-                    config.values.forEach((val) => {
-                        valuesLabels[val] = `${format(val, config.format)}`;
-                    });
-                    return valuesLabels;
-                }
-                case 'range':
-                    return {
-                        [this.min]: `${format(this.min, config.format)}`,
-                        [this.max]: `${format(this.max, config.format)}`
-                    };
-                case 'positions': {
-                    const positionsLabels = {};
-                    config.values.forEach((val) => {
-                        let key = this.max * (val / 100) || this.min;
-                        positionsLabels[key] = `${format(key, config.format)}`;
-                    });
-                    return positionsLabels;
-                }
-                case 'count': {
-                    const countLabels = { [this.min]: `${format(this.min, config.format)}` };
-                    const step = (this.max - this.min) / config.values[0];
-                    for (let i = 1; i < config.values[0]; i++) {
-                        let key = this.min + i * step;
-                        countLabels[key] = `${format(key, config.format)}`;
-                    }
-                    countLabels[this.max] = `${format(this.max, config.format)}`;
-                    return countLabels;
-                }
-                default:
-                    // nothing
-                    return false;
-                }
-            } else {
-                return false;
-            }
+            
+            return createTicks({
+                config: this.sliderSettings.pips,
+                min: this.min,
+                max: this.max,
+                direction: this.direction,
+                stepSize: this.stepSize
+            });
         },
         connect() {
             const conSet = this.sliderSettings.connect;
@@ -143,8 +125,26 @@ export default {
                 return conSet[1] ? 'bottom' : 'none';
             }
         },
-        validClass() {
-            return this.isValid ? 'knime-valid-widget' : 'knime-invalid-widget';
+        sliderClass() {
+            return [
+                'knime-slider',
+                `knime-slider-${this.sliderSettings.orientation}`,
+                this.tooltips === 'none' ? '' : 'tooltip-slider'
+            ];
+        },
+        labelClass() {
+            return [
+                'knime-label',
+                `knime-slider-${this.sliderSettings.orientation}-label`,
+                this.tooltips === 'none' ? '' : 'tooltip-label'
+            ];
+        },
+        errorClass() {
+            return [
+                'knime-error',
+                `knime-slider-${this.sliderSettings.orientation}-error`,
+                this.tooltips === 'none' ? '' : 'tooltip-error'
+            ];
         }
     },
     methods: {
@@ -178,7 +178,11 @@ export default {
 </script>
 
 <template>
-  <div class="knime-slider">
+  <div>
+    <Label
+      :text="label"
+      :class="labelClass"
+    />
     <Slider
       :minimum="min"
       :maximum="max"
@@ -191,15 +195,50 @@ export default {
       :tooltip-format="tooltipFormat"
       :marks="marks"
       :connect="connect"
-      :class="validClass"
+      :class="sliderClass"
       @updateValue="onChange"
+    />
+    <ErrorMessage
+      :error="errorMessage"
+      :class="errorClass"
     />
   </div>
 </template>
 
 <style lang="postcss" scoped>
 /* Dynamically style container at some point */
-.knime-slider {
-  padding: 40px 20px 35px 50px;
+.knime-slider-horizontal {
+  padding-top: 10px;
+  padding-right: 15px;
+  padding-bottom: 25px;
+  padding-left: 15px;
+}
+
+.knime-slider-horizontal.tooltip-slider {
+  padding-top: 45px;
+  padding-right: 25px;
+  padding-left: 25px;
+}
+
+.knime-slider-vertical {
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+
+.knime-slider-vertical.tooltip-slider {
+  padding-top: 15px;
+  padding-left: 50px;
+}
+
+.knime-slider-horizontal-label,
+.knime-slider-horizontal-error {
+  padding-left: 15px;
+}
+
+.knime-slider-horizontal-label.tooltip-label,
+.knime-slider-horizontal-error.tooltip-error {
+  padding-left: 25px;
 }
 </style>

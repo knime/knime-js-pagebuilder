@@ -81,7 +81,8 @@ export default {
 </script>
 
 <template>
-  <div class="knime-widget">
+  <!-- knime-qf-container legacy selector -->
+  <div class="knime-widget knime-qf-container">
     <Component
       :is="type"
       v-bind="$props"
