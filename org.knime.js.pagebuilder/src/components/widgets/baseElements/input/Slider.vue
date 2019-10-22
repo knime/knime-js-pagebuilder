@@ -8,6 +8,8 @@ const DEFAULT_HEIGHT = 20;
 /**
  * At the html component level (1st level), functionality will be limited to
  * validating settings on a low level to allow proper browser functionality.
+ * 
+ * This slider uses the Vue-Slider-Component library.
  */
 export default {
     components: {

@@ -108,7 +108,6 @@ export default {
             return (val) => val;
         },
         marks() {
-            
             return createTicks({
                 config: this.sliderSettings.pips,
                 min: this.min,
