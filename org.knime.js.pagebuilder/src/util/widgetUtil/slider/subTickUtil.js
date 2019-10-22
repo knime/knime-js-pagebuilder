@@ -148,7 +148,7 @@ export const createSubTicks = (tickObj, vals, subTickConfig) => {
         let allSteps = numSteps + labelValues.length;
         // calculate the ideal distance between ticks to perfectly
         // match the user preference.
-        const densitySize = max - min / numSteps;
+        const densitySize = (max - min) / numSteps;
         // create a collection of the distance between all of the
         // existing labels on the slider.
         const diffArr = labelValues.reduce((acc, val, ind, arr) => {
