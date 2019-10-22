@@ -1,13 +1,13 @@
 import fs from 'fs';
-const { createInstrumenter } = require('istanbul-lib-instrument');
 
 describe('script loader', () => {
     let knimeLoaderSrc;
 
     beforeAll(() => {
+        const instrumenter = require('istanbul-lib-instrument').createInstrumenter();
         const filename = require.resolve('@/components/layout/injectedScripts/scriptLoader');
-        // trick taken from https://jasonstitt.com/istanbul-cover-eval to allow coverage in evaluadet src
-        knimeLoaderSrc = createInstrumenter().instrumentSync(fs.readFileSync(filename, 'utf-8'), filename);
+        // trick taken from https://jasonstitt.com/istanbul-cover-eval to allow coverage in evaluated src
+        knimeLoaderSrc = instrumenter.instrumentSync(fs.readFileSync(filename, 'utf-8'), filename);
 
         jest.spyOn(window, 'postMessage').mockImplementation(() => {});
     });

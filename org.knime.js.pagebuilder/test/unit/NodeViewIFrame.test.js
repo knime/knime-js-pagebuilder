@@ -1,6 +1,5 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
-import { testURL } from '~/jest.config';
 
 import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
 
@@ -104,7 +103,7 @@ describe('NodeViewIframe.vue', () => {
         });
 
         // fake script loader callback (scriptLoader.js is mocked)
-        window.origin = new URL(testURL).origin;
+        window.origin = window.location.origin;
         window.postMessage({ nodeId: '0.0.7', type: 'load' }, window.origin);
 
         setTimeout(() => { // postMessage mock adds artificial delay
@@ -134,7 +133,7 @@ describe('NodeViewIframe.vue', () => {
             }
         });
 
-        window.origin = new URL(testURL).origin;
+        window.origin = window.location.origin;
 
         // see above
         wrapper.vm.messageFromIframe({
@@ -157,7 +156,7 @@ describe('NodeViewIframe.vue', () => {
             }
         });
 
-        window.origin = new URL(testURL).origin;
+        window.origin = window.location.origin;
 
         // see above
         wrapper.vm.messageFromIframe({
@@ -179,7 +178,7 @@ describe('NodeViewIframe.vue', () => {
             }
         });
 
-        window.origin = new URL(testURL).origin;
+        window.origin = window.location.origin;
 
         // see above
         wrapper.vm.messageFromIframe({
@@ -191,9 +190,8 @@ describe('NodeViewIframe.vue', () => {
     });
 
     describe('resource injection', () => {
-        it('injects resources', () => {
-            window.origin = new URL(testURL).origin;
-            jest.spyOn(NodeViewIFrame.methods, 'initHeightPolling').mockImplementation(() => {});
+        it('injects scripts and styles', () => {
+            window.origin = window.location.origin;
             let wrapper = shallowMount(NodeViewIFrame, {
                 attachToDocument: true,
                 ...context,
@@ -211,8 +209,7 @@ describe('NodeViewIframe.vue', () => {
             let html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('messageListener.js mock');
             expect(html).toMatch('scriptLoader.js mock');
-            expect(html)
-                .toMatch(`["${window.origin}", "knimespace", "0.0.7", 2]`);
+            expect(html).toMatch(`["${window.origin}", "knimespace", "0.0.7", 2]`);
             expect(html).toMatch('<script src="http://baseurl.test.example/foo/bar.js" ' +
                 'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
             expect(html).toMatch('<script src="http://baseurl.test.example/qux/baz.js" ' +
@@ -240,7 +237,7 @@ describe('NodeViewIframe.vue', () => {
 
             jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
 
-            window.origin = new URL(testURL).origin;
+            window.origin = window.location.origin;
 
             // fake resource loading
             // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260

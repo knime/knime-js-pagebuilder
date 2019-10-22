@@ -1,4 +1,4 @@
-describe('script loader', () => {
+describe('message listener', () => {
 
     const postMessage = (data, origin) => {
         // we can't use

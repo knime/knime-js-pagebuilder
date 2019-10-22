@@ -1,7 +1,7 @@
 <script>
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
-import WidgetConfig from '../widgets/widgets.config';
+import widgetConfig from '../widgets/widgets.config';
 
 /**
  * Wrapper for a single node view iframe or widget
@@ -94,7 +94,7 @@ export default {
             return style.join(';');
         },
         isWidget() {
-            return this.webNodeConfig && WidgetConfig[this.webNodeConfig.viewRepresentation['@class']];
+            return this.webNodeConfig && widgetConfig[this.webNodeConfig.viewRepresentation['@class']];
         }
     },
     methods: {
