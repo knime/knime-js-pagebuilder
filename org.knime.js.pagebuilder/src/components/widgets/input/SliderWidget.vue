@@ -105,16 +105,16 @@ export default {
             if (tt && typeof tt[0] === 'object') {
                 return (val) => format(val, tt[0]);
             }
-            return (val) => val;
+            return (val) => val.toString();
         },
         marks() {
-            return createTicks({
+            return Object.freeze(createTicks({
                 config: this.sliderSettings.pips,
                 min: this.min,
                 max: this.max,
                 direction: this.direction,
                 stepSize: this.stepSize
-            });
+            }));
         },
         connect() {
             const conSet = this.sliderSettings.connect;

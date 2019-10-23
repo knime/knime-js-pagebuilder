@@ -6,7 +6,7 @@ import { createSubTicks } from './subTickUtil';
  * SliderWidget to parse the user provided options into a
  * correctly formatted Object holding the ticks in the proper
  * format to be passed to the Slider input component.
- * 
+ *
  * @param  {Object} tickConfig - the config object for the ticks
  *          of the slider as created by the SliderWidget.
  * @param  {Object} tickConfig.config - the sub-object provided

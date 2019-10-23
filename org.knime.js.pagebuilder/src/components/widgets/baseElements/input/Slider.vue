@@ -8,7 +8,6 @@ const DEFAULT_HEIGHT = 20;
 /**
  * At the html component level (1st level), functionality will be limited to
  * validating settings on a low level to allow proper browser functionality.
- * 
  * This slider uses the Vue-Slider-Component library.
  */
 export default {
@@ -89,13 +88,13 @@ export default {
             });
         },
         validate() {
+            if (this.minimum >= this.maximum || this.maximum <= this.minimum) {
+                return false;
+            }
             if (typeof this.getValue() === 'undefined') {
                 return false;
             }
             if (this.getValue() < this.minimum || this.getValue() > this.maximum) {
-                return false;
-            }
-            if (this.minimum >= this.maximum || this.maximum <= this.minimum) {
                 return false;
             }
             return true;

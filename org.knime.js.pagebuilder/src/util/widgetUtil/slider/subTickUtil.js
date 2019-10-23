@@ -3,7 +3,7 @@
  * created. It styles the tick based on the provided
  * length and the direction; which is used to determine if
  * the length will be used for the height or the width.
- * 
+ *
  * @param  {Number} length - the length of the tick in pixels.
  * @param  {String} direction - the direction of the slider.
  * @returns {Object} tick - the tick object.
@@ -33,7 +33,6 @@ const newTick = (length, direction) => {
  * (middle), and all others (odd-numbered ticks in odd sequences
  * that are not the absolute median tick) to a default 5 pixels
  * (smallest).
- * 
  * @param  {Number} ind - the index of the tick in the sequence.
  * @param  {Number} numTick - the total number of ticks in the sequence.
  * @returns {Number} length - the appropriate length(px) for the tick.
@@ -62,7 +61,7 @@ const getTickSize = (ind, numTick) => {
  * recent labeled ticks and then calculates the ideal distance to space these
  * ticks based on the ideal number of ticks specified by the user with the
  * density config option.
- * 
+ *
  * @param  {Object} tickObj - the object holding all of the ticks as key/value
  *          pairs.
  * @param  {Object} intervalConfig - the config holding the required information.
@@ -106,7 +105,7 @@ const addSubInterval = (tickObj, intervalConfig) => {
 /**
  * This utility creates the unlabeled subticks on the slider depending on the
  * user supplied density measure.
- * 
+ *
  * @param  {Object} tickObj - the object holding all of the ticks as key/value
  *          pairs.
  * @param  {Set} vals - the ordered collection (Set) of all the existing numberic values
@@ -151,6 +150,7 @@ export const createSubTicks = (tickObj, vals, subTickConfig) => {
         const densitySize = (max - min) / numSteps;
         // create a collection of the distance between all of the
         // existing labels on the slider.
+        // eslint-disable-next-line arrow-body-style
         const diffArr = labelValues.reduce((acc, val, ind, arr) => {
             return ind < labelValues.length - 1
                 ? [...acc, arr[ind + 1] - val]
