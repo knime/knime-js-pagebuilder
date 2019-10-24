@@ -40,12 +40,14 @@ export const format = (num, obj) => {
         let thouStr = label.split('.');
         // let thouStr = label.split(obj.mark || '.');
         let newStr = thouStr[0][0];
+        // the number of digits between thousandths delimiters
+        const DIGIT_COUNT = 3;
         /**
          * counting backwards, rebuild string with correct
          * thousands delimiter (every 3rd digit)
         */
         for (let i = 1; i < thouStr[0].length; i++) {
-            newStr += ((thouStr[0].length - i) % 3 === 0
+            newStr += ((thouStr[0].length - i) % DIGIT_COUNT === 0
                 ? obj.thousand
                 : '') + thouStr[0][i];
         }

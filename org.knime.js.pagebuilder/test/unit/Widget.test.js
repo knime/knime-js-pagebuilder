@@ -107,6 +107,7 @@ describe('Widget.vue', () => {
         expect(wrapper.vm.isValid).toBe(true);
     });
 
+    // eslint-disable-next-line no-warning-comments
     // TODO AP-12850: update Widget component level validation
     it('validates all data received', () => {
         let nodeConfig = {
@@ -122,6 +123,7 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
+        const expectedValue = 10;
 
         expect(wrapper.vm.validate()).toBe(true);
         expect(wrapper.vm.validate(null)).toBe(true);
@@ -129,7 +131,7 @@ describe('Widget.vue', () => {
         expect(wrapper.vm.validate('test')).toBe(true);
         expect(wrapper.vm.validate([])).toBe(true);
         expect(wrapper.vm.validate(0)).toBe(true);
-        expect(wrapper.vm.validate(10)).toBe(true);
+        expect(wrapper.vm.validate(expectedValue)).toBe(true);
     });
 
     it('publishes update to store', () => {
@@ -146,19 +148,21 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
+        const expectedValue = 11;
+        const newValue = 10;
 
         // previously modified to be 11
-        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(11);
+        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
             isValid: true,
             nodeId,
             update: {
-                'viewValue.testValue': 10
+                'viewValue.testValue': newValue
             }
         });
 
-        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(10);
+        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(newValue);
     });
 
     it('test getting deep properties with util', () => {
@@ -175,12 +179,13 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
+        const expectedValue = 10;
+        const newValue = 11;
 
-        expect(getProp(wrapper.vm.$store.state, 'pagebuilder.page.webNodes.id1.viewValue.testValue')).toEqual(10);
-
-        setProp(wrapper.vm.$store.state, 'pagebuilder.page.webNodes.id1.viewValue.testValue', 11);
-
-        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(11);
+        expect(getProp(wrapper.vm.$store.state, 'pagebuilder.page.webNodes.id1.viewValue.testValue'))
+            .toEqual(expectedValue);
+        setProp(wrapper.vm.$store.state, 'pagebuilder.page.webNodes.id1.viewValue.testValue', newValue);
+        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(newValue);
     });
 
 });

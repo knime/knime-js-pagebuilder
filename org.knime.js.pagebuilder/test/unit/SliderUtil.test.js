@@ -33,7 +33,7 @@ describe('tickUtil.js', () => {
                     negative: '-',
                     decimals: 2,
                     mark: '.'
-                },
+                }
             },
             min: 0,
             max: 100,
@@ -51,6 +51,7 @@ describe('tickUtil.js', () => {
     });
 
     it('handles count ticks', () => {
+        const NUM_TICKS = 4;
         const tickConfig = {
             config: {
                 mode: 'count',
@@ -59,7 +60,7 @@ describe('tickUtil.js', () => {
                     decimals: 2,
                     mark: '.'
                 },
-                values: [4]
+                values: [NUM_TICKS]
             },
             min: 0,
             max: 100,
@@ -76,6 +77,9 @@ describe('tickUtil.js', () => {
     });
 
     it('handles values ticks', () => {
+        const val1 = 1;
+        const val2 = 1;
+        const val3 = 1;
         const tickConfig = {
             config: {
                 mode: 'values',
@@ -84,7 +88,7 @@ describe('tickUtil.js', () => {
                     decimals: 2,
                     mark: '.'
                 },
-                values: [1, 50, 100]
+                values: [val1, val2, val3]
             },
             min: 1,
             max: 100,
@@ -177,73 +181,4 @@ describe('tickUtil.js', () => {
             }
         });
     });
-
-    // it('rounds to provided decimal point', () => {
-    //     let configObj = {};
-    //     let testValue = 1.23456789;
-
-    //     expect(format(testValue, configObj)).toEqual('1.23456789');
-    //     configObj.decimals = 0;
-    //     expect(format(testValue, configObj)).toEqual('1.23456789');
-    //     configObj.decimals = 4;
-    //     expect(format(testValue, configObj)).toEqual('1.2346');
-    // });
-
-    // it('delimits thousands properly', () => {
-    //     let configObj = {};
-    //     let testValue = 123456789;
-
-    //     expect(format(testValue, configObj)).toEqual('123456789');
-    //     configObj.thousand = ',';
-    //     expect(format(testValue, configObj)).toEqual('123,456,789');
-    //     configObj.thousand = '.';
-    //     expect(format(testValue, configObj)).toEqual('123.456.789');
-    //     testValue = '1234.56789';
-    //     expect(format(testValue, configObj)).toEqual('1.234.56789');
-    // });
-
-    // it('uses provided mark', () => {
-    //     let configObj = {
-    //         mark: '$'
-    //     };
-    //     let testValue = 1234.56789;
-
-    //     expect(format(testValue, configObj)).toEqual('1234$56789');
-    // });
-
-    // it('uses provided prefix', () => {
-    //     let configObj = {
-    //         prefix: '$'
-    //     };
-    //     let testValue = 123456789;
-
-    //     expect(format(testValue, configObj)).toEqual('$123456789');
-    // });
-
-    // it('uses provided postfix', () => {
-    //     let configObj = {
-    //         postfix: '%'
-    //     };
-    //     let testValue = 123456789;
-
-    //     expect(format(testValue, configObj)).toEqual('123456789%');
-    // });
-
-    // it('uses provided negativeBefore', () => {
-    //     let configObj = {
-    //         negativeBefore: '+/'
-    //     };
-    //     let testValue = -123456789;
-
-    //     expect(format(testValue, configObj)).toEqual('+/-123456789');
-    // });
-
-    // it('uses provided negative replacement', () => {
-    //     let configObj = {
-    //         negative: '?'
-    //     };
-    //     let testValue = -123456789;
-
-    //     expect(format(testValue, configObj)).toEqual('?123456789');
-    // });
 });

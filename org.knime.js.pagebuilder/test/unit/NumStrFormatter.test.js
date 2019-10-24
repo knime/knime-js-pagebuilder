@@ -16,7 +16,7 @@ describe('numStrFormatter.js', () => {
 
     it('rounds to provided decimal point', () => {
         let configObj = {};
-        let testValue = 1.23456789;
+        const testValue = 1.23456789;
 
         expect(format(testValue, configObj)).toEqual('1.23456789');
         configObj.decimals = 0;
@@ -27,22 +27,22 @@ describe('numStrFormatter.js', () => {
 
     it('delimits thousands properly', () => {
         let configObj = {};
-        let testValue = 123456789;
+        const testValue1 = 123456789;
 
-        expect(format(testValue, configObj)).toEqual('123456789');
+        expect(format(testValue1, configObj)).toEqual('123456789');
         configObj.thousand = ',';
-        expect(format(testValue, configObj)).toEqual('123,456,789');
+        expect(format(testValue1, configObj)).toEqual('123,456,789');
         configObj.thousand = '.';
-        expect(format(testValue, configObj)).toEqual('123.456.789');
-        testValue = '1234.56789';
-        expect(format(testValue, configObj)).toEqual('1.234.56789');
+        expect(format(testValue1, configObj)).toEqual('123.456.789');
+        const testValue2 = '1234.56789';
+        expect(format(testValue2, configObj)).toEqual('1.234.56789');
     });
 
     it('uses provided mark', () => {
         let configObj = {
             mark: '$'
         };
-        let testValue = 1234.56789;
+        const testValue = 1234.56789;
 
         expect(format(testValue, configObj)).toEqual('1234$56789');
     });
@@ -51,7 +51,7 @@ describe('numStrFormatter.js', () => {
         let configObj = {
             prefix: '$'
         };
-        let testValue = 123456789;
+        const testValue = 123456789;
 
         expect(format(testValue, configObj)).toEqual('$123456789');
     });
@@ -60,7 +60,7 @@ describe('numStrFormatter.js', () => {
         let configObj = {
             postfix: '%'
         };
-        let testValue = 123456789;
+        const testValue = 123456789;
 
         expect(format(testValue, configObj)).toEqual('123456789%');
     });
@@ -69,7 +69,7 @@ describe('numStrFormatter.js', () => {
         let configObj = {
             negativeBefore: '+/'
         };
-        let testValue = -123456789;
+        const testValue = -123456789;
 
         expect(format(testValue, configObj)).toEqual('+/-123456789');
     });
@@ -78,7 +78,7 @@ describe('numStrFormatter.js', () => {
         let configObj = {
             negative: '?'
         };
-        let testValue = -123456789;
+        const testValue = -123456789;
 
         expect(format(testValue, configObj)).toEqual('?123456789');
     });

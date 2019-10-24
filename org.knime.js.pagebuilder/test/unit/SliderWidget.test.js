@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import { shallowMount } from '@vue/test-utils';
 
 import SliderWidget from '@/components/widgets/input/SliderWidget';
@@ -151,6 +152,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.find(Slider)).toBeTruthy();
     });
 
+    // eslint-disable-next-line no-warning-comments
     // TODO AP-12850: update component level validation
     it('always validates as true', () => {
         let wrapper = shallowMount(SliderWidget, {

@@ -1,4 +1,7 @@
 <script>
+/**
+ * Default error message for widgets.
+ */
 export default {
     props: {
         error: {
@@ -10,7 +13,8 @@ export default {
 </script>
 
 <template>
-  <label class="knime-qf-title">
+  <!-- knime-qf-error legacy selector -->
+  <label class="knime-qf-error">
     {{ error }}
   </label>
 </template>
@@ -18,7 +22,7 @@ export default {
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
-label.knime-qf-title {
+label.knime-qf-error {
   font-family: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     "Helvetica", "Arial", sans-serif;

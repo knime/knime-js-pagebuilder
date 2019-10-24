@@ -1,4 +1,7 @@
 <script>
+/**
+ * Default label for widgets.
+ */
 export default {
     props: {
         text: {
@@ -10,6 +13,7 @@ export default {
 </script>
 
 <template>
+  <!-- knime-qf-title legacy selector -->
   <label class="knime-qf-title">
     {{ text }}
   </label>

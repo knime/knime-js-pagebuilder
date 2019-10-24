@@ -5,6 +5,7 @@ import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { format } from '../../../util/numStrFormatter';
 import { getProp } from '../../../util/nestedProperty';
 import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
+import { addKnimeClasses } from '../../../util/widgetUtil/slider/knimeClasses';
 
 const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.double';
 const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.double';
@@ -27,6 +28,8 @@ const DEBOUNCER_TIMEOUT = 250;
  * 2nd level (this) components will not know or care about the global store,
  * so API changes will no affect them.
  *
+ * This node also adds the necessary KNIME slider CSS selectors to the child slider
+ * component.
  */
 export default {
     components: {
@@ -145,6 +148,9 @@ export default {
                 this.tooltips === 'none' ? '' : 'tooltip-error'
             ];
         }
+    },
+    mounted() {
+        addKnimeClasses(this.$el.childNodes[1].childNodes[0]);
     },
     methods: {
         onChange(e) {

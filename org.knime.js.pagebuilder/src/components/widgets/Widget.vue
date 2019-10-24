@@ -2,6 +2,7 @@
 import { mapActions } from 'vuex';
 import widgetConfig from './widgets.config';
 import SliderWidget from './input/SliderWidget';
+import { applyCustomCss } from '../../util/customCss';
 
 /**
  * A Widget node view. This top level component sits at
@@ -29,6 +30,8 @@ import SliderWidget from './input/SliderWidget';
  * The type of the child of this component is determined through
  * the computed property type, as all widget class names are
  * mapped in a config file.
+ *
+ * The application of customCSS is also handled by this component.
  */
 export default {
     components: {
@@ -58,6 +61,9 @@ export default {
         isValid() {
             return Boolean(this.$store.state.pagebuilder.pageValidity[this.nodeId]);
         }
+    },
+    mounted() {
+        applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     methods: {
         validate(value) {

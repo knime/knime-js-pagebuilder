@@ -539,7 +539,7 @@
                 "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
             ],
             "viewValue": null,
-            "customCSS": "",
+            "customCSS": " .knime-qf-title { color: blue !important; }",
             "stylesheets": [
                 "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
                 "/js-lib/knime/service/knime.css",

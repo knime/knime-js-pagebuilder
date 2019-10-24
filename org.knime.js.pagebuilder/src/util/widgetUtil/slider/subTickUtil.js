@@ -1,3 +1,9 @@
+const DEFAULT_KNIME_TICK_LENGTH = 5;
+const DEFAULT_KNIME_MIN_MAX_TICK_LENGTH = 10;
+const DEFAULT_KNIME_MEDIAN_TICK_LENGTH = 8;
+const DEFAULT_KNIME_EXT_SUB_TICK_LENGTH = 6;
+const SUBTICK_INTERVAL_BUFFER_FACTOR = 1.5;
+
 /**
  * This generator function is used anytime sub-ticks are
  * created. It styles the tick based on the provided
@@ -42,13 +48,13 @@ const getTickSize = (ind, numTick) => {
     case  ind === 0:
     case  ind === numTick:
     case  numTick % 2 === 0:
-        return 5;
+        return DEFAULT_KNIME_TICK_LENGTH;
     case  Math.ceil(numTick / 2) === ind:
-        return 8;
+        return DEFAULT_KNIME_MEDIAN_TICK_LENGTH;
     case  ind % 2 === 0:
-        return 6;
+        return DEFAULT_KNIME_EXT_SUB_TICK_LENGTH;
     default:
-        return 5;
+        return DEFAULT_KNIME_TICK_LENGTH;
     }
 };
 
@@ -131,10 +137,10 @@ export const createSubTicks = (tickObj, vals, subTickConfig) => {
         // indicated they want ticks via the density option,
         // add master ticks for the min and max values.
         if (!tickObj[min]) {
-            tickObj[min] = newTick(11, direction);
+            tickObj[min] = newTick(DEFAULT_KNIME_MIN_MAX_TICK_LENGTH, direction);
         }
         if (!tickObj[max]) {
-            tickObj[max] = newTick(11, direction);
+            tickObj[max] = newTick(DEFAULT_KNIME_MIN_MAX_TICK_LENGTH, direction);
         }
         // get an array of all the numeric values of the ticks as the
         // sit on the slider (even unlabeled sliders will have min
@@ -172,7 +178,7 @@ export const createSubTicks = (tickObj, vals, subTickConfig) => {
         // are still intervals into which we can place subticks, then
         // keep adding subticks.
         do {
-            if (intervalConfig.diff.value > densitySize * 1.5) {
+            if (intervalConfig.diff.value > densitySize * SUBTICK_INTERVAL_BUFFER_FACTOR) {
                 allSteps -= addSubInterval(tickObj, intervalConfig);
             }
             allSteps--;
