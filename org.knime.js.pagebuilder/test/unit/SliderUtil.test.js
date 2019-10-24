@@ -78,8 +78,8 @@ describe('tickUtil.js', () => {
 
     it('handles values ticks', () => {
         const val1 = 1;
-        const val2 = 1;
-        const val3 = 1;
+        const val2 = 50;
+        const val3 = 100;
         const tickConfig = {
             config: {
                 mode: 'values',
@@ -140,7 +140,7 @@ describe('tickUtil.js', () => {
                     display: 'none'
                 },
                 style: {
-                    height: '11px !important'
+                    height: '10px !important'
                 }
             },
             '25': {
@@ -176,7 +176,7 @@ describe('tickUtil.js', () => {
                     display: 'none'
                 },
                 style: {
-                    height: '11px !important'
+                    height: '10px !important'
                 }
             }
         });

@@ -42,8 +42,11 @@ export default {
          * Node configuration as received by API
          */
         nodeConfig: {
-            default: () => ({}),
-            type: Object
+            required: true,
+            type: Object,
+            validator(obj) {
+                return obj.viewRepresentation && obj.viewRepresentation['@class'];
+            }
         },
         /**
          * The unique string node ID as it exists

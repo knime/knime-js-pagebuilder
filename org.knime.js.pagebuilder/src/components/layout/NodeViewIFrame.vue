@@ -1,4 +1,6 @@
 <script>
+import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
+import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
 
 const heightPollInterval = 200; // ms
 
@@ -7,6 +9,13 @@ const heightPollInterval = 200; // ms
  */
 export default {
     props: {
+        /**
+         * Node id
+         */
+        nodeId: {
+            default: () => null,
+            type: String
+        },
         /**
          * Node configuration as received by API
          */
@@ -43,6 +52,12 @@ export default {
     },
 
     computed: {
+        nodeJsLibs() {
+            return this.nodeConfig.javascriptLibraries || [];
+        },
+        nodeStylesheets() {
+            return this.nodeConfig.stylesheets || [];
+        },
         innerStyle() {
             // prevent margin collapsation of body’s children, which causes incorrect height detection
             let style = 'body { display: inline-block; }';
@@ -73,44 +88,76 @@ export default {
     },
 
     mounted() {
+        window.addEventListener('message', this.messageFromIframe);
+
         this.document = this.$el.contentDocument;
         this.injectContent();
-        if (this.autoHeight) { // TODO: defer until after init() AP-12648
-            if (this.pollHeight) {
-                this.initHeightPolling();
-            } else {
-                this.setHeight();
-            }
-        }
     },
 
     beforeDestroy() {
+        window.removeEventListener('message', this.messageFromIframe);
+
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
     },
 
     methods: {
+        /**
+         * Inject all the scripts and stylesheet associated with the node, as well as additional scripts that we use
+         * for cross-frame communication
+         * @return {undefined}
+         */
         injectContent() {
+            const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
 
-            this.document.write(`<!doctype html><style>${this.innerStyle}</style>` +
+            // stylesheets from the node view itself
+            let styles = this.nodeStylesheets.map(
+                style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${encodeURI(style)}">`
+            ).join('');
 
-              `<pre>${JSON.stringify(this.nodeConfig, null, 2).replace(/</g, '&lt;')}</pre>`);
-            /* TODO inject ressources AP-12648
-             this.nodeConfig.stylesheets.forEach(stylesheet => {
-             const link = doc.createElement('link');
-             link.setAttribute('type', 'style/css');
-             link.href = `/${restApiURL}/${jobWebResources({ jobId, webResource: stylesheet })[0]}`;
-             head.appendChild(link);
-             });
+            // furthernode styles needed for sizing
+            styles += `<style>${this.innerStyle}</style>`;
 
-             this.nodeConfig.javascriptLibraries.forEach(lib => {
-             // TODO: ensure order of execution AP-12648
-             const script = doc.createElement('script');
-             script.src = `/${restApiURL}/${jobWebResources({ jobId, webResource: lib })[0]}`;
-             head.appendChild(script);
-             });
-             */
+            // custom CSS from node configuration
+            if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
+                styles += `<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`;
+            }
+
+            // script loader
+            let scriptLoader = `<script>${scriptLoaderSrc
+                .replace("'%ORIGIN%'", JSON.stringify(window.origin))
+                .replace("'%NAMESPACE%'", JSON.stringify(this.nodeConfig.namespace))
+                .replace("'%NODEID%'", JSON.stringify(this.nodeId))
+                .replace("'%LIBCOUNT%'", this.nodeJsLibs.length)
+            }<\/script>`; // eslint-disable-line no-useless-escape
+
+            // postMessage receiver
+            let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
+
+            // scripts from the node itself
+            let scripts = this.nodeJsLibs.map(
+                lib => `<script
+                    src="${resourceBaseUrl}${lib}"
+                    onload="knimeLoader(true)"
+                    onerror="knimeLoader(false)">
+                <\/script>` // eslint-disable-line no-useless-escape
+            ).join('');
+
+            this.document.write(`<!doctype html>
+                <html lang="en-US">
+                <meta charset="utf-8">
+                <head>
+                  ${styles}
+                  ${messageListener}
+                  ${scriptLoader}
+                  <title></title>
+                </head>
+                <body></body>
+                ${scripts}
+                </html>`);
+
+            this.document.close();
         },
 
         initHeightPolling() {
@@ -120,13 +167,43 @@ export default {
 
         setHeight() {
             let { document } = this;
+            if (!document || !document.body) {
+                return;
+            }
             let { defaultView } = document;
             let htmlStyle = defaultView.getComputedStyle(document.documentElement);
             let bodyStyle = defaultView.getComputedStyle(document.body);
             this.height = document.body.scrollHeight +
                 parseInt(htmlStyle.paddingTop, 10) + parseInt(htmlStyle.paddingBottom, 10) +
                 parseInt(bodyStyle.marginTop, 10) + parseInt(bodyStyle.marginBottom, 10);
+        },
+
+        messageFromIframe(event) {
+            if (event.origin !== window.origin) {
+                return;
+            }
+            if (!event.data || event.data.nodeId !== this.nodeId) {
+                return;
+            }
+            if (event.data.type === 'load') {
+                consola.debug(`View resource loading for ${this.nodeId} completed`);
+                this.document.defaultView.postMessage({
+                    namespace: this.nodeConfig.namespace,
+                    initMethodName: this.nodeConfig.initMethodName,
+                    viewRepresentation: this.nodeConfig.viewRepresentation,
+                    viewValue: this.nodeConfig.viewValue,
+                    type: 'init'
+                }, window.origin);
+                if (this.autoHeight) {
+                    if (this.pollHeight) {
+                        this.initHeightPolling();
+                    } else {
+                        this.setHeight();
+                    }
+                }
+            }
         }
+
     }
 };
 </script>

@@ -122,7 +122,8 @@ The PageBuilder expects that the embedding app provides the following:
 - global `window.consola` instance for logging
 - CSS variables as defined in the `webapps-common` project.
   They are not included in the build in order to avoid duplication
-- calls the method 'initStore' as described in the next section, before PageBuilder store actions and the component are beeing used
+- calls the method 'initStore' as described in the next section, before PageBuilder store actions and the component are
+  being used
 
 ### Usage example
 
@@ -233,7 +234,7 @@ export default {
 
 These actions are implemented by the PageBuilder and can be dispatched by the embedding application:
 
-##### `setPage`
+##### `pagebuilder/setPage`
 
 Sets the current page object required to render a page.
 
@@ -273,6 +274,26 @@ Sets the view state in PageBuilder.
 
 ```js
 this.$store.dispatch('pagebuilder/setViewState', { viewState: 'executing' });
+```
+
+##### `pagebuilder/setResourceBaseUrl`
+
+Provide the base URL for resources that get injected into iframes.
+
+Since the pagebuilder can run under different root URLs it needs to know the baseURL. This will be concatenated with the
+resource paths of the JS views’ `javascriptLibraries` and `stylesheets` items. 
+
+###### Parameters:
+
+* `{ resourceBaseUrl }`  
+  Should be an absolute URL.
+
+###### Example:
+
+```js
+this.$store.dispatch('pagebuilder/setResourceBaseUrl', {
+    resourceBaseUrl: 'https://knime.example/knime/webportal/rest/v4/get-resources-dummypath'
+});
 ```
 
 

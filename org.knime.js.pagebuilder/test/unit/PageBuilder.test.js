@@ -26,7 +26,6 @@ describe('PageBuilder.vue', () => {
             }
         };
         store.commit('pagebuilder/setPage', page);
-        store.commit('pagebuilder/setNodeValidity', page);
         context = {
             store,
             localVue
@@ -73,8 +72,7 @@ describe('PageBuilder.vue', () => {
 
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid'])
-            .toEqual(false);
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(false);
 
         store.commit('pagebuilder/updateWebNode', {
             nodeId: 'id1',
@@ -84,19 +82,16 @@ describe('PageBuilder.vue', () => {
             }
         });
 
-        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid'])
-            .toBe(true);
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
     });
 
-    it('returns invalid with empty page', () => {
+    it('returns valid with empty page', () => {
         const page = {};
         store.commit('pagebuilder/setPage', page);
-        store.commit('pagebuilder/setNodeValidity', page);
 
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid'])
-            .toEqual(false);
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
     });
 
     it('prevents value modification with invalid node updates', () => {

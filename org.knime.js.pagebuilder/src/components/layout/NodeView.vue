@@ -1,7 +1,7 @@
 <script>
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
-import WidgetConfig from '../widgets/widgets.config';
+import widgetConfig from '../widgets/widgets.config';
 
 /**
  * Wrapper for a single node view iframe or widget
@@ -94,7 +94,7 @@ export default {
             return style.join(';');
         },
         isWidget() {
-            return this.webNodeConfig && WidgetConfig[this.webNodeConfig.viewRepresentation['@class']];
+            return this.webNodeConfig && widgetConfig[this.webNodeConfig.viewRepresentation['@class']];
         }
     },
     methods: {
@@ -117,7 +117,9 @@ export default {
         :node-id="viewConfig.nodeID"
       />
       <NodeViewIFrame
-        v-else
+        v-if="webNodeAvailable"
+
+        :node-id="viewConfig.nodeID"
         :node-config="webNodeConfig"
         :auto-height="autoHeight"
         :poll-height="pollHeight"
@@ -136,7 +138,7 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 .view {
-  background-color: var(--theme-color-gray-ultra-light);
+  background-color: var(--theme-color-white);
 
   &.aspectRatio16by9,
   &.aspectRatio4by3,

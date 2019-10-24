@@ -14,8 +14,8 @@ export const applyCustomCss = (parentEl, customCss) => {
             let rules  = customCss.trim().split('}').map(str => {
                 // separate a set of styles from the selector(s)
                 let singleRule = str.split('{');
+                let rule = {};
                 if (singleRule.length === 2) {
-                    let rule = {};
                     try {
                         // store the selectors as the key and the styles as the value
                         rule[singleRule[0].replace(';', '').trim()] = singleRule[1].trim();
@@ -23,8 +23,8 @@ export const applyCustomCss = (parentEl, customCss) => {
                         consola.error(`Custom CSS application error: `, e);
                         warnings.push(e);
                     }
-                    return rule;
                 }
+                return rule;
             });
             rules.forEach(rulePair => {
                 if (rulePair) {

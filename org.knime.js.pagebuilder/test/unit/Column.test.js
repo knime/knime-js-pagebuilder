@@ -29,7 +29,7 @@ describe('Column.vue', () => {
             }
         });
         expect(wrapper.is('div')).toBe(true);
-        expect(wrapper.attributes('class')).toEqual('col col-xs-6');
+        expect(wrapper.attributes('class')).toEqual('col col-6');
         expect(wrapper.attributes('style')).toBeUndefined();
     });
 
@@ -44,7 +44,7 @@ describe('Column.vue', () => {
                 }
             }
         });
-        expect(wrapper.attributes('class')).toEqual('col col-xs-6 class1 class2');
+        expect(wrapper.attributes('class')).toEqual('col col-6 class1 class2');
         expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
     });
 
@@ -63,7 +63,7 @@ describe('Column.vue', () => {
             }
         });
         expect(wrapper.attributes('class'))
-            .toEqual('col col-xs-12 col-sm-8 col-md-11 col-lg-10 col-xl-9 class1 class2');
+            .toEqual('col col-12 col-sm-8 col-md-11 col-lg-10 col-xl-9 class1 class2');
     });
 
     it('renders default responsive grid class if no width defined', () => {
@@ -73,7 +73,7 @@ describe('Column.vue', () => {
                 columnConfig: {}
             }
         });
-        expect(wrapper.attributes('class')).toEqual('col col-xs-12');
+        expect(wrapper.attributes('class')).toEqual('col col-12');
     });
 
     it('renders views', () => {
@@ -161,6 +161,7 @@ describe('Column.vue', () => {
 
         const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
         expect(views.length).toBe(0);
+        // eslint-disable-next-line no-magic-numbers
         expect(rows.length).toBe(3);
         expect(rows.at(0).props('rowConfig')).toEqual({ type: 'row', dummy: 'dummy' });
         expect(rows.at(1).props('rowConfig')).toEqual({ type: 'row', foo: 'bar' });

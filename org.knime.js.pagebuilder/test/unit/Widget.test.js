@@ -1,13 +1,25 @@
+/* eslint-disable no-magic-numbers */
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import Widget from '@/components/widgets/Widget';
 import { getProp, setProp } from '../../src/util/nestedProperty';
 
-import * as storeConfig from '@/../store/pagebuilder';
+import * as storeConfig from '~/store/pagebuilder';
 
 describe('Widget.vue', () => {
     let store, localVue, context;
+
+    let nodeConfig = {
+        foo: 'bar',
+        viewRepresentation: {
+            '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+        },
+        viewValue: {
+            testValue: 10
+        }
+    };
+    let nodeId = 'id1';
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -16,40 +28,23 @@ describe('Widget.vue', () => {
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         let page = {
             webNodes: {
-                id1: {
-                    foo: 'bar',
-                    viewRepresentation: {
-                        '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-                    },
-                    viewValue: {
-                        testValue: 10
-                    }
-                }
+                [nodeId]: nodeConfig
             }
         };
         store.commit('pagebuilder/setPage', page);
-        store.commit('pagebuilder/setNodeValidity', page);
         context = {
             store,
-            localVue
+            localVue,
+            propsData: {
+                nodeConfig
+            },
+            stubs: {
+                SliderWidget: true
+            }
         };
-    });
-
-    it('has default props', () => {
-        try {
-            shallowMount(Widget, context);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
     });
 
     it('renders', () => {
-        let nodeConfig = {
-            viewRepresentation: {
-                '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-            }
-        };
-        let nodeId = 'id1';
         let wrapper = shallowMount(Widget, {
             ...context,
             propsData: {
@@ -62,12 +57,6 @@ describe('Widget.vue', () => {
     });
 
     it('detects correct widget type', () => {
-        let nodeConfig = {
-            viewRepresentation: {
-                '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-            }
-        };
-        let nodeId = 'id1';
         let wrapper = shallowMount(Widget, {
             ...context,
             propsData: {
@@ -80,12 +69,6 @@ describe('Widget.vue', () => {
     });
 
     it('correctly queries store for node validity', () => {
-        let nodeConfig = {
-            viewRepresentation: {
-                '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-            }
-        };
-        let nodeId = 'id1';
         let wrapper = shallowMount(Widget, {
             ...context,
             propsData: {
@@ -110,12 +93,6 @@ describe('Widget.vue', () => {
     // eslint-disable-next-line no-warning-comments
     // TODO AP-12850: update Widget component level validation
     it('validates all data received', () => {
-        let nodeConfig = {
-            viewRepresentation: {
-                '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-            }
-        };
-        let nodeId = 'id1';
         let wrapper = shallowMount(Widget, {
             ...context,
             propsData: {
@@ -135,12 +112,6 @@ describe('Widget.vue', () => {
     });
 
     it('publishes update to store', () => {
-        let nodeConfig = {
-            viewRepresentation: {
-                '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-            }
-        };
-        let nodeId = 'id1';
         let wrapper = shallowMount(Widget, {
             ...context,
             propsData: {
@@ -166,12 +137,6 @@ describe('Widget.vue', () => {
     });
 
     it('test getting deep properties with util', () => {
-        let nodeConfig = {
-            viewRepresentation: {
-                '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-            }
-        };
-        let nodeId = 'id1';
         let wrapper = shallowMount(Widget, {
             ...context,
             propsData: {

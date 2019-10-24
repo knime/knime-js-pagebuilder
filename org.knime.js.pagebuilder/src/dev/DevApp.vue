@@ -19,12 +19,6 @@ export default {
             }));
         }
     },
-    methods: {
-        onPageSelect(e) {
-            let page = { page: this.pageMocks[e.target.selectedOptions[0].index - 1].src };
-            this.$store.dispatch('pagebuilder/setPage', page);
-        }
-    },
     created() {
         let store = this.$store;
         let pageMocks = this.pageMocks;
@@ -46,6 +40,12 @@ export default {
                 await setRandomPage();
             }
         }, store);
+    },
+    methods: {
+        onPageSelect(e) {
+            let page = { page: this.pageMocks[e.target.selectedOptions[0].index - 1].src };
+            this.$store.dispatch('pagebuilder/setPage', page);
+        }
     }
 };
 </script>

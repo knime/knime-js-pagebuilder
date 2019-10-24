@@ -11,30 +11,30 @@ const maxGridWidth = 12;
  * - row (a nested layout translates to multiple rows here)
  *
  * @example
-    +-----------------+
-    |                 |
-    |      html       |
-    |                 |
-    +-----------------+
-    |.-----row-------.|
-    ||  |  ...    |  ||
-    ||  |         |  ||
-    |°---------------°|
-    +-----------------+
-    |                 |
-    |      view       |
-    |                 |
-    +-----------------+
-    |.-----row-------.<-- nestedLayout
-    ||  |  ...    |  ||
-    ||  |         |  ||
-    ||-----row-------||
-    ||  |  ...    |  ||
-    ||  |         |  ||
-    ||---------------||
-    ||      ⋮        ||
-    |°---------------°|
-    +-----------------+
+ +-----------------+
+ |                 |
+ |      html       |
+ |                 |
+ +-----------------+
+ |.-----row-------.|
+ ||  |  ...    |  ||
+ ||  |         |  ||
+ |°---------------°|
+ +-----------------+
+ |                 |
+ |      view       |
+ |                 |
+ +-----------------+
+ |.-----row-------.<-- nestedLayout
+ ||  |  ...    |  ||
+ ||  |         |  ||
+ ||-----row-------||
+ ||  |  ...    |  ||
+ ||  |         |  ||
+ ||---------------||
+ ||      ⋮        ||
+ |°---------------°|
+ +-----------------+
  *
  */
 export default {
@@ -69,16 +69,17 @@ export default {
             let classes = ['col'];
 
             let hasSize = false;
-            ['XS', 'SM', 'MD', 'LG', 'XL'].forEach(size => {
+            ['XS', 'SM', 'MD', 'LG', 'XL'].forEach((size, i) => {
                 const sizeDefinition = this.columnConfig[`width${size}`];
                 if (sizeDefinition > 0 && sizeDefinition <= maxGridWidth) {
                     hasSize = true;
-                    classes.push(`col-${size.toLowerCase()}-${sizeDefinition}`);
+                    const modifier = i ? `-${size.toLowerCase()}` : ''; // mobile first: 'XS' is the default
+                    classes.push(`col${modifier}-${sizeDefinition}`);
                 }
             });
 
             if (!hasSize) {
-                classes.push('col-xs-12'); // default if no width defined
+                classes.push('col-12'); // default if no width defined
             }
 
             if (Array.isArray(this.columnConfig.additionalClasses)) {
@@ -147,6 +148,79 @@ export default {
   & > * {
     flex: 0 0 auto;
   }
+}
+
+/* compatible with Bootstrap 4 grid */
+.col-1 {
+  -ms-flex: 0 0 calc(100% / 12);
+  flex: 0 0 calc(100% / 12);
+  max-width: calc(100% / 12);
+}
+
+.col-2 {
+  -ms-flex: 0 0 calc(2 * 100% / 12);
+  flex: 0 0 calc(2 * 100% / 12);
+  max-width: calc(2 * 100% / 12);
+}
+
+.col-xs-3 {
+  -ms-flex: 0 0 calc(3 * 100% / 12);
+  flex: 0 0 calc(3 * 100% / 12);
+  max-width: calc(3 * 100% / 12);
+}
+
+.col-4 {
+  -ms-flex: 0 0 calc(4 * 100% / 12);
+  flex: 0 0 calc(4 * 100% / 12);
+  max-width: calc(4 * 100% / 12);
+}
+
+.col-5 {
+  -ms-flex: 0 0 calc(5 * 100% / 12);
+  flex: 0 0 calc(5 * 100% / 12);
+  max-width: calc(5 * 100% / 12);
+}
+
+.col-6 {
+  -ms-flex: 0 0 calc(6 * 100% / 12);
+  flex: 0 0 calc(6 * 100% / 12);
+  max-width: calc(6 * 100% / 12);
+}
+
+.col-7 {
+  -ms-flex: 0 0 calc(7 * 100% / 12);
+  flex: 0 0 calc(7 * 100% / 12);
+  max-width: calc(7 * 100% / 12);
+}
+
+.col-8 {
+  -ms-flex: 0 0 calc(8 * 100% / 12);
+  flex: 0 0 calc(8 * 100% / 12);
+  max-width: calc(8 * 100% / 12);
+}
+
+.col-9 {
+  -ms-flex: 0 0 calc(9 * 100% / 12);
+  flex: 0 0 calc(9 * 100% / 12);
+  max-width: calc(9 * 100% / 12);
+}
+
+.col-10 {
+  -ms-flex: 0 0 calc(10 * 100% / 12);
+  flex: 0 0 calc(10 * 100% / 12);
+  max-width: calc(10 * 100% / 12);
+}
+
+.col-11 {
+  -ms-flex: 0 0 calc(11 * 100% / 12);
+  flex: 0 0 calc(11 * 100% / 12);
+  max-width: calc(11 * 100% / 12);
+}
+
+.col-12 {
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
 }
 
 @media (min-width: 576px) {
