@@ -247,6 +247,7 @@ describe('NodeViewIframe.vue', () => {
             });
 
             expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                nodeId: '0.0.7',
                 namespace: 'knimespace',
                 initMethodName: 'initMe',
                 viewRepresentation: { dummyRepresentation: true },
