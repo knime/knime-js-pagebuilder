@@ -107,7 +107,6 @@ export default {
              * TODO: SRV-2626
              *
              * insert additional custom widget validation
-             * currently fake validation to test styling
              */
             if (this.viewRep.required) {
                 if (!value) {
