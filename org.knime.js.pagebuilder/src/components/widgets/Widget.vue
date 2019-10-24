@@ -1,6 +1,7 @@
 <script>
 import { mapActions } from 'vuex';
 import widgetConfig from './widgets.config';
+import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
 import { applyCustomCss } from '../../util/customCss';
 
@@ -35,6 +36,7 @@ import { applyCustomCss } from '../../util/customCss';
  */
 export default {
     components: {
+        StringWidget,
         SliderWidget
     },
     props: {
@@ -107,5 +109,6 @@ export default {
   height: 100%;
   background-color: white;
   border: none;
+  overflow: hidden;
 }
 </style>

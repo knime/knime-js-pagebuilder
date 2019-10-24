@@ -176,6 +176,11 @@ export default {
              * insert additional custom widget validation
              * currently fake validation to test styling
              */
+            if (this.viewRep.required) {
+                if (!value && value !== 0) {
+                    return false;
+                }
+            }
             return true;
         }
     }
@@ -211,7 +216,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-/* Dynamically style container at some point */
 .knime-slider-horizontal {
   padding-top: 10px;
   padding-right: 15px;

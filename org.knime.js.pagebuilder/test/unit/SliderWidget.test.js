@@ -154,7 +154,7 @@ describe('SliderWidget.vue', () => {
 
     // eslint-disable-next-line no-warning-comments
     // TODO AP-12850: update component level validation
-    it('always validates as true', () => {
+    it('validates as false without a value', () => {
         let wrapper = shallowMount(SliderWidget, {
             ...context,
             propsData: {
@@ -163,7 +163,7 @@ describe('SliderWidget.vue', () => {
                 isValid
             }
         });
-        expect(wrapper.vm.validate()).toBe(true);
+        expect(wrapper.vm.validate()).toBe(false);
     });
 
     it('has correct data properties', () => {

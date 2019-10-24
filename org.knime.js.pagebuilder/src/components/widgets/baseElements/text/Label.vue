@@ -35,4 +35,3 @@ label.knime-qf-title {
   position: relative;
 }
 </style>
-
