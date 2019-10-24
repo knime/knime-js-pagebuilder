@@ -71,17 +71,20 @@ describe('Slider.vue', () => {
             ...context,
             propsData
         });
+        const lowValue = -10;
+        const okayValue = 10;
+        const highValue = 110;
 
         // too low
-        wrapper.vm.$refs.slider.setValue(-10);
+        wrapper.vm.$refs.slider.setValue(lowValue);
         expect(wrapper.vm.validate()).toBe(false);
 
         // valid
-        wrapper.vm.$refs.slider.setValue(10);
+        wrapper.vm.$refs.slider.setValue(okayValue);
         expect(wrapper.vm.validate()).toBe(true);
 
         // too high
-        wrapper.vm.$refs.slider.setValue(110);
+        wrapper.vm.$refs.slider.setValue(highValue);
         expect(wrapper.vm.validate()).toBe(false);
     });
 
