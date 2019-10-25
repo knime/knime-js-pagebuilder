@@ -42,10 +42,18 @@ timeout(time: 15, unit: 'MINUTES') {
                     '''
                 }
                 stage('Verify checked-in files') {
+                    // The old build system requires the compiled JS files to be checked in (no mvn).
+                    // The new Jenkins can verify this
                     sh '''
                         npm run build
-                        git status --porcelain dist/ | grep -q "^ *M" && exit 1
-                        echo OK, compiled JS files have been checked in.
+                        GIT_STATUS=$(git status --porcelain dist/)
+                        if grep -q "^ *M" <<< "$GIT_STATUS"; then
+                          echo "Compiled JS files not checked in:"
+                          echo "$GIT_STATUS"
+                          exit 1
+                        else
+                          echo OK, compiled JS files have been checked in.
+                        fi
                     '''
                 }
                 stage('Unit Tests') {
