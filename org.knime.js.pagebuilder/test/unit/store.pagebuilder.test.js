@@ -62,9 +62,13 @@ describe('PageBuilder store', () => {
         expect(store.state.page).toEqual(page);
     });
 
-    it('calls nextPage on pageBuilder store', () => {
+    it('calls nextPage on pageBuilder store', (done) => {
         store.dispatch('nextPage');
-        expect(outboundStoreConfig.actions.nextPage).toHaveBeenCalled();
+        
+        process.nextTick(() => {
+            expect(outboundStoreConfig.actions.nextPage).toHaveBeenCalled();
+            done();
+        });
     });
 
     it('calls previousPage on pageBuilder store', () => {
