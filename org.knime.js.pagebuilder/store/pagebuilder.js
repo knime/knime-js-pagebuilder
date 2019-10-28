@@ -142,7 +142,10 @@ export const actions = {
     // only for PageBuilder-internal usage
     async nextPage({ dispatch, state }) {
         consola.trace('PageBuilder: Proxying call for next page');
-        await Promise.all(Object.values(state.pageValueGetters).map(getter => getter())).then((values) => {
+        let valuePromises = Object.values(state.pageValueGetters)
+            .filter(getter => typeof getter === 'function')
+            .map(getter => getter());
+        await Promise.all(valuePromises).then((values) => {
             let valueMap = {};
             values.forEach(element => {
                 valueMap[element.nodeId] = JSON.stringify(element.value);
