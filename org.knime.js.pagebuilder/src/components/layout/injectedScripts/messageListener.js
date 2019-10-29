@@ -15,8 +15,9 @@
             var getValueMethod = data.getViewValueMethodName;
             if (window[namespace][getValueMethod]) {
                 try {
+                    var retrievedValue = window[namespace][getValueMethod]();
                     parent.postMessage({
-                        value: window[namespace][getValueMethod](),
+                        value: retrievedValue,
                         nodeId: nodeId,
                         type: 'getValue'
                     }, window.origin);
