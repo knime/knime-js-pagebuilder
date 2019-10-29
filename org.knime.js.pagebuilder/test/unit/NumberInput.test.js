@@ -1,10 +1,11 @@
 import { mount } from '@vue/test-utils';
 
 import DoubleWidget from '@/components/widgets/input/DoubleWidget.vue';
+import IntegerWidget from '@/components/widgets/input/IntegerWidget.vue';
 import NumberInput from '@/components/widgets/baseElements/input/NumberInput.vue';
 
 describe('NumberInput.vue', () => {
-    let propsData;
+    let propsData, propsData2;
 
     beforeEach(() => {
         propsData = {
@@ -63,6 +64,61 @@ describe('NumberInput.vue', () => {
             nodeId: '9:0:16',
             isValid: false
         };
+
+        propsData2 = {
+            nodeConfig: {
+                '@class': 'org.knime.js.core.JSONWebNode',
+                namespace: 'knimeIntegerWidget',
+                viewValue: null,
+                customCSS: '',
+                stylesheets: [
+                    '/js-lib/font-awesome/4_7_0/css/font-awesome.min.css',
+                    '/js-lib/knime/service/knime.css',
+                    '/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css',
+                    '/org/knime/js/base/util/quickform/quickformStyles.css'
+                ],
+                initMethodName: 'init',
+                validateMethodName: 'validate',
+                setValidationErrorMethodName: 'setValidationErrorMessage',
+                viewRepresentation: {
+                    '@class': 'org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation',
+                    label: 'This is the label',
+                    description: 'This is the description. (with maximum)',
+                    required: true,
+                    defaultValue: {
+                        '@class': 'org.knime.js.base.node.base.input.integer.IntegerNodeValue',
+                        integer: 0
+                    },
+                    currentValue: {
+                        '@class': 'org.knime.js.base.node.base.input.integer.IntegerNodeValue',
+                        integer: 0
+                    },
+                    usemin: false,
+                    usemax: true,
+                    min: 0,
+                    max: 100
+                },
+                nodeInfo: {
+                    '@class': 'org.knime.js.core.JSONWebNodeInfo',
+                    nodeAnnotation: '',
+                    nodeName: 'Integer Widget',
+                    nodeState: 'executed',
+                    nodeWarnMessage: null,
+                    nodeErrorMessage: null,
+                    displayPossible: true
+                },
+                javascriptLibraries: [
+                    '/js-lib/knime/service/knime_service_1_0_0.js',
+                    '/js-lib/jQuery/jquery-1.11.0.min.js',
+                    '/js-lib/jQueryUI/min/ui/jquery-ui.min.js',
+                    '/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js',
+                    '/org/knime/js/base/node/widget/input/integer/integerWidget.js'
+                ],
+                getViewValueMethodName: 'value'
+            },
+            nodeId: '11:0:14',
+            isValid: false
+        };
     });
 
     it('renders', () => {
@@ -103,6 +159,26 @@ describe('NumberInput.vue', () => {
 
         let numericInputComponent = wrapper.find(NumberInput);
         expect(numericInputComponent.vm.validate()).toBe(false);
+    });
+
+    it('correctly emulates double inputs', () => {
+        let wrapper = mount(DoubleWidget, {
+            propsData
+        });
+        const doubleStepSize = 0.1;
+
+        let numericInputComponent = wrapper.find(NumberInput);
+        expect(numericInputComponent.vm.stepSize).toBe(doubleStepSize);
+    });
+
+    it('correctly emulates integer inputs', () => {
+        let wrapper = mount(IntegerWidget, {
+            propsData: propsData2
+        });
+        const intStepSize = 1;
+
+        let numericInputComponent = wrapper.find(NumberInput);
+        expect(numericInputComponent.vm.stepSize).toBe(intStepSize);
     });
 
     it('handles mouseup events', () => {
