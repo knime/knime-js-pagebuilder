@@ -1,6 +1,7 @@
 <script>
 import { mapActions } from 'vuex';
 import widgetConfig from './widgets.config';
+import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
@@ -37,6 +38,7 @@ import { applyCustomCss } from '../../util/customCss';
  */
 export default {
     components: {
+        IntegerWidget,
         DoubleWidget,
         StringWidget,
         SliderWidget
