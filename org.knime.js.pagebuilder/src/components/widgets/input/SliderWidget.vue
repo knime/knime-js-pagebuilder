@@ -176,10 +176,8 @@ export default {
              * insert additional custom widget validation
              * currently fake validation to test styling
              */
-            if (this.viewRep.required) {
-                if (!value && value !== 0) {
-                    return false;
-                }
+            if (this.viewRep.required && !value) {
+                return false;
             }
             return true;
         }

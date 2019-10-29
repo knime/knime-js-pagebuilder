@@ -1,28 +1,20 @@
 <script>
-import InputField from '../baseElements/input/InputField';
-import TextArea from '../baseElements/input/TextArea';
+import NumberInput from '../baseElements/input/NumberInput';
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { getProp } from '../../../util/nestedProperty';
 
-const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.string';
-const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.string';
+const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.double';
+const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.double';
 const DEBOUNCER_TIMEOUT = 250;
 
 /**
- * This is the String Input widget implementation. At this component
- * level, the primary goal is to parse the view representation into
- * the necessary configuration values to render the correct input
- * element.
- *
- * This widget has two rendering options: a standard input field or
- * a text area.
+ * This is the Double Input widget implementation.
  */
 export default {
     components: {
         Label,
-        InputField,
-        TextArea,
+        NumberInput,
         ErrorMessage
     },
     props: {
@@ -62,27 +54,18 @@ export default {
             } else if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
                 return this.nodeConfig.nodeInfo.nodeWarnMessage;
             } else {
-                return 'Current string input value is invalid';
+                return 'Current double input value is invalid';
             }
         },
         val() {
             return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
                 getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
-        editorType() {
-            return this.viewRep.editorType;
+        min() {
+            return this.viewRep.usemin ? this.viewRep.min : -Number.MAX_SAFE_INTEGER;
         },
-        multiColumns() {
-            return this.viewRep.multilineEditorWidth;
-        },
-        multiRows() {
-            return this.viewRep.multilineEditorHeight;
-        },
-        regex() {
-            return this.viewRep.regex || '.*';
-        },
-        placeholder() {
-            return '';
+        max() {
+            return this.viewRep.usemax ? this.viewRep.max : Number.MAX_SAFE_INTEGER;
         }
     },
     methods: {
@@ -90,7 +73,7 @@ export default {
             clearTimeout(this.updateDebouncer);
             const newValue = e.val;
             const newWebNodeConfig = {
-                type: 'String Input',
+                type: 'Double Input',
                 nodeId: this.nodeId,
                 originalEvent: e.originalEvent,
                 isValid: e.isValid && this.validate(newValue),
@@ -108,7 +91,7 @@ export default {
              *
              * insert additional custom widget validation
              */
-            if (this.viewRep.required && !value) {
+            if (this.viewRep.required && (!value && value !== 0)) {
                 return false;
             }
             return true;
@@ -125,23 +108,13 @@ export default {
       :text="label"
       class="knime-label"
     />
-    <TextArea
-      v-if="editorType === 'Multi-line'"
+    <NumberInput
+      type="double"
       :value="val"
-      :cols="multiColumns"
-      :rows="multiRows"
-      :pattern="regex"
-      :placeholder="placeholder"
+      :min="min"
+      :max="max"
       :is-valid="isValid"
-      @updateValue="onChange"
-    />
-    <InputField
-      v-else
-      :value="val"
-      type="text"
-      :pattern="regex"
-      :placeholder="placeholder"
-      :is-valid="isValid"
+      :description="description"
       @updateValue="onChange"
     />
     <ErrorMessage

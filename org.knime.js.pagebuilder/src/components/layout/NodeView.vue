@@ -117,8 +117,7 @@ export default {
         :node-id="viewConfig.nodeID"
       />
       <NodeViewIFrame
-        v-if="webNodeAvailable"
-
+        v-else
         :node-id="viewConfig.nodeID"
         :node-config="webNodeConfig"
         :auto-height="autoHeight"
