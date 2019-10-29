@@ -47,8 +47,6 @@ export default {
         errorMessage() {
             if (this.isValid) {
                 return '';
-            } else if (this.viewRep.errorMessage) {
-                return this.viewRep.errorMessage;
             } else if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
                 return this.nodeConfig.nodeInfo.nodeErrorMessage;
             } else if (this.nodeConfig.nodeInfo.nodeWarnMessage) {

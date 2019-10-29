@@ -8,7 +8,10 @@ const DEFAULT_STEP_SIZE_INTEGER = 1;
 const BASE_10_HELPER = 10;
 
 /**
- * Default number (spinner) input field for widgets.
+ * Default number (spinner) input field for widgets. It can either be a double input widget
+ * or an integer input widget, based on the type received as a prop. It implements custom
+ * user controls to augment the existing native HTML <input> component funcitonality and
+ * provide consistent KNIME styling.
  */
 export default {
     components: {
@@ -86,14 +89,26 @@ export default {
         },
         validate() {
             let newValue = this.getValue();
-            if (typeof newValue !== 'number') {
+            if (typeof newValue !== 'number' || isNaN(newValue)) {
                 return false;
             }
             if (newValue < this.min || newValue > this.max) {
                 return false;
             }
-            return true;
+            return this.$el.childNodes[0].validity.valid;
         },
+        /**
+         * This method is used by the input controls to change the value of the numeric input.
+         * The provided value (valDiff) should be signed (+/-) based on which button was pressed
+         * (negative for the down arrow, etc.). This method will attempt to parse the value. It also
+         * steps based on the current value to the next nearest step, regardless of the number of
+         * significant digits in the current value (1.00001 => 1.1).
+         *
+         * @param  {Number} valDiff - the amount by which to change the current value.
+         * @param  {Boolean} publishChange - if the change should trigger an upwards event.
+         * @param {Event} event - the original event object which trigger the changeValue call.
+         * @returns {undefined}
+         */
         changeValue(valDiff, publishChange, event) {
             let parsedVal = this.getValue();
             if (!isNaN(parsedVal)) {
@@ -108,6 +123,18 @@ export default {
                 }
             }
         },
+        /**
+         * This method is the callback handler for mouse events on the input field controls.
+         * It is fired when either the up-arrow or down-arrow is pressed by the user. It manages
+         * both mousedown and mouseup events. It clears any exisiting timeouts or intervals whihc
+         * may have been set previously and decides how the user would like the value updated
+         * (holding the button will rapidly change the value after a short delay; quickly clicking
+         * the button will use short increments instead).
+         *
+         * @param {Event} e - the DOM event object which triggered the handler.
+         * @param {String} type - the type of button pressed (either 'increased' or 'decreased').
+         * @returns {undefined}
+         */
         mouseEvent(e, type) {
             clearTimeout(this.arrowManipulationDebouncer);
             clearInterval(this.arrowManipulationInterval);
@@ -138,13 +165,13 @@ export default {
   <!-- knime-qf-input legacy selector -->
   <div class="knime-input-container">
     <input
-      :class="inputClass"
       type="number"
       role="spinButton"
-      :title="description"
       :min="min"
       :max="max"
       :step="stepSize"
+      :class="inputClass"
+      :title="description"
       @change="onValueChange"
       @input="onValueChange"
     >
