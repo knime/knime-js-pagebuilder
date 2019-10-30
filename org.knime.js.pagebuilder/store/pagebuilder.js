@@ -45,7 +45,6 @@ export const mutations = {
             state.pageValueGetters = {};
             Object.keys(page.webNodes).forEach((nodeId) => {
                 this._vm.$set(state.pageValidity, nodeId, false);
-                this._vm.$set(state.pageValueGetters, nodeId, null);
             });
         }
     },
@@ -143,17 +142,15 @@ export const actions = {
     async nextPage({ dispatch, state }) {
         consola.trace('PageBuilder: Proxying call for next page');
         let valuePromises = Object.values(state.pageValueGetters)
-            .filter(getter => typeof getter === 'function')
             .map(getter => getter());
         await Promise.all(valuePromises).then((values) => {
             let valueMap = {};
             values.forEach(element => {
                 valueMap[element.nodeId] = JSON.stringify(element.value);
             });
-            consola.info(valueMap);
             dispatch('outbound/nextPage', { valueMap });
         }).catch((errors) => {
-            consola.error(errors);
+            consola.error(`Could not retrieve all page values: ${errors}`);
             // TODO: display errors with SRV-2628
         });
     },

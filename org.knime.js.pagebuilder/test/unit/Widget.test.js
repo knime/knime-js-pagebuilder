@@ -13,10 +13,11 @@ describe('Widget.vue', () => {
     let nodeConfig = {
         foo: 'bar',
         viewRepresentation: {
-            '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-        },
-        viewValue: {
-            testValue: 10
+            '@class':
+        'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation',
+            currentValue: {
+                testValue: 10
+            }
         }
     };
     let nodeId = 'id1';
@@ -83,7 +84,7 @@ describe('Widget.vue', () => {
             isValid: true,
             nodeId,
             update: {
-                'viewValue.testValue': 11
+                'viewRepresentation.currentValue.testValue': 11
             }
         });
 
@@ -119,17 +120,23 @@ describe('Widget.vue', () => {
         });
 
         // previously modified to be 11
-        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(11);
+        expect(
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+                .currentValue.testValue
+        ).toEqual(11);
 
         wrapper.vm.publishUpdate({
             isValid: true,
             nodeId,
             update: {
-                'viewValue.testValue': 10
+                'viewRepresentation.currentValue.testValue': 10
             }
         });
 
-        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(10);
+        expect(
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+                .currentValue.testValue
+        ).toEqual(10);
     });
 
     it('test getting deep properties with util', () => {
@@ -141,11 +148,86 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(getProp(wrapper.vm.$store.state, 'pagebuilder.page.webNodes.id1.viewValue.testValue')).toEqual(10);
-
-        setProp(wrapper.vm.$store.state, 'pagebuilder.page.webNodes.id1.viewValue.testValue', 11);
-
-        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(11);
+        expect(
+            getProp(
+                wrapper.vm.$store.state,
+                'pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue'
+            )
+        ).toEqual(10);
+        setProp(
+            wrapper.vm.$store.state,
+            'pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue',
+            11
+        );
+        expect(
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+                .currentValue.testValue
+        ).toEqual(11);
     });
 
+    it('retrieves value as resolvable promise', () => {
+        let wrapper = shallowMount(Widget, {
+            ...context,
+            propsData: {
+                nodeConfig,
+                nodeId
+            }
+        });
+
+        // previously modified to be 11
+        expect(
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+                .currentValue.testValue
+        ).toEqual(11);
+
+        wrapper.vm.publishUpdate({
+            isValid: true,
+            nodeId,
+            update: {
+                'viewRepresentation.currentValue.testValue': 42
+            }
+        });
+
+        expect(
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+                .currentValue.testValue
+        ).toEqual(42);
+        let valPromise = wrapper.vm.getValue();
+        return expect(valPromise).resolves.toStrictEqual({
+            nodeId,
+            value: { testValue: 42 }
+        });
+    });
+
+    it('rejects value promise on error', () => {
+        let wrapper = shallowMount(Widget, {
+            ...context,
+            propsData: {
+                nodeConfig,
+                nodeId
+            }
+        });
+
+        // previously modified to be 42
+        expect(
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+                .currentValue.testValue
+        ).toEqual(42);
+
+        wrapper.vm.publishUpdate({
+            isValid: true,
+            nodeId,
+            update: {
+                viewRepresentation: {
+                    '@class':
+            'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                }
+            }
+        });
+
+        let valPromise = wrapper.vm.getValue();
+        return expect(valPromise).rejects.toStrictEqual(
+            new Error('Value of widget could not be retrieved.')
+        );
+    });
 });
