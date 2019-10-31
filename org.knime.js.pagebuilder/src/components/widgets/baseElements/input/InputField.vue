@@ -58,7 +58,7 @@ export default {
         },
         validate() {
             const matches = this.getValue().match(this.pattern);
-            return matches[0] === this.getValue();
+            return matches !== null && matches[0] === this.getValue();
         }
     }
 };
