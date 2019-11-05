@@ -117,8 +117,7 @@ export default {
         :node-id="viewConfig.nodeID"
       />
       <NodeViewIFrame
-        v-if="webNodeAvailable"
-
+        v-else
         :node-id="viewConfig.nodeID"
         :node-config="webNodeConfig"
         :auto-height="autoHeight"
@@ -139,7 +138,6 @@ export default {
 
 .view {
   background-color: var(--theme-color-white);
-  height: 0;
 
   &.aspectRatio16by9,
   &.aspectRatio4by3,

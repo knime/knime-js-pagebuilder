@@ -100,6 +100,7 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
+        const expectedValue = 10;
 
         expect(wrapper.vm.validate()).toBe(true);
         expect(wrapper.vm.validate(null)).toBe(true);
@@ -107,7 +108,7 @@ describe('Widget.vue', () => {
         expect(wrapper.vm.validate('test')).toBe(true);
         expect(wrapper.vm.validate([])).toBe(true);
         expect(wrapper.vm.validate(0)).toBe(true);
-        expect(wrapper.vm.validate(10)).toBe(true);
+        expect(wrapper.vm.validate(expectedValue)).toBe(true);
     });
 
     it('publishes update to store', () => {
@@ -118,25 +119,27 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
+        const expectedValue = 11;
+        const newValue = 10;
 
         // previously modified to be 11
         expect(
             wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
                 .currentValue.testValue
-        ).toEqual(11);
+        ).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
             isValid: true,
             nodeId,
             update: {
-                'viewRepresentation.currentValue.testValue': 10
+                'viewRepresentation.currentValue.testValue': newValue
             }
         });
 
         expect(
             wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
                 .currentValue.testValue
-        ).toEqual(10);
+        ).toEqual(newValue);
     });
 
     it('test getting deep properties with util', () => {
@@ -148,21 +151,24 @@ describe('Widget.vue', () => {
             }
         });
 
+         const expectedValue = 10;
+         const newValue = 11;
+       
         expect(
             getProp(
                 wrapper.vm.$store.state,
                 'pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue'
             )
-        ).toEqual(10);
+        ).toEqual(expectedValue);
         setProp(
             wrapper.vm.$store.state,
             'pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue',
-            11
+            newValue
         );
         expect(
             wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
                 .currentValue.testValue
-        ).toEqual(11);
+        ).toEqual(newValue);
     });
 
     it('retrieves value as resolvable promise', () => {

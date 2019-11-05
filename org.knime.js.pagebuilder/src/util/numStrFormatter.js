@@ -3,37 +3,31 @@
  * in the slider widget. It matches the existing API
  * expected from KNIME AP in the node config.
  *
- * The expected configuration object is as follows:
- *
- *  obj = {};
- *  obj.decimals = number of significant digits
- *                 ex: obj.decimals = 2;
- *                     num = 1.234 => '1.23'
- *  obj.thousand = the string delimiter for thousands
- *                  ex: obj.thousand = '_';
- *                      num = 1000; => '1_000'
- *  obj.mark = the string delimiter between the integer
- *             and the decimal
- *             ex: obj.mark = ',';
- *                 num = 1.234; => '1,234'
- *  obj.prefix = the string prefix for the label
- *               ex: obj.prefix = '$'
- *                   num = 100; => '$100'
- *  obj.negativeBefore = the string that prefixes
- *                       negative numbers before the
- *                       negative sign, but AFTER the
- *                       given prefix. ONLY applies
- *                       to negatives
- *                       ex: obj.negativeBefore = '+/';
- *                           num = -100; => '+/-100'
- *  obj.negative = the string to replace the '-' in
- *                 negative numbers
- *                 ex: obj.negative = '⁒';
- *                     num = -1; => '⁒1'
- *
- * @param  {Number} num the number to be formatted
- * @param  {Object} obj the label configuration object
- * @returns {String} string representation of input number
+ * @param  {Number} num - the number to be formatted.
+ * @param  {Object} obj - the label configuration object.
+ * @param  {Number} [obj.decimals] - number of significant digits.
+ *          ex: obj.decimals = 2;
+ *          num = 1.234 => '1.23'
+ * @param  {String} [obj.thousand] - the string delimiter for thousands.
+ *          ex: obj.thousand = '_';
+ *          num = 1000; => '1_000'
+ * @param  {String} [obj.mark] - the string delimiter between the integer
+ *          and decimal.
+ *          ex: obj.mark = ',';
+ *          num = 1.234; => '1,234'
+ * @param  {String} [obj.prefix] - the string prefix for the label
+ *          ex: obj.prefix = '$';
+ *          num = 100; => '$100'
+ * @param  {String} [obj.negativeBefore] - the string that prefixes
+ *          negative numbers before the negative sign, but AFTER the
+ *          given prefix. ONLY applies to negatives.
+ *          obj.negativeBefore = '+/';
+ *          num = -100; => '+/-100'
+ * @param  {String} [obj.negative] - the string to replace the '-' in
+ *          negative numbers.
+ *          ex: obj.negative = '⁒';
+ *          num = -1; => '⁒1'
+ * @returns {String} label - string representation of input number
  */
 export const format = (num, obj) => {
     // Significant digit rounding and string conversion
@@ -46,13 +40,14 @@ export const format = (num, obj) => {
         let thouStr = label.split('.');
         // let thouStr = label.split(obj.mark || '.');
         let newStr = thouStr[0][0];
+        // the number of digits between thousandths delimiters
+        const DIGIT_COUNT = 3;
         /**
          * counting backwards, rebuild string with correct
          * thousands delimiter (every 3rd digit)
         */
         for (let i = 1; i < thouStr[0].length; i++) {
-            // eslint-disable-next-line no-magic-numbers
-            newStr += ((thouStr[0].length - i) % 3 === 0
+            newStr += ((thouStr[0].length - i) % DIGIT_COUNT === 0
                 ? obj.thousand
                 : '') + thouStr[0][i];
         }

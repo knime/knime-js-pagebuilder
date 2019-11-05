@@ -1,6 +1,9 @@
 <script>
 import { mapActions } from 'vuex';
 import widgetConfig from './widgets.config';
+import StringWidget from './input/StringWidget';
+import SliderWidget from './input/SliderWidget';
+import { applyCustomCss } from '../../util/customCss';
 
 /**
  * A Widget node view. This top level component sits at
@@ -28,9 +31,14 @@ import widgetConfig from './widgets.config';
  * The type of the child of this component is determined through
  * the computed property type, as all widget class names are
  * mapped in a config file.
+ *
+ * The application of customCSS is also handled by this component.
  */
 export default {
-    components: {},
+    components: {
+        StringWidget,
+        SliderWidget
+    },
     props: {
         /**
          * Node configuration as received by API
@@ -61,6 +69,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+        applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
@@ -101,7 +110,8 @@ export default {
 </script>
 
 <template>
-  <div class="knime-widget">
+  <!-- knime-qf-container legacy selector -->
+  <div class="knime-widget knime-qf-container">
     <Component
       :is="type"
       v-bind="$props"
@@ -117,5 +127,6 @@ export default {
   height: 100%;
   background-color: white;
   border: none;
+  overflow: hidden;
 }
 </style>

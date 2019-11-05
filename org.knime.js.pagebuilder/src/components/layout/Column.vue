@@ -144,6 +144,7 @@ export default {
   max-width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   & > * {
     flex: 0 0 auto;
