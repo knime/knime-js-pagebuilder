@@ -89,7 +89,7 @@ describe('PageBuilder store', () => {
         process.nextTick(() => {
             expect(outboundStoreConfig.actions.nextPage).toHaveBeenCalledWith(
                 expect.anything(),
-                { valueMap: {} },
+                { viewValues: {} },
                 undefined // eslint-disable-line no-undefined
             );
             done();
@@ -111,7 +111,7 @@ describe('PageBuilder store', () => {
         process.nextTick(() => {
             expect(outboundStoreConfig.actions.nextPage).toHaveBeenCalledWith(
                 expect.anything(),
-                { valueMap: { [nodeId]: JSON.stringify(sampleVal) } },
+                { viewValues: { [nodeId]: JSON.stringify(sampleVal) } },
                 undefined // eslint-disable-line no-undefined
             );
             done();

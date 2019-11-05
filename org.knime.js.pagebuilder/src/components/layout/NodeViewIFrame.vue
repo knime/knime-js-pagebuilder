@@ -207,21 +207,21 @@ export default {
             } else if (event.data.type === 'getValue') {
                 // call callback
                 if (typeof event.data.value === 'undefined') {
-                    this.getValueCallback({ err: new Error(event.data.error) });
+                    this.getValueCallback({ error: new Error(event.data.error) });
                 } else {
-                    this.getValueCallback({ val: event.data.value });
+                    this.getValueCallback({ value: event.data.value });
                 }
             }
         },
 
         getValue() {
             return new Promise((resolve, reject) => {
-                this.getValueCallback = ({ err, val }) => {
+                this.getValueCallback = ({ error, value }) => {
                     window.clearTimeout(this.cancelValueGetter);
-                    if (err) {
-                        reject(err);
+                    if (error) {
+                        reject(error);
                     } else {
-                        resolve({ nodeId: this.nodeId, value: val });
+                        resolve({ nodeId: this.nodeId, value });
                     }
                 };
                 this.document.defaultView.postMessage({

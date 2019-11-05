@@ -91,14 +91,15 @@ export default {
         getValue() {
             return new Promise((resolve, reject) => {
                 try {
-                    let val = this.$store.state.pagebuilder.page.webNodes[this.nodeId].viewRepresentation.currentValue;
-                    if (typeof val === 'undefined') {
+                    let value = this.$store.state.pagebuilder.page.webNodes[this.nodeId]
+                        .viewRepresentation.currentValue;
+                    if (typeof value === 'undefined') {
                         reject(new Error('Value of widget could not be retrieved.'));
                     } else {
-                        resolve({ nodeId: this.nodeId, value: val });
+                        resolve({ nodeId: this.nodeId, value });
                     }
-                } catch (err) {
-                    reject(new Error(err));
+                } catch (error) {
+                    reject(new Error(error));
                 }
             });
         },

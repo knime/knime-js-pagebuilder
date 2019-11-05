@@ -144,11 +144,11 @@ export const actions = {
         let valuePromises = Object.values(state.pageValueGetters)
             .map(getter => getter());
         await Promise.all(valuePromises).then((values) => {
-            let valueMap = {};
+            let viewValues = {};
             values.forEach(element => {
-                valueMap[element.nodeId] = JSON.stringify(element.value);
+                viewValues[element.nodeId] = JSON.stringify(element.value);
             });
-            dispatch('outbound/nextPage', { valueMap });
+            dispatch('outbound/nextPage', { viewValues });
         }).catch((errors) => {
             consola.error(`Could not retrieve all page values: ${errors}`);
             // TODO: display errors with SRV-2628
