@@ -27,12 +27,18 @@ export default {
     },
     props: {
         nodeConfig: {
-            default: () => ({}),
-            type: Object
+            required: true,
+            type: Object,
+            validator(obj) {
+                return obj.nodeInfo;
+            }
         },
         nodeId: {
-            default: () => null,
-            type: String
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return Boolean(nodeId);
+            }
         },
         isValid: {
             default: () => false,

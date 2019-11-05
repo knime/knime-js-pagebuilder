@@ -135,27 +135,6 @@ describe('SliderWidget.vue', () => {
         expect(wrapper2.isVisible()).toBeTruthy();
     });
 
-    it('has default (empty) props (expected failure)', () => {
-        try {
-            shallowMount(StringWidget);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
-    });
-
-    it('\'s children failt with empty props', () => {
-        try {
-            shallowMount(TextArea);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
-        try {
-            shallowMount(InputField);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
-    });
-
     it('will render a text input field or a text area field based on settings', () => {
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput
