@@ -14,7 +14,7 @@ describe('Widget.vue', () => {
         foo: 'bar',
         viewRepresentation: {
             '@class':
-        'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation',
+                'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation',
             currentValue: {
                 testValue: 10
             }
@@ -151,9 +151,9 @@ describe('Widget.vue', () => {
             }
         });
 
-         const expectedValue = 10;
-         const newValue = 11;
-       
+        const expectedValue = 10;
+        const newValue = 11;
+
         expect(
             getProp(
                 wrapper.vm.$store.state,
@@ -162,12 +162,10 @@ describe('Widget.vue', () => {
         ).toEqual(expectedValue);
         setProp(
             wrapper.vm.$store.state,
-            'pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue',
-            newValue
+            'pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue', newValue
         );
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
-                .currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(newValue);
     });
 
@@ -180,28 +178,29 @@ describe('Widget.vue', () => {
             }
         });
 
+        const expectedValue = 11;
+        const newValue = 42;
+
         // previously modified to be 11
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
-                .currentValue.testValue
-        ).toEqual(11);
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
+        ).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
             isValid: true,
             nodeId,
             update: {
-                'viewRepresentation.currentValue.testValue': 42
+                'viewRepresentation.currentValue.testValue': newValue
             }
         });
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
-                .currentValue.testValue
-        ).toEqual(42);
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
+        ).toEqual(newValue);
         let valPromise = wrapper.vm.getValue();
         return expect(valPromise).resolves.toStrictEqual({
             nodeId,
-            value: { testValue: 42 }
+            value: { testValue: newValue }
         });
     });
 
@@ -214,11 +213,12 @@ describe('Widget.vue', () => {
             }
         });
 
+        const expectedValue = 42;
+
         // previously modified to be 42
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
-                .currentValue.testValue
-        ).toEqual(42);
+            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
+        ).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
             isValid: true,
@@ -226,7 +226,7 @@ describe('Widget.vue', () => {
             update: {
                 viewRepresentation: {
                     '@class':
-            'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                        'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
                 }
             }
         });
