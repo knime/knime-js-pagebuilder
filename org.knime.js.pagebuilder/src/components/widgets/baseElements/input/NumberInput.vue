@@ -198,8 +198,6 @@ export default {
 .knime-input-container {
   position: relative;
   width: 100%;
-  min-width: 100px;
-  max-width: 400px;
 
   & input.knime-qf-input {
     font-family: 'Roboto', BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
@@ -214,8 +212,6 @@ export default {
     padding: 11px 10px 11px 10px;
     border-radius: 0;
     width: 100%;
-    min-width: 40px;
-    max-width: 400px;
     border: none;
     outline: none;
   }
@@ -234,9 +230,7 @@ export default {
     width: 33px;
     height: 20px;
     padding-left: 10px;
-    padding-bottom: 3px;
     padding-right: 9px;
-    padding-top: 3px;
     transform: rotate(180deg);
     background-color: var(--theme-color-porcelain);
 
@@ -260,9 +254,7 @@ export default {
     width: 33px;
     height: 20px;
     padding-left: 9px;
-    padding-bottom: 3px;
     padding-right: 10px;
-    padding-top: 3px;
     background-color: var(--theme-color-porcelain);
 
     & svg {
