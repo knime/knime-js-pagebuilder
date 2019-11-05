@@ -12,8 +12,82 @@ describe('Widget.vue', () => {
 
     let nodeConfig = {
         foo: 'bar',
+        nodeInfo: {
+            '@class': 'org.knime.js.core.JSONWebNodeInfo',
+            nodeState: 'executed',
+            nodeAnnotation: '',
+            nodeErrorMessage: null,
+            nodeWarnMessage: null,
+            displayPossible: true,
+            nodeName: 'Slider Widget'
+        },
         viewRepresentation: {
-            '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+            '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation',
+            sliderSettings: {
+                '@class': 'org.knime.js.core.settings.slider.SliderSettings',
+                connect: [
+                    false,
+                    false
+                ],
+                tooltips: [
+                    {
+                        prefix: '$',
+                        negative: '-',
+                        thousand: ',',
+                        decimals: 2,
+                        postfix: '_',
+                        mark: '.',
+                        negativeBefore: '-'
+                    }
+                ],
+                pips: {
+                    '@class': 'org.knime.js.core.settings.slider.SliderPipsSettings',
+                    format: {
+                        '@class': 'org.knime.js.core.settings.numberFormat.NumberFormatSettings',
+                        negative: '-',
+                        decimals: 2,
+                        mark: '.'
+                    },
+                    mode: 'positions',
+                    values: [
+                        0,
+                        25,
+                        50,
+                        75,
+                        100
+                    ],
+                    stepped: false,
+                    density: 3
+                },
+                direction: 'ltr',
+                orientation: 'vertical',
+                range: {
+                    min: [
+                        5
+                    ],
+                    max: [
+                        25
+                    ]
+                },
+                start: [
+                    5
+                ]
+            },
+            useCustomMax: true,
+            useCustomMin: true,
+            customMax: 100,
+            customMin: 0,
+            defaultValue: {
+                '@class': 'org.knime.js.base.node.base.input.slider.SliderNodeValue',
+                double: 5
+            },
+            description: 'Enter Description',
+            required: true,
+            label: 'Testing Slider',
+            currentValue: {
+                '@class': 'org.knime.js.base.node.base.input.slider.SliderNodeValue',
+                double: 5
+            }
         },
         viewValue: {
             testValue: 10

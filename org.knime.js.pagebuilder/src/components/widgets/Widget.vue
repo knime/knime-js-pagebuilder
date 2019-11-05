@@ -55,8 +55,11 @@ export default {
          * in the store webNodes
          */
         nodeId: {
-            default: () => null,
-            type: String
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return Boolean(nodeId);
+            }
         }
     },
     computed: {

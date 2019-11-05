@@ -10,7 +10,6 @@ describe('SliderWidget.vue', () => {
     let context, nodeConfig, nodeId, isValid;
 
     beforeEach(() => {
-
         nodeConfig = {
             '@class': 'org.knime.js.core.JSONWebNode',
             nodeInfo: {
@@ -130,14 +129,6 @@ describe('SliderWidget.vue', () => {
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-    });
-
-    it('has default (empty) props (expected failure)', () => {
-        try {
-            shallowMount(SliderWidget, context);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
     });
 
     it('has a Slider component', () => {

@@ -39,12 +39,21 @@ export default {
     },
     props: {
         nodeConfig: {
-            default: () => ({}),
-            type: Object
+            required: true,
+            type: Object,
+            validator(obj) {
+                return obj.nodeInfo &&
+                    obj.viewRepresentation.sliderSettings &&
+                    (getProp(obj, CURRENT_VALUE_KEY) ||
+                    getProp(obj, DEFAULT_VALUE_KEY));
+            }
         },
         nodeId: {
-            default: () => null,
-            type: String
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return Boolean(nodeId);
+            }
         },
         isValid: {
             default: () => false,
