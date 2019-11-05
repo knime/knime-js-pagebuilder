@@ -72,17 +72,17 @@ describe('PageBuilder.vue', () => {
 
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(false);
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
 
         store.commit('pagebuilder/updateWebNode', {
             nodeId: 'id1',
-            isValid: true,
+            isValid: false,
             update: {
                 foo: 'rod'
             }
         });
 
-        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
+        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(false);
     });
 
     it('returns valid with empty page', () => {

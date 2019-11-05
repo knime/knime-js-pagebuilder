@@ -91,8 +91,6 @@ input.knime-qf-input {
   padding: 11px 10px 11px 10px;
   border-radius: 0;
   width: 100%;
-  min-width: 100px;
-  max-width: 400px;
   border: none;
   outline: none;
 }

@@ -77,17 +77,17 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.isValid).toBe(false);
+        expect(wrapper.vm.isValid).toBe(true);
 
         wrapper.vm.publishUpdate({
-            isValid: true,
+            isValid: false,
             nodeId,
             update: {
                 'viewValue.testValue': 11
             }
         });
 
-        expect(wrapper.vm.isValid).toBe(true);
+        expect(wrapper.vm.isValid).toBe(false);
     });
 
     // eslint-disable-next-line no-warning-comments
@@ -119,10 +119,9 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
-        const expectedValue = 11;
-        const newValue = 10;
+        const expectedValue = 10;
+        const newValue = 11;
 
-        // previously modified to be 11
         expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewValue.testValue).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
@@ -144,8 +143,9 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
-        const expectedValue = 10;
-        const newValue = 11;
+        // previously modified to be 11
+        const expectedValue = 11;
+        const newValue = 10;
 
         expect(getProp(wrapper.vm.$store.state, 'pagebuilder.page.webNodes.id1.viewValue.testValue'))
             .toEqual(expectedValue);
