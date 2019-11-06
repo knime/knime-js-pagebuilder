@@ -88,7 +88,7 @@ describe('message listener', () => {
             delete window['com.example'];
             parent.removeEventListener('message', listener);
             done();
-        }, 100);
+        }, 10); // eslint-disable-line no-magic-numbers
     });
 
     it('handles errors in the "getValue" method', (done) => {
@@ -119,7 +119,7 @@ describe('message listener', () => {
             delete window['com.example'];
             parent.removeEventListener('message', errorListener);
             done();
-        }, 100);
+        }, 10); // eslint-disable-line no-magic-numbers
     });
 
     it('handles invalid "getValue" method', (done) => {
@@ -150,7 +150,7 @@ describe('message listener', () => {
             delete window['com.example'];
             parent.removeEventListener('message', errorListener);
             done();
-        }, 100);
+        }, 10); // eslint-disable-line no-magic-numbers
     });
 
     it('ignores irrelevant messages', () => {
