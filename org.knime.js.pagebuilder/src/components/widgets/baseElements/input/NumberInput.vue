@@ -214,6 +214,8 @@ export default {
     border-left-width: 3px;
     border-left-color: transparent;
     border-left-style: solid;
+    border-top: none;
+    border-bottom: none;
     outline: none;
   }
 
