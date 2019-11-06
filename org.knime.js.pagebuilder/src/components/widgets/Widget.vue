@@ -71,7 +71,11 @@ export default {
         }
     },
     mounted() {
+        this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
         applyCustomCss(this.$el, this.nodeConfig.customCSS);
+    },
+    beforeDestroy() {
+        this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
     },
     methods: {
         validate(value) {
@@ -86,6 +90,21 @@ export default {
         publishUpdate(update) {
             update.isValid = update.isValid && this.validate(update);
             this.updateValue(update);
+        },
+        getValue() {
+            return new Promise((resolve, reject) => {
+                try {
+                    let value = this.$store.state.pagebuilder.page.webNodes[this.nodeId]
+                        .viewRepresentation.currentValue;
+                    if (typeof value === 'undefined') {
+                        reject(new Error('Value of widget could not be retrieved.'));
+                    } else {
+                        resolve({ nodeId: this.nodeId, value });
+                    }
+                } catch (error) {
+                    reject(new Error(error));
+                }
+            });
         },
         ...mapActions({
             updateValue: 'pagebuilder/updateWebNode'
