@@ -81,7 +81,7 @@ export default {
             if (this.viewRep.useCustomMax) { return this.viewRep.customMax; }
             return this.sliderSettings.range.max[0];
         },
-        val() {
+        value() {
             return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
                 getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
@@ -155,7 +155,7 @@ export default {
     methods: {
         onChange(e) {
             clearTimeout(this.updateDebouncer);
-            const newValue = parseFloat(e.val);
+            const newValue = parseFloat(e.value);
             const newWebNodeConfig = {
                 type: 'Slider',
                 nodeId: this.nodeId,
@@ -196,7 +196,7 @@ export default {
     <Slider
       :minimum="min"
       :maximum="max"
-      :value="val"
+      :value="value"
       :is-valid="isValid"
       :direction="direction"
       :step-size="stepSize"

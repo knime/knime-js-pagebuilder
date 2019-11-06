@@ -82,7 +82,7 @@ export default {
         },
         onValueChange(e) {
             this.$emit('updateValue', {
-                val: this.getValue(),
+                value: this.getValue(),
                 originalEvent: e,
                 isValid: this.validate()
             });

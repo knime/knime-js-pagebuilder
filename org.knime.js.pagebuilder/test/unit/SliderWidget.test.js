@@ -195,7 +195,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.label).toBe('Testing Slider');
         expect(wrapper.vm.min).toBe(0);
         expect(wrapper.vm.max).toBe(100);
-        expect(wrapper.vm.val).toBe(5);
+        expect(wrapper.vm.value).toBe(5);
         expect(wrapper.vm.direction).toBe('ttb');
         expect(wrapper.vm.stepSize).toBe(.000001);
         expect(wrapper.vm.height).toBe(533);

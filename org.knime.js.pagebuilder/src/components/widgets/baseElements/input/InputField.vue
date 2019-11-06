@@ -51,7 +51,7 @@ export default {
         },
         onValueChange(e) {
             this.$emit('updateValue', {
-                val: this.getValue(),
+                value: this.getValue(),
                 originalEvent: e,
                 isValid: this.validate()
             });
@@ -71,7 +71,7 @@ export default {
     :type="type"
     :pattern="pattern"
     :placeholder="placeholder"
-    @change="onValueChange"
+    @input="onValueChange"
   >
 </template>
 
@@ -91,14 +91,16 @@ input.knime-qf-input {
   padding: 11px 10px 11px 10px;
   border-radius: 0;
   width: 100%;
-  border: none;
+  border-left-width: 3px;
+  border-left-color: transparent;
+  border-left-style: solid;
   outline: none;
+  border-top: none;
+  border-bottom: none;
 }
 
 input.knime-input-invalid {
-  border-left-width: 3px;
   border-left-color: var(--theme-color-error);
-  border-left-style: solid;
 }
 </style>
 

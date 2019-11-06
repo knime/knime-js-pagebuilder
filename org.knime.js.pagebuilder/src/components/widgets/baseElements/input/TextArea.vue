@@ -44,7 +44,7 @@ export default {
         },
         onValueChange(e) {
             this.$emit('updateValue', {
-                val: this.getValue(),
+                value: this.getValue(),
                 originalEvent: e,
                 isValid: this.validate()
             });
@@ -63,7 +63,7 @@ export default {
     :cols="cols"
     :rows="rows"
     :placeholder="placeholder"
-    @change="onValueChange"
+    @input="onValueChange"
   />
 </template>
 
@@ -84,12 +84,13 @@ textarea.knime-qf-input {
   border-radius: 0;
   border: none;
   outline: none;
+  border-left-width: 3px;
+  border-left-color: transparent;
+  border-left-style: solid;
 }
 
 textarea.knime-textarea-invalid {
-  border-left-width: 3px;
   border-left-color: var(--theme-color-error);
-  border-left-style: solid;
 }
 </style>
 

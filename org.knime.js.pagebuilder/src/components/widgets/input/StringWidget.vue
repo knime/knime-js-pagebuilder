@@ -56,7 +56,7 @@ export default {
             return this.viewRep.label;
         },
         description() {
-            return this.viewRep.description || '';
+            return this.viewRep.description || null;
         },
         errorMessage() {
             if (this.isValid) {
@@ -71,7 +71,7 @@ export default {
                 return 'Current string input value is invalid';
             }
         },
-        val() {
+        value() {
             return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
                 getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
@@ -94,7 +94,7 @@ export default {
     methods: {
         onChange(e) {
             clearTimeout(this.updateDebouncer);
-            const newValue = e.val;
+            const newValue = e.value;
             const newWebNodeConfig = {
                 type: 'String Input',
                 nodeId: this.nodeId,
@@ -135,7 +135,7 @@ export default {
     />
     <TextArea
       v-if="editorType === 'Multi-line'"
-      :value="val"
+      :value="value"
       :cols="multiColumns"
       :rows="multiRows"
       :pattern="regex"
@@ -145,7 +145,7 @@ export default {
     />
     <InputField
       v-else
-      :value="val"
+      :value="value"
       type="text"
       :pattern="regex"
       :placeholder="placeholder"
