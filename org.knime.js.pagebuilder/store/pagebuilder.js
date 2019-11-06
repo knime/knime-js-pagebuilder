@@ -6,7 +6,8 @@ export const state = () => ({
     viewState: null,
     page: null,
     resourceBaseUrl: '',
-    pageValidity: {}
+    pageValidity: {},
+    pageValueGetters: {}
 });
 
 export const mutations = {
@@ -39,10 +40,9 @@ export const mutations = {
          * In order to make these properties reactive, they have to be initialized once using `this._vm.$set` whenever
          * the page changes.
          */
-        if (page &&
-            typeof page.webNodes === 'object' &&
-            page.webNodes !== null) {
+        if (page && typeof page.webNodes === 'object' && page.webNodes !== null) {
             state.pageValidity = {};
+            state.pageValueGetters = {};
             Object.keys(page.webNodes).forEach((nodeId) => {
                 this._vm.$set(state.pageValidity, nodeId, false);
             });
@@ -95,6 +95,14 @@ export const mutations = {
             consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated because` +
                 `the change was invalid. Valid:`, newWebNode.isValid);
         }
+    },
+
+    addValueGetter(state, { nodeId, valueGetter }) {
+        state.pageValueGetters[nodeId] = valueGetter;
+    },
+
+    removeValueGetter(state, nodeId) {
+        delete state.pageValueGetters[nodeId];
     }
 };
 
@@ -120,10 +128,31 @@ export const actions = {
         commit('updateWebNode', newWebNode);
     },
 
+    addValueGetter({ commit }, { nodeId, valueGetter }) {
+        consola.trace('PageBuilder: add value getter via action: ', nodeId);
+        commit('addValueGetter', { nodeId, valueGetter });
+    },
+
+    removeValueGetter({ commit }, { nodeId }) {
+        consola.trace('PageBuilder: remove value getter via action: ', nodeId);
+        commit('removeValueGetter', nodeId);
+    },
+
     // only for PageBuilder-internal usage
-    async nextPage({ dispatch }) {
+    async nextPage({ dispatch, state }) {
         consola.trace('PageBuilder: Proxying call for next page');
-        await dispatch('outbound/nextPage');
+        let valuePromises = Object.values(state.pageValueGetters)
+            .map(getter => getter());
+        await Promise.all(valuePromises).then((values) => {
+            let viewValues = {};
+            values.forEach(element => {
+                viewValues[element.nodeId] = JSON.stringify(element.value);
+            });
+            dispatch('outbound/nextPage', { viewValues });
+        }).catch((errors) => {
+            consola.error(`Could not retrieve all page values: ${errors}`);
+            // TODO: display errors with SRV-2628
+        });
     },
 
     async previousPage({ dispatch }) {

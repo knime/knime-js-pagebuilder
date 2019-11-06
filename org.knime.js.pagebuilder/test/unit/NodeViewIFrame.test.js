@@ -219,7 +219,6 @@ describe('NodeViewIframe.vue', () => {
             expect(html).toMatch('<style>body { background: red; }</style>');
         });
 
-
         it('handles resource loading', () => {
             let wrapper = shallowMount(NodeViewIFrame, {
                 ...context,
@@ -247,12 +246,88 @@ describe('NodeViewIframe.vue', () => {
             });
 
             expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                nodeId: '0.0.7',
                 namespace: 'knimespace',
                 initMethodName: 'initMe',
                 viewRepresentation: { dummyRepresentation: true },
                 viewValue: { dummyValue: true },
                 type: 'init'
             }, window.origin);
+        });
+    });
+    
+    describe('view value retrieval', () => {
+        it('handles getValue call', () => {
+            let wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    nodeId: '0.0.7',
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        getViewValueMethodName: 'value'
+                    }
+                }
+            });
+            window.origin = window.location.origin;
+            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+            wrapper.vm.getValue();
+            expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                nodeId: '0.0.7',
+                namespace: 'knimespace',
+                getViewValueMethodName: 'value',
+                type: 'getValue'
+            }, window.origin);
+        });
+
+        it('resolves getValue promise', () => {
+            let wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    nodeId: '0.0.7',
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        getViewValueMethodName: 'value'
+                    }
+                }
+            });
+            window.origin = window.location.origin;
+            let valuePromise = wrapper.vm.getValue();
+            
+            // fake value returned
+            // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'getValue', value: { integer: 42 } }
+            });
+
+            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0.0.7', value: { integer: 42 } });
+        });
+
+        it('rejects getValue promise on error', () => {
+            let wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    nodeId: '0.0.7',
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        getViewValueMethodName: 'value'
+                    }
+                }
+            });
+            window.origin = window.location.origin;
+            let valuePromise = wrapper.vm.getValue();
+            let errorMessage = 'some error message';
+
+            // fake error returned
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'getValue', error: errorMessage }
+            });
+
+            return expect(valuePromise).rejects.toStrictEqual(new Error(errorMessage));
         });
     });
 });
