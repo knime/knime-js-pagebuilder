@@ -73,22 +73,6 @@ describe('DoubleWidget.vue', () => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
-    it('has default (empty) props (expected failure)', () => {
-        try {
-            shallowMount(DoubleWidget);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
-    });
-
-    it('\'s children fail with empty props', () => {
-        try {
-            shallowMount(NumberInput);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
-    });
-
     it('\'s children will change appearance when invalid', () => {
         let wrapper = mount(DoubleWidget, {
             propsData

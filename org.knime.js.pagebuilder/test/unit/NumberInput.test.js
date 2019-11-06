@@ -130,10 +130,12 @@ describe('NumberInput.vue', () => {
     });
 
     it('invalidates string values', () => {
-        propsData.nodeConfig.viewRepresentation.currentValue.double = 'notNumber';
+        // propsData.nodeConfig.viewRepresentation.currentValue.double = NaN;
         let wrapper = mount(DoubleWidget, {
             propsData
         });
+
+        wrapper.find(NumberInput).vm.$el.childNodes[0].value = 'stringValue';
 
         let numericInputComponent = wrapper.find(NumberInput);
         expect(numericInputComponent.vm.validate()).toBe(false);
