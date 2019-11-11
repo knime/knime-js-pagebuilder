@@ -44,7 +44,7 @@ export const mutations = {
             state.pageValidity = {};
             state.pageValueGetters = {};
             Object.keys(page.webNodes).forEach((nodeId) => {
-                this._vm.$set(state.pageValidity, nodeId, false);
+                this._vm.$set(state.pageValidity, nodeId, true);
             });
         }
     },
