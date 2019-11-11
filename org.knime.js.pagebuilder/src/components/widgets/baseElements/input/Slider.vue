@@ -105,6 +105,7 @@ export default {
       ref="slider"
       :min="minimum"
       :max="maximum"
+      :silent="true"
       :direction="direction"
       :interval="stepSize"
       :marks="marks"
