@@ -12,13 +12,13 @@ describe('customCss.js', () => {
 
         component = () => ({
             template: `<div class="parent-element">
-                        <div class="child-one">
-                          <div class="child-two">
-                          </div>
-                        </div>
-                        <div class="child-one">
-                        </div>
-                      </div>`
+                <div class="child-one">
+                    <div class="child-two">
+                    </div>
+                </div>
+                <div class="child-one">
+                </div>
+            </div>`
         });
     });
 

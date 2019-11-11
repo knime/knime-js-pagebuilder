@@ -8,9 +8,9 @@ import { getProp, setProp } from '../../src/util/nestedProperty';
 import * as storeConfig from '~/store/pagebuilder';
 
 describe('Widget.vue', () => {
-    let store, localVue, context;
+    let store, localVue, context, nodeConfig;
 
-    let nodeConfig = {
+    const nodeConfigBlueprint = {
         foo: 'bar',
         nodeInfo: {
             '@class': 'org.knime.js.core.JSONWebNodeInfo',
@@ -94,7 +94,8 @@ describe('Widget.vue', () => {
     };
     let nodeId = 'id1';
 
-    beforeAll(() => {
+    beforeEach(() => {
+        nodeConfig = JSON.parse(JSON.stringify(nodeConfigBlueprint));
         localVue = createLocalVue();
         localVue.use(Vuex);
 
@@ -191,10 +192,9 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
-        const expectedValue = 11;
-        const newValue = 10;
+        const expectedValue = 10;
+        const newValue = 11;
 
-        // previously modified to be 11
         expect(
             wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
                 .currentValue.testValue
@@ -250,10 +250,9 @@ describe('Widget.vue', () => {
             }
         });
 
-        const expectedValue = 11;
+        const expectedValue = 10;
         const newValue = 42;
 
-        // previously modified to be 11
         expect(
             wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
@@ -284,10 +283,8 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
+        const expectedValue = 10;
 
-        const expectedValue = 42;
-
-        // previously modified to be 42
         expect(
             wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
@@ -297,8 +294,7 @@ describe('Widget.vue', () => {
             nodeId,
             update: {
                 viewRepresentation: {
-                    '@class':
-                        'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                    '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
                 }
             }
         });

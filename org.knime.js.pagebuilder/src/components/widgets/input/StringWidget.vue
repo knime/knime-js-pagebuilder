@@ -55,19 +55,20 @@ export default {
         errorMessage() {
             if (this.isValid) {
                 return '';
-            } else if (this.viewRep.errorMessage) {
-                return this.viewRep.errorMessage;
-            } else if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            } else if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            } else {
-                return 'Current string input value is invalid';
             }
+            if (this.viewRep.errorMessage) {
+                return this.viewRep.errorMessage;
+            }
+            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
+                return this.nodeConfig.nodeInfo.nodeErrorMessage;
+            }
+            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
+                return this.nodeConfig.nodeInfo.nodeWarnMessage;
+            }
+            return 'Current string input value is invalid';
         },
         val() {
-            return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
-                getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            return getProp(this.nodeConfig, CURRENT_VALUE_KEY) || getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
         editorType() {
             return this.viewRep.editorType;
