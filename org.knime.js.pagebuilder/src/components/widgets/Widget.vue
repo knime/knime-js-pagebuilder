@@ -2,6 +2,7 @@
 import { mapActions } from 'vuex';
 import widgetConfig from './widgets.config';
 // input widgets
+import BooleanWidget from './input/BooleanWidget';
 import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
@@ -42,6 +43,7 @@ import { applyCustomCss } from '../../util/customCss';
 export default {
     components: {
         // input widgets
+        BooleanWidget,
         IntegerWidget,
         DoubleWidget,
         StringWidget,
