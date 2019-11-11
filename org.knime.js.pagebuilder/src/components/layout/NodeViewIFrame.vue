@@ -3,6 +3,7 @@ import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
 
 const heightPollInterval = 200; // ms
+const valueGetterTimeout = 10000; // ms
 
 /**
  * A single node view iframe
@@ -92,11 +93,12 @@ export default {
 
         this.document = this.$el.contentDocument;
         this.injectContent();
+        this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
     },
 
     beforeDestroy() {
         window.removeEventListener('message', this.messageFromIframe);
-
+        this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
@@ -188,6 +190,7 @@ export default {
             if (event.data.type === 'load') {
                 consola.debug(`View resource loading for ${this.nodeId} completed`);
                 this.document.defaultView.postMessage({
+                    nodeId: this.nodeId,
                     namespace: this.nodeConfig.namespace,
                     initMethodName: this.nodeConfig.initMethodName,
                     viewRepresentation: this.nodeConfig.viewRepresentation,
@@ -201,7 +204,36 @@ export default {
                         this.setHeight();
                     }
                 }
+            } else if (event.data.type === 'getValue') {
+                // call callback
+                if (typeof event.data.value === 'undefined') {
+                    this.getValueCallback({ error: new Error(event.data.error) });
+                } else {
+                    this.getValueCallback({ value: event.data.value });
+                }
             }
+        },
+
+        getValue() {
+            return new Promise((resolve, reject) => {
+                this.getValueCallback = ({ error, value }) => {
+                    window.clearTimeout(this.cancelValueGetter);
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve({ nodeId: this.nodeId, value });
+                    }
+                };
+                this.document.defaultView.postMessage({
+                    nodeId: this.nodeId,
+                    namespace: this.nodeConfig.namespace,
+                    getViewValueMethodName: this.nodeConfig.getViewValueMethodName,
+                    type: 'getValue'
+                }, window.origin);
+                this.cancelValueGetter = window.setTimeout(() => {
+                    reject(new Error('Value could not be retrieved in the allocated time.'));
+                }, valueGetterTimeout);
+            });
         }
 
     }
