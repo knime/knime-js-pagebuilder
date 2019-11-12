@@ -166,7 +166,6 @@ export default {
             const newWebNodeConfig = {
                 type: 'Slider',
                 nodeId: this.nodeId,
-                originalEvent: e.originalEvent,
                 isValid: e.isValid && this.validate(newValue),
                 update: {
                     [CURRENT_VALUE_KEY]: newValue
@@ -184,9 +183,7 @@ export default {
              * currently fake validation to test styling
              */
             if (this.viewRep.required) {
-                if (!value && value !== 0) {
-                    return false;
-                }
+                return value || value === 0;
             }
             return true;
         }

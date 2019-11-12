@@ -45,7 +45,6 @@ export default {
         onValueChange(e) {
             this.$emit('updateValue', {
                 value: this.getValue(),
-                originalEvent: e,
                 isValid: this.validate()
             });
         },
@@ -71,12 +70,9 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 textarea.knime-qf-input {
-  font-family: 'Roboto', BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: var(--theme-color-masala);
-  letter-spacing: 0.03px;
   line-height: 18px;
   background-color: var(--theme-color-porcelain);
   margin: 0;

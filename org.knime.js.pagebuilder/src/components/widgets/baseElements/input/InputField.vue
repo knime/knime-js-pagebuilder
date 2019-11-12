@@ -27,13 +27,10 @@ export default {
     },
     computed: {
         inputClass() {
+            // knime-qf-input legacy selector
             const classes = ['knime-qf-input', 'knime-single-line'];
-            switch (this.type) {
-            case 'text':
+            if (this.type === 'text') {
                 classes.push('knime-string');
-                break;
-            default:
-                  //  nothing
             }
             if (!this.isValid) {
                 classes.push('knime-input-invalid');
@@ -52,7 +49,6 @@ export default {
         onValueChange(e) {
             this.$emit('updateValue', {
                 value: this.getValue(),
-                originalEvent: e,
                 isValid: this.validate()
             });
         },
@@ -65,7 +61,6 @@ export default {
 </script>
 
 <template>
-  <!-- knime-qf-input legacy selector -->
   <input
     :class="inputClass"
     :type="type"
@@ -79,12 +74,9 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 input.knime-qf-input {
-  font-family: 'Roboto', BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: var(--theme-color-masala);
-  letter-spacing: 0.03px;
   line-height: 18px;
   background-color: var(--theme-color-porcelain);
   margin: 0;

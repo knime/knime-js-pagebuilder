@@ -87,9 +87,6 @@ export default {
         },
         regex() {
             return this.viewRep.regex || '.*';
-        },
-        placeholder() {
-            return '';
         }
     },
     methods: {
@@ -99,7 +96,6 @@ export default {
             const newWebNodeConfig = {
                 type: 'String Input',
                 nodeId: this.nodeId,
-                originalEvent: e.originalEvent,
                 isValid: e.isValid && this.validate(newValue),
                 update: {
                     [CURRENT_VALUE_KEY]: newValue
@@ -140,7 +136,6 @@ export default {
       :cols="multiColumns"
       :rows="multiRows"
       :pattern="regex"
-      :placeholder="placeholder"
       :is-valid="isValid"
       @updateValue="onChange"
     />
@@ -149,7 +144,6 @@ export default {
       :value="value"
       type="text"
       :pattern="regex"
-      :placeholder="placeholder"
       :is-valid="isValid"
       @updateValue="onChange"
     />
