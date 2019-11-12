@@ -60,7 +60,7 @@ export default {
             type: String
         },
         dragOnClick: {
-            default: () => true,
+            default: () => false,
             type: Boolean
         },
         contained: {
