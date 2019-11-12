@@ -48,8 +48,8 @@ describe('Slider.vue', () => {
             ...context,
             propsData
         });
-
-        wrapper.vm.$refs.slider.setValue(wrapper.vm.value++);
+        let newValue = wrapper.vm.value + 1;
+        wrapper.vm.$refs.slider.setValue(newValue);
 
         expect(wrapper.emitted().updateValue).toBeTruthy();
     });
@@ -78,11 +78,11 @@ describe('Slider.vue', () => {
         // too low
         wrapper.vm.$refs.slider.setValue(lowValue);
         expect(wrapper.vm.validate()).toBe(false);
-
+        
         // valid
         wrapper.vm.$refs.slider.setValue(okayValue);
         expect(wrapper.vm.validate()).toBe(true);
-
+        
         // too high
         wrapper.vm.$refs.slider.setValue(highValue);
         expect(wrapper.vm.validate()).toBe(false);

@@ -18,7 +18,7 @@ const DEBOUNCER_TIMEOUT = 250;
  * context, such as nodeId, full config, etc. It will also be able to
  * so second level validation (after the base component validation).
  *
- * It will be responsible for knowing its incomming nodeConfig object,
+ * It will be responsible for knowing its incoming nodeConfig object,
  * as well as the keys for its corresponding properties. When the 2nd level
  * receives an update event from the 1st (lower) level child component, it
  * will validate and then emit an updateWidget event to the parent Widget
@@ -39,12 +39,19 @@ export default {
     },
     props: {
         nodeConfig: {
-            default: () => ({}),
-            type: Object
+            required: true,
+            type: Object,
+            validator(obj) {
+                return obj.nodeInfo && obj.viewRepresentation.sliderSettings &&
+                    (getProp(obj, CURRENT_VALUE_KEY) || getProp(obj, DEFAULT_VALUE_KEY));
+            }
         },
         nodeId: {
-            default: () => null,
-            type: String
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return Boolean(nodeId);
+            }
         },
         isValid: {
             default: () => false,
