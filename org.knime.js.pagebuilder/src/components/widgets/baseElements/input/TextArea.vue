@@ -35,7 +35,6 @@ export default {
         }
     },
     mounted() {
-        this.$el.value = this.value;
         this.onValueChange({});
     },
     methods: {
@@ -58,6 +57,7 @@ export default {
 <template>
   <!-- knime-qf-input legacy selector -->
   <textarea
+    :value="value"
     :class="textAreaClass"
     :cols="cols"
     :rows="rows"

@@ -94,27 +94,6 @@ describe('PageBuilder.vue', () => {
         expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
     });
 
-    it('prevents value modification with invalid node updates', () => {
-        let wrapper = shallowMount(PageBuilder, context);
-        let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
-
-        expect(node.foo).toEqual('bar');
-
-        let update = {
-            nodeId: 'id1',
-            isValid: false,
-            update: {
-                foo: 'rod'
-            }
-        };
-
-        store.commit('pagebuilder/updateWebNode', update);
-        expect(node.foo).toEqual('bar');
-        update.isValid = true;
-        store.commit('pagebuilder/updateWebNode', update);
-        expect(node.foo).toEqual('rod');
-    });
-
     it('prevents value modification with invalid keys', () => {
         let wrapper = shallowMount(PageBuilder, context);
         let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;

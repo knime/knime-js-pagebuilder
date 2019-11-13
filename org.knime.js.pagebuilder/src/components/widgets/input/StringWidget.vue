@@ -74,7 +74,8 @@ export default {
             return 'Current string input value is invalid';
         },
         value() {
-            return getProp(this.nodeConfig, CURRENT_VALUE_KEY) || getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            const value = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
+            return !value && value !== '' ? getProp(this.nodeConfig, DEFAULT_VALUE_KEY) : value;
         },
         editorType() {
             return this.viewRep.editorType;
@@ -125,6 +126,7 @@ export default {
 <template>
   <div
     :title="description"
+    class="knime-string-widget"
   >
     <Label
       :text="label"
@@ -155,5 +157,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-
+.knime-string-widget {
+  overflow: hidden !important;
+}
 </style>

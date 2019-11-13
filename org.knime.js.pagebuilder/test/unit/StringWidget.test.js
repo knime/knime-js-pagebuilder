@@ -215,7 +215,7 @@ describe('StringWidget.vue', () => {
         expect(updateWidget[1][0].isValid).toBeFalsy();
 
         let wrapper2 = mount(StringWidget, {
-            propsData: propsDataInput
+            propsData: propsDateTextArea
         });
 
         jest.runAllTimers();
@@ -227,12 +227,12 @@ describe('StringWidget.vue', () => {
         let textAreaChild = wrapper2.find(TextArea);
         textAreaChild.setProps({ value: '' });
         textAreaChild.vm.onValueChange({});
-
+        
         jest.runAllTimers();
-
+        
         ({ updateWidget } = wrapper2.emitted());
         expect(updateWidget).toBeTruthy();
-        expect(updateWidget[0][0].isValid).toBeFalsy();
+        expect(updateWidget[1][0].isValid).toBeFalsy();
     });
 
     it('has empty error message when valid', () => {

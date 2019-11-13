@@ -39,7 +39,6 @@ export default {
         }
     },
     mounted() {
-        this.$el.value = this.value;
         this.onValueChange({});
     },
     methods: {
@@ -62,6 +61,7 @@ export default {
 
 <template>
   <input
+    :value="value"
     :class="inputClass"
     :type="type"
     :pattern="pattern"
