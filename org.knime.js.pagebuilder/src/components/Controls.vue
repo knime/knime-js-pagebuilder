@@ -1,9 +1,13 @@
 <script>
-import LoadingButton from './LoadingButton';
+import Button from '~/webapps-common/ui/components/Button';
+import ArrowLeftIcon from '~/webapps-common/ui/assets/img/icons/arrow-left.svg?inline';
+import CloseIcon from '~/webapps-common/ui/assets/img/icons/close.svg?inline';
 
 export default {
     components: {
-        LoadingButton
+        Button,
+        ArrowLeftIcon,
+        CloseIcon
     },
     data() {
         return {
@@ -17,6 +21,10 @@ export default {
             await this.$store.dispatch('pagebuilder/previousPage');
             this.loadingPrev = false;
         },
+        async cancel() {
+            // TODO
+            // await this.$store.dispatch('pagebuilder/previousPage');
+        },
         async nextPage() {
             this.loadingNext = true;
             await this.$store.dispatch('pagebuilder/nextPage');
@@ -27,24 +35,56 @@ export default {
 </script>
 
 <template>
-  <div>
-    <LoadingButton
-      :loading="loadingPrev"
-      @click="previousPage"
-    >
-      ◀ back
-    </LoadingButton>
-    <LoadingButton
-      :loading="loadingNext"
-      @click="nextPage"
-    >
-      next ▶︎
-    </LoadingButton>
-  </div>
+  <section>
+    <div class="grid-container">
+      <div class="grid-item-12 controls">
+        <Button
+          compact
+          :disabled="loadingPrev"
+          @click="previousPage"
+        >
+          <ArrowLeftIcon />Back
+        </Button>
+        <Button
+          compact
+          @click="cancel"
+        >
+          <CloseIcon />Cancel
+        </Button>
+        <Button
+          primary
+          class="next"
+          :disabled="loadingNext"
+          @click="nextPage"
+        >
+          Next
+        </Button>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style lang="postcss" scoped>
-div {
+section {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  bottom: 30px;
+  width: 100%;
+  background-color: var(--theme-color-gray-ultra-light);
+  box-shadow: 0 1px 4px 0 var(--theme-color-gray-dark-semi);
+}
+
+.controls {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+button {
+  &.next {
+    width: 95px;
+  }
 }
 </style>
