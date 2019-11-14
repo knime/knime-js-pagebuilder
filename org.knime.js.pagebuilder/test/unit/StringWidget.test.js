@@ -5,7 +5,7 @@ import StringWidget from '@/components/widgets/input/StringWidget.vue';
 import InputField from '@/components/widgets/baseElements/input/InputField.vue';
 import TextArea from '@/components/widgets/baseElements/input/TextArea.vue';
 
-describe('SliderWidget.vue', () => {
+describe('StringWidget.vue', () => {
     let propsDataInput, propsDateTextArea;
 
     beforeEach(() => {
@@ -162,7 +162,7 @@ describe('SliderWidget.vue', () => {
         });
 
         expect(wrapper.find(InputField)).toBeTruthy();
-        
+
         wrapper.setProps(propsDateTextArea);
 
         expect(wrapper.find(TextArea)).toBeTruthy();
@@ -216,7 +216,7 @@ describe('SliderWidget.vue', () => {
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput
         });
-        
+
         setTimeout(() => {
 
             expect(wrapper.emitted().onChange).toBe(true);
@@ -236,7 +236,7 @@ describe('SliderWidget.vue', () => {
         let wrapper2 = mount(StringWidget, {
             propsData: propsDataInput
         });
-        
+
         setTimeout(() => {
 
             expect(wrapper2.emitted().onChange).toBe(true);

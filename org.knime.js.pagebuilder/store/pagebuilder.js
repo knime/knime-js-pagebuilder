@@ -88,12 +88,12 @@ export const mutations = {
                 } catch (e) {
                     // catch deep Object modification errors
                     consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated ` +
-                     `because the provided key was invalid. Key:`, key);
+                    `because the provided key was invalid. Key:`, key);
                 }
             }
         } else {
             consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated because` +
-                `the change was invalid. Valid:`, newWebNode.isValid);
+                ` the change was invalid. Valid:`, newWebNode.isValid);
         }
     },
 

@@ -17,23 +17,19 @@ export default {
     props: {
         value: {
             default: () => DEFAULT_SLIDER_VALUE,
-            type: Number,
-            required: true
+            type: Number
         },
         maximum: {
             default: () => 1,
-            type: Number,
-            required: true
+            type: Number
         },
         minimum: {
             default: () => 0,
-            type: Number,
-            required: true
+            type: Number
         },
         isValid: {
             default: () => false,
-            type: Boolean,
-            required: true
+            type: Boolean
         },
         direction: {
             default: () => 'ltr',
@@ -64,7 +60,7 @@ export default {
             type: String
         },
         dragOnClick: {
-            default: () => true,
+            default: () => false,
             type: Boolean
         },
         contained: {
@@ -109,6 +105,7 @@ export default {
       ref="slider"
       :min="minimum"
       :max="maximum"
+      :silent="true"
       :direction="direction"
       :interval="stepSize"
       :marks="marks"
