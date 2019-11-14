@@ -5,7 +5,6 @@ import { getProp } from '../../../util/nestedProperty';
 
 const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.boolean';
 const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.boolean';
-const DEBOUNCER_TIMEOUT = 250;
 
 /**
  * This is the Boolean Input widget implementation.
@@ -40,7 +39,6 @@ export default {
             viewRep: this.nodeConfig.viewRepresentation
         };
     },
-    updateDebouncer: null,
     computed: {
         label() {
             return this.viewRep.label;
@@ -49,25 +47,24 @@ export default {
             return this.viewRep.description || '';
         },
         value() {
-            return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
-                getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
+            return typeof currentValue === 'boolean'
+                ? currentValue
+                : getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         }
     },
     methods: {
         onChange(e) {
-            clearTimeout(this.updateDebouncer);
+            this.$el.querySelector('.knime-boolean').focus();
             const newWebNodeConfig = {
                 type: 'Boolean Input',
                 nodeId: this.nodeId,
-                originalEvent: { value: e },
                 isValid: this.validate(e),
                 update: {
                     [CURRENT_VALUE_KEY]: e
                 }
             };
-            this.updateDebouncer = setTimeout(() => {
-                this.$emit('updateWidget', newWebNodeConfig);
-            }, DEBOUNCER_TIMEOUT);
+            this.$emit('updateWidget', newWebNodeConfig);
         },
         validate(value) {
             /**
@@ -75,7 +72,7 @@ export default {
              *
              * insert additional custom widget validation
              */
-            return typeof value !== 'undefined';
+            return typeof value === 'boolean';
         }
     }
 };
@@ -100,6 +97,8 @@ export default {
     <Label
       :text="label"
       class="knime-label"
+      @input="onChange"
+      @click.native="()=>onChange(!value)"
     />
   </div>
 </template>
