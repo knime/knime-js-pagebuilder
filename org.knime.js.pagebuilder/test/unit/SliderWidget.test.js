@@ -184,8 +184,8 @@ describe('SliderWidget.vue', () => {
         });
         // tooltip format and marks and labels tested separately
         expect(wrapper.vm.label).toBe('Testing Slider');
-        expect(wrapper.vm.min).toBe(0);
-        expect(wrapper.vm.max).toBe(100);
+        expect(wrapper.vm.min).toBe(5);
+        expect(wrapper.vm.max).toBe(25);
         expect(wrapper.vm.val).toBe(5);
         expect(wrapper.vm.direction).toBe('ttb');
         expect(wrapper.vm.stepSize).toBe(.000001);
@@ -203,7 +203,7 @@ describe('SliderWidget.vue', () => {
         );
     });
 
-    it('uses custom max and min if present', () => {
+    it('uses custom max and min if present and appropriate', () => {
         let propsData = {
             nodeConfig,
             nodeId,
@@ -214,9 +214,15 @@ describe('SliderWidget.vue', () => {
             propsData
         });
 
+        expect(wrapper.vm.min).toBe(5);
+        expect(wrapper.vm.max).toBe(25);
+
+        nodeConfig.viewRepresentation['@class'] = 'org.knime.js.base.node.widget' +
+            '.rangeSlider.InteractiveFilterRangeSliderDefinition';
+        
         expect(wrapper.vm.min).toBe(0);
         expect(wrapper.vm.max).toBe(100);
-        
+
         nodeConfig.viewRepresentation.useCustomMin = false;
         nodeConfig.viewRepresentation.useCustomMax = false;
 

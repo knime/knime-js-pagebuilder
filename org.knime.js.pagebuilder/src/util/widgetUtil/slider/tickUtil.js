@@ -68,9 +68,12 @@ export const createTicks = (tickConfig) => {
             break;
         case 'positions': {
             config.values.forEach((val) => {
-                let key = max * (val / 100); // || min;
-                markConfig[key] = `${format(key, config.format)}`;
-                orderedValues.add(key);
+                let range = max - min;
+                let key = range * (val / 100) + min; // || min;
+                if (min <= key && max >= key) {
+                    markConfig[key] = `${format(key, config.format)}`;
+                    orderedValues.add(key);
+                }
             });
             break;
         }

@@ -66,6 +66,9 @@ export default {
     },
     updateDebouncer: null,
     computed: {
+        isInteractiveRangeSlider() {
+            return this.viewRep['@class'].includes('range');
+        },
         label() {
             return this.viewRep.label;
         },
@@ -81,11 +84,15 @@ export default {
             }
         },
         min() {
-            if (this.viewRep.useCustomMin) { return this.viewRep.customMin; }
+            if (this.isInteractiveRangeSlider && this.viewRep.useCustomMin) {
+                return this.viewRep.customMin;
+            }
             return this.sliderSettings.range.min[0];
         },
         max() {
-            if (this.viewRep.useCustomMax) { return this.viewRep.customMax; }
+            if (this.isInteractiveRangeSlider && this.viewRep.useCustomMax) {
+                return this.viewRep.customMax;
+            }
             return this.sliderSettings.range.max[0];
         },
         val() {

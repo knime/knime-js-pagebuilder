@@ -241,6 +241,10 @@ export default {
   background-color: var(--theme-color-porcelain);
 }
 
+.vue-slider-dot:hover {
+  background-color: var(--theme-color-dove-gray);
+}
+
 .vue-slider-ttb .vue-slider-dot,
 .vue-slider-btt .vue-slider-dot {
   left: 2px !important;
@@ -249,7 +253,7 @@ export default {
 }
 
 .vue-slider-dot-focus {
-  background-color: var(--theme-color-masala);
+  background-color: var(--theme-color-masala) !important;
 }
 
 .vue-slider-dot-handle {
