@@ -75,7 +75,10 @@ export default {
         },
         value() {
             const value = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
-            return !value && value !== '' ? getProp(this.nodeConfig, DEFAULT_VALUE_KEY) : value;
+            if (value || value === '') {
+                return value;
+            }
+            return getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
         editorType() {
             return this.viewRep.editorType;
