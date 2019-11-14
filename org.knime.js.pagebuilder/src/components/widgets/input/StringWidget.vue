@@ -27,12 +27,18 @@ export default {
     },
     props: {
         nodeConfig: {
-            default: () => ({}),
-            type: Object
+            required: true,
+            type: Object,
+            validator(obj) {
+                return obj.nodeInfo;
+            }
         },
         nodeId: {
-            default: () => null,
-            type: String
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return Boolean(nodeId);
+            }
         },
         isValid: {
             default: () => false,
@@ -50,7 +56,7 @@ export default {
             return this.viewRep.label;
         },
         description() {
-            return this.viewRep.description || '';
+            return this.viewRep.description || null;
         },
         errorMessage() {
             if (this.isValid) {
@@ -67,8 +73,12 @@ export default {
             }
             return 'Current string input value is invalid';
         },
-        val() {
-            return getProp(this.nodeConfig, CURRENT_VALUE_KEY) || getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+        value() {
+            const value = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
+            if (value || value === '') {
+                return value;
+            }
+            return getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
         editorType() {
             return this.viewRep.editorType;
@@ -81,19 +91,15 @@ export default {
         },
         regex() {
             return this.viewRep.regex || '.*';
-        },
-        placeholder() {
-            return '';
         }
     },
     methods: {
         onChange(e) {
             clearTimeout(this.updateDebouncer);
-            const newValue = e.val;
+            const newValue = e.value;
             const newWebNodeConfig = {
                 type: 'String Input',
                 nodeId: this.nodeId,
-                originalEvent: e.originalEvent,
                 isValid: e.isValid && this.validate(newValue),
                 update: {
                     [CURRENT_VALUE_KEY]: newValue
@@ -121,6 +127,7 @@ export default {
 <template>
   <div
     :title="description"
+    class="knime-string-widget"
   >
     <Label
       :text="label"
@@ -128,20 +135,18 @@ export default {
     />
     <TextArea
       v-if="editorType === 'Multi-line'"
-      :value="val"
+      :value="value"
       :cols="multiColumns"
       :rows="multiRows"
       :pattern="regex"
-      :placeholder="placeholder"
       :is-valid="isValid"
       @updateValue="onChange"
     />
     <InputField
       v-else
-      :value="val"
+      :value="value"
       type="text"
       :pattern="regex"
-      :placeholder="placeholder"
       :is-valid="isValid"
       @updateValue="onChange"
     />
@@ -153,5 +158,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-
+.knime-string-widget {
+  overflow: hidden !important;
+}
 </style>
