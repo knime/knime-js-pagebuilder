@@ -85,12 +85,7 @@ export default {
   >
     <Checkbox
       :value="value"
-      box-size="14px"
-      box-padding="5px 0 3px 26px"
-      check-height="5px"
-      check-width="10px"
-      check-left="-1.25px"
-      check-top="4px"
+      box-size="Medium"
       class="knime-boolean"
       @input="onChange"
     />
