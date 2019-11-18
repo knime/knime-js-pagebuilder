@@ -44,7 +44,7 @@ export const mutations = {
             state.pageValidity = {};
             state.pageValueGetters = {};
             Object.keys(page.webNodes).forEach((nodeId) => {
-                this._vm.$set(state.pageValidity, nodeId, false);
+                this._vm.$set(state.pageValidity, nodeId, true);
             });
         }
     },
@@ -80,20 +80,21 @@ export const mutations = {
         state.pageValidity[newWebNode.nodeId] = newWebNode.isValid;
 
         // only update value if the node is valid
-        if (newWebNode.isValid) {
-            let currentWebNode = state.page.webNodes[newWebNode.nodeId];
-            for (let [key, value] of Object.entries(newWebNode.update)) {
-                try {
-                    setProp(currentWebNode, key, value);
-                } catch (e) {
-                    // catch deep Object modification errors
-                    consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated ` +
-                    `because the provided key was invalid. Key:`, key);
-                }
+        let currentWebNode = state.page.webNodes[newWebNode.nodeId];
+        let values = [];
+        for (let [key, value] of Object.entries(newWebNode.update)) {
+            try {
+                values.push(value);
+                setProp(currentWebNode, key, value);
+            } catch (e) {
+                // catch deep Object modification errors
+                consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated ` +
+                `because the provided key was invalid. Key:`, key);
             }
-        } else {
-            consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated because` +
-                ` the change was invalid. Valid:`, newWebNode.isValid);
+        }
+        if (!newWebNode.isValid) {
+            consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Node is now invalid` +
+                ` because of its new value(s). Value(s):`, values.join(', '));
         }
     },
 

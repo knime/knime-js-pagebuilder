@@ -89,6 +89,7 @@ export default {
         },
         publishUpdate(update) {
             update.isValid = update.isValid && this.validate(update);
+            update.type = this.type;
             this.updateValue(update);
         },
         getValue() {

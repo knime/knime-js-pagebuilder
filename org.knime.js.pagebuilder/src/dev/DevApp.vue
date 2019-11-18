@@ -98,11 +98,13 @@ export default {
 </template>
 
 <style lang="postcss">
+@import "normalize.css";
 @import "webapps-common/ui/css/variables";
 
 body {
   font-family: "Roboto", "Arial", sans-serif;
   font-weight: 300;
+  margin: 10px;
 }
 
 .frame {

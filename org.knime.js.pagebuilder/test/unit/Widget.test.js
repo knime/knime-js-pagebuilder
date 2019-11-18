@@ -151,17 +151,17 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.isValid).toBe(false);
+        expect(wrapper.vm.isValid).toBe(true);
 
         wrapper.vm.publishUpdate({
-            isValid: true,
+            isValid: false,
             nodeId,
             update: {
                 'viewRepresentation.currentValue.testValue': 11
             }
         });
 
-        expect(wrapper.vm.isValid).toBe(true);
+        expect(wrapper.vm.isValid).toBe(false);
     });
 
     // TODO AP-12850: update Widget component level validation
@@ -195,10 +195,8 @@ describe('Widget.vue', () => {
         const expectedValue = 10;
         const newValue = 11;
 
-        expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
-                .currentValue.testValue
-        ).toEqual(expectedValue);
+        expect(wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+            .currentValue.testValue).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
             isValid: true,
@@ -222,9 +220,8 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
-
         const expectedValue = 10;
-        const newValue = 11;
+        const newValue = 12;
 
         expect(
             getProp(

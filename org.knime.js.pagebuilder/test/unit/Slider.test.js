@@ -19,7 +19,7 @@ describe('Slider.vue', () => {
             tooltipFormat: (val) => val.toString(),
             marks: {},
             connect: 'both',
-            drageOnClick: true,
+            dragOnClick: true,
             contained: false
         };
     });
@@ -78,11 +78,11 @@ describe('Slider.vue', () => {
         // too low
         wrapper.vm.$refs.slider.setValue(lowValue);
         expect(wrapper.vm.validate()).toBe(false);
-        
+
         // valid
         wrapper.vm.$refs.slider.setValue(okayValue);
         expect(wrapper.vm.validate()).toBe(true);
-        
+
         // too high
         wrapper.vm.$refs.slider.setValue(highValue);
         expect(wrapper.vm.validate()).toBe(false);

@@ -70,7 +70,7 @@ export const setProp = (obj, key, val) => {
         obj[newKey] = typeof obj[newKey] === 'object' ? obj[newKey] : {};
         setProp(obj[newKey], key, val);
     } else {
-        if (!obj[key[0]]) {
+        if (typeof obj[key[0]] === 'undefined') {
             throw Error('Provided key does not exist!');
         }
         obj[key[0]] = val;

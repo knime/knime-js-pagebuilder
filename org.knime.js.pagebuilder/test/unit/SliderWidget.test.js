@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import { shallowMount, mount } from '@vue/test-utils';
+import { mount, shallowMount } from '@vue/test-utils';
 
 import SliderWidget from '@/components/widgets/input/SliderWidget';
 import Slider from '@/components/widgets/baseElements/input/Slider';
@@ -186,7 +186,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.label).toBe('Testing Slider');
         expect(wrapper.vm.min).toBe(5);
         expect(wrapper.vm.max).toBe(25);
-        expect(wrapper.vm.val).toBe(5);
+        expect(wrapper.vm.value).toBe(5);
         expect(wrapper.vm.direction).toBe('ttb');
         expect(wrapper.vm.stepSize).toBe(.000001);
         expect(wrapper.vm.height).toBe(533);
@@ -251,7 +251,7 @@ describe('SliderWidget.vue', () => {
 
         expect(typeof wrapper.vm.tooltipFormat).toBe('function');
         expect(wrapper.vm.tooltipFormat(1.234)).toBe('$1.23_');
-        
+
         nodeConfig.viewRepresentation.sliderSettings.tooltips = [];
 
         expect(typeof wrapper.vm.tooltipFormat).toBe('function');
@@ -333,6 +333,9 @@ describe('SliderWidget.vue', () => {
     });
 
     it('sets debouncer when an update is received', () => {
+
+        jest.useFakeTimers();
+
         let getWrapper = () => shallowMount(SliderWidget, {
             ...context,
             propsData: {
@@ -345,22 +348,26 @@ describe('SliderWidget.vue', () => {
         let wrapper = getWrapper();
 
         let changeEvent = {
-            val: 10,
+            value: 10,
             isValid: true,
             nodeId
         };
 
-        wrapper.find(Slider).vm.$emit('onChange', changeEvent);
-        setTimeout(() => expect(wrapper.vm.updateDebouncer).toBeTruthy(), 251);
-        setTimeout(() => expect(typeof wrapper.vm.updateDebouncer === 'function').toBeTruthy(), 251);
+        wrapper.find(Slider).vm.$emit('updateValue', changeEvent);
+        expect(wrapper.vm.updateDebouncer).toBeTruthy();
+        jest.runAllTimers();
+        expect(typeof wrapper.vm.updateDebouncer).toBe('number');
+
         wrapper = getWrapper();
         wrapper.vm.onChange(changeEvent);
-        setTimeout(() => expect(wrapper.vm.updateDebouncer).toBeTruthy(), 251);
-        setTimeout(() => expect(typeof wrapper.vm.updateDebouncer === 'function').toBeTruthy(), 251);
+        expect(wrapper.vm.updateDebouncer).toBeTruthy();
+        expect(typeof wrapper.vm.updateDebouncer).toBe('number');
     });
 
     it('captures and detects update events from Slider component with debounce', () => {
-        let wrapper = shallowMount(SliderWidget, {
+        jest.useFakeTimers();
+
+        let wrapper = mount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
@@ -369,18 +376,22 @@ describe('SliderWidget.vue', () => {
             }
         });
 
-        wrapper.find(Slider).vm.$emit('onChange', {
-            val: 10,
+        wrapper.find(Slider).vm.$emit('updateValue', {
+            value: 10,
             isValid: true,
             nodeId
         });
 
         expect(wrapper.emitted().updateWidget).toBeUndefined();
+        jest.runAllTimers();
 
-        setTimeout(() => expect(wrapper.emitted().updateWidget).toBeTruthy(), 251);
+        expect(wrapper.emitted().updateWidget).toBeTruthy();
     });
 
     it('debounces multiple updates properly', () => {
+
+        jest.useFakeTimers();
+
         let wrapper = shallowMount(SliderWidget, {
             ...context,
             propsData: {
@@ -391,22 +402,24 @@ describe('SliderWidget.vue', () => {
         });
 
         let fireUpdate = () => {
-            wrapper.find(Slider).vm.$emit('onChange', {
-                val: 10,
+            wrapper.find(Slider).vm.$emit('updateValue', {
+                value: 10,
                 isValid: true,
                 nodeId
             });
         };
 
         fireUpdate();
-        setTimeout(() => expect(wrapper.emitted().updateWidget).toBeUndefined(), 251);
         setTimeout(fireUpdate, 240);
+        jest.advanceTimersByTime(250);
         expect(wrapper.emitted().updateWidget).toBeUndefined();
-        setTimeout(() => expect(wrapper.emitted().updateWidget).toBeTruthy(), 251);
-
+        jest.advanceTimersByTime(251);
+        expect(wrapper.emitted().updateWidget).toBeTruthy();
     });
 
+
     it('correctly emits the updateWidget Payload', () => {
+        jest.useFakeTimers();
         let wrapper = shallowMount(SliderWidget, {
             ...context,
             propsData: {
@@ -416,18 +429,17 @@ describe('SliderWidget.vue', () => {
             }
         });
 
-        wrapper.find(Slider).vm.$emit('onChange', {
-            val: 10,
+        wrapper.find(Slider).vm.$emit('updateValue', {
+            value: 10,
             isValid: true,
             nodeId
         });
 
-        setTimeout(() => {
-            expect(wrapper.emitted().updateWidget.isValid).toBeTrue();
-            expect(wrapper.emitted().updateWidget.update).toBeTrue();
-            expect(wrapper.emitted().updateWidget.update['viewRepresentation.currentValue.double'])
-                .toBe(10);
-        }, 251);
+        jest.advanceTimersByTime(251);
+        const { updateWidget } = wrapper.emitted();
+        expect(updateWidget[0][0].isValid).toBeTruthy();
+        expect(updateWidget[0][0].update).toBeTruthy();
+        expect(updateWidget[0][0].update['viewRepresentation.currentValue.double']).toBe(10);
     });
 
     it('has no error message when valid', () => {
@@ -496,7 +508,7 @@ describe('SliderWidget.vue', () => {
 
         expect(wrapper.find(ErrorMessage).isVisible()).toBe(true);
         expect(wrapper.find(ErrorMessage).vm.error).toBe('');
-        
+
         wrapper.setProps({ isValid: false });
 
         expect(wrapper.find(ErrorMessage).vm.error).not.toBe('');
