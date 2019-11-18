@@ -15,6 +15,11 @@ export default {
             loadingNext: false
         };
     },
+    computed: {
+        hasPreviousPage() {
+            return this.$store.state.pagebuilder.page && this.$store.state.pagebuilder.page.hasPreviousPage;
+        }
+    },
     methods: {
         async previousPage() {
             this.loadingPrev = true;
@@ -38,13 +43,16 @@ export default {
   <section>
     <div class="grid-container">
       <div class="grid-item-12 controls">
-        <Button
-          compact
-          :disabled="loadingPrev"
-          @click="previousPage"
-        >
-          <ArrowLeftIcon />Back
-        </Button>
+        <div>
+          <Button
+            v-if="hasPreviousPage"
+            compact
+            :disabled="loadingPrev"
+            @click="previousPage"
+          >
+            <ArrowLeftIcon />Back
+          </Button>
+        </div>
         <Button
           compact
           @click="cancel"

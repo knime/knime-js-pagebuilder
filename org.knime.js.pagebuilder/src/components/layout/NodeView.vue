@@ -45,7 +45,7 @@ export default {
             return this.viewConfig.autoResize !== false;
         },
         webNodeConfig() {
-            let nodeConfigs = this.$store.state.pagebuilder.page.webNodes;
+            let nodeConfigs = this.$store.state.pagebuilder.page.wizardPageContent.webNodes;
             let { nodeID } = this.viewConfig;
             return nodeConfigs[nodeID];
         },

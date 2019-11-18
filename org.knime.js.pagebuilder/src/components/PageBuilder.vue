@@ -2,16 +2,14 @@
 import validKeys from '~/store/keys';
 import * as storeConfig from '~/store/pagebuilder';
 import Controls from './Controls';
-import Progress from '~/src/components/Progress';
 import Page from '~/src/components/Page';
 import Result from '~/src/components/Result';
 
-const supportedViewStates = ['page', 'executing', 'result'];
+const supportedWizardExecutionStates = ['INTERACTION_REQUIRED', 'EXECUTING_FINISHED', 'EXECUTING_FAILED'];
 
 export default {
     components: {
         Controls,
-        Progress,
         Page,
         Result
     },
@@ -36,25 +34,23 @@ export default {
     },
 
     computed: {
-        viewState() {
-            let viewState = this.$store.state.pagebuilder.viewState;
-            if (viewState && !supportedViewStates.includes(viewState)) {
-                consola.error(`PageBuilder used with unsupported viewState: ${viewState}`);
+        executionState() {
+            let page = this.$store.state.pagebuilder.page;
+            let state = page && page.wizardExecutionState;
+            if (!supportedWizardExecutionStates.includes(state)) {
+                consola.error(`PageBuilder used with unsupported viewState: ${state}`);
+                return null;
             }
-            return viewState;
-        },
-        showPageBuilder() {
-            return supportedViewStates.includes(this.viewState);
+            return state;
         }
     }
 };
 </script>
 
 <template>
-  <div v-if="showPageBuilder">
-    <Page v-if="viewState === 'page'" />
-    <Progress v-else-if="viewState === 'executing'" />
-    <Result v-else-if="viewState === 'result'" />
+  <div v-if="executionState">
+    <Page v-if="executionState === 'INTERACTION_REQUIRED'" />
+    <Result v-else-if="executionState === 'EXECUTING_FINISHED' || executionState === 'EXECUTING_FAILED'" />
 
     <Controls />
   </div>

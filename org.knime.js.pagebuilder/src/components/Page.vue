@@ -7,11 +7,12 @@ export default {
         Layout
     },
     computed: {
-        page() {
-            return this.$store.state.pagebuilder.page;
+        pageContent() {
+            return this.$store.state.pagebuilder.page && this.$store.state.pagebuilder.page.wizardPageContent;
         },
         layout() {
-            return this.page && this.page.webNodePageConfiguration && this.page.webNodePageConfiguration.layout;
+            return this.pageContent && this.pageContent.webNodePageConfiguration &&
+                this.pageContent.webNodePageConfiguration.layout;
         }
     }
 };
@@ -19,7 +20,7 @@ export default {
 
 <template>
   <Layout
-    v-if="page"
+    v-if="pageContent"
     :layout="layout"
   />
 </template>

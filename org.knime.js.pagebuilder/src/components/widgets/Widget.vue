@@ -91,7 +91,7 @@ export default {
         getValue() {
             return new Promise((resolve, reject) => {
                 try {
-                    let value = this.$store.state.pagebuilder.page.webNodes[this.nodeId]
+                    let value = this.$store.state.pagebuilder.page.wizardPageContent.webNodes[this.nodeId]
                         .viewRepresentation.currentValue;
                     if (typeof value === 'undefined') {
                         reject(new Error('Value of widget could not be retrieved.'));

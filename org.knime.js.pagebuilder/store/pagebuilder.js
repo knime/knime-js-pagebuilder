@@ -3,7 +3,6 @@ import { setProp } from '../src/util/nestedProperty';
 export const namespaced = true;
 
 export const state = () => ({
-    viewState: null,
     page: null,
     resourceBaseUrl: '',
     pageValidity: {},
@@ -11,10 +10,6 @@ export const state = () => ({
 });
 
 export const mutations = {
-    setViewState(storeState, viewState) {
-        storeState.viewState = viewState;
-    },
-
     setResourceBaseUrl(storeState, resourceBaseUrl) {
         storeState.resourceBaseUrl = resourceBaseUrl;
     },
@@ -28,6 +23,7 @@ export const mutations = {
      */
     setPage(state, page) {
         state.page = page;
+
         /* The `pageValidity` object stores the valid state of all webNodes in the page as an key/value pair.
          *
          * Boolean isValid values for each node are stored with a key of the corresponding nodeID.
@@ -40,10 +36,11 @@ export const mutations = {
          * In order to make these properties reactive, they have to be initialized once using `this._vm.$set` whenever
          * the page changes.
          */
-        if (page && typeof page.webNodes === 'object' && page.webNodes !== null) {
+        let webNodes = page && page.wizardPageContent && page.wizardPageContent.webNodes;
+        if (webNodes && typeof webNodes === 'object') {
             state.pageValidity = {};
             state.pageValueGetters = {};
-            Object.keys(page.webNodes).forEach((nodeId) => {
+            Object.keys(webNodes).forEach((nodeId) => {
                 this._vm.$set(state.pageValidity, nodeId, false);
             });
         }
@@ -81,7 +78,7 @@ export const mutations = {
 
         // only update value if the node is valid
         if (newWebNode.isValid) {
-            let currentWebNode = state.page.webNodes[newWebNode.nodeId];
+            let currentWebNode = state.page.wizardPageContent.webNodes[newWebNode.nodeId];
             for (let [key, value] of Object.entries(newWebNode.update)) {
                 try {
                     setProp(currentWebNode, key, value);
@@ -107,11 +104,6 @@ export const mutations = {
 };
 
 export const actions = {
-    setViewState({ commit }, { viewState }) {
-        consola.trace('PageBuilder: Set state via action: ', viewState);
-        commit('setViewState', viewState);
-    },
-
     setPage({ commit }, { page }) {
         consola.trace('PageBuilder: Set page via action: ', page);
         commit('setPage', page);
@@ -164,9 +156,9 @@ export const actions = {
 export const getters = {
     // Global page validity method (ex: to enable 'Next Page' button)
     isPageValid(state, getters) {
-        if (!state.page || !state.page.webNodes || !state.pageValidity) {
+        if (!state.page || !state.page.wizardPageContent.webNodes || !state.pageValidity) {
             return true;
         }
-        return Object.keys(state.page.webNodes).every(key => state.pageValidity[key]);
+        return Object.keys(state.page.wizardPageContent.webNodes).every(key => state.pageValidity[key]);
     }
 };
