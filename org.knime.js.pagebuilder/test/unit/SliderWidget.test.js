@@ -192,15 +192,6 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.height).toBe(533);
         expect(wrapper.vm.tooltips).toBe('always');
         expect(wrapper.vm.connect).toBe('none');
-        expect(wrapper.vm.sliderClass).toEqual(
-            expect.arrayContaining(['knime-slider', 'knime-slider-vertical', 'tooltip-slider'])
-        );
-        expect(wrapper.vm.labelClass).toEqual(
-            expect.arrayContaining(['knime-label', 'knime-slider-vertical-label', 'tooltip-label'])
-        );
-        expect(wrapper.vm.errorClass).toEqual(
-            expect.arrayContaining(['knime-error', 'knime-slider-vertical-error', 'tooltip-error'])
-        );
     });
 
     it('uses custom max and min if present and appropriate', () => {

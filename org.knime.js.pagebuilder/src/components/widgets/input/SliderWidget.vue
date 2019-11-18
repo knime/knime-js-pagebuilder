@@ -2,7 +2,7 @@
 import Slider from '../baseElements/input/Slider';
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import { format } from '../../../util/numStrFormatter';
+import { format as sliderLabelFormatter } from '../../../util/numStrFormatter';
 import { getProp } from '../../../util/nestedProperty';
 import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
 import { addKnimeClasses } from '../../../util/widgetUtil/slider/knimeClasses';
@@ -14,22 +14,18 @@ const VERTICAL_SLIDER_HEIGHT = 533;
 const DEBOUNCER_TIMEOUT = 250;
 
 /**
- * At the SliderWidget component level (2nd level), the component will know more about its
- * context, such as nodeId, full config, etc. It will also be able to
- * so second level validation (after the base component validation).
+ * This is the implementation of the Slider Input Widget and the
+ * Interactive Range Slider Filter Definition (TODO: AP-12916). This
+ * component uses the Slider Vue component (KNIME implementation) which
+ * in turn relies on the vue-slider-component (npm) library. The primary
+ * goal of the SliderWidget component is to parse the various settings from
+ * the nodeConfig provided by the parent Widget component and prepare them
+ * correctly for the child Slider (mainly the vue-slider-component).
  *
- * It will be responsible for knowing its incoming nodeConfig object,
- * as well as the keys for its corresponding properties. When the 2nd level
- * receives an update event from the 1st (lower) level child component, it
- * will validate and then emit an updateWidget event to the parent Widget
- * which contains the widget specific information needed to update the global
- * state on the store.
- *
- * 2nd level (this) components will not know or care about the global store,
- * so API changes will no affect them.
- *
- * This node also adds the necessary KNIME slider CSS selectors to the child slider
- * component.
+ * This widget has two rendering options and two functionality levels. The
+ * rendering options are: vertical and horizontal. The functionality levels
+ * are: Slider Input Widget and the Interactive Range Slider Filter
+ * Definition (TODO: AP-12916).
  */
 export default {
     components: {
@@ -38,6 +34,27 @@ export default {
         ErrorMessage
     },
     props: {
+        /**
+         * The nodeConfig provided to the SliderWidget component should have the
+         * necessary fields as seen in the validator below:
+         *
+         * ex:  nodeConfig = {
+         *          nodeInfo: {...},
+         *          viewRepresentation: {
+         *              sliderSettings: {...},
+         *              *either*
+         *              currentValue: {
+         *                  double: Number
+         *              },
+         *              *or*
+         *              defaultValue: {
+         *                  double: Number
+         *              },
+         *              ...
+         *          },
+         *          ...
+         *      };
+         */
         nodeConfig: {
             required: true,
             type: Object,
@@ -66,6 +83,14 @@ export default {
     },
     updateDebouncer: null,
     computed: {
+        /**
+         * TODO: AP-12916 Frontend: rewrite interactive range slider filter widget
+         *
+         * Returns true if the slider component represents an Interactive Range
+         * Slider Filter Widget Node and, therefore, should publish interactivity events.
+         *
+         * @returns {undefined}
+         */
         isInteractiveRangeSlider() {
             return this.viewRep['@class'].includes('range');
         },
@@ -75,13 +100,14 @@ export default {
         errorMessage() {
             if (this.isValid) {
                 return '';
-            } else if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            } else if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            } else {
-                return 'Current slider value is invalid';
             }
+            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
+                return this.nodeConfig.nodeInfo.nodeErrorMessage;
+            }
+            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
+                return this.nodeConfig.nodeInfo.nodeWarnMessage;
+            }
+            return 'Current slider value is invalid';
         },
         min() {
             if (this.isInteractiveRangeSlider && this.viewRep.useCustomMin) {
@@ -99,7 +125,12 @@ export default {
             return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
                 getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
+        /**
+         * @returns {String} the slider direction config in the correct format
+         * for vue-slider-component (npm).
+         */
         direction() {
+            // if vertical: 'ltr' is 'ttb' and 'rtl' it 'btt'
             const vertConfig = this.sliderSettings.direction === 'ltr' ? 'ttb' : 'btt';
             return this.sliderSettings.orientation === 'horizontal'
                 ? this.sliderSettings.direction
@@ -108,6 +139,12 @@ export default {
         stepSize() {
             return this.sliderSettings.step || MINIMUM_SLIDER_STEP;
         },
+        /**
+         * Because we computed the direction above, we can check for the 'b' in
+         * 'ttb' or 'btt' to determine if the height of the slider needs to be
+         * explicitly set (which it does for vertical sliders).
+         * @returns {(Number|null)} slider height (in px) or null
+         */
         height() {
             if (this.direction.includes('b')) {
                 return VERTICAL_SLIDER_HEIGHT;
@@ -117,54 +154,77 @@ export default {
         tooltips() {
             return this.sliderSettings.tooltips ? 'always' : 'none';
         },
+        /**
+         * This method provided the function to be passed to the vue-slider-component
+         * (npm) which it uses to format the tooltips of the slider. The function should
+         * accept a value as a parameter and return the String (label) to be shown on
+         * the slider. The sliderLabelFormatter utility function consumes a tooltip
+         * settings from the KNIME AP (seen below as tooltips[0]) and returns a function
+         * that correctly formats labels based on all of the existing configuration
+         * options from KNIME AP.
+         *
+         * @returns {Function} the formatting function to be used on the tooltips.
+         */
         tooltipFormat() {
-            const tt = this.sliderSettings.tooltips;
-            if (tt && typeof tt[0] === 'object') {
-                return (val) => format(val, tt[0]);
+            const { tooltips } = this.sliderSettings;
+            if (tooltips && typeof tooltips[0] === 'object') {
+                return (val) => sliderLabelFormatter(val, tooltips[0]);
             }
             return (val) => val.toString();
         },
-        marks() {
-            return Object.freeze(createTicks({
-                config: this.sliderSettings.pips,
-                min: this.min,
-                max: this.max,
-                direction: this.direction,
-                stepSize: this.stepSize
-            }));
-        },
+        /**
+         * This config option comes from KNIME as an array of length 2 containing
+         * Boolean values. If both values are true, then we will connect the whole
+         * slider with the larger colored bar with the class 'both' on the vue-
+         * slider-component (npm). If both settings from KNIME are false, then we
+         * will only show the "rail" of the slider with the class 'none'. Otherwise,
+         * we will map the true and false values and their positions to the existing
+         * behavior in the KNIME AP and return either 'top' or 'bottom' to be used
+         * on the vue-slider-component.
+         *
+         * @returns {String} config for connectting the colored part of the slider
+         *      to the slider handle
+         */
         connect() {
-            const conSet = this.sliderSettings.connect;
-            if (conSet[0]) {
-                return conSet[1] ? 'both' : 'top';
-            } else {
-                return conSet[1] ? 'bottom' : 'none';
+            const { connect } = this.sliderSettings;
+            if (connect[0]) {
+                return connect[1] ? 'both' : 'top';
             }
-        },
-        sliderClass() {
-            return [
-                'knime-slider',
-                `knime-slider-${this.sliderSettings.orientation}`,
-                this.tooltips === 'none' ? '' : 'tooltip-slider'
-            ];
-        },
-        labelClass() {
-            return [
-                'knime-label',
-                `knime-slider-${this.sliderSettings.orientation}-label`,
-                this.tooltips === 'none' ? '' : 'tooltip-label'
-            ];
-        },
-        errorClass() {
-            return [
-                'knime-error',
-                `knime-slider-${this.sliderSettings.orientation}-error`,
-                this.tooltips === 'none' ? '' : 'tooltip-error'
-            ];
+            return connect[1] ? 'bottom' : 'none';
         }
     },
     mounted() {
+        /**
+         * TODO: improve CSS parsing SRV-2713
+         *
+         * Add CSS manually.
+         */
         addKnimeClasses(this.$el.childNodes[1].childNodes[0]);
+
+        /**
+         * Important to set this property directly on the component
+         * when the component is mounted. This method (createTicks)
+         * can, in some cases, create an object with many 1,000's of
+         * keys representing the ticks on the slider. The Object it-
+         * self is needed to pass to the vue-slider-component, and
+         * it must be "computed" based on settings this SliderWidget
+         * receives in the props, but we want to *avoid* Vue from
+         * attaching getters and setters to the Object (as would)
+         * happen if this.marks was a computer property. This is all
+         * done to improve performance and it has a large impact. It
+         * can also be achieved with this.marks as a computer property
+         * IF Object.freeze() is called on the returned value from
+         * createTicks before it it returned from the this.marks method.
+         * The implementation below is simpler and does not rely on the
+         * Object.freeze API.
+         */
+        this.marks = createTicks({
+            config: this.sliderSettings.pips,
+            min: this.min,
+            max: this.max,
+            direction: this.direction,
+            stepSize: this.stepSize
+        });
     },
     methods: {
         onChange(e) {
@@ -173,7 +233,6 @@ export default {
             const newWebNodeConfig = {
                 type: 'Slider',
                 nodeId: this.nodeId,
-                originalEvent: e.originalEvent,
                 isValid: e.isValid && this.validate(newValue),
                 update: {
                     [CURRENT_VALUE_KEY]: newValue
@@ -191,9 +250,7 @@ export default {
              * currently fake validation to test styling
              */
             if (this.viewRep.required) {
-                if (!value && value !== 0) {
-                    return false;
-                }
+                return value || value === 0;
             }
             return true;
         }
@@ -205,7 +262,9 @@ export default {
   <div>
     <Label
       :text="label"
-      :class="labelClass"
+      :class="['knime-label',
+               `knime-slider-${sliderSettings.orientation}-label`,
+               { 'tooltip-label': tooltips }]"
     />
     <Slider
       :minimum="min"
@@ -219,12 +278,16 @@ export default {
       :tooltip-format="tooltipFormat"
       :marks="marks"
       :connect="connect"
-      :class="sliderClass"
+      :class="['knime-slider',
+               `knime-slider-${sliderSettings.orientation}`,
+               {'tooltip-slider': tooltips }]"
       @updateValue="onChange"
     />
     <ErrorMessage
       :error="errorMessage"
-      :class="errorClass"
+      :class="['knime-error',
+               `knime-slider-${sliderSettings.orientation}-error`,
+               {'tooltip-error': tooltips}]"
     />
   </div>
 </template>
