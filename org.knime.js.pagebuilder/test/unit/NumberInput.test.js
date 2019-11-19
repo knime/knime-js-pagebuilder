@@ -192,18 +192,37 @@ describe('NumberInput.vue', () => {
         let event = {
             type: 'mouseup'
         };
-        let originalValue = 0;
-        const newValue = 0.1;
-
-        expect(numericInputComponent.vm.getValue()).toBe(originalValue);
 
         numericInputComponent.vm.mouseEvent(event, 'increase');
-
-        expect(numericInputComponent.vm.getValue()).toBe(newValue);
         expect(numericInputComponent.emitted().updateValue).toBeTruthy();
     });
 
+    it('handles mouseleave events', () => {
+        let wrapper = mount(IntegerWidget, {
+            propsData: propsData2
+        });
+        let testSpy = 0;
+        const changeValueMock = (diff) => {
+            testSpy += diff;
+        };
+        let numericInputComponent = wrapper.find(NumberInput);
+        numericInputComponent.vm.changeValue = changeValueMock;
+        let event = {
+            type: 'mouseleave'
+        };
+
+        numericInputComponent.vm.mouseEvent(event, 'increase');
+        expect(testSpy).toBe(0);
+        numericInputComponent.setData({ clicked: true });
+        numericInputComponent.vm.mouseEvent(event, 'increase');
+        expect(testSpy).toBe(1);
+        numericInputComponent.setData({ clicked: true });
+        numericInputComponent.vm.mouseEvent(event, 'decrease');
+        expect(testSpy).toBe(0);
+    });
+
     it('handles mousedown events', () => {
+        jest.useFakeTimers();
         let wrapper = mount(DoubleWidget, {
             propsData
         });
@@ -213,23 +232,54 @@ describe('NumberInput.vue', () => {
             type: 'mousedown'
         };
         let originalValue = 0;
-        const intervalCheckTimeout = 201;
-        const newValueCheckTimeout = 201;
 
         expect(numericInputComponent.vm.getValue()).toBe(originalValue);
-        expect(numericInputComponent.vm.arrowManipulationDebouncer).toBeFalsy();
-        expect(numericInputComponent.vm.arrowManipulationInterval).toBeFalsy();
+        expect(numericInputComponent.vm.spinnerArrowTimeout).toBeFalsy();
+        expect(numericInputComponent.vm.spinnerArrowInterval).toBeFalsy();
         
         numericInputComponent.vm.mouseEvent(event, 'increase');
         
-        expect(numericInputComponent.vm.arrowManipulationDebouncer).toBeTruthy();
-        
-        setTimeout(() => {
-            expect(numericInputComponent.vm.arrowManipulationInterval).toBeTruthy();
-        }, intervalCheckTimeout);
+        expect(numericInputComponent.vm.spinnerArrowTimeout).toBeTruthy();
+        expect(numericInputComponent.vm.spinnerArrowInterval).toBeFalsy();
+        jest.advanceTimersByTime(250);
+        expect(numericInputComponent.vm.spinnerArrowInterval).toBeTruthy();
+        jest.advanceTimersByTime(250);
+        expect(numericInputComponent.vm.getValue()).toBeGreaterThan(originalValue);
+    });
 
-        setTimeout(() => {
-            expect(numericInputComponent.vm.getValue()).toBeGreaterThan(originalValue);
-        }, newValueCheckTimeout);
+    // test should return fallbacks when values high
+    it('mimics native behavior', () => {
+        let wrapper = mount(IntegerWidget, {
+            propsData: propsData2
+        });
+        let numericInputComponent = wrapper.find(NumberInput);
+        numericInputComponent.vm.$el.childNodes[0].value = 200;
+        numericInputComponent.vm.changeValue(-1, {});
+        expect(numericInputComponent.vm.getValue()).toBe(99);
+    });
+
+    // test should return fallbacks when values low
+    it('mimics native behavior', () => {
+        let wrapper = mount(IntegerWidget, {
+            propsData: propsData2
+        });
+        let numericInputComponent = wrapper.find(NumberInput);
+        numericInputComponent.setProps({ min: 0 });
+        numericInputComponent.vm.$el.childNodes[0].value = -200;
+        numericInputComponent.vm.changeValue(1, {});
+        expect(numericInputComponent.vm.getValue()).toBe(1);
+    });
+
+    // test should return fallbacks when values cannot be parsed
+    it('mimics native behavior', () => {
+        let wrapper = mount(IntegerWidget, {
+            propsData: propsData2
+        });
+        let numericInputComponent = wrapper.find(NumberInput);
+        numericInputComponent.vm.$el.childNodes[0].value = 50;
+        expect(numericInputComponent.vm.getValue()).toBe(50);
+        numericInputComponent.vm.$el.childNodes[0].value = '-';
+        numericInputComponent.vm.changeValue(1, {});
+        expect(numericInputComponent.vm.getValue()).toBe(1);
     });
 });

@@ -76,10 +76,7 @@ export default {
         value() {
             let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
             let defaultValue = getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
-            if (typeof currentValue === 'number') {
-                if (isNaN(currentValue)) {
-                    return defaultValue;
-                }
+            if (typeof currentValue === 'number' && this.validate(currentValue)) {
                 return currentValue;
             }
             return defaultValue;
@@ -111,10 +108,13 @@ export default {
              * insert additional custom widget validation
              */
             if (this.viewRep.required) {
+                if (isNaN(value)) {
+                    return false;
+                }
                 if (value < this.min || value > this.max) {
                     return false;
                 }
-                return value || value === 0;
+                return Boolean(value || value === 0);
             }
             return true;
         }

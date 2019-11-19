@@ -103,17 +103,37 @@ export default {
         }
     },
     mounted() {
+        /**
+         * We store the initial value as a worst-case-scenario fall back when the
+         * user interaction leaves us no choice but to return to a known valid
+         * value (mimicking native behavior). Ex: If the user invalidates the value
+         * by accident when they are around -1,000,000 and there is a minimum on the
+         * input of -Number.MAX_SAFE_INTEGER, when they interact with the arrows, we
+         * will fall back to the initial value instead of either storing their prev
+         * value (which looks weird and random when you restore it) or jumping to the
+         * smallest value, which also looks strange because it has so many digits.
+         * This behavior is the same as native behavior. We also set this value in the
+         * mounted method so it is a static instance field and does not receive watchers
+         * from Vue.
+         */
+        this.initialValue = this.value;
         this.$el.childNodes[0].value = this.value;
-        this.onValueChange({});
+        this.publishChangeEvent({});
     },
     methods: {
         getValue() {
-            if (this.type === 'integer') {
-                return parseInt(this.$el.childNodes[0].value, BASE_10_CONSTANT);
+            let inputValue = this.$el.childNodes[0].valueAsNumber;
+            // for IE11 support
+            if (isNaN(inputValue)) {
+                inputValue = this.$el.childNodes[0].value;
+                // manually parse the value
+                return this.type === 'integer'
+                    ? parseInt(inputValue, BASE_10_CONSTANT)
+                    : parseFloat(inputValue);
             }
-            return parseFloat(this.$el.childNodes[0].value);
+            return inputValue;
         },
-        onValueChange(e) {
+        publishChangeEvent(e) {
             const newValue = this.getValue();
             this.$emit('updateValue', {
                 value: newValue,
@@ -122,50 +142,85 @@ export default {
             });
         },
         validate(value) {
-            let newValue = value || this.getValue();
             // type check the value
-            if (typeof newValue !== 'number' || isNaN(newValue)) {
+            if (typeof value !== 'number' || isNaN(value)) {
                 return false;
             }
             // check against the configured maximum and minimum
-            if (newValue < this.min || newValue > this.max) {
+            if (value < this.min || value > this.max) {
                 return false;
             }
-            // finally return the native <input type='number'/> validity
-            return this.$el.childNodes[0].validity.valid;
+            return true;
         },
         /**
          * This method is used by the input controls to change the value of the numeric input.
-         * The provided value (valDiff) should be signed (+/-) based on which button was pressed
+         * The provided value (increment) should be signed (+/-) based on which button was pressed
          * (negative for the down arrow, etc.). This method will attempt to parse the value. It also
          * steps based on the current value to the next nearest step, regardless of the number of
          * significant digits in the current value (1.00001 => 1.1). This preserves the existing
-         * behavior of KNIME numeric inputs
+         * behavior of KNIME numeric inputs and native inputs.
          *
-         * @param  {Number} valDiff - the amount by which to change the current value.
-         * @param  {Boolean} publishChange - if the change should trigger an upwards event.
+         * This method is different than the publishChangeEvent() method and the mouseEvent()
+         * method because it contains additional validation steps and fallbacks to directly mani-
+         * pulate the value of the input element. These are designed to mimic native input behavior
+         * and the additional interim validation cannot be contained in the getValue() or validator()
+         * methods because it is needed only for the direct value manipulation and native behavior.
+         *
+         * @param  {Number} increment - the amount by which to change the current value.
          * @param {Event} event - the original event object which trigger the changeValue call.
          * @returns {undefined}
          */
-        changeValue(valDiff, publishChange, event) {
-            let parsedVal = this.getValue();
+        changeValue(increment, event) {
+            let value = this.getValue();
+            /**
+             * This logic mimics the expected behavior of a number input with spinner arrows. If
+             * there is an invalid value, it will try to use fall backs, such as the closest valid
+             * number (min or max) or worst case the initial value. Expected behavior is when the
+             * value becomes invalid to return to the closest valid point.
+             */
+            if (!this.validate(value)) {
+                // use the min if value too low
+                if (value < this.min) {
+                    value = this.min;
+                // or use the max if value too high
+                } else if (value > this.max) {
+                    value = this.max;
+                // fallback, use the initial value
+                } else {
+                    value = this.initialValue;
+                }
+            }
+
             /** Mimic stepping to nearest step with safe value rounding */
-            parsedVal = (parsedVal + valDiff) * BASE_10_CONSTANT;
+            let parsedVal = (value + increment) * BASE_10_CONSTANT;
             parsedVal = Math.round(parsedVal) / BASE_10_CONSTANT;
+
+            /**
+             * All measures have been taken to ensure a valid value at this point, so if the last
+             * step fails, we will not update the value. This prevents things like clicking the
+             * '^' increment option when you already have an invalid value that is greater than
+             * the max, etc. This mimics native behavior.
+             */
             if (this.validate(parsedVal)) {
                 this.$el.childNodes[0].value = parsedVal;
-                if (publishChange) {
-                    this.onValueChange(event);
-                }
+                this.publishChangeEvent(event);
             }
         },
         /**
          * This method is the callback handler for mouse events on the input field controls.
          * It is fired when either the up-arrow or down-arrow is pressed by the user. It manages
-         * both mousedown and mouseup events. It clears any exisiting timeouts or intervals whihc
+         * both mousedown and mouseup events. It clears any exisiting timeouts or intervals which
          * may have been set previously and decides how the user would like the value updated
          * (holding the button will rapidly change the value after a short delay; quickly clicking
          * the button will use short increments instead).
+         *
+         * It also recognizes when the mouse leaves the button (which could cause a mouseup event
+         * to be missed) and therefore uses the this.clicked data property to ensure it doesn't
+         * get stuck in an interval.
+         *
+         * This method is different than the changeValue() method and the publishChangeEvent()
+         * method because it interprets arrow events specifically on the icons and processes them
+         * with additional logic to achieve the desired behavior.
          *
          * @param {Event} e - the DOM event object which triggered the handler.
          * @param {String} type - the type of button pressed (either 'increased' or 'decreased').
@@ -173,7 +228,7 @@ export default {
          */
         mouseEvent(e, type) {
             // on any mouse event, clear existing timers and intervals
-            clearTimeout(this.spinnerArrowDebouncer);
+            clearTimeout(this.spinnerArrowInterval);
             clearInterval(this.spinnerArrowTimeout);
             // set the increment size
             let valueDifference = this.stepSize;
@@ -185,10 +240,9 @@ export default {
             if (e.type === 'mousedown') {
                 // enable 'mouseup' and 'mouseleave' events by setting clicked to true
                 this.clicked = true;
-                this.spinnerArrowDebouncer = setTimeout(() => {
-                    this.spinnerArrowTimeout = setInterval(() => {
-                        // don't trigger publish events for every change
-                        this.changeValue(valueDifference, false, e);
+                this.spinnerArrowTimeout = setTimeout(() => {
+                    this.spinnerArrowInterval = setInterval(() => {
+                        this.changeValue(valueDifference, e);
                     }, MOUSE_DOWN_CHANGE_INTERVAL);
                 }, INTERVAL_TIMEOUT_DELAY);
                 return;
@@ -197,7 +251,7 @@ export default {
                 // disable additional events from being fired
                 this.clicked = false;
                 // on 'mouseup' or 'mouseleave' publish change
-                this.changeValue(valueDifference, true, e);
+                this.changeValue(valueDifference, e);
             }
         }
     }
@@ -215,7 +269,7 @@ export default {
       :step="stepSize"
       :class="inputClass"
       :title="description"
-      @input="onValueChange"
+      @input="publishChangeEvent"
     >
     <span
       id="knime-increase"
