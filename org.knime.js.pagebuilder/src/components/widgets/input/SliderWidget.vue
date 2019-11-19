@@ -122,15 +122,36 @@ export default {
             return this.sliderSettings.range.max[0];
         },
         value() {
-            return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
-                getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
+            let defaultValue = getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            if (typeof currentValue === 'number') {
+                if (isNaN(currentValue)) {
+                    return defaultValue;
+                }
+                return currentValue;
+            }
+            return defaultValue;
         },
         /**
+         * Maps the KNIME configuration settings to the appropriate direction
+         * configuration string for the vue-slider-widget component. In KNIME
+         * there are two settings: ...sliderSettings.orientation (possible
+         * values: 'horizontal' or 'vertical') and ...sliderSettings.direction
+         * (possible values: 'ltr' or 'rtl'). The vue-slider-component accepts
+         * four possible values: 'ltr' (left-to-right), 'rtl' (right-to-left),
+         * 'ttb' (top-to-bottom), 'btt' (bottom-to-top). This computed value
+         * maps the two different schemas to match the behavior found in the
+         * old webportal. See the mappings here:
+         *
+         *  orientation = 'horizontal' && direction = 'ltr' => 'ltr'
+         *  orientation = 'horizontal' && direction = 'rtl' => 'rtl'
+         *  orientation = 'vertical' && direction = 'rtl' => 'ttb'
+         *  orientation = 'vertical' && direction = 'rtl' => 'btt'
+         *
          * @returns {String} the slider direction config in the correct format
          * for vue-slider-component (npm).
          */
         direction() {
-            // if vertical: 'ltr' is 'ttb' and 'rtl' it 'btt'
             const vertConfig = this.sliderSettings.direction === 'ltr' ? 'ttb' : 'btt';
             return this.sliderSettings.orientation === 'horizontal'
                 ? this.sliderSettings.direction
