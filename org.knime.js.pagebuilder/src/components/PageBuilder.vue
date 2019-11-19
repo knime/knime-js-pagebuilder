@@ -3,15 +3,11 @@ import validKeys from '~/store/keys';
 import * as storeConfig from '~/store/pagebuilder';
 import Controls from './Controls';
 import Page from '~/src/components/Page';
-import Result from '~/src/components/Result';
-
-const supportedWizardExecutionStates = ['INTERACTION_REQUIRED', 'EXECUTING_FINISHED', 'EXECUTING_FAILED'];
 
 export default {
     components: {
         Controls,
-        Page,
-        Result
+        Page
     },
 
     initStore(actions, store) { // this method is to be called by the embedding app, cf. README
@@ -32,25 +28,24 @@ export default {
             actions
         });
     },
-
     computed: {
-        executionState() {
+        hasPage() {
             let page = this.$store.state.pagebuilder.page;
             let state = page && page.wizardExecutionState;
-            if (!supportedWizardExecutionStates.includes(state)) {
-                consola.error(`PageBuilder used with unsupported viewState: ${state}`);
-                return null;
+            if (state === 'INTERACTION_REQUIRED') {
+                return true;
+            } else {
+                consola.error(`PageBuilder used with unsupported state: ${state}`);
+                return false;
             }
-            return state;
         }
     }
 };
 </script>
 
 <template>
-  <div v-if="executionState">
-    <Page v-if="executionState === 'INTERACTION_REQUIRED'" />
-    <Result v-else-if="executionState === 'EXECUTING_FINISHED' || executionState === 'EXECUTING_FAILED'" />
+  <div>
+    <Page v-if="hasPage" />
 
     <Controls />
   </div>

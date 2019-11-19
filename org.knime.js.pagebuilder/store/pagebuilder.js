@@ -135,12 +135,12 @@ export const actions = {
         consola.trace('PageBuilder: Proxying call for next page');
         let valuePromises = Object.values(state.pageValueGetters)
             .map(getter => getter());
-        await Promise.all(valuePromises).then((values) => {
+        await Promise.all(valuePromises).then(async (values) => {
             let viewValues = {};
             values.forEach(element => {
                 viewValues[element.nodeId] = JSON.stringify(element.value);
             });
-            dispatch('outbound/nextPage', { viewValues });
+            await dispatch('outbound/nextPage', { viewValues });
         }).catch((errors) => {
             consola.error(`Could not retrieve all page values: ${errors}`);
             // TODO: display errors with SRV-2628
