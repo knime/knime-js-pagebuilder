@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --formats umd-min --mode production src/components/PageBuilder.vue",
-    "dev-inte": "concurrently -n server,app -c yellow,blue \"http-server --cors -p 4000 -c-1 dist/\" \"npm run build -- --watch\"",
+    "dev-inte": "concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist/ http-server\" \"npm run build -- --watch\"",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ext .js,.vue .",
     "lint:css": "stylelint '**/*.{css,vue}'",

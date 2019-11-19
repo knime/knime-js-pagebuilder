@@ -94,7 +94,8 @@ export default {
             return style.join(';');
         },
         isWidget() {
-            return this.webNodeConfig && widgetConfig[this.webNodeConfig.viewRepresentation['@class']];
+            return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
+                widgetConfig[this.webNodeConfig.viewRepresentation['@class']];
         }
     },
     methods: {

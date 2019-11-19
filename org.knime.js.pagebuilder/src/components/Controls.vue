@@ -11,8 +11,7 @@ export default {
     },
     data() {
         return {
-            loadingPrev: false,
-            loadingNext: false
+            loading: false
         };
     },
     computed: {
@@ -22,18 +21,18 @@ export default {
     },
     methods: {
         async previousPage() {
-            this.loadingPrev = true;
+            this.loading = true;
             await this.$store.dispatch('pagebuilder/previousPage');
-            this.loadingPrev = false;
+            this.loading = false;
         },
         async cancel() {
             // TODO
             // await this.$store.dispatch('pagebuilder/previousPage');
         },
         async nextPage() {
-            this.loadingNext = true;
+            this.loading = true;
             await this.$store.dispatch('pagebuilder/nextPage');
-            this.loadingNext = false;
+            this.loading = false;
         }
     }
 };
@@ -47,7 +46,7 @@ export default {
           <Button
             v-if="hasPreviousPage"
             compact
-            :disabled="loadingPrev"
+            :disabled="loading"
             @click="previousPage"
           >
             <ArrowLeftIcon />Back
@@ -62,7 +61,7 @@ export default {
         <Button
           primary
           class="next"
-          :disabled="loadingNext"
+          :disabled="loading"
           @click="nextPage"
         >
           Next
@@ -77,7 +76,7 @@ section {
   position: fixed;
   z-index: 10;
   left: 0;
-  bottom: 30px;
+  bottom: 0;
   width: 100%;
   background-color: var(--theme-color-gray-ultra-light);
   box-shadow: 0 1px 4px 0 var(--theme-color-gray-dark-semi);
