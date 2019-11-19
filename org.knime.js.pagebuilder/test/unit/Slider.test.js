@@ -19,7 +19,7 @@ describe('Slider.vue', () => {
             tooltipFormat: (val) => val.toString(),
             marks: {},
             connect: 'both',
-            drageOnClick: true,
+            dragOnClick: true,
             contained: false
         };
     });
@@ -48,8 +48,8 @@ describe('Slider.vue', () => {
             ...context,
             propsData
         });
-
-        wrapper.vm.$refs.slider.setValue(wrapper.vm.value++);
+        let newValue = wrapper.vm.value + 1;
+        wrapper.vm.$refs.slider.setValue(newValue);
 
         expect(wrapper.emitted().updateValue).toBeTruthy();
     });

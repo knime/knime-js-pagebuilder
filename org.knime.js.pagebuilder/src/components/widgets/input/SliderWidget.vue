@@ -18,7 +18,7 @@ const DEBOUNCER_TIMEOUT = 250;
  * context, such as nodeId, full config, etc. It will also be able to
  * so second level validation (after the base component validation).
  *
- * It will be responsible for knowing its incomming nodeConfig object,
+ * It will be responsible for knowing its incoming nodeConfig object,
  * as well as the keys for its corresponding properties. When the 2nd level
  * receives an update event from the 1st (lower) level child component, it
  * will validate and then emit an updateWidget event to the parent Widget
@@ -39,12 +39,19 @@ export default {
     },
     props: {
         nodeConfig: {
-            default: () => ({}),
-            type: Object
+            required: true,
+            type: Object,
+            validator(obj) {
+                return obj.nodeInfo && obj.viewRepresentation.sliderSettings &&
+                    (getProp(obj, CURRENT_VALUE_KEY) || getProp(obj, DEFAULT_VALUE_KEY));
+            }
         },
         nodeId: {
-            default: () => null,
-            type: String
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return Boolean(nodeId);
+            }
         },
         isValid: {
             default: () => false,
@@ -81,7 +88,7 @@ export default {
             if (this.viewRep.useCustomMax) { return this.viewRep.customMax; }
             return this.sliderSettings.range.max[0];
         },
-        val() {
+        value() {
             return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
                 getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
@@ -155,11 +162,10 @@ export default {
     methods: {
         onChange(e) {
             clearTimeout(this.updateDebouncer);
-            const newValue = parseFloat(e.val);
+            const newValue = parseFloat(e.value);
             const newWebNodeConfig = {
                 type: 'Slider',
                 nodeId: this.nodeId,
-                originalEvent: e.originalEvent,
                 isValid: e.isValid && this.validate(newValue),
                 update: {
                     [CURRENT_VALUE_KEY]: newValue
@@ -176,8 +182,8 @@ export default {
              * insert additional custom widget validation
              * currently fake validation to test styling
              */
-            if (this.viewRep.required && !value) {
-                return false;
+            if (this.viewRep.required) {
+                return value || value === 0;
             }
             return true;
         }
@@ -194,7 +200,7 @@ export default {
     <Slider
       :minimum="min"
       :maximum="max"
-      :value="val"
+      :value="value"
       :is-valid="isValid"
       :direction="direction"
       :step-size="stepSize"
