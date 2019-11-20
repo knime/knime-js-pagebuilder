@@ -3,6 +3,8 @@ import { mapActions } from 'vuex';
 import widgetConfig from './widgets.config';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
+// output widgets
+import TextWidget from './output/TextWidget';
 import { applyCustomCss } from '../../util/customCss';
 
 /**
@@ -37,7 +39,9 @@ import { applyCustomCss } from '../../util/customCss';
 export default {
     components: {
         StringWidget,
-        SliderWidget
+        SliderWidget,
+        // output widgets
+        TextWidget
     },
     props: {
         /**
