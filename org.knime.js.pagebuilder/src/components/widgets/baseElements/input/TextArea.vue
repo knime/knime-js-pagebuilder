@@ -35,7 +35,6 @@ export default {
         }
     },
     mounted() {
-        this.$el.value = this.value;
         this.onValueChange({});
     },
     methods: {
@@ -44,8 +43,7 @@ export default {
         },
         onValueChange(e) {
             this.$emit('updateValue', {
-                val: this.getValue(),
-                originalEvent: e,
+                value: this.getValue(),
                 isValid: this.validate()
             });
         },
@@ -59,11 +57,12 @@ export default {
 <template>
   <!-- knime-qf-input legacy selector -->
   <textarea
+    :value="value"
     :class="textAreaClass"
     :cols="cols"
     :rows="rows"
     :placeholder="placeholder"
-    @change="onValueChange"
+    @input="onValueChange"
   />
 </template>
 
@@ -71,12 +70,9 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 textarea.knime-qf-input {
-  font-family: 'Roboto', BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: var(--theme-color-masala);
-  letter-spacing: 0.03px;
   line-height: 18px;
   background-color: var(--theme-color-porcelain);
   margin: 0;
@@ -84,12 +80,13 @@ textarea.knime-qf-input {
   border-radius: 0;
   border: none;
   outline: none;
+  border-left-width: 3px;
+  border-left-color: transparent;
+  border-left-style: solid;
 }
 
 textarea.knime-textarea-invalid {
-  border-left-width: 3px;
   border-left-color: var(--theme-color-error);
-  border-left-style: solid;
 }
 </style>
 

@@ -125,26 +125,6 @@ describe('PageBuilder store', () => {
             store.commit('setPage', page);
         });
 
-        it('prevents value modification with invalid node updates', () => {
-            let node = store.state.page.wizardPageContent.webNodes.id1;
-
-            expect(node.foo).toEqual('bar');
-
-            let update = {
-                nodeId: 'id1',
-                isValid: false,
-                update: {
-                    foo: 'rod'
-                }
-            };
-
-            store.commit('updateWebNode', update);
-            expect(node.foo).toEqual('bar');
-            update.isValid = true;
-            store.commit('updateWebNode', update);
-            expect(node.foo).toEqual('rod');
-        });
-
         it('prevents value modification with invalid keys', () => {
             let node = store.state.page.wizardPageContent.webNodes.id1;
 

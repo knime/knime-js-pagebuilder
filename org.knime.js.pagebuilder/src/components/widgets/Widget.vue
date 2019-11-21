@@ -55,8 +55,11 @@ export default {
          * in the store webNodes
          */
         nodeId: {
-            default: () => null,
-            type: String
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return Boolean(nodeId);
+            }
         }
     },
     computed: {
@@ -86,6 +89,7 @@ export default {
         },
         publishUpdate(update) {
             update.isValid = update.isValid && this.validate(update);
+            update.type = this.type;
             this.updateValue(update);
         },
         getValue() {

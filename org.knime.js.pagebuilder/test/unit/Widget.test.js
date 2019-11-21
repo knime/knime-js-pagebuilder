@@ -8,21 +8,94 @@ import { getProp, setProp } from '../../src/util/nestedProperty';
 import * as storeConfig from '~/store/pagebuilder';
 
 describe('Widget.vue', () => {
-    let store, localVue, context;
+    let store, localVue, context, nodeConfig;
 
-    let nodeConfig = {
+    const nodeConfigBlueprint = {
         foo: 'bar',
+        nodeInfo: {
+            '@class': 'org.knime.js.core.JSONWebNodeInfo',
+            nodeState: 'executed',
+            nodeAnnotation: '',
+            nodeErrorMessage: null,
+            nodeWarnMessage: null,
+            displayPossible: true,
+            nodeName: 'Slider Widget'
+        },
         viewRepresentation: {
-            '@class':
-                'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation',
+            '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation',
+            sliderSettings: {
+                '@class': 'org.knime.js.core.settings.slider.SliderSettings',
+                connect: [
+                    false,
+                    false
+                ],
+                tooltips: [
+                    {
+                        prefix: '$',
+                        negative: '-',
+                        thousand: ',',
+                        decimals: 2,
+                        postfix: '_',
+                        mark: '.',
+                        negativeBefore: '-'
+                    }
+                ],
+                pips: {
+                    '@class': 'org.knime.js.core.settings.slider.SliderPipsSettings',
+                    format: {
+                        '@class': 'org.knime.js.core.settings.numberFormat.NumberFormatSettings',
+                        negative: '-',
+                        decimals: 2,
+                        mark: '.'
+                    },
+                    mode: 'positions',
+                    values: [
+                        0,
+                        25,
+                        50,
+                        75,
+                        100
+                    ],
+                    stepped: false,
+                    density: 3
+                },
+                direction: 'ltr',
+                orientation: 'vertical',
+                range: {
+                    min: [
+                        5
+                    ],
+                    max: [
+                        25
+                    ]
+                },
+                start: [
+                    5
+                ]
+            },
+            useCustomMax: true,
+            useCustomMin: true,
+            customMax: 100,
+            customMin: 0,
+            defaultValue: {
+                '@class': 'org.knime.js.base.node.base.input.slider.SliderNodeValue',
+                double: 5
+            },
+            description: 'Enter Description',
+            required: true,
+            label: 'Testing Slider',
             currentValue: {
                 testValue: 10
             }
+        },
+        viewValue: {
+            testValue: 10
         }
     };
     let nodeId = 'id1';
 
-    beforeAll(() => {
+    beforeEach(() => {
+        nodeConfig = JSON.parse(JSON.stringify(nodeConfigBlueprint));
         localVue = createLocalVue();
         localVue.use(Vuex);
 
@@ -80,17 +153,17 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.isValid).toBe(false);
+        expect(wrapper.vm.isValid).toBe(true);
 
         wrapper.vm.publishUpdate({
-            isValid: true,
+            isValid: false,
             nodeId,
             update: {
                 'viewRepresentation.currentValue.testValue': 11
             }
         });
 
-        expect(wrapper.vm.isValid).toBe(true);
+        expect(wrapper.vm.isValid).toBe(false);
     });
 
     // TODO AP-12850: update Widget component level validation
@@ -121,14 +194,11 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
-        const expectedValue = 11;
-        const newValue = 10;
+        const expectedValue = 10;
+        const newValue = 11;
 
-        // previously modified to be 11
-        expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation
-                .currentValue.testValue
-        ).toEqual(expectedValue);
+        expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation
+            .currentValue.testValue).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
             isValid: true,
@@ -152,9 +222,8 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
-
         const expectedValue = 10;
-        const newValue = 11;
+        const newValue = 12;
 
         expect(
             getProp(
@@ -180,10 +249,9 @@ describe('Widget.vue', () => {
             }
         });
 
-        const expectedValue = 11;
+        const expectedValue = 10;
         const newValue = 42;
 
-        // previously modified to be 11
         expect(
             wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
@@ -214,10 +282,8 @@ describe('Widget.vue', () => {
                 nodeId
             }
         });
+        const expectedValue = 10;
 
-        const expectedValue = 42;
-
-        // previously modified to be 42
         expect(
             wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
@@ -227,8 +293,7 @@ describe('Widget.vue', () => {
             nodeId,
             update: {
                 viewRepresentation: {
-                    '@class':
-                        'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                    '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
                 }
             }
         });

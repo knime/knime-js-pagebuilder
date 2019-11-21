@@ -23,15 +23,12 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 label.knime-qf-title {
-  font-family: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    "Helvetica", "Arial", sans-serif;
-  font-weight: bold;
-  font-size: 16px;
+  font-weight: 300;
+  font-size: 13px;
   color: var(--theme-color-masala);
-  letter-spacing: 0.1px;
-  line-height: 24px;
+  line-height: 18px;
   display: block;
   position: relative;
+  margin-bottom: 5px;
 }
 </style>

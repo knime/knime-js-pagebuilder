@@ -5,7 +5,7 @@ import StringWidget from '@/components/widgets/input/StringWidget.vue';
 import InputField from '@/components/widgets/baseElements/input/InputField.vue';
 import TextArea from '@/components/widgets/baseElements/input/TextArea.vue';
 
-describe('SliderWidget.vue', () => {
+describe('StringWidget.vue', () => {
     let propsDataInput, propsDateTextArea;
 
     beforeEach(() => {
@@ -135,34 +135,13 @@ describe('SliderWidget.vue', () => {
         expect(wrapper2.isVisible()).toBeTruthy();
     });
 
-    it('has default (empty) props (expected failure)', () => {
-        try {
-            shallowMount(StringWidget);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
-    });
-
-    it('\'s children failt with empty props', () => {
-        try {
-            shallowMount(TextArea);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
-        try {
-            shallowMount(InputField);
-        } catch (e) {
-            expect(e.toString().split(':')[0]).toBe('TypeError');
-        }
-    });
-
     it('will render a text input field or a text area field based on settings', () => {
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput
         });
 
         expect(wrapper.find(InputField)).toBeTruthy();
-        
+
         wrapper.setProps(propsDateTextArea);
 
         expect(wrapper.find(TextArea)).toBeTruthy();
@@ -213,45 +192,47 @@ describe('SliderWidget.vue', () => {
     });
 
     it('will return invalid when the value is required but missing', () => {
+        jest.useFakeTimers();
+
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput
         });
-        
-        setTimeout(() => {
 
-            expect(wrapper.emitted().onChange).toBe(true);
-            expect(wrapper.emitted().onChange.isValid).toBe(true);
+        jest.runAllTimers();
 
-            let inputChild = wrapper.find(InputField);
-            inputChild.setProps({ value: '' });
-            inputChild.vm.onValueChange({});
+        let { updateWidget } = wrapper.emitted();
+        expect(updateWidget).toBeTruthy();
+        expect(updateWidget[0][0].isValid).toBeTruthy();
 
-            setTimeout(() => {
-                expect(wrapper.emitted().onChange).toBe(true);
-                expect(wrapper.emitted().onChange.isValid).toBe(false);
-            }, 251);
+        let inputChild = wrapper.find(InputField);
+        inputChild.setProps({ value: '' });
+        inputChild.vm.onValueChange({});
 
-        }, 251);
+        jest.runAllTimers();
+
+        ({ updateWidget } = wrapper.emitted());
+        expect(updateWidget).toBeTruthy();
+        expect(updateWidget[1][0].isValid).toBeFalsy();
 
         let wrapper2 = mount(StringWidget, {
-            propsData: propsDataInput
+            propsData: propsDateTextArea
         });
+
+        jest.runAllTimers();
+
+        ({ updateWidget } = wrapper2.emitted());
+        expect(updateWidget).toBeTruthy();
+        expect(updateWidget[0][0].isValid).toBeTruthy();
+
+        let textAreaChild = wrapper2.find(TextArea);
+        textAreaChild.setProps({ value: '' });
+        textAreaChild.vm.onValueChange({});
         
-        setTimeout(() => {
-
-            expect(wrapper2.emitted().onChange).toBe(true);
-            expect(wrapper2.emitted().onChange.isValid).toBe(true);
-
-            let textAreaChild = wrapper2.find(TextArea);
-            textAreaChild.setProps({ value: '' });
-            textAreaChild.vm.onValueChange({});
-
-            setTimeout(() => {
-                expect(wrapper2.emitted().onChange).toBe(true);
-                expect(wrapper2.emitted().onChange.isValid).toBe(false);
-            }, 251);
-
-        }, 251);
+        jest.runAllTimers();
+        
+        ({ updateWidget } = wrapper2.emitted());
+        expect(updateWidget).toBeTruthy();
+        expect(updateWidget[1][0].isValid).toBeFalsy();
     });
 
     it('has empty error message when valid', () => {
