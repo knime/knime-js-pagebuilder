@@ -130,35 +130,21 @@ export const actions = {
         commit('removeValueGetter', nodeId);
     },
 
-    // only for PageBuilder-internal usage
-    async nextPage({ dispatch, state }) {
-        consola.trace('PageBuilder: Proxying call for next page');
+    async getViewValues({ state }) {
         let valuePromises = Object.values(state.pageValueGetters)
             .map(getter => getter());
-        await Promise.all(valuePromises).then(async (values) => {
+
+        let values = await Promise.all(valuePromises).then((values) => {
             let viewValues = {};
             values.forEach(element => {
                 viewValues[element.nodeId] = JSON.stringify(element.value);
             });
-            await dispatch('outbound/nextPage', { viewValues });
-        }).catch((errors) => {
-            consola.error(`Could not retrieve all page values: ${errors}`);
-            // TODO: display errors with SRV-2628
+            return viewValues;
+        }).catch((e) => {
+            consola.error(`Could not retrieve all view values: ${e}`);
+            throw new Error(`Could not retrieve all view values`);
         });
-    },
 
-    async previousPage({ dispatch }) {
-        consola.trace('PageBuilder: Proxying call for previous page');
-        await dispatch('outbound/previousPage');
-    }
-};
-
-export const getters = {
-    // Global page validity method (ex: to enable 'Next Page' button)
-    isPageValid(state, getters) {
-        if (!state.page || !state.page.wizardPageContent.webNodes || !state.pageValidity) {
-            return true;
-        }
-        return Object.keys(state.page.wizardPageContent.webNodes).every(key => state.pageValidity[key]);
+        return values;
     }
 };
