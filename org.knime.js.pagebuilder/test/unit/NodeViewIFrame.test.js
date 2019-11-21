@@ -20,16 +20,18 @@ describe('NodeViewIframe.vue', () => {
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
-            webNodes: {
-                '0.0.7': {
-                    namespace: 'foo',
-                    javascriptLibraries: [],
-                    stylesheets: []
-                },
-                '0.0.9': {
-                    namespace: 'bar',
-                    javascriptLibraries: [],
-                    stylesheets: []
+            wizardPageContent: {
+                webNodes: {
+                    '0.0.7': {
+                        namespace: 'foo',
+                        javascriptLibraries: [],
+                        stylesheets: []
+                    },
+                    '0.0.9': {
+                        namespace: 'bar',
+                        javascriptLibraries: [],
+                        stylesheets: []
+                    }
                 }
             }
         });

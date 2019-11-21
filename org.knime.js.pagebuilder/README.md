@@ -133,7 +133,6 @@ the PageBuilder store:
 ```js
 import Vue from 'vue';
 import { pagebuilderURL } from '~/app.config';
-import actions from '~/pagebuilder-store-api';
 import PageBuilderError from '~/components/PageBuilderError';
 
 export default async function ({ app }) {
@@ -160,7 +159,7 @@ export default async function ({ app }) {
             script.src = pagebuilderURL;
             document.head.appendChild(script);
         });
-        PageBuilder.initStore(actions, app.store);
+        PageBuilder.initStore(app.store);
         Vue.component('PageBuilder', PageBuilder);
     } catch (e) {
         consola.error('Loading of PageBuilder failed');
@@ -177,57 +176,7 @@ Then the component can be used in templates:
 ```
 
 ### API
-The component provides a store module namespaced as `pagebuilder`. All communication with the embedding app is achieved
-via store actions. Therefore, the app must provide well-defined implementations for the actions defined in
-[`store/keys.js`](store/keys.js).
-
-
-#### Outbound (interface)
-
-The following actions are required to be implemented by the embedding application:
-
-##### `nextPage`
-
-Triggers execution of the workflow up to the next page (or to the end, if no more pages are present).
-
-###### Parameters:
-
-(none)
-
-###### Example:
-
-```js
-// pagebuilder-api/actions.js
-export default {
-    nextPage({ commit }) {
-        consola.trace('Pagebuilder requested next page');
-        this.$api.proceedToNextPage();
-    }
-    // …
-};
-
-```
-
-##### `previousPage`
-
-Triggers rollback of the workflow to the previous page
-
-###### Parameters:
-
-(none)
-
-###### Example:
-
-```js
-// pagebuilder-api/actions.js
-export default {
-    previousPage({ commit }) {
-        consola.trace('Pagebuilder requested previous page');
-        this.$api.proceedToNextPage();
-    }
-    // …
-};
-```
+The component provides a store module namespaced as `pagebuilder`. Currently there is only inbound communication, e.g. the embedding app calls store actions of the PageBuilder.
 
 
 #### Inbound
@@ -241,39 +190,24 @@ Sets the current page object required to render a page.
 ###### Parameters:
 
 * `{ page }`  
-  Page configuration parameter as provided by the Job API
+  Page configuration as provided by the Gateway API
 
 ###### Example:
 
 ```js
 this.$store.dispatch('pagebuilder/setPage', {
     page: {
-        '@class': 'org.knime.js.core.JSONWebNodePage',
-        webNodePageConfiguration: { /* … */ },
-        webNodes: { /* … */ },
-        version: '1.2.3.4'
+        hasPreviousPage: true,
+        nodeMessages: {},
+        wizardExecutionState: 'INTERACTION_REQUIRED',
+        wizardPageContent: {
+            '@class': 'org.knime.js.core.JSONWebNodePage',
+            webNodePageConfiguration: { /* … */ },
+            webNodes: { /* … */ },
+            version: '1.2.3.4'
+        }
     }
 });
-```
-
-##### `pagebuilder/setViewState`
-
-Sets the view state in PageBuilder.
-
-###### Parameters:
-
-* `{ viewState }`  
-  Three view states are supported: `page`, `executing`, `result`
-
-    * `page`: The workflow is currently at a view node. The pagebuilder displays the HTML view for that node.  
-      Requires a page object (which can be provided by `setPage`; see above).
-    * `executing`: Some node in the workflow is currently being executed. The pagebuilder displays a progress view.
-    * `result`: The workflow is executed. The pagebuilder displays a success / error summary page.
-
-###### Example:
-
-```js
-this.$store.dispatch('pagebuilder/setViewState', { viewState: 'executing' });
 ```
 
 ##### `pagebuilder/setResourceBaseUrl`
@@ -294,6 +228,20 @@ resource paths of the JS views’ `javascriptLibraries` and `stylesheets` items.
 this.$store.dispatch('pagebuilder/setResourceBaseUrl', {
     resourceBaseUrl: 'https://knime.example/knime/webportal/rest/v4/get-resources-dummypath'
 });
+```
+
+##### `pagebuilder/getViewValues`
+
+Gets all values of the views (iframes or widgets) on the current page.
+
+###### Parameters:
+
+none
+
+###### Example:
+
+```js
+let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
 ```
 
 

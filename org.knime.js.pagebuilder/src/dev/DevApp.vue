@@ -1,16 +1,11 @@
 <script>
 import PageBuilder from '../components/PageBuilder.vue';
 
-const supportedViewStates = ['page', 'executing', 'result'];
-
 export default {
     components: {
         PageBuilder
     },
     computed: {
-        supportedViewStates() {
-            return supportedViewStates;
-        },
         pageMocks() {
             const mocks = require.context('../../mocks', false, /.json$/); // eslint-disable-line no-undef
             return mocks.keys().sort().map(x => ({
@@ -21,30 +16,20 @@ export default {
     },
     created() {
         let store = this.$store;
-        let pageMocks = this.pageMocks;
-        const delay = 500;
-        let setRandomPage = () => new Promise((resolve) => {
-            window.setTimeout(() => {
-                let randomPage = pageMocks[Math.floor(Math.random() * pageMocks.length)];
-                store.dispatch('pagebuilder/setPage', { page: randomPage.src });
-                resolve();
-            }, delay);
-        });
-        PageBuilder.initStore({
-            async nextPage() {
-                consola.trace('PageBuilder: Proxying call for next page');
-                await setRandomPage();
-            },
-            async previousPage() {
-                consola.trace('PageBuilder: Proxying call for previous page');
-                await setRandomPage();
-            }
-        }, store);
+        PageBuilder.initStore(store);
     },
     methods: {
         onPageSelect(e) {
-            let page = { page: this.pageMocks[e.target.selectedOptions[0].index - 1].src };
-            this.$store.dispatch('pagebuilder/setPage', page);
+            let pageMock = this.pageMocks[e.target.selectedOptions[0].index - 1];
+            this.$store.dispatch('pagebuilder/setPage', { page: pageMock ? pageMock.src : null });
+        },
+        async onGetViewValues() {
+            try {
+                let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
+                console.debug('viewValues', viewValues); // eslint-disable-line no-console
+            } catch (e) {
+                console.error('error while getting viewValues', e); // eslint-disable-line no-console
+            }
         }
     }
 };
@@ -65,17 +50,6 @@ export default {
       See the README file for details.
     </p>
     <p>
-      View state:
-      <select v-model="$store.state.pagebuilder.viewState">
-        <option :value="null">-</option>
-        <option
-          v-for="state in supportedViewStates"
-          :key="state"
-          :value="state"
-        >
-          {{ state }}
-        </option>
-      </select>
       Page mock:
       <select
         @change="onPageSelect"
@@ -89,6 +63,7 @@ export default {
           {{ page.name }}
         </option>
       </select>
+      <button @click="onGetViewValues">print view values to console</button>
     </p>
 
     <div class="frame">

@@ -10,10 +10,6 @@ export const state = () => ({
 });
 
 export const mutations = {
-    setResourceBaseUrl(storeState, resourceBaseUrl) {
-        storeState.resourceBaseUrl = resourceBaseUrl;
-    },
-
     /**
      * Set page.
      *
@@ -44,6 +40,10 @@ export const mutations = {
                 this._vm.$set(state.pageValidity, nodeId, false);
             });
         }
+    },
+
+    setResourceBaseUrl(storeState, resourceBaseUrl) {
+        storeState.resourceBaseUrl = resourceBaseUrl;
     },
 
     /**

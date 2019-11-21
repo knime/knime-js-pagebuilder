@@ -28,8 +28,10 @@ describe('Widget.vue', () => {
 
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         let page = {
-            webNodes: {
-                [nodeId]: nodeConfig
+            wizardPageContent: {
+                webNodes: {
+                    [nodeId]: nodeConfig
+                }
             }
         };
         store.commit('pagebuilder/setPage', page);
@@ -124,7 +126,7 @@ describe('Widget.vue', () => {
 
         // previously modified to be 11
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation
                 .currentValue.testValue
         ).toEqual(expectedValue);
 
@@ -137,7 +139,7 @@ describe('Widget.vue', () => {
         });
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation
                 .currentValue.testValue
         ).toEqual(newValue);
     });
@@ -157,15 +159,15 @@ describe('Widget.vue', () => {
         expect(
             getProp(
                 wrapper.vm.$store.state,
-                'pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue'
+                'pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue'
             )
         ).toEqual(expectedValue);
         setProp(
             wrapper.vm.$store.state,
-            'pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue', newValue
+            'pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue', newValue
         );
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(newValue);
     });
 
@@ -183,7 +185,7 @@ describe('Widget.vue', () => {
 
         // previously modified to be 11
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
@@ -195,7 +197,7 @@ describe('Widget.vue', () => {
         });
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(newValue);
         let valPromise = wrapper.vm.getValue();
         return expect(valPromise).resolves.toStrictEqual({
@@ -217,7 +219,7 @@ describe('Widget.vue', () => {
 
         // previously modified to be 42
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({

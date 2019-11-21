@@ -15,17 +15,19 @@ describe('NodeView.vue', () => {
 
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         store.commit('pagebuilder/setPage', {
-            webNodes: {
-                id1: {
-                    foo: 'bar',
-                    viewRepresentation: {
-                        '@class': 'testing.notWidget'
-                    }
-                },
-                id2: {
-                    baz: 'qux',
-                    viewRepresentation: {
-                        '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+            wizardPageContent: {
+                webNodes: {
+                    id1: {
+                        foo: 'bar',
+                        viewRepresentation: {
+                            '@class': 'testing.notWidget'
+                        }
+                    },
+                    id2: {
+                        baz: 'qux',
+                        viewRepresentation: {
+                            '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                        }
                     }
                 }
             }

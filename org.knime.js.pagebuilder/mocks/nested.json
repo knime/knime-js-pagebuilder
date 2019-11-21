@@ -1,4 +1,8 @@
 {
+  "hasPreviousPage": true,
+  "nodeMessages": {},
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "wizardPageContent": {
     "@class": "org.knime.js.core.JSONWebNodePage",
     "webNodePageConfiguration": {
       "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
@@ -2695,3 +2699,4 @@
     },
     "version": "4.1.0.qualifier"
   }
+}

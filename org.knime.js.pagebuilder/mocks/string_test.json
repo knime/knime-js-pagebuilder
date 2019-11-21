@@ -1,941 +1,946 @@
 {
-  "@class": "org.knime.js.core.JSONWebNodePage",
-  "webNodePageConfiguration": {
-    "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
-    "layout": {
-      "rows": [
-        {
-          "type": "JSONLayoutRow",
-          "additionalClasses": [],
-          "additionalStyles": [],
-          "columns": [
-            {
-              "content": [
-                {
-                  "type": "JSONLayoutRow",
-                  "additionalClasses": [],
-                  "additionalStyles": [],
-                  "columns": [
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:10",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 4,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    },
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:11",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 4,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    },
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:13",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 4,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    }
-                  ]
-                },
-                {
-                  "type": "JSONLayoutRow",
-                  "additionalClasses": [],
-                  "additionalStyles": [],
-                  "columns": [
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:14",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 3,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    },
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:16",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 3,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    },
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:17",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 3,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    },
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:18",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 3,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    }
-                  ]
-                },
-                {
-                  "type": "JSONLayoutRow",
-                  "additionalClasses": [],
-                  "additionalStyles": [],
-                  "columns": [
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:19",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 6,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    },
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:20",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 6,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    }
-                  ]
-                },
-                {
-                  "type": "JSONLayoutRow",
-                  "additionalClasses": [],
-                  "additionalStyles": [],
-                  "columns": [
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:21",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 4,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    },
-                    {
-                      "content": [],
-                      "widthMD": null,
-                      "widthXS": 4,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    },
-                    {
-                      "content": [
-                        {
-                          "type": "JSONLayoutViewContent",
-                          "sizeHeight": true,
-                          "sizeWidth": false,
-                          "autoResize": true,
-                          "resizeMethod": "viewLowestElement",
-                          "scrolling": false,
-                          "nodeID": "7:0:22",
-                          "maxHeight": null,
-                          "maxWidth": null,
-                          "minHeight": null,
-                          "minWidth": null,
-                          "resizeInterval": null,
-                          "resizeTolerance": 5,
-                          "additionalClasses": [],
-                          "additionalStyles": []
-                        }
-                      ],
-                      "widthMD": null,
-                      "widthXS": 4,
-                      "widthSM": null,
-                      "widthLG": null,
-                      "widthXL": null,
-                      "additionalClasses": [],
-                      "additionalStyles": []
-                    }
-                  ]
-                }
-              ],
-              "widthMD": null,
-              "widthXS": 12,
-              "widthSM": null,
-              "widthLG": null,
-              "widthXL": null,
-              "additionalClasses": [],
-              "additionalStyles": []
-            }
-          ]
-        }
-      ]
+  "hasPreviousPage": true,
+  "nodeMessages": {},
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "JSONLayoutRow",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
+              {
+                "content": [
+                  {
+                    "type": "JSONLayoutRow",
+                    "additionalClasses": [],
+                    "additionalStyles": [],
+                    "columns": [
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:10",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 4,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      },
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:11",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 4,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      },
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:13",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 4,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "JSONLayoutRow",
+                    "additionalClasses": [],
+                    "additionalStyles": [],
+                    "columns": [
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:14",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 3,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      },
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:16",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 3,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      },
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:17",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 3,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      },
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:18",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 3,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "JSONLayoutRow",
+                    "additionalClasses": [],
+                    "additionalStyles": [],
+                    "columns": [
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:19",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 6,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      },
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:20",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 6,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "JSONLayoutRow",
+                    "additionalClasses": [],
+                    "additionalStyles": [],
+                    "columns": [
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:21",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 4,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      },
+                      {
+                        "content": [],
+                        "widthMD": null,
+                        "widthXS": 4,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      },
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "autoResize": true,
+                            "resizeMethod": "viewLowestElement",
+                            "scrolling": false,
+                            "nodeID": "7:0:22",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ],
+                        "widthMD": null,
+                        "widthXS": 4,
+                        "widthSM": null,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "additionalClasses": [],
+                        "additionalStyles": []
+                      }
+                    ]
+                  }
+                ],
+                "widthMD": null,
+                "widthXS": 12,
+                "widthSM": null,
+                "widthLG": null,
+                "widthXL": null,
+                "additionalClasses": [],
+                "additionalStyles": []
+              }
+            ]
+          }
+        ]
+      },
+      "blackBoard": null,
+      "selectionTranslators": null,
+      "version": "4.1.0.v201910181048"
     },
-    "blackBoard": null,
-    "selectionTranslators": null,
+    "webNodes": {
+      "7:0:16": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (multiline half size)",
+          "description": "This is the description. width: 30, height: 2.",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "This is the default value"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "This is the default value"
+          },
+          "regex": "",
+          "editorType": "Multi-line",
+          "multilineEditorWidth": 30,
+          "multilineEditorHeight": 2,
+          "errorMessage": "This is the Validation Error Message"
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:17": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (single line w regex)",
+          "description": "This is the really long validation message.\n",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "test@knime.com"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "test@knime.com"
+          },
+          "regex": "",
+          "editorType": "Single-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message (regex) tttttttttttttttttttttttttttttttteeeeeeeeeeeeeeeeeeeeeessssssssssssssssssssssssssttttttttttt sajdfkjdslkjaf asjdflkj andsafl jgsdafsdaj fsdf"
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:14": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (multiline double size)",
+          "description": "This is the description. width: 120, height: 10.",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "This is the default value"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "This is the default value"
+          },
+          "regex": "",
+          "editorType": "Multi-line",
+          "multilineEditorWidth": 120,
+          "multilineEditorHeight": 10,
+          "errorMessage": "This is the Validation Error Message"
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:18": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (multiline)",
+          "description": "This is the really long description ttttttttttttttttttttttttttttttttttttttttttteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeessssssssssssssssssssssssssssssssssssssssssssssssstttttttttttttttttttttttttttttttttttttt.\n",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "Long desciption multi"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "Long desciption multi"
+          },
+          "regex": ".*",
+          "editorType": "Multi-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message (regex)"
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:19": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (single line). it is LOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGG.",
+          "description": "This is the really long label test.\n",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "test@knime.com"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "test@knime.com"
+          },
+          "regex": "",
+          "editorType": "Single-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message "
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:20": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (multi line). it is LOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGG.",
+          "description": "This is the really long label test.\n",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "test@knime.com"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "test@knime.com"
+          },
+          "regex": "",
+          "editorType": "Multi-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message "
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:13": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (single line w regex)",
+          "description": "This is the really long description ttttttttttttttttttttttttttttttttttttttttttteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeessssssssssssssssssssssssssssssssssssssssssssssssstttttttttttttttttttttttttttttttttttttt.\n",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "example@knime.com"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "example@knime.com"
+          },
+          "regex": ".*",
+          "editorType": "Single-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message (regex)"
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:10": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (single line)",
+          "description": "This is the description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "This is the default value"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "This is the default value"
+          },
+          "regex": "",
+          "editorType": "Single-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message"
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:21": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (single line).",
+          "description": "This is the really long default value test.\n",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          },
+          "regex": "",
+          "editorType": "Single-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message "
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:11": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (multiline)",
+          "description": "This is the description. width: 60, height: 5.",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "This is the default value"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "This is the default value"
+          },
+          "regex": "",
+          "editorType": "Multi-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message"
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "7:0:22": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeStringWidget",
+        "viewValue": null,
+        "customCSS": "",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
+          "label": "This is the Label (multi line).",
+          "description": "This is the really long default value test.\n",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham."
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
+            "string": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham."
+          },
+          "regex": "",
+          "editorType": "Multi-line",
+          "multilineEditorWidth": 60,
+          "multilineEditorHeight": 5,
+          "errorMessage": "This is the Validation Error Message "
+        },
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "String Widget",
+          "nodeState": "executed",
+          "nodeWarnMessage": null,
+          "nodeErrorMessage": null,
+          "displayPossible": true
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/string/stringWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      }
+    },
     "version": "4.1.0.v201910181048"
-  },
-  "webNodes": {
-    "7:0:16": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (multiline half size)",
-        "description": "This is the description. width: 30, height: 2.",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "This is the default value"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "This is the default value"
-        },
-        "regex": "",
-        "editorType": "Multi-line",
-        "multilineEditorWidth": 30,
-        "multilineEditorHeight": 2,
-        "errorMessage": "This is the Validation Error Message"
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:17": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (single line w regex)",
-        "description": "This is the really long validation message.\n",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "test@knime.com"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "test@knime.com"
-        },
-        "regex": "",
-        "editorType": "Single-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message (regex) tttttttttttttttttttttttttttttttteeeeeeeeeeeeeeeeeeeeeessssssssssssssssssssssssssttttttttttt sajdfkjdslkjaf asjdflkj andsafl jgsdafsdaj fsdf"
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:14": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (multiline double size)",
-        "description": "This is the description. width: 120, height: 10.",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "This is the default value"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "This is the default value"
-        },
-        "regex": "",
-        "editorType": "Multi-line",
-        "multilineEditorWidth": 120,
-        "multilineEditorHeight": 10,
-        "errorMessage": "This is the Validation Error Message"
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:18": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (multiline)",
-        "description": "This is the really long description ttttttttttttttttttttttttttttttttttttttttttteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeessssssssssssssssssssssssssssssssssssssssssssssssstttttttttttttttttttttttttttttttttttttt.\n",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "Long desciption multi"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "Long desciption multi"
-        },
-        "regex": ".*",
-        "editorType": "Multi-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message (regex)"
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:19": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (single line). it is LOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGG.",
-        "description": "This is the really long label test.\n",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "test@knime.com"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "test@knime.com"
-        },
-        "regex": "",
-        "editorType": "Single-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message "
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:20": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (multi line). it is LOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNNNNNNNGGGGGGGGGGGGGGGG.",
-        "description": "This is the really long label test.\n",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "test@knime.com"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "test@knime.com"
-        },
-        "regex": "",
-        "editorType": "Multi-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message "
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:13": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (single line w regex)",
-        "description": "This is the really long description ttttttttttttttttttttttttttttttttttttttttttteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeessssssssssssssssssssssssssssssssssssssssssssssssstttttttttttttttttttttttttttttttttttttt.\n",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "example@knime.com"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "example@knime.com"
-        },
-        "regex": ".*",
-        "editorType": "Single-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message (regex)"
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:10": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (single line)",
-        "description": "This is the description",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "This is the default value"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "This is the default value"
-        },
-        "regex": "",
-        "editorType": "Single-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message"
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:21": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (single line).",
-        "description": "This is the really long default value test.\n",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        },
-        "regex": "",
-        "editorType": "Single-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message "
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:11": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (multiline)",
-        "description": "This is the description. width: 60, height: 5.",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "This is the default value"
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "This is the default value"
-        },
-        "regex": "",
-        "editorType": "Multi-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message"
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    },
-    "7:0:22": {
-      "@class": "org.knime.js.core.JSONWebNode",
-      "namespace": "knimeStringWidget",
-      "viewValue": null,
-      "customCSS": "",
-      "stylesheets": [
-        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-        "/js-lib/knime/service/knime.css",
-        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-        "/org/knime/js/base/util/quickform/quickformStyles.css"
-      ],
-      "initMethodName": "init",
-      "validateMethodName": "validate",
-      "setValidationErrorMethodName": "setValidationErrorMessage",
-      "viewRepresentation": {
-        "@class": "org.knime.js.base.node.base.input.string.StringNodeRepresentation",
-        "label": "This is the Label (multi line).",
-        "description": "This is the really long default value test.\n",
-        "required": true,
-        "defaultValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham."
-        },
-        "currentValue": {
-          "@class": "org.knime.js.base.node.base.input.string.StringNodeValue",
-          "string": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham."
-        },
-        "regex": "",
-        "editorType": "Multi-line",
-        "multilineEditorWidth": 60,
-        "multilineEditorHeight": 5,
-        "errorMessage": "This is the Validation Error Message "
-      },
-      "nodeInfo": {
-        "@class": "org.knime.js.core.JSONWebNodeInfo",
-        "nodeAnnotation": "",
-        "nodeName": "String Widget",
-        "nodeState": "executed",
-        "nodeWarnMessage": null,
-        "nodeErrorMessage": null,
-        "displayPossible": true
-      },
-      "javascriptLibraries": [
-        "/js-lib/knime/service/knime_service_1_0_0.js",
-        "/js-lib/jQuery/jquery-1.11.0.min.js",
-        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-        "/org/knime/js/base/node/widget/input/string/stringWidget.js"
-      ],
-      "getViewValueMethodName": "value"
-    }
-  },
-  "version": "4.1.0.v201910181048"
+  }
 }

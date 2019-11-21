@@ -3,8 +3,6 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import PageBuilder from '@/components/PageBuilder';
 import Page from '@/components/Page';
-import Progress from '@/components/Progress';
-import Result from '@/components/Result';
 
 describe('PageBuilder.vue', () => {
 
@@ -14,16 +12,10 @@ describe('PageBuilder.vue', () => {
         localVue = createLocalVue();
         localVue.use(Vuex);
         store = new Vuex.Store();
-        PageBuilder.initStore({
-            nextPage: () => {},
-            previousPage: () => {}
-        }, store);
+        PageBuilder.initStore(store);
         const page = {
-            webNodes: {
-                id1: {
-                    foo: 'bar'
-                }
-            }
+            wizardExecutionState: 'INTERACTION_REQUIRED',
+            wizardPageContent: {}
         };
         store.commit('pagebuilder/setPage', page);
         context = {
@@ -36,100 +28,21 @@ describe('PageBuilder.vue', () => {
         expect(store.state.pagebuilder).toBeDefined();
     });
 
-    it('renders nothing if no viewState set', () => {
-        store.commit('pagebuilder/setViewState', null);
+    it('renders page component', () => {
+        let wrapper = shallowMount(PageBuilder, context);
+
+        expect(wrapper.find(Page).exists()).toBeTruthy();
+    });
+
+    it('renders nothing if called with unsupported wizardExecutionState', () => {
+        const page = {
+            wizardExecutionState: 'SOMEFAKESTATE'
+        };
+        store.commit('pagebuilder/setPage', page);
 
         let wrapper = shallowMount(PageBuilder, context);
 
         expect(wrapper.html()).toBeUndefined();
     });
 
-    it('renders Page if viewState is "page"', () => {
-        store.commit('pagebuilder/setViewState', 'page');
-
-        let wrapper = shallowMount(PageBuilder, context);
-
-        expect(wrapper.find(Page).exists()).toBeTruthy();
-    });
-
-    it('renders Execution if viewState is "executing"', () => {
-        store.commit('pagebuilder/setViewState', 'executing');
-
-        let wrapper = shallowMount(PageBuilder, context);
-
-        expect(wrapper.find(Progress).exists()).toBeTruthy();
-    });
-
-    it('renders Result if viewState is "result"', () => {
-        store.commit('pagebuilder/setViewState', 'result');
-
-        let wrapper = shallowMount(PageBuilder, context);
-
-        expect(wrapper.find(Result).exists()).toBeTruthy();
-    });
-
-    it('validates page based on individual node validity', () => {
-
-        let wrapper = shallowMount(PageBuilder, context);
-
-        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(false);
-
-        store.commit('pagebuilder/updateWebNode', {
-            nodeId: 'id1',
-            isValid: true,
-            update: {
-                foo: 'rod'
-            }
-        });
-
-        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
-    });
-
-    it('returns valid with empty page', () => {
-        const page = {};
-        store.commit('pagebuilder/setPage', page);
-
-        let wrapper = shallowMount(PageBuilder, context);
-
-        expect(wrapper.vm.$store.getters['pagebuilder/isPageValid']).toBe(true);
-    });
-
-    it('prevents value modification with invalid node updates', () => {
-        let wrapper = shallowMount(PageBuilder, context);
-        let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
-
-        expect(node.foo).toEqual('bar');
-
-        let update = {
-            nodeId: 'id1',
-            isValid: false,
-            update: {
-                foo: 'rod'
-            }
-        };
-
-        store.commit('pagebuilder/updateWebNode', update);
-        expect(node.foo).toEqual('bar');
-        update.isValid = true;
-        store.commit('pagebuilder/updateWebNode', update);
-        expect(node.foo).toEqual('rod');
-    });
-
-    it('prevents value modification with invalid keys', () => {
-        let wrapper = shallowMount(PageBuilder, context);
-        let node = wrapper.vm.$store.state.pagebuilder.page.webNodes.id1;
-
-        expect(node.foo).toEqual('bar');
-
-        let update = {
-            nodeId: 'id1',
-            isValid: true,
-            update: {
-                fooBar: 'rod' // wrong key
-            }
-        };
-
-        store.commit('pagebuilder/updateWebNode', update);
-        expect(node.foo).toEqual('bar');
-    });
 });
