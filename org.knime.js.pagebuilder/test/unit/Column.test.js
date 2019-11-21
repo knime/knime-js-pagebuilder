@@ -197,4 +197,30 @@ describe('Column.vue', () => {
         expect(divs.at(1).html()).toEqual(`<div>${html2}</div>`);
     });
 
+    it('always re-renders NodeView components', () => {
+        // this is important so the iframe of NodeViewIFrame gets destroyed and re-created correctly
+            
+        let content = [{
+            type: 'view',
+            nodeID: '9:0:4'
+        }];
+
+        let wrapper = shallowMount(Column, {
+            stubs,
+            propsData: {
+                columnConfig: {
+                    content
+                }
+            }
+        });
+
+        let view1 = wrapper.find(NodeView).element;
+
+        wrapper.setProps({ columnConfig: { content } });
+
+        let view2 = wrapper.find(NodeView).element;
+
+        expect(view1).not.toBe(view2);
+    });
+
 });

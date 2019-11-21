@@ -104,9 +104,10 @@ export default {
     :style="styles"
   >
     <template v-for="(item, index) in content">
+      <!-- :key with timestamp to force the IFrame to be re-rendered; TODO probably not needed for widgets -->
       <NodeView
         v-if="item.type === 'view' || item.type === 'JSONLayoutViewContent'"
-        :key="index"
+        :key="index + '-' + Date.now()"
         :view-config="item"
       />
       <Row
