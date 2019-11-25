@@ -154,7 +154,7 @@ export default {
     />
     <ErrorMessage
       :error="errorMessage"
-      class="knime-error"
+      :class="['knime-error', { 'ms-edge-valid': isValid }]"
     />
   </div>
 </template>
@@ -162,5 +162,10 @@ export default {
 <style lang="postcss" scoped>
 .knime-string-widget {
   overflow: hidden !important;
+}
+
+/* Microsoft edge has trouble updating props in a timely manner, so hide if necessary */
+.ms-edge-valid {
+  visibility: hidden;
 }
 </style>
