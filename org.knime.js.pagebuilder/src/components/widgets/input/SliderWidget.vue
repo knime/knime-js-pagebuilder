@@ -42,11 +42,11 @@ export default {
          *          nodeInfo: {...},
          *          viewRepresentation: {
          *              sliderSettings: {...},
-         *              *either*
+         *              // *either*
          *              currentValue: {
          *                  double: Number
          *              },
-         *              *or*
+         *              // *or*
          *              defaultValue: {
          *                  double: Number
          *              },

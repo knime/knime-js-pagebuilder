@@ -49,29 +49,29 @@ export const createTicks = (tickConfig) => {
                 : (max - min) / config.values[0];
             for (let i = 0; i < (max - min) / step; i++) {
                 let val = min + step * i;
-                markConfig[val] = `${format(val, config.format)}`;
+                markConfig[val] = format(val, config.format);
                 orderedValues.add(val);
             }
-            markConfig[max] = `${format(max, config.format)}`;
+            markConfig[max] = format(max, config.format);
             break;
         }
         case 'values': {
             config.values.forEach((val) => {
-                markConfig[val] = `${format(val, config.format)}`;
+                markConfig[val] = format(val, config.format);
                 orderedValues.add(val);
             });
             break;
         }
         case 'range':
-            markConfig[min] = `${format(min, config.format)}`;
-            markConfig[max] = `${format(max, config.format)}`;
+            markConfig[min] = format(min, config.format);
+            markConfig[max] = format(max, config.format);
             break;
         case 'positions': {
             config.values.forEach((val) => {
                 let range = max - min;
-                let key = range * (val / 100) + min; // || min;
-                if (min <= key && max >= key) {
-                    markConfig[key] = `${format(key, config.format)}`;
+                let key = range * (val / 100) + min;
+                if (min <= key && key <= max) {
+                    markConfig[key] = format(key, config.format);
                     orderedValues.add(key);
                 }
             });
@@ -91,4 +91,3 @@ export const createTicks = (tickConfig) => {
     }
     return markConfig;
 };
-
