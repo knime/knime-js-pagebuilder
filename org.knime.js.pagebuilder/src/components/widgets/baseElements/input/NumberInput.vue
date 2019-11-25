@@ -5,12 +5,11 @@ const INTERVAL_TIMEOUT_DELAY = 200;
 const MOUSE_DOWN_CHANGE_INTERVAL = 50;
 const DEFAULT_STEP_SIZE_DOUBLE = 0.1;
 const DEFAULT_STEP_SIZE_INTEGER = 1;
-const BASE_10_CONSTANT = 10;
 
 /**
  * Default number (spinner) input field for widgets. It can either be a double input widget
  * or an integer input widget, based on the type received as a prop. It implements custom
- * user controls to augment the existing native HTML <input> component funcitonality and
+ * user controls to augment the existing native HTML <input> component functionality and
  * provide consistent KNIME styling.
  */
 export default {
@@ -19,19 +18,19 @@ export default {
     },
     props: {
         value: {
-            default: () => 0,
+            default: 0,
             type: Number
         },
         min: {
-            default: () => 0,
+            default: 0,
             type: Number
         },
         max: {
-            default: () => 1,
+            default: 1,
             type: Number
         },
         isValid: {
-            default: () => false,
+            default: false,
             type: Boolean
         },
         /**
@@ -47,7 +46,10 @@ export default {
          */
         type: {
             default: 'double',
-            type: String
+            type: String,
+            validator(val) {
+                return ['double', 'integer'].includes(val);
+            }
         },
         description: {
             default: 'KNIME number input',
@@ -58,9 +60,11 @@ export default {
      * @returns {Object} clicked should be false to prevent un-
      *      intended 'mouseup' or 'mouseleave' events.
      */
-    data: () => ({
-        clicked: false
-    }),
+    data() {
+        return {
+            clicked: false
+        };
+    },
     /**
      * The reference to the timeout which is set when
      * a user clicks one of the numeric spinner wheels. This
@@ -128,7 +132,7 @@ export default {
                 inputValue = this.$el.childNodes[0].value;
                 // manually parse the value
                 return this.type === 'integer'
-                    ? parseInt(inputValue, BASE_10_CONSTANT)
+                    ? parseInt(inputValue, 10)
                     : parseFloat(inputValue);
             }
             return inputValue;
@@ -147,10 +151,8 @@ export default {
                 return false;
             }
             // check against the configured maximum and minimum
-            if (value < this.min || value > this.max) {
-                return false;
-            }
-            return true;
+            return this.min <= value && value <= this.max;
+
         },
         /**
          * This method is used by the input controls to change the value of the numeric input.
@@ -182,18 +184,18 @@ export default {
                 // use the min if value too low
                 if (value < this.min) {
                     value = this.min;
-                // or use the max if value too high
+                    // or use the max if value too high
                 } else if (value > this.max) {
                     value = this.max;
-                // fallback, use the initial value
+                    // fallback, use the initial value
                 } else {
                     value = this.initialValue;
                 }
             }
 
             /** Mimic stepping to nearest step with safe value rounding */
-            let parsedVal = (value + increment) * BASE_10_CONSTANT;
-            parsedVal = Math.round(parsedVal) / BASE_10_CONSTANT;
+            let parsedVal = value + increment;
+            parsedVal = Math.round(parsedVal * 10) / 10; // eslint-disable-line no-magic-numbers
 
             /**
              * All measures have been taken to ensure a valid value at this point, so if the last
@@ -209,7 +211,7 @@ export default {
         /**
          * This method is the callback handler for mouse events on the input field controls.
          * It is fired when either the up-arrow or down-arrow is pressed by the user. It manages
-         * both mousedown and mouseup events. It clears any exisiting timeouts or intervals which
+         * both mousedown and mouseup events. It clears any existing timeouts or intervals which
          * may have been set previously and decides how the user would like the value updated
          * (holding the button will rapidly change the value after a short delay; quickly clicking
          * the button will use short increments instead).
@@ -272,7 +274,7 @@ export default {
       @input="publishChangeEvent"
     >
     <span
-      id="knime-increase"
+      class="knime-increase"
       @mousedown="(e) => mouseEvent(e, 'increase')"
       @mouseup="(e) => mouseEvent(e, 'increase')"
       @mouseleave="(e) => mouseEvent(e, 'increase')"
@@ -280,7 +282,7 @@ export default {
       <ArrowIcon />
     </span>
     <span
-      id="knime-decrease"
+      class="knime-decrease"
       @mousedown="(e) => mouseEvent(e, 'decrease')"
       @mouseup="(e) => mouseEvent(e, 'decrease')"
       @mouseleave="(e) => mouseEvent(e, 'decrease')"
@@ -298,12 +300,10 @@ export default {
   width: 100%;
 
   & input.knime-qf-input {
-    font-family: 'Roboto', BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-      'Droid Sans', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-size: 13px;
     font-weight: 500;
     color: var(--theme-color-masala);
-    letter-spacing: 0.03px;
+    letter-spacing: inherit;
     line-height: 18px;
     background-color: var(--theme-color-porcelain);
     margin: 0;
@@ -322,50 +322,37 @@ export default {
     border-left-color: var(--theme-color-error);
   }
 
-  & #knime-increase {
+  & .knime-increase,
+  & .knime-decrease {
     position: absolute;
-    z-index: 1001;
-    top: 0;
+    z-index: 1;
     right: 0;
     width: 33px;
     height: 20px;
     padding-left: 10px;
     padding-right: 9px;
+    background-color: var(--theme-color-porcelain);
+
+    & svg {
+      width: 100%;
+      height: 100%;
+      stroke-width: 1.5px;
+    }
+  }
+
+  & .knime-increase {
+    top: 0;
     transform: rotate(180deg);
-    background-color: var(--theme-color-porcelain);
-
-    & svg {
-      width: 100%;
-      height: 100%;
-      stroke-width: 1.5px;
-    }
   }
 
-  & #knime-increase:focus,
-  & #knime-increase:active {
-    background-color: var(--theme-color-silver-sand);
-  }
-
-  & #knime-decrease {
-    position: absolute;
-    z-index: 1001;
+  & .knime-decrease {
     bottom: 0;
-    right: 0;
-    width: 33px;
-    height: 20px;
-    padding-left: 9px;
-    padding-right: 10px;
-    background-color: var(--theme-color-porcelain);
-
-    & svg {
-      width: 100%;
-      height: 100%;
-      stroke-width: 1.5px;
-    }
   }
 
-  & #knime-decrease:focus,
-  & #knime-decrease:active {
+  & .knime-increase:focus,
+  & .knime-increase:active,
+  & .knime-decrease:focus,
+  & .knime-decrease:active {
     background-color: var(--theme-color-silver-sand);
   }
 }

@@ -16,55 +16,55 @@ export default {
     },
     props: {
         value: {
-            default: () => DEFAULT_SLIDER_VALUE,
+            default: DEFAULT_SLIDER_VALUE,
             type: Number
         },
         maximum: {
-            default: () => 1,
+            default: 1,
             type: Number
         },
         minimum: {
-            default: () => 0,
+            default: 0,
             type: Number
         },
         isValid: {
-            default: () => false,
+            default: false,
             type: Boolean
         },
         direction: {
-            default: () => 'ltr',
+            default: 'ltr',
             type: String
         },
         stepSize: {
-            default: () => DEFAULT_STEP_SIZE,
+            default: DEFAULT_STEP_SIZE,
             type: Number
         },
         height: {
-            default: () => DEFAULT_HEIGHT,
+            default: DEFAULT_HEIGHT,
             type: Number
         },
         tooltips: {
-            default: () => 'always',
+            default: 'always',
             type: String
         },
         tooltipFormat: {
-            default: () => '',
+            default: x => x,
             type: Function
         },
         marks: {
-            default: () => {},
+            default: () => ({}),
             type: Object
         },
         connect: {
-            default: () => 'both',
+            default: 'both',
             type: String
         },
         dragOnClick: {
-            default: () => false,
+            default: false,
             type: Boolean
         },
         contained: {
-            default: () => false,
+            default: false,
             type: Boolean
         }
     },

@@ -14,7 +14,7 @@ export default {
          * Node id
          */
         nodeId: {
-            default: () => null,
+            default: null,
             type: String
         },
         /**

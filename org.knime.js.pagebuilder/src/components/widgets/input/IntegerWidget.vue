@@ -24,11 +24,13 @@ export default {
         * The nodeConfig provided to the DoubleWidget component should have the
         * necessary fields as seen in the validator below:
         *
-        * ex:  nodeConfig = {
-        *          viewRepresentation: {...},
-        *          nodeInfo: {...},
-        *          ...
-        *      };
+        * @example
+        *
+        *    {
+        *        viewRepresentation: {...},
+        *        nodeInfo: {...},
+        *        ...
+        *    }
         */
         nodeConfig: {
             required: true,
@@ -45,7 +47,7 @@ export default {
             }
         },
         isValid: {
-            default: () => false,
+            default: false,
             type: Boolean
         }
     },
@@ -103,21 +105,22 @@ export default {
             this.$emit('updateWidget', newWebNodeConfig);
         },
         validate(value) {
-            /**
+            /*
              * TODO: SRV-2626
              *
              * insert additional custom widget validation
              */
-            if (this.viewRep.required) {
-                if (isNaN(value)) {
-                    return false;
-                }
-                if (value < this.min || value > this.max) {
-                    return false;
-                }
-                return value || value === 0;
+            if (!this.viewRep.required) {
+                return true;
             }
-            return true;
+
+            if (isNaN(value)) {
+                return false;
+            }
+            if (value < this.min || this.max < value) {
+                return false;
+            }
+            return Boolean(value) || value === 0;
         }
     }
 };

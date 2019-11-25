@@ -144,7 +144,6 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.find(Slider)).toBeTruthy();
     });
 
-    // eslint-disable-next-line no-warning-comments
     // TODO AP-12850: update component level validation
     it('validates as false without a value', () => {
         let wrapper = shallowMount(SliderWidget, {

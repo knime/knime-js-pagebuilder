@@ -4,6 +4,7 @@ import DoubleWidget from '@/components/widgets/input/DoubleWidget.vue';
 import IntegerWidget from '@/components/widgets/input/IntegerWidget.vue';
 import NumberInput from '@/components/widgets/baseElements/input/NumberInput.vue';
 
+/* eslint-disable no-magic-numbers */
 describe('NumberInput.vue', () => {
     let propsData, propsData2;
 
@@ -189,11 +190,7 @@ describe('NumberInput.vue', () => {
         });
 
         let numericInputComponent = wrapper.find(NumberInput);
-        let event = {
-            type: 'mouseup'
-        };
-
-        numericInputComponent.vm.mouseEvent(event, 'increase');
+        numericInputComponent.find('.knime-increase').trigger('mouseup');
         expect(numericInputComponent.emitted().updateValue).toBeTruthy();
     });
 
@@ -207,17 +204,14 @@ describe('NumberInput.vue', () => {
         };
         let numericInputComponent = wrapper.find(NumberInput);
         numericInputComponent.vm.changeValue = changeValueMock;
-        let event = {
-            type: 'mouseleave'
-        };
 
-        numericInputComponent.vm.mouseEvent(event, 'increase');
+        numericInputComponent.find('.knime-increase').trigger('mouseleave');
         expect(testSpy).toBe(0);
         numericInputComponent.setData({ clicked: true });
-        numericInputComponent.vm.mouseEvent(event, 'increase');
+        numericInputComponent.find('.knime-increase').trigger('mouseleave');
         expect(testSpy).toBe(1);
         numericInputComponent.setData({ clicked: true });
-        numericInputComponent.vm.mouseEvent(event, 'decrease');
+        numericInputComponent.find('.knime-decrease').trigger('mouseleave');
         expect(testSpy).toBe(0);
     });
 
@@ -228,17 +222,14 @@ describe('NumberInput.vue', () => {
         });
 
         let numericInputComponent = wrapper.find(NumberInput);
-        let event = {
-            type: 'mousedown'
-        };
         let originalValue = 0;
 
         expect(numericInputComponent.vm.getValue()).toBe(originalValue);
         expect(numericInputComponent.vm.spinnerArrowTimeout).toBeFalsy();
         expect(numericInputComponent.vm.spinnerArrowInterval).toBeFalsy();
-        
-        numericInputComponent.vm.mouseEvent(event, 'increase');
-        
+
+        numericInputComponent.find('.knime-increase').trigger('mousedown');
+
         expect(numericInputComponent.vm.spinnerArrowTimeout).toBeTruthy();
         expect(numericInputComponent.vm.spinnerArrowInterval).toBeFalsy();
         jest.advanceTimersByTime(250);
@@ -248,7 +239,7 @@ describe('NumberInput.vue', () => {
     });
 
     // test should return fallbacks when values high
-    it('mimics native behavior', () => {
+    it('mimics native behavior for value overflow', () => {
         let wrapper = mount(IntegerWidget, {
             propsData: propsData2
         });
@@ -259,7 +250,7 @@ describe('NumberInput.vue', () => {
     });
 
     // test should return fallbacks when values low
-    it('mimics native behavior', () => {
+    it('mimics native behavior for value underflow', () => {
         let wrapper = mount(IntegerWidget, {
             propsData: propsData2
         });
@@ -271,7 +262,7 @@ describe('NumberInput.vue', () => {
     });
 
     // test should return fallbacks when values cannot be parsed
-    it('mimics native behavior', () => {
+    it('mimics native behavior for invalid value', () => {
         let wrapper = mount(IntegerWidget, {
             propsData: propsData2
         });

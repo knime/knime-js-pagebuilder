@@ -5,11 +5,11 @@
 export default {
     props: {
         value: {
-            default: () => '',
+            default: '',
             type: [Number, String]
         },
         isValid: {
-            default: () => false,
+            default: false,
             type: Boolean
         },
         type: {

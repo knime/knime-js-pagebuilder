@@ -41,7 +41,7 @@ export default {
             }
         },
         isValid: {
-            default: () => false,
+            default: false,
             type: Boolean
         }
     },
@@ -110,7 +110,7 @@ export default {
             }, DEBOUNCER_TIMEOUT);
         },
         validate(value) {
-            /**
+            /*
              * TODO: SRV-2626
              *
              * insert additional custom widget validation
