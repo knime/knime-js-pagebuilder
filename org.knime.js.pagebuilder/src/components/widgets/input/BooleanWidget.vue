@@ -1,5 +1,4 @@
 <script>
-import Label from '../baseElements/text/Label';
 import Checkbox from '~/webapps-common/ui/components/forms/Checkbox';
 import { getProp } from '../../../util/nestedProperty';
 
@@ -11,7 +10,6 @@ const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.boolean';
  */
 export default {
     components: {
-        Label,
         Checkbox
     },
     props: {
@@ -55,7 +53,6 @@ export default {
     },
     methods: {
         onChange(e) {
-            this.$el.querySelector('.knime-boolean').focus();
             const newWebNodeConfig = {
                 type: 'Boolean Input',
                 nodeId: this.nodeId,
@@ -67,7 +64,7 @@ export default {
             this.$emit('updateWidget', newWebNodeConfig);
         },
         validate(value) {
-            /**
+            /*
              * TODO: SRV-2626
              *
              * insert additional custom widget validation
@@ -88,13 +85,9 @@ export default {
       box-size="Medium"
       class="knime-boolean"
       @input="onChange"
-    />
-    <Label
-      :text="label"
-      class="knime-label"
-      @input="onChange"
-      @click.native="()=>onChange(!value)"
-    />
+    >
+      {{ label }}
+    </Checkbox>
   </div>
 </template>
 

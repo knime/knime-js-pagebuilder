@@ -1,6 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import { shallowMount } from '@vue/test-utils';
 
+import Checkbox from '~/webapps-common/ui/components/forms/Checkbox';
 import BooleanWidget from '@/components/widgets/input/BooleanWidget.vue';
 
 describe('BooleanWidget.vue', () => {
@@ -77,7 +78,7 @@ describe('BooleanWidget.vue', () => {
             }
         });
         expect(typeof wrapper.emitted().updateWidget).toBe('undefined');
-        wrapper.vm.onChange(false);
+        wrapper.find(Checkbox).vm.$emit('input', false);
         expect(wrapper.emitted().updateWidget).toBeTruthy();
     });
 });
