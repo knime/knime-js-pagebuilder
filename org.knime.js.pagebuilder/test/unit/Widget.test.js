@@ -286,15 +286,20 @@ describe('Widget.vue', () => {
             wrapper.vm.$store.state.pagebuilder.page.webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
 
+        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {}); // avoid clutter
+
         wrapper.vm.publishUpdate({
             isValid: true,
             nodeId,
             update: {
+                // wrong format
                 viewRepresentation: {
                     '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
                 }
             }
         });
+
+        consoleSpy.mockRestore();
 
         let valPromise = wrapper.vm.getValue();
         return expect(valPromise).rejects.toStrictEqual(
