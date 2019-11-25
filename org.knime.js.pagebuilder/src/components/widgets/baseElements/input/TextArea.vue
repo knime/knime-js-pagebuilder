@@ -81,7 +81,7 @@ textarea.knime-qf-input {
   border: none;
   outline: none;
   border-left-width: 3px;
-  border-left-color: transparent;
+  border-color: transparent;
   border-left-style: solid;
 }
 

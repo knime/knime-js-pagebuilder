@@ -84,7 +84,7 @@ input.knime-qf-input {
   border-radius: 0;
   width: 100%;
   border-left-width: 3px;
-  border-left-color: transparent;
+  border-color: transparent;
   border-left-style: solid;
   outline: none;
   border-top: none;
