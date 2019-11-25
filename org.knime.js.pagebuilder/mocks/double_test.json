@@ -1,0 +1,583 @@
+{
+  "@class": "org.knime.js.core.JSONWebNodePage",
+  "webNodePageConfiguration": {
+    "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+    "layout": {
+      "rows": [
+        {
+          "type": "JSONLayoutRow",
+          "additionalClasses": [],
+          "additionalStyles": [],
+          "columns": [
+            {
+              "content": [
+                {
+                  "type": "JSONLayoutRow",
+                  "additionalClasses": [],
+                  "additionalStyles": [],
+                  "columns": [
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "9:0:8",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 3,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "9:0:11",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 3,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "9:0:12",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 3,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "9:0:13",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 3,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    }
+                  ]
+                },
+                {
+                  "type": "JSONLayoutViewContent",
+                  "sizeHeight": true,
+                  "sizeWidth": false,
+                  "autoResize": true,
+                  "resizeMethod": "viewLowestElement",
+                  "scrolling": false,
+                  "nodeID": "9:0:14",
+                  "maxHeight": null,
+                  "maxWidth": null,
+                  "minHeight": null,
+                  "minWidth": null,
+                  "resizeInterval": null,
+                  "resizeTolerance": 5,
+                  "additionalClasses": [],
+                  "additionalStyles": []
+                },
+                {
+                  "type": "JSONLayoutRow",
+                  "additionalClasses": [],
+                  "additionalStyles": [],
+                  "columns": [
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "9:0:15",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 6,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "9:0:16",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 6,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    }
+                  ]
+                }
+              ],
+              "widthMD": null,
+              "widthXS": 12,
+              "widthSM": null,
+              "widthLG": null,
+              "widthXL": null,
+              "additionalClasses": [],
+              "additionalStyles": []
+            }
+          ]
+        }
+      ]
+    },
+    "blackBoard": null,
+    "selectionTranslators": null,
+    "version": "4.1.0.v201910181048"
+  },
+  "webNodes": {
+    "9:0:12": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeDoubleWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. This widget has the maximum set.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "usemin": false,
+        "usemax": true,
+        "min": 0,
+        "max": 1
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Double Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "9:0:13": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeDoubleWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. This widget has the default set.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0.5
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0.5
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0,
+        "max": 1
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Double Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "9:0:14": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeDoubleWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. This widget has the minimum and maximum set large.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 1000000
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 1000000
+        },
+        "usemin": true,
+        "usemax": true,
+        "min": -100000000,
+        "max": 100000001
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Double Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "9:0:8": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeDoubleWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. This is the default widget (all that's been changed is the label and the description)",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0,
+        "max": 1
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Double Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "9:0:15": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeDoubleWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation",
+        "label": "This is the label. Now its super super super super super super super super super super long",
+        "description": "This is the description. ",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0,
+        "max": 1
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Double Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "9:0:11": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeDoubleWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. This widget has the minimum set.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "usemin": true,
+        "usemax": false,
+        "min": 0,
+        "max": 1
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Double Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "9:0:16": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeDoubleWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation",
+        "label": "This is the label. ",
+        "description": "This is the description. Now its super super super super super super super super super super super super super super super super super super super super super super super super super super super super super super super long.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.dbl.DoubleNodeValue",
+          "double": 0
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0,
+        "max": 1
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Double Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    }
+  },
+  "version": "4.1.0.v201910181048"
+}

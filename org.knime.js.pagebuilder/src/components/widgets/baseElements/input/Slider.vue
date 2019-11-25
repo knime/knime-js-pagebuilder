@@ -6,9 +6,8 @@ const DEFAULT_STEP_SIZE = .1;
 const DEFAULT_HEIGHT = 20;
 
 /**
- * At the html component level (1st level), functionality will be limited to
- * validating settings on a low level to allow proper browser functionality.
- * This slider uses the Vue-Slider-Component library.
+ * This KNIME slider input element implementation relies on
+ * the vue-slider-component (npm) library.
  */
 export default {
     components: {
@@ -16,55 +15,55 @@ export default {
     },
     props: {
         value: {
-            default: () => DEFAULT_SLIDER_VALUE,
+            default: DEFAULT_SLIDER_VALUE,
             type: Number
         },
         maximum: {
-            default: () => 1,
+            default: 1,
             type: Number
         },
         minimum: {
-            default: () => 0,
+            default: 0,
             type: Number
         },
         isValid: {
-            default: () => false,
+            default: false,
             type: Boolean
         },
         direction: {
-            default: () => 'ltr',
+            default: 'ltr',
             type: String
         },
         stepSize: {
-            default: () => DEFAULT_STEP_SIZE,
+            default: DEFAULT_STEP_SIZE,
             type: Number
         },
         height: {
-            default: () => DEFAULT_HEIGHT,
+            default: DEFAULT_HEIGHT,
             type: Number
         },
         tooltips: {
-            default: () => 'always',
+            default: 'always',
             type: String
         },
         tooltipFormat: {
-            default: () => '',
+            default: x => x,
             type: Function
         },
         marks: {
-            default: () => {},
+            default: () => ({}),
             type: Object
         },
         connect: {
-            default: () => 'both',
+            default: 'both',
             type: String
         },
         dragOnClick: {
-            default: () => false,
+            default: false,
             type: Boolean
         },
         contained: {
-            default: () => false,
+            default: false,
             type: Boolean
         }
     },
@@ -240,6 +239,10 @@ export default {
   background-color: var(--theme-color-porcelain);
 }
 
+.vue-slider-dot:hover {
+  background-color: var(--theme-color-dove-gray);
+}
+
 .vue-slider-ttb .vue-slider-dot,
 .vue-slider-btt .vue-slider-dot {
   left: 2px !important;
@@ -248,7 +251,7 @@ export default {
 }
 
 .vue-slider-dot-focus {
-  background-color: var(--theme-color-masala);
+  background-color: var(--theme-color-masala) !important;
 }
 
 .vue-slider-dot-handle {
