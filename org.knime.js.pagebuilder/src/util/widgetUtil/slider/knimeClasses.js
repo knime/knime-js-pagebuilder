@@ -45,7 +45,6 @@ export const addKnimeClasses = (sliderElement) => {
             }
         }
     } catch (e) {
-        // eslint-disable-next-line no-warning-comments
         // TODO: AP-12954 publish warning that KNIME CSS classes could not be loaded.
     }
 };

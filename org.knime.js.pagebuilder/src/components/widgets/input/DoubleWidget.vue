@@ -6,10 +6,12 @@ import { getProp } from '../../../util/nestedProperty';
 
 const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.double';
 const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.double';
-const DEBOUNCER_TIMEOUT = 250;
 
 /**
- * This is the Double Input widget implementation.
+ * This is the implementation of the Double Input Widget. This component relies
+ * on the NumberInput component. The primary goal of the DoubleWidget component
+ * is to parse the various settings from the nodeConfig provided by the parent
+ * Widget component and parse them correctly for the NumberInput component.
  */
 export default {
     components: {
@@ -18,6 +20,16 @@ export default {
         ErrorMessage
     },
     props: {
+        /**
+        * The nodeConfig provided to the DoubleWidget component should have the
+        * necessary fields as seen in the validator below:
+        *
+        * ex:  nodeConfig = {
+        *          viewRepresentation: {...},
+        *          nodeInfo: {...},
+        *          ...
+        *      };
+        */
         nodeConfig: {
             required: true,
             type: Object,
@@ -33,7 +45,7 @@ export default {
             }
         },
         isValid: {
-            default: () => false,
+            default: false,
             type: Boolean
         }
     },
@@ -42,7 +54,6 @@ export default {
             viewRep: this.nodeConfig.viewRepresentation
         };
     },
-    updateDebouncer: null,
     computed: {
         label() {
             return this.viewRep.label;
@@ -53,17 +64,22 @@ export default {
         errorMessage() {
             if (this.isValid) {
                 return '';
-            } else if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            } else if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            } else {
-                return 'Current double input value is invalid';
             }
+            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
+                return this.nodeConfig.nodeInfo.nodeErrorMessage;
+            }
+            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
+                return this.nodeConfig.nodeInfo.nodeWarnMessage;
+            }
+            return 'Current double input value is invalid';
         },
-        val() {
-            return getProp(this.nodeConfig, CURRENT_VALUE_KEY) ||
-                getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+        value() {
+            let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
+            let defaultValue = getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            if (typeof currentValue === 'number' && this.validate(currentValue)) {
+                return currentValue;
+            }
+            return defaultValue;
         },
         min() {
             return this.viewRep.usemin ? this.viewRep.min : -Number.MAX_SAFE_INTEGER;
@@ -74,31 +90,33 @@ export default {
     },
     methods: {
         onChange(e) {
-            clearTimeout(this.updateDebouncer);
-            const newValue = e.val;
+            const newValue = e.value;
             const newWebNodeConfig = {
                 type: 'Double Input',
                 nodeId: this.nodeId,
-                originalEvent: e.originalEvent,
                 isValid: e.isValid && this.validate(newValue),
                 update: {
                     [CURRENT_VALUE_KEY]: newValue
                 }
             };
-            this.updateDebouncer = setTimeout(() => {
-                this.$emit('updateWidget', newWebNodeConfig);
-            }, DEBOUNCER_TIMEOUT);
+            this.$emit('updateWidget', newWebNodeConfig);
         },
         validate(value) {
-            /**
-             * TODO: SRV-2626
+            /*
+             * TODO SRV-2626
              *
              * insert additional custom widget validation
              */
-            if (this.viewRep.required && (!value && value !== 0)) {
+            if (!this.viewRep.required) {
+                return true;
+            }
+            if (isNaN(value)) {
                 return false;
             }
-            return true;
+            if (value < this.min || this.max < value) {
+                return false;
+            }
+            return Boolean(value) || value === 0;
         }
     }
 };
@@ -114,7 +132,7 @@ export default {
     />
     <NumberInput
       type="double"
-      :value="val"
+      :value="value"
       :min="min"
       :max="max"
       :is-valid="isValid"

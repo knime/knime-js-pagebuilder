@@ -164,7 +164,7 @@ export default {
   max-width: calc(2 * 100% / 12);
 }
 
-.col-xs-3 {
+.col-3 {
   -ms-flex: 0 0 calc(3 * 100% / 12);
   flex: 0 0 calc(3 * 100% / 12);
   max-width: calc(3 * 100% / 12);
