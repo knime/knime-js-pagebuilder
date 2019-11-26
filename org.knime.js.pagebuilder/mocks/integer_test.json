@@ -1,0 +1,601 @@
+{
+  "@class": "org.knime.js.core.JSONWebNodePage",
+  "webNodePageConfiguration": {
+    "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+    "layout": {
+      "rows": [
+        {
+          "type": "JSONLayoutRow",
+          "additionalClasses": [],
+          "additionalStyles": [],
+          "columns": [
+            {
+              "content": [
+                {
+                  "type": "JSONLayoutRow",
+                  "additionalClasses": [],
+                  "additionalStyles": [],
+                  "columns": [
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "11:0:10",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 4,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "11:0:13",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 4,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "11:0:14",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 4,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    }
+                  ]
+                },
+                {
+                  "type": "JSONLayoutRow",
+                  "additionalClasses": [],
+                  "additionalStyles": [],
+                  "columns": [
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "11:0:15",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 6,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "11:0:16",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 6,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    }
+                  ]
+                },
+                {
+                  "type": "JSONLayoutRow",
+                  "additionalClasses": [],
+                  "additionalStyles": [],
+                  "columns": [
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "11:0:17",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 6,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "autoResize": true,
+                          "resizeMethod": "viewLowestElement",
+                          "scrolling": false,
+                          "nodeID": "11:0:18",
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "additionalClasses": [],
+                          "additionalStyles": []
+                        }
+                      ],
+                      "widthMD": null,
+                      "widthXS": 6,
+                      "widthSM": null,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "additionalClasses": [],
+                      "additionalStyles": []
+                    }
+                  ]
+                }
+              ],
+              "widthMD": null,
+              "widthXS": 12,
+              "widthSM": null,
+              "widthLG": null,
+              "widthXL": null,
+              "additionalClasses": [],
+              "additionalStyles": []
+            }
+          ]
+        }
+      ]
+    },
+    "blackBoard": null,
+    "selectionTranslators": null,
+    "version": "4.1.0.v201910181048"
+  },
+  "webNodes": {
+    "11:0:13": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeIntegerWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. (with minimum)",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "usemin": true,
+        "usemax": false,
+        "min": 0,
+        "max": 100
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Integer Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/integer/integerWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "11:0:14": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeIntegerWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. (with maximum)",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "usemin": false,
+        "usemax": true,
+        "min": 0,
+        "max": 100
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Integer Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/integer/integerWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "11:0:10": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeIntegerWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. (All defaults)",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0,
+        "max": 100
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Integer Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/integer/integerWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "11:0:17": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeIntegerWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation",
+        "label": "This is the label... a really really really really really really really really really long one.",
+        "description": "This is the description. (long label)",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0,
+        "max": 100
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Integer Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/integer/integerWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "11:0:18": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeIntegerWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation",
+        "label": "This is the label (long description)",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget egestas purus viverra accumsan in nisl nisi scelerisque eu. Ac turpis egestas sed tempus urna. Morbi tincidunt augue interdum velit. Sed adipiscing diam donec adipiscing tristique risus nec feugiat in. Ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt. Malesuada nunc vel risus commodo viverra maecenas accumsan. Velit aliquet sagittis id consectetur purus ut faucibus pulvinar. Facilisis mauris sit amet massa vitae tortor condimentum lacinia. Amet est placerat in egestas erat imperdiet. Morbi blandit cursus risus at ultrices mi tempus. Amet consectetur adipiscing elit ut aliquam. Nulla pellentesque dignissim enim sit amet. Consequat nisl vel pretium lectus quam id leo in vitae. Lobortis feugiat vivamus at augue eget. Tristique et egestas quis ipsum suspendisse ultrices. Scelerisque eu ultrices vitae auctor eu augue ut lectus.\n\nEget velit aliquet sagittis id consectetur purus ut faucibus. Quisque non tellus orci ac auctor augue mauris. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur. Volutpat lacus laoreet non curabitur gravida arcu ac tortor. Cras fermentum odio eu feugiat pretium nibh ipsum. Quam pellentesque nec nam aliquam sem et tortor consequat. Ut enim blandit volutpat maecenas. Volutpat lacus laoreet non curabitur. Pellentesque elit eget gravida cum sociis natoque penatibus. Enim praesent elementum facilisis leo vel. Turpis tincidunt id aliquet risus feugiat in ante metus.\n\nRhoncus dolor purus non enim praesent elementum facilisis leo vel. Tincidunt arcu non sodales neque sodales ut etiam. Duis convallis convallis tellus id. Feugiat in fermentum posuere urna nec tincidunt. Donec ac odio tempor orci dapibus ultrices in iaculis. Neque laoreet suspendisse interdum consectetur libero. Amet consectetur adipiscing elit ut aliquam purus sit. Habitant morbi tristique senectus et netus. Malesuada proin libero nunc consequat interdum. Aliquet sagittis id consectetur purus ut faucibus.\n\nIn mollis nunc sed id semper. Turpis massa tincidunt dui ut ornare lectus sit. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Eu consequat ac felis donec. Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Ut tristique et egestas quis. Facilisi cras fermentum odio eu feugiat pretium nibh ipsum. Consectetur adipiscing elit pellentesque habitant. Est lorem ipsum dolor sit amet consectetur. Quisque egestas diam in arcu cursus euismod quis. Vitae sapien pellentesque habitant morbi. Arcu odio ut sem nulla pharetra diam sit. Sed sed risus pretium quam vulputate dignissim. At consectetur lorem donec massa sapien.\n\nPotenti nullam ac tortor vitae purus faucibus ornare suspendisse sed. Pretium viverra suspendisse potenti nullam ac. Morbi blandit cursus risus at ultrices. A diam sollicitudin tempor id. Iaculis urna id volutpat lacus. Urna porttitor rhoncus dolor purus non. Dolor morbi non arcu risus quis varius quam quisque. Tempor id eu nisl nunc mi ipsum. In hendrerit gravida rutrum quisque non tellus orci. Mauris vitae ultricies leo integer malesuada nunc. Bibendum neque egestas congue quisque egestas diam. Sodales ut etiam sit amet nisl purus in. Quis ipsum suspendisse ultrices gravida. Vitae nunc sed velit dignissim. Sem fringilla ut morbi tincidunt augue interdum velit. Dui sapien eget mi proin sed libero enim sed faucibus. In egestas erat imperdiet sed euismod nisi porta.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0,
+        "max": 100
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Integer Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/integer/integerWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "11:0:15": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeIntegerWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. (with minimum and maximum)",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 0
+        },
+        "usemin": true,
+        "usemax": true,
+        "min": 0,
+        "max": 100
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Integer Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/integer/integerWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "11:0:16": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "namespace": "knimeIntegerWidget",
+      "viewValue": null,
+      "customCSS": "",
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "initMethodName": "init",
+      "validateMethodName": "validate",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation",
+        "label": "This is the label",
+        "description": "This is the description. (with default value)",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 50
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.integer.IntegerNodeValue",
+          "integer": 50
+        },
+        "usemin": false,
+        "usemax": false,
+        "min": 0,
+        "max": 100
+      },
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeAnnotation": "",
+        "nodeName": "Integer Widget",
+        "nodeState": "executed",
+        "nodeWarnMessage": null,
+        "nodeErrorMessage": null,
+        "displayPossible": true
+      },
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/integer/integerWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    }
+  },
+  "version": "4.1.0.v201910181048"
+}

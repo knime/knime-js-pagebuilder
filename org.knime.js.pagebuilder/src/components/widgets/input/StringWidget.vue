@@ -41,7 +41,7 @@ export default {
             }
         },
         isValid: {
-            default: () => false,
+            default: false,
             type: Boolean
         }
     },
@@ -110,15 +110,13 @@ export default {
             }, DEBOUNCER_TIMEOUT);
         },
         validate(value) {
-            /**
+            /*
              * TODO: SRV-2626
              *
              * insert additional custom widget validation
              */
-            if (this.viewRep.required) {
-                if (!value) {
-                    return false;
-                }
+            if (this.viewRep.required && !value) {
+                return false;
             }
             return true;
         }
@@ -154,7 +152,7 @@ export default {
     />
     <ErrorMessage
       :error="errorMessage"
-      class="knime-error"
+      :class="['knime-error', { 'ms-edge-valid': isValid }]"
     />
   </div>
 </template>
@@ -162,5 +160,10 @@ export default {
 <style lang="postcss" scoped>
 .knime-string-widget {
   overflow: hidden !important;
+}
+
+/* Microsoft edge has trouble updating props in a timely manner, so hide if necessary */
+.ms-edge-valid {
+  visibility: hidden;
 }
 </style>
