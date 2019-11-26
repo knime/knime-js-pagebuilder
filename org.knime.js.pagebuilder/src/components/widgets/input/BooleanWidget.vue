@@ -83,7 +83,7 @@ export default {
     <Checkbox
       :value="value"
       box-size="Medium"
-      class="knime-boolean"
+      class="knime-boolean knime-qf-title"
       @input="onChange"
     >
       {{ label }}
@@ -97,6 +97,15 @@ export default {
 
   & .knime-label {
     overflow: hidden;
+  }
+
+  & .knime-qf-title {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    display: block;
+    letter-spacing: 0.1px;
+    margin-bottom: 5px;
   }
 }
 </style>
