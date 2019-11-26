@@ -73,14 +73,14 @@ describe('TextWidget.vue', () => {
         expect(wrapper.vm.validate(propsData.undefinedProp)).toBe(true);
     });
 
-    it('recognized the Text element type', () => {
+    it('recognizes the Text element type', () => {
         let wrapper = mount(TextWidget, {
             propsData
         });
         expect(wrapper.vm.elementType).toBe('p');
     });
 
-    it('recognized the Preformatted element type', () => {
+    it('recognizes the Preformatted element type', () => {
         propsData.nodeConfig.viewRepresentation.textFormat = 'Preformatted';
         let wrapper = mount(TextWidget, {
             propsData
@@ -88,7 +88,7 @@ describe('TextWidget.vue', () => {
         expect(wrapper.vm.elementType).toBe('pre');
     });
 
-    it('recognized the HTML element type', () => {
+    it('recognizes the HTML element type', () => {
         propsData.nodeConfig.viewRepresentation.textFormat = 'Html';
         let wrapper = mount(TextWidget, {
             propsData

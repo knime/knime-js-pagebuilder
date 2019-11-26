@@ -1,4 +1,3 @@
-/* eslint-disable vue/multiline-html-element-content-newline */
 <script>
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
@@ -17,11 +16,23 @@ export default {
         ErrorMessage
     },
     props: {
+        /**
+         * The nodeConfig provided to the Text Output Widget component should
+         * have the necessary fields as seen in the validator below:
+         *
+         * ex:  nodeConfig = {
+         *          nodeInfo: {...},
+         *          viewRepresentation: {
+         *              text: "{String}"
+         *          },
+         *          ...
+         *      };
+         */
         nodeConfig: {
             required: true,
             type: Object,
             validator(obj) {
-                return obj.viewRepresentation && obj.nodeInfo;
+                return obj.nodeInfo && obj.viewRepresentation && getProp(obj, DEFAULT_VALUE_KEY);
             }
         },
         nodeId: {
@@ -32,7 +43,7 @@ export default {
             }
         },
         isValid: {
-            default: () => true,
+            default: true,
             type: Boolean
         }
     },
@@ -51,38 +62,56 @@ export default {
         errorMessage() {
             if (this.isValid) {
                 return '';
-            } else if (this.viewRep.errorMessage) {
-                return this.viewRep.errorMessage;
-            } else if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            } else if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            } else {
-                return 'Current text output value is invalid';
             }
+            if (this.viewRep.errorMessage) {
+                return this.viewRep.errorMessage;
+            }
+            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
+                return this.nodeConfig.nodeInfo.nodeErrorMessage;
+            }
+            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
+                return this.nodeConfig.nodeInfo.nodeWarnMessage;
+            }
+            return 'Current text output value is invalid';
         },
+        /**
+         * Unlike some other widgets, the Text Output only has one value.
+         *
+         * @returns {String} the text output to be displayed.
+         */
         value() {
             return getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
+        /**
+         * This property determines the type of element to be rendered in the component
+         * based on the settings from the nodeConfig. There are three possible rendering
+         * options in this node; controlled by the nodeConfig.viewRepresentation.textFor-
+         * mat value. The configuration options map to HTML elements as follows: 'Text' =>
+         * 'p' (<p></p> for regular text), 'Preformatted' => 'pre' (<pre></pre> for pre-
+         * formatted text) and 'Html' => false (boolean, which will trigger a Vue HTML
+         * injection).
+         *
+         * @returns {(String|Boolean)} either the element tag (string) or false (boolean)
+         */
         elementType() {
-            switch (this.viewRep.textFormat) {
-            case 'Text':
+            if (this.viewRep.textFormat === 'Text') {
                 return 'p';
-            case 'Preformatted':
-                return 'pre';
-            default:
-                return false;
             }
+            if (this.viewRep.textFormat === 'Preformatted') {
+                return 'pre';
+            }
+            return false;
         }
     },
     methods: {
+        /**
+         * No validation for the text output widget. Always true.
+         *
+         * @param {value} value - the value to validate.
+         * @returns {Boolean} always true because there is currently no validation for
+         *      the Text Output Widget.
+         */
         validate(value) {
-            /**
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation though likely
-             * not needed for output widgets.
-             */
             return true;
         }
     }
@@ -104,6 +133,7 @@ export default {
       v-text="value"
     />
     <!-- v-html needed to enable all existing behavior -->
+    <!-- eslint-disable vue/no-v-html -->
     <div
       v-else
       class="knime-qf-text knime-multiline"
@@ -120,6 +150,5 @@ export default {
 .knime-multiline {
   line-height: 18px;
   font-size: 13px;
-  letter-spacing: 0.08px;
 }
 </style>
