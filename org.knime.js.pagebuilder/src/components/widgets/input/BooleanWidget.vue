@@ -100,11 +100,10 @@ export default {
   }
 
   & .knime-qf-title {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 16px;
     line-height: 24px;
     display: block;
-    letter-spacing: 0.1px;
     margin-bottom: 5px;
   }
 }

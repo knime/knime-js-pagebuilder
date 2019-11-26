@@ -23,13 +23,10 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 label.knime-qf-title {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 16px;
-  color: var(--theme-color-masala);
   line-height: 24px;
   display: block;
-  position: relative;
-  letter-spacing: 0.1px;
   margin-bottom: 5px;
 }
 </style>
