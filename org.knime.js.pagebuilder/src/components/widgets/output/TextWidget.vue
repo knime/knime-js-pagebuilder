@@ -111,17 +111,12 @@ export default {
          *      the Text Output Widget.
          */
         validate(value) {
-            /**
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation though likely
-             * not needed for output widgets.
-             */
             return true;
         }
     }
 };
 </script>
+
 <template>
   <div
     :title="description"
@@ -137,6 +132,7 @@ export default {
       v-text="value"
     />
     <!-- v-html needed to enable all existing behavior -->
+    <!-- eslint-disable vue/no-v-html -->
     <div
       v-else
       class="knime-qf-text knime-multiline"
@@ -148,6 +144,7 @@ export default {
     />
   </div>
 </template>
+
 <style lang="postcss" scoped>
 .knime-multiline {
   line-height: 18px;
