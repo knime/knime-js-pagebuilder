@@ -74,12 +74,14 @@ export default {
 
 <style lang="postcss">
 @import "normalize.css";
+@import "webapps-common/ui/css/fonts.css";
 @import "webapps-common/ui/css/variables";
 
 body {
-  font-family: "Roboto", "Arial", sans-serif;
-  font-weight: 300;
   margin: 10px;
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--theme-color-masala);
 }
 
 .frame {

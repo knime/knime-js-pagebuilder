@@ -1,0 +1,721 @@
+{
+  "@class": "org.knime.js.core.JSONWebNodePage",
+  "webNodePageConfiguration": {
+    "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+    "layout": {
+      "rows": [
+        {
+          "type": "JSONLayoutRow",
+          "additionalStyles": [],
+          "additionalClasses": [],
+          "columns": [
+            {
+              "content": [
+                {
+                  "type": "JSONLayoutRow",
+                  "additionalStyles": [],
+                  "additionalClasses": [],
+                  "columns": [
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:14",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 6,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:17",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 6,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    }
+                  ]
+                },
+                {
+                  "type": "JSONLayoutRow",
+                  "additionalStyles": [],
+                  "additionalClasses": [],
+                  "columns": [
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:18",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 3,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:19",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 3,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:20",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 3,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:21",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 3,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    }
+                  ]
+                },
+                {
+                  "type": "JSONLayoutRow",
+                  "additionalStyles": [],
+                  "additionalClasses": [],
+                  "columns": [
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:22",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 4,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:23",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 4,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    },
+                    {
+                      "content": [
+                        {
+                          "type": "JSONLayoutViewContent",
+                          "resizeMethod": "viewLowestElement",
+                          "nodeID": "15:0:24",
+                          "resizeInterval": null,
+                          "resizeTolerance": 5,
+                          "scrolling": false,
+                          "maxHeight": null,
+                          "maxWidth": null,
+                          "minHeight": null,
+                          "minWidth": null,
+                          "autoResize": true,
+                          "sizeHeight": true,
+                          "sizeWidth": false,
+                          "additionalStyles": [],
+                          "additionalClasses": []
+                        }
+                      ],
+                      "widthXS": 4,
+                      "widthLG": null,
+                      "widthXL": null,
+                      "widthSM": null,
+                      "widthMD": null,
+                      "additionalStyles": [],
+                      "additionalClasses": []
+                    }
+                  ]
+                }
+              ],
+              "widthXS": 12,
+              "widthLG": null,
+              "widthXL": null,
+              "widthSM": null,
+              "widthMD": null,
+              "additionalStyles": [],
+              "additionalClasses": []
+            }
+          ]
+        }
+      ]
+    },
+    "blackBoard": null,
+    "selectionTranslators": null,
+    "version": "4.1.0.v201910311645"
+  },
+  "webNodes": {
+    "15:0:19": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label (default true)",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": true
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": true
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "15:0:20": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label (default false)",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "15:0:21": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label (default true)",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": true
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": true
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "15:0:24": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label (default false)",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "15:0:14": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label (default true)",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": true
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": true
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "15:0:22": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label (default false)",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "15:0:23": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label (default true)",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": true
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": true
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "15:0:17": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label (default false)",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    },
+    "15:0:18": {
+      "@class": "org.knime.js.core.JSONWebNode",
+      "viewValue": null,
+      "customCSS": "",
+      "viewRepresentation": {
+        "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+        "label": "This is the label but its really really really really really reallyreally really reallyreally really reallyreally really reallyreally really reallyreally really reallyreally really really long.",
+        "description": "This is the description.",
+        "required": true,
+        "defaultValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        },
+        "currentValue": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+          "boolean": false
+        }
+      },
+      "initMethodName": "init",
+      "setValidationErrorMethodName": "setValidationErrorMessage",
+      "validateMethodName": "validate",
+      "nodeInfo": {
+        "@class": "org.knime.js.core.JSONWebNodeInfo",
+        "nodeName": "Boolean Widget",
+        "nodeState": "executed",
+        "nodeAnnotation": "",
+        "nodeErrorMessage": null,
+        "nodeWarnMessage": null,
+        "displayPossible": true
+      },
+      "stylesheets": [
+        "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+        "/js-lib/knime/service/knime.css",
+        "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+        "/org/knime/js/base/util/quickform/quickformStyles.css"
+      ],
+      "namespace": "knimeBooleanWidget",
+      "javascriptLibraries": [
+        "/js-lib/knime/service/knime_service_1_0_0.js",
+        "/js-lib/jQuery/jquery-1.11.0.min.js",
+        "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+        "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+        "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+      ],
+      "getViewValueMethodName": "value"
+    }
+  },
+  "version": "4.1.0.v201910311645"
+}

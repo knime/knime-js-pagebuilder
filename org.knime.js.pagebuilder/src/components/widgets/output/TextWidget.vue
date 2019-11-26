@@ -1,9 +1,10 @@
-/* eslint-disable vue/multiline-html-element-content-newline */
 <script>
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { getProp } from '../../../util/nestedProperty';
+
 const DEFAULT_VALUE_KEY = 'viewRepresentation.text';
+
 /**
  * This is the Text Output widget. This widget has three rendering options:
  * a standard <p>{text...}</p> output, a preformatted <pre>{text...}</pre>
@@ -42,7 +43,7 @@ export default {
             }
         },
         isValid: {
-            default: () => false,
+            default: true,
             type: Boolean
         }
     },
@@ -149,6 +150,5 @@ export default {
 .knime-multiline {
   line-height: 18px;
   font-size: 13px;
-  letter-spacing: 0.03px;
 }
 </style>
