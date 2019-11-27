@@ -1,4 +1,5 @@
 import { setProp } from '../src/util/nestedProperty';
+import Vue from 'vue';
 
 export const namespaced = true;
 
@@ -29,7 +30,7 @@ export const mutations = {
          *      ...
          * }
          *
-         * In order to make these properties reactive, they have to be initialized once using `this._vm.$set` whenever
+         * In order to make these properties reactive, they have to be initialized once using `Vue.set` whenever
          * the page changes.
          */
         let webNodes = page && page.wizardPageContent && page.wizardPageContent.webNodes;
@@ -37,7 +38,7 @@ export const mutations = {
             state.pageValidity = {};
             state.pageValueGetters = {};
             Object.keys(webNodes).forEach((nodeId) => {
-                this._vm.$set(state.pageValidity, nodeId, true);
+                Vue.set(state.pageValidity, nodeId, true);
             });
         }
     },
