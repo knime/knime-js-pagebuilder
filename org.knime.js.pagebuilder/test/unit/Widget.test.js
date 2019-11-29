@@ -253,7 +253,8 @@ describe('Widget.vue', () => {
         const newValue = 42;
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent
+                .webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
@@ -265,7 +266,8 @@ describe('Widget.vue', () => {
         });
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent
+                .webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(newValue);
         let valPromise = wrapper.vm.getValue();
         return expect(valPromise).resolves.toStrictEqual({
@@ -285,7 +287,8 @@ describe('Widget.vue', () => {
         const expectedValue = 10;
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent
+                .webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
 
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {}); // avoid clutter
