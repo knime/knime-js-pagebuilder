@@ -236,7 +236,8 @@ describe('Widget.vue', () => {
             'pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue', newValue
         );
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent
+                .webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(newValue);
     });
 
@@ -253,7 +254,8 @@ describe('Widget.vue', () => {
         const newValue = 42;
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent
+                .webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
@@ -265,7 +267,8 @@ describe('Widget.vue', () => {
         });
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent
+                .webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(newValue);
         let valPromise = wrapper.vm.getValue();
         return expect(valPromise).resolves.toStrictEqual({
@@ -285,7 +288,8 @@ describe('Widget.vue', () => {
         const expectedValue = 10;
 
         expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation.currentValue.testValue
+            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent
+                .webNodes.id1.viewRepresentation.currentValue.testValue
         ).toEqual(expectedValue);
 
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {}); // avoid clutter
@@ -307,5 +311,44 @@ describe('Widget.vue', () => {
         return expect(valPromise).rejects.toStrictEqual(
             new Error('Value of widget could not be retrieved.')
         );
+    });
+
+    it('registers a value getter with the store', () => {
+        let wrapper = shallowMount(Widget, {
+            ...context,
+            propsData: {
+                nodeConfig,
+                nodeId
+            }
+        });
+
+        expect(wrapper.vm.hasValueGetter).toBe(true);
+        expect(typeof wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId]).toBe('function');
+        expect(wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId])
+            .toBe(wrapper.vm.getValue);
+    });
+
+    // test with an output widget to ensure the store does not register a getter
+    it('prevents value getter registration for incompatible types', () => {
+        let wrapper = shallowMount(Widget, {
+            ...context,
+            propsData: {
+                nodeConfig: {
+                    nodeInfo: {
+                        '@class': 'org.knime.js.core.JSONWebNodeInfo',
+                        nodeState: 'executed',
+                        nodeName: 'Slider Widget'
+                    },
+                    viewRepresentation: {
+                        '@class': 'org.knime.js.base.node.output.text.TextOutputRepresentation',
+                        text: 'Test String to prevent TextWidget prop validation failure'
+                    }
+                },
+                nodeId
+            }
+        });
+
+        expect(wrapper.vm.hasValueGetter).toBe(false);
+        expect(typeof wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId]).toBe('undefined');
     });
 });

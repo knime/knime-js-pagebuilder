@@ -78,12 +78,30 @@ export default {
         type() {
             return widgetConfig[this.nodeConfig.viewRepresentation['@class']];
         },
+        /**
+         * This method checks if the type of widget is compatible with the getValue method and
+         * therefore should be registed with the store. For some widgets (like output widgets)
+         * there are no current values store on the viewRepresentation (because they are static),
+         * so registering the getValue method for the node will cause a failure and prevent the
+         * call to 'NextPage' from working, essentially rendering the workflow useless in the
+         * webportal. To register a new widget to be excluded from getValue registration, add
+         * the Vue Component type name as a String to the preventValueGetterRegistration Array
+         * in './widgets.config.js' @example Text Output Widget === 'TextWidget'
+         *
+         * @returns {Boolean} if the widget has a value getter compatible for store registration.
+         */
+        hasValueGetter() {
+            return widgetConfig.preventValueGetterRegistration.indexOf(this.type) === -1;
+        },
         isValid() {
             return Boolean(this.$store.state.pagebuilder.pageValidity[this.nodeId]);
         }
     },
     mounted() {
-        this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+        /* prevent incompatible widgets (i.e. output) from registering getter */
+        if (this.hasValueGetter) {
+            this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+        }
         applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
