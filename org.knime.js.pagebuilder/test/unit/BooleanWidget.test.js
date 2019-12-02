@@ -68,7 +68,7 @@ describe('BooleanWidget.vue', () => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
-    it('emits change events', () => {
+    it('emits updateWidget events', () => {
         let mockChild = document.createElement('div');
         mockChild.setAttribute('class', 'knime-boolean');
         let wrapper = shallowMount(BooleanWidget, {
@@ -78,7 +78,7 @@ describe('BooleanWidget.vue', () => {
             }
         });
         expect(typeof wrapper.emitted().updateWidget).toBe('undefined');
-        wrapper.find(Checkbox).vm.$emit('input', false);
+        wrapper.find(Checkbox).vm.$emit('updateValue', false);
         expect(wrapper.emitted().updateWidget).toBeTruthy();
     });
 });
