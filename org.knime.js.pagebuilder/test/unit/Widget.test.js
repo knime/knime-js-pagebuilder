@@ -115,7 +115,13 @@ describe('Widget.vue', () => {
                 nodeConfig
             },
             stubs: {
-                SliderWidget: true
+                SliderWidget: {
+                    name: 'slider-widget',
+                    template: '<div />',
+                    methods: {
+                        onChange() { return true; } // because hasValueGetter checks for it
+                    }
+                }
             }
         };
     });
@@ -337,7 +343,7 @@ describe('Widget.vue', () => {
                     nodeInfo: {
                         '@class': 'org.knime.js.core.JSONWebNodeInfo',
                         nodeState: 'executed',
-                        nodeName: 'Slider Widget'
+                        nodeName: 'Text Widget'
                     },
                     viewRepresentation: {
                         '@class': 'org.knime.js.base.node.output.text.TextOutputRepresentation',
