@@ -15,7 +15,9 @@ export default {
 <template>
   <!-- knime-qf-error legacy selector -->
   <label class="knime-qf-error">
-    {{ error }}
+    <!-- In case of empty text, render a non-breaking space '\u00a0' for MS Edge. Otherwise, there is a bug that causes
+     the validation message to be visible even after the text has been updated to the empty string. -->
+    {{ error || '\u00a0' }}
   </label>
 </template>
 
