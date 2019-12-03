@@ -1,7 +1,7 @@
 <script>
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
-import widgetConfig from '../widgets/widgets.config';
+import { classToComponentMap } from '../widgets/widgets.config';
 
 /**
  * Wrapper for a single node view iframe or widget
@@ -95,7 +95,7 @@ export default {
         },
         isWidget() {
             return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
-                widgetConfig[this.webNodeConfig.viewRepresentation['@class']];
+                classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
         }
     },
     methods: {

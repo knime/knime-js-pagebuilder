@@ -119,9 +119,7 @@ export default {
 </script>
 
 <template>
-  <div
-    :title="description"
-  >
+  <div :title="description">
     <Label
       :text="label"
       class="knime-label"

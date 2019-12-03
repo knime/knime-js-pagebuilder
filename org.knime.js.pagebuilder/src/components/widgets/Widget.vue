@@ -1,6 +1,6 @@
 <script>
 import { mapActions } from 'vuex';
-import widgetConfig from './widgets.config';
+import { classToComponentMap } from './widgets.config';
 // input widgets
 import BooleanWidget from './input/BooleanWidget';
 import IntegerWidget from './input/IntegerWidget';
@@ -76,18 +76,32 @@ export default {
     },
     computed: {
         type() {
-            return widgetConfig[this.nodeConfig.viewRepresentation['@class']];
+            return classToComponentMap[this.nodeConfig.viewRepresentation['@class']];
+        },
+        /**
+         * This method checks if the widget is compatible with the getValue method. Some widgets (like output widgets)
+         * are static so they can't change their value.
+         *
+         * @returns {Boolean}
+         */
+        hasValueGetter() {
+            return typeof this.$refs.widget.onChange === 'function';
         },
         isValid() {
             return Boolean(this.$store.state.pagebuilder.pageValidity[this.nodeId]);
         }
     },
     mounted() {
-        this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+        // prevent incompatible widgets (i.e. output) from registering getter
+        if (this.hasValueGetter) {
+            this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+        }
         applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
-        this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
+        if (this.hasValueGetter) {
+            this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
+        }
     },
     methods: {
         validate(value) {
@@ -131,6 +145,7 @@ export default {
   <div class="knime-widget knime-qf-container">
     <Component
       :is="type"
+      ref="widget"
       v-bind="$props"
       :is-valid="isValid"
       @updateWidget="publishUpdate"
