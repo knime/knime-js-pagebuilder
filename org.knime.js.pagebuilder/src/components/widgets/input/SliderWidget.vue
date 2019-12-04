@@ -164,7 +164,7 @@ export default {
          * Because we computed the direction above, we can check for the 'b' in
          * 'ttb' or 'btt' to determine if the height of the slider needs to be
          * explicitly set (which it does for vertical sliders).
-         * @returns {(Number|null)} slider height (in px) or null
+         * @returns {(Number|null)} slider height (in px) or null.
          */
         height() {
             if (this.direction.includes('b')) {
@@ -203,8 +203,8 @@ export default {
          * behavior in the KNIME AP and return either 'top' or 'bottom' to be used
          * on the vue-slider-component.
          *
-         * @returns {String} config for connectting the colored part of the slider
-         *      to the slider handle
+         * @returns {String} config for connecting the colored part of the slider
+         *      to the slider handle.
          */
         connect() {
             const { connect } = this.sliderSettings;
@@ -212,6 +212,37 @@ export default {
                 return connect[1] ? 'both' : 'top';
             }
             return connect[1] ? 'bottom' : 'none';
+        },
+        /**
+         * This method parses the settings from the existing KNIME Slider
+         * Widget API into options the child Slider Vue component can then
+         * handle.
+         *
+         * Important to have this as a computed property, as setting
+         * this.marks directly on the component instance during mounted()
+         * results in missing labels on the slider. The implementation is
+         * also important (Object.freeze()). This method (createTicks)
+         * can, in some cases, create an object with many 1,000's of
+         * keys representing the ticks on the slider. The Object it-
+         * self is needed to pass to the vue-slider-component, and
+         * it must be "computed" based on settings this SliderWidget
+         * receives in the props, but we want to *avoid* Vue from
+         * attaching getters and setters to the Object (as would)
+         * happen if this.marks was a regular computed property. This is
+         * all done to improve performance and it has a large, positive
+         * impact.
+         *
+         * @returns {Object} marks for configuring the labels of the
+         *    child slider component.
+         */
+        marks() {
+            return Object.freeze(createTicks({
+                config: this.sliderSettings.pips,
+                min: this.min,
+                max: this.max,
+                direction: this.direction,
+                stepSize: this.stepSize
+            }));
         }
     },
     mounted() {
@@ -221,31 +252,6 @@ export default {
          * Add CSS manually.
          */
         addKnimeClasses(this.$el.childNodes[1].childNodes[0]);
-
-        /**
-         * Important to set this property directly on the component
-         * when the component is mounted. This method (createTicks)
-         * can, in some cases, create an object with many 1,000's of
-         * keys representing the ticks on the slider. The Object it-
-         * self is needed to pass to the vue-slider-component, and
-         * it must be "computed" based on settings this SliderWidget
-         * receives in the props, but we want to *avoid* Vue from
-         * attaching getters and setters to the Object (as would)
-         * happen if this.marks was a computer property. This is all
-         * done to improve performance and it has a large impact. It
-         * can also be achieved with this.marks as a computer property
-         * IF Object.freeze() is called on the returned value from
-         * createTicks before it it returned from the this.marks method.
-         * The implementation below is simpler and does not rely on the
-         * Object.freeze API.
-         */
-        this.marks = createTicks({
-            config: this.sliderSettings.pips,
-            min: this.min,
-            max: this.max,
-            direction: this.direction,
-            stepSize: this.stepSize
-        });
     },
     methods: {
         onChange(e) {
