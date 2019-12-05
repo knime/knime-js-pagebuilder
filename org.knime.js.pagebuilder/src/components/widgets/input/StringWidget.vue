@@ -138,7 +138,6 @@ export default {
       :value="value"
       :cols="multiColumns"
       :rows="multiRows"
-      :pattern="regex"
       :is-valid="isValid"
       @updateValue="onChange"
     />
@@ -146,7 +145,6 @@ export default {
       v-else
       :value="value"
       type="text"
-      :pattern="regex"
       :is-valid="isValid"
       @updateValue="onChange"
     />

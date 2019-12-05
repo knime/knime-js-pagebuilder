@@ -190,7 +190,7 @@ export default {
 /* mark style */
 .vue-slider-mark {
   cursor: pointer;
-  z-index: 4;
+  z-index: 1;
 }
 
 .vue-slider-mark-step {
@@ -237,10 +237,11 @@ export default {
   height: 29px !important;
   width: 19px !important;
   background-color: var(--theme-color-porcelain);
+  z-index: 1;
 }
 
 .vue-slider-dot:hover {
-  background-color: var(--theme-color-dove-gray);
+  background-color: var(--theme-color-silver-sand);
 }
 
 .vue-slider-ttb .vue-slider-dot,

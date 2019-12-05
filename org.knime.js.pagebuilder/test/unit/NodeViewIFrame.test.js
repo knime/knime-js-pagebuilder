@@ -216,6 +216,7 @@ describe('NodeViewIframe.vue', () => {
                 'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
             expect(html).toMatch('<script src="http://baseurl.test.example/qux/baz.js" ' +
                 'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
+            expect(html).toMatch(`knimeService.resourceBaseUrl = 'http://baseurl.test.example/';`);
             expect(html).toMatch('<link type="text/css" rel="stylesheet" href="http://baseurl.test.example/bla.css">');
             expect(html).toMatch('<link type="text/css" rel="stylesheet" href="http://baseurl.test.example/narf.css">');
             expect(html).toMatch('<style>body { background: red; }</style>');
@@ -257,7 +258,7 @@ describe('NodeViewIframe.vue', () => {
             }, window.origin);
         });
     });
-    
+
     describe('view value retrieval', () => {
         it('handles getValue call', () => {
             let wrapper = shallowMount(NodeViewIFrame, {
@@ -296,7 +297,7 @@ describe('NodeViewIframe.vue', () => {
             });
             window.origin = window.location.origin;
             let valuePromise = wrapper.vm.getValue();
-            
+
             // fake value returned
             // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260
             wrapper.vm.messageFromIframe({

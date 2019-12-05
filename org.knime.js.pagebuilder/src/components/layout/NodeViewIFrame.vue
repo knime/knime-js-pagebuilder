@@ -113,18 +113,8 @@ export default {
         injectContent() {
             const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
 
-            // stylesheets from the node view itself
-            let styles = this.nodeStylesheets.map(
-                style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${encodeURI(style)}">`
-            ).join('');
-
-            // furthernode styles needed for sizing
-            styles += `<style>${this.innerStyle}</style>`;
-
-            // custom CSS from node configuration
-            if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
-                styles += `<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`;
-            }
+            let styles = this.computeStyles(resourceBaseUrl);
+            let scripts = this.computeScripts(resourceBaseUrl);
 
             // script loader
             let scriptLoader = `<script>${scriptLoaderSrc
@@ -136,15 +126,6 @@ export default {
 
             // postMessage receiver
             let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
-
-            // scripts from the node itself
-            let scripts = this.nodeJsLibs.map(
-                lib => `<script
-                    src="${resourceBaseUrl}${lib}"
-                    onload="knimeLoader(true)"
-                    onerror="knimeLoader(false)">
-                <\/script>` // eslint-disable-line no-useless-escape
-            ).join('');
 
             this.document.write(`<!doctype html>
                 <html lang="en-US">
@@ -160,6 +141,51 @@ export default {
                 </html>`);
 
             this.document.close();
+        },
+
+        /**
+         * Helper method that computes the required `<style>` elements that should be injected into the iframe
+         * @param {String} resourceBaseUrl Base URL from store
+         * @returns {String}
+         */
+        computeStyles(resourceBaseUrl) {
+            // stylesheets from the node view itself
+            let styles = this.nodeStylesheets.map(
+                style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${encodeURI(style)}">`
+            );
+
+            // further node styles needed for sizing
+            styles.push(`<style>${this.innerStyle}</style>`);
+
+            // custom CSS from node configuration
+            if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
+                styles.push(`<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`);
+            }
+
+            return styles.join('');
+        },
+
+        /**
+         * Helper method that computes the required `<script>` elements that should be injected into the iframe
+         * @param {String} resourceBaseUrl Base URL from store
+         * @returns {String}
+         */
+        computeScripts(resourceBaseUrl) {
+            // scripts from the node itself
+            let scripts = this.nodeJsLibs.map(
+                lib => `<script
+                    src="${resourceBaseUrl}${lib}"
+                    onload="knimeLoader(true)"
+                    onerror="knimeLoader(false)">
+                <\/script>` // eslint-disable-line no-useless-escape
+            );
+
+            // inject resource base URL so that it can be read by dynamic JS nodes and generic JS view
+            scripts.push(`<script>
+                knimeService.resourceBaseUrl = '${resourceBaseUrl}';
+            <\/script>`); // eslint-disable-line no-useless-escape
+
+            return scripts.join('');
         },
 
         initHeightPolling() {
