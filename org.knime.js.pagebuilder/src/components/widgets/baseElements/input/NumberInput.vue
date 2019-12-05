@@ -342,7 +342,7 @@ export default {
 
   & .knime-increase {
     top: 0;
-    transform: rotate(180deg);
+    transform: scaleY(-1);
   }
 
   & .knime-decrease {
