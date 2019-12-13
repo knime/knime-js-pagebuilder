@@ -1,6 +1,7 @@
 <script>
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
+import NotAvailable from './NotAvailable';
 import { classToComponentMap } from '../widgets/widgets.config';
 
 /**
@@ -9,7 +10,8 @@ import { classToComponentMap } from '../widgets/widgets.config';
 export default {
     components: {
         NodeViewIFrame,
-        Widget
+        Widget,
+        NotAvailable
     },
     props: {
         /**
@@ -53,6 +55,11 @@ export default {
             // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
             // update the layout configuration, so we get a phantom item
             return typeof this.webNodeConfig !== 'undefined';
+        },
+        webNodeDisplayable() {
+            // a node can be available but not displayable
+            // in that case we simply display a corresponding message to show that the node is not displayable
+            return this.webNodeConfig.nodeInfo.displayPossible;
         },
         classes() {
             let classes = ['view'];
@@ -112,8 +119,13 @@ export default {
     :style="style"
   >
     <template v-if="webNodeAvailable">
+      <NotAvailable
+        v-if="!webNodeDisplayable"
+        :node-info="webNodeConfig.nodeInfo"
+        :node-id="viewConfig.nodeID"
+      />
       <Widget
-        v-if="isWidget"
+        v-else-if="isWidget"
         :node-config="webNodeConfig"
         :node-id="viewConfig.nodeID"
       />
@@ -127,10 +139,6 @@ export default {
         @heightChange="updateHeight"
       />
     </template>
-    <p v-else>
-      <!-- TODO AP-12850 -->
-      Web Node cannot be displayed.
-    </p>
   </div>
 </template>
 

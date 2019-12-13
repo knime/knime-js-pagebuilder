@@ -3,6 +3,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import NodeView from '@/components/layout/NodeView';
 import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
+import NotAvailable from '@/components/layout/NotAvailable';
 
 import * as storeConfig from '~/store/pagebuilder';
 
@@ -21,12 +22,18 @@ describe('NodeView.vue', () => {
                         foo: 'bar',
                         viewRepresentation: {
                             '@class': 'testing.notWidget'
+                        },
+                        nodeInfo: {
+                            displayPossible: true
                         }
                     },
                     id2: {
                         baz: 'qux',
                         viewRepresentation: {
                             '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                        },
+                        nodeInfo: {
+                            displayPossible: true
                         }
                     }
                 }
@@ -133,6 +140,9 @@ describe('NodeView.vue', () => {
             foo: 'bar',
             viewRepresentation: {
                 '@class': 'testing.notWidget'
+            },
+            nodeInfo: {
+                displayPossible: true
             }
         };
 
@@ -267,6 +277,42 @@ describe('NodeView.vue', () => {
         wrapper.find(NodeViewIFrame).vm.$emit('heightChange', '342');
 
         expect(wrapper.attributes('style')).toEqual('height: 342px;');
+    });
+
+    it('renders not displayable nodes', () => {
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig: {
+                    nodeID: 'id1',
+                    resizeMethod: 'viewLowestElement',
+                    autoResize: true
+                }
+            }
+        });
+        store.commit('pagebuilder/setPage', {
+            wizardPageContent: {
+                webNodes: {
+                    id1: {
+                        foo: 'bar',
+                        viewRepresentation: {
+                            '@class': 'testing.notWidget'
+                        },
+                        nodeInfo: {
+                            displayPossible: false
+                        }
+                    }
+                }
+            }
+        });
+        let expectedNodeInfo = {
+            displayPossible: false
+        };
+
+        expect(wrapper.find(NotAvailable).exists()).toBe(true);
+        expect(wrapper.find(NotAvailable).props('nodeInfo')).toEqual(expectedNodeInfo);
+        expect(wrapper.find(NotAvailable).props('nodeId')).toEqual('id1');
+
     });
 
 });
