@@ -293,7 +293,7 @@
           "nodeInfo": {
             "@class": "org.knime.js.core.JSONWebNodeInfo",
             "nodeName": "Bar Chart",
-            "nodeAnnotation": "Error on node",
+            "nodeAnnotation": "Node with error",
             "nodeState": "configured",
             "nodeErrorMessage": "Execute failed: Index for category column with name Cluster Membership not found.",
             "nodeWarnMessage": null,
@@ -315,7 +315,7 @@
           "nodeInfo": {
             "@class": "org.knime.js.core.JSONWebNodeInfo",
             "nodeName": "Scatter Plot",
-            "nodeAnnotation": "Error before node",
+            "nodeAnnotation": null,
             "nodeState": "configured",
             "nodeErrorMessage": null,
             "nodeWarnMessage": null,
@@ -337,7 +337,7 @@
           "nodeInfo": {
             "@class": "org.knime.js.core.JSONWebNodeInfo",
             "nodeName": "Credentials Widget",
-            "nodeAnnotation": "should show warning",
+            "nodeAnnotation": "Node with warning",
             "nodeState": "idle",
             "nodeErrorMessage": null,
             "nodeWarnMessage": "No user name set",

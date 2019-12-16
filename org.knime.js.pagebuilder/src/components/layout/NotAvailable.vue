@@ -16,7 +16,7 @@ export default {
         }
     },
     computed: {
-        hasAnnotation() {
+        nodeAnnotation() {
             return this.nodeInfo && this.nodeInfo.nodeAnnotation;
         },
         hasErrorMessage() {
@@ -32,9 +32,8 @@ export default {
             return 'Missing Node';
         },
         text() {
-            return this.hasAnnotation
-                ? `${this.nodeName}(${this.nodeId}) - ${this.nodeInfo.nodeAnnotation}`
-                : `${this.nodeName}(${this.nodeId})`;
+            let annotation = this.nodeAnnotation ? ` - ${this.nodeAnnotation}` : '';
+            return `${this.nodeName}${annotation} (${this.nodeId}) can’t be displayed`;
         }
     }
 };
@@ -44,13 +43,13 @@ export default {
   <div class="red">
     <Label :text="text" />
     <p v-if="hasErrorMessage">
-      Error Message on node: {{ nodeInfo.nodeErrorMessage }}
+      Error message on node: {{ nodeInfo.nodeErrorMessage }}
     </p>
     <p v-else-if="hasWarnMessages">
       Warn message on node: {{ nodeInfo.nodeWarnMessage }}
     </p>
     <p v-else>
-      No further information on the node available. Please check the configuration of the workflow
+      No further information available. Please check the configuration of the workflow.
     </p>
   </div>
 </template>
