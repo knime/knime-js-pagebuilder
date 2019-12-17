@@ -29,37 +29,41 @@ timeout(time: 15, unit: 'MINUTES') {
                         npm ci
                     '''
                 }
-                stage('npm Security Audit') {
-					env.lastStage = env.STAGE_NAME
-                    retry(3) {
-                        sh '''
-                            npm audit
-                        '''
-                    }
-                }
 
-                stage('Static Code Analysis') {
-					env.lastStage = env.STAGE_NAME
+                parallel 'npm Security Audit': {
+                    env.lastStage = env.STAGE_NAME
+
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                        retry(3) { // because npm registry sometimes break
+                            sh '''
+                                npm audit
+                            '''
+                        }
+                    }
+                },
+                'Static Code Analysis': {
+                    env.lastStage = env.STAGE_NAME
                     sh '''
                         npm run lint
                     '''
-                }
-                stage('Verify checked-in files') {
-					env.lastStage = env.STAGE_NAME
+                },
+                'Verify checked-in files': {
+                    env.lastStage = env.STAGE_NAME
                     // The old build system requires the compiled JS files to be checked in (no mvn).
                     // The new Jenkins can verify this
                     sh '''
                         npm run build
                         GIT_STATUS=$(git status --porcelain dist/)
                         if grep -q "^ *M" <<< "$GIT_STATUS"; then
-                          echo "Compiled JS files not checked in:"
-                          echo "$GIT_STATUS"
-                          exit 1
+                        echo "Compiled JS files not checked in:"
+                        echo "$GIT_STATUS"
+                        exit 1
                         else
-                          echo OK, compiled JS files have been checked in.
+                        echo OK, compiled JS files have been checked in.
                         fi
                     '''
                 }
+
                 stage('Unit Tests') {
 					env.lastStage = env.STAGE_NAME
                     try {
