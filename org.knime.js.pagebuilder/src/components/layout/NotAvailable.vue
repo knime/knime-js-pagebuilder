@@ -1,9 +1,11 @@
 <script>
 import Label from '../widgets/baseElements/text/Label';
+import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg?inline';
 
 export default {
     components: {
-        Label
+        Label,
+        SignWarningIcon
     },
     props: {
         nodeInfo: {
@@ -26,10 +28,7 @@ export default {
             return this.nodeInfo && this.nodeInfo.nodeWarnMessage;
         },
         nodeName() {
-            if (this.nodeInfo) {
-                return this.nodeInfo.nodeName;
-            }
-            return 'Missing Node';
+            return this.nodeInfo ? this.nodeInfo.nodeName : 'Missing node';
         },
         text() {
             let annotation = this.nodeAnnotation ? ` - ${this.nodeAnnotation}` : '';
@@ -40,24 +39,37 @@ export default {
 </script>
 
 <template>
-  <div class="red">
+  <div>
+    <SignWarningIcon class="icon" />
     <Label :text="text" />
-    <p v-if="hasErrorMessage">
+    <span v-if="hasErrorMessage">
       Error message on node: {{ nodeInfo.nodeErrorMessage }}
-    </p>
-    <p v-else-if="hasWarnMessages">
+    </span>
+    <span v-else-if="hasWarnMessages">
       Warn message on node: {{ nodeInfo.nodeWarnMessage }}
-    </p>
-    <p v-else>
+    </span>
+    <span v-else>
       No further information available. Please check the configuration of the workflow.
-    </p>
+    </span>
   </div>
 </template>
 
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
-.red {
+div {
   color: var(--theme-color-error);
+  border: 2px solid var(--theme-color-porcelain);
+  padding: 18px 18px 18px 56px;
+  font-size: 16px;
+}
+
+.icon {
+  position: absolute;
+  margin-left: -40px;
+  width: 24px;
+  height: 24px;
+  stroke-width: calc(32px / 24);
+  stroke: var(--theme-color-error);
 }
 </style>

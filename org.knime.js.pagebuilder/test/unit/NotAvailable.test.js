@@ -9,8 +9,8 @@ describe('NotAvailable.vue', () => {
     });
 
     it('renders default', () => {
-        expect(wrapper.find(Label).props('text')).toEqual('Missing Node()');
-        expect(wrapper.find('p').text()).toContain('No further information on the node available');
+        expect(wrapper.find(Label).props('text')).toEqual('Missing node () can’t be displayed');
+        expect(wrapper.find('span').text()).toContain('No further information available');
     });
 
     it('renders error message', () => {
@@ -20,7 +20,7 @@ describe('NotAvailable.vue', () => {
                 nodeErrorMessage: 'test_error'
             } }
         });
-        expect(wrapper.find('p').text()).toContain('test_error');
+        expect(wrapper.find('span').text()).toContain('test_error');
     });
 
     it('renders warn message', () => {
@@ -30,7 +30,7 @@ describe('NotAvailable.vue', () => {
                 nodeWarnMessage: 'test_warning'
             } }
         });
-        expect(wrapper.find('p').text()).toContain('test_warning');
+        expect(wrapper.find('span').text()).toContain('test_warning');
     });
 
     it('renders annotation', () => {
@@ -44,7 +44,7 @@ describe('NotAvailable.vue', () => {
                 nodeId: '10.0.2'
             }
         });
-        expect(wrapper.find(Label).props('text')).toEqual('testName(10.0.2) - test_annotation');
+        expect(wrapper.find(Label).props('text')).toEqual('testName - test_annotation (10.0.2) can’t be displayed');
     });
 });
 
