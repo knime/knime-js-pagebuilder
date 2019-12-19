@@ -82,9 +82,9 @@ export default {
   >
     <Checkbox
       :value="value"
-      box-size="Medium"
+      box-size="medium"
       class="knime-boolean knime-qf-title"
-      @updateValue="onChange"
+      @input="onChange"
     >
       {{ label }}
     </Checkbox>
