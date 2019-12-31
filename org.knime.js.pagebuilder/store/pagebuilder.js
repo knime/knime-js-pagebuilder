@@ -95,6 +95,13 @@ export const mutations = {
         }
     },
 
+    setWebNodeLoading(state, { nodeId, loading }) {
+        let webNode = state.page.wizardPageContent.webNodes[nodeId];
+        if (webNode) {
+            webNode.loading = loading;
+        }
+    },
+
     addValueGetter(state, { nodeId, valueGetter }) {
         state.pageValueGetters[nodeId] = valueGetter;
     },
@@ -119,6 +126,11 @@ export const actions = {
         consola.trace(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Updated value via action:`,
             newWebNode);
         commit('updateWebNode', newWebNode);
+    },
+
+    setWebNodeLoading({ commit }, { nodeId, loading }) {
+        consola.trace(`PageBuilder: setting loading state of ${nodeId} via action: `, loading);
+        commit('setWebNodeLoading', { nodeId, loading });
     },
 
     addValueGetter({ commit }, { nodeId, valueGetter }) {

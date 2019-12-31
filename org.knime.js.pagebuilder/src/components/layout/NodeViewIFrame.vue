@@ -96,7 +96,7 @@ export default {
     },
 
     mounted() {
-        this.setInitializing(true);
+        this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: true });
         window.addEventListener('message', this.messageFromIframe);
 
         this.document = this.$el.contentDocument;
@@ -113,12 +113,6 @@ export default {
     },
 
     methods: {
-        setInitializing(init) {
-            let node = this.webNode();
-            if (node) {
-                node.initializing = init;
-            }
-        },
         /**
          * Inject all the scripts and stylesheet associated with the node, as well as additional scripts that we use
          * for cross-frame communication
@@ -244,7 +238,7 @@ export default {
                         this.setHeight();
                     }
                 }
-                this.setInitializing(false);
+                this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
             } else if (event.data.type === 'getValue') {
                 // call callback
                 if (typeof event.data.value === 'undefined') {
