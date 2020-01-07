@@ -7,7 +7,8 @@ export const state = () => ({
     page: null,
     resourceBaseUrl: '',
     pageValidity: {},
-    pageValueGetters: {}
+    pageValueGetters: {},
+    viewsLoading: []
 });
 
 export const mutations = {
@@ -96,9 +97,13 @@ export const mutations = {
     },
 
     setWebNodeLoading(state, { nodeId, loading }) {
-        let webNode = state.page.wizardPageContent.webNodes[nodeId];
-        if (webNode) {
-            webNode.loading = loading;
+        let index = state.viewsLoading.indexOf(nodeId);
+        if (index < 0 && loading) {
+            // add nodeId to list of loading views if not already present
+            state.viewsLoading.push(nodeId);
+        } else if (index >= 0 && !loading) {
+            // remove nodeId from list of loading views if present
+            state.viewsLoading.splice(index, 1);
         }
     },
 
