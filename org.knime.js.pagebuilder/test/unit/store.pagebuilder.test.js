@@ -22,6 +22,7 @@ describe('PageBuilder store', () => {
         expect(store.state.resourceBaseUrl).toBe('');
         expect(store.state.pageValidity).toEqual({});
         expect(store.state.pageValueGetters).toEqual({});
+        expect(store.state.viewsLoading).toEqual([]);
     });
 
     it('allows setting page', () => {
@@ -109,6 +110,16 @@ describe('PageBuilder store', () => {
 
             await expect(store.dispatch('getViewValues')).rejects.toThrow();
         });
+    });
+
+    it('allows setting loading state for views', () => {
+        expect(store.state.viewsLoading.length).toBe(0);
+        let nodeId = '0.0.7';
+        store.dispatch('setWebNodeLoading', { nodeId, loading: true });
+        expect(store.state.viewsLoading.length).toBe(1);
+        expect(store.state.viewsLoading[0]).toBe(nodeId);
+        store.dispatch('setWebNodeLoading', { nodeId, loading: false });
+        expect(store.state.viewsLoading.length).toBe(0);
     });
 
     describe('node value updates', () => {
