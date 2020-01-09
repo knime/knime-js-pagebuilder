@@ -182,7 +182,9 @@ export default {
 
             // inject resource base URL so that it can be read by dynamic JS nodes and generic JS view
             scripts.push(`<script>
-                knimeService.resourceBaseUrl = '${resourceBaseUrl}';
+                if (typeof knimeService !== 'undefined') {
+                    knimeService.resourceBaseUrl = '${resourceBaseUrl}';
+                }
             <\/script>`); // eslint-disable-line no-useless-escape
 
             return scripts.join('');
