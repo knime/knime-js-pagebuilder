@@ -53,23 +53,17 @@ export default {
     },
     methods: {
         onChange(e) {
-            const newWebNodeConfig = {
-                type: 'Boolean Input',
+            const changeEventObj = {
                 nodeId: this.nodeId,
-                isValid: this.validate(e),
                 update: {
                     [CURRENT_VALUE_KEY]: e
                 }
             };
-            this.$emit('updateWidget', newWebNodeConfig);
+            this.$emit('updateWidget', changeEventObj);
         },
-        validate(value) {
-            /*
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation
-             */
-            return typeof value === 'boolean';
+        validate() {
+            return typeof this.value === 'boolean' &&
+                this.$refs.form.validate();
         }
     }
 };
@@ -81,6 +75,7 @@ export default {
     class="knime-checkbox"
   >
     <Checkbox
+      ref="form"
       :value="value"
       box-size="medium"
       class="knime-boolean knime-qf-title"

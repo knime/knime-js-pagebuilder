@@ -74,6 +74,11 @@ export default {
             }
         }
     },
+    data() {
+        return {
+            isValid: true
+        };
+    },
     computed: {
         type() {
             return classToComponentMap[this.nodeConfig.viewRepresentation['@class']];
@@ -86,12 +91,11 @@ export default {
          */
         hasValueGetter() {
             return typeof this.$refs.widget.onChange === 'function';
-        },
-        isValid() {
-            return Boolean(this.$store.state.pagebuilder.pageValidity[this.nodeId]);
         }
     },
-    mounted() {
+    async mounted() {
+        this.isValid = await this.validate().isValid;
+        this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         // prevent incompatible widgets (i.e. output) from registering getter
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
@@ -99,23 +103,14 @@ export default {
         applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
+        this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         }
     },
     methods: {
-        validate(value) {
-            /**
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation
-             * currently fake validation
-             */
-            return true;
-        },
         publishUpdate(update) {
-            update.isValid = update.isValid && this.validate(update);
-            update.type = this.type;
+            this.isValid = this.$refs.widget.validate();
             this.updateValue(update);
         },
         getValue() {
@@ -130,6 +125,21 @@ export default {
                     }
                 } catch (error) {
                     reject(new Error(error));
+                }
+            });
+        },
+        validate() {
+            return new Promise((resolve, reject) => {
+                let isValid;
+                try {
+                    isValid = this.$refs.widget.validate();
+                    if (typeof isValid === 'undefined') {
+                        throw new Error('Widget validation failed.');
+                    }
+                } catch (error) {
+                    isValid = false;
+                } finally {
+                    resolve({ nodeId: this.nodeId, isValid });
                 }
             });
         },

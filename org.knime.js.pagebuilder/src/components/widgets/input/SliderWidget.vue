@@ -5,13 +5,11 @@ import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { format as sliderLabelFormatter } from '../../../util/numStrFormatter';
 import { getProp } from '../../../util/nestedProperty';
 import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
-import { addKnimeClasses } from '../../../util/widgetUtil/slider/knimeClasses';
 
 const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.double';
 const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.double';
 const MINIMUM_SLIDER_STEP = .000001;
 const VERTICAL_SLIDER_HEIGHT = 533;
-const DEBOUNCER_TIMEOUT = 250;
 
 /**
  * This is the implementation of the Slider Input Widget and the
@@ -71,7 +69,7 @@ export default {
             }
         },
         isValid: {
-            default: false,
+            default: true,
             type: Boolean
         }
     },
@@ -245,41 +243,22 @@ export default {
             }));
         }
     },
-    mounted() {
-        /**
-         * TODO: improve CSS parsing SRV-2713
-         *
-         * Add CSS manually.
-         */
-        addKnimeClasses(this.$el.childNodes[1].childNodes[0]);
-    },
     methods: {
         onChange(e) {
-            clearTimeout(this.updateDebouncer);
-            const newValue = parseFloat(e.value);
-            const newWebNodeConfig = {
-                type: 'Slider',
+            const changeEventObj = {
                 nodeId: this.nodeId,
-                isValid: e.isValid && this.validate(newValue),
                 update: {
-                    [CURRENT_VALUE_KEY]: newValue
+                    [CURRENT_VALUE_KEY]: e
                 }
             };
-            this.updateDebouncer = setTimeout(() => {
-                this.$emit('updateWidget', newWebNodeConfig);
-            }, DEBOUNCER_TIMEOUT);
+            this.$emit('updateWidget', changeEventObj);
         },
-        validate(value) {
-            /*
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation
-             * currently fake validation to test styling
-             */
-            if (this.viewRep.required) {
-                return value || value === 0;
+        validate() {
+            if (!this.viewRep.required) {
+                return true;
             }
-            return true;
+            let value = this.$refs.form.getValue();
+            return Boolean(this.$refs.form.validate() && (value || value === 0));
         }
     }
 };
@@ -294,6 +273,7 @@ export default {
                { 'tooltip-label': tooltips }]"
     />
     <Slider
+      ref="form"
       :minimum="min"
       :maximum="max"
       :value="value"
@@ -308,7 +288,7 @@ export default {
       :class="['knime-slider',
                `knime-slider-${sliderSettings.orientation}`,
                {'tooltip-slider': tooltips }]"
-      @updateValue="onChange"
+      @input="onChange"
     />
     <ErrorMessage
       :error="errorMessage"

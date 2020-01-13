@@ -41,7 +41,7 @@ export default {
             }
         },
         isValid: {
-            default: false,
+            default: true,
             type: Boolean
         }
     },
@@ -80,8 +80,8 @@ export default {
             }
             return getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
-        editorType() {
-            return this.viewRep.editorType;
+        isMultiLine() {
+            return this.viewRep.editorType === 'Multi-line';
         },
         multiColumns() {
             return this.viewRep.multilineEditorWidth;
@@ -94,36 +94,26 @@ export default {
         }
     },
     methods: {
-        onChange(value, options) {
-            // TODO remove with WEBP-120
-            let oldImpl = typeof value === 'object';
-            let newValue = oldImpl ? value.value : value;
-            let isValid = oldImpl ? value.isValid : options.isValid;
-
+        onChange(value) {
             clearTimeout(this.updateDebouncer);
 
-            const newWebNodeConfig = {
-                type: 'String Input',
+            const changeEventObj = {
+                // type: 'String Input',
                 nodeId: this.nodeId,
-                isValid: isValid && this.validate(newValue),
                 update: {
-                    [CURRENT_VALUE_KEY]: newValue
+                    [CURRENT_VALUE_KEY]: value
                 }
             };
             this.updateDebouncer = setTimeout(() => {
-                this.$emit('updateWidget', newWebNodeConfig);
+                this.$emit('updateWidget', changeEventObj);
             }, DEBOUNCER_TIMEOUT);
         },
-        validate(value) {
-            /*
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation
-             */
-            if (this.viewRep.required && !value) {
-                return false;
+        validate() {
+            let isValid = true;
+            if (this.viewRep.required && !this.$refs.form.getValue()) {
+                isValid = false;
             }
-            return true;
+            return this.$refs.form.validate() && isValid;
         }
     }
 };
@@ -139,15 +129,17 @@ export default {
       class="knime-label"
     />
     <TextArea
-      v-if="editorType === 'Multi-line'"
+      v-if="isMultiLine"
+      ref="form"
       :value="value"
       :cols="multiColumns"
       :rows="multiRows"
       :is-valid="isValid"
-      @updateValue="onChange"
+      @input="onChange"
     />
     <InputField
       v-else
+      ref="form"
       :value="value"
       :is-valid="isValid"
       input-classes="knime-qf-input knime-string knime-single-line"

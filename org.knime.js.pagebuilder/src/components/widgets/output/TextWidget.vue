@@ -111,7 +111,7 @@ export default {
          * @returns {Boolean} always true because there is currently no validation for
          *      the Text Output Widget.
          */
-        validate(value) {
+        validate() {
             return true;
         }
     }

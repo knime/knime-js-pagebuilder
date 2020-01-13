@@ -1,14 +1,20 @@
 <script>
+import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
+
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
 
 const heightPollInterval = 200; // ms
 const valueGetterTimeout = 10000; // ms
+const validatorTimeout = 10000; // ms
 
 /**
  * A single node view iframe
  */
 export default {
+    components: {
+        ErrorMessage
+    },
     props: {
         /**
          * Node id
@@ -48,7 +54,8 @@ export default {
     },
     data() {
         return {
-            height: 0
+            height: 0,
+            isValid: true
         };
     },
 
@@ -91,13 +98,15 @@ export default {
     mounted() {
         window.addEventListener('message', this.messageFromIframe);
 
-        this.document = this.$el.contentDocument;
+        this.document = this.$refs.iframe.contentDocument;
         this.injectContent();
+        this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
     },
 
     beforeDestroy() {
         window.removeEventListener('message', this.messageFromIframe);
+        this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         if (this.intervalId) {
             clearInterval(this.intervalId);
@@ -230,6 +239,8 @@ export default {
                         this.setHeight();
                     }
                 }
+            } else if (event.data.type === 'validate') {
+                this.validateCallback({ isValid: event.data.isValid });
             } else if (event.data.type === 'getValue') {
                 // call callback
                 if (typeof event.data.value === 'undefined') {
@@ -238,6 +249,29 @@ export default {
                     this.getValueCallback({ value: event.data.value });
                 }
             }
+        },
+
+        validate() {
+            return new Promise((resolve, reject) => {
+                this.validateCallback = ({ error, isValid }) => {
+                    if (error || !isValid) {
+                        isValid = false;
+                    }
+                    this.isValid = isValid;
+                    window.clearTimeout(this.cancelValidate);
+                    resolve({ nodeId: this.nodeId, isValid });
+                };
+                this.document.defaultView.postMessage({
+                    nodeId: this.nodeId,
+                    namespace: this.nodeConfig.namespace,
+                    validateMethodName: this.nodeConfig.validateMethodName,
+                    type: 'validate'
+                }, window.origin);
+                this.cancelValidate = window.setTimeout(() => {
+                    this.isValid = false;
+                    resolve({ nodeId: this.nodeId, isValid: false });
+                }, validatorTimeout);
+            });
         },
 
         getValue() {
@@ -267,7 +301,13 @@ export default {
 </script>
 
 <template>
-  <iframe />
+  <div>
+    <iframe ref="iframe" />
+    <ErrorMessage
+      :error="isValid ? '' : 'View is not responding.'"
+      :class="['knime-error']"
+    />
+  </div>
 </template>
 
 <style lang="postcss" scoped>

@@ -34,35 +34,29 @@ export default {
             return classes;
         }
     },
-    mounted() {
-        this.onValueChange({});
-    },
     methods: {
         getValue() {
             return this.$el.value;
         },
-        onValueChange(e) {
-            this.$emit('updateValue', {
-                value: this.getValue(),
-                isValid: this.validate()
-            });
+        onInput(e) {
+            this.$emit('input', this.getValue());
         },
         validate() {
-            return Boolean(this.getValue());
+            const value = this.getValue();
+            return Boolean(value || value === '');
         }
     }
 };
 </script>
 
 <template>
-  <!-- knime-qf-input legacy selector -->
   <textarea
     :value="value"
     :class="textAreaClass"
     :cols="cols"
     :rows="rows"
     :placeholder="placeholder"
-    @input="onValueChange"
+    @input="onInput"
   />
 </template>
 

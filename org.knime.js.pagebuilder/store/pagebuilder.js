@@ -1,12 +1,11 @@
 import { setProp } from '../src/util/nestedProperty';
-import Vue from 'vue';
 
 export const namespaced = true;
 
 export const state = () => ({
     page: null,
     resourceBaseUrl: '',
-    pageValidity: {},
+    pageValidators: {},
     pageValueGetters: {}
 });
 
@@ -35,11 +34,8 @@ export const mutations = {
          */
         let webNodes = page && page.wizardPageContent && page.wizardPageContent.webNodes;
         if (webNodes && typeof webNodes === 'object') {
-            state.pageValidity = {};
+            state.pageValidators = {};
             state.pageValueGetters = {};
-            Object.keys(webNodes).forEach((nodeId) => {
-                Vue.set(state.pageValidity, nodeId, true);
-            });
         }
     },
 
@@ -74,9 +70,6 @@ export const mutations = {
      * @return {undefined}
      */
     updateWebNode(state, newWebNode) {
-        // update the validity of the node
-        state.pageValidity[newWebNode.nodeId] = newWebNode.isValid;
-
         let currentWebNode = state.page.wizardPageContent.webNodes[newWebNode.nodeId];
         let values = [];
         for (let [key, value] of Object.entries(newWebNode.update)) {
@@ -89,19 +82,23 @@ export const mutations = {
                 `because the provided key was invalid. Key:`, key);
             }
         }
-        if (!newWebNode.isValid) {
-            consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Node is now invalid` +
-                ` because of its new value(s). Value(s):`, values.join(', '));
-        }
     },
 
     addValueGetter(state, { nodeId, valueGetter }) {
         state.pageValueGetters[nodeId] = valueGetter;
     },
-
+    
     removeValueGetter(state, nodeId) {
         delete state.pageValueGetters[nodeId];
-    }
+    },
+
+    addValidator(state, { nodeId, validator }) {
+        state.pageValidators[nodeId] = validator;
+    },
+
+    removeValidator(state, nodeId) {
+        delete state.pageValidators[nodeId];
+    },
 };
 
 export const actions = {
@@ -147,5 +144,48 @@ export const actions = {
         });
 
         return values;
+    },
+
+    addValidator({ commit }, { nodeId, validator }) {
+        consola.trace('PageBuilder: add validator via action: ', nodeId);
+        commit('addValidator', { nodeId, validator });
+    },
+
+    removeValidator({ commit }, { nodeId }) {
+        consola.trace('PageBuilder: remove validator via action: ', nodeId);
+        commit('removeValidator', nodeId);
+    },
+
+    async getValidity({ state, dispatch }) {
+        const validatingMessageId = 'validatingMessage';
+        let notification = {
+            message: 'Validating views...',
+            type: 'info',
+            id: validatingMessageId,
+            autoRemove: false
+        };
+        dispatch('notification/show', { notification }, { root: true });
+
+        let validityPromises = Object.values(state.pageValidators)
+            .map(getter => getter());
+
+        let validity = await Promise.all(validityPromises).then((validities) => {
+            let invalidViews = [];
+            let viewValidities = validities.reduce((obj, nodeResp) => {
+                if (!(obj[nodeResp.nodeId] = nodeResp.isValid)) {
+                    invalidViews.push(nodeResp.nodeId);
+                }
+                return obj;
+            }, {});
+            if (invalidViews.length > 0) {
+                throw new Error(`${invalidViews.length} views invalid (${invalidViews.join(', ')})`);
+            }
+            return viewValidities;
+        }).catch((e) => {
+            dispatch('notification/remove', { id: validatingMessageId }, { root: true });
+            consola.error(`Page validation failed: ${e}`);
+            throw new Error(`Page validation failed.`);
+        });
+        return validity;
     }
 };

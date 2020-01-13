@@ -121,15 +121,15 @@ export default {
          * from Vue.
          */
         this.initialValue = this.value;
-        this.$el.childNodes[0].value = this.value;
-        this.publishChangeEvent({});
+        this.$refs.input.value = this.value;
+        this.onInput({});
     },
     methods: {
         getValue() {
-            let inputValue = this.$el.childNodes[0].valueAsNumber;
+            let inputValue = this.$refs.input.valueAsNumber;
             // for IE11 support
             if (isNaN(inputValue)) {
-                inputValue = this.$el.childNodes[0].value;
+                inputValue = this.$refs.input.value;
                 // manually parse the value
                 return this.type === 'integer'
                     ? parseInt(inputValue, 10)
@@ -137,22 +137,20 @@ export default {
             }
             return inputValue;
         },
-        publishChangeEvent(e) {
+        onInput(e) {
             const newValue = this.getValue();
             this.$emit('updateValue', {
-                value: newValue,
-                originalEvent: e,
-                isValid: this.validate(newValue)
+                value: newValue
             });
         },
-        validate(value) {
+        validate(val) {
+            let value = typeof val === 'undefined' ? this.getValue() : val;
             // type check the value
             if (typeof value !== 'number' || isNaN(value)) {
                 return false;
             }
             // check against the configured maximum and minimum
             return this.min <= value && value <= this.max;
-
         },
         /**
          * This method is used by the input controls to change the value of the numeric input.
@@ -204,8 +202,8 @@ export default {
              * the max, etc. This mimics native behavior.
              */
             if (this.validate(parsedVal)) {
-                this.$el.childNodes[0].value = parsedVal;
-                this.publishChangeEvent(event);
+                this.$refs.input.value = parsedVal;
+                this.onInput(event);
             }
         },
         /**
@@ -264,6 +262,7 @@ export default {
   <!-- knime-qf-input legacy selector -->
   <div class="knime-input-container">
     <input
+      ref="input"
       type="number"
       role="spinButton"
       :min="min"
@@ -271,7 +270,7 @@ export default {
       :step="stepSize"
       :class="inputClass"
       :title="description"
-      @input="publishChangeEvent"
+      @input="onInput"
     >
     <span
       class="knime-increase"

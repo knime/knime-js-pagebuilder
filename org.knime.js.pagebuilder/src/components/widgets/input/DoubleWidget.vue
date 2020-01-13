@@ -45,7 +45,7 @@ export default {
             }
         },
         isValid: {
-            default: false,
+            default: true,
             type: Boolean
         }
     },
@@ -76,7 +76,7 @@ export default {
         value() {
             let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
             let defaultValue = getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
-            if (typeof currentValue === 'number' && this.validate(currentValue)) {
+            if (typeof currentValue === 'number') {
                 return currentValue;
             }
             return defaultValue;
@@ -90,33 +90,27 @@ export default {
     },
     methods: {
         onChange(e) {
-            const newValue = e.value;
-            const newWebNodeConfig = {
-                type: 'Double Input',
+            const changeEventObj = {
                 nodeId: this.nodeId,
-                isValid: e.isValid && this.validate(newValue),
                 update: {
-                    [CURRENT_VALUE_KEY]: newValue
+                    [CURRENT_VALUE_KEY]: e.value
                 }
             };
-            this.$emit('updateWidget', newWebNodeConfig);
+            this.$emit('updateWidget', changeEventObj);
         },
-        validate(value) {
-            /*
-             * TODO SRV-2626
-             *
-             * insert additional custom widget validation
-             */
+        validate() {
             if (!this.viewRep.required) {
                 return true;
             }
+            let value = this.$refs.form.getValue();
+            let isValid = true;
             if (isNaN(value)) {
-                return false;
+                isValid = false;
             }
             if (value < this.min || this.max < value) {
-                return false;
+                isValid = false;
             }
-            return Boolean(value) || value === 0;
+            return this.$refs.form.validate() && isValid;
         }
     }
 };
@@ -131,6 +125,7 @@ export default {
       class="knime-label"
     />
     <NumberInput
+      ref="form"
       type="double"
       :value="value"
       :min="min"
