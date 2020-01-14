@@ -18,18 +18,18 @@
   "author": "KNIME AG, Zurich, Switzerland",
   "dependencies": {
     "consola": "2.10.1",
-    "vue": "2.6.10",
+    "vue": "2.6.11",
     "vue-slider-component": "3.0.41",
     "vuex": "3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "3.10.0",
-    "@vue/cli-plugin-unit-jest": "4.0.0-beta.3",
-    "@vue/cli-service": "3.10.0",
+    "@vue/cli-plugin-babel": "4.1.2",
+    "@vue/cli-plugin-unit-jest": "4.1.2",
+    "@vue/cli-service": "4.1.2",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.3",
-    "babel-jest": "24.8.0",
+    "babel-jest": "24.9.0",
     "concurrently": "4.1.1",
     "cross-var": "1.1.0",
     "eslint": "5.16.0",
@@ -49,7 +49,7 @@
     "typeface-roboto": "0.0.75",
     "typeface-roboto-mono": "0.0.75",
     "vue-svg-loader": "0.11.0",
-    "vue-template-compiler": "2.6.10",
+    "vue-template-compiler": "2.6.11",
     "webapps-common": "file:webapps-common"
   },
   "engines": {
