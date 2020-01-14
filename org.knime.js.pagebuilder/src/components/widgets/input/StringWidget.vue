@@ -1,6 +1,6 @@
 <script>
 import InputField from '~/webapps-common/ui/components/forms/InputField';
-import TextArea from '../baseElements/input/TextArea';
+import TextArea from '~/webapps-common/ui/components/forms/TextArea';
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { getProp } from '../../../util/nestedProperty';
@@ -49,7 +49,6 @@ export default {
             viewRep: this.nodeConfig.viewRepresentation
         };
     },
-    updateDebouncer: null,
     computed: {
         label() {
             return this.viewRep.label;
