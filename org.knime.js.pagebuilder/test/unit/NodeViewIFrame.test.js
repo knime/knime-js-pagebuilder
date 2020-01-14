@@ -333,4 +333,65 @@ describe('NodeViewIframe.vue', () => {
             return expect(valuePromise).rejects.toStrictEqual(new Error(errorMessage));
         });
     });
+
+    describe('view validation', () => {
+        let wrapper;
+
+        beforeEach(() => {
+            wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    nodeId: '0.0.7',
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        validateMethodName: 'validate'
+                    }
+                }
+            });
+        });
+
+        it('handles validation', () => {
+            window.origin = window.location.origin;
+            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+            wrapper.vm.validate();
+            expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                nodeId: '0.0.7',
+                namespace: 'knimespace',
+                validateMethodName: 'validate',
+                type: 'validate'
+            }, window.origin);
+        });
+
+        it('resolves validate promise', () => {
+            window.origin = window.location.origin;
+            let validatePromise = wrapper.vm.validate();
+            // fake validation returned
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'validate', isValid: true }
+            });
+            return expect(validatePromise).resolves.toStrictEqual({ nodeId: '0.0.7', isValid: true });
+        });
+
+        it('returns invalid for errors with webnodes', () => {
+            window.origin = window.location.origin;
+            let valuePromise = wrapper.vm.validate();
+            // fake error
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'validate', error: true }
+            });
+            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0.0.7', isValid: false });
+        });
+
+        it('returns invalid when views timeout', () => {
+            jest.useFakeTimers();
+            window.origin = window.location.origin;
+            let valuePromise = wrapper.vm.validate();
+            // don't provide a message queue response
+            jest.runAllTimers();
+            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0.0.7', isValid: false });
+        });
+    });
 });

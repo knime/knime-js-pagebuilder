@@ -6,7 +6,7 @@ import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js'
 
 const heightPollInterval = 200; // ms
 const valueGetterTimeout = 10000; // ms
-const validatorTimeout = 10000; // ms
+const validatorTimeout = 5000; // ms
 
 /**
  * A single node view iframe

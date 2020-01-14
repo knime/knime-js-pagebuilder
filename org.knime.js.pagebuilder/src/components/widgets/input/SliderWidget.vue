@@ -3,11 +3,9 @@ import Slider from '../baseElements/input/Slider';
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { format as sliderLabelFormatter } from '../../../util/numStrFormatter';
-import { getProp } from '../../../util/nestedProperty';
 import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
 
-const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.double';
-const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.double';
+const DATA_TYPE = 'double';
 const MINIMUM_SLIDER_STEP = .000001;
 const VERTICAL_SLIDER_HEIGHT = 533;
 
@@ -40,14 +38,6 @@ export default {
          *          nodeInfo: {...},
          *          viewRepresentation: {
          *              sliderSettings: {...},
-         *              // *either*
-         *              currentValue: {
-         *                  double: Number
-         *              },
-         *              // *or*
-         *              defaultValue: {
-         *                  double: Number
-         *              },
          *              ...
          *          },
          *          ...
@@ -57,8 +47,7 @@ export default {
             required: true,
             type: Object,
             validator(obj) {
-                return obj.nodeInfo && obj.viewRepresentation.sliderSettings &&
-                    (getProp(obj, CURRENT_VALUE_KEY) || getProp(obj, DEFAULT_VALUE_KEY));
+                return obj.nodeInfo && obj.viewRepresentation.sliderSettings;
             }
         },
         nodeId: {
@@ -71,6 +60,12 @@ export default {
         isValid: {
             default: true,
             type: Boolean
+        },
+        valuePair: {
+            default: () => ({
+                [DATA_TYPE]: 0
+            }),
+            type: Object
         }
     },
     data() {
@@ -119,15 +114,7 @@ export default {
             return this.sliderSettings.range.max[0];
         },
         value() {
-            let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
-            let defaultValue = getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
-            if (typeof currentValue === 'number') {
-                if (isNaN(currentValue)) {
-                    return defaultValue;
-                }
-                return currentValue;
-            }
-            return defaultValue;
+            return this.valuePair[DATA_TYPE];
         },
         /**
          * Maps the KNIME configuration settings to the appropriate direction
@@ -246,9 +233,8 @@ export default {
         onChange(value) {
             const changeEventObj = {
                 nodeId: this.nodeId,
-                update: {
-                    [CURRENT_VALUE_KEY]: value
-                }
+                type: DATA_TYPE,
+                value
             };
             this.$emit('updateWidget', changeEventObj);
         },

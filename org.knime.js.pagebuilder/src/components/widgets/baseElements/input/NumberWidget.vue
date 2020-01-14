@@ -2,10 +2,6 @@
 import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
 import Label from '../text/Label';
 import ErrorMessage from '../text/ErrorMessage';
-import { getProp } from '../../../../util/nestedProperty';
-
-const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.'; // trailing prop is defined via type
-const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.'; // trailing prop is defined via type
 
 /**
  * This is the implementation of the Number Input Widget. The primary goal of this component
@@ -53,6 +49,12 @@ export default {
             validator(val) {
                 return ['double', 'integer'].includes(val);
             }
+        },
+        valuePair: {
+            default: () => ({
+                double: 0
+            }),
+            type: Object
         }
     },
     data() {
@@ -80,12 +82,7 @@ export default {
             return 'Current input value is invalid';
         },
         value() {
-            let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY + this.type);
-            let defaultValue = getProp(this.nodeConfig, DEFAULT_VALUE_KEY + this.type);
-            if (typeof currentValue === 'number') {
-                return currentValue;
-            }
-            return defaultValue;
+            return this.valuePair[this.type];
         },
         min() {
             return this.viewRep.usemin ? this.viewRep.min : -Number.MAX_SAFE_INTEGER;
@@ -107,9 +104,8 @@ export default {
         onChange(value) {
             const changeEventObj = {
                 nodeId: this.nodeId,
-                update: {
-                    [CURRENT_VALUE_KEY + this.type]: value
-                }
+                type: this.type,
+                value
             };
             this.$emit('updateWidget', changeEventObj);
         },

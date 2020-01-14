@@ -3,10 +3,8 @@ import InputField from '~/webapps-common/ui/components/forms/InputField';
 import TextArea from '~/webapps-common/ui/components/forms/TextArea';
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import { getProp } from '../../../util/nestedProperty';
 
-const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.string';
-const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.string';
+const DATA_TYPE = 'string';
 
 /**
  * This is the String Input widget implementation. At this component
@@ -42,6 +40,12 @@ export default {
         isValid: {
             default: true,
             type: Boolean
+        },
+        valuePair: {
+            default: () => ({
+                [DATA_TYPE]: 0
+            }),
+            type: Object
         }
     },
     data() {
@@ -72,11 +76,7 @@ export default {
             return 'Current string input value is invalid';
         },
         value() {
-            const value = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
-            if (value || value === '') {
-                return value;
-            }
-            return getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            return this.valuePair[DATA_TYPE];
         },
         isMultiLine() {
             return this.viewRep.editorType === 'Multi-line';
@@ -89,15 +89,19 @@ export default {
         },
         regex() {
             return this.viewRep.regex || '.*';
+        },
+        inputClasses() {
+            let classList = 'knime-qf-input knime-string ';
+            classList += this.isMultiLine ? 'knime-multi-line' : 'knime-single-line';
+            return classList;
         }
     },
     methods: {
         onChange(value) {
             const changeEventObj = {
                 nodeId: this.nodeId,
-                update: {
-                    [CURRENT_VALUE_KEY]: value
-                }
+                type: DATA_TYPE,
+                value
             };
             this.$emit('updateWidget', changeEventObj);
         },
@@ -128,6 +132,7 @@ export default {
       :cols="multiColumns"
       :rows="multiRows"
       :is-valid="isValid"
+      :input-classes="inputClasses"
       @input="onChange"
     />
     <InputField
@@ -135,7 +140,7 @@ export default {
       ref="form"
       :value="value"
       :is-valid="isValid"
-      input-classes="knime-qf-input knime-string knime-single-line"
+      :input-classes="inputClasses"
       @input="onChange"
     />
     <ErrorMessage

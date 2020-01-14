@@ -21,12 +21,12 @@ import { applyCustomCss } from '../../util/customCss';
  * of actions from the Vuex store. Each instance of this Widget
  * component is listening for an "updateWidget" event from its child
  * component. The children of the Widget instance will parse and
- * package their own updated value and validity on the event object
- * passed to the parent Widget.
+ * package their own updated value on the event object passed to the
+ * parent Widget.
  *
  * This Widget component can then complete some last minute
- * verification before using the "updateValue" action to update
- * the store and validity of the page.
+ * verification before using the "updateWebNode" action to update
+ * the store.
  *
  * This component should fill its parent container. Avoid styling
  * this component. This serves primarily as a separation of
@@ -91,15 +91,20 @@ export default {
          */
         hasValueGetter() {
             return typeof this.$refs.widget.onChange === 'function';
+        },
+        valuePair() {
+            return this.nodeConfig.viewRepresentation.currentValue;
         }
     },
     async mounted() {
-        this.isValid = await this.validate().isValid;
         this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         // prevent incompatible widgets (i.e. output) from registering getter
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
         }
+        await this.validate().then((resp, err) => {
+            this.isValid = resp.isValid;
+        });
         applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
@@ -109,15 +114,19 @@ export default {
         }
     },
     methods: {
-        publishUpdate(update) {
-            this.isValid = this.$refs.widget.validate();
-            this.updateValue(update);
+        async publishUpdate(changeObj) {
+            changeObj.update = {
+                [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
+            };
+            this.updateWebNode(changeObj);
+            await this.validate().then((resp, err) => {
+                this.isValid = resp.isValid;
+            });
         },
         getValue() {
             return new Promise((resolve, reject) => {
                 try {
-                    let value = this.$store.state.pagebuilder.page.wizardPageContent.webNodes[this.nodeId]
-                        .viewRepresentation.currentValue;
+                    let value = this.valuePair;
                     if (typeof value === 'undefined') {
                         reject(new Error('Value of widget could not be retrieved.'));
                     } else {
@@ -144,7 +153,7 @@ export default {
             });
         },
         ...mapActions({
-            updateValue: 'pagebuilder/updateWebNode'
+            updateWebNode: 'pagebuilder/updateWebNode'
         })
     }
 };
@@ -158,6 +167,7 @@ export default {
       ref="widget"
       v-bind="$props"
       :is-valid="isValid"
+      :value-pair="valuePair"
       @updateWidget="publishUpdate"
     />
   </div>

@@ -121,7 +121,8 @@ describe('SliderWidget.vue', () => {
             propsData: {
                 nodeConfig,
                 nodeId,
-                isValid
+                isValid,
+                valuePair: nodeConfig.viewRepresentation.currentValue
             }
         });
     });
@@ -247,8 +248,9 @@ describe('SliderWidget.vue', () => {
     it('correctly emits the updateWidget Payload', () => {
         wrapper.find(Slider).vm.$emit('input', 10);
         const { updateWidget } = wrapper.emitted();
-        expect(updateWidget[0][0].update).toBeTruthy();
-        expect(updateWidget[0][0].update['viewRepresentation.currentValue.double']).toBe(10);
+        expect(updateWidget[0][0]).toBeTruthy();
+        expect(updateWidget[0][0].type).toBe('double');
+        expect(updateWidget[0][0].value).toBe(10);
     });
 
     it('has no error message when valid', () => {

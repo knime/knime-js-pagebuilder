@@ -3,7 +3,7 @@ import { shallowMount, mount } from '@vue/test-utils';
 
 import StringWidget from '@/components/widgets/input/StringWidget';
 import InputField from '~/webapps-common/ui/components/forms/InputField';
-import TextArea from '@/components/widgets/baseElements/input/TextArea';
+import TextArea from '~/webapps-common/ui/components/forms/TextArea';
 
 describe('StringWidget.vue', () => {
     let propsDataInput, propsDateTextArea;
@@ -147,7 +147,6 @@ describe('StringWidget.vue', () => {
         expect(wrapper.find(TextArea)).toBeTruthy();
     });
 
-    // TODO remove with WEBP-120
     it('\'s children will change appearance when invalid', () => {
 
         let wrapper2 = mount(StringWidget, {
@@ -155,13 +154,13 @@ describe('StringWidget.vue', () => {
         });
 
         let textareaComponent = wrapper2.find(TextArea);
-        expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBeGreaterThan(-1);
+        expect(textareaComponent.vm.inputClassList.includes('invalid')).toBe(true);
 
         textareaComponent.setProps({ isValid: true });
-        expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBe(-1);
+        expect(textareaComponent.vm.inputClassList.includes('invalid')).toBe(false);
 
         textareaComponent.setProps({ isValid: false });
-        expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBeGreaterThan(-1);
+        expect(textareaComponent.vm.inputClassList.includes('invalid')).toBe(true);
     });
 
     it('has validate logic to validate non-required values', () => {

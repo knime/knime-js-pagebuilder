@@ -55,10 +55,8 @@ export const mutations = {
      */
     updateWebNode(state, newWebNode) {
         let currentWebNode = state.page.wizardPageContent.webNodes[newWebNode.nodeId];
-        let values = [];
         for (let [key, value] of Object.entries(newWebNode.update)) {
             try {
-                values.push(value);
                 setProp(currentWebNode, key, value);
             } catch (e) {
                 // catch deep Object modification errors

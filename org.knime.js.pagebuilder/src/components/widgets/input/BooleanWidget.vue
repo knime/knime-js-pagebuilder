@@ -1,9 +1,7 @@
 <script>
 import Checkbox from '~/webapps-common/ui/components/forms/Checkbox';
-import { getProp } from '../../../util/nestedProperty';
 
-const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.boolean';
-const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.boolean';
+const DATA_TYPE = 'boolean';
 
 /**
  * This is the Boolean Input widget implementation.
@@ -30,6 +28,12 @@ export default {
         isValid: {
             default: () => true,
             type: Boolean
+        },
+        valuePair: {
+            default: () => ({
+                boolean: ''
+            }),
+            type: Object
         }
     },
     data() {
@@ -45,19 +49,15 @@ export default {
             return this.viewRep.description || '';
         },
         value() {
-            let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
-            return typeof currentValue === 'boolean'
-                ? currentValue
-                : getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            return this.valuePair[DATA_TYPE];
         }
     },
     methods: {
         onChange(value) {
             const changeEventObj = {
                 nodeId: this.nodeId,
-                update: {
-                    [CURRENT_VALUE_KEY]: value
-                }
+                type: DATA_TYPE,
+                value
             };
             this.$emit('updateWidget', changeEventObj);
         },
