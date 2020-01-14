@@ -142,7 +142,7 @@ export const actions = {
 
     async getValidity({ state, dispatch }) {
         let validityPromises = Object.values(state.pageValidators)
-            .map(getter => getter());
+            .map(validator => validator());
         let validity = await Promise.all(validityPromises)
             .then(validityArray => validityArray.reduce((obj, nodeResp) => {
                 obj[nodeResp.nodeId] = nodeResp.isValid;

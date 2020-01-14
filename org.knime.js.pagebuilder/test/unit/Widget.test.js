@@ -121,7 +121,7 @@ describe('Widget.vue', () => {
                     ref: 'widget',
                     methods: {
                         onChange() { return true; }, // because hasValueGetter checks for it,
-                        validate() { return true; }
+                        validate: jest.fn().mockReturnValue(Promise.resolve(true))
                     }
                 }
             }
@@ -248,6 +248,9 @@ describe('Widget.vue', () => {
 
     // test with an output widget to ensure the store does not register a getter
     it('prevents value getter registration for incompatible types', () => {
+        expect(wrapper.vm.hasValueGetter).toBe(true);
+        expect(typeof wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId]).toBe('function');
+
         let nodeId2 = 'node2';
         let newWrapper = shallowMount(Widget, {
             store,
@@ -280,5 +283,11 @@ describe('Widget.vue', () => {
 
         expect(newWrapper.vm.hasValueGetter).toBe(false);
         expect(typeof newWrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId2]).toBe('undefined');
+    });
+
+    it('registers a validator with the store', () => {
+        expect(typeof wrapper.vm.$store.state.pagebuilder.pageValidators[nodeId]).toBe('function');
+        expect(wrapper.vm.$store.state.pagebuilder.pageValidators[nodeId])
+            .toBe(wrapper.vm.validate);
     });
 });

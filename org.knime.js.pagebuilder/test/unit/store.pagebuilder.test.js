@@ -143,4 +143,37 @@ describe('PageBuilder store', () => {
         });
     });
 
+    describe('node validators', () => {
+        it('allows adding validator via action', () => {
+            let nodeId = '1.1.1';
+            let validator = function () {
+                return Promise.resolve(true);
+            };
+            expect(store.state.pageValidators[nodeId]).not.toBeDefined();
+            store.dispatch('addValidator', { nodeId, validator });
+            expect(store.state.pageValidators[nodeId]).toEqual(validator);
+        });
+
+        it('allows removing validator via action', () => {
+            let nodeId = '1.1.1';
+            let validator = function () {
+                return Promise.resolve(true);
+            };
+            store.dispatch('addValidator', { nodeId, validator });
+            expect(store.state.pageValidators[nodeId]).toEqual(validator);
+            store.dispatch('removeValidator', { nodeId });
+            expect(store.state.pageValidators[nodeId]).not.toBeDefined();
+        });
+
+        it('allows validating page via action', async () => {
+            let nodeId = '1.1.1';
+            let validator = function () {
+                return Promise.resolve({ nodeId, isValid: true });
+            };
+            store.dispatch('addValidator', { nodeId, validator });
+            let pageValidity = await store.dispatch('getValidity');
+            expect(pageValidity).toEqual({ [nodeId]: true });
+        });
+    });
+
 });
