@@ -20,7 +20,7 @@ describe('PageBuilder store', () => {
     it('creates an empty store', () => {
         expect(store.state.page).toBe(null);
         expect(store.state.resourceBaseUrl).toBe('');
-        expect(store.state.pageValidity).toEqual({});
+        expect(store.state.pageValidators).toEqual({});
         expect(store.state.pageValueGetters).toEqual({});
     });
 

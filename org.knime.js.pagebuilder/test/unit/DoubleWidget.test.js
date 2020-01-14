@@ -87,20 +87,22 @@ describe('DoubleWidget.vue', () => {
     });
 
     it('has validate logic to invalidate required values', () => {
-        let wrapper = shallowMount(DoubleWidget, {
+        let wrapper = mount(DoubleWidget, {
             propsData
         });
 
-        expect(wrapper.vm.validate(false)).toBe(false);
+        wrapper.find(NumberInput).setProps({ value: null });
+
+        expect(wrapper.vm.validate()).toBe(false);
     });
 
     it('has validate logic to validate non-required values', () => {
         propsData.nodeConfig.viewRepresentation.required = false;
-        let wrapper = shallowMount(DoubleWidget, {
+        let wrapper = mount(DoubleWidget, {
             propsData
         });
 
-        expect(wrapper.vm.validate(false)).toBe(true);
+        expect(wrapper.vm.validate()).toBe(true);
     });
 
     it('has empty error message when valid', () => {

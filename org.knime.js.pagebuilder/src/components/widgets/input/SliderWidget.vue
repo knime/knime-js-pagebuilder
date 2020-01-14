@@ -79,7 +79,6 @@ export default {
             sliderSettings: this.nodeConfig.viewRepresentation.sliderSettings
         };
     },
-    updateDebouncer: null,
     computed: {
         /**
          * TODO: AP-12916 Frontend: rewrite interactive range slider filter widget

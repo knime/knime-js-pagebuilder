@@ -63,7 +63,7 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: true
             }
         });
-        expect(wrapper.vm.$el.contentDocument.documentElement.innerHTML).toContain('html { overflow: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).toContain('html { overflow: hidden; }');
 
         wrapper = shallowMount(NodeViewIFrame, {
             ...context,
@@ -73,7 +73,7 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: true
             }
         });
-        expect(wrapper.vm.$el.contentDocument.documentElement.innerHTML).toContain('html { overflow-y: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).toContain('html { overflow-y: hidden; }');
 
         wrapper = shallowMount(NodeViewIFrame, {
             ...context,
@@ -83,8 +83,8 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: false
             }
         });
-        expect(wrapper.vm.$el.contentDocument.documentElement.innerHTML).not.toContain('html { overflow: hidden; }');
-        expect(wrapper.vm.$el.contentDocument.documentElement.innerHTML).not.toContain('html { overflow-y: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).not.toContain('html { overflow: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).not.toContain('html { overflow-y: hidden; }');
 
     });
 

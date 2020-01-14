@@ -164,54 +164,34 @@ describe('StringWidget.vue', () => {
         expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBeGreaterThan(-1);
     });
 
-    it('has validate logic to invalidate required values', () => {
-        let wrapper = mount(StringWidget, {
-            propsData: propsDataInput
-        });
-
-        expect(wrapper.vm.validate(false)).toBe(false);
-    });
-
     it('has validate logic to validate non-required values', () => {
         propsDataInput.nodeConfig.viewRepresentation.required = false;
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput
         });
 
-        expect(wrapper.vm.validate(false)).toBe(true);
+        expect(wrapper.vm.validate()).toBe(true);
+        wrapper.find(InputField).setProps({ value: '' });
+        expect(wrapper.vm.validate()).toBe(true);
     });
 
     it('will return invalid when the value is required but missing', () => {
-        jest.useFakeTimers();
-
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput
         });
+        wrapper.find(InputField).setProps({ value: '' });
+        expect(wrapper.vm.validate()).toBeFalsy();
+        wrapper.find(InputField).setProps({ value: 'a' });
+        expect(wrapper.vm.validate()).toBeTruthy();
 
-        expect(wrapper.vm.validate('')).toBeFalsy();
-        expect(wrapper.vm.validate('a')).toBeTruthy();
-
-
-        // TODO refactor with WEBP-120
         let wrapper2 = mount(StringWidget, {
             propsData: propsDateTextArea
         });
 
-        jest.runAllTimers();
-
-        let { updateWidget } = wrapper2.emitted();
-        expect(updateWidget).toBeTruthy();
-        expect(updateWidget[0][0].isValid).toBeTruthy();
-
-        let textAreaChild = wrapper2.find(TextArea);
-        textAreaChild.setProps({ value: '' });
-        textAreaChild.vm.onValueChange({});
-        
-        jest.runAllTimers();
-        
-        ({ updateWidget } = wrapper2.emitted());
-        expect(updateWidget).toBeTruthy();
-        expect(updateWidget[1][0].isValid).toBeFalsy();
+        wrapper2.find(TextArea).setProps({ value: '' });
+        expect(wrapper2.vm.validate()).toBeFalsy();
+        wrapper2.find(TextArea).setProps({ value: 'a' });
+        expect(wrapper2.vm.validate()).toBeTruthy();
     });
 
     it('has empty error message when valid', () => {

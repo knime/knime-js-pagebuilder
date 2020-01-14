@@ -82,7 +82,7 @@ export const mutations = {
 
     removeValidator(state, nodeId) {
         delete state.pageValidators[nodeId];
-    },
+    }
 };
 
 export const actions = {
