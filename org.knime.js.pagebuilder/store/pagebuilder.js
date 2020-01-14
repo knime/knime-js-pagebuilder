@@ -19,19 +19,6 @@ export const mutations = {
      */
     setPage(state, page) {
         state.page = page;
-
-        /* The `pageValidity` object stores the valid state of all webNodes in the page as an key/value pair.
-         *
-         * Boolean isValid values for each node are stored with a key of the corresponding nodeID.
-         *
-         * ex: state.pageValidity = {
-         *      1:0:1 : false,
-         *      ...
-         * }
-         *
-         * In order to make these properties reactive, they have to be initialized once using `Vue.set` whenever
-         * the page changes.
-         */
         let webNodes = page && page.wizardPageContent && page.wizardPageContent.webNodes;
         if (webNodes && typeof webNodes === 'object') {
             state.pageValidators = {};
@@ -50,9 +37,6 @@ export const mutations = {
      *
      * The expected newWebNode object should
      * have keys/values for:
-     *
-     *      isValid: (Boolean) tells store if value
-     *                          should be updated or not.
      *      nodeId: (String) the nodeID from the workflow
      *              which is used to serialize the node
      *              in the store.
@@ -157,35 +141,18 @@ export const actions = {
     },
 
     async getValidity({ state, dispatch }) {
-        const validatingMessageId = 'validatingMessage';
-        let notification = {
-            message: 'Validating views...',
-            type: 'info',
-            id: validatingMessageId,
-            autoRemove: false
-        };
-        dispatch('notification/show', { notification }, { root: true });
-
         let validityPromises = Object.values(state.pageValidators)
             .map(getter => getter());
-
-        let validity = await Promise.all(validityPromises).then((validities) => {
-            let invalidViews = [];
-            let viewValidities = validities.reduce((obj, nodeResp) => {
-                if (!(obj[nodeResp.nodeId] = nodeResp.isValid)) {
-                    invalidViews.push(nodeResp.nodeId);
-                }
+        let validity = await Promise.all(validityPromises)
+            .then(validityArray => validityArray.reduce((obj, nodeResp) => {
+                obj[nodeResp.nodeId] = nodeResp.isValid;
                 return obj;
-            }, {});
-            if (invalidViews.length > 0) {
-                throw new Error(`${invalidViews.length} views invalid (${invalidViews.join(', ')})`);
-            }
-            return viewValidities;
-        }).catch((e) => {
-            dispatch('notification/remove', { id: validatingMessageId }, { root: true });
-            consola.error(`Page validation failed: ${e}`);
-            throw new Error(`Page validation failed.`);
-        });
+            }, {}))
+            .catch((e) => {
+                let errMsg = `Page validation failed: ${e}`;
+                consola.error(errMsg);
+                throw new Error(errMsg);
+            });
         return validity;
     }
 };

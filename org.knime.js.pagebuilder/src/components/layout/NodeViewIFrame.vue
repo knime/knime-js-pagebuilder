@@ -55,7 +55,8 @@ export default {
     data() {
         return {
             height: 0,
-            isValid: true
+            isValid: true,
+            errorMessage: ''
         };
     },
 
@@ -256,6 +257,7 @@ export default {
                 this.validateCallback = ({ error, isValid }) => {
                     if (error || !isValid) {
                         isValid = false;
+                        this.errorMessage = 'View validation failed.';
                     }
                     this.isValid = isValid;
                     window.clearTimeout(this.cancelValidate);
@@ -269,6 +271,7 @@ export default {
                 }, window.origin);
                 this.cancelValidate = window.setTimeout(() => {
                     this.isValid = false;
+                    this.errorMessage = 'View is not responding.';
                     resolve({ nodeId: this.nodeId, isValid: false });
                 }, validatorTimeout);
             });
@@ -303,10 +306,12 @@ export default {
 <template>
   <div>
     <iframe ref="iframe" />
-    <ErrorMessage
-      :error="isValid ? '' : 'View is not responding.'"
-      :class="['knime-error']"
-    />
+    <div class="knime-error">
+      <ErrorMessage
+        v-if="!isValid"
+        :error="errorMessage"
+      />
+    </div>
   </div>
 </template>
 
@@ -316,5 +321,11 @@ iframe {
   height: 100%;
   background-color: white;
   border: none;
+}
+
+.knime-error {
+  position: absolute;
+  top: 0;
+  background-color: white;
 }
 </style>

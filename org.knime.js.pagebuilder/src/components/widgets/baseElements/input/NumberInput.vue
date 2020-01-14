@@ -121,8 +121,6 @@ export default {
          * from Vue.
          */
         this.initialValue = this.value;
-        this.$refs.input.value = this.value;
-        this.onInput({});
     },
     methods: {
         getValue() {
@@ -137,11 +135,8 @@ export default {
             }
             return inputValue;
         },
-        onInput(e) {
-            const newValue = this.getValue();
-            this.$emit('updateValue', {
-                value: newValue
-            });
+        onInput() {
+            this.$emit('input', this.getValue());
         },
         validate(val) {
             let value = typeof val === 'undefined' ? this.getValue() : val;
@@ -259,12 +254,12 @@ export default {
 </script>
 
 <template>
-  <!-- knime-qf-input legacy selector -->
-  <div class="knime-input-container">
+  <div>
     <input
       ref="input"
       type="number"
       role="spinButton"
+      :value="value"
       :min="min"
       :max="max"
       :step="stepSize"
@@ -273,7 +268,7 @@ export default {
       @input="onInput"
     >
     <span
-      class="knime-increase"
+      class="increase"
       @mousedown="(e) => mouseEvent(e, 'increase')"
       @mouseup="(e) => mouseEvent(e, 'increase')"
       @mouseleave="(e) => mouseEvent(e, 'increase')"
@@ -281,7 +276,7 @@ export default {
       <ArrowIcon />
     </span>
     <span
-      class="knime-decrease"
+      class="decrease"
       @mousedown="(e) => mouseEvent(e, 'decrease')"
       @mouseup="(e) => mouseEvent(e, 'decrease')"
       @mouseleave="(e) => mouseEvent(e, 'decrease')"
@@ -321,8 +316,8 @@ export default {
     border-left-color: var(--theme-color-error);
   }
 
-  & .knime-increase,
-  & .knime-decrease {
+  & .increase,
+  & .decrease {
     position: absolute;
     z-index: 1;
     right: 0;
@@ -339,19 +334,19 @@ export default {
     }
   }
 
-  & .knime-increase {
+  & .increase {
     top: 0;
     transform: scaleY(-1);
   }
 
-  & .knime-decrease {
+  & .decrease {
     bottom: 0;
   }
 
-  & .knime-increase:focus,
-  & .knime-increase:active,
-  & .knime-decrease:focus,
-  & .knime-decrease:active {
+  & .increase:focus,
+  & .increase:active,
+  & .decrease:focus,
+  & .decrease:active {
     background-color: var(--theme-color-silver-sand);
   }
 }

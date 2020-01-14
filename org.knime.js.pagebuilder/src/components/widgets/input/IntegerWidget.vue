@@ -92,11 +92,11 @@ export default {
         }
     },
     methods: {
-        onChange(e) {
+        onChange(value) {
             const changeEventObj = {
                 nodeId: this.nodeId,
                 update: {
-                    [CURRENT_VALUE_KEY]: e.value
+                    [CURRENT_VALUE_KEY]: value
                 }
             };
             this.$emit('updateWidget', changeEventObj);
@@ -135,7 +135,8 @@ export default {
       :max="max"
       :is-valid="isValid"
       :description="description"
-      @updateValue="onChange"
+      class="knime-input-container"
+      @input="onChange"
     />
     <ErrorMessage
       :error="errorMessage"
@@ -143,7 +144,3 @@ export default {
     />
   </div>
 </template>
-
-<style lang="postcss" scoped>
-
-</style>

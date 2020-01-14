@@ -7,7 +7,6 @@ import { getProp } from '../../../util/nestedProperty';
 
 const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.string';
 const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.string';
-const DEBOUNCER_TIMEOUT = 250;
 
 /**
  * This is the String Input widget implementation. At this component
@@ -95,18 +94,13 @@ export default {
     },
     methods: {
         onChange(value) {
-            clearTimeout(this.updateDebouncer);
-
             const changeEventObj = {
-                // type: 'String Input',
                 nodeId: this.nodeId,
                 update: {
                     [CURRENT_VALUE_KEY]: value
                 }
             };
-            this.updateDebouncer = setTimeout(() => {
-                this.$emit('updateWidget', changeEventObj);
-            }, DEBOUNCER_TIMEOUT);
+            this.$emit('updateWidget', changeEventObj);
         },
         validate() {
             let isValid = true;

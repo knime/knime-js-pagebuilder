@@ -52,11 +52,11 @@ export default {
         }
     },
     methods: {
-        onChange(e) {
+        onChange(value) {
             const changeEventObj = {
                 nodeId: this.nodeId,
                 update: {
-                    [CURRENT_VALUE_KEY]: e
+                    [CURRENT_VALUE_KEY]: value
                 }
             };
             this.$emit('updateWidget', changeEventObj);
