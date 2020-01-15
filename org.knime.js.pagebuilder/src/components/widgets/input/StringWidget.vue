@@ -1,5 +1,5 @@
 <script>
-import InputField from '../baseElements/input/InputField';
+import InputField from '~/webapps-common/ui/components/forms/InputField';
 import TextArea from '../baseElements/input/TextArea';
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
@@ -94,13 +94,18 @@ export default {
         }
     },
     methods: {
-        onChange(e) {
+        onChange(value, options) {
+            // TODO remove with WEBP-120
+            let oldImpl = typeof value === 'object';
+            let newValue = oldImpl ? value.value : value;
+            let isValid = oldImpl ? value.isValid : options.isValid;
+
             clearTimeout(this.updateDebouncer);
-            const newValue = e.value;
+
             const newWebNodeConfig = {
                 type: 'String Input',
                 nodeId: this.nodeId,
-                isValid: e.isValid && this.validate(newValue),
+                isValid: isValid && this.validate(newValue),
                 update: {
                     [CURRENT_VALUE_KEY]: newValue
                 }
@@ -144,9 +149,9 @@ export default {
     <InputField
       v-else
       :value="value"
-      type="text"
       :is-valid="isValid"
-      @updateValue="onChange"
+      input-classes="knime-qf-input knime-string knime-single-line"
+      @input="onChange"
     />
     <ErrorMessage
       :error="errorMessage"

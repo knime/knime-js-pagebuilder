@@ -1,9 +1,9 @@
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 
-import StringWidget from '@/components/widgets/input/StringWidget.vue';
-import InputField from '@/components/widgets/baseElements/input/InputField.vue';
-import TextArea from '@/components/widgets/baseElements/input/TextArea.vue';
+import StringWidget from '@/components/widgets/input/StringWidget';
+import InputField from '~/webapps-common/ui/components/forms/InputField';
+import TextArea from '@/components/widgets/baseElements/input/TextArea';
 
 describe('StringWidget.vue', () => {
     let propsDataInput, propsDateTextArea;
@@ -147,30 +147,20 @@ describe('StringWidget.vue', () => {
         expect(wrapper.find(TextArea)).toBeTruthy();
     });
 
+    // TODO remove with WEBP-120
     it('\'s children will change appearance when invalid', () => {
-        let wrapper = mount(StringWidget, {
-            propsData: propsDataInput
-        });
+
         let wrapper2 = mount(StringWidget, {
             propsData: propsDateTextArea
         });
 
-        let inputComponent = wrapper.find(InputField);
         let textareaComponent = wrapper2.find(TextArea);
-
-        expect(inputComponent.vm.inputClass.indexOf('knime-input-invalid')).toBeGreaterThan(-1);
         expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBeGreaterThan(-1);
 
-        inputComponent.setProps({ isValid: true });
         textareaComponent.setProps({ isValid: true });
-
-        expect(inputComponent.vm.inputClass.indexOf('knime-input-invalid')).toBe(-1);
         expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBe(-1);
 
-        inputComponent.setProps({ isValid: false });
         textareaComponent.setProps({ isValid: false });
-
-        expect(inputComponent.vm.inputClass.indexOf('knime-input-invalid')).toBeGreaterThan(-1);
         expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBeGreaterThan(-1);
     });
 
@@ -198,29 +188,18 @@ describe('StringWidget.vue', () => {
             propsData: propsDataInput
         });
 
-        jest.runAllTimers();
+        expect(wrapper.vm.validate('')).toBeFalsy();
+        expect(wrapper.vm.validate('a')).toBeTruthy();
 
-        let { updateWidget } = wrapper.emitted();
-        expect(updateWidget).toBeTruthy();
-        expect(updateWidget[0][0].isValid).toBeTruthy();
 
-        let inputChild = wrapper.find(InputField);
-        inputChild.setProps({ value: '' });
-        inputChild.vm.onValueChange({});
-
-        jest.runAllTimers();
-
-        ({ updateWidget } = wrapper.emitted());
-        expect(updateWidget).toBeTruthy();
-        expect(updateWidget[1][0].isValid).toBeFalsy();
-
+        // TODO refactor with WEBP-120
         let wrapper2 = mount(StringWidget, {
             propsData: propsDateTextArea
         });
 
         jest.runAllTimers();
 
-        ({ updateWidget } = wrapper2.emitted());
+        let { updateWidget } = wrapper2.emitted();
         expect(updateWidget).toBeTruthy();
         expect(updateWidget[0][0].isValid).toBeTruthy();
 
