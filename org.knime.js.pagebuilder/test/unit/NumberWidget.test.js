@@ -78,11 +78,11 @@ describe('NumberWidget.vue', () => {
         });
 
         let numericInputComponent = wrapper.find(NumberInput);
-        expect(numericInputComponent.vm.inputClassList.includes('invalid')).toBe(true);
+        expect(numericInputComponent.find('input').classes()).toContain('invalid');
         numericInputComponent.setProps({ isValid: true });
-        expect(numericInputComponent.vm.inputClassList.includes('invalid')).toBe(false);
+        expect(numericInputComponent.find('input').classes()).not.toContain('invalid');
         numericInputComponent.setProps({ isValid: false });
-        expect(numericInputComponent.vm.inputClassList.includes('invalid')).toBe(true);
+        expect(numericInputComponent.find('input').classes()).toContain('invalid');
     });
 
     it('has validate logic to invalidate required values', () => {

@@ -31,7 +31,7 @@ export default {
         },
         valuePair: {
             default: () => ({
-                boolean: ''
+                boolean: true
             }),
             type: Object
         }
@@ -62,8 +62,7 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            return typeof this.value === 'boolean' &&
-                this.$refs.form.validate();
+            return typeof this.value === 'boolean';
         }
     }
 };

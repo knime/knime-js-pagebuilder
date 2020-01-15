@@ -128,9 +128,7 @@ export default {
 </script>
 
 <template>
-  <div
-    :title="description"
-  >
+  <div>
     <Label
       v-if="label"
       :text="label"

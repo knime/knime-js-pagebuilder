@@ -82,6 +82,15 @@ export default {
     computed: {
         type() {
             return classToComponentMap[this.nodeConfig.viewRepresentation['@class']];
+            
+        },
+        /**
+         * Check for a validator. Some widgets (like output widgets) are static so they don't need to be validated.
+         *
+         * @returns {Boolean}
+         */
+        hasValidator() {
+            return typeof this.$refs.widget.validate === 'function';
         },
         /**
          * This method checks if the widget is compatible with the getValue method. Some widgets (like output widgets)
@@ -97,7 +106,9 @@ export default {
         }
     },
     async mounted() {
-        this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
+        if (this.hasValidator) {
+            this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
+        }
         // prevent incompatible widgets (i.e. output) from registering getter
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });

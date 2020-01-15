@@ -61,18 +61,6 @@ describe('TextWidget.vue', () => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
-    it('is always valid', () => {
-        let wrapper = mount(TextWidget, {
-            propsData
-        });
-        expect(wrapper.vm.validate()).toBe(true);
-        expect(wrapper.vm.validate(null)).toBe(true);
-        expect(wrapper.vm.validate('')).toBe(true);
-        expect(wrapper.vm.validate(0)).toBe(true);
-        expect(wrapper.vm.validate(NaN)).toBe(true);
-        expect(wrapper.vm.validate(propsData.undefinedProp)).toBe(true);
-    });
-
     it('recognizes the Text element type', () => {
         let wrapper = mount(TextWidget, {
             propsData

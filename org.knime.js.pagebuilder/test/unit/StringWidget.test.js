@@ -153,14 +153,14 @@ describe('StringWidget.vue', () => {
             propsData: propsDateTextArea
         });
 
-        let textareaComponent = wrapper2.find(TextArea);
-        expect(textareaComponent.vm.inputClassList.includes('invalid')).toBe(true);
+        let textComponent = wrapper2.find(TextArea);
+        expect(textComponent.classes()).toContain('invalid');
 
-        textareaComponent.setProps({ isValid: true });
-        expect(textareaComponent.vm.inputClassList.includes('invalid')).toBe(false);
+        textComponent.setProps({ isValid: true });
+        expect(textComponent.classes()).not.toContain('invalid');
 
-        textareaComponent.setProps({ isValid: false });
-        expect(textareaComponent.vm.inputClassList.includes('invalid')).toBe(true);
+        textComponent.setProps({ isValid: false });
+        expect(textComponent.classes()).toContain('invalid');
     });
 
     it('has validate logic to validate non-required values', () => {

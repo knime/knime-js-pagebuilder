@@ -102,18 +102,6 @@ export default {
             }
             return false;
         }
-    },
-    methods: {
-        /**
-         * No validation for the text output widget. Always true.
-         *
-         * @param {value} value - the value to validate.
-         * @returns {Boolean} always true because there is currently no validation for
-         *      the Text Output Widget.
-         */
-        validate() {
-            return true;
-        }
     }
 };
 </script>

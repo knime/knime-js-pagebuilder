@@ -110,17 +110,18 @@ export default {
             if (this.viewRep.required && !this.$refs.form.getValue()) {
                 isValid = false;
             }
-            return this.$refs.form.validate() && isValid;
+            // text area doesn't have a validate method
+            let validForm = typeof this.$refs.form.validate === 'function'
+                ? this.$refs.form.validate()
+                : true;
+            return validForm && isValid;
         }
     }
 };
 </script>
 
 <template>
-  <div
-    :title="description"
-    class="knime-string-widget"
-  >
+  <div class="knime-string-widget">
     <Label
       :text="label"
       class="knime-label"
@@ -133,6 +134,7 @@ export default {
       :rows="multiRows"
       :is-valid="isValid"
       :input-classes="inputClasses"
+      :title="description"
       @input="onChange"
     />
     <InputField
@@ -141,6 +143,7 @@ export default {
       :value="value"
       :is-valid="isValid"
       :input-classes="inputClasses"
+      :title="description"
       @input="onChange"
     />
     <ErrorMessage
