@@ -82,7 +82,6 @@ export default {
     computed: {
         type() {
             return classToComponentMap[this.nodeConfig.viewRepresentation['@class']];
-            
         },
         /**
          * Check for a validator. Some widgets (like output widgets) are static so they don't need to be validated.
@@ -106,20 +105,23 @@ export default {
         }
     },
     async mounted() {
-        if (this.hasValidator) {
-            this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
-        }
         // prevent incompatible widgets (i.e. output) from registering getter
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
         }
-        await this.validate().then((resp, err) => {
-            this.isValid = resp.isValid;
-        });
+        if (this.hasValidator) {
+            this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
+            await this.validate().then((resp, err) => {
+                this.isValid = resp.isValid;
+            });
+        }
+
         applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
-        this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
+        if (this.hasValidator) {
+            this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
+        }
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         }
@@ -130,9 +132,11 @@ export default {
                 [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
             };
             this.updateWebNode(changeObj);
-            await this.validate().then((resp, err) => {
-                this.isValid = resp.isValid;
-            });
+            if (this.hasValidator) {
+                await this.validate().then((resp, err) => {
+                    this.isValid = resp.isValid;
+                });
+            }
         },
         getValue() {
             return new Promise((resolve, reject) => {
