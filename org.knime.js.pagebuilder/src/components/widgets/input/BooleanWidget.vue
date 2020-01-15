@@ -26,7 +26,7 @@ export default {
             }
         },
         isValid: {
-            default: () => true,
+            default: true,
             type: Boolean
         },
         valuePair: {

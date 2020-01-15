@@ -27,7 +27,7 @@ export default {
             type: Number
         },
         isValid: {
-            default: false,
+            default: true,
             type: Boolean
         },
         direction: {
