@@ -91,7 +91,7 @@ export default {
         },
         errorMessage() {
             if (this.isValid) {
-                return '';
+                return null;
             }
             if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
                 return this.nodeConfig.nodeInfo.nodeErrorMessage;
@@ -277,8 +277,7 @@ export default {
     />
     <ErrorMessage
       :error="errorMessage"
-      :class="['knime-error',
-               `knime-slider-${sliderSettings.orientation}-error`,
+      :class="[`knime-slider-${sliderSettings.orientation}-error`,
                {'tooltip-error': tooltips}]"
     />
   </div>

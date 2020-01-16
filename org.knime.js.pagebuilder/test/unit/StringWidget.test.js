@@ -193,16 +193,16 @@ describe('StringWidget.vue', () => {
         expect(wrapper2.vm.validate()).toBeTruthy();
     });
 
-    it('has empty error message when valid', () => {
+    it('has no error message when valid', () => {
         propsDataInput.isValid = true;
         let wrapper = shallowMount(StringWidget, {
             propsData: propsDataInput
         });
 
-        expect(wrapper.vm.errorMessage).toBe('');
+        expect(wrapper.vm.errorMessage).toBe(null);
     });
 
-    it('has provided error message when valid', () => {
+    it('has error message when valid', () => {
         let wrapper = shallowMount(StringWidget, {
             propsData: propsDataInput
         });

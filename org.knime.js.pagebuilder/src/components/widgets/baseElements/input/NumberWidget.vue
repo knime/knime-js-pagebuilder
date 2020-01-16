@@ -71,7 +71,7 @@ export default {
         },
         errorMessage() {
             if (this.isValid) {
-                return '';
+                return null;
             }
             if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
                 return this.nodeConfig.nodeInfo.nodeErrorMessage;
@@ -145,9 +145,6 @@ export default {
       :input-classes="inputClasses"
       @input="onChange"
     />
-    <ErrorMessage
-      v-if="errorMessage"
-      :error="errorMessage"
-    />
+    <ErrorMessage :error="errorMessage" />
   </div>
 </template>

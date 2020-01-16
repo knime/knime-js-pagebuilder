@@ -61,7 +61,7 @@ export default {
         },
         errorMessage() {
             if (this.isValid) {
-                return '';
+                return null;
             }
             if (this.viewRep.errorMessage) {
                 return this.viewRep.errorMessage;
@@ -125,10 +125,7 @@ export default {
       class="knime-qf-text knime-multiline"
       v-html="value"
     />
-    <ErrorMessage
-      :error="errorMessage"
-      class="knime-error"
-    />
+    <ErrorMessage :error="errorMessage" />
   </div>
 </template>
 

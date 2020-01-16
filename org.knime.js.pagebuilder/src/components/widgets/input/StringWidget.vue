@@ -62,7 +62,7 @@ export default {
         },
         errorMessage() {
             if (this.isValid) {
-                return '';
+                return null;
             }
             if (this.viewRep.errorMessage) {
                 return this.viewRep.errorMessage;
@@ -146,20 +146,12 @@ export default {
       :title="description"
       @input="onChange"
     />
-    <ErrorMessage
-      :error="errorMessage"
-      :class="['knime-error', { 'ms-edge-valid': isValid }]"
-    />
+    <ErrorMessage :error="errorMessage" />
   </div>
 </template>
 
 <style lang="postcss" scoped>
 .knime-string-widget {
   overflow: hidden !important;
-}
-
-/* Microsoft edge has trouble updating props in a timely manner, so hide if necessary */
-.ms-edge-valid {
-  visibility: hidden;
 }
 </style>

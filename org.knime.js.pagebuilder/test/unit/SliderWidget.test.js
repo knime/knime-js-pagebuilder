@@ -254,7 +254,7 @@ describe('SliderWidget.vue', () => {
     });
 
     it('has no error message when valid', () => {
-        expect(wrapper.vm.errorMessage).toBe('');
+        expect(wrapper.vm.errorMessage).toBe(null);
     });
 
     it('has default error message', () => {
@@ -311,11 +311,9 @@ describe('SliderWidget.vue', () => {
 
     it('only displays error message when invalid', () => {
         expect(wrapper.find(ErrorMessage).isVisible()).toBe(true);
-        expect(wrapper.find(ErrorMessage).vm.error).toBe('');
+        expect(wrapper.find(ErrorMessage).vm.error).toBe(null);
 
         wrapper.setProps({ isValid: false });
-
-        expect(wrapper.find(ErrorMessage).vm.error).not.toBe('');
         expect(wrapper.find(ErrorMessage).vm.error).toBe('Current slider value is invalid');
     });
 });

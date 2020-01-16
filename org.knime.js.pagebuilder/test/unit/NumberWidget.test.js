@@ -104,13 +104,13 @@ describe('NumberWidget.vue', () => {
         expect(wrapper.vm.validate()).toBe(true);
     });
 
-    it('has empty error message when valid', () => {
+    it('has no error message when valid', () => {
         propsData.isValid = true;
         let wrapper = shallowMount(NumberWidget, {
             propsData
         });
 
-        expect(wrapper.vm.errorMessage).toBe('');
+        expect(wrapper.vm.errorMessage).toBe(null);
     });
 
     it('has default error message', () => {

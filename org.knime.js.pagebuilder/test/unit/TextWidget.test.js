@@ -84,12 +84,12 @@ describe('TextWidget.vue', () => {
         expect(wrapper.vm.elementType).toBe(false);
     });
 
-    it('has empty error message when valid', () => {
+    it('has no error message when valid', () => {
         let wrapper = shallowMount(TextWidget, {
             propsData
         });
 
-        expect(wrapper.vm.errorMessage).toBe('');
+        expect(wrapper.vm.errorMessage).toBe(null);
     });
 
     it('has default error message', () => {
