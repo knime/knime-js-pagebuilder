@@ -12,7 +12,6 @@
             var viewValue = data.viewValue;
             window[namespace][initMethodName](viewRepresentation, viewValue);
         } else if (data.type === 'validate') {
-            var validateMethod = data.validateMethodName;
             var validateResponse = function (valid, errMsg) {
                 var resp = {
                     isValid: valid,
@@ -22,9 +21,10 @@
                 resp.error = errMsg || resp.error;
                 return resp;
             };
-            if (window[namespace][validateMethod]) {
+            var validateMethod = window[namespace] && window[namespace][data.validateMethodName];
+            if (typeof validateMethod === 'function') {
                 try {
-                    var validity = window[namespace][validateMethod]();
+                    var validity = validateMethod();
                     parent.postMessage(validateResponse(validity), window.origin);
                 } catch (err) {
                     parent.postMessage(validateResponse(false, 'View could not be validated: ' + err),
@@ -35,10 +35,10 @@
                     window.origin);
             }
         } else if (data.type === 'getValue') {
-            var getValueMethod = data.getViewValueMethodName;
-            if (window[namespace][getValueMethod]) {
+            var getValueMethod = window[namespace] && window[namespace][data.getViewValueMethodName];
+            if (typeof getValueMethod === 'function') {
                 try {
-                    var retrievedValue = window[namespace][getValueMethod]();
+                    var retrievedValue = getValueMethod();
                     parent.postMessage({
                         value: retrievedValue,
                         nodeId: nodeId,
