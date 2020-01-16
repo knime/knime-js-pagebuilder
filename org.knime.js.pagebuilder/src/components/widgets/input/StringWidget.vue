@@ -1,7 +1,7 @@
 <script>
 import InputField from '~/webapps-common/ui/components/forms/InputField';
 import TextArea from '~/webapps-common/ui/components/forms/TextArea';
-import Label from '../baseElements/text/Label';
+import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 
 const DATA_TYPE = 'string';
@@ -124,29 +124,29 @@ export default {
   <div class="knime-string-widget">
     <Label
       :text="label"
-      class="knime-label"
-    />
-    <TextArea
-      v-if="isMultiLine"
-      ref="form"
-      :value="value"
-      :cols="multiColumns"
-      :rows="multiRows"
-      :is-valid="isValid"
-      :input-classes="inputClasses"
-      :title="description"
-      @input="onChange"
-    />
-    <InputField
-      v-else
-      ref="form"
-      :value="value"
-      :is-valid="isValid"
-      :input-classes="inputClasses"
-      :title="description"
-      @input="onChange"
-    />
-    <ErrorMessage :error="errorMessage" />
+    >
+      <TextArea
+        v-if="isMultiLine"
+        ref="form"
+        :value="value"
+        :cols="multiColumns"
+        :rows="multiRows"
+        :is-valid="isValid"
+        :input-classes="inputClasses"
+        :title="description"
+        @input="onChange"
+      />
+      <InputField
+        v-else
+        ref="form"
+        :value="value"
+        :is-valid="isValid"
+        :input-classes="inputClasses"
+        :title="description"
+        @input="onChange"
+      />
+      <ErrorMessage :error="errorMessage" />
+    </Label>
   </div>
 </template>
 

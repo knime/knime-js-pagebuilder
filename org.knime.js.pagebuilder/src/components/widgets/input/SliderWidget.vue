@@ -1,6 +1,6 @@
 <script>
 import Slider from '../baseElements/input/Slider';
-import Label from '../baseElements/text/Label';
+import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { format as sliderLabelFormatter } from '../../../util/numStrFormatter';
 import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';

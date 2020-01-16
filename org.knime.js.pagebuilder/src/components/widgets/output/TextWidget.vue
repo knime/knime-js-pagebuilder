@@ -1,5 +1,5 @@
 <script>
-import Label from '../baseElements/text/Label';
+import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { getProp } from '../../../util/nestedProperty';
 
