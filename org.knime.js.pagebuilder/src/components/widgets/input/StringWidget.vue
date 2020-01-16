@@ -1,13 +1,10 @@
 <script>
 import InputField from '~/webapps-common/ui/components/forms/InputField';
-import TextArea from '../baseElements/input/TextArea';
+import TextArea from '~/webapps-common/ui/components/forms/TextArea';
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import { getProp } from '../../../util/nestedProperty';
 
-const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.string';
-const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.string';
-const DEBOUNCER_TIMEOUT = 250;
+const DATA_TYPE = 'string';
 
 /**
  * This is the String Input widget implementation. At this component
@@ -41,8 +38,14 @@ export default {
             }
         },
         isValid: {
-            default: false,
+            default: true,
             type: Boolean
+        },
+        valuePair: {
+            default: () => ({
+                [DATA_TYPE]: 0
+            }),
+            type: Object
         }
     },
     data() {
@@ -50,7 +53,6 @@ export default {
             viewRep: this.nodeConfig.viewRepresentation
         };
     },
-    updateDebouncer: null,
     computed: {
         label() {
             return this.viewRep.label;
@@ -60,7 +62,7 @@ export default {
         },
         errorMessage() {
             if (this.isValid) {
-                return '';
+                return null;
             }
             if (this.viewRep.errorMessage) {
                 return this.viewRep.errorMessage;
@@ -74,14 +76,10 @@ export default {
             return 'Current string input value is invalid';
         },
         value() {
-            const value = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
-            if (value || value === '') {
-                return value;
-            }
-            return getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            return this.valuePair[DATA_TYPE];
         },
-        editorType() {
-            return this.viewRep.editorType;
+        isMultiLine() {
+            return this.viewRep.editorType === 'Multi-line';
         },
         multiColumns() {
             return this.viewRep.multilineEditorWidth;
@@ -91,82 +89,69 @@ export default {
         },
         regex() {
             return this.viewRep.regex || '.*';
+        },
+        inputClasses() {
+            let classList = 'knime-qf-input knime-string ';
+            classList += this.isMultiLine ? 'knime-multi-line' : 'knime-single-line';
+            return classList;
         }
     },
     methods: {
-        onChange(value, options) {
-            // TODO remove with WEBP-120
-            let oldImpl = typeof value === 'object';
-            let newValue = oldImpl ? value.value : value;
-            let isValid = oldImpl ? value.isValid : options.isValid;
-
-            clearTimeout(this.updateDebouncer);
-
-            const newWebNodeConfig = {
-                type: 'String Input',
+        onChange(value) {
+            const changeEventObj = {
                 nodeId: this.nodeId,
-                isValid: isValid && this.validate(newValue),
-                update: {
-                    [CURRENT_VALUE_KEY]: newValue
-                }
+                type: DATA_TYPE,
+                value
             };
-            this.updateDebouncer = setTimeout(() => {
-                this.$emit('updateWidget', newWebNodeConfig);
-            }, DEBOUNCER_TIMEOUT);
+            this.$emit('updateWidget', changeEventObj);
         },
-        validate(value) {
-            /*
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation
-             */
-            if (this.viewRep.required && !value) {
-                return false;
+        validate() {
+            let isValid = true;
+            if (this.viewRep.required && !this.$refs.form.getValue()) {
+                isValid = false;
             }
-            return true;
+            // text area doesn't have a validate method
+            let validForm = typeof this.$refs.form.validate === 'function'
+                ? this.$refs.form.validate()
+                : true;
+            return validForm && isValid;
         }
     }
 };
 </script>
 
 <template>
-  <div
-    :title="description"
-    class="knime-string-widget"
-  >
+  <div class="knime-string-widget">
     <Label
       :text="label"
       class="knime-label"
     />
     <TextArea
-      v-if="editorType === 'Multi-line'"
+      v-if="isMultiLine"
+      ref="form"
       :value="value"
       :cols="multiColumns"
       :rows="multiRows"
       :is-valid="isValid"
-      @updateValue="onChange"
+      :input-classes="inputClasses"
+      :title="description"
+      @input="onChange"
     />
     <InputField
       v-else
+      ref="form"
       :value="value"
       :is-valid="isValid"
-      input-classes="knime-qf-input knime-string knime-single-line"
+      :input-classes="inputClasses"
+      :title="description"
       @input="onChange"
     />
-    <ErrorMessage
-      :error="errorMessage"
-      :class="['knime-error', { 'ms-edge-valid': isValid }]"
-    />
+    <ErrorMessage :error="errorMessage" />
   </div>
 </template>
 
 <style lang="postcss" scoped>
 .knime-string-widget {
   overflow: hidden !important;
-}
-
-/* Microsoft edge has trouble updating props in a timely manner, so hide if necessary */
-.ms-edge-valid {
-  visibility: hidden;
 }
 </style>

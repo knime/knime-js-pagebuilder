@@ -21,12 +21,12 @@ import { applyCustomCss } from '../../util/customCss';
  * of actions from the Vuex store. Each instance of this Widget
  * component is listening for an "updateWidget" event from its child
  * component. The children of the Widget instance will parse and
- * package their own updated value and validity on the event object
- * passed to the parent Widget.
+ * package their own updated value on the event object passed to the
+ * parent Widget.
  *
  * This Widget component can then complete some last minute
- * verification before using the "updateValue" action to update
- * the store and validity of the page.
+ * verification before using the "updateWebNode" action to update
+ * the store.
  *
  * This component should fill its parent container. Avoid styling
  * this component. This serves primarily as a separation of
@@ -74,9 +74,22 @@ export default {
             }
         }
     },
+    data() {
+        return {
+            isValid: true
+        };
+    },
     computed: {
         type() {
             return classToComponentMap[this.nodeConfig.viewRepresentation['@class']];
+        },
+        /**
+         * Check for a validator. Some widgets (like output widgets) are static so they don't need to be validated.
+         *
+         * @returns {Boolean}
+         */
+        hasValidator() {
+            return typeof this.$refs.widget.validate === 'function';
         },
         /**
          * This method checks if the widget is compatible with the getValue method. Some widgets (like output widgets)
@@ -87,42 +100,48 @@ export default {
         hasValueGetter() {
             return typeof this.$refs.widget.onChange === 'function';
         },
-        isValid() {
-            return Boolean(this.$store.state.pagebuilder.pageValidity[this.nodeId]);
+        valuePair() {
+            return this.nodeConfig.viewRepresentation.currentValue;
         }
     },
-    mounted() {
+    async mounted() {
         // prevent incompatible widgets (i.e. output) from registering getter
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
         }
+        if (this.hasValidator) {
+            this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
+            await this.validate().then((resp, err) => {
+                this.isValid = resp.isValid;
+            });
+        }
+
         applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
+        if (this.hasValidator) {
+            this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
+        }
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         }
     },
     methods: {
-        validate(value) {
-            /**
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation
-             * currently fake validation
-             */
-            return true;
-        },
-        publishUpdate(update) {
-            update.isValid = update.isValid && this.validate(update);
-            update.type = this.type;
-            this.updateValue(update);
+        async publishUpdate(changeObj) {
+            changeObj.update = {
+                [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
+            };
+            this.updateWebNode(changeObj);
+            if (this.hasValidator) {
+                await this.validate().then((resp, err) => {
+                    this.isValid = resp.isValid;
+                });
+            }
         },
         getValue() {
             return new Promise((resolve, reject) => {
                 try {
-                    let value = this.$store.state.pagebuilder.page.wizardPageContent.webNodes[this.nodeId]
-                        .viewRepresentation.currentValue;
+                    let value = this.valuePair;
                     if (typeof value === 'undefined') {
                         reject(new Error('Value of widget could not be retrieved.'));
                     } else {
@@ -133,8 +152,23 @@ export default {
                 }
             });
         },
+        validate() {
+            return new Promise((resolve, reject) => {
+                let isValid;
+                try {
+                    isValid = this.$refs.widget.validate();
+                    if (typeof isValid === 'undefined') {
+                        throw new Error('Widget validation failed.');
+                    }
+                } catch (error) {
+                    isValid = false;
+                } finally {
+                    resolve({ nodeId: this.nodeId, isValid });
+                }
+            });
+        },
         ...mapActions({
-            updateValue: 'pagebuilder/updateWebNode'
+            updateWebNode: 'pagebuilder/updateWebNode'
         })
     }
 };
@@ -148,6 +182,7 @@ export default {
       ref="widget"
       v-bind="$props"
       :is-valid="isValid"
+      :value-pair="valuePair"
       @updateWidget="publishUpdate"
     />
   </div>

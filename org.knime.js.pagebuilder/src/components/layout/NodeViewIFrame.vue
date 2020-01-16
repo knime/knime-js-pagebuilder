@@ -1,14 +1,20 @@
 <script>
+import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
+
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
 
 const heightPollInterval = 200; // ms
 const valueGetterTimeout = 10000; // ms
+const validatorTimeout = 5000; // ms
 
 /**
  * A single node view iframe
  */
 export default {
+    components: {
+        ErrorMessage
+    },
     props: {
         /**
          * Node id
@@ -48,7 +54,9 @@ export default {
     },
     data() {
         return {
-            height: 0
+            height: 0,
+            isValid: true,
+            errorMessage: null
         };
     },
 
@@ -99,13 +107,15 @@ export default {
         this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: true });
         window.addEventListener('message', this.messageFromIframe);
 
-        this.document = this.$el.contentDocument;
+        this.document = this.$refs.iframe.contentDocument;
         this.injectContent();
+        this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
     },
 
     beforeDestroy() {
         window.removeEventListener('message', this.messageFromIframe);
+        this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         if (this.intervalId) {
             clearInterval(this.intervalId);
@@ -241,6 +251,8 @@ export default {
                     }
                 }
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
+            } else if (event.data.type === 'validate') {
+                this.validateCallback({ isValid: event.data.isValid });
             } else if (event.data.type === 'getValue') {
                 // call callback
                 if (typeof event.data.value === 'undefined') {
@@ -249,6 +261,32 @@ export default {
                     this.getValueCallback({ value: event.data.value });
                 }
             }
+        },
+
+        validate() {
+            return new Promise((resolve, reject) => {
+                this.validateCallback = ({ error, isValid = false }) => {
+                    if (error || !isValid) {
+                        this.errorMessage = 'View validation failed.';
+                    } else {
+                        this.errorMessage = null;
+                    }
+                    this.isValid = isValid;
+                    window.clearTimeout(this.cancelValidate);
+                    resolve({ nodeId: this.nodeId, isValid });
+                };
+                this.document.defaultView.postMessage({
+                    nodeId: this.nodeId,
+                    namespace: this.nodeConfig.namespace,
+                    validateMethodName: this.nodeConfig.validateMethodName,
+                    type: 'validate'
+                }, window.origin);
+                this.cancelValidate = window.setTimeout(() => {
+                    this.isValid = false;
+                    this.errorMessage = 'View is not responding.';
+                    resolve({ nodeId: this.nodeId, isValid: this.isValid });
+                }, validatorTimeout);
+            });
         },
 
         getValue() {
@@ -278,14 +316,38 @@ export default {
 </script>
 
 <template>
-  <iframe />
+  <div>
+    <iframe
+      ref="iframe"
+      :class="{error: !isValid}"
+    />
+    <ErrorMessage
+      v-if="errorMessage"
+      :error="errorMessage"
+      class="error-message"
+    />
+  </div>
 </template>
 
 <style lang="postcss" scoped>
+@import "webapps-common/ui/css/variables";
+
 iframe {
   width: 100%;
   height: 100%;
   background-color: white;
   border: none;
+
+  &.error {
+    outline: 2px solid var(--theme-color-error);
+  }
+}
+
+.error-message {
+  position: absolute !important;
+  top: 0;
+  margin: 2px 0 0 2px;
+  padding: 5px;
+  background-color: white;
 }
 </style>

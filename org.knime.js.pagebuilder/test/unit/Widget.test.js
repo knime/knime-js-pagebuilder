@@ -8,7 +8,7 @@ import { getProp, setProp } from '../../src/util/nestedProperty';
 import * as storeConfig from '~/store/pagebuilder';
 
 describe('Widget.vue', () => {
-    let store, localVue, context, nodeConfig;
+    let store, localVue, context, nodeConfig, wrapper;
 
     const nodeConfigBlueprint = {
         foo: 'bar',
@@ -118,88 +118,33 @@ describe('Widget.vue', () => {
                 SliderWidget: {
                     name: 'slider-widget',
                     template: '<div />',
+                    ref: 'widget',
                     methods: {
-                        onChange() { return true; } // because hasValueGetter checks for it
+                        onChange() { return true; }, // because hasValueGetter checks for it,
+                        validate: jest.fn().mockReturnValue(Promise.resolve(true))
                     }
                 }
             }
         };
-    });
-
-    it('renders', () => {
-        let wrapper = shallowMount(Widget, {
+        wrapper = shallowMount(Widget, {
             ...context,
             propsData: {
                 nodeConfig,
                 nodeId
             }
         });
+    });
+
+    it('renders', () => {
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
     it('detects correct widget type', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId
-            }
-        });
-
         expect(wrapper.vm.type).toEqual('SliderWidget');
     });
 
-    it('correctly queries store for node validity', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId
-            }
-        });
-
-        expect(wrapper.vm.isValid).toBe(true);
-
-        wrapper.vm.publishUpdate({
-            isValid: false,
-            nodeId,
-            update: {
-                'viewRepresentation.currentValue.testValue': 11
-            }
-        });
-
-        expect(wrapper.vm.isValid).toBe(false);
-    });
-
-    // TODO AP-12850: update Widget component level validation
-    it('validates all data received', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId
-            }
-        });
-        const expectedValue = 10;
-
-        expect(wrapper.vm.validate()).toBe(true);
-        expect(wrapper.vm.validate(null)).toBe(true);
-        expect(wrapper.vm.validate({})).toBe(true);
-        expect(wrapper.vm.validate('test')).toBe(true);
-        expect(wrapper.vm.validate([])).toBe(true);
-        expect(wrapper.vm.validate(0)).toBe(true);
-        expect(wrapper.vm.validate(expectedValue)).toBe(true);
-    });
-
     it('publishes update to store', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId
-            }
-        });
         const expectedValue = 10;
         const newValue = 11;
 
@@ -207,11 +152,9 @@ describe('Widget.vue', () => {
             .currentValue.testValue).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
-            isValid: true,
             nodeId,
-            update: {
-                'viewRepresentation.currentValue.testValue': newValue
-            }
+            type: 'testValue',
+            value: newValue
         });
 
         expect(
@@ -221,13 +164,6 @@ describe('Widget.vue', () => {
     });
 
     it('test getting deep properties with util', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId
-            }
-        });
         const expectedValue = 10;
         const newValue = 12;
 
@@ -248,14 +184,6 @@ describe('Widget.vue', () => {
     });
 
     it('retrieves value as resolvable promise', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId
-            }
-        });
-
         const expectedValue = 10;
         const newValue = 42;
 
@@ -265,11 +193,9 @@ describe('Widget.vue', () => {
         ).toEqual(expectedValue);
 
         wrapper.vm.publishUpdate({
-            isValid: true,
             nodeId,
-            update: {
-                'viewRepresentation.currentValue.testValue': newValue
-            }
+            type: 'testValue',
+            value: newValue
         });
 
         expect(
@@ -283,51 +209,7 @@ describe('Widget.vue', () => {
         });
     });
 
-    it('rejects value promise on error', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId
-            }
-        });
-        const expectedValue = 10;
-
-        expect(
-            wrapper.vm.$store.state.pagebuilder.page.wizardPageContent
-                .webNodes.id1.viewRepresentation.currentValue.testValue
-        ).toEqual(expectedValue);
-
-        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {}); // avoid clutter
-
-        wrapper.vm.publishUpdate({
-            isValid: true,
-            nodeId,
-            update: {
-                // wrong format
-                viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-                }
-            }
-        });
-
-        consoleSpy.mockRestore();
-
-        let valPromise = wrapper.vm.getValue();
-        return expect(valPromise).rejects.toStrictEqual(
-            new Error('Value of widget could not be retrieved.')
-        );
-    });
-
     it('registers a value getter with the store', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId
-            }
-        });
-
         expect(wrapper.vm.hasValueGetter).toBe(true);
         expect(typeof wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId]).toBe('function');
         expect(wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId])
@@ -336,8 +218,13 @@ describe('Widget.vue', () => {
 
     // test with an output widget to ensure the store does not register a getter
     it('prevents value getter registration for incompatible types', () => {
-        let wrapper = shallowMount(Widget, {
-            ...context,
+        expect(wrapper.vm.hasValueGetter).toBe(true);
+        expect(typeof wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId]).toBe('function');
+
+        let nodeId2 = 'node2';
+        let newWrapper = shallowMount(Widget, {
+            store,
+            localVue,
             propsData: {
                 nodeConfig: {
                     nodeInfo: {
@@ -350,11 +237,27 @@ describe('Widget.vue', () => {
                         text: 'Test String to prevent TextWidget prop validation failure'
                     }
                 },
-                nodeId
+                nodeId: nodeId2
+            },
+            stubs: {
+                TextOutput: {
+                    name: 'text-output-widget',
+                    template: '<div />',
+                    ref: 'widget',
+                    methods: {
+                        validate() { return true; }
+                    }
+                }
             }
         });
 
-        expect(wrapper.vm.hasValueGetter).toBe(false);
-        expect(typeof wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId]).toBe('undefined');
+        expect(newWrapper.vm.hasValueGetter).toBe(false);
+        expect(typeof newWrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId2]).toBe('undefined');
+    });
+
+    it('registers a validator with the store', () => {
+        expect(typeof wrapper.vm.$store.state.pagebuilder.pageValidators[nodeId]).toBe('function');
+        expect(wrapper.vm.$store.state.pagebuilder.pageValidators[nodeId])
+            .toBe(wrapper.vm.validate);
     });
 });

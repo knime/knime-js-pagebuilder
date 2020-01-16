@@ -51,7 +51,7 @@ describe('Slider.vue', () => {
         let newValue = wrapper.vm.value + 1;
         wrapper.vm.$refs.slider.setValue(newValue);
 
-        expect(wrapper.emitted().updateValue).toBeTruthy();
+        expect(wrapper.emitted().input).toBeTruthy();
     });
 
     it('invalidates undefined values', () => {

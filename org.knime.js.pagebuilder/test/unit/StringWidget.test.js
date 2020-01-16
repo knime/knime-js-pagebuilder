@@ -3,7 +3,7 @@ import { shallowMount, mount } from '@vue/test-utils';
 
 import StringWidget from '@/components/widgets/input/StringWidget';
 import InputField from '~/webapps-common/ui/components/forms/InputField';
-import TextArea from '@/components/widgets/baseElements/input/TextArea';
+import TextArea from '~/webapps-common/ui/components/forms/TextArea';
 
 describe('StringWidget.vue', () => {
     let propsDataInput, propsDateTextArea;
@@ -147,29 +147,20 @@ describe('StringWidget.vue', () => {
         expect(wrapper.find(TextArea)).toBeTruthy();
     });
 
-    // TODO remove with WEBP-120
     it('\'s children will change appearance when invalid', () => {
 
         let wrapper2 = mount(StringWidget, {
             propsData: propsDateTextArea
         });
 
-        let textareaComponent = wrapper2.find(TextArea);
-        expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBeGreaterThan(-1);
+        let textComponent = wrapper2.find(TextArea);
+        expect(textComponent.classes()).toContain('invalid');
 
-        textareaComponent.setProps({ isValid: true });
-        expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBe(-1);
+        textComponent.setProps({ isValid: true });
+        expect(textComponent.classes()).not.toContain('invalid');
 
-        textareaComponent.setProps({ isValid: false });
-        expect(textareaComponent.vm.textAreaClass.indexOf('knime-textarea-invalid')).toBeGreaterThan(-1);
-    });
-
-    it('has validate logic to invalidate required values', () => {
-        let wrapper = mount(StringWidget, {
-            propsData: propsDataInput
-        });
-
-        expect(wrapper.vm.validate(false)).toBe(false);
+        textComponent.setProps({ isValid: false });
+        expect(textComponent.classes()).toContain('invalid');
     });
 
     it('has validate logic to validate non-required values', () => {
@@ -178,52 +169,40 @@ describe('StringWidget.vue', () => {
             propsData: propsDataInput
         });
 
-        expect(wrapper.vm.validate(false)).toBe(true);
+        expect(wrapper.vm.validate()).toBe(true);
+        wrapper.find(InputField).setProps({ value: '' });
+        expect(wrapper.vm.validate()).toBe(true);
     });
 
     it('will return invalid when the value is required but missing', () => {
-        jest.useFakeTimers();
-
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput
         });
+        wrapper.find(InputField).setProps({ value: '' });
+        expect(wrapper.vm.validate()).toBeFalsy();
+        wrapper.find(InputField).setProps({ value: 'a' });
+        expect(wrapper.vm.validate()).toBeTruthy();
 
-        expect(wrapper.vm.validate('')).toBeFalsy();
-        expect(wrapper.vm.validate('a')).toBeTruthy();
-
-
-        // TODO refactor with WEBP-120
         let wrapper2 = mount(StringWidget, {
             propsData: propsDateTextArea
         });
 
-        jest.runAllTimers();
-
-        let { updateWidget } = wrapper2.emitted();
-        expect(updateWidget).toBeTruthy();
-        expect(updateWidget[0][0].isValid).toBeTruthy();
-
-        let textAreaChild = wrapper2.find(TextArea);
-        textAreaChild.setProps({ value: '' });
-        textAreaChild.vm.onValueChange({});
-        
-        jest.runAllTimers();
-        
-        ({ updateWidget } = wrapper2.emitted());
-        expect(updateWidget).toBeTruthy();
-        expect(updateWidget[1][0].isValid).toBeFalsy();
+        wrapper2.find(TextArea).setProps({ value: '' });
+        expect(wrapper2.vm.validate()).toBeFalsy();
+        wrapper2.find(TextArea).setProps({ value: 'a' });
+        expect(wrapper2.vm.validate()).toBeTruthy();
     });
 
-    it('has empty error message when valid', () => {
+    it('has no error message when valid', () => {
         propsDataInput.isValid = true;
         let wrapper = shallowMount(StringWidget, {
             propsData: propsDataInput
         });
 
-        expect(wrapper.vm.errorMessage).toBe('');
+        expect(wrapper.vm.errorMessage).toBe(null);
     });
 
-    it('has provided error message when valid', () => {
+    it('has error message when valid', () => {
         let wrapper = shallowMount(StringWidget, {
             propsData: propsDataInput
         });

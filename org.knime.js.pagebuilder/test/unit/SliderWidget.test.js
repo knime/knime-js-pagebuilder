@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import { mount, shallowMount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 
 import SliderWidget from '@/components/widgets/input/SliderWidget';
 import Slider from '@/components/widgets/baseElements/input/Slider';
@@ -7,7 +7,7 @@ import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 import { addKnimeClasses } from '../../src/util/widgetUtil/slider/knimeClasses';
 
 describe('SliderWidget.vue', () => {
-    let context, nodeConfig, nodeId, isValid;
+    let context, nodeConfig, nodeId, isValid, wrapper;
 
     beforeEach(() => {
         nodeConfig = {
@@ -116,71 +116,32 @@ describe('SliderWidget.vue', () => {
         };
         nodeId = 'id1';
         isValid = true;
-    });
-
-    it('renders', () => {
-        let wrapper = shallowMount(SliderWidget, {
+        wrapper = shallowMount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
                 nodeId,
-                isValid
+                isValid,
+                valuePair: nodeConfig.viewRepresentation.currentValue
             }
         });
+    });
+
+    it('renders', () => {
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
     it('has a Slider component', () => {
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
         expect(wrapper.find(Slider)).toBeTruthy();
     });
 
-    // TODO AP-12850: update component level validation
-    it('validates as false without a value', () => {
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-        expect(wrapper.vm.validate()).toBe(false);
-    });
-
     it('has correct data properties', () => {
-        let propsData = {
-            nodeConfig,
-            nodeId,
-            isValid
-        };
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData
-        });
-
         expect(wrapper.vm.viewRep).toBe(nodeConfig.viewRepresentation);
         expect(wrapper.vm.sliderSettings).toBe(nodeConfig.viewRepresentation.sliderSettings);
     });
 
     it('has correct computed properties', () => {
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
         // tooltip format and marks and labels tested separately
         expect(wrapper.vm.label).toBe('Testing Slider');
         expect(wrapper.vm.min).toBe(5);
@@ -194,16 +155,6 @@ describe('SliderWidget.vue', () => {
     });
 
     it('uses custom max and min if present and appropriate', () => {
-        let propsData = {
-            nodeConfig,
-            nodeId,
-            isValid
-        };
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData
-        });
-
         expect(wrapper.vm.min).toBe(5);
         expect(wrapper.vm.max).toBe(25);
 
@@ -221,16 +172,6 @@ describe('SliderWidget.vue', () => {
     });
 
     it('sets height if slider is vertical', () => {
-        let propsData = {
-            nodeConfig,
-            nodeId,
-            isValid
-        };
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData
-        });
-
         expect(wrapper.vm.height).toBe(533);
 
         nodeConfig.viewRepresentation.sliderSettings.orientation = 'horizontal';
@@ -239,15 +180,6 @@ describe('SliderWidget.vue', () => {
     });
 
     it('creates tooltip formatting function if present', () => {
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
         expect(typeof wrapper.vm.tooltipFormat).toBe('function');
         expect(wrapper.vm.tooltipFormat(1.234)).toBe('$1.23_');
 
@@ -259,22 +191,13 @@ describe('SliderWidget.vue', () => {
 
     // determines if the slider bar is filled, half (w/ orientation) or none
     it('correctly interprets the "none" connect configuration', () => {
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
         expect(wrapper.vm.connect).toBe('none');
     });
 
     // determines if the slider bar is filled, half (w/ orientation) or none
     it('correctly interprets the "bottom" connect configuration', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[1] = true;
-        let wrapper = shallowMount(SliderWidget, {
+        let wrapper2 = shallowMount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
@@ -283,13 +206,13 @@ describe('SliderWidget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.connect).toBe('bottom');
+        expect(wrapper2.vm.connect).toBe('bottom');
     });
 
     // determines if the slider bar is filled, half (w/ orientation) or none
     it('correctly interprets the "top" connect configuration', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[0] = true;
-        let wrapper = shallowMount(SliderWidget, {
+        let wrapper2 = shallowMount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
@@ -298,14 +221,14 @@ describe('SliderWidget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.connect).toBe('top');
+        expect(wrapper2.vm.connect).toBe('top');
     });
 
     // determines if the slider bar is filled, half (w/ orientation) or none
     it('correctly interprets the "both" connect configuration', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[0] = true;
         nodeConfig.viewRepresentation.sliderSettings.connect[1] = true;
-        let wrapper = shallowMount(SliderWidget, {
+        let wrapper2 = shallowMount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
@@ -314,157 +237,48 @@ describe('SliderWidget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.connect).toBe('both');
+        expect(wrapper2.vm.connect).toBe('both');
     });
 
     // cannot test fully without DOM, but method is failsafe
     it('trys to apply KNIME class styles to the Slider', () => {
-        let wrapper = mount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
         expect(addKnimeClasses(wrapper.vm.$el.childNodes[1].childNodes[0])).toBeUndefined();
     });
 
-    it('sets debouncer when an update is received', () => {
-
-        jest.useFakeTimers();
-
-        let getWrapper = () => shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
-        let wrapper = getWrapper();
-
-        let changeEvent = {
-            value: 10,
-            isValid: true,
-            nodeId
-        };
-
-        wrapper.find(Slider).vm.$emit('updateValue', changeEvent);
-        expect(wrapper.vm.updateDebouncer).toBeTruthy();
-        jest.runAllTimers();
-        expect(typeof wrapper.vm.updateDebouncer).toBe('number');
-
-        wrapper = getWrapper();
-        wrapper.vm.onChange(changeEvent);
-        expect(wrapper.vm.updateDebouncer).toBeTruthy();
-        expect(typeof wrapper.vm.updateDebouncer).toBe('number');
-    });
-
-    it('captures and detects update events from Slider component with debounce', () => {
-        jest.useFakeTimers();
-
-        let wrapper = mount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
-        wrapper.find(Slider).vm.$emit('updateValue', {
-            value: 10,
-            isValid: true,
-            nodeId
-        });
-
-        expect(wrapper.emitted().updateWidget).toBeUndefined();
-        jest.runAllTimers();
-
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-    });
-
-    it('debounces multiple updates properly', () => {
-
-        jest.useFakeTimers();
-
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
-        let fireUpdate = () => {
-            wrapper.find(Slider).vm.$emit('updateValue', {
-                value: 10,
-                isValid: true,
-                nodeId
-            });
-        };
-
-        fireUpdate();
-        setTimeout(fireUpdate, 240);
-        jest.advanceTimersByTime(250);
-        expect(wrapper.emitted().updateWidget).toBeUndefined();
-        jest.advanceTimersByTime(251);
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-    });
-
-
     it('correctly emits the updateWidget Payload', () => {
-        jest.useFakeTimers();
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
-        wrapper.find(Slider).vm.$emit('updateValue', {
-            value: 10,
-            isValid: true,
-            nodeId
-        });
-
-        jest.advanceTimersByTime(251);
+        wrapper.find(Slider).vm.$emit('input', 10);
         const { updateWidget } = wrapper.emitted();
-        expect(updateWidget[0][0].isValid).toBeTruthy();
-        expect(updateWidget[0][0].update).toBeTruthy();
-        expect(updateWidget[0][0].update['viewRepresentation.currentValue.double']).toBe(10);
+        expect(updateWidget[0][0]).toBeTruthy();
+        expect(updateWidget[0][0].type).toBe('double');
+        expect(updateWidget[0][0].value).toBe(10);
     });
 
     it('has no error message when valid', () => {
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
-        expect(wrapper.vm.errorMessage).toBe('');
+        expect(wrapper.vm.errorMessage).toBe(null);
     });
 
     it('has default error message', () => {
-        let wrapper = shallowMount(SliderWidget, {
+        let wrapper2 = shallowMount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
                 nodeId,
                 isValid: false
+            },
+            stubs: {
+                form: {
+                    ref: 'form',
+                    name: 'slider',
+                    template: '<div />',
+                    methods: {
+                        getValue() { return true; },
+                        validate() { return true; }
+                    }
+                }
             }
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Current slider value is invalid');
+        expect(wrapper2.vm.errorMessage).toBe('Current slider value is invalid');
     });
 
     it('has warning message', () => {
@@ -483,7 +297,7 @@ describe('SliderWidget.vue', () => {
 
     it('has error message', () => {
         nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-        let wrapper = shallowMount(SliderWidget, {
+        let wrapper2 = shallowMount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
@@ -492,25 +306,14 @@ describe('SliderWidget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Testing error message');
+        expect(wrapper2.vm.errorMessage).toBe('Testing error message');
     });
 
     it('only displays error message when invalid', () => {
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid
-            }
-        });
-
         expect(wrapper.find(ErrorMessage).isVisible()).toBe(true);
-        expect(wrapper.find(ErrorMessage).vm.error).toBe('');
+        expect(wrapper.find(ErrorMessage).vm.error).toBe(null);
 
         wrapper.setProps({ isValid: false });
-
-        expect(wrapper.find(ErrorMessage).vm.error).not.toBe('');
         expect(wrapper.find(ErrorMessage).vm.error).toBe('Current slider value is invalid');
     });
 });

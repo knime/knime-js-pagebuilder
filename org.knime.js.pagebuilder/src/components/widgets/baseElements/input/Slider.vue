@@ -27,7 +27,7 @@ export default {
             type: Number
         },
         isValid: {
-            default: false,
+            default: true,
             type: Boolean
         },
         direction: {
@@ -67,28 +67,22 @@ export default {
             type: Boolean
         }
     },
-    mounted() {
-        this.$refs.slider.setValue(this.value);
-        this.onValueChange({});
-    },
     methods: {
         getValue() {
             return this.$refs.slider.getValue();
         },
-        onValueChange(e) {
-            this.$emit('updateValue', {
-                value: this.getValue(),
-                isValid: this.validate()
-            });
+        onInput(e) {
+            this.$emit('input', this.getValue());
         },
         validate() {
+            let value = this.getValue();
             if (this.minimum >= this.maximum || this.maximum <= this.minimum) {
                 return false;
             }
-            if (typeof this.getValue() === 'undefined') {
+            if (typeof value !== 'number') {
                 return false;
             }
-            if (this.getValue() < this.minimum || this.getValue() > this.maximum) {
+            if (value < this.minimum || value > this.maximum) {
                 return false;
             }
             return true;
@@ -98,9 +92,10 @@ export default {
 </script>
 
 <template>
-  <div class="scoped-parent">
+  <div>
     <VueSlider
       ref="slider"
+      :value="value"
       :min="minimum"
       :max="maximum"
       :silent="true"
@@ -114,7 +109,7 @@ export default {
       :drag-on-click="dragOnClick"
       :contained="contained"
       :lazy="true"
-      @change="onValueChange"
+      @change="onInput"
     />
   </div>
 </template>

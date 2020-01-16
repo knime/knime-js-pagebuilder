@@ -25,12 +25,13 @@ describe('ErrorMessage.vue', () => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
-    it('renders whitespace for empty message (to make MS Edge happy)', () => {
+    it('renders empty wrapper when there is no error message', () => {
         let wrapper = shallowMount(ErrorMessage, {
             propsData: {
                 error: null
             }
         });
-        expect(wrapper.html()).toMatch('&nbsp;');
+        expect(wrapper.isVisible()).toBeTruthy();
+        expect(wrapper.text()).toBe('');
     });
 });

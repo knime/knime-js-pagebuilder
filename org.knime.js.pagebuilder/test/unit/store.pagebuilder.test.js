@@ -20,9 +20,9 @@ describe('PageBuilder store', () => {
     it('creates an empty store', () => {
         expect(store.state.page).toBe(null);
         expect(store.state.resourceBaseUrl).toBe('');
-        expect(store.state.pageValidity).toEqual({});
+        expect(store.state.pageValidators).toEqual({});
         expect(store.state.pageValueGetters).toEqual({});
-        expect(store.state.viewsLoading).toEqual([]);
+        expect(store.state.webNodesLoading).toEqual([]);
     });
 
     it('allows setting page', () => {
@@ -112,14 +112,14 @@ describe('PageBuilder store', () => {
         });
     });
 
-    it('allows setting loading state for views', () => {
-        expect(store.state.viewsLoading.length).toBe(0);
+    it('allows setting loading state for webNodes', () => {
+        expect(store.state.webNodesLoading.length).toBe(0);
         let nodeId = '0.0.7';
         store.dispatch('setWebNodeLoading', { nodeId, loading: true });
-        expect(store.state.viewsLoading.length).toBe(1);
-        expect(store.state.viewsLoading[0]).toBe(nodeId);
+        expect(store.state.webNodesLoading.length).toBe(1);
+        expect(store.state.webNodesLoading[0]).toBe(nodeId);
         store.dispatch('setWebNodeLoading', { nodeId, loading: false });
-        expect(store.state.viewsLoading.length).toBe(0);
+        expect(store.state.webNodesLoading.length).toBe(0);
     });
 
     describe('node value updates', () => {
@@ -151,6 +151,39 @@ describe('PageBuilder store', () => {
 
             store.commit('updateWebNode', update);
             expect(node).toEqual({ foo: 'bar' });
+        });
+    });
+
+    describe('node validators', () => {
+        it('allows adding validator via action', () => {
+            let nodeId = '1.1.1';
+            let validator = function () {
+                return Promise.resolve(true);
+            };
+            expect(store.state.pageValidators[nodeId]).not.toBeDefined();
+            store.dispatch('addValidator', { nodeId, validator });
+            expect(store.state.pageValidators[nodeId]).toEqual(validator);
+        });
+
+        it('allows removing validator via action', () => {
+            let nodeId = '1.1.1';
+            let validator = function () {
+                return Promise.resolve(true);
+            };
+            store.dispatch('addValidator', { nodeId, validator });
+            expect(store.state.pageValidators[nodeId]).toEqual(validator);
+            store.dispatch('removeValidator', { nodeId });
+            expect(store.state.pageValidators[nodeId]).not.toBeDefined();
+        });
+
+        it('allows validating page via action', async () => {
+            let nodeId = '1.1.1';
+            let validator = function () {
+                return Promise.resolve({ nodeId, isValid: true });
+            };
+            store.dispatch('addValidator', { nodeId, validator });
+            let pageValidity = await store.dispatch('getValidity');
+            expect(pageValidity).toEqual({ [nodeId]: true });
         });
     });
 

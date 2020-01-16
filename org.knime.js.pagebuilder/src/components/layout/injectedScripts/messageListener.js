@@ -11,6 +11,29 @@
             var viewRepresentation = data.viewRepresentation;
             var viewValue = data.viewValue;
             window[namespace][initMethodName](viewRepresentation, viewValue);
+        } else if (data.type === 'validate') {
+            var validateMethod = data.validateMethodName;
+            var validateResponse = function (valid, errMsg) {
+                var resp = {
+                    isValid: valid,
+                    nodeId: nodeId,
+                    type: 'validate'
+                };
+                resp.error = errMsg || resp.error;
+                return resp;
+            };
+            if (window[namespace][validateMethod]) {
+                try {
+                    var validity = window[namespace][validateMethod]();
+                    parent.postMessage(validateResponse(validity), window.origin);
+                } catch (err) {
+                    parent.postMessage(validateResponse(false, 'View could not be validated: ' + err),
+                        window.origin);
+                }
+            } else {
+                parent.postMessage(validateResponse(false, 'Validate method not present in view.'),
+                    window.origin);
+            }
         } else if (data.type === 'getValue') {
             var getValueMethod = data.getViewValueMethodName;
             if (window[namespace][getValueMethod]) {

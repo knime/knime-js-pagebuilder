@@ -3,15 +3,11 @@ import Slider from '../baseElements/input/Slider';
 import Label from '../baseElements/text/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { format as sliderLabelFormatter } from '../../../util/numStrFormatter';
-import { getProp } from '../../../util/nestedProperty';
 import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
-import { addKnimeClasses } from '../../../util/widgetUtil/slider/knimeClasses';
 
-const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.double';
-const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.double';
+const DATA_TYPE = 'double';
 const MINIMUM_SLIDER_STEP = .000001;
 const VERTICAL_SLIDER_HEIGHT = 533;
-const DEBOUNCER_TIMEOUT = 250;
 
 /**
  * This is the implementation of the Slider Input Widget and the
@@ -42,14 +38,6 @@ export default {
          *          nodeInfo: {...},
          *          viewRepresentation: {
          *              sliderSettings: {...},
-         *              // *either*
-         *              currentValue: {
-         *                  double: Number
-         *              },
-         *              // *or*
-         *              defaultValue: {
-         *                  double: Number
-         *              },
          *              ...
          *          },
          *          ...
@@ -59,8 +47,7 @@ export default {
             required: true,
             type: Object,
             validator(obj) {
-                return obj.nodeInfo && obj.viewRepresentation.sliderSettings &&
-                    (getProp(obj, CURRENT_VALUE_KEY) || getProp(obj, DEFAULT_VALUE_KEY));
+                return obj.nodeInfo && obj.viewRepresentation.sliderSettings;
             }
         },
         nodeId: {
@@ -71,8 +58,14 @@ export default {
             }
         },
         isValid: {
-            default: false,
+            default: true,
             type: Boolean
+        },
+        valuePair: {
+            default: () => ({
+                [DATA_TYPE]: 0
+            }),
+            type: Object
         }
     },
     data() {
@@ -81,7 +74,6 @@ export default {
             sliderSettings: this.nodeConfig.viewRepresentation.sliderSettings
         };
     },
-    updateDebouncer: null,
     computed: {
         /**
          * TODO: AP-12916 Frontend: rewrite interactive range slider filter widget
@@ -99,7 +91,7 @@ export default {
         },
         errorMessage() {
             if (this.isValid) {
-                return '';
+                return null;
             }
             if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
                 return this.nodeConfig.nodeInfo.nodeErrorMessage;
@@ -122,15 +114,7 @@ export default {
             return this.sliderSettings.range.max[0];
         },
         value() {
-            let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
-            let defaultValue = getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
-            if (typeof currentValue === 'number') {
-                if (isNaN(currentValue)) {
-                    return defaultValue;
-                }
-                return currentValue;
-            }
-            return defaultValue;
+            return this.valuePair[DATA_TYPE];
         },
         /**
          * Maps the KNIME configuration settings to the appropriate direction
@@ -245,41 +229,21 @@ export default {
             }));
         }
     },
-    mounted() {
-        /**
-         * TODO: improve CSS parsing SRV-2713
-         *
-         * Add CSS manually.
-         */
-        addKnimeClasses(this.$el.childNodes[1].childNodes[0]);
-    },
     methods: {
-        onChange(e) {
-            clearTimeout(this.updateDebouncer);
-            const newValue = parseFloat(e.value);
-            const newWebNodeConfig = {
-                type: 'Slider',
+        onChange(value) {
+            const changeEventObj = {
                 nodeId: this.nodeId,
-                isValid: e.isValid && this.validate(newValue),
-                update: {
-                    [CURRENT_VALUE_KEY]: newValue
-                }
+                type: DATA_TYPE,
+                value
             };
-            this.updateDebouncer = setTimeout(() => {
-                this.$emit('updateWidget', newWebNodeConfig);
-            }, DEBOUNCER_TIMEOUT);
+            this.$emit('updateWidget', changeEventObj);
         },
-        validate(value) {
-            /*
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation
-             * currently fake validation to test styling
-             */
-            if (this.viewRep.required) {
-                return value || value === 0;
+        validate() {
+            if (!this.viewRep.required) {
+                return true;
             }
-            return true;
+            let value = this.$refs.form.getValue();
+            return Boolean(this.$refs.form.validate() && (value || value === 0));
         }
     }
 };
@@ -294,6 +258,7 @@ export default {
                { 'tooltip-label': tooltips }]"
     />
     <Slider
+      ref="form"
       :minimum="min"
       :maximum="max"
       :value="value"
@@ -308,12 +273,11 @@ export default {
       :class="['knime-slider',
                `knime-slider-${sliderSettings.orientation}`,
                {'tooltip-slider': tooltips }]"
-      @updateValue="onChange"
+      @input="onChange"
     />
     <ErrorMessage
       :error="errorMessage"
-      :class="['knime-error',
-               `knime-slider-${sliderSettings.orientation}-error`,
+      :class="[`knime-slider-${sliderSettings.orientation}-error`,
                {'tooltip-error': tooltips}]"
     />
   </div>

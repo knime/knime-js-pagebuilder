@@ -61,7 +61,7 @@ export default {
         },
         errorMessage() {
             if (this.isValid) {
-                return '';
+                return null;
             }
             if (this.viewRep.errorMessage) {
                 return this.viewRep.errorMessage;
@@ -102,18 +102,6 @@ export default {
             }
             return false;
         }
-    },
-    methods: {
-        /**
-         * No validation for the text output widget. Always true.
-         *
-         * @param {value} value - the value to validate.
-         * @returns {Boolean} always true because there is currently no validation for
-         *      the Text Output Widget.
-         */
-        validate(value) {
-            return true;
-        }
     }
 };
 </script>
@@ -137,10 +125,7 @@ export default {
       class="knime-qf-text knime-multiline"
       v-html="value"
     />
-    <ErrorMessage
-      :error="errorMessage"
-      class="knime-error"
-    />
+    <ErrorMessage :error="errorMessage" />
   </div>
 </template>
 

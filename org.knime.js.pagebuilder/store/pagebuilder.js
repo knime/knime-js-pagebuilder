@@ -1,14 +1,13 @@
 import { setProp } from '../src/util/nestedProperty';
-import Vue from 'vue';
 
 export const namespaced = true;
 
 export const state = () => ({
     page: null,
     resourceBaseUrl: '',
-    pageValidity: {},
-    pageValueGetters: {},
-    viewsLoading: []
+    webNodesLoading: [],
+    pageValidators: {},
+    pageValueGetters: {}
 });
 
 export const mutations = {
@@ -21,26 +20,10 @@ export const mutations = {
      */
     setPage(state, page) {
         state.page = page;
-
-        /* The `pageValidity` object stores the valid state of all webNodes in the page as an key/value pair.
-         *
-         * Boolean isValid values for each node are stored with a key of the corresponding nodeID.
-         *
-         * ex: state.pageValidity = {
-         *      1:0:1 : false,
-         *      ...
-         * }
-         *
-         * In order to make these properties reactive, they have to be initialized once using `Vue.set` whenever
-         * the page changes.
-         */
         let webNodes = page && page.wizardPageContent && page.wizardPageContent.webNodes;
         if (webNodes && typeof webNodes === 'object') {
-            state.pageValidity = {};
+            state.pageValidators = {};
             state.pageValueGetters = {};
-            Object.keys(webNodes).forEach((nodeId) => {
-                Vue.set(state.pageValidity, nodeId, true);
-            });
         }
     },
 
@@ -55,9 +38,6 @@ export const mutations = {
      *
      * The expected newWebNode object should
      * have keys/values for:
-     *
-     *      isValid: (Boolean) tells store if value
-     *                          should be updated or not.
      *      nodeId: (String) the nodeID from the workflow
      *              which is used to serialize the node
      *              in the store.
@@ -75,14 +55,9 @@ export const mutations = {
      * @return {undefined}
      */
     updateWebNode(state, newWebNode) {
-        // update the validity of the node
-        state.pageValidity[newWebNode.nodeId] = newWebNode.isValid;
-
         let currentWebNode = state.page.wizardPageContent.webNodes[newWebNode.nodeId];
-        let values = [];
         for (let [key, value] of Object.entries(newWebNode.update)) {
             try {
-                values.push(value);
                 setProp(currentWebNode, key, value);
             } catch (e) {
                 // catch deep Object modification errors
@@ -90,29 +65,33 @@ export const mutations = {
                 `because the provided key was invalid. Key:`, key);
             }
         }
-        if (!newWebNode.isValid) {
-            consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Node is now invalid` +
-                ` because of its new value(s). Value(s):`, values.join(', '));
-        }
     },
 
     setWebNodeLoading(state, { nodeId, loading }) {
-        let index = state.viewsLoading.indexOf(nodeId);
-        if (index < 0 && loading) {
+        let index = state.webNodesLoading.indexOf(nodeId);
+        if (index === -1 && loading) {
             // add nodeId to list of loading views if not already present
-            state.viewsLoading.push(nodeId);
+            state.webNodesLoading.push(nodeId);
         } else if (index >= 0 && !loading) {
             // remove nodeId from list of loading views if present
-            state.viewsLoading.splice(index, 1);
+            state.webNodesLoading.splice(index, 1);
         }
     },
 
     addValueGetter(state, { nodeId, valueGetter }) {
         state.pageValueGetters[nodeId] = valueGetter;
     },
-
+    
     removeValueGetter(state, nodeId) {
         delete state.pageValueGetters[nodeId];
+    },
+
+    addValidator(state, { nodeId, validator }) {
+        state.pageValidators[nodeId] = validator;
+    },
+
+    removeValidator(state, nodeId) {
+        delete state.pageValidators[nodeId];
     }
 };
 
@@ -164,5 +143,31 @@ export const actions = {
         });
 
         return values;
+    },
+
+    addValidator({ commit }, { nodeId, validator }) {
+        consola.trace('PageBuilder: add validator via action: ', nodeId);
+        commit('addValidator', { nodeId, validator });
+    },
+
+    removeValidator({ commit }, { nodeId }) {
+        consola.trace('PageBuilder: remove validator via action: ', nodeId);
+        commit('removeValidator', nodeId);
+    },
+
+    async getValidity({ state, dispatch }) {
+        let validityPromises = Object.values(state.pageValidators)
+            .map(validator => validator());
+        let validity = await Promise.all(validityPromises)
+            .then(validityArray => validityArray.reduce((obj, nodeResp) => {
+                obj[nodeResp.nodeId] = nodeResp.isValid;
+                return obj;
+            }, {}))
+            .catch((e) => {
+                let errMsg = `Page validation failed: ${e}`;
+                consola.error(errMsg);
+                throw new Error(errMsg);
+            });
+        return validity;
     }
 };

@@ -23,6 +23,14 @@ export default {
             let pageMock = this.pageMocks[e.target.selectedOptions[0].index - 1];
             this.$store.dispatch('pagebuilder/setPage', { page: pageMock ? pageMock.src : null });
         },
+        async onValidate() {
+            try {
+                let viewValidities = await this.$store.dispatch('pagebuilder/getValidity');
+                console.debug('viewValidities', viewValidities); // eslint-disable-line no-console
+            } catch (e) {
+                console.error('error while validating', e); // eslint-disable-line no-console
+            }
+        },
         async onGetViewValues() {
             try {
                 let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
@@ -63,6 +71,7 @@ export default {
           {{ page.name }}
         </option>
       </select>
+      <button @click="onValidate">print view validity to console</button>
       <button @click="onGetViewValues">print view values to console</button>
     </p>
 

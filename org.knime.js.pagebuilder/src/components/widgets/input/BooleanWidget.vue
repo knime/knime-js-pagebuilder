@@ -1,9 +1,7 @@
 <script>
 import Checkbox from '~/webapps-common/ui/components/forms/Checkbox';
-import { getProp } from '../../../util/nestedProperty';
 
-const CURRENT_VALUE_KEY = 'viewRepresentation.currentValue.boolean';
-const DEFAULT_VALUE_KEY = 'viewRepresentation.defaultValue.boolean';
+const DATA_TYPE = 'boolean';
 
 /**
  * This is the Boolean Input widget implementation.
@@ -28,8 +26,14 @@ export default {
             }
         },
         isValid: {
-            default: () => true,
+            default: true,
             type: Boolean
+        },
+        valuePair: {
+            default: () => ({
+                boolean: true
+            }),
+            type: Object
         }
     },
     data() {
@@ -45,31 +49,20 @@ export default {
             return this.viewRep.description || '';
         },
         value() {
-            let currentValue = getProp(this.nodeConfig, CURRENT_VALUE_KEY);
-            return typeof currentValue === 'boolean'
-                ? currentValue
-                : getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
+            return this.valuePair[DATA_TYPE];
         }
     },
     methods: {
-        onChange(e) {
-            const newWebNodeConfig = {
-                type: 'Boolean Input',
+        onChange(value) {
+            const changeEventObj = {
                 nodeId: this.nodeId,
-                isValid: this.validate(e),
-                update: {
-                    [CURRENT_VALUE_KEY]: e
-                }
+                type: DATA_TYPE,
+                value
             };
-            this.$emit('updateWidget', newWebNodeConfig);
+            this.$emit('updateWidget', changeEventObj);
         },
-        validate(value) {
-            /*
-             * TODO: SRV-2626
-             *
-             * insert additional custom widget validation
-             */
-            return typeof value === 'boolean';
+        validate() {
+            return typeof this.value === 'boolean';
         }
     }
 };
@@ -81,6 +74,7 @@ export default {
     class="knime-checkbox"
   >
     <Checkbox
+      ref="form"
       :value="value"
       box-size="medium"
       class="knime-boolean knime-qf-title"
