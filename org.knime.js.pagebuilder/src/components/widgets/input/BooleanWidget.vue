@@ -71,13 +71,13 @@ export default {
 <template>
   <div
     :title="description"
-    class="knime-checkbox"
+    class="checkbox-widget"
   >
     <Checkbox
       ref="form"
       :value="value"
       box-size="medium"
-      class="knime-boolean knime-qf-title"
+      class="checkbox-input"
       @input="onChange"
     >
       {{ label }}
@@ -86,19 +86,21 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.knime-checkbox {
+div {
   display: flex;
 
-  & .knime-label {
-    overflow: hidden;
-  }
-
-  & .knime-qf-title {
+  & .checkbox-input {
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
     display: block;
     margin-bottom: 5px;
+    &.medium {
+        padding-top: 0;
+    }
+    &.large {
+      padding-top: 3px;
+    }
   }
 }
 </style>
