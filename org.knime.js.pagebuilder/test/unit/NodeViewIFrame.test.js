@@ -17,6 +17,7 @@ describe('NodeViewIframe.vue', () => {
         localVue = createLocalVue();
         localVue.use(Vuex);
 
+        storeConfig.actions.setWebNodeLoading = jest.fn();
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
@@ -256,6 +257,36 @@ describe('NodeViewIframe.vue', () => {
                 viewValue: { dummyValue: true },
                 type: 'init'
             }, window.origin);
+        });
+
+        it('sets view loading on store', () => {
+            let wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    nodeId: '0.0.7',
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        initMethodName: 'initMe',
+                        viewRepresentation: { dummyRepresentation: true },
+                        viewValue: { dummyValue: true }
+                    }
+                }
+            });
+            // before resource loading
+            let calls = storeConfig.actions.setWebNodeLoading.mock.calls;
+            let lastCall = calls[calls.length - 1];
+            expect(lastCall[1]).toMatchObject({ nodeId: '0.0.7', loading: true });
+            
+            // mock resource loading done
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'load' }
+            });
+
+            calls = storeConfig.actions.setWebNodeLoading.mock.calls;
+            lastCall = calls[calls.length - 1];
+            expect(lastCall[1]).toMatchObject({ nodeId: '0.0.7', loading: false });
         });
     });
 

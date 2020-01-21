@@ -5,6 +5,7 @@ export const namespaced = true;
 export const state = () => ({
     page: null,
     resourceBaseUrl: '',
+    webNodesLoading: [],
     pageValidators: {},
     pageValueGetters: {}
 });
@@ -66,6 +67,17 @@ export const mutations = {
         }
     },
 
+    setWebNodeLoading(state, { nodeId, loading }) {
+        let index = state.webNodesLoading.indexOf(nodeId);
+        if (index === -1 && loading) {
+            // add nodeId to list of loading views if not already present
+            state.webNodesLoading.push(nodeId);
+        } else if (index >= 0 && !loading) {
+            // remove nodeId from list of loading views if present
+            state.webNodesLoading.splice(index, 1);
+        }
+    },
+
     addValueGetter(state, { nodeId, valueGetter }) {
         state.pageValueGetters[nodeId] = valueGetter;
     },
@@ -98,6 +110,11 @@ export const actions = {
         consola.trace(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Updated value via action:`,
             newWebNode);
         commit('updateWebNode', newWebNode);
+    },
+
+    setWebNodeLoading({ commit }, { nodeId, loading }) {
+        consola.trace(`PageBuilder: setting loading state of ${nodeId} via action: `, loading);
+        commit('setWebNodeLoading', { nodeId, loading });
     },
 
     addValueGetter({ commit }, { nodeId, valueGetter }) {

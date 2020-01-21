@@ -61,6 +61,13 @@ export default {
     },
 
     computed: {
+        webNode() {
+            let page = this.$store.state.pagebuilder.page;
+            if (page && page.webNodes) {
+                return page.webNodes.filter(node => this.nodeId === node.nodeId)[0];
+            }
+            return null;
+        },
         nodeJsLibs() {
             return this.nodeConfig.javascriptLibraries || [];
         },
@@ -97,6 +104,7 @@ export default {
     },
 
     mounted() {
+        this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: true });
         window.addEventListener('message', this.messageFromIframe);
 
         this.document = this.$refs.iframe.contentDocument;
@@ -242,6 +250,7 @@ export default {
                         this.setHeight();
                     }
                 }
+                this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
             } else if (event.data.type === 'validate') {
                 this.validateCallback({ isValid: event.data.isValid });
             } else if (event.data.type === 'getValue') {
