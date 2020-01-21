@@ -86,6 +86,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
+
 div {
   display: flex;
 
@@ -95,9 +96,11 @@ div {
     line-height: 24px;
     display: block;
     margin-bottom: 5px;
+
     &.medium {
-        padding-top: 0;
+      padding-top: 0;
     }
+
     &.large {
       padding-top: 3px;
     }
