@@ -154,13 +154,12 @@ describe('StringWidget.vue', () => {
         });
 
         let textComponent = wrapper2.find(TextArea);
-        expect(textComponent.find('textarea').classes()).toContain('invalid');
 
         textComponent.setProps({ isValid: true });
-        expect(textComponent.find('textarea').classes()).not.toContain('invalid');
+        expect(textComponent.props('isValid')).toBe(true);
 
         textComponent.setProps({ isValid: false });
-        expect(textComponent.find('textarea').classes()).toContain('invalid');
+        expect(textComponent.props('isValid')).toBe(false);
     });
 
     it('has validate logic to validate non-required values', () => {
