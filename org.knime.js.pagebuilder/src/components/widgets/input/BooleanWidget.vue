@@ -71,7 +71,6 @@ export default {
 <template>
   <div
     :title="description"
-    class="checkbox-widget"
   >
     <Checkbox
       ref="form"
