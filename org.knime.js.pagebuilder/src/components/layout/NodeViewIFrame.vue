@@ -202,6 +202,7 @@ export default {
             scripts.push(`<script>
                 if (typeof knimeService !== 'undefined') {
                     knimeService.resourceBaseUrl = '${resourceBaseUrl}';
+                    knimeService.pageBuilderPresent = true;
                 }
             <\/script>`); // eslint-disable-line no-useless-escape
 
