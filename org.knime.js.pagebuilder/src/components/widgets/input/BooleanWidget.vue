@@ -69,19 +69,16 @@ export default {
 </script>
 
 <template>
-  <div
+  <Checkbox
+    ref="form"
+    :value="value"
+    box-size="medium"
+    class="checkbox-input"
+    @input="onChange"
     :title="description"
   >
-    <Checkbox
-      ref="form"
-      :value="value"
-      box-size="medium"
-      class="checkbox-input"
-      @input="onChange"
-    >
-      {{ label }}
-    </Checkbox>
-  </div>
+    {{ label }}
+  </Checkbox>
 </template>
 
 <style lang="postcss" scoped>
