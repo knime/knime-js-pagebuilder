@@ -88,8 +88,6 @@ export default {
 <style lang="postcss" scoped>
 
 div {
-  display: flex;
-
   & .checkbox-input {
     font-weight: 700;
     font-size: 16px;
@@ -97,13 +95,8 @@ div {
     display: block;
     margin-bottom: 5px;
 
-    &.medium {
-      padding-top: 0;
-    }
-
-    &.large {
-      padding-top: 3px;
-    }
+    /* overwrite medium style */
+    padding-top: 0;
   }
 }
 </style>
