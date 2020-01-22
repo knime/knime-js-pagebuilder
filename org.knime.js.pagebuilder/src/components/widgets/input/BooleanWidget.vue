@@ -82,17 +82,14 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
+.checkbox-input {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  display: block;
+  margin-bottom: 5px;
 
-div {
-  & .checkbox-input {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 24px;
-    display: block;
-    margin-bottom: 5px;
-
-    /* overwrite medium style */
-    padding-top: 0;
-  }
+  /* overwrite medium style */
+  padding-top: 0;
 }
 </style>
