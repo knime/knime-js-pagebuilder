@@ -78,9 +78,10 @@ describe('NumberWidget.vue', () => {
         });
 
         let numericInputComponent = wrapper.find(NumberInput);
-        numericInputComponent.setProps({ isValid: true });
+
+        wrapper.setProps({ isValid: true });
         expect(numericInputComponent.props('isValid')).toBe(true);
-        numericInputComponent.setProps({ isValid: false });
+        wrapper.setProps({ isValid: false });
         expect(numericInputComponent.props('isValid')).toBe(false);
     });
 
