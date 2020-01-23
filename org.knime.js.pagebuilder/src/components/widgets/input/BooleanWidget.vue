@@ -90,6 +90,8 @@ export default {
   margin-bottom: 5px;
 
   /* overwrite medium style */
-  padding-top: 0;
+  &.medium {
+    padding-top: 0;
+  }
 }
 </style>
