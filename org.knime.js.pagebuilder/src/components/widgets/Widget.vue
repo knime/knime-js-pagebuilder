@@ -175,8 +175,7 @@ export default {
 </script>
 
 <template>
-  <!-- knime-qf-container legacy selector -->
-  <div class="knime-widget knime-qf-container">
+  <div>
     <Component
       :is="type"
       ref="widget"
@@ -189,7 +188,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.knime-widget {
+div {
   width: 100%;
   height: 100%;
   background-color: white;
