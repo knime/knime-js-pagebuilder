@@ -72,7 +72,7 @@ export default {
   <Checkbox
     ref="form"
     :value="value"
-    box-size="medium"
+    label-size="large"
     class="checkbox-input"
     @input="onChange"
     :title="description"
@@ -80,18 +80,3 @@ export default {
     {{ label }}
   </Checkbox>
 </template>
-
-<style lang="postcss" scoped>
-.checkbox-input {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  display: block;
-  margin-bottom: 5px;
-
-  /* overwrite medium style */
-  &.medium {
-    padding-top: 0;
-  }
-}
-</style>
