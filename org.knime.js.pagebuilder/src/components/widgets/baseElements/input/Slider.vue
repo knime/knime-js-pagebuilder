@@ -130,7 +130,7 @@ export default {
 /* rail style */
 .vue-slider-rail {
   cursor: pointer;
-  background-color: var(--theme-color-porcelain);
+  background-color: var(--theme-color-stone-gray);
   border-radius: 0;
 }
 
@@ -141,7 +141,12 @@ export default {
 
 .vue-slider-rtl .vue-slider-rail,
 .vue-slider-ltr .vue-slider-rail {
-  height: 3px !important;
+  height: 1px !important;
+}
+
+.vue-slider-ttb,
+.vue-slider-btt {
+  width: 1px !important;
 }
 
 /* process style */
@@ -231,12 +236,13 @@ export default {
   cursor: pointer;
   height: 29px !important;
   width: 19px !important;
-  background-color: var(--theme-color-porcelain);
+  border: 1px solid var(--theme-color-stone-gray);
+  background: var(--theme-color-white);
   z-index: 1;
 }
 
 .vue-slider-dot:hover {
-  background-color: var(--theme-color-silver-sand);
+  background-color: var(--theme-color-porcelain);
 }
 
 .vue-slider-ttb .vue-slider-dot,
