@@ -175,7 +175,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="widget">
     <Component
       :is="type"
       ref="widget"
@@ -188,7 +188,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-div {
+.widget {
   width: 100%;
   height: 100%;
   background-color: white;
