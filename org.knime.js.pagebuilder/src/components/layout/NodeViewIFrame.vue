@@ -76,6 +76,7 @@ export default {
         },
         innerStyle() {
             // prevent margin collapsation of body’s children, which causes incorrect height detection
+            // TODO this breaks some views, e.g. the slider width, see WEBP-219
             let style = 'body { display: inline-block; }';
             if (this.scrolling) {
                 if (this.pollHeight) {
@@ -203,6 +204,7 @@ export default {
                 if (typeof knimeService !== 'undefined') {
                     knimeService.resourceBaseUrl = '${resourceBaseUrl}';
                     knimeService.pageBuilderPresent = true;
+                    knimeService.nodeId = '${this.nodeId}';
                 }
             <\/script>`); // eslint-disable-line no-useless-escape
 
@@ -234,6 +236,7 @@ export default {
             if (!event.data || event.data.nodeId !== this.nodeId) {
                 return;
             }
+
             if (event.data.type === 'load') {
                 consola.debug(`View resource loading for ${this.nodeId} completed`);
                 this.document.defaultView.postMessage({
@@ -261,6 +264,8 @@ export default {
                 } else {
                     this.getValueCallback({ value: event.data.value });
                 }
+            } else {
+                this.handleInteractivity(event);
             }
         },
 
@@ -310,6 +315,48 @@ export default {
                     reject(new Error('Value could not be retrieved in the allocated time.'));
                 }, valueGetterTimeout);
             });
+        },
+
+        handleInteractivity(event) {
+            let interactivityType = event.data.type;
+            switch (interactivityType) {
+            case 'subscribeToEvents':
+                consola.trace(`subscribe to event called`, this.nodeId, event.data);
+                // TODO call store
+                break;
+            case 'unsubscribeFromEvents':
+                consola.trace(`unsubscribe from event called`, this.nodeId, event.data);
+                // TODO call store
+                break;
+            case 'publishEvent':
+                consola.trace(`publish event called`, this.nodeId, event.data);
+                // TODO call store with WEBP-74
+                break;
+            case 'getPublishedElement': {
+                consola.trace(`getPublishedElement called`);
+                let value = { elements: [{ id: 'foobar' }] }; // TODO retrieve from store
+                this.document.defaultView.postMessage({
+                    type: 'publishedElement',
+                    sequence: event.data.sequence,
+                    value
+                }, window.origin);
+                break;
+            }
+            case 'registerSelectionTranslator':
+                consola.trace(`registerSelectionTranslator called`);
+                // TODO register with WEBP-73
+                break;
+            default:
+                break;
+            }
+        },
+
+        informIframe(event) {
+            let data = {
+                nodeId: this.nodeId,
+                type: 'interactivityEvent'
+            };
+            this.document.defaultView.postMessage(data, window.origin);
         }
 
     }
