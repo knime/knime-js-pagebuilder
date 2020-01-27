@@ -12,7 +12,7 @@ export const state = () => ({
 
 export const mutations = {
     addSubscriber(state, { id, callback, elementFilter }) {
-        addInteractivityId(id);
+        addInteractivityId(state, id);
         state[id].subscribers.push({ callback, elementFilter });
     },
     removeSubscriber(state, { id, callback }) {
@@ -24,8 +24,8 @@ export const mutations = {
         }
     },
     updateData(state, { id, data }) {
-        addInteractivityId(id);
-        // TODO process changesets, combine filters...
+        addInteractivityId(state, id);
+        // TODO process changesets, combine filters... WEBP-74
     },
     clear(state) {
         state = {};
@@ -35,17 +35,27 @@ export const mutations = {
 export const actions = {
     subscribe({ commit }, { id, callback, elementFilter }) {
         commit('addSubscriber', { id, callback, elementFilter });
-        // TODO inform subscriber of current state
+        // TODO inform subscriber of current state WEBP-74
     },
     unsubscribe({ commit }, { id, callback }) {
         commit('removeSubscriber', { id, callback });
     },
     publish({ commit }, { id, data, callback }) {
         commit('updateData', { id, data });
-        // TODO call subscribers
+        // TODO call subscribers WEBP-74
+    },
+    clear({ commit }) {
+        commit('clear');
     }
 };
 
 export const getters = {
+    getPublishedElement: (state) => (id) => {
+        if (state[id]) {
+            return state[id].data;
+        } else {
+            return null;
+        }
+    }
 };
 

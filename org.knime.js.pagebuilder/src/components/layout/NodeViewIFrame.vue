@@ -112,6 +112,16 @@ export default {
         this.injectContent();
         this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+
+        // create global API (used by iframes)
+        let getPublishedElementFunc = this.$store.getters['pagebuilder/interactivity/getPublishedElement'];
+        if (!window.KnimePageBuilderAPI) {
+            window.KnimePageBuilderAPI = {
+                getPublishedElement(id) {
+                    return getPublishedElementFunc(id);
+                }
+            };
+        }
     },
 
     beforeDestroy() {
@@ -121,6 +131,9 @@ export default {
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
+
+        // remove global API
+        delete window.KnimePageBuilderAPI;
     },
 
     methods: {
@@ -254,6 +267,7 @@ export default {
                         this.setHeight();
                     }
                 }
+
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
             } else if (event.data.type === 'validate') {
                 this.validateCallback({ isValid: event.data.isValid });
@@ -321,29 +335,26 @@ export default {
             let interactivityType = event.data.type;
             switch (interactivityType) {
             case 'subscribeToEvents':
-                consola.trace(`subscribe to event called`, this.nodeId, event.data);
-                // TODO call store
+                consola.debug(`subscribe to event called`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/subscribe', {
+                    id: event.data.id,
+                    callback: this.informIframe,
+                    elementFilter: event.data.elementFilter
+                });
                 break;
             case 'unsubscribeFromEvents':
-                consola.trace(`unsubscribe from event called`, this.nodeId, event.data);
-                // TODO call store
+                consola.debug(`unsubscribe from event called`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/unsubscribe', {
+                    id: event.data.id,
+                    callback: this.informIframe
+                });
                 break;
             case 'publishEvent':
-                consola.trace(`publish event called`, this.nodeId, event.data);
+                consola.debug(`publish event called`, this.nodeId, event.data);
                 // TODO call store with WEBP-74
                 break;
-            case 'getPublishedElement': {
-                consola.trace(`getPublishedElement called`);
-                let value = { elements: [{ id: 'foobar' }] }; // TODO retrieve from store
-                this.document.defaultView.postMessage({
-                    type: 'publishedElement',
-                    sequence: event.data.sequence,
-                    value
-                }, window.origin);
-                break;
-            }
             case 'registerSelectionTranslator':
-                consola.trace(`registerSelectionTranslator called`);
+                consola.debug(`registerSelectionTranslator called`);
                 // TODO register with WEBP-73
                 break;
             default:
@@ -351,11 +362,14 @@ export default {
             }
         },
 
-        informIframe(event) {
+        informIframe(id, payload) {
             let data = {
                 nodeId: this.nodeId,
-                type: 'interactivityEvent'
+                type: 'interactivityEvent',
+                id,
+                payload
             };
+            consola.warn('Sending ', data);
             this.document.defaultView.postMessage(data, window.origin);
         }
 
