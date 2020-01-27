@@ -9,7 +9,6 @@ import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
-import { applyCustomCss } from '../../util/customCss';
 
 /**
  * A Widget node view. This top level component sits at
@@ -115,8 +114,6 @@ export default {
                 this.isValid = resp.isValid;
             });
         }
-
-        applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
         if (this.hasValidator) {
