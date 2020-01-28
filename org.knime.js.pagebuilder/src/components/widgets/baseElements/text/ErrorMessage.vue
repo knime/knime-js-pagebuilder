@@ -13,8 +13,7 @@ export default {
 </script>
 
 <template>
-  <!-- knime-qf-error legacy selector -->
-  <span class="knime-error knime-qf-error">{{ error || '' }}</span>
+  <span>{{ error || '' }}</span>
 </template>
 
 <style lang="postcss" scoped>

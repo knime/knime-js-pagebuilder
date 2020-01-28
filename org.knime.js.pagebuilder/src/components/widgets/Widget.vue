@@ -9,7 +9,6 @@ import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
-import { applyCustomCss } from '../../util/customCss';
 
 /**
  * A Widget node view. This top level component sits at
@@ -115,8 +114,6 @@ export default {
                 this.isValid = resp.isValid;
             });
         }
-
-        applyCustomCss(this.$el, this.nodeConfig.customCSS);
     },
     beforeDestroy() {
         if (this.hasValidator) {
@@ -175,8 +172,7 @@ export default {
 </script>
 
 <template>
-  <!-- knime-qf-container legacy selector -->
-  <div class="knime-widget knime-qf-container">
+  <div class="widget">
     <Component
       :is="type"
       ref="widget"
@@ -189,7 +185,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.knime-widget {
+.widget {
   width: 100%;
   height: 100%;
   background-color: white;

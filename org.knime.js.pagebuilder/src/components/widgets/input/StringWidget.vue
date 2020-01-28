@@ -121,7 +121,7 @@ export default {
 </script>
 
 <template>
-  <div class="knime-string-widget">
+  <div>
     <Label
       :text="label"
     >
@@ -151,7 +151,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.knime-string-widget {
+div {
   overflow: hidden !important;
 }
 </style>
