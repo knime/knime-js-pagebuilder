@@ -5,6 +5,11 @@ export default {
     components: {
         PageBuilder
     },
+    data() {
+        return {
+            selectedIdxOnStart: 3
+        };
+    },
     computed: {
         pageMocks() {
             const mocks = require.context('../../mocks', false, /.json$/); // eslint-disable-line no-undef
@@ -17,6 +22,9 @@ export default {
     created() {
         let store = this.$store;
         PageBuilder.initStore(store);
+        // load default page mock
+        let pageMock = this.pageMocks[this.selectedIdxOnStart];
+        this.$store.dispatch('pagebuilder/setPage', { page: pageMock ? pageMock.src : null });
     },
     methods: {
         onPageSelect(e) {
@@ -64,9 +72,10 @@ export default {
       >
         <option :value="null">-</option>
         <option
-          v-for="page in pageMocks"
+          v-for="(page, idx) in pageMocks"
           :key="page.name"
           :value="page.src"
+          :selected="idx === selectedIdxOnStart"
         >
           {{ page.name }}
         </option>
