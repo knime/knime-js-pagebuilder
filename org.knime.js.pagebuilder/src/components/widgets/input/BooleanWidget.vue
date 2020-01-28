@@ -74,8 +74,8 @@ export default {
     :value="value"
     box-size="medium"
     class="checkbox-input"
-    @input="onChange"
     :title="description"
+    @input="onChange"
   >
     {{ label }}
   </Checkbox>

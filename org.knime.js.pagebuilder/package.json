@@ -4,15 +4,16 @@
   "description": "PageBuilder for KNIME® Analytics Platform & WebPortal",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --formats umd-min --mode production src/components/PageBuilder.vue",
+    "dev": "npm run opensourcecredits -- --no-overwrite && vue-cli-service serve",
+    "build": "concurrently -n pagebuilder,credits -c blue,green \"vue-cli-service build --target lib --formats umd-min --mode production src/components/PageBuilder.vue\" \"npm run opensourcecredits\"",
     "dev-inte": "concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist/ http-server\" \"npm run build -- --watch\"",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ext .js,.vue .",
     "lint:css": "stylelint '**/*.{css,vue}'",
     "test:unit": "vue-cli-service test:unit",
     "coverage": "vue-cli-service test:unit --coverage",
-    "sendcoverage": "cross-var sonar-scanner -Dsonar.login=\"$SONAR_LOGIN\" -Dsonar.password=\"$SONAR_PASSWORD\""
+    "sendcoverage": "cross-var sonar-scanner -Dsonar.login=\"$SONAR_LOGIN\" -Dsonar.password=\"$SONAR_PASSWORD\"",
+    "opensourcecredits": "cross-env CREDITS_BUILD_PREFIX=pagebuilder-packages npm run --prefix webapps-common/ opensourcecredits"
   },
   "license": "UNLICENSED",
   "author": "KNIME AG, Zurich, Switzerland",
@@ -31,6 +32,7 @@
     "babel-eslint": "10.0.3",
     "babel-jest": "24.9.0",
     "concurrently": "4.1.1",
+    "cross-env": "5.2.0",
     "cross-var": "1.1.0",
     "eslint": "5.16.0",
     "eslint-plugin-vue": "5.2.3",
