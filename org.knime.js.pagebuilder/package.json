@@ -11,7 +11,7 @@
     "lint:js": "eslint --ext .js,.vue .",
     "lint:css": "stylelint '**/*.{css,vue}'",
     "test:unit": "vue-cli-service test:unit",
-    "coverage": "vue-cli-service test:unit --coverage",
+    "coverage": "npm run opensourcecredits && vue-cli-service test:unit --coverage",
     "sendcoverage": "cross-var sonar-scanner -Dsonar.login=\"$SONAR_LOGIN\" -Dsonar.password=\"$SONAR_PASSWORD\"",
     "opensourcecredits": "cross-env CREDITS_BUILD_PREFIX=pagebuilder-packages npm run --prefix webapps-common/ opensourcecredits"
   },
