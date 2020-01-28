@@ -74,7 +74,7 @@ export default {
             if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
                 return this.nodeConfig.nodeInfo.nodeWarnMessage;
             }
-            return 'Current string input value is invalid';
+            return 'Current selected item is invalid';
         },
         value() {
             return this.valuePair[DATA_TYPE][0];
