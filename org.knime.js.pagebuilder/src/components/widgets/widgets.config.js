@@ -5,6 +5,7 @@ export const classToComponentMap = {
     'org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation': 'DoubleWidget',
     'org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation': 'IntegerWidget',
     'org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation': 'BooleanWidget',
+    'org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation': 'SingleSelectWidget',
 
     // output widgets
     'org.knime.js.base.node.output.text.TextOutputRepresentation': 'TextWidget'
