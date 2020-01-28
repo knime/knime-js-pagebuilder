@@ -3,7 +3,7 @@ import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 
-const DATA_TYPE = 'string';
+const DATA_TYPE = 'value';
 
 /**
  * This is the String Input widget implementation. At this component
@@ -55,6 +55,9 @@ export default {
         label() {
             return this.viewRep.label;
         },
+        possibleChoices() {
+            return this.viewRep.possibleChoices.map((x) => ({ id: x, text: x }));
+        },
         description() {
             return this.viewRep.description || null;
         },
@@ -74,27 +77,19 @@ export default {
             return 'Current string input value is invalid';
         },
         value() {
-            return this.valuePair[DATA_TYPE];
+            return this.valuePair[DATA_TYPE][0];
         },
         isRadioButtons() {
-            return (this.viewRep.type === "Radio buttons (vertical)") ||
-                    (this.viewRep.type === "Radio buttons (horizontal)");
+            return this.viewRep.type === 'Radio buttons (vertical)' ||
+                    this.viewRep.type === 'Radio buttons (horizontal)';
         },
         radioButtonsAlignment() {
-            if (this.viewRep.type === "Radio buttons (vertical)") {
+            if (this.viewRep.type === 'Radio buttons (vertical)') {
                 return 'vertical';
-            } else if (this.viewRep.type === "Radio buttons (horizontal)") {
+            } else if (this.viewRep.type === 'Radio buttons (horizontal)') {
                 return 'horizontal';
             }
             return '';
-        },
-        regex() {
-            return this.viewRep.regex || '.*';
-        },
-        inputClasses() {
-            let classList = 'knime-qf-input knime-string ';
-            classList += this.isMultiLine ? 'knime-multi-line' : 'knime-single-line';
-            return classList;
         }
     },
     methods: {
@@ -102,20 +97,16 @@ export default {
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
-                value
+                value: [value]
             };
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
             let isValid = true;
-            if (this.viewRep.required && !this.$refs.form.getValue()) {
+            if (this.viewRep.required && !this.$refs.form.$refs.input.some(x => x.checked)) {
                 isValid = false;
             }
-            // text area doesn't have a validate method
-            let validForm = typeof this.$refs.form.validate === 'function'
-                ? this.$refs.form.validate()
-                : true;
-            return validForm && isValid;
+            return isValid;
         }
     }
 };
@@ -128,11 +119,11 @@ export default {
     >
       <RadioButtons
         v-if="isRadioButtons"
-        :alignment="radioButtonsAlignment"
         ref="form"
+        :alignment="radioButtonsAlignment"
         :value="value"
+        :possible-values="possibleChoices"
         :is-valid="isValid"
-        :input-classes="inputClasses"
         :title="description"
         @input="onChange"
       />
