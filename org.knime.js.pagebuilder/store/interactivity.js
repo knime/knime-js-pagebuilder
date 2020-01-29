@@ -27,7 +27,7 @@ export const mutations = {
     },
     removeSubscriber(state, { id, callback }) {
         if (state[id]) {
-            let index = state[id].subscribers.indexOf(callback);
+            let index = state[id].subscribers.findIndex((subscriber) => subscriber.callback === callback);
             if (index >= 0) {
                 state[id].subscribers.splice(index, 1);
             }
