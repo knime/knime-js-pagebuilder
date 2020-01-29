@@ -362,8 +362,12 @@ export default {
                 });
                 break;
             case 'publishEvent': // TODO rename to interactivityPublish
-                consola.trace(`publish event`, this.nodeId, event.data);
-                // TODO call store with WEBP-74
+                consola.trace(`publish event called`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/publish', {
+                    id: event.data.id,
+                    data: event.data.payload,
+                    callback: this.informIframe
+                });
                 break;
             case 'registerSelectionTranslator': // TODO rename to interactivityRegisterSelectionTranslator
                 consola.trace(`registerSelectionTranslator`);
