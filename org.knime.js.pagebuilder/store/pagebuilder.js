@@ -96,9 +96,11 @@ export const mutations = {
 };
 
 export const actions = {
-    setPage({ commit }, { page }) {
+    setPage({ commit, dispatch }, { page }) {
         consola.trace('PageBuilder: Set page via action: ', page);
         commit('setPage', page);
+
+        dispatch('interactivity/clear');
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {

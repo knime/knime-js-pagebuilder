@@ -1,13 +1,23 @@
 export const namespaced = true;
 
+/**
+ * This store is actually not used like a Vuex store since it doesn't use the reactivity features.
+ * We decided to not use them because subscribers need a changeSet which will already be provided by all code calling
+ * the updateData() action. So we simply forward it to the subscribers instead of generating a new changeSet.
+ * That means this store is more a pubsub service wrapped in a store to provide a streamlined API.
+ */
+
 const addInteractivityId = (state, id) => {
     if (!state[id]) {
-        state[id] = { subscribers: [], data: {} };
+        state[id] = { // we don't need reactivity, so no need to use Vue.set()
+            subscribers: [], // subscribers will get notified when data changes
+            data: {} // keeps the current data to be accessed on demand by getPublishedElement()
+        };
     }
 };
 
 export const state = () => ({
-    // only filled at runtime by mutations
+    // filled at runtime by mutations
 });
 
 export const mutations = {
