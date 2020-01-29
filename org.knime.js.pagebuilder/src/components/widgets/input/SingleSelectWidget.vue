@@ -2,6 +2,7 @@
 import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
+import ListBox from 'webapps-common/ui/components/forms/ListBox';
 
 const DATA_TYPE = 'value';
 
@@ -16,6 +17,7 @@ const DATA_TYPE = 'value';
  */
 export default {
     components: {
+        ListBox,
         Label,
         RadioButtons,
         ErrorMessage
@@ -61,6 +63,12 @@ export default {
         description() {
             return this.viewRep.description || null;
         },
+        maxVisibleListEntries() {
+            if (this.viewRep.limitNumberVisOptions) {
+                return this.viewRep.numberVisOptions;
+            }
+            return 0;
+        },
         errorMessage() {
             if (this.isValid) {
                 return null;
@@ -78,6 +86,12 @@ export default {
         },
         value() {
             return this.valuePair[DATA_TYPE][0];
+        },
+        isList() {
+            return this.viewRep.type === 'List';
+        },
+        isDropdown() {
+            return this.viewRep.type === 'Dropdown';
         },
         isRadioButtons() {
             return this.viewRep.type === 'Radio buttons (vertical)' ||
@@ -103,8 +117,8 @@ export default {
         },
         validate() {
             let isValid = true;
-            if (this.viewRep.required && !this.$refs.form.$refs.input.some(x => x.checked)) {
-                isValid = false;
+            if (this.viewRep.required) {
+                isValid = this.$refs.form.hasSelection();
             }
             return isValid;
         }
@@ -122,6 +136,17 @@ export default {
         ref="form"
         :alignment="radioButtonsAlignment"
         :value="value"
+        :possible-values="possibleChoices"
+        :is-valid="isValid"
+        :title="description"
+        @input="onChange"
+      />
+      <ListBox
+        v-if="isList"
+        ref="form"
+        :value="value"
+        :size="maxVisibleListEntries"
+        :aria-label="label"
         :possible-values="possibleChoices"
         :is-valid="isValid"
         :title="description"
