@@ -7,7 +7,7 @@ export default {
     },
     data() {
         return {
-            selectedIdxOnStart: 3
+            currentPageIndex: 3
         };
     },
     computed: {
@@ -19,16 +19,26 @@ export default {
             }));
         }
     },
+    watch: {
+        currentPageIndex(newIdx) {
+            localStorage.setItem('pageIdx', newIdx);
+        }
+    },
     created() {
         let store = this.$store;
         PageBuilder.initStore(store);
         // load default page mock
-        let pageMock = this.pageMocks[this.selectedIdxOnStart];
+        if (localStorage && localStorage.pageIdx) {
+            this.currentPageIndex = Number(localStorage.getItem('pageIdx'));
+        }
+        let pageMock = this.pageMocks[this.currentPageIndex];
         this.$store.dispatch('pagebuilder/setPage', { page: pageMock ? pageMock.src : null });
     },
     methods: {
         onPageSelect(e) {
-            let pageMock = this.pageMocks[e.target.selectedOptions[0].index - 1];
+            let pageIdx = e.target.selectedOptions[0].index - 1;
+            this.currentPageIndex = pageIdx;
+            let pageMock = this.pageMocks[pageIdx];
             this.$store.dispatch('pagebuilder/setPage', { page: pageMock ? pageMock.src : null });
         },
         async onValidate() {
@@ -72,10 +82,10 @@ export default {
       >
         <option :value="null">-</option>
         <option
-          v-for="(page, idx) in pageMocks"
+          v-for="(page, index) in pageMocks"
           :key="page.name"
           :value="page.src"
-          :selected="idx === selectedIdxOnStart"
+          :selected="index === currentPageIndex"
         >
           {{ page.name }}
         </option>
