@@ -132,7 +132,6 @@ export default {
     <Label
       v-if="label"
       :text="label"
-      class="knime-label"
     />
     <NumberInput
       ref="form"

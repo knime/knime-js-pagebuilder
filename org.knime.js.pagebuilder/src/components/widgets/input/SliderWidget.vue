@@ -253,8 +253,7 @@ export default {
   <div>
     <Label
       :text="label"
-      :class="['knime-label',
-               `knime-slider-${sliderSettings.orientation}-label`,
+      :class="[`slider-${sliderSettings.orientation}-label`,
                { 'tooltip-label': tooltips }]"
     />
     <Slider
@@ -270,52 +269,51 @@ export default {
       :tooltip-format="tooltipFormat"
       :marks="marks"
       :connect="connect"
-      :class="['knime-slider',
-               `knime-slider-${sliderSettings.orientation}`,
+      :class="[`slider-${sliderSettings.orientation}`,
                {'tooltip-slider': tooltips }]"
       @input="onChange"
     />
     <ErrorMessage
       :error="errorMessage"
-      :class="[`knime-slider-${sliderSettings.orientation}-error`,
+      :class="[`slider-${sliderSettings.orientation}-error`,
                {'tooltip-error': tooltips}]"
     />
   </div>
 </template>
 
 <style lang="postcss" scoped>
-.knime-slider-horizontal {
+.slider-horizontal {
   padding-top: 10px;
   padding-right: 15px;
   padding-bottom: 25px;
   padding-left: 15px;
 }
 
-.knime-slider-horizontal.tooltip-slider {
+.slider-horizontal.tooltip-slider {
   padding-top: 45px;
   padding-right: 25px;
   padding-left: 25px;
 }
 
-.knime-slider-vertical {
+.slider-vertical {
   padding-top: 10px;
   padding-right: 20px;
   padding-bottom: 10px;
   padding-left: 10px;
 }
 
-.knime-slider-vertical.tooltip-slider {
+.slider-vertical.tooltip-slider {
   padding-top: 15px;
   padding-left: 50px;
 }
 
-.knime-slider-horizontal-label,
-.knime-slider-horizontal-error {
+.slider-horizontal-label,
+.slider-horizontal-error {
   padding-left: 15px;
 }
 
-.knime-slider-horizontal-label.tooltip-label,
-.knime-slider-horizontal-error.tooltip-error {
+.slider-horizontal-label.tooltip-label,
+.slider-horizontal-error.tooltip-error {
   padding-left: 25px;
 }
 </style>
