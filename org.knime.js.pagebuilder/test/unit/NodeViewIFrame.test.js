@@ -425,4 +425,28 @@ describe('NodeViewIframe.vue', () => {
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0.0.7', isValid: false });
         });
     });
+
+    describe('Interactivity', () => {
+        let wrapper;
+
+        beforeEach(() => {
+            wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true
+            });
+        });
+
+        it('registers & unregisters global PageBuilder API', () => {
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            wrapper.destroy();
+            expect(window.KnimePageBuilderAPI).not.toBeDefined();
+        });
+
+        it('getPublishedElement calls interactivity store', () => {
+            // TODO finish test
+            // window.KnimePageBuilderAPI.getPublishedElement('selection-12345');
+        });
+
+        // TODO finish tests
+    });
 });

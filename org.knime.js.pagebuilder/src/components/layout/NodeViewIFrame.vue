@@ -8,6 +8,8 @@ const heightPollInterval = 200; // ms
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
 
+// TODO WEBP-227 split into multiple files
+
 /**
  * A single node view iframe
  */
@@ -332,47 +334,45 @@ export default {
         },
 
         handleInteractivity(event) {
+            let callback = (id, payload) => {
+                let data = {
+                    nodeId: this.nodeId,
+                    type: 'interactivityEvent',
+                    id,
+                    payload
+                };
+                this.document.defaultView.postMessage(data, window.origin);
+            };
+
             let interactivityType = event.data.type;
             switch (interactivityType) {
-            case 'subscribeToEvents':
-                consola.debug(`subscribe to event called`, this.nodeId, event.data);
+            case 'subscribeToEvents': // TODO rename to interactivitySubscribe
+                consola.trace(`subscribe to event`, this.nodeId, event.data);
                 this.$store.dispatch('pagebuilder/interactivity/subscribe', {
                     id: event.data.id,
-                    callback: this.informIframe,
+                    callback,
                     elementFilter: event.data.elementFilter
                 });
                 break;
-            case 'unsubscribeFromEvents':
-                consola.debug(`unsubscribe from event called`, this.nodeId, event.data);
+            case 'unsubscribeFromEvents': // TODO rename to interactivityUnsubscribe
+                consola.trace(`unsubscribe from event`, this.nodeId, event.data);
                 this.$store.dispatch('pagebuilder/interactivity/unsubscribe', {
                     id: event.data.id,
-                    callback: this.informIframe
+                    callback
                 });
                 break;
-            case 'publishEvent':
-                consola.debug(`publish event called`, this.nodeId, event.data);
+            case 'publishEvent': // TODO rename to interactivityPublish
+                consola.trace(`publish event`, this.nodeId, event.data);
                 // TODO call store with WEBP-74
                 break;
-            case 'registerSelectionTranslator':
-                consola.debug(`registerSelectionTranslator called`);
+            case 'registerSelectionTranslator': // TODO rename to interactivityRegisterSelectionTranslator
+                consola.trace(`registerSelectionTranslator`);
                 // TODO register with WEBP-73
                 break;
             default:
                 break;
             }
-        },
-
-        informIframe(id, payload) {
-            let data = {
-                nodeId: this.nodeId,
-                type: 'interactivityEvent',
-                id,
-                payload
-            };
-            consola.warn('Sending ', data);
-            this.document.defaultView.postMessage(data, window.origin);
         }
-
     }
 };
 </script>
