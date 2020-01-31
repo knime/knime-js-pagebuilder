@@ -160,7 +160,7 @@ export default {
 .vue-slider-ttb .vue-slider-process,
 .vue-slider-btt .vue-slider-process {
   width: 7px !important;
-  left: -3.5px !important;
+  left: -2.5px !important;
 }
 
 .vue-slider-rtl .vue-slider-process,
@@ -273,8 +273,8 @@ export default {
 .vue-slider-btt .vue-slider-dot-handle {
   width: 5px !important;
   height: 11px !important;
-  top: 4px !important;
-  left: 11.25px !important;
+  top: 3px !important;
+  left: 11.75px !important;
   transform: rotate(90deg);
 }
 
