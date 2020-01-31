@@ -274,7 +274,7 @@ export default {
   width: 5px !important;
   height: 11px !important;
   top: 4px !important;
-  left: 12.25px !important;
+  left: 11.25px !important;
   transform: rotate(90deg);
 }
 
