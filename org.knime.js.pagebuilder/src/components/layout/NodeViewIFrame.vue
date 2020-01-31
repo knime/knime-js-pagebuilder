@@ -116,11 +116,11 @@ export default {
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
 
         // create global API (used by iframes)
-        let getPublishedElementFunc = this.$store.getters['pagebuilder/interactivity/getPublishedElement'];
+        let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
         if (!window.KnimePageBuilderAPI) {
             window.KnimePageBuilderAPI = {
-                getPublishedElement(id) {
-                    return getPublishedElementFunc(id);
+                getPublishedData(id) {
+                    return getPublishedDataFunc(id);
                 }
             };
         }
@@ -366,7 +366,7 @@ export default {
                 this.$store.dispatch('pagebuilder/interactivity/publish', {
                     id: event.data.id,
                     data: event.data.payload,
-                    callback: this.informIframe
+                    skipCallback: callback
                 });
                 break;
             case 'registerSelectionTranslator': // TODO rename to interactivityRegisterSelectionTranslator
@@ -376,6 +376,16 @@ export default {
             default:
                 break;
             }
+        },
+
+        informIframe(id, payload) {
+            let data = {
+                nodeId: this.nodeId,
+                type: 'interactivityEvent',
+                id,
+                payload
+            };
+            this.document.defaultView.postMessage(data, window.origin);
         }
     }
 };
