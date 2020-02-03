@@ -4,6 +4,7 @@ import { shallowMount } from '@vue/test-utils';
 import SingleSelectWidget from '@/components/widgets/input/SingleSelectWidget';
 import RadioButtons from '~/webapps-common/ui/components/forms/RadioButtons';
 import ListBox from '~/webapps-common/ui/components/forms/ListBox';
+import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
 
 describe('SingleSelectWidget.vue', () => {
     let propsDataRadioHorizonal, propsDataRadioVertical, propsDataDropdown, propsDataList;
@@ -346,8 +347,12 @@ describe('SingleSelectWidget.vue', () => {
 
     it('renders dropdown component', () => {
         propsDataDropdown.isValid = true;
+        let wrapper = shallowMount(SingleSelectWidget, {
+            propsData: propsDataList
+        });
 
-        // TODO: impl
+        let rb = wrapper.find(Dropdown);
+        expect(rb).toBeTruthy();
     });
 
     it('has no error message when valid', () => {

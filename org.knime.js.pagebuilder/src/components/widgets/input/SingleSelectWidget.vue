@@ -3,6 +3,7 @@ import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import ListBox from 'webapps-common/ui/components/forms/ListBox';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 
 const DATA_TYPE = 'value';
 
@@ -19,6 +20,7 @@ export default {
     components: {
         ListBox,
         Label,
+        Dropdown,
         RadioButtons,
         ErrorMessage
     },
@@ -146,6 +148,16 @@ export default {
         ref="form"
         :value="value"
         :size="maxVisibleListEntries"
+        :aria-label="label"
+        :possible-values="possibleChoices"
+        :is-valid="isValid"
+        :title="description"
+        @input="onChange"
+      />
+      <Dropdown
+        v-if="isDropdown"
+        ref="form"
+        :value="value"
         :aria-label="label"
         :possible-values="possibleChoices"
         :is-valid="isValid"
