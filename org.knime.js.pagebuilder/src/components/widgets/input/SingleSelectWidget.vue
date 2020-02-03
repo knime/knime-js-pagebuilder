@@ -168,9 +168,3 @@ export default {
     </Label>
   </div>
 </template>
-
-<style lang="postcss" scoped>
-div {
-  overflow: hidden !important;
-}
-</style>
