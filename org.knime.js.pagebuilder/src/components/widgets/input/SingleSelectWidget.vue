@@ -4,6 +4,7 @@ import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import ListBox from 'webapps-common/ui/components/forms/ListBox';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 
 const DATA_TYPE = 'value';
 
@@ -18,6 +19,7 @@ const DATA_TYPE = 'value';
  */
 export default {
     components: {
+        Fieldset,
         ListBox,
         Label,
         Dropdown,
@@ -130,7 +132,8 @@ export default {
 
 <template>
   <div>
-    <Label
+    <Fieldset
+      v-if="isRadioButtons"
       :text="label"
     >
       <RadioButtons
@@ -143,6 +146,12 @@ export default {
         :title="description"
         @input="onChange"
       />
+      <ErrorMessage :error="errorMessage" />
+    </Fieldset>
+    <Label
+      v-if="!isRadioButtons"
+      :text="label"
+    >
       <ListBox
         v-if="isList"
         ref="form"
