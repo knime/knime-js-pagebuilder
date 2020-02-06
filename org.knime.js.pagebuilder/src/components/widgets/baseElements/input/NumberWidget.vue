@@ -64,7 +64,7 @@ export default {
     },
     computed: {
         label() {
-            return this.viewRep.label || null;
+            return this.viewRep.label;
         },
         description() {
             return this.viewRep.description || null;
@@ -130,20 +130,20 @@ export default {
 <template>
   <div>
     <Label
-      v-if="label"
       :text="label"
-    />
-    <NumberInput
-      ref="form"
-      :type="type"
-      :value="value"
-      :min="min"
-      :max="max"
-      :is-valid="isValid"
-      :title="description"
-      :input-classes="inputClasses"
-      @input="onChange"
-    />
+    >
+      <NumberInput
+        ref="form"
+        :type="type"
+        :value="value"
+        :min="min"
+        :max="max"
+        :is-valid="isValid"
+        :title="description"
+        :input-classes="inputClasses"
+        @input="onChange"
+      />
+    </Label>
     <ErrorMessage :error="errorMessage" />
   </div>
 </template>
