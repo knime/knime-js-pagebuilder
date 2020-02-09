@@ -35,22 +35,24 @@ describe('script loader', () => {
     });
 
     it('handles load errors', () => {
+        const message = 'Script could not be loaded';
         eval(knimeLoaderSrc.replace("'%LIBCOUNT%'", 100));
 
         window.knimeLoader(true);
-        expect(() => window.knimeLoader(false)).toThrowError(new Error('Script could not be loaded'));
+        expect(() => window.knimeLoader(false)).toThrowError(new Error(message));
 
-        expect(window.postMessage).toHaveBeenCalledWith({ nodeId: '%NODEID%', type: 'error' }, '%ORIGIN%');
+        expect(window.postMessage).toHaveBeenCalledWith({ nodeId: '%NODEID%', error: message }, '%ORIGIN%');
     });
 
     it('handles successful load with missing view', () => {
+        const message = 'No view found under namespace %NAMESPACE%';
         eval(knimeLoaderSrc.replace("'%LIBCOUNT%'", 2));
 
         window.knimeLoader(true);
         expect(() => window.knimeLoader(true))
-            .toThrowError(new ReferenceError('no view found under namespace %NAMESPACE%'));
+            .toThrowError(new ReferenceError(message));
 
-        expect(window.postMessage).toHaveBeenCalledWith({ nodeId: '%NODEID%', type: 'error' }, '%ORIGIN%');
+        expect(window.postMessage).toHaveBeenCalledWith({ nodeId: '%NODEID%', error: message }, '%ORIGIN%');
     });
 
     it('handles empty script list', () => {

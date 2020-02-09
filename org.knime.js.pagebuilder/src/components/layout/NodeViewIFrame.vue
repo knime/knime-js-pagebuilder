@@ -1,19 +1,26 @@
 <script>
+import { mapActions } from 'vuex';
+
 import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
+import ViewAlert from './ViewAlert';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
+import loadingErrorHandlerSrc from 'raw-loader!./injectedScripts/loadErrorHandler.js';
+import viewAlertHandlerSrc from 'raw-loader!./injectedScripts/viewAlertHandler.js';
 
 const heightPollInterval = 200; // ms
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
+const setValidationErrorTimeout = 1000; // ms
 
 /**
  * A single node view iframe
  */
 export default {
     components: {
-        ErrorMessage
+        ErrorMessage,
+        ViewAlert
     },
     props: {
         /**
@@ -56,7 +63,8 @@ export default {
         return {
             height: 0,
             isValid: true,
-            errorMessage: null
+            errorMessage: null,
+            alert: null
         };
     },
 
@@ -111,12 +119,17 @@ export default {
         this.injectContent();
         this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+        this.$store.dispatch('pagebuilder/addValidationErrorSetter', {
+            nodeId: this.nodeId,
+            errorSetter: this.setValidationError
+        });
     },
 
     beforeDestroy() {
         window.removeEventListener('message', this.messageFromIframe);
         this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
+        this.$store.dispatch('pagebuilder/removeValidationErrorSetter', { nodeId: this.nodeId });
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
@@ -133,6 +146,16 @@ export default {
 
             let styles = this.computeStyles(resourceBaseUrl);
             let scripts = this.computeScripts(resourceBaseUrl);
+
+            // runtime/script injection error handling
+            let loadingErrorHandler = `<script>${loadingErrorHandlerSrc
+                .replace("'%NODEID%'", JSON.stringify(this.nodeId))
+            }<\/script>`; // eslint-disable-line no-useless-escape
+
+            // view alert override
+            let viewAlertHandler = `<script>${viewAlertHandlerSrc
+                .replace("'%NODEID%'", JSON.stringify(this.nodeId))
+            }<\/script>`; // eslint-disable-line no-useless-escape
 
             // script loader
             let scriptLoader = `<script>${scriptLoaderSrc
@@ -152,6 +175,8 @@ export default {
                   ${styles}
                   ${messageListener}
                   ${scriptLoader}
+                  ${viewAlertHandler}
+                  ${loadingErrorHandler}
                   <title></title>
                 </head>
                 <body></body>
@@ -227,13 +252,15 @@ export default {
         },
 
         messageFromIframe(event) {
-            if (event.origin !== window.origin) {
+            const data = event.data;
+            if (event.origin !== window.origin || !data || data.nodeId !== this.nodeId) {
                 return;
             }
-            if (!event.data || event.data.nodeId !== this.nodeId) {
-                return;
+            if (data.error) {
+                this.errorMessage = data.error;
+                this.isValid = false;
             }
-            if (event.data.type === 'load') {
+            if (data.type === 'load') {
                 consola.debug(`View resource loading for ${this.nodeId} completed`);
                 this.document.defaultView.postMessage({
                     nodeId: this.nodeId,
@@ -251,25 +278,25 @@ export default {
                     }
                 }
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
-            } else if (event.data.type === 'validate') {
-                this.validateCallback({ isValid: event.data.isValid });
-            } else if (event.data.type === 'getValue') {
-                // call callback
-                if (typeof event.data.value === 'undefined') {
-                    this.getValueCallback({ error: new Error(event.data.error) });
-                } else {
-                    this.getValueCallback({ value: event.data.value });
-                }
+            } else if (data.type === 'validate') {
+                this.validateCallback({ ...data });
+            } else if (data.type === 'getValue') {
+                this.getValueCallback({ ...data });
+            } else if (data.type === 'setValidationError') {
+                this.setValidationErrorCallback({ ...data });
+            } else if (data.type === 'alert') {
+                this.alert = {
+                    ...data,
+                    type: data.level === 'error' ? 'error' : 'warn'
+                };
             }
         },
 
         validate() {
             return new Promise((resolve, reject) => {
-                this.validateCallback = ({ error, isValid = false }) => {
-                    if (error || !isValid) {
+                this.validateCallback = ({ isValid }) => {
+                    if (!isValid) {
                         this.errorMessage = 'View validation failed.';
-                    } else {
-                        this.errorMessage = null;
                     }
                     this.isValid = isValid;
                     window.clearTimeout(this.cancelValidate);
@@ -294,7 +321,7 @@ export default {
                 this.getValueCallback = ({ error, value }) => {
                     window.clearTimeout(this.cancelValueGetter);
                     if (error) {
-                        reject(error);
+                        reject(new Error(error));
                     } else {
                         resolve({ nodeId: this.nodeId, value });
                     }
@@ -309,8 +336,44 @@ export default {
                     reject(new Error('Value could not be retrieved in the allocated time.'));
                 }, valueGetterTimeout);
             });
-        }
+        },
 
+        setValidationError(errorMessage) {
+            return new Promise((resolve, reject) => {
+                this.setValidationErrorCallback = ({ error }) => {
+                    window.clearTimeout(this.cancelSetValidatorError);
+                    if (error) {
+                        reject(new Error(error));
+                    } else {
+                        resolve(true);
+                    }
+                };
+                this.document.defaultView.postMessage({
+                    nodeId: this.nodeId,
+                    namespace: this.nodeConfig.namespace,
+                    setValidationErrorMethodName: this.nodeConfig.setValidationErrorMethodName,
+                    type: 'setValidationError',
+                    errorMessage
+                }, window.origin);
+                this.cancelSetValidatorError = window.setTimeout(() => {
+                    reject(new Error('Validation error message could not be set in the allocated time.'));
+                }, setValidationErrorTimeout);
+            });
+        },
+        /* Event handler for closing an alert */
+        onCloseAlert() {
+            consola.trace('Closing view alert (NodeViewIFrame).');
+            // if there was an error, check to see if the view is responding (will update styles if not)
+            if (this.alert.type === 'error') {
+                this.validate();
+            }
+            // delete the alert data to close the alert
+            this.alert = null;
+        },
+
+        ...mapActions({
+            showNotification: 'pagebuilder/showNotification'
+        })
     }
 };
 </script>
@@ -321,8 +384,16 @@ export default {
       ref="iframe"
       :class="{error: !isValid}"
     />
+    <ViewAlert
+      :type="alert && alert.type"
+      :message="alert && alert.message"
+      :active="Boolean(alert)"
+      :node-id="nodeId"
+      :node-info="nodeConfig.nodeInfo"
+      @closeAlert="onCloseAlert"
+    />
     <ErrorMessage
-      v-if="errorMessage"
+      v-if="errorMessage && !isValid"
       :error="errorMessage"
       class="error-message"
     />

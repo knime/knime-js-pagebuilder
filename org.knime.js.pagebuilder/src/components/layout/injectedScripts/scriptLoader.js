@@ -10,14 +10,16 @@ window.knimeLoader = (function () {
     return function knimeLoader(success) {
         knimeLoaderCount--;
         if (!success) {
-            parent.postMessage({ nodeId: nodeId, type: 'error' }, origin);
-            throw new Error('Script could not be loaded');
+            var scriptErrorMsg = 'Script could not be loaded';
+            parent.postMessage({ nodeId: nodeId, error: scriptErrorMsg }, origin);
+            throw new Error(scriptErrorMsg);
         }
         if (knimeLoaderCount === 0) {
             var view = window[namespace];
             if (!view) {
-                parent.postMessage({ nodeId: nodeId, type: 'error' }, origin);
-                throw new ReferenceError('no view found under namespace ' + namespace);
+                var referenceErrorMsg = 'No view found under namespace ' + namespace;
+                parent.postMessage({ nodeId: nodeId, error: referenceErrorMsg }, origin);
+                throw new ReferenceError(referenceErrorMsg);
             }
             parent.postMessage({ nodeId: nodeId, type: 'load' }, origin);
         }

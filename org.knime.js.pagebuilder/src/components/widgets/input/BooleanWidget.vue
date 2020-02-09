@@ -71,11 +71,11 @@ export default {
 <template>
   <Checkbox
     ref="form"
-    :value="value"
     label-size="large"
     class="checkbox-input"
-    @input="onChange"
+    :value="value"
     :title="description"
+    @input="onChange"
   >
     {{ label }}
   </Checkbox>
