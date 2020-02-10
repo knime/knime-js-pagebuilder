@@ -10,98 +10,98 @@
         "rows": [
           {
             "type": "JSONLayoutRow",
-            "additionalStyles": [],
             "additionalClasses": [],
+            "additionalStyles": [],
             "columns": [
               {
-                "widthLG": null,
-                "widthXL": null,
-                "widthSM": null,
-                "widthMD": null,
                 "widthXS": 6,
                 "content": [
                   {
                     "type": "JSONLayoutViewContent",
-                    "sizeWidth": false,
-                    "resizeInterval": null,
-                    "autoResize": true,
                     "resizeMethod": "viewLowestElement",
-                    "scrolling": false,
-                    "sizeHeight": true,
+                    "resizeInterval": null,
                     "resizeTolerance": 5,
+                    "scrolling": false,
                     "maxHeight": null,
                     "maxWidth": null,
                     "minHeight": null,
                     "minWidth": null,
                     "nodeID": "5:0:6",
-                    "additionalStyles": [],
-                    "additionalClasses": []
+                    "autoResize": true,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   },
                   {
                     "type": "JSONLayoutViewContent",
-                    "sizeWidth": false,
-                    "resizeInterval": null,
-                    "autoResize": true,
                     "resizeMethod": "viewLowestElement",
-                    "scrolling": false,
-                    "sizeHeight": true,
+                    "resizeInterval": null,
                     "resizeTolerance": 5,
+                    "scrolling": false,
                     "maxHeight": null,
                     "maxWidth": null,
                     "minHeight": null,
                     "minWidth": null,
                     "nodeID": "5:0:8",
-                    "additionalStyles": [],
-                    "additionalClasses": []
+                    "autoResize": true,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   }
                 ],
-                "additionalStyles": [],
-                "additionalClasses": []
-              },
-              {
-                "widthLG": null,
-                "widthXL": null,
                 "widthSM": null,
                 "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "additionalClasses": [],
+                "additionalStyles": []
+              },
+              {
                 "widthXS": 6,
                 "content": [
                   {
                     "type": "JSONLayoutViewContent",
-                    "sizeWidth": false,
-                    "resizeInterval": null,
-                    "autoResize": true,
                     "resizeMethod": "viewLowestElement",
-                    "scrolling": false,
-                    "sizeHeight": true,
+                    "resizeInterval": null,
                     "resizeTolerance": 5,
+                    "scrolling": false,
                     "maxHeight": null,
                     "maxWidth": null,
                     "minHeight": null,
                     "minWidth": null,
                     "nodeID": "5:0:7",
-                    "additionalStyles": [],
-                    "additionalClasses": []
+                    "autoResize": true,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   },
                   {
                     "type": "JSONLayoutViewContent",
-                    "sizeWidth": false,
-                    "resizeInterval": null,
-                    "autoResize": true,
                     "resizeMethod": "viewLowestElement",
-                    "scrolling": false,
-                    "sizeHeight": true,
+                    "resizeInterval": null,
                     "resizeTolerance": 5,
+                    "scrolling": false,
                     "maxHeight": null,
                     "maxWidth": null,
                     "minHeight": null,
                     "minWidth": null,
                     "nodeID": "5:0:9",
-                    "additionalStyles": [],
-                    "additionalClasses": []
+                    "autoResize": true,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   }
                 ],
-                "additionalStyles": [],
-                "additionalClasses": []
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "additionalClasses": [],
+                "additionalStyles": []
               }
             ]
           }
@@ -109,11 +109,26 @@
       },
       "blackBoard": null,
       "selectionTranslators": null,
-      "version": "4.1.0.v201912041250"
+      "version": "4.2.0.v202002061426"
     },
     "webNodes": {
       "5:0:6": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "Multiple Selection Widget",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null
+        },
         "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
@@ -125,29 +140,10 @@
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
         ],
-        "nodeInfo": {
-          "@class": "org.knime.js.core.JSONWebNodeInfo",
-          "nodeErrorMessage": null,
-          "nodeWarnMessage": null,
-          "displayPossible": true,
-          "nodeName": "Multiple Selection Widget",
-          "nodeAnnotation": "",
-          "nodeState": "executed"
-        },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
-        "initMethodName": "init",
-        "validateMethodName": "validate",
-        "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
         "namespace": "knimeMultipleSelectionWidget",
-        "viewValue": null,
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+          "@class": "org.knime.js.base.node.widget.selection.multiple.MultipleSelectionWidgetRepresentation",
           "label": "Label",
           "description": "Some Text...",
           "required": true,
@@ -178,10 +174,29 @@
           "limitNumberVisOptions": true,
           "numberVisOptions": 4
         },
-        "customCSS": ""
+        "viewValue": null,
+        "customCSS": "",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage"
       },
       "5:0:8": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "Multiple Selection Widget",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null
+        },
         "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
@@ -193,29 +208,10 @@
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
         ],
-        "nodeInfo": {
-          "@class": "org.knime.js.core.JSONWebNodeInfo",
-          "nodeErrorMessage": null,
-          "nodeWarnMessage": null,
-          "displayPossible": true,
-          "nodeName": "Multiple Selection Widget",
-          "nodeAnnotation": "",
-          "nodeState": "executed"
-        },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
-        "initMethodName": "init",
-        "validateMethodName": "validate",
-        "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
         "namespace": "knimeMultipleSelectionWidget",
-        "viewValue": null,
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+          "@class": "org.knime.js.base.node.widget.selection.multiple.MultipleSelectionWidgetRepresentation",
           "label": "Label List",
           "description": "Desc List",
           "required": true,
@@ -249,10 +245,29 @@
           "limitNumberVisOptions": true,
           "numberVisOptions": 5
         },
-        "customCSS": ""
+        "viewValue": null,
+        "customCSS": "",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage"
       },
       "5:0:7": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "Multiple Selection Widget",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null
+        },
         "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
@@ -264,29 +279,10 @@
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
         ],
-        "nodeInfo": {
-          "@class": "org.knime.js.core.JSONWebNodeInfo",
-          "nodeErrorMessage": null,
-          "nodeWarnMessage": null,
-          "displayPossible": true,
-          "nodeName": "Multiple Selection Widget",
-          "nodeAnnotation": "",
-          "nodeState": "executed"
-        },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
-        "initMethodName": "init",
-        "validateMethodName": "validate",
-        "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
         "namespace": "knimeMultipleSelectionWidget",
-        "viewValue": null,
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+          "@class": "org.knime.js.base.node.widget.selection.multiple.MultipleSelectionWidgetRepresentation",
           "label": "Label Checkbox Vertical",
           "description": "Enter Description CHV",
           "required": true,
@@ -318,10 +314,29 @@
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
         },
-        "customCSS": ""
+        "viewValue": null,
+        "customCSS": "",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage"
       },
       "5:0:9": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeName": "Multiple Selection Widget",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null
+        },
         "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
@@ -333,29 +348,10 @@
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
         ],
-        "nodeInfo": {
-          "@class": "org.knime.js.core.JSONWebNodeInfo",
-          "nodeErrorMessage": null,
-          "nodeWarnMessage": null,
-          "displayPossible": true,
-          "nodeName": "Multiple Selection Widget",
-          "nodeAnnotation": "",
-          "nodeState": "executed"
-        },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
-        "initMethodName": "init",
-        "validateMethodName": "validate",
-        "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
         "namespace": "knimeMultipleSelectionWidget",
-        "viewValue": null,
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+          "@class": "org.knime.js.base.node.widget.selection.multiple.MultipleSelectionWidgetRepresentation",
           "label": "Label Checkbox Horiziontal",
           "description": "Enter Description",
           "required": true,
@@ -386,9 +382,13 @@
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
         },
-        "customCSS": ""
+        "viewValue": null,
+        "customCSS": "",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage"
       }
     },
-    "version": "4.1.0.v201912041250"
+    "version": "4.2.0.v202002061426"
   }
 }

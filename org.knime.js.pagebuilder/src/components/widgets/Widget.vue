@@ -8,7 +8,6 @@ import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
 import SingleSelectWidget from './input/SingleSelectWidget';
-import SingleMultiSelectWidget from './input/SingleMultiSelectWidget';
 import MultiSelectWidget from './input/MultiSelectWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
@@ -51,7 +50,6 @@ export default {
         StringWidget,
         SliderWidget,
         SingleSelectWidget,
-        SingleMultiSelectWidget,
         MultiSelectWidget,
         // output widgets
         TextWidget
