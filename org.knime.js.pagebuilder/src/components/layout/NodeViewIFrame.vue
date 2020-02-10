@@ -334,23 +334,14 @@ export default {
         },
 
         handleInteractivity(event) {
-            let callback = (id, payload) => {
-                let data = {
-                    nodeId: this.nodeId,
-                    type: 'interactivityEvent',
-                    id,
-                    payload
-                };
-                this.document.defaultView.postMessage(data, window.origin);
-            };
-
+            
             let interactivityType = event.data.type;
             switch (interactivityType) {
             case 'subscribeToEvents': // TODO rename to interactivitySubscribe
                 consola.trace(`subscribe to event`, this.nodeId, event.data);
                 this.$store.dispatch('pagebuilder/interactivity/subscribe', {
                     id: event.data.id,
-                    callback,
+                    callback: this.informIframe,
                     elementFilter: event.data.elementFilter
                 });
                 break;
@@ -358,7 +349,7 @@ export default {
                 consola.trace(`unsubscribe from event`, this.nodeId, event.data);
                 this.$store.dispatch('pagebuilder/interactivity/unsubscribe', {
                     id: event.data.id,
-                    callback
+                    callback: this.informIframe
                 });
                 break;
             case 'publishEvent': // TODO rename to interactivityPublish
@@ -366,7 +357,7 @@ export default {
                 this.$store.dispatch('pagebuilder/interactivity/publish', {
                     id: event.data.id,
                     data: event.data.payload,
-                    skipCallback: callback
+                    skipCallback: this.informIframe
                 });
                 break;
             case 'registerSelectionTranslator': // TODO rename to interactivityRegisterSelectionTranslator

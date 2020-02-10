@@ -262,6 +262,7 @@ export const actions = {
         commit('removeSubscriber', { id, callback });
     },
     publish({ commit, state }, { id, data, skipCallback }) {
+        consola.debug(`publish event called with `, id, data);
         if (data.changeSet) {
             // row-based change set handling
             let publish = processChangeset(state, { id, data });
