@@ -119,7 +119,7 @@ export default {
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
         if (!window.KnimePageBuilderAPI) {
             window.KnimePageBuilderAPI = {
-                getPublishedData(id) {
+                interactivityGetPublishedData(id) {
                     return getPublishedDataFunc(id);
                 }
             };
@@ -337,31 +337,31 @@ export default {
             
             let interactivityType = event.data.type;
             switch (interactivityType) {
-            case 'subscribeToEvents': // TODO rename to interactivitySubscribe
+            case 'interactivitySubscribe':
                 consola.trace(`subscribe to event`, this.nodeId, event.data);
                 this.$store.dispatch('pagebuilder/interactivity/subscribe', {
                     id: event.data.id,
-                    callback: this.informIframe,
+                    callback: this.interactivityInformIframe,
                     elementFilter: event.data.elementFilter
                 });
                 break;
-            case 'unsubscribeFromEvents': // TODO rename to interactivityUnsubscribe
+            case 'interactivityUnsubscribe':
                 consola.trace(`unsubscribe from event`, this.nodeId, event.data);
                 this.$store.dispatch('pagebuilder/interactivity/unsubscribe', {
                     id: event.data.id,
-                    callback: this.informIframe
+                    callback: this.interactivityInformIframe
                 });
                 break;
-            case 'publishEvent': // TODO rename to interactivityPublish
+            case 'interactivityPublish':
                 consola.trace(`publish event called`, this.nodeId, event.data);
                 this.$store.dispatch('pagebuilder/interactivity/publish', {
                     id: event.data.id,
                     data: event.data.payload,
-                    skipCallback: this.informIframe
+                    skipCallback: this.interactivityInformIframe
                 });
                 break;
-            case 'registerSelectionTranslator': // TODO rename to interactivityRegisterSelectionTranslator
-                consola.trace(`registerSelectionTranslator`);
+            case 'interactivityRegisterSelectionTranslator':
+                consola.trace(`interactivityRegisterSelectionTranslator`);
                 // TODO register with WEBP-73
                 break;
             default:
@@ -369,7 +369,7 @@ export default {
             }
         },
 
-        informIframe(id, payload) {
+        interactivityInformIframe(id, payload) {
             let data = {
                 nodeId: this.nodeId,
                 type: 'interactivityEvent',

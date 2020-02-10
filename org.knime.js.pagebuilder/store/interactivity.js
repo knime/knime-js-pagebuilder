@@ -262,7 +262,6 @@ export const actions = {
         commit('removeSubscriber', { id, callback });
     },
     publish({ commit, state }, { id, data, skipCallback }) {
-        consola.debug(`publish event called with `, id, data);
         if (data.changeSet) {
             // row-based change set handling
             let publish = processChangeset(state, { id, data });
@@ -271,6 +270,9 @@ export const actions = {
             }
         } else {
             // non row-based update
+            if (!data.elements) {
+                throw new Error('Invalid payload for publishing interactivity event');
+            }
             let changedIds = determineChangedIds(state, { id, data });
             if (changedIds.length < 1) {
                 return;

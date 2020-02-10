@@ -22,20 +22,20 @@ describe('Interactivity store', () => {
 
     it('allows adding a subscriber', () => {
         let id = 'selection-12345-12345-12345';
-        let payload = { id, callback: jest.fn(), elementFilter: 2 };
+        let payload = { id, callback: jest.fn(), elementFilter: [2] };
         store.dispatch('subscribe', payload);
         expect(store.state[payload.id].subscribers.length).toEqual(1);
         expect(store.state[payload.id].subscribers[0]).toEqual({
             callback: payload.callback,
-            elementFilter: payload.elementFilter
+            filterIds: payload.elementFilter
         });
 
-        let payload2 = { id, callback: jest.fn(), elementFilter: 10 };
+        let payload2 = { id, callback: jest.fn(), elementFilter: [10] };
         store.dispatch('subscribe', payload2);
         expect(store.state[payload.id].subscribers.length).toEqual(2);
         expect(store.state[payload.id].subscribers[1]).toEqual({
             callback: payload2.callback,
-            elementFilter: payload2.elementFilter
+            filterIds: payload2.elementFilter
         });
 
         // TODO test inform subscriber of current state WEBP-74
@@ -68,24 +68,24 @@ describe('Interactivity store', () => {
 
     it('allows publishing', () => {
         let id = 'selection-12345-12345-12345';
-        let payload = { id, data: {}, callback: jest.fn() };
+        let payload = { id, data: { elements: [] }, callback: jest.fn() };
         store.dispatch('publish', payload);
         
         // TODO test call subscribers WEBP-74
     });
 
-    describe('allows getting the published element', () => {
+    describe('allows getting the published data', () => {
         it('returns the data', () => {
             let id = 'selection-12345-12345-12345';
-            let payload = { id, data: { testData: 1 }, callback: jest.fn() };
+            let minimalDummyData = { elements: [{ id: 1, testData: 1 }] };
+            let payload = { id, data: minimalDummyData, callback: jest.fn() };
             store.dispatch('publish', payload);
 
-            // TODO WEBP-74
-            // expect(store.getters.getPublishedElement(id)).toEqual(payload.data);
+            expect(store.getters.getPublishedData(id)).toEqual(payload.data);
         });
 
         it('returns null if nothing published', () => {
-            expect(store.getters.getPublishedElement('doesntexist-12345')).toBeNull();
+            expect(store.getters.getPublishedData('doesntexist-12345')).toBeNull();
         });
     });
 });
