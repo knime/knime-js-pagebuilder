@@ -116,7 +116,7 @@ export default {
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
 
         // create global API (used by iframes)
-        let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
+        let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/'];
         if (!window.KnimePageBuilderAPI) {
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
@@ -280,7 +280,7 @@ export default {
                 } else {
                     this.getValueCallback({ value: event.data.value });
                 }
-            } else {
+            } else if (event.data.type.startsWith('interactivity')) {
                 this.handleInteractivity(event);
             }
         },
@@ -362,7 +362,10 @@ export default {
                 break;
             case 'interactivityRegisterSelectionTranslator':
                 consola.trace(`interactivityRegisterSelectionTranslator`);
-                // TODO register with WEBP-73
+                this.$store.dispatch('pagebuilder/interactivity/registerSelectionTranslator', {
+                    id: event.data.id,
+                    translator: event.data.translator
+                });
                 break;
             default:
                 break;

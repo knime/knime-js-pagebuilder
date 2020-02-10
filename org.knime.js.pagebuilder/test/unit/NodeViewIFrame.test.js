@@ -11,14 +11,29 @@ jest.mock('raw-loader!./injectedScripts/messageListener.js', () => '"messageList
 
 describe('NodeViewIframe.vue', () => {
 
-    let store, localVue, context;
+    let interactivityConfig, store, localVue, context;
 
     beforeAll(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
 
         storeConfig.actions.setWebNodeLoading = jest.fn();
-        store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        interactivityConfig = {
+            actions: {
+                subscribe: jest.fn(),
+                unsubscribe: jest.fn(),
+                publish: jest.fn(),
+                registerSelectionTranslator: jest.fn(),
+                clear: jest.fn()
+            },
+            getters: {
+                getPublishedData: jest.fn()
+            }
+        };
+        store = new Vuex.Store({ modules: {
+            pagebuilder: storeConfig,
+            'pagebuilder/interactivity': interactivityConfig
+        } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
             wizardPageContent: {
@@ -64,7 +79,8 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: true
             }
         });
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).toContain('html { overflow: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
+            .toContain('html { overflow: hidden; }');
 
         wrapper = shallowMount(NodeViewIFrame, {
             ...context,
@@ -74,7 +90,8 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: true
             }
         });
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).toContain('html { overflow-y: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
+            .toContain('html { overflow-y: hidden; }');
 
         wrapper = shallowMount(NodeViewIFrame, {
             ...context,
@@ -84,8 +101,10 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: false
             }
         });
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).not.toContain('html { overflow: hidden; }');
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).not.toContain('html { overflow-y: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
+            .not.toContain('html { overflow: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
+            .not.toContain('html { overflow-y: hidden; }');
 
     });
 
@@ -432,21 +451,63 @@ describe('NodeViewIframe.vue', () => {
         beforeEach(() => {
             wrapper = shallowMount(NodeViewIFrame, {
                 ...context,
-                attachToDocument: true
+                attachToDocument: true,
+                propsData: {
+                    nodeId: '0.0.7'
+                }
             });
         });
 
         it('registers & unregisters global PageBuilder API', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
             wrapper.destroy();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
 
-        it('getPublishedElement calls interactivity store', () => {
-            // TODO finish test
-            // window.KnimePageBuilderAPI.getPublishedElement('selection-12345');
+        it('getPublishedData calls interactivity store', () => {
+            window.KnimePageBuilderAPI.interactivityGetPublishedData('selection-12345');
+            expect(interactivityConfig.getters.getPublishedData).toHaveBeenCalled();
         });
 
-        // TODO finish tests
+        it('subscribe calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'interactivitySubscribe', id: '123' }
+            });
+            expect(interactivityConfig.actions.subscribe).toHaveBeenCalled();
+        });
+
+        it('unsubscribe calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'interactivityUnubscribe', id: '123' }
+            });
+            expect(interactivityConfig.actions.unsubscribe).toHaveBeenCalled();
+        });
+
+        it('publish calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'interactivityPublish', id: '123', payload: 'dummy' }
+            });
+            expect(interactivityConfig.actions.publish).toHaveBeenCalled();
+        });
+
+        it('registerSelectionTranslator calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({ origin: window.origin,
+                data: {
+                    nodeId: '0.0.7',
+                    type: 'interactivityRegisterSelectionTranslator',
+                    id: '123',
+                    translator: 'dummy'
+                } });
+            expect(interactivityConfig.actions.registerSelectionTranslator).toHaveBeenCalled();
+        });
+        
     });
 });

@@ -284,6 +284,9 @@ export const actions = {
             notifySubscribers(state, { id, data, skipCallback, changedIds });
         }
     },
+    registerSelectionTranslator({ commit }, { id, translator }) {
+        // TODO fill me
+    },
     clear({ commit }) {
         commit('clear');
     }
