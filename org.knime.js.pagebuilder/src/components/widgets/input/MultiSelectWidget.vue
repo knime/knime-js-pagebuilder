@@ -1,7 +1,7 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import ListBox from 'webapps-common/ui/components/forms/ListBox';
+import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
 
@@ -20,7 +20,7 @@ export default {
     components: {
         Checkboxes,
         Fieldset,
-        ListBox,
+        MultiselectListBox,
         Label,
         ErrorMessage
     },
@@ -155,7 +155,7 @@ export default {
       v-else
       :text="label"
     >
-      <ListBox
+      <MultiselectListBox
         v-if="isList"
         ref="form"
         :value="value"
