@@ -1,0 +1,394 @@
+{
+  "hasPreviousPage": true,
+  "nodeMessages": {},
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthLG": null,
+                "widthXL": null,
+                "widthSM": null,
+                "widthMD": null,
+                "widthXS": 6,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "resizeTolerance": 5,
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "5:0:6",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  },
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "resizeTolerance": 5,
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "5:0:8",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthLG": null,
+                "widthXL": null,
+                "widthSM": null,
+                "widthMD": null,
+                "widthXS": 6,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "resizeTolerance": 5,
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "5:0:7",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  },
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "resizeTolerance": 5,
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "5:0:9",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          }
+        ]
+      },
+      "blackBoard": null,
+      "selectionTranslators": null,
+      "version": "4.1.0.v201912041250"
+    },
+    "webNodes": {
+      "5:0:6": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
+        ],
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true,
+          "nodeName": "Multiple Selection Widget",
+          "nodeAnnotation": "",
+          "nodeState": "executed"
+        },
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "getViewValueMethodName": "value",
+        "namespace": "knimeMultipleSelectionWidget",
+        "viewValue": null,
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+          "label": "Label",
+          "description": "Some Text...",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+            "value": [
+              "TwinList 3",
+              "TwinList 5"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+            "value": [
+              "TwinList 3",
+              "TwinList 5"
+            ]
+          },
+          "possibleChoices": [
+            "TwinList 1",
+            "TwinList 2",
+            "TwinList 3",
+            "TwinList 4",
+            "TwinList 5",
+            "TwinList 6",
+            "TwinList 7"
+          ],
+          "type": "Twinlist",
+          "limitNumberVisOptions": true,
+          "numberVisOptions": 4
+        },
+        "customCSS": ""
+      },
+      "5:0:8": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
+        ],
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true,
+          "nodeName": "Multiple Selection Widget",
+          "nodeAnnotation": "",
+          "nodeState": "executed"
+        },
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "getViewValueMethodName": "value",
+        "namespace": "knimeMultipleSelectionWidget",
+        "viewValue": null,
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+          "label": "Label List",
+          "description": "Desc List",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+            "value": [
+              "List 3",
+              "List 4",
+              "List 7"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+            "value": [
+              "List 3",
+              "List 4",
+              "List 7"
+            ]
+          },
+          "possibleChoices": [
+            "List 1",
+            "List 2",
+            "List 3",
+            "List 4",
+            "List 5",
+            "List 6",
+            "List 7",
+            "List 8"
+          ],
+          "type": "List",
+          "limitNumberVisOptions": true,
+          "numberVisOptions": 5
+        },
+        "customCSS": ""
+      },
+      "5:0:7": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
+        ],
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true,
+          "nodeName": "Multiple Selection Widget",
+          "nodeAnnotation": "",
+          "nodeState": "executed"
+        },
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "getViewValueMethodName": "value",
+        "namespace": "knimeMultipleSelectionWidget",
+        "viewValue": null,
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+          "label": "Label Checkbox Vertical",
+          "description": "Enter Description CHV",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+            "value": [
+              "CBV 2",
+              "CBV 4",
+              "CBV 6"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+            "value": [
+              "CBV 2",
+              "CBV 4",
+              "CBV 6"
+            ]
+          },
+          "possibleChoices": [
+            "CBV 1",
+            "CBV 2",
+            "CBV 3",
+            "CBV 4",
+            "CBV 5",
+            "CBV 6"
+          ],
+          "type": "Check boxes (vertical)",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "customCSS": ""
+      },
+      "5:0:9": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
+        ],
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true,
+          "nodeName": "Multiple Selection Widget",
+          "nodeAnnotation": "",
+          "nodeState": "executed"
+        },
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "getViewValueMethodName": "value",
+        "namespace": "knimeMultipleSelectionWidget",
+        "viewValue": null,
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+          "label": "Label Checkbox Horiziontal",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+            "value": [
+              "CBH 1",
+              "CBH 4"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+            "value": [
+              "CBH 1",
+              "CBH 4"
+            ]
+          },
+          "possibleChoices": [
+            "CBH 1",
+            "CBH 2",
+            "CBH 3",
+            "CBH 4",
+            "CBH 5",
+            "CBH 6",
+            "CBH 7"
+          ],
+          "type": "Check boxes (horizontal)",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "customCSS": ""
+      }
+    },
+    "version": "4.1.0.v201912041250"
+  }
+}
