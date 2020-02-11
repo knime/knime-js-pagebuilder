@@ -237,6 +237,7 @@ export const mutations = {
         }
     },
     updateData(state, { id, data }) {
+        addInteractivityId(state, { id });
         state[id].data = data;
     },
     clear(state) {
@@ -285,7 +286,7 @@ export const actions = {
         }
     },
     registerSelectionTranslator({ commit }, { id, translator }) {
-        // TODO fill me
+        // TODO fill me with WEBP-73
     },
     clear({ commit }) {
         commit('clear');
