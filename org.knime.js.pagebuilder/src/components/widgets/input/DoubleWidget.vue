@@ -9,6 +9,11 @@ export default {
     components: {
         NumberWidget
     },
+    data() {
+        return {
+            hasValueGetter: true // tell parent to register getValue with store
+        };
+    },
     methods: {
         validate() {
             return this.$refs.widget.validate();
