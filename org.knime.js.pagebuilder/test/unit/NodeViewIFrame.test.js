@@ -11,13 +11,14 @@ jest.mock('raw-loader!./injectedScripts/messageListener.js', () => '"messageList
 
 describe('NodeViewIframe.vue', () => {
 
-    let interactivityConfig, store, localVue, context;
+    let interactivityConfig, store, localVue, context, mockGetPublishedData;
 
     beforeAll(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
 
         storeConfig.actions.setWebNodeLoading = jest.fn();
+        mockGetPublishedData = jest.fn();
         interactivityConfig = {
             namespaced: true,
             actions: {
@@ -28,7 +29,7 @@ describe('NodeViewIframe.vue', () => {
                 clear: jest.fn()
             },
             getters: {
-                getPublishedData: jest.fn()
+                getPublishedData: jest.fn().mockReturnValue(mockGetPublishedData)
             }
         };
         store = new Vuex.Store({ modules: {
@@ -467,9 +468,10 @@ describe('NodeViewIframe.vue', () => {
         });
 
         it('getPublishedData calls interactivity store', () => {
-            // FIXME this doesn't work yet as the store getter cannot be retrieved
-            /* window.KnimePageBuilderAPI.interactivityGetPublishedData('selection-12345');
-            expect(interactivityConfig.getters.getPublishedData).toHaveBeenCalled(); */
+            let id = 'selection-12345';
+            window.KnimePageBuilderAPI.interactivityGetPublishedData(id);
+            expect(interactivityConfig.getters.getPublishedData).toHaveBeenCalled();
+            expect(mockGetPublishedData).toHaveBeenCalledWith(id);
         });
 
         it('subscribe calls interactivity store', () => {
@@ -509,6 +511,20 @@ describe('NodeViewIframe.vue', () => {
                     translator: 'dummy'
                 } });
             expect(interactivityConfig.actions.registerSelectionTranslator).toHaveBeenCalled();
+        });
+
+        it('informs iframe of interactivity events', () => {
+            window.origin = window.location.origin;
+            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+            let id = '123';
+            let payload = 'dummyData';
+            wrapper.vm.interactivityInformIframe(id, payload);
+            expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                nodeId: '0.0.7',
+                type: 'interactivityEvent',
+                id,
+                payload
+            }, window.origin);
         });
         
     });
