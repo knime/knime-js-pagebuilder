@@ -116,7 +116,7 @@ export default {
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
 
         // create global API (used by iframes)
-        let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/'];
+        let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
         if (!window.KnimePageBuilderAPI) {
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
