@@ -2,6 +2,7 @@
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox';
+import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
 
@@ -21,6 +22,7 @@ export default {
         Checkboxes,
         Fieldset,
         MultiselectListBox,
+        Twinlist,
         Label,
         ErrorMessage
     },
@@ -161,6 +163,18 @@ export default {
         :value="value"
         :size="maxVisibleListEntries"
         :aria-label="label"
+        :possible-values="possibleChoices"
+        :is-valid="isValid"
+        :title="description"
+        @input="onChange"
+      />
+      <Twinlist
+        v-if="isTwinlist"
+        ref="form"
+        :value="value"
+        :size="maxVisibleListEntries"
+        :aria-label-left="`Possible choices for ${label}`"
+        :aria-label-right="`Selected values for ${label}`"
         :possible-values="possibleChoices"
         :is-valid="isValid"
         :title="description"
