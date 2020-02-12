@@ -4,7 +4,6 @@ import { shallowMount } from '@vue/test-utils';
 import SliderWidget from '@/components/widgets/input/SliderWidget';
 import Slider from '@/components/widgets/baseElements/input/Slider';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
-import { addKnimeClasses } from '../../src/util/widgetUtil/slider/knimeClasses';
 
 describe('SliderWidget.vue', () => {
     let context, nodeConfig, nodeId, isValid, wrapper;
@@ -238,11 +237,6 @@ describe('SliderWidget.vue', () => {
         });
 
         expect(wrapper2.vm.connect).toBe('both');
-    });
-
-    // cannot test fully without DOM, but method is failsafe
-    it('trys to apply KNIME class styles to the Slider', () => {
-        expect(addKnimeClasses(wrapper.vm.$el.childNodes[1].childNodes[0])).toBeUndefined();
     });
 
     it('correctly emits the updateWidget Payload', () => {

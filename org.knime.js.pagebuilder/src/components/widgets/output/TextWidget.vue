@@ -1,5 +1,5 @@
 <script>
-import Label from '../baseElements/text/Label';
+import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { getProp } from '../../../util/nestedProperty';
 
@@ -110,19 +110,18 @@ export default {
   <div :title="description">
     <Label
       :text="label"
-      class="knime-label"
     />
     <Component
       :is="elementType"
       v-if="elementType"
-      class="knime-qf-text knime-multiline"
+      class="multiline"
       v-text="value"
     />
     <!-- v-html needed to enable all existing behavior -->
     <!-- eslint-disable vue/no-v-html -->
     <div
       v-else
-      class="knime-qf-text knime-multiline"
+      class="multiline"
       v-html="value"
     />
     <ErrorMessage :error="errorMessage" />
@@ -130,7 +129,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.knime-multiline {
+.multiline {
   line-height: 18px;
   font-size: 13px;
 }

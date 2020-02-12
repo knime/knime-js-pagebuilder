@@ -69,36 +69,14 @@ export default {
 </script>
 
 <template>
-  <div
+  <Checkbox
+    ref="form"
+    :value="value"
+    label-size="large"
+    class="checkbox-input"
+    @input="onChange"
     :title="description"
-    class="knime-checkbox"
   >
-    <Checkbox
-      ref="form"
-      :value="value"
-      box-size="medium"
-      class="knime-boolean knime-qf-title"
-      @input="onChange"
-    >
-      {{ label }}
-    </Checkbox>
-  </div>
+    {{ label }}
+  </Checkbox>
 </template>
-
-<style lang="postcss" scoped>
-.knime-checkbox {
-  display: flex;
-
-  & .knime-label {
-    overflow: hidden;
-  }
-
-  & .knime-qf-title {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 24px;
-    display: block;
-    margin-bottom: 5px;
-  }
-}
-</style>

@@ -1,6 +1,6 @@
 <script>
 import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
-import Label from '../text/Label';
+import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../text/ErrorMessage';
 
 /**
@@ -132,7 +132,6 @@ export default {
     <Label
       v-if="label"
       :text="label"
-      class="knime-label"
     />
     <NumberInput
       ref="form"

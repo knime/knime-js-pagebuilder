@@ -1,6 +1,6 @@
 import NotAvailable from '~/src/components/layout/NotAvailable';
 import { shallowMount } from '@vue/test-utils';
-import Label from '~/src/components/widgets/baseElements/text/Label';
+import Label from '~/webapps-common/ui/components/forms/Label';
 
 describe('NotAvailable.vue', () => {
     let wrapper;

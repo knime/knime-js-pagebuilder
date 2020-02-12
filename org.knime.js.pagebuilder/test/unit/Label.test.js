@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 
-import Label from '@/components/widgets/baseElements/text/Label';
+import Label from '~/webapps-common/ui/components/forms/Label';
 
 describe('Label.vue', () => {
     let context, propsData;

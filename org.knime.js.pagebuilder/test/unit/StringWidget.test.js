@@ -147,20 +147,34 @@ describe('StringWidget.vue', () => {
         expect(wrapper.find(TextArea)).toBeTruthy();
     });
 
-    it('\'s children will change appearance when invalid', () => {
+    it('\'s input will be invalid if widget is', () => {
 
-        let wrapper2 = mount(StringWidget, {
-            propsData: propsDateTextArea
+        let widget = mount(StringWidget, {
+            propsData: { ...propsDataInput, isValid: true }
         });
 
-        let textComponent = wrapper2.find(TextArea);
-        expect(textComponent.classes()).toContain('invalid');
+        let textComponent = widget.find(InputField);
 
-        textComponent.setProps({ isValid: true });
-        expect(textComponent.classes()).not.toContain('invalid');
+        expect(textComponent.props('isValid')).toBe(true);
 
-        textComponent.setProps({ isValid: false });
-        expect(textComponent.classes()).toContain('invalid');
+        widget.setProps({ isValid: false });
+
+        expect(textComponent.props('isValid')).toBe(false);
+    });
+
+    it('\'s textarea will be invalid if widget is', () => {
+
+        let widget = mount(StringWidget, {
+            propsData: { ...propsDateTextArea, isValid: true }
+        });
+
+        let textComponent = widget.find(TextArea);
+
+        expect(textComponent.props('isValid')).toBe(true);
+
+        widget.setProps({ isValid: false });
+
+        expect(textComponent.props('isValid')).toBe(false);
     });
 
     it('has validate logic to validate non-required values', () => {
