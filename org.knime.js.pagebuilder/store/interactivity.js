@@ -234,6 +234,10 @@ export const mutations = {
             if (index >= 0) {
                 state[id].subscribers.splice(index, 1);
             }
+            // remove state if no data and no subscribers
+            if (state[id].subscribers.length === 0 && !state[id].data) {
+                delete state[id];
+            }
         }
     },
     updateData(state, { id, data }) {
@@ -241,7 +245,9 @@ export const mutations = {
         state[id].data = data;
     },
     clear(state) {
-        state = {};
+        Object.keys(state).forEach(id => {
+            delete state[id];
+        });
     }
 };
 
