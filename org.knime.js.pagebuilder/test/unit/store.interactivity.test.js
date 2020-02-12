@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -21,7 +22,6 @@ describe('Interactivity store', () => {
     });
 
     describe('mutations', () => {
-
         let subscriberId = 'selection-0.0.9';
 
         it('add subscriber', () => {
@@ -110,101 +110,185 @@ describe('Interactivity store', () => {
         });
     });
 
-    describe('adding subscribers', () => {
+    describe('actions', () => {
+        describe('adding subscribers', () => {
+            let subscriberId = 'selection-0.0.9';
+            let dataId = 'selection-0.0.7';
+            let data = { elements: ['dummyData'] };
         
-        let subscriberId = 'selection-0.0.9';
-        let dataId = 'selection-0.0.7';
-        let data = { elements: ['dummyData'] };
-        
-        beforeEach(() => {
-            store.commit('updateData', { id: dataId, data });
-        });
-
-        it('allows adding a subscriber without elementFilter', () => {
-            let payload = { id: subscriberId, callback: jest.fn() };
-            store.dispatch('subscribe', payload);
-            expect(store.state[payload.id].subscribers.length).toEqual(1);
-            expect(store.state[payload.id].subscribers[0]).toEqual({
-                callback: payload.callback,
-                filterIds: payload.elementFilter
+            beforeEach(() => {
+                store.commit('updateData', { id: dataId, data });
             });
-            // no data, callback is supposed to not be informed
-            expect(payload.callback).not.toHaveBeenCalled();
-        });
 
-        it('allows adding a subscriber with elementFilter', () => {
-            let payload = { id: subscriberId, callback: jest.fn(), elementFilter: [2] };
-            store.dispatch('subscribe', payload);
-            expect(store.state[payload.id].subscribers.length).toEqual(1);
-            expect(store.state[payload.id].subscribers[0]).toEqual({
-                callback: payload.callback,
-                filterIds: payload.elementFilter
+            it('allows adding a subscriber without elementFilter', () => {
+                let payload = { id: subscriberId, callback: jest.fn() };
+                store.dispatch('subscribe', payload);
+                expect(store.state[payload.id].subscribers.length).toEqual(1);
+                expect(store.state[payload.id].subscribers[0]).toEqual({
+                    callback: payload.callback,
+                    filterIds: payload.elementFilter
+                });
+                // no data, callback is supposed to not be informed
+                expect(payload.callback).not.toHaveBeenCalled();
             });
-            // no data, callback is supposed to not be informed
-            expect(payload.callback).not.toHaveBeenCalled();
-        });
 
-        it('informs callback of current state when subscribing', () => {
-            let payload = { id: dataId, callback: jest.fn() };
-            store.dispatch('subscribe', payload);
-            expect(store.state[payload.id].subscribers.length).toEqual(1);
-            expect(store.state[payload.id].subscribers[0]).toEqual({
-                callback: payload.callback,
-                filterIds: payload.elementFilter
+            it('allows adding a subscriber with elementFilter', () => {
+                let payload = { id: subscriberId, callback: jest.fn(), elementFilter: [2] };
+                store.dispatch('subscribe', payload);
+                expect(store.state[payload.id].subscribers.length).toEqual(1);
+                expect(store.state[payload.id].subscribers[0]).toEqual({
+                    callback: payload.callback,
+                    filterIds: payload.elementFilter
+                });
+                // no data, callback is supposed to not be informed
+                expect(payload.callback).not.toHaveBeenCalled();
             });
-            // data present, callback is supposed to be informed
-            let reData = data;
-            reData.reevaluate = true;
-            expect(payload.callback).toHaveBeenCalledWith(dataId, reData);
+
+            it('informs callback of current state when subscribing', () => {
+                let payload = { id: dataId, callback: jest.fn() };
+                store.dispatch('subscribe', payload);
+                expect(store.state[payload.id].subscribers.length).toEqual(1);
+                expect(store.state[payload.id].subscribers[0]).toEqual({
+                    callback: payload.callback,
+                    filterIds: payload.elementFilter
+                });
+                // data present, callback is supposed to be informed
+                let reData = data;
+                reData.reevaluate = true;
+                expect(payload.callback).toHaveBeenCalledWith(dataId, reData);
+            });
+
         });
-
-    });
-    
-    it('allows removing a subscriber', () => {
-        let id = 'selection-12345-12345-12345';
-        let payload = { id, callback: jest.fn(), elementFilter: 2 };
-        store.dispatch('subscribe', payload);
-        expect(store.state[payload.id].subscribers.length).toEqual(1);
-
-        store.dispatch('unsubscribe', payload);
-        expect(store.state[payload.id]).not.toBeDefined();
-    });
-
-    describe('allows updating data', () => {
-        it('new id', () => {
-            // TODO process changesets, combine filters... WEBP-74
-        });
-        it('existing id', () => {
-            // TODO process changesets, combine filters... WEBP-74
-        });
-    });
-
-    it('allows clearing the store', () => {
-        store.dispatch('clear');
-        expect(store.state).toEqual({});
-    });
-
-
-    it('allows publishing', () => {
-        let id = 'selection-12345-12345-12345';
-        let payload = { id, data: { elements: [] }, callback: jest.fn() };
-        store.dispatch('publish', payload);
-        
-        // TODO test call subscribers WEBP-74
-    });
-
-    describe('allows getting the published data', () => {
-        it('returns the data', () => {
+        describe('removing subscribers', () => {
             let id = 'selection-12345-12345-12345';
-            let minimalDummyData = { elements: [{ id: 1, testData: 1 }] };
-            let payload = { id, data: minimalDummyData, callback: jest.fn() };
-            store.dispatch('publish', payload);
+            let payload = { id, callback: jest.fn(), elementFilter: 2 };
+            
+            it('allows removing a subscriber', () => {
+                store.commit('addSubscriber', payload);
+                expect(store.state[payload.id].subscribers.length).toEqual(1);
 
-            expect(store.getters.getPublishedData(id)).toEqual(payload.data);
+                store.dispatch('unsubscribe', payload);
+                expect(store.state[payload.id]).not.toBeDefined();
+            });
+            it('allows removing non-existing subscriber', () => {
+                store.dispatch('unsubscribe', payload);
+                expect(store.state[payload.id]).not.toBeDefined();
+            });
+        });
+        describe('publish data', () => {
+
+            let publishId = '0.0.7';
+
+            describe('notifies subscribers of changes', () => {
+                it('notifies registered subscribers', () => {
+
+                });
+                it('notifies with filtered elements', () => {
+
+                });
+                it('does not notify on empty filtered elements', () => {
+
+                });
+                it('notifies on relevant elements', () => {
+
+                });
+                it('does not notify on empty relevant elements', () => {
+
+                });
+                it('does not notify skipped callback', () => {
+
+                });
+            });
+            describe('handles changesets', () => {
+                it('creates element for added rows', () => {
+
+                });
+                it('does not create element for only removed rows', () => {
+
+                });
+                it('keeps removed and added rows', () => {
+
+                });
+            });
+            describe('handles regular updates', () => {
+
+                let minimalData = { elements: [{ id: '0.0.7', data: 'wibble' }] };
+
+                it('throws error on invalid payload', () => {
+                    let invalidPayload = { id: publishId, data: { wibble: 'foo', wobble: 'bar' } };
+                    expect(() => {
+                        store.dispatch('publish', invalidPayload);
+                    }).toThrowError(/^.*invalid payload.*$/i);
+                });
+                it('creates element on new id', () => {
+                    expect(store.state[publishId]).not.toBeDefined();
+                    let payload = { id: publishId, data: minimalData };
+                    store.dispatch('publish', payload);
+                    expect(store.state[publishId]).toBeDefined();
+                    expect(store.state[publishId].data).toEqual(minimalData);
+                });
+                it('updates existing id', () => {
+                    let payload = { id: publishId, data: minimalData };
+                    store.dispatch('publish', payload);
+                    expect(store.state[publishId]).toBeDefined();
+                    expect(store.state[publishId].data).toEqual(minimalData);
+                    let changedData = JSON.parse(JSON.stringify(minimalData));
+                    changedData.elements[0].data = 'wobble';
+                    let payload2 = { id: publishId, data: changedData };
+                    store.dispatch('publish', payload2);
+                    expect(store.state[publishId].data).toEqual(changedData);
+                });
+                it('does not update on unchanged data', () => {
+                    
+                });
+            });
+        });
+        describe('handles selection translators', () => {
+            it('allows registering a selection translator', () => {
+                // TODO with WEBP-73
+            });
         });
 
-        it('returns null if nothing published', () => {
-            expect(store.getters.getPublishedData('doesntexist-12345')).toBeNull();
+        describe('clear store', () => {
+            it('allows clearing the store', () => {
+                expect(store.state).toEqual({});
+                let dataPayload = { id: '0.0.7', data: 'dummyData' };
+                store.commit('updateData', dataPayload);
+                expect(store.state[dataPayload.id]).toBeDefined();
+                store.dispatch('clear');
+                expect(store.state).toEqual({});
+            });
+            it('allows clearing the store without data', () => {
+                expect(store.state).toEqual({});
+                let payload = { id: '0.0.7', callback: jest.fn() };
+                store.commit('addSubscriber', payload);
+                expect(store.state[payload.id]).toBeDefined();
+                store.dispatch('clear');
+                expect(store.state).toEqual({});
+            });
+            it('allows clearing an empty store', () => {
+                expect(store.state).toEqual({});
+                store.dispatch('clear');
+                expect(store.state).toEqual({});
+            });
         });
     });
+
+    describe('getters', () => {
+        describe('allows getting the published data', () => {
+            it('returns the data', () => {
+                let id = 'selection-12345-12345-12345';
+                let minimalDummyData = { elements: [{ id: 1, testData: 1 }] };
+                let payload = { id, data: minimalDummyData, callback: jest.fn() };
+                store.dispatch('publish', payload);
+
+                expect(store.getters.getPublishedData(id)).toEqual(payload.data);
+            });
+
+            it('returns null if nothing published', () => {
+                expect(store.getters.getPublishedData('doesntexist-12345')).toBeNull();
+            });
+        });
+    });
+
 });
