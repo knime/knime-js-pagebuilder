@@ -123,7 +123,7 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            // TODO: this validate function is called BEFORE the value really changed - why?
+            // TODO: this validate function is called BEFORE the value of *checkboxes* is really changed - why?
             let isValid = true;
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
@@ -137,7 +137,7 @@ export default {
 <template>
   <div>
     <Fieldset
-      v-if="isCheckboxes"
+      v-if="isCheckboxes || isTwinlist"
       :text="label"
     >
       <Checkboxes
@@ -146,6 +146,18 @@ export default {
         :value="value"
         :alignment="checkBoxesAlignment"
         :aria-label="label"
+        :possible-values="possibleChoices"
+        :is-valid="isValid"
+        :title="description"
+        @input="onChange"
+      />
+      <Twinlist
+        v-if="isTwinlist"
+        ref="form"
+        :value="value"
+        :size="maxVisibleListEntries"
+        aria-label-left="Excludes"
+        aria-label-right="Includes"
         :possible-values="possibleChoices"
         :is-valid="isValid"
         :title="description"
@@ -163,18 +175,6 @@ export default {
         :value="value"
         :size="maxVisibleListEntries"
         :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <Twinlist
-        v-if="isTwinlist"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        aria-label-left="Excludes"
-        aria-label-right="Includes"
         :possible-values="possibleChoices"
         :is-valid="isValid"
         :title="description"
