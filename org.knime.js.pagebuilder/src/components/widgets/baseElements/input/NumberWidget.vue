@@ -89,15 +89,6 @@ export default {
         },
         max() {
             return this.viewRep.usemax ? this.viewRep.max : Number.MAX_SAFE_INTEGER;
-        },
-        inputClasses() {
-            let classes = 'knime-qf-input knime-spinner';
-            if (this.type === 'integer') {
-                classes += 'knime-integer';
-            } else {
-                classes += 'knime-double';
-            }
-            return classes;
         }
     },
     methods: {
@@ -129,9 +120,7 @@ export default {
 
 <template>
   <div>
-    <Label
-      :text="label"
-    >
+    <Label :text="label">
       <NumberInput
         ref="form"
         :type="type"
@@ -140,7 +129,6 @@ export default {
         :max="max"
         :is-valid="isValid"
         :title="description"
-        :input-classes="inputClasses"
         @input="onChange"
       />
     </Label>

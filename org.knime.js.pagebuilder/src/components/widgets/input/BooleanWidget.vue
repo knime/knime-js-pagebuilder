@@ -73,9 +73,8 @@ export default {
     ref="form"
     :value="value"
     label-size="large"
-    class="checkbox-input"
-    @input="onChange"
     :title="description"
+    @input="onChange"
   >
     {{ label }}
   </Checkbox>
