@@ -78,4 +78,5 @@ export default {
   >
     {{ label }}
   </Checkbox>
+  <!-- no ErrorMessage needed yet -->
 </template>
