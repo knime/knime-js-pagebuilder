@@ -177,16 +177,21 @@ describe('Interactivity store', () => {
         });
         describe('publish data', () => {
 
-            let publishId = '0.0.7';
+            let publishId = '0.0.7 Bond';
 
             describe('notifies subscribers of changes', () => {
                 
+                let filterId = '0.0.8 Bill';
+                let filterId2 = '0.0.9 Spectre';
+                let minimalData = { elements: [{ id: filterId, data: 42 }] };
                 let subscriberCallback = jest.fn();
-                let minimalData = { elements: [{ id: 42 }] };
+                let filteredCallback = jest.fn();
                 
                 beforeEach(() => {
-                    let subscriberPayload = { id: publishId, callback: subscriberCallback };
-                    store.commit('addSubscriber', subscriberPayload);
+                    let subscriber = { id: publishId, callback: subscriberCallback };
+                    store.commit('addSubscriber', subscriber);
+                    let filteredSubscriber = { id: publishId, callback: filteredCallback, elementFilter: [filterId] };
+                    store.commit('addSubscriber', filteredSubscriber);
                 });
 
                 it('notifies registered subscribers', () => {
@@ -195,16 +200,52 @@ describe('Interactivity store', () => {
                     expect(subscriberCallback).toHaveBeenCalledWith(publishId, minimalData);
                 });
                 it('notifies with filtered elements', () => {
-                    // throw new Error();
+                    let payload = { id: publishId, data: minimalData };
+                    store.dispatch('publish', payload);
+                    expect(subscriberCallback).toHaveBeenCalledWith(publishId, minimalData);
+                    expect(filteredCallback).toHaveBeenCalledWith(publishId, minimalData);
                 });
                 it('does not notify on empty filtered elements', () => {
-                    // throw new Error();
+                    let filteredData = JSON.parse(JSON.stringify(minimalData));
+                    filteredData.elements[0].id = filterId2;
+                    let payload = { id: publishId, data: filteredData };
+                    store.dispatch('publish', payload);
+                    expect(subscriberCallback).toHaveBeenCalledWith(publishId, filteredData);
+                    expect(filteredCallback).not.toHaveBeenCalled();
                 });
-                it('notifies on relevant elements', () => {
-                    // throw new Error();
+                it('notifies only relevant elements', () => {
+                    // setup
+                    let doubleData = JSON.parse(JSON.stringify(minimalData));
+                    let secondElement = { id: filterId2, data: 'wibble' };
+                    doubleData.elements.push(secondElement);
+                    let payload = { id: publishId, data: doubleData };
+                    store.dispatch('publish', payload);
+                    jest.resetAllMocks();
+                    
+                    // relevant element changed
+                    let filteredData = JSON.parse(JSON.stringify(minimalData));
+                    filteredData.elements[0].data = 'wobble';
+                    let payload2 = { id: publishId, data: filteredData };
+                    store.dispatch('publish', payload2);
+                    expect(subscriberCallback).toHaveBeenCalledWith(publishId, filteredData);
+                    expect(filteredCallback).toHaveBeenCalledWith(publishId, filteredData);
+
+                    // not relevant element changed
+                    let filteredData2 = JSON.parse(JSON.stringify(minimalData));
+                    filteredData2.elements[0].id = filterId2;
+                    filteredData2.elements[0].data = 'wubble';
+                    let payload3 = { id: publishId, data: filteredData2 };
+                    store.dispatch('publish', payload3);
+                    expect(subscriberCallback).toHaveBeenCalledWith(publishId, filteredData2);
+                    expect(filteredCallback).not.toHaveBeenCalledWith();
                 });
-                it('does not notify on empty relevant elements', () => {
-                    // throw new Error();
+                it('does not notify on unchanged data', () => {
+                    let payload = { id: publishId, data: minimalData };
+                    store.dispatch('publish', payload);
+                    jest.resetAllMocks();
+                    store.dispatch('publish', payload);
+                    expect(subscriberCallback).not.toHaveBeenCalled();
+                    expect(filteredCallback).not.toHaveBeenCalled();
                 });
                 it('does not notify skipped callback', () => {
                     let skipCallback = jest.fn();
@@ -216,18 +257,25 @@ describe('Interactivity store', () => {
                 });
             });
             describe('handles changesets', () => {
+
+                let universalRow = 'row42';
+                let britishRows;
+
+                beforeEach(() => {
+                    britishRows = ['wibble', 'wobble', 'wubble', 'flob'];
+                });
+
                 it('creates element for added rows', () => {
-                    let addedRow = 'row42';
                     let payload = { id: publishId,
                         data: {
                             changeSet: {
-                                added: [addedRow]
+                                added: [universalRow]
                             }
                         } };
                     store.dispatch('publish', payload);
                     expect(store.state[publishId]).toBeDefined();
                     expect(store.state[publishId].data).toEqual({
-                        elements: [{ rows: [addedRow], type: 'row' }]
+                        elements: [{ rows: [universalRow], type: 'row' }]
                     });
                 });
                 it('does not create element for only removed rows', () => {
@@ -240,6 +288,65 @@ describe('Interactivity store', () => {
                         } };
                     store.dispatch('publish', payload);
                     expect(store.state[publishId]).not.toBeDefined();
+                });
+                it('adds rows', () => {
+                    let payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                added: [universalRow]
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    payload.data.changeSet.added = britishRows;
+                    store.dispatch('publish', payload);
+                    let allRows = [universalRow].concat(britishRows);
+                    expect(store.state[publishId].data).toEqual({
+                        elements: [{ rows: allRows, type: 'row' }]
+                    });
+                });
+                it('removes rows', () => {
+                    let payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                added: britishRows
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    let removeRow = 'wobble';
+                    payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                removed: [removeRow]
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    britishRows.splice(britishRows.indexOf(removeRow), 1);
+                    expect(store.state[publishId].data).toEqual({
+                        elements: [{ rows: britishRows, type: 'row' }]
+                    });
+                });
+                it('adds and removes rows', () => {
+                    let payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                added: britishRows
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    let removeRow = 'wobble';
+                    payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                added: [universalRow],
+                                removed: [removeRow]
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    britishRows.splice(britishRows.indexOf(removeRow), 1);
+                    let allRows = britishRows.concat([universalRow]);
+                    expect(store.state[publishId].data).toEqual({
+                        elements: [{ rows: allRows, type: 'row' }]
+                    });
                 });
                 it('keeps removed and added rows', () => {
                     let addedRow = 'row42';
@@ -254,6 +361,20 @@ describe('Interactivity store', () => {
                     expect(store.state[publishId]).toBeDefined();
                     expect(store.state[publishId].data).toEqual({
                         elements: [{ rows: [addedRow], type: 'row' }]
+                    });
+                });
+                it('removes element on empty rows', () => {
+                    let payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                added: [universalRow]
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    payload.data.changeSet = { removed: [universalRow] };
+                    store.dispatch('publish', payload);
+                    expect(store.state[publishId].data).toEqual({
+                        elements: []
                     });
                 });
             });
