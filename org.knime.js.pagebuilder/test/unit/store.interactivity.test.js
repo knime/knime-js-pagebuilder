@@ -180,34 +180,81 @@ describe('Interactivity store', () => {
             let publishId = '0.0.7';
 
             describe('notifies subscribers of changes', () => {
-                it('notifies registered subscribers', () => {
+                
+                let subscriberCallback = jest.fn();
+                let minimalData = { elements: [{ id: 42 }] };
+                
+                beforeEach(() => {
+                    let subscriberPayload = { id: publishId, callback: subscriberCallback };
+                    store.commit('addSubscriber', subscriberPayload);
+                });
 
+                it('notifies registered subscribers', () => {
+                    let payload = { id: publishId, data: minimalData };
+                    store.dispatch('publish', payload);
+                    expect(subscriberCallback).toHaveBeenCalledWith(publishId, minimalData);
                 });
                 it('notifies with filtered elements', () => {
-
+                    // throw new Error();
                 });
                 it('does not notify on empty filtered elements', () => {
-
+                    // throw new Error();
                 });
                 it('notifies on relevant elements', () => {
-
+                    // throw new Error();
                 });
                 it('does not notify on empty relevant elements', () => {
-
+                    // throw new Error();
                 });
                 it('does not notify skipped callback', () => {
-
+                    let skipCallback = jest.fn();
+                    let skipPayload = { id: publishId, callback: skipCallback };
+                    store.commit('addSubscriber', skipPayload);
+                    let payload = { id: publishId, data: minimalData, skipCallback };
+                    store.dispatch('publish', payload);
+                    expect(skipCallback).not.toHaveBeenCalled();
                 });
             });
             describe('handles changesets', () => {
                 it('creates element for added rows', () => {
-
+                    let addedRow = 'row42';
+                    let payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                added: [addedRow]
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    expect(store.state[publishId]).toBeDefined();
+                    expect(store.state[publishId].data).toEqual({
+                        elements: [{ rows: [addedRow], type: 'row' }]
+                    });
                 });
                 it('does not create element for only removed rows', () => {
-
+                    let removedRow = 'row42';
+                    let payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                removed: [removedRow]
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    expect(store.state[publishId]).not.toBeDefined();
                 });
                 it('keeps removed and added rows', () => {
-
+                    let addedRow = 'row42';
+                    let payload = { id: publishId,
+                        data: {
+                            changeSet: {
+                                added: [addedRow],
+                                removed: [addedRow]
+                            }
+                        } };
+                    store.dispatch('publish', payload);
+                    expect(store.state[publishId]).toBeDefined();
+                    expect(store.state[publishId].data).toEqual({
+                        elements: [{ rows: [addedRow], type: 'row' }]
+                    });
                 });
             });
             describe('handles regular updates', () => {
