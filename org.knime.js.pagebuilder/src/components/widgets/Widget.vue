@@ -97,7 +97,7 @@ export default {
          * @returns {Boolean}
          */
         hasValueGetter() {
-            return typeof this.$refs.widget.onChange === 'function' || this.$refs.widget.hasValueGetter;
+            return typeof this.$refs.widget.onChange === 'function';
         },
         valuePair() {
             return this.nodeConfig.viewRepresentation.currentValue;

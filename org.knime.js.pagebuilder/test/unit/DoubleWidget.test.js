@@ -1,77 +1,84 @@
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 
 import DoubleWidget from '@/components/widgets/input/DoubleWidget';
-import Widget from '@/components/widgets/Widget';
-
-import * as storeConfig from '~/store/pagebuilder';
 
 describe('DoubleWidget.vue', () => {
-    let propsData;
+    let mountOptions;
 
     beforeEach(() => {
-        propsData = {
-            nodeConfig: {
-                viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation',
-                    defaultValue: {
-                        '@class': 'org.knime.js.base.node.base.input.dbl.DoubleNodeValue',
-                        double: 0
+        mountOptions = {
+            propsData: {
+                nodeConfig: {
+                    viewRepresentation: {
+                        '@class': 'org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation',
+                        defaultValue: {
+                            '@class': 'org.knime.js.base.node.base.input.dbl.DoubleNodeValue',
+                            double: 0
+                        },
+                        currentValue: {
+                            '@class': 'org.knime.js.base.node.base.input.dbl.DoubleNodeValue',
+                            double: 0
+                        }
                     },
-                    currentValue: {
-                        '@class': 'org.knime.js.base.node.base.input.dbl.DoubleNodeValue',
-                        double: 0
-                    }
+                    nodeInfo: {},
+                    getViewValueMethodName: 'value'
                 },
-                nodeInfo: {},
-                getViewValueMethodName: 'value'
+                nodeId: 'id1',
+                isValid: false,
+                type: 'double'
             },
-            nodeId: 'id1',
-            isValid: false,
-            type: 'double'
+            stubs: {
+                NumberWidget: {
+                    template: '<div />',
+                    methods: {
+                        validate: jest.fn(),
+                        onChange: jest.fn()
+                    }
+                }
+            },
+            listeners: {
+                fakeEvent: jest.fn()
+            }
         };
     });
 
     it('renders', () => {
-        let wrapper = shallowMount(DoubleWidget, {
-            propsData
-        });
+        let wrapper = shallowMount(DoubleWidget, mountOptions);
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
+        expect(wrapper.find(mountOptions.stubs.NumberWidget).exists()).toBeTruthy();
     });
 
-    describe('registers getValue with store', () => {
-        let localVue, store, context, wrapper;
-        let nodeId = 'id1';
+    it('passes-through all props', () => {
+        let wrapper = shallowMount(DoubleWidget, mountOptions);
+        expect(wrapper.find(mountOptions.stubs.NumberWidget).vm.$attrs).toEqual(mountOptions.propsData);
+    });
+
+    it('passes-through all listeners', () => {
+        let wrapper = shallowMount(DoubleWidget, mountOptions);
+        expect(wrapper.find(mountOptions.stubs.NumberWidget).vm.$listeners).toHaveProperty('fakeEvent');
+    });
+
+    describe('passes-through methods', () => {
+        let wrapper;
 
         beforeEach(() => {
-            localVue = createLocalVue();
-            localVue.use(Vuex);
-    
-            store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-            let page = {
-                wizardPageContent: {
-                    webNodes: {
-                        [nodeId]: propsData.nodeConfig
-                    }
-                }
-            };
-            store.commit('pagebuilder/setPage', page);
-            context = {
-                store,
-                localVue,
-                propsData
-            };
-            wrapper = mount(Widget, {
-                ...context
-            });
+            wrapper = shallowMount(DoubleWidget, mountOptions);
         });
 
-        it('registers getValue method with the store', () => {
-            expect(wrapper.vm.hasValueGetter).toBe(true);
-            expect(typeof wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId]).toBe('function');
-            expect(wrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId])
-                .toBe(wrapper.vm.getValue);
+        it('validate', () => {
+            let validate = mountOptions.stubs.NumberWidget.methods.validate;
+            expect(validate).not.toBeCalled();
+            wrapper.vm.validate();
+            expect(validate).toBeCalled();
+        });
+    
+        it('onChange', () => {
+            let onChange = mountOptions.stubs.NumberWidget.methods.onChange;
+            expect(onChange).not.toBeCalled();
+            wrapper.vm.onChange();
+            expect(onChange).toBeCalled();
         });
     });
+
 });
