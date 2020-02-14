@@ -123,7 +123,6 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            // TODO: this validate function is called BEFORE the value of *checkboxes* is really changed - why?
             let isValid = true;
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
