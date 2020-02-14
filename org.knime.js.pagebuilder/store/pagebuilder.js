@@ -99,8 +99,16 @@ export const actions = {
     setPage({ commit, dispatch }, { page }) {
         consola.trace('PageBuilder: Set page via action: ', page);
         commit('setPage', page);
-
         dispatch('interactivity/clear');
+        if (page && page.wizardPageContent) {
+            let pageConfig = page.wizardPageContent.webNodePageConfiguration;
+            if (pageConfig && pageConfig.selectionTranslators && pageConfig.selectionTranslators.length > 0) {
+                for (let i = 0; i < pageConfig.selectionTranslators.length; i++) {
+                    dispatch('interactivity/registerSelectionTranslator',
+                        { translatorId: i, translator: pageConfig.selectionTranslators[i] });
+                }
+            }
+        }
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {

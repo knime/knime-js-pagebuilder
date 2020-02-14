@@ -219,6 +219,168 @@ const notifySubscribers = (state, { id, data, skipCallback, changedIds }) => {
     }
 };
 
+// eslint-disable-next-line complexity
+const mapSelectionEvent = function (data, { mapping, sourceToTarget, curElementSource, curElementTarget }) {
+
+    // FIXME: I am too complex and need refactoring
+    
+    if (!data || !data.changeSet) {
+        return;
+    }
+    let mappedData = {
+        selectionMethod: 'selection',
+        changeSet: {}
+    };
+    let curRowsSource = [];
+    if (curElementSource && curElementSource.elements) {
+        for (let i = 0; i < curElementSource.elements.length; i++) {
+            if (curElementSource.elements[i].rows) {
+                curRowsSource = curRowsSource.concat(curElementSource.elements[i].rows);
+            }
+        }
+    }
+    let curPartialRowsSource = [];
+    if (curElementSource && curElementSource.partial) {
+        curPartialRowsSource = curElementSource.partial;
+    }
+    let curRowsTarget = [];
+    if (curElementTarget && curElementTarget.elements) {
+        for (let i = 0; i < curElementTarget.elements.length; i++) {
+            if (curElementTarget.elements[i].rows) {
+                curRowsTarget = curRowsTarget.concat(curElementTarget.elements[i].rows);
+            }
+        }
+    }
+    let addedRows = [];
+    if (data.changeSet && data.changeSet.added) {
+        addedRows = data.changeSet.added;
+    }
+    let removedRows = [];
+    if (data.changeSet && data.changeSet.removed) {
+        removedRows = data.changeSet.removed;
+    }
+    if (data.changeSet && data.changeSet.partialRemoved) {
+        for (let i = 0; i < data.changeSet.partialRemoved.length; i++) {
+            if (addedRows.indexOf(data.changeSet.partialRemoved[i]) < 0) {
+                removedRows.push(data.changeSet.partialRemoved[i]);
+            }
+        }
+    }
+    let mappedAdded = []; let mappedRemoved = [];
+    let partialAdded = []; let partialRemoved = [];
+    if (sourceToTarget) {
+        for (let row = 0; row < addedRows.length; row++) {
+            if (mapping[addedRows[row]]) {
+                let addedNotExisting = mapping[addedRows[row]].filter((row) => curRowsTarget.indexOf(row) < 0);
+                mappedAdded = mappedAdded.concat(addedNotExisting);
+            }
+        }
+        for (let row = 0; row < removedRows.length; row++) {
+            if (mapping[removedRows[row]]) {
+                let removedExisting = mapping[removedRows[row]].filter((row) => curRowsTarget.indexOf(row) > -1);
+                mappedRemoved = mappedRemoved.concat(removedExisting);
+            }
+        }
+    } else {
+        let mappedPartial = [];
+        for (let row in mapping) {
+            let include = mapping[row].every((mappedRow) => curRowsTarget.indexOf(mappedRow) > -1);
+            let partial = mapping[row].some((mappedRow) => curRowsTarget.indexOf(mappedRow) > -1);
+            if (curElementTarget && curElementTarget.partial) {
+                partial |= mapping[row].some((mappedRow) => curElementTarget.partial.indexOf(mappedRow) > -1);
+            }
+            let includeAdded = mapping[row].some((mappedRow) => addedRows.indexOf(mappedRow) > -1);
+            let includeRemoved = mapping[row].some((mappedRow) => removedRows.indexOf(mappedRow) > -1);
+            /* if (include) {
+                mappedRows.push(row);
+            } else if (partial) {
+                partialRows.push(row);
+            } */
+            if (include && includeAdded && curRowsSource.indexOf(row) < 0) {
+                mappedAdded.push(row);
+            }
+            if (!include && includeRemoved && curRowsSource.indexOf(row) > -1) {
+                mappedRemoved.push(row);
+            }
+            if (!include && partial) {
+                mappedPartial.push(row);
+            }
+        }
+        partialAdded = mappedPartial.filter((row) => curPartialRowsSource.indexOf(row) < 0);
+        partialRemoved = curPartialRowsSource.filter((row) => mappedPartial.indexOf(row) < 0);
+    }
+    let createChangeset = mappedAdded.length + mappedRemoved.length + partialAdded.length + partialRemoved.length;
+    if (createChangeset) {
+        mappedData.changeSet = {};
+        if (mappedAdded.length > 0) {
+            mappedData.changeSet.added = mappedAdded;
+        }
+        if (mappedRemoved.length > 0) {
+            mappedData.changeSet.removed = mappedRemoved;
+        }
+        if (partialAdded.length > 0) {
+            mappedData.changeSet.partialAdded = partialAdded;
+        }
+        if (partialRemoved.length > 0) {
+            mappedData.changeSet.partialRemoved = partialRemoved;
+        }
+    }
+    return mappedData;
+};
+
+const handleSelectionTranslatorEvent = function ({ dispatch, getters },
+    { translatorId, data, translator, targetId, sourceToTarget, skipCallback }) {
+    let mappedData = data;
+    if (!translator.forward && translator.mapping) {
+        let curElementSource = getters.getPublishedData(`selection-${translator.sourceID}`);
+        let curElementTarget = getters.getPublishedData(`selection-${targetId}`);
+        mappedData = mapSelectionEvent(data,
+            { mapping: translator.mapping, sourceToTarget, curElementSource, curElementTarget });
+        if (!mappedData) {
+            return;
+        }
+    }
+    mappedData.mappedEvent = translatorId;
+    let id = sourceToTarget ? `selection-${targetId}` : `selection-${translator.sourceID}`;
+    dispatch('publish', { id, data: mappedData, skipCallback });
+};
+
+const subscribeSelectionSourceTranslator = function ({ dispatch, getters }, { translatorId, translator }) {
+    let translatorCallback = (id, data) => {
+        if (!data || data.mappedEvent === translatorId) {
+            return;
+        }
+        for (let i = 0; i < translator.targetIDs.length; i++) {
+            handleSelectionTranslatorEvent({ dispatch, getters }, {
+                translatorId,
+                data,
+                translator,
+                targetId: translator.targetIDs[i],
+                sourceToTarget: true,
+                skipCallback: translatorCallback
+            });
+        }
+    };
+    dispatch('subscribe', { id: `selection-${translator.sourceID}`, callback: translatorCallback });
+};
+
+const subscribeSelectionTargetTranslator = function ({ dispatch, getters }, { translator, translatorId, handlerId }) {
+    let translatorCallback = (id, data) => {
+        if (!data || data.mappedEvent === translatorId) {
+            return;
+        }
+        handleSelectionTranslatorEvent({ dispatch, getters }, {
+            translatorId,
+            data,
+            translator,
+            targetId: handlerId,
+            sourceToTarget: false,
+            skipCallback: translatorCallback
+        });
+    };
+    dispatch('subscribe', { id: `selection-${handlerId}`, callback: translatorCallback });
+};
+
 export const state = () => ({
     // filled at runtime by mutations
 });
@@ -291,8 +453,21 @@ export const actions = {
             notifySubscribers(state, { id, data, skipCallback, changedIds });
         }
     },
-    registerSelectionTranslator({ commit }, { id, translator }) {
-        // TODO fill me with WEBP-73
+    registerSelectionTranslator({ dispatch, commit, getters }, { translatorId, translator }) {
+        // check non-existing IDs
+        if (!translator.sourceID || !translator.targetIDs) {
+            return;
+        }
+        // check if translator is forwarding events or contains mapping
+        if (!translator.forward && !translator.mapping) {
+            return;
+        }
+        // subscribe translators in both directions
+        subscribeSelectionSourceTranslator({ dispatch, getters }, { translatorId, translator });
+        for (let i = 0; i < translator.targetIDs.length; i++) {
+            subscribeSelectionTargetTranslator({ dispatch, getters },
+                { translator, translatorId, handlerId: translator.targetIDs[i] });
+        }
     },
     clear({ commit }) {
         commit('clear');
