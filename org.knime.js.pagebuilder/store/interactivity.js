@@ -219,38 +219,82 @@ const notifySubscribers = (state, { id, data, skipCallback, changedIds }) => {
     }
 };
 
-// eslint-disable-next-line complexity
-const mapSelectionEvent = function (data, { mapping, sourceToTarget, curElementSource, curElementTarget }) {
+const concatenateRowsFromDataElement = function (dataElement) {
+    let rows = [];
+    if (dataElement && dataElement.elements) {
+        dataElement.elements.forEach((sourceElement) => {
+            if (sourceElement.rows) {
+                rows = rows.concat(sourceElement.rows);
+            }
+        });
+    }
+    return rows;
+};
 
-    // FIXME: I am too complex and need refactoring
+const mapSelectionEventSource = function (changeSet, { addedRows, removedRows, mapping, curElementTarget }) {
+    let curRowsTarget = concatenateRowsFromDataElement(curElementTarget);
+    // determine mapped added rows
+    changeSet.added = [];
+    addedRows.forEach((addedRow) => {
+        if (mapping[addedRow]) {
+            let addedNotExisting = mapping[addedRow].filter((row) => !curRowsTarget.includes(row));
+            changeSet.added = changeSet.added.concat(addedNotExisting);
+        }
+    });
     
+    // determine mapped removed rows
+    changeSet.removed = [];
+    removedRows.forEach((removedRow) => {
+        if (mapping[removedRow]) {
+            let removedExisting = mapping[removedRow].filter((row) => curRowsTarget.includes(row));
+            changeSet.removed = changeSet.removed.concat(removedExisting);
+        }
+    });
+};
+
+const mapSelectionEventTarget = function (changeSet,
+    { mapping, addedRows, removedRows, curElementSource, curElementTarget }) {
+    let curRowsSource = concatenateRowsFromDataElement(curElementSource);
+    let curRowsTarget = concatenateRowsFromDataElement(curElementTarget);
+    
+    let mappedPartial = [];
+    changeSet.added = [];
+    changeSet.removed = [];
+    for (let row in mapping) {
+        let include = mapping[row].every((mappedRow) => curRowsTarget.includes(mappedRow));
+        let partial = mapping[row].some((mappedRow) => curRowsTarget.includes(mappedRow));
+        if (curElementTarget && curElementTarget.partial) {
+            partial = partial || mapping[row].some((mappedRow) => curElementTarget.partial.includes(mappedRow));
+        }
+        let includeAdded = mapping[row].some((mappedRow) => addedRows.includes(mappedRow));
+        let includeRemoved = mapping[row].some((mappedRow) => removedRows.includes(mappedRow));
+        if (include && includeAdded && !curRowsSource.includes(row)) {
+            changeSet.added.push(row);
+        }
+        if (!include && includeRemoved && curRowsSource.includes(row)) {
+            changeSet.removed.push(row);
+        }
+        if (!include && partial) {
+            mappedPartial.push(row);
+        }
+    }
+
+    let curPartialRowsSource = [];
+    if (curElementSource && curElementSource.partial) {
+        curPartialRowsSource = curElementSource.partial;
+    }
+    changeSet.partialAdded = mappedPartial.filter((row) => !curPartialRowsSource.includes(row));
+    changeSet.partialRemoved = curPartialRowsSource.filter((row) => !mappedPartial.includes(row));
+};
+
+const mapSelectionEvent = function (data, { mapping, sourceToTarget, curElementSource, curElementTarget }) {
     if (!data || !data.changeSet) {
-        return;
+        throw new Error('Selection event could not be mapped because no change set was present.');
     }
     let mappedData = {
         selectionMethod: 'selection',
         changeSet: {}
     };
-    let curRowsSource = [];
-    if (curElementSource && curElementSource.elements) {
-        for (let i = 0; i < curElementSource.elements.length; i++) {
-            if (curElementSource.elements[i].rows) {
-                curRowsSource = curRowsSource.concat(curElementSource.elements[i].rows);
-            }
-        }
-    }
-    let curPartialRowsSource = [];
-    if (curElementSource && curElementSource.partial) {
-        curPartialRowsSource = curElementSource.partial;
-    }
-    let curRowsTarget = [];
-    if (curElementTarget && curElementTarget.elements) {
-        for (let i = 0; i < curElementTarget.elements.length; i++) {
-            if (curElementTarget.elements[i].rows) {
-                curRowsTarget = curRowsTarget.concat(curElementTarget.elements[i].rows);
-            }
-        }
-    }
     let addedRows = [];
     if (data.changeSet && data.changeSet.added) {
         addedRows = data.changeSet.added;
@@ -266,65 +310,37 @@ const mapSelectionEvent = function (data, { mapping, sourceToTarget, curElementS
             }
         }
     }
-    let mappedAdded = []; let mappedRemoved = [];
-    let partialAdded = []; let partialRemoved = [];
     if (sourceToTarget) {
-        for (let row = 0; row < addedRows.length; row++) {
-            if (mapping[addedRows[row]]) {
-                let addedNotExisting = mapping[addedRows[row]].filter((row) => curRowsTarget.indexOf(row) < 0);
-                mappedAdded = mappedAdded.concat(addedNotExisting);
-            }
-        }
-        for (let row = 0; row < removedRows.length; row++) {
-            if (mapping[removedRows[row]]) {
-                let removedExisting = mapping[removedRows[row]].filter((row) => curRowsTarget.indexOf(row) > -1);
-                mappedRemoved = mappedRemoved.concat(removedExisting);
-            }
-        }
+        mapSelectionEventSource(mappedData.changeSet, {
+            addedRows,
+            removedRows,
+            mapping,
+            curElementTarget
+        });
     } else {
-        let mappedPartial = [];
-        for (let row in mapping) {
-            let include = mapping[row].every((mappedRow) => curRowsTarget.indexOf(mappedRow) > -1);
-            let partial = mapping[row].some((mappedRow) => curRowsTarget.indexOf(mappedRow) > -1);
-            if (curElementTarget && curElementTarget.partial) {
-                partial |= mapping[row].some((mappedRow) => curElementTarget.partial.indexOf(mappedRow) > -1);
-            }
-            let includeAdded = mapping[row].some((mappedRow) => addedRows.indexOf(mappedRow) > -1);
-            let includeRemoved = mapping[row].some((mappedRow) => removedRows.indexOf(mappedRow) > -1);
-            /* if (include) {
-                mappedRows.push(row);
-            } else if (partial) {
-                partialRows.push(row);
-            } */
-            if (include && includeAdded && curRowsSource.indexOf(row) < 0) {
-                mappedAdded.push(row);
-            }
-            if (!include && includeRemoved && curRowsSource.indexOf(row) > -1) {
-                mappedRemoved.push(row);
-            }
-            if (!include && partial) {
-                mappedPartial.push(row);
-            }
-        }
-        partialAdded = mappedPartial.filter((row) => curPartialRowsSource.indexOf(row) < 0);
-        partialRemoved = curPartialRowsSource.filter((row) => mappedPartial.indexOf(row) < 0);
+        mapSelectionEventTarget(mappedData.changeSet, {
+            mapping,
+            addedRows,
+            removedRows,
+            curElementSource,
+            curElementTarget
+        });
     }
-    let createChangeset = mappedAdded.length + mappedRemoved.length + partialAdded.length + partialRemoved.length;
-    if (createChangeset) {
-        mappedData.changeSet = {};
-        if (mappedAdded.length > 0) {
-            mappedData.changeSet.added = mappedAdded;
-        }
-        if (mappedRemoved.length > 0) {
-            mappedData.changeSet.removed = mappedRemoved;
-        }
-        if (partialAdded.length > 0) {
-            mappedData.changeSet.partialAdded = partialAdded;
-        }
-        if (partialRemoved.length > 0) {
-            mappedData.changeSet.partialRemoved = partialRemoved;
-        }
+
+    // sanitize changeSet
+    if (mappedData.changeSet.added && mappedData.changeSet.added.length < 1) {
+        delete mappedData.changeSet.added;
     }
+    if (mappedData.changeSet.removed && mappedData.changeSet.removed.length < 1) {
+        delete mappedData.changeSet.removed;
+    }
+    if (mappedData.changeSet.partialAdded && mappedData.changeSet.partialAdded.length < 1) {
+        delete mappedData.changeSet.partialAdded;
+    }
+    if (mappedData.changeSet.partialRemoved && mappedData.changeSet.partialRemoved.length < 1) {
+        delete mappedData.changeSet.partialRemoved;
+    }
+
     return mappedData;
 };
 
@@ -485,4 +501,3 @@ export const getters = {
         }
     }
 };
-
