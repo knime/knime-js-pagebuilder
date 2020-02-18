@@ -47,7 +47,7 @@ export default {
         },
         valuePair: {
             default: () => ({
-                [DATA_TYPE]: 0
+                [DATA_TYPE]: []
             }),
             type: Object
         }
