@@ -251,7 +251,7 @@ describe('Widget.vue', () => {
             }
         });
 
-        expect(newWrapper.vm.hasValueGetter).toBe(false);
+        expect(newWrapper.vm.hasValueGetter).toBeFalsy();
         expect(typeof newWrapper.vm.$store.state.pagebuilder.pageValueGetters[nodeId2]).toBe('undefined');
     });
 

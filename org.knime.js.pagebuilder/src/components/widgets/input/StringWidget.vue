@@ -89,11 +89,6 @@ export default {
         },
         regex() {
             return this.viewRep.regex || '.*';
-        },
-        inputClasses() {
-            let classList = 'knime-qf-input knime-string ';
-            classList += this.isMultiLine ? 'knime-multi-line' : 'knime-single-line';
-            return classList;
         }
     },
     methods: {
@@ -132,7 +127,6 @@ export default {
         :cols="multiColumns"
         :rows="multiRows"
         :is-valid="isValid"
-        :input-classes="inputClasses"
         :title="description"
         @input="onChange"
       />
@@ -141,7 +135,6 @@ export default {
         ref="form"
         :value="value"
         :is-valid="isValid"
-        :input-classes="inputClasses"
         :title="description"
         @input="onChange"
       />

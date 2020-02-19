@@ -73,10 +73,10 @@ export default {
     ref="form"
     :value="value"
     label-size="large"
-    class="checkbox-input"
     :title="description"
     @input="onChange"
   >
     {{ label }}
   </Checkbox>
+  <!-- no ErrorMessage needed yet -->
 </template>
