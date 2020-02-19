@@ -14,6 +14,10 @@
                relativePathSource="dist/knime-pagebuilder.umd.min.js"
                relativePathTarget="org/knime/core/knime-pagebuilder2.js">
          </webResource>
+         <webResource
+               relativePathSource="dist/pagebuilder-credits.umd.min.js"
+               relativePathTarget="org/knime/core/pagebuilder-credits.js">
+         </webResource>
       </webResourceBundle>
    </extension>
 </plugin>

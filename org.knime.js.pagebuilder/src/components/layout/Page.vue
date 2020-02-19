@@ -1,5 +1,5 @@
 <script>
-import Layout from './layout/Layout';
+import Layout from './Layout';
 
 export default {
     name: 'Page',

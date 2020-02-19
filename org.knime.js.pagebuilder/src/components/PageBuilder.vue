@@ -1,6 +1,6 @@
 <script>
 import * as storeConfig from '~/store/pagebuilder';
-import Page from '~/src/components/Page';
+import Page from '~/src/components/layout/Page';
 
 export default {
     components: {
