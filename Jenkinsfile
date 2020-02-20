@@ -31,7 +31,7 @@ timeout(time: 15, unit: 'MINUTES') {
                 }
 
                 parallel 'npm Security Audit': {
-                    env.lastStage = env.STAGE_NAME
+                    env.lastStage = 'Security Audit'
 
                     catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                         retry(3) { // because npm registry sometimes break
@@ -42,13 +42,13 @@ timeout(time: 15, unit: 'MINUTES') {
                     }
                 },
                 'Static Code Analysis': {
-                    env.lastStage = env.STAGE_NAME
+                    env.lastStage = 'Lint'
                     sh '''
                         npm run lint
                     '''
                 },
                 'Verify checked-in files': {
-                    env.lastStage = env.STAGE_NAME
+                    env.lastStage = 'Verify checked-in files'
                     // The old build system requires the compiled JS files to be checked in (no mvn).
                     // The new Jenkins can verify this
                     sh '''
