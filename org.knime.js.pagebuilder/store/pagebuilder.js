@@ -107,10 +107,9 @@ export const actions = {
         if (page && page.wizardPageContent) {
             let pageConfig = page.wizardPageContent.webNodePageConfiguration;
             if (pageConfig && pageConfig.selectionTranslators && pageConfig.selectionTranslators.length > 0) {
-                for (let i = 0; i < pageConfig.selectionTranslators.length; i++) {
-                    dispatch('interactivity/registerSelectionTranslator',
-                        { translatorId: i, translator: pageConfig.selectionTranslators[i] });
-                }
+                pageConfig.selectionTranslators.forEach((translator, i) => {
+                    dispatch('interactivity/registerSelectionTranslator', { translatorId: i, translator });
+                });
             }
         }
     },

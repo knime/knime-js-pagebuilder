@@ -78,7 +78,7 @@ export default {
         },
         innerStyle() {
             // prevent margin collapsation of body’s children, which causes incorrect height detection
-            // TODO this breaks some views, e.g. the slider width, see WEBP-219
+            // TODO WEBP-219 this breaks some views, e.g. the slider width
             let style = 'body { display: inline-block; }';
             if (this.scrolling) {
                 if (this.pollHeight) {
@@ -115,7 +115,9 @@ export default {
         this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
 
-        // create global API (used by iframes)
+        // create global API which is accessed by knimeService running inside the iframe.
+        // This global API should only be used/extended for cases where window.postMessage can't be used
+        // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
         if (!window.KnimePageBuilderAPI) {
             window.KnimePageBuilderAPI = {
@@ -334,7 +336,6 @@ export default {
         },
 
         handleInteractivity(event) {
-            
             let interactivityType = event.data.type;
             switch (interactivityType) {
             case 'interactivitySubscribe':

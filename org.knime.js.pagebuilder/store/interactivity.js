@@ -10,7 +10,7 @@ export const namespaced = true;
 const addInteractivityId = (state, { id, subscriberOnly }) => {
     if (!state[id]) {
         state[id] = { // we don't need reactivity, so no need to use Vue.set()
-            subscribers: [] // subscribers will get notified when data changes
+            subscribers: [] // they will get notified when data changes
             
         };
     }
@@ -79,15 +79,17 @@ const addRows = (state, { id, rowsToAdd }) => {
     if (!curData.elements || curData.elements.length < 1) {
         curData.elements = [{ type: 'row', rows: [] }];
     }
-    for (let i = 0; i < curData.elements.length; i++) {
+
+    for (let el of curData.elements) {
         // only consider first unnamed element for added rows
-        if (typeof curData.elements[i].id === 'undefined') {
-            let curRows = curData.elements[i].rows || [];
+        if (typeof el.id === 'undefined') {
+            let curRows = el.rows || [];
             addedRows = rowsToAdd.filter((row) => !curRows.includes(row));
-            curData.elements[i].rows = curRows.concat(addedRows);
+            el.rows = curRows.concat(addedRows);
             break;
         }
     }
+
     return addedRows;
 };
 
@@ -104,7 +106,8 @@ const addPartialRows = (state, { id, rowsToAdd }) => {
 };
 
 const assembleChangePayload = ({ data, addedRows, removedRows, partialAddedRows, partialRemovedRows }) => {
-    if (removedRows.length + addedRows.length + partialRemovedRows.length + partialAddedRows.length) {
+    let modified = Boolean(removedRows.length + addedRows.length + partialRemovedRows.length + partialAddedRows.length);
+    if (modified) {
         let toPublish = { selectionMethod: data.selectionMethod, changeSet: {} };
         if (removedRows.length) {
             toPublish.changeSet.removed = removedRows;
@@ -130,7 +133,7 @@ const assembleChangePayload = ({ data, addedRows, removedRows, partialAddedRows,
 const processChangeset = (state, { id, data }) => {
     let added = data.changeSet.added && data.changeSet.added.length;
     let partialAdded = data.changeSet.partialAdded && data.changeSet.partialAdded.length;
-    // determine if
+    // determine if we need to do something
     if (!state[id] || !state[id].data) {
         if (added || partialAdded) {
             addInteractivityId(state, { id });
@@ -183,9 +186,9 @@ const determineChangedIds = (state, { id, data }) => {
     data.elements.forEach((element) => {
         if (typeof element.id !== 'undefined') {
             if (state[id] && state[id].data) {
-                // find the existing element with the same id, if exists
+                // find the existing element with the same id, if it exists
                 let matched = state[id].data.elements.filter(existingElement => element.id === existingElement.id);
-                // if element could not be found or the elements differ add current id to list of changed ids
+                // if element could not be found or the elements differ, add current id to list of changed ids
                 if (!matched.length || JSON.stringify(element) !== JSON.stringify(matched[0])) {
                     changedIds.push(element.id);
                 }
@@ -304,11 +307,11 @@ const mapSelectionEvent = function (data, { mapping, sourceToTarget, curElementS
         removedRows = data.changeSet.removed;
     }
     if (data.changeSet && data.changeSet.partialRemoved) {
-        for (let i = 0; i < data.changeSet.partialRemoved.length; i++) {
-            if (addedRows.indexOf(data.changeSet.partialRemoved[i]) < 0) {
-                removedRows.push(data.changeSet.partialRemoved[i]);
+        data.changeSet.partialRemoved.forEach((row) => {
+            if (!addedRows.includes(row)) {
+                removedRows.push(row);
             }
-        }
+        });
     }
     if (sourceToTarget) {
         mapSelectionEventSource(mappedData.changeSet, {
@@ -366,16 +369,16 @@ const subscribeSelectionSourceTranslator = function ({ dispatch, getters }, { tr
         if (!data || data.mappedEvent === translatorId) {
             return;
         }
-        for (let i = 0; i < translator.targetIDs.length; i++) {
+        translator.targetIDs.forEach((targetId) => {
             handleSelectionTranslatorEvent({ dispatch, getters }, {
                 translatorId,
                 data,
                 translator,
-                targetId: translator.targetIDs[i],
+                targetId,
                 sourceToTarget: true,
                 skipCallback: translatorCallback
             });
-        }
+        });
     };
     dispatch('subscribe', { id: `selection-${translator.sourceID}`, callback: translatorCallback });
 };
@@ -396,6 +399,7 @@ const subscribeSelectionTargetTranslator = function ({ dispatch, getters }, { tr
     };
     dispatch('subscribe', { id: `selection-${handlerId}`, callback: translatorCallback });
 };
+
 
 export const state = () => ({
     // filled at runtime by mutations
@@ -480,10 +484,10 @@ export const actions = {
         }
         // subscribe translators in both directions
         subscribeSelectionSourceTranslator({ dispatch, getters }, { translatorId, translator });
-        for (let i = 0; i < translator.targetIDs.length; i++) {
+        translator.targetIDs.forEach((targetId) => {
             subscribeSelectionTargetTranslator({ dispatch, getters },
-                { translator, translatorId, handlerId: translator.targetIDs[i] });
-        }
+                { translator, translatorId, handlerId: targetId });
+        });
     },
     clear({ commit }) {
         commit('clear');

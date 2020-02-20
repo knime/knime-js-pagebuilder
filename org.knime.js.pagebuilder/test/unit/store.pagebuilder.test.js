@@ -78,7 +78,7 @@ describe('PageBuilder store', () => {
         store.dispatch('setPage', { page });
         expect(interactivityStoreConfig.actions.registerSelectionTranslator).toHaveBeenCalledWith(
             // eslint-disable-next-line no-undefined
-            expect.anything(), { translator: 'foo', translatorId: 0 }, undefined
+            expect.anything(), { translator: dummyTranslator, translatorId: 0 }, undefined
         );
     });
 
