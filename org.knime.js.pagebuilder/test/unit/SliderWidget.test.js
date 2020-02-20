@@ -239,7 +239,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper2.vm.connect).toBe('both');
     });
 
-    it('correctly emits the updateWidget Payload', () => {
+    it('correctly emits the updateWidget payload', () => {
         wrapper.find(Slider).vm.$emit('input', 10);
         const { updateWidget } = wrapper.emitted();
         expect(updateWidget[0][0]).toBeTruthy();

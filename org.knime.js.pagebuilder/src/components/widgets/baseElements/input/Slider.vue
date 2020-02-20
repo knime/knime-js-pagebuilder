@@ -95,6 +95,7 @@ export default {
   <div>
     <VueSlider
       ref="slider"
+      :width="direction.includes('tt') ? 1 : 'auto'"
       :value="value"
       :min="minimum"
       :max="maximum"
@@ -102,7 +103,7 @@ export default {
       :direction="direction"
       :interval="stepSize"
       :marks="marks"
-      :height="height"
+      :height="direction.includes('tt') ? height : 1"
       :tooltip="tooltips"
       :tooltip-formatter="tooltipFormat"
       :class="[connect]"
@@ -136,17 +137,12 @@ export default {
 
 /* invalid state */
 .slider-invalid .vue-slider-rail {
-  background-color: red;
+  background-color: var(--theme-color-error);
 }
 
 .vue-slider-rtl .vue-slider-rail,
 .vue-slider-ltr .vue-slider-rail {
   height: 1px !important;
-}
-
-.vue-slider-ttb,
-.vue-slider-btt {
-  width: 1px !important;
 }
 
 /* process style */
@@ -158,13 +154,13 @@ export default {
 
 /* invalid state */
 .knime-invalid-widget .vue-slider-process {
-  background-color: red;
+  background-color: var(--theme-color-error);
 }
 
 .vue-slider-ttb .vue-slider-process,
 .vue-slider-btt .vue-slider-process {
   width: 7px !important;
-  left: -1.5px !important;
+  left: -2.5px !important;
 }
 
 .vue-slider-rtl .vue-slider-process,
@@ -202,7 +198,7 @@ export default {
 .vue-slider-btt .vue-slider-mark-step {
   width: 10px !important;
   height: 1px !important;
-  left: 10px !important;
+  left: 11px !important;
   top: 2px !important;
 }
 
@@ -210,7 +206,7 @@ export default {
 .vue-slider-rtl .vue-slider-mark-step {
   width: 1px !important;
   height: 10px !important;
-  top: 10px !important;
+  top: 11px !important;
   left: 2px !important;
 }
 
@@ -223,12 +219,12 @@ export default {
 
 .vue-slider-ttb .vue-slider-mark-label,
 .vue-slider-btt .vue-slider-mark-label {
-  margin-left: 18px !important;
+  margin-left: 24px !important;
 }
 
 .vue-slider-ltr .vue-slider-mark-label,
 .vue-slider-rtl .vue-slider-mark-label {
-  margin-top: 16px !important;
+  margin-top: 20px !important;
 }
 
 /* dot style */
@@ -247,13 +243,14 @@ export default {
 
 .vue-slider-ttb .vue-slider-dot,
 .vue-slider-btt .vue-slider-dot {
-  left: 2px !important;
+  left: 0 !important;
   height: 19px !important;
   width: 29px !important;
 }
 
 .vue-slider-dot-focus {
   background-color: var(--theme-color-masala) !important;
+  border-color: var(--theme-color-masala) !important;
 }
 
 .vue-slider-dot-handle {
@@ -268,16 +265,16 @@ export default {
   border-right-width: 1px;
   box-sizing: border-box;
   position: relative;
-  left: 7px !important;
-  top: 9px !important;
+  left: 6px !important;
+  top: 8px !important;
 }
 
 .vue-slider-ttb .vue-slider-dot-handle,
 .vue-slider-btt .vue-slider-dot-handle {
   width: 5px !important;
   height: 11px !important;
-  top: 4px !important;
-  left: 12.25px !important;
+  top: 3px !important;
+  left: 11.75px !important;
   transform: rotate(90deg);
 }
 
