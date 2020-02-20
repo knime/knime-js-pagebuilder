@@ -1,10 +1,13 @@
 <script>
+import Vue from 'vue';
 import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
+import iFrameResize from 'iframe-resizer/js/iframeResizer';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
+import resizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow';
 
-const heightPollInterval = 200; // ms
+// const heightPollInterval = 200; // ms
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
 
@@ -76,7 +79,8 @@ export default {
         },
         innerStyle() {
             // prevent margin collapsation of body’s children, which causes incorrect height detection
-            let style = 'body { display: inline-block; }';
+            
+            let style = '';
             if (this.scrolling) {
                 if (this.pollHeight) {
                     // in case of auto height, a vertical scrollbar can interfere with the height calculation (in
@@ -104,6 +108,11 @@ export default {
     },
 
     mounted() {
+        Vue.directive('resize', {
+            bind(el, { value = {} }) {
+                el.addEventListener('load', () => iFrameResize(value, el));
+            }
+        });
         this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: true });
         window.addEventListener('message', this.messageFromIframe);
 
@@ -144,6 +153,8 @@ export default {
 
             // postMessage receiver
             let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
+            // iframe resizer content window script
+            let iframeResizer = this.autoHeight ? `<script>${resizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
 
             this.document.write(`<!doctype html>
                 <html lang="en-US">
@@ -152,6 +163,7 @@ export default {
                   ${styles}
                   ${messageListener}
                   ${scriptLoader}
+                  ${iframeResizer}
                   <title></title>
                 </head>
                 <body></body>
@@ -209,8 +221,14 @@ export default {
         },
 
         initHeightPolling() {
-            consola.trace('Starting height polling');
-            this.intervalId = setInterval(this.setHeight, heightPollInterval);
+            /* consola.trace('Starting height polling');
+            this.intervalId = setInterval(this.setHeight, heightPollInterval); */
+        },
+
+        resizeIframe() {
+            if (this.autoHeight) {
+                iFrameResize({ checkOrigin: false, heightCalculationMethod: 'lowestElement' /* TODO: fill me */ });
+            }
         },
 
         setHeight() {
@@ -316,10 +334,11 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="frame-container">
     <iframe
       ref="iframe"
-      :class="{error: !isValid}"
+      :class="{error: !isValid, aspect: !autoHeight}"
+      @load="resizeIframe"
     />
     <ErrorMessage
       v-if="errorMessage"
@@ -332,11 +351,19 @@ export default {
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
-iframe {
+div.frame-container {
   width: 100%;
-  height: 100%;
+}
+
+iframe {
   background-color: white;
   border: none;
+  min-width: 100%;
+  width: 1px;
+
+  &.aspect {
+    height: 100%;
+  }
 
   &.error {
     outline: 2px solid var(--theme-color-error);

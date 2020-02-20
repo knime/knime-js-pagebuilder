@@ -107,7 +107,7 @@ export default {
     },
     methods: {
         updateHeight(height) {
-            this.height = height;
+            /* this.height = height; */
         }
     }
 };
