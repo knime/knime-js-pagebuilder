@@ -76,6 +76,8 @@ export default {
         },
         innerStyle() {
             // prevent margin collapsation of body’s children, which causes incorrect height detection
+            /* FIXME: This breaks some views and prohibits stretching the full width for others, removing
+            this next line causes issues as well, see WEBP-219 */
             let style = 'body { display: inline-block; }';
             if (this.scrolling) {
                 if (this.pollHeight) {
@@ -316,7 +318,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="frame-container">
     <iframe
       ref="iframe"
       :class="{error: !isValid}"
@@ -331,6 +333,11 @@ export default {
 
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
+
+div.frame-container {
+  width: 100%;
+  height: 100%;
+}
 
 iframe {
   width: 100%;
