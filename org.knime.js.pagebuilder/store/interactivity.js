@@ -21,7 +21,7 @@ const addInteractivityId = (state, { id, subscriberOnly }) => {
     }
 };
 
-const createRelevantElements = (state, { id, filterIds, changedIds }) => {
+const getRelevantElements = (state, { id, filterIds, changedIds }) => {
     let data;
     if (state[id]) {
         data = state[id].data;
@@ -208,7 +208,7 @@ const notifySubscribers = (state, { id, data, skipCallback, changedIds }) => {
             if (!skipCallback || subscriber.callback !== skipCallback) {
                 let payload = data;
                 if (changedIds) {
-                    payload = createRelevantElements(state, {
+                    payload = getRelevantElements(state, {
                         id,
                         filterIds: subscriber.filterIds,
                         changedIds
@@ -439,7 +439,7 @@ export const actions = {
         commit('addSubscriber', { id, callback, elementFilter });
         // inform subscriber about current state of channel
         if (state[id].data) {
-            let relevantElements = createRelevantElements(state, { id, filterIds: elementFilter });
+            let relevantElements = getRelevantElements(state, { id, filterIds: elementFilter });
             if (!relevantElements) {
                 relevantElements = {};
             }

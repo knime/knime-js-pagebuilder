@@ -69,7 +69,7 @@ describe('Interactivity store', () => {
             expect(store.state).toEqual({});
         });
 
-        it('remove subscriber with data present', () => {
+        it('add and remove subscriber with data present', () => {
             expect(store.state).toEqual({});
             let dataPayload = { id: subscriberId, data: 'dummyData' };
             store.commit('updateData', dataPayload);
@@ -86,7 +86,7 @@ describe('Interactivity store', () => {
             expect(store.state[payload.id].subscribers.length).toEqual(0);
         });
 
-        it('updateData', () => {
+        it('update data', () => {
             expect(store.state).toEqual({});
             let dataPayload = { id: subscriberId, data: 'wibble' };
             store.commit('updateData', dataPayload);
@@ -100,7 +100,7 @@ describe('Interactivity store', () => {
             expect(store.state[dataPayload2.id].data).toEqual(dataPayload2.data);
         });
 
-        it('clearState', () => {
+        it('clear state', () => {
             expect(store.state).toEqual({});
             let dataPayload = { id: subscriberId, data: 'dummyData' };
             store.commit('updateData', dataPayload);
@@ -157,8 +157,8 @@ describe('Interactivity store', () => {
                 reData.reevaluate = true;
                 expect(payload.callback).toHaveBeenCalledWith(dataId, reData);
             });
-
         });
+
         describe('removing subscribers', () => {
             const id = 'selection-12345-12345-12345';
             const payload = { id, callback: jest.fn(), elementFilter: 2 };
@@ -175,12 +175,11 @@ describe('Interactivity store', () => {
                 expect(store.state[payload.id]).not.toBeDefined();
             });
         });
-        describe('publish data', () => {
 
+        describe('publishing data', () => {
             const publishId = '0.0.7 Bond';
 
             describe('notifies subscribers of changes', () => {
-                
                 const filterId = '0.0.8 Bill';
                 const filterId2 = '0.0.9 Spectre';
                 const minimalData = { elements: [{ id: filterId, data: 42 }] };
@@ -199,12 +198,14 @@ describe('Interactivity store', () => {
                     store.dispatch('publish', payload);
                     expect(subscriberCallback).toHaveBeenCalledWith(publishId, minimalData);
                 });
+
                 it('notifies with filtered elements', () => {
                     let payload = { id: publishId, data: minimalData };
                     store.dispatch('publish', payload);
                     expect(subscriberCallback).toHaveBeenCalledWith(publishId, minimalData);
                     expect(filteredCallback).toHaveBeenCalledWith(publishId, minimalData);
                 });
+
                 it('does not notify on empty filtered elements', () => {
                     let filteredData = JSON.parse(JSON.stringify(minimalData));
                     filteredData.elements[0].id = filterId2;
@@ -213,6 +214,7 @@ describe('Interactivity store', () => {
                     expect(subscriberCallback).toHaveBeenCalledWith(publishId, filteredData);
                     expect(filteredCallback).not.toHaveBeenCalled();
                 });
+
                 it('notifies only relevant elements', () => {
                     // setup
                     let doubleData = JSON.parse(JSON.stringify(minimalData));
@@ -239,6 +241,7 @@ describe('Interactivity store', () => {
                     expect(subscriberCallback).toHaveBeenCalledWith(publishId, filteredData2);
                     expect(filteredCallback).not.toHaveBeenCalledWith();
                 });
+
                 it('does not notify on unchanged data', () => {
                     let payload = { id: publishId, data: minimalData };
                     store.dispatch('publish', payload);
@@ -247,6 +250,7 @@ describe('Interactivity store', () => {
                     expect(subscriberCallback).not.toHaveBeenCalled();
                     expect(filteredCallback).not.toHaveBeenCalled();
                 });
+
                 it('does not notify skipped callback', () => {
                     let skipCallback = jest.fn();
                     let skipPayload = { id: publishId, callback: skipCallback };
@@ -256,8 +260,8 @@ describe('Interactivity store', () => {
                     expect(skipCallback).not.toHaveBeenCalled();
                 });
             });
-            describe('handles changesets', () => {
 
+            describe('handles changesets', () => {
                 const universalRow = 'row42';
                 let britishRows;
 
@@ -278,6 +282,7 @@ describe('Interactivity store', () => {
                         elements: [{ rows: [universalRow], type: 'row' }]
                     });
                 });
+
                 it('does not create element for only removed rows', () => {
                     let removedRow = 'row42';
                     let payload = { id: publishId,
@@ -289,6 +294,7 @@ describe('Interactivity store', () => {
                     store.dispatch('publish', payload);
                     expect(store.state[publishId]).not.toBeDefined();
                 });
+
                 it('adds rows', () => {
                     let payload = { id: publishId,
                         data: {
@@ -304,6 +310,7 @@ describe('Interactivity store', () => {
                         elements: [{ rows: allRows, type: 'row' }]
                     });
                 });
+
                 it('removes rows', () => {
                     let payload = { id: publishId,
                         data: {
@@ -325,6 +332,7 @@ describe('Interactivity store', () => {
                         elements: [{ rows: britishRows, type: 'row' }]
                     });
                 });
+
                 it('adds and removes rows', () => {
                     let payload = { id: publishId,
                         data: {
@@ -348,6 +356,7 @@ describe('Interactivity store', () => {
                         elements: [{ rows: allRows, type: 'row' }]
                     });
                 });
+
                 it('keeps removed and added rows', () => {
                     let addedRow = 'row42';
                     let payload = { id: publishId,
@@ -363,6 +372,7 @@ describe('Interactivity store', () => {
                         elements: [{ rows: [addedRow], type: 'row' }]
                     });
                 });
+
                 it('removes element on empty rows', () => {
                     let payload = { id: publishId,
                         data: {
@@ -378,8 +388,8 @@ describe('Interactivity store', () => {
                     });
                 });
             });
-            describe('handles regular updates', () => {
 
+            describe('handles regular updates', () => {
                 const minimalData = { elements: [{ id: '0.0.7', data: 'wibble' }] };
 
                 it('throws error on invalid payload', () => {
@@ -388,6 +398,7 @@ describe('Interactivity store', () => {
                         store.dispatch('publish', invalidPayload);
                     }).toThrowError(/^.*invalid payload.*$/i);
                 });
+
                 it('creates element on new id', () => {
                     expect(store.state[publishId]).not.toBeDefined();
                     let payload = { id: publishId, data: minimalData };
@@ -395,6 +406,7 @@ describe('Interactivity store', () => {
                     expect(store.state[publishId]).toBeDefined();
                     expect(store.state[publishId].data).toEqual(minimalData);
                 });
+                
                 it('updates existing id', () => {
                     let payload = { id: publishId, data: minimalData };
                     store.dispatch('publish', payload);
@@ -406,6 +418,7 @@ describe('Interactivity store', () => {
                     store.dispatch('publish', payload2);
                     expect(store.state[publishId].data).toEqual(changedData);
                 });
+
                 it('does not update on unchanged data element', () => {
                     let multipleElementData = JSON.parse(JSON.stringify(minimalData));
                     multipleElementData.elements.push({ id: '0.0.9', data: 'wubble' });
@@ -419,8 +432,8 @@ describe('Interactivity store', () => {
                 });
             });
         });
+
         describe('selection translators', () => {
-            
             const prefix = 'selection-';
             const sourceID = '0.0.7';
             const targetIDs = ['0.0.9'];
@@ -428,7 +441,6 @@ describe('Interactivity store', () => {
             const translatorId = 42;
 
             describe('register translators', () => {
-            
                 it('does not subscribe invalid selection translators', () => {
                     let invalidTranslator = { dummyElement: 'foo' };
                     store.dispatch('registerSelectionTranslator', { translatorId, translator: invalidTranslator });
@@ -446,6 +458,7 @@ describe('Interactivity store', () => {
                     store.dispatch('registerSelectionTranslator', { translatorId, translator: invalidTranslator });
                     expect(store.state).toEqual({});
                 });
+
                 it('allows registering a forwarding selection translator without mapping', () => {
                     let translator = { sourceID, targetIDs, forward: true };
                     store.dispatch('registerSelectionTranslator', { translatorId, translator });
@@ -454,6 +467,7 @@ describe('Interactivity store', () => {
                     expect(store.state[prefix + targetIDs[0]]).toBeDefined();
                     expect(store.state[prefix + targetIDs[0]].subscribers[0]).toBeDefined();
                 });
+
                 it('allows registering a selection translator with mapping', () => {
                     let dummyMapping = {};
                     let translator = { sourceID, targetIDs, mapping: dummyMapping };
@@ -463,6 +477,7 @@ describe('Interactivity store', () => {
                     expect(store.state[prefix + targetIDs[0]]).toBeDefined();
                     expect(store.state[prefix + targetIDs[0]].subscribers[0]).toBeDefined();
                 });
+
                 it('registers multiple targets of a selection translator', () => {
                     let translator = { sourceID, targetIDs: multipleTargetIDs, forward: true };
                     store.dispatch('registerSelectionTranslator', { translatorId, translator });
@@ -474,6 +489,7 @@ describe('Interactivity store', () => {
                     });
                 });
             });
+
             describe('selection event mapping', () => {
                 it('forwards selection event to target', () => {
                     let translator = { sourceID, targetIDs, forward: true };
@@ -485,6 +501,7 @@ describe('Interactivity store', () => {
                     store.dispatch('publish', { id: prefix + sourceID, data: payload });
                     expect(subscriber).toHaveBeenCalledWith(prefix + targetIDs[0], expect.objectContaining(payload));
                 });
+
                 it('forwards selection event to multiple targets', () => {
                     let translator = { sourceID, targetIDs: multipleTargetIDs, forward: true };
                     store.dispatch('registerSelectionTranslator', { translatorId, translator });
@@ -501,6 +518,7 @@ describe('Interactivity store', () => {
                         expect(callback).toHaveBeenCalledWith(expect.anything(), expect.objectContaining(payload));
                     });
                 });
+
                 it('forwards selection event to source', () => {
                     let translator = { sourceID, targetIDs, forward: true };
                     store.dispatch('registerSelectionTranslator', { translatorId, translator });
@@ -519,6 +537,7 @@ describe('Interactivity store', () => {
                     let payload = { elements: [{ id: 'foo', wibble: 'wobble' }] };
                     expect(() => store.dispatch('publish', { id: prefix + sourceID, data: payload })).toThrow();
                 });
+
                 it('maps selection event with mapping to target', () => {
                     let mapping = { wibble: ['wobble'] };
                     let translator = { sourceID, targetIDs, mapping };
@@ -531,6 +550,7 @@ describe('Interactivity store', () => {
                         changeSet: { added: mapping.wibble }
                     }));
                 });
+
                 it('maps selection event with simple mapping to source', () => {
                     let mapping = { wibble: ['wobble'] };
                     let translator = { sourceID, targetIDs, mapping };
@@ -543,6 +563,7 @@ describe('Interactivity store', () => {
                         changeSet: { added: ['wibble'] }
                     }));
                 });
+
                 it('does not map selection items not existing in mapping', () => {
                     let mapping = { wibble: ['wobble'] };
                     let translator = { sourceID, targetIDs, mapping };
@@ -553,6 +574,7 @@ describe('Interactivity store', () => {
                     store.dispatch('publish', { id: prefix + sourceID, data: payload });
                     expect(subscriber).not.toHaveBeenCalled();
                 });
+
                 it('maps selection event with multiple mapping to target', () => {
                     let mapping = { wibble: ['wobble', 'wubble', 'flob'] };
                     let translator = { sourceID, targetIDs, mapping };
@@ -570,6 +592,7 @@ describe('Interactivity store', () => {
                         changeSet: { removed: mapping.wibble }
                     }));
                 });
+
                 it('maps selection event with multiple mapping to source', () => {
                     let mapping = { wibble: ['wobble', 'wubble', 'flob'] };
                     let translator = { sourceID, targetIDs, mapping };
@@ -587,6 +610,7 @@ describe('Interactivity store', () => {
                         changeSet: { removed: ['wibble'] }
                     }));
                 });
+
                 it('handles partial mappings to source', () => {
                     let mapping = { wibble: ['wobble', 'wubble', 'flob'] };
                     let translator = { sourceID, targetIDs, mapping };
@@ -646,6 +670,7 @@ describe('Interactivity store', () => {
                 store.dispatch('clear');
                 expect(store.state).toEqual({});
             });
+
             it('allows clearing the store without data', () => {
                 expect(store.state).toEqual({});
                 let payload = { id: '0.0.7', callback: jest.fn() };
@@ -654,6 +679,7 @@ describe('Interactivity store', () => {
                 store.dispatch('clear');
                 expect(store.state).toEqual({});
             });
+
             it('allows clearing an empty store', () => {
                 expect(store.state).toEqual({});
                 store.dispatch('clear');
