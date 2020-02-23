@@ -11,6 +11,8 @@ import resizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.conten
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
 
+// TODO WEBP-227 split into multiple files
+
 /**
  * A single node view iframe
  */
@@ -120,6 +122,18 @@ export default {
         this.injectContent();
         this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+
+        // create global API which is accessed by knimeService running inside the iframe.
+        // This global API should only be used/extended for cases where window.postMessage can't be used
+        // due to the need of an immediate return value.
+        let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
+        if (!window.KnimePageBuilderAPI) {
+            window.KnimePageBuilderAPI = {
+                interactivityGetPublishedData(id) {
+                    return getPublishedDataFunc(id);
+                }
+            };
+        }
     },
 
     beforeDestroy() {
@@ -129,6 +143,9 @@ export default {
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
+
+        // remove global API
+        delete window.KnimePageBuilderAPI;
     },
 
     methods: {
@@ -214,6 +231,8 @@ export default {
             scripts.push(`<script>
                 if (typeof knimeService !== 'undefined') {
                     knimeService.resourceBaseUrl = '${resourceBaseUrl}';
+                    knimeService.pageBuilderPresent = true;
+                    knimeService.nodeId = '${this.nodeId}';
                 }
             <\/script>`); // eslint-disable-line no-useless-escape
 
@@ -251,6 +270,7 @@ export default {
             if (!event.data || event.data.nodeId !== this.nodeId) {
                 return;
             }
+
             if (event.data.type === 'load') {
                 consola.debug(`View resource loading for ${this.nodeId} completed`);
                 this.document.defaultView.postMessage({
@@ -268,6 +288,7 @@ export default {
                         this.setHeight();
                     }
                 }
+
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
             } else if (event.data.type === 'validate') {
                 this.validateCallback({ isValid: event.data.isValid });
@@ -278,6 +299,8 @@ export default {
                 } else {
                     this.getValueCallback({ value: event.data.value });
                 }
+            } else if (event.data.type.startsWith('interactivity')) {
+                this.handleInteractivity(event);
             }
         },
 
@@ -327,8 +350,55 @@ export default {
                     reject(new Error('Value could not be retrieved in the allocated time.'));
                 }, valueGetterTimeout);
             });
-        }
+        },
 
+        handleInteractivity(event) {
+            let interactivityType = event.data.type;
+            switch (interactivityType) {
+            case 'interactivitySubscribe':
+                consola.trace(`subscribe to event`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/subscribe', {
+                    id: event.data.id,
+                    callback: this.interactivityInformIframe,
+                    elementFilter: event.data.elementFilter
+                });
+                break;
+            case 'interactivityUnsubscribe':
+                consola.trace(`unsubscribe from event`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/unsubscribe', {
+                    id: event.data.id,
+                    callback: this.interactivityInformIframe
+                });
+                break;
+            case 'interactivityPublish':
+                consola.trace(`publish event called`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/publish', {
+                    id: event.data.id,
+                    data: event.data.payload,
+                    skipCallback: this.interactivityInformIframe
+                });
+                break;
+            case 'interactivityRegisterSelectionTranslator':
+                consola.trace(`interactivityRegisterSelectionTranslator`);
+                this.$store.dispatch('pagebuilder/interactivity/registerSelectionTranslator', {
+                    translatorId: event.data.id,
+                    translator: event.data.translator
+                });
+                break;
+            default:
+                break;
+            }
+        },
+
+        interactivityInformIframe(id, payload) {
+            let data = {
+                nodeId: this.nodeId,
+                type: 'interactivityEvent',
+                id,
+                payload
+            };
+            this.document.defaultView.postMessage(data, window.origin);
+        }
     }
 };
 </script>
