@@ -62,7 +62,10 @@ export default {
             return this.viewRep.label;
         },
         possibleChoices() {
-            return this.viewRep.possibleChoices.map((x) => ({ id: x, text: x }));
+            return this.viewRep.possibleChoices.map((x) => ({
+                id: x,
+                text: x
+            }));
         },
         description() {
             return this.viewRep.description || null;
@@ -99,7 +102,7 @@ export default {
         },
         isRadioButtons() {
             return this.viewRep.type === 'Radio buttons (vertical)' ||
-                    this.viewRep.type === 'Radio buttons (horizontal)';
+                this.viewRep.type === 'Radio buttons (horizontal)';
         },
         radioButtonsAlignment() {
             if (this.viewRep.type === 'Radio buttons (vertical)') {
@@ -131,10 +134,11 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="single-select-widget">
     <Fieldset
       v-if="isRadioButtons"
       :text="label"
+      class="fieldset"
     >
       <RadioButtons
         v-if="isRadioButtons"
@@ -177,3 +181,12 @@ export default {
     </Label>
   </div>
 </template>
+
+<style scoped>
+.single-select-widget {
+  & .fieldset {
+    min-width: auto;
+    overflow-x: hidden;
+  }
+}
+</style>
