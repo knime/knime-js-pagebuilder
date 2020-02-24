@@ -31,20 +31,9 @@ export default {
             }
         }
     },
-    data() {
-        return {
-            height: null
-        };
-    },
     computed: {
         autoHeight() {
-            // legacy implementation used the prefix `view` for various resizing detection methods.
-            // The current implementation uses only one method, so the only information needed is whether or not to use
-            // resizing detection at all
             return this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('view');
-        },
-        pollHeight() {
-            return this.viewConfig.autoResize !== false;
         },
         webNodeConfig() {
             let nodeConfigs = this.$store.state.pagebuilder.page.wizardPageContent.webNodes;
@@ -94,20 +83,11 @@ export default {
                 }
             }
 
-            if (this.height !== null) {
-                style.push(`height:${this.height}px;`);
-            }
-
             return style.join(';');
         },
         isWidget() {
             return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
                 classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
-        }
-    },
-    methods: {
-        updateHeight(height) {
-            /* this.height = height; */
         }
     }
 };
@@ -134,9 +114,7 @@ export default {
         :node-id="viewConfig.nodeID"
         :node-config="webNodeConfig"
         :auto-height="autoHeight"
-        :poll-height="pollHeight"
         :scrolling="viewConfig.scrolling"
-        @heightChange="updateHeight"
       />
     </template>
   </div>

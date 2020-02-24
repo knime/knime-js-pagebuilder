@@ -1,5 +1,4 @@
 <script>
-import Vue from 'vue';
 import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
 import iFrameResize from 'iframe-resizer/js/iframeResizer';
 
@@ -7,7 +6,6 @@ import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
 import resizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow';
 
-// const heightPollInterval = 200; // ms
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
 
@@ -43,13 +41,6 @@ export default {
             default: false
         },
         /**
-         * Update height automatically when content size changes?
-         */
-        pollHeight: {
-            type: Boolean,
-            default: false
-        },
-        /**
          * Render inner scrollbars?
          */
         scrolling: {
@@ -80,41 +71,15 @@ export default {
             return this.nodeConfig.stylesheets || [];
         },
         innerStyle() {
-            // prevent margin collapsation of body’s children, which causes incorrect height detection
-            
             let style = '';
-            if (this.scrolling) {
-                if (this.pollHeight) {
-                    // in case of auto height, a vertical scrollbar can interfere with the height calculation (in
-                    // combination with a horizontal scrollbar)
-                    style += 'html { overflow-y: hidden; }';
-                }
-            } else {
+            if (!this.scrolling) {
                 style += 'html { overflow: hidden; }';
             }
             return style;
         }
     },
 
-    watch: {
-        height(newHeight) {
-            /**
-             * Fired when the iframe detects that its content’s height size has changed.
-             * Requires the `pollHeight` prop to be set to `true`.
-             *
-             * @event heightChange
-             * @type {number}
-             */
-            this.$emit('heightChange', newHeight);
-        }
-    },
-
     mounted() {
-        Vue.directive('resize', {
-            bind(el, { value = {} }) {
-                el.addEventListener('load', () => iFrameResize(value, el));
-            }
-        });
         this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: true });
         window.addEventListener('message', this.messageFromIframe);
 
@@ -140,9 +105,6 @@ export default {
         window.removeEventListener('message', this.messageFromIframe);
         this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-        }
 
         // remove global API
         delete window.KnimePageBuilderAPI;
@@ -239,28 +201,10 @@ export default {
             return scripts.join('');
         },
 
-        initHeightPolling() {
-            /* consola.trace('Starting height polling');
-            this.intervalId = setInterval(this.setHeight, heightPollInterval); */
-        },
-
         resizeIframe() {
             if (this.autoHeight) {
                 iFrameResize({ checkOrigin: false, heightCalculationMethod: 'lowestElement' /* TODO: fill me */ });
             }
-        },
-
-        setHeight() {
-            let { document } = this;
-            if (!document || !document.body) {
-                return;
-            }
-            let { defaultView } = document;
-            let htmlStyle = defaultView.getComputedStyle(document.documentElement);
-            let bodyStyle = defaultView.getComputedStyle(document.body);
-            this.height = document.body.scrollHeight +
-                parseInt(htmlStyle.paddingTop, 10) + parseInt(htmlStyle.paddingBottom, 10) +
-                parseInt(bodyStyle.marginTop, 10) + parseInt(bodyStyle.marginBottom, 10);
         },
 
         messageFromIframe(event) {
@@ -281,14 +225,6 @@ export default {
                     viewValue: this.nodeConfig.viewValue,
                     type: 'init'
                 }, window.origin);
-                if (this.autoHeight) {
-                    if (this.pollHeight) {
-                        this.initHeightPolling();
-                    } else {
-                        this.setHeight();
-                    }
-                }
-
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
             } else if (event.data.type === 'validate') {
                 this.validateCallback({ isValid: event.data.isValid });
@@ -407,7 +343,7 @@ export default {
   <div class="frame-container">
     <iframe
       ref="iframe"
-      :class="{error: !isValid, aspect: !autoHeight}"
+      :class="{error: !isValid, 'full-height': !autoHeight}"
       @load="resizeIframe"
     />
     <ErrorMessage
@@ -431,7 +367,7 @@ iframe {
   min-width: 100%;
   width: 1px;
 
-  &.aspect {
+  &.full-height {
     height: 100%;
   }
 
