@@ -4,8 +4,15 @@ import Vuex from 'vuex';
 import * as storeConfig from '~/store/pagebuilder';
 
 describe('PageBuilder store', () => {
-
     let store, localVue;
+
+    let interactivityStoreConfig = {
+        namespaced: true,
+        actions: {
+            registerSelectionTranslator: jest.fn(),
+            clear: jest.fn()
+        }
+    };
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -14,6 +21,7 @@ describe('PageBuilder store', () => {
 
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
+        store.registerModule('interactivity', interactivityStoreConfig);
         jest.resetAllMocks();
     });
 
@@ -49,6 +57,29 @@ describe('PageBuilder store', () => {
         };
         store.dispatch('setPage', { page });
         expect(store.state.page).toEqual(page);
+    });
+
+    it('clears interactivity when setting a page', () => {
+        expect(interactivityStoreConfig.actions.clear).not.toHaveBeenCalled();
+        store.dispatch('setPage', { });
+        expect(interactivityStoreConfig.actions.clear).toHaveBeenCalled();
+    });
+
+    it('registers selection translators when setting a page', () => {
+        expect(interactivityStoreConfig.actions.registerSelectionTranslator).not.toHaveBeenCalled();
+        let dummyTranslator = 'foo';
+        let page = {
+            wizardPageContent: {
+                webNodePageConfiguration: {
+                    selectionTranslators: [dummyTranslator]
+                }
+            }
+        };
+        store.dispatch('setPage', { page });
+        expect(interactivityStoreConfig.actions.registerSelectionTranslator).toHaveBeenCalledWith(
+            // eslint-disable-next-line no-undefined
+            expect.anything(), { translator: dummyTranslator, translatorId: 0 }, undefined
+        );
     });
 
     it('allows setting resourceBaseUrl', () => {
