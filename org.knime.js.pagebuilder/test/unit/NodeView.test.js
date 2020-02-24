@@ -215,7 +215,6 @@ describe('NodeView.vue', () => {
             }
         });
         expect(wrapper.find(NodeViewIFrame).props('autoHeight')).toBe(false);
-        expect(wrapper.find(NodeViewIFrame).props('pollHeight')).toBe(false);
 
         wrapper = shallowMount(NodeView, {
             ...context,
@@ -228,7 +227,6 @@ describe('NodeView.vue', () => {
             }
         });
         expect(wrapper.find(NodeViewIFrame).props('autoHeight')).toBe(true);
-        expect(wrapper.find(NodeViewIFrame).props('pollHeight')).toBe(true);
     });
 
     it('renders with classes and styles', () => {
@@ -260,23 +258,6 @@ describe('NodeView.vue', () => {
         });
         expect(wrapper.attributes('class')).toEqual('view');
         expect(wrapper.attributes('style')).not.toBeDefined();
-    });
-
-    it('reacts to the heightChange event', () => {
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: 'id1',
-                    resizeMethod: 'viewLowestElement',
-                    autoResize: true
-                }
-            }
-        });
-
-        wrapper.find(NodeViewIFrame).vm.$emit('heightChange', '342');
-
-        expect(wrapper.attributes('style')).toEqual('height: 342px;');
     });
 
     it('renders not displayable nodes', () => {
