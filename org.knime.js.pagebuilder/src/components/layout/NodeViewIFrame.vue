@@ -4,7 +4,7 @@ import iFrameResize from 'iframe-resizer/js/iframeResizer';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
-import resizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow';
+import resizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow.js';
 
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms

@@ -5,10 +5,6 @@ import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
 
 import * as storeConfig from '@/../store/pagebuilder';
 
-jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
-  foo = ['%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
-jest.mock('raw-loader!./injectedScripts/messageListener.js', () => '"messageListener.js mock";', { virtual: true });
-
 describe('NodeViewIframe.vue', () => {
 
     let interactivityConfig, store, localVue, context, mockGetPublishedData;
