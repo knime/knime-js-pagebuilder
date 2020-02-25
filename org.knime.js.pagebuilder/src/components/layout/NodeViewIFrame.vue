@@ -20,11 +20,11 @@ export default {
     },
     props: {
         /**
-         * Node id
+         * View configuration, mainly layout and sizing options
          */
-        nodeId: {
-            default: null,
-            type: String
+        viewConfig: {
+            default: () => ({}),
+            type: Object
         },
         /**
          * Node configuration as received by API
@@ -32,31 +32,22 @@ export default {
         nodeConfig: {
             default: () => ({}),
             type: Object
-        },
-        /**
-         * Set height automatically depending on content?
-         */
-        autoHeight: {
-            type: Boolean,
-            default: false
-        },
-        /**
-         * Render inner scrollbars?
-         */
-        scrolling: {
-            type: Boolean,
-            default: false
         }
     },
     data() {
         return {
-            height: 0,
             isValid: true,
             errorMessage: null
         };
     },
 
     computed: {
+        nodeId() {
+            return this.viewConfig.nodeID;
+        },
+        iframeId() {
+            return `node-${this.nodeId.replace(/:/g, '-')}`;
+        },
         webNode() {
             let page = this.$store.state.pagebuilder.page;
             if (page && page.webNodes) {
@@ -70,12 +61,28 @@ export default {
         nodeStylesheets() {
             return this.nodeConfig.stylesheets || [];
         },
-        innerStyle() {
-            let style = '';
-            if (!this.scrolling) {
-                style += 'html { overflow: hidden; }';
+        autoHeight() {
+            return this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('view');
+        },
+        styles() {
+            let style = [];
+            if (this.viewConfig.additionalStyles) {
+                style = style.concat(this.viewConfig.additionalStyles);
             }
-            return style;
+            return style.join(';');
+        },
+        classes() {
+            let classes = [];
+            if (!this.isValid) {
+                classes.push('error');
+            }
+            if (!this.autoHeight) {
+                classes.push('full-height');
+            }
+            if (Array.isArray(this.viewConfig.additionalClasses)) {
+                classes = classes.concat(this.viewConfig.additionalClasses);
+            }
+            return classes;
         }
     },
 
@@ -163,9 +170,6 @@ export default {
                 style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${encodeURI(style)}">`
             );
 
-            // further node styles needed for sizing
-            styles.push(`<style>${this.innerStyle}</style>`);
-
             // custom CSS from node configuration
             if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
                 styles.push(`<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`);
@@ -203,7 +207,50 @@ export default {
 
         resizeIframe() {
             if (this.autoHeight) {
-                iFrameResize({ checkOrigin: false, heightCalculationMethod: 'lowestElement' /* TODO: fill me */ });
+                // apply a default tolerance of 5px to avoid unnecessary screen flicker
+                const defaultResizeTolerance = 5;
+                let conf = this.viewConfig;
+
+                // strip prefix from resize method to determine heightCalculationMethod
+                let prefix = 'view'.length;
+                let method = conf.resizeMethod.substring(prefix, prefix + 1).toLowerCase() +
+                    conf.resizeMethod.substring(prefix + 1);
+                // special case, this used a different resize method for IE, but is not supported anymore
+                if (method === 'lowestElementIEMax') {
+                    method = 'lowestElement';
+                }
+
+                // populate settings object
+                let resizeSettings = {
+                    log: true,
+                    checkOrigin: [window.origin],
+                    resizeFrom: 'child',
+                    warningTimeout: 0,
+
+                    autoResize: conf.autoResize,
+                    scrolling: conf.scrolling,
+                    heightCalculationMethod: method,
+                    sizeHeight: conf.sizeHeight,
+                    sizeWidth: conf.sizeWidth,
+                    tolerance: conf.resizeTolerance || defaultResizeTolerance
+                };
+                if (conf.minWidth) {
+                    resizeSettings.minWidth = conf.minWidth;
+                }
+                if (conf.maxWidth) {
+                    resizeSettings.maxWidth = conf.maxWidth;
+                }
+                if (conf.minHeight) {
+                    resizeSettings.minHeight = conf.minHeight;
+                }
+                if (conf.maxHeight) {
+                    resizeSettings.maxHeight = conf.maxHeight;
+                }
+                if (conf.resizeInterval) {
+                    resizeSettings.interval = conf.resizeInterval;
+                }
+                                
+                iFrameResize(resizeSettings, `iframe#${this.iframeId}`);
             }
         },
 
@@ -342,8 +389,10 @@ export default {
 <template>
   <div class="frame-container">
     <iframe
+      :id="iframeId"
       ref="iframe"
-      :class="{error: !isValid, 'full-height': !autoHeight}"
+      :class="classes"
+      :style="style"
       @load="resizeIframe"
     />
     <ErrorMessage

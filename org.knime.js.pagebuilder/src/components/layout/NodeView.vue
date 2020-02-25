@@ -32,9 +32,6 @@ export default {
         }
     },
     computed: {
-        autoHeight() {
-            return this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('view');
-        },
         webNodeConfig() {
             let nodeConfigs = this.$store.state.pagebuilder.page.wizardPageContent.webNodes;
             let { nodeID } = this.viewConfig;
@@ -55,35 +52,8 @@ export default {
             if (this.webNodeAvailable && this.viewConfig.resizeMethod &&
                 this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
                 classes.push(this.viewConfig.resizeMethod);
-                if (Array.isArray(this.viewConfig.additionalClasses)) {
-                    classes = classes.concat(this.viewConfig.additionalClasses);
-                }
             }
             return classes;
-        },
-        style() {
-            let style = [];
-
-            if (this.webNodeAvailable) {
-                const styleProps = ['minWidth', 'maxWidth', 'minHeight', 'maxHeight'];
-                styleProps.forEach(prop => {
-                    if (this.viewConfig.hasOwnProperty(prop)) {
-                        let value = this.viewConfig[prop];
-                        if (value) {
-                            let key = prop.replace(/[WH]/, x => `-${x.toLowerCase()}`);
-                            if (!value.toString().includes('px')) {
-                                value = `${value}px`;
-                            }
-                            style.push(`${key}:${value};`);
-                        }
-                    }
-                });
-                if (this.viewConfig.additionalStyles) {
-                    style = style.concat(this.viewConfig.additionalStyles);
-                }
-            }
-
-            return style.join(';');
         },
         isWidget() {
             return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
@@ -96,7 +66,6 @@ export default {
 <template>
   <div
     :class="classes"
-    :style="style"
   >
     <template v-if="webNodeAvailable">
       <NotAvailable
@@ -111,10 +80,8 @@ export default {
       />
       <NodeViewIFrame
         v-else
-        :node-id="viewConfig.nodeID"
+        :view-config="viewConfig"
         :node-config="webNodeConfig"
-        :auto-height="autoHeight"
-        :scrolling="viewConfig.scrolling"
       />
     </template>
   </div>
