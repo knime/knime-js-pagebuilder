@@ -3,7 +3,7 @@ import { shallowMount } from '@vue/test-utils';
 import Label from '~/webapps-common/ui/components/forms/Label';
 import Button from '~/webapps-common/ui/components/Button';
 
-describe('NotAvailable.vue', () => {
+describe('ViewAlert.vue', () => {
     let wrapper;
     beforeAll(() => {
         wrapper = shallowMount(ViewAlert, {
@@ -18,8 +18,8 @@ describe('NotAvailable.vue', () => {
         expect(wrapper.find(Label).exists()).toBe(false);
         wrapper.setProps({ active: true });
         expect(wrapper.find(Label).exists()).toBe(true);
-        expect(wrapper.find(Label).props('text')).toEqual('Missing node (node ID 0:0:0) INFO');
-        expect(wrapper.find('span').text()).toContain('No further information available');
+        expect(wrapper.find(Label).props('text')).toEqual('WARNING: Missing node');
+        expect(wrapper.text()).toContain('No further information available');
     });
 
     it('renders message', () => {
@@ -35,8 +35,8 @@ describe('NotAvailable.vue', () => {
             }
         });
         expect(wrapper.find(Label).exists()).toBe(true);
-        expect(wrapper.find(Label).props('text')).toEqual('String Splitter (node ID 0:0:0) ERROR');
-        expect(wrapper.find('span').text()).toContain('No string to split');
+        expect(wrapper.find(Label).props('text')).toEqual('ERROR: String Splitter');
+        expect(wrapper.text()).toContain('No string to split');
     });
 
     it('emits close event', () => {
