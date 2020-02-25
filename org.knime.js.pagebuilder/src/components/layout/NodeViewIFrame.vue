@@ -43,10 +43,10 @@ export default {
 
     computed: {
         nodeId() {
-            return this.viewConfig.nodeID;
+            return this.viewConfig && this.viewConfig.nodeID;
         },
         iframeId() {
-            return `node-${this.nodeId.replace(/:/g, '-')}`;
+            return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
         },
         webNode() {
             let page = this.$store.state.pagebuilder.page;
@@ -64,13 +64,6 @@ export default {
         autoHeight() {
             return this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('view');
         },
-        styles() {
-            let style = [];
-            if (this.viewConfig.additionalStyles) {
-                style = style.concat(this.viewConfig.additionalStyles);
-            }
-            return style.join(';');
-        },
         classes() {
             let classes = [];
             if (!this.isValid) {
@@ -78,9 +71,6 @@ export default {
             }
             if (!this.autoHeight) {
                 classes.push('full-height');
-            }
-            if (Array.isArray(this.viewConfig.additionalClasses)) {
-                classes = classes.concat(this.viewConfig.additionalClasses);
             }
             return classes;
         }
@@ -209,20 +199,24 @@ export default {
             if (this.autoHeight) {
                 // apply a default tolerance of 5px to avoid unnecessary screen flicker
                 const defaultResizeTolerance = 5;
+                const defaultResizeMethod = 'lowestElement';
                 let conf = this.viewConfig;
 
                 // strip prefix from resize method to determine heightCalculationMethod
                 let prefix = 'view'.length;
-                let method = conf.resizeMethod.substring(prefix, prefix + 1).toLowerCase() +
-                    conf.resizeMethod.substring(prefix + 1);
+                let method = defaultResizeMethod;
+                if (conf.resizeMethod) {
+                    method = conf.resizeMethod.substring(prefix, prefix + 1).toLowerCase() +
+                        conf.resizeMethod.substring(prefix + 1);
+                }
                 // special case, this used a different resize method for IE, but is not supported anymore
                 if (method === 'lowestElementIEMax') {
-                    method = 'lowestElement';
+                    method = defaultResizeMethod;
                 }
 
                 // populate settings object
                 let resizeSettings = {
-                    log: true,
+                    log: false,
                     checkOrigin: [window.origin],
                     resizeFrom: 'child',
                     warningTimeout: 0,
@@ -392,7 +386,6 @@ export default {
       :id="iframeId"
       ref="iframe"
       :class="classes"
-      :style="style"
       @load="resizeIframe"
     />
     <ErrorMessage

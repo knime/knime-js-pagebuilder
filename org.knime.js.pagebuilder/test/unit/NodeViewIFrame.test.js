@@ -40,12 +40,12 @@ describe('NodeViewIframe.vue', () => {
         store.commit('pagebuilder/setPage', {
             wizardPageContent: {
                 webNodes: {
-                    '0.0.7': {
+                    '0:0:7': {
                         namespace: 'foo',
                         javascriptLibraries: [],
                         stylesheets: []
                     },
-                    '0.0.9': {
+                    '0:0:9': {
                         namespace: 'bar',
                         javascriptLibraries: [],
                         stylesheets: []
@@ -72,33 +72,6 @@ describe('NodeViewIframe.vue', () => {
         expect(wrapper.html()).toBeTruthy();
     });
 
-    it('respects the "scrolling" attribute', () => {
-        let wrapper = shallowMount(NodeViewIFrame, {
-            ...context,
-            attachToDocument: true,
-            propsData: {
-                scrolling: false,
-                pollHeight: true
-            }
-        });
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
-            .toContain('html { overflow: hidden; }');
-
-        wrapper = shallowMount(NodeViewIFrame, {
-            ...context,
-            attachToDocument: true,
-            propsData: {
-                scrolling: true,
-                pollHeight: false
-            }
-        });
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
-            .not.toContain('html { overflow: hidden; }');
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
-            .not.toContain('html { overflow-y: hidden; }');
-
-    });
-
     describe('resource injection', () => {
         it('injects scripts and styles', () => {
             window.origin = window.location.origin;
@@ -106,7 +79,9 @@ describe('NodeViewIframe.vue', () => {
                 attachToDocument: true,
                 ...context,
                 propsData: {
-                    nodeId: '0.0.7',
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    },
                     nodeConfig: {
                         namespace: 'knimespace',
                         javascriptLibraries: ['foo/bar.js', 'qux/baz.js'],
@@ -120,7 +95,7 @@ describe('NodeViewIframe.vue', () => {
             let html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('messageListener.js mock');
             expect(html).toMatch('scriptLoader.js mock');
-            expect(html).toMatch(`["${window.origin}", "knimespace", "0.0.7", 2]`);
+            expect(html).toMatch(`["${window.origin}", "knimespace", "0:0:7", 2]`);
             expect(html).toMatch('<script src="http://baseurl.test.example/foo/bar.js" ' +
                 'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
             expect(html).toMatch('<script src="http://baseurl.test.example/qux/baz.js" ' +
@@ -131,7 +106,7 @@ describe('NodeViewIframe.vue', () => {
             expect(html).toMatch('<style>body { background: red; }</style>');
 
             // check if iframe resizer was also injected
-            iframeConfig.propsData.autoHeight = true;
+            iframeConfig.propsData.viewConfig.resizeMethod = 'viewLowestElement';
             wrapper = shallowMount(NodeViewIFrame, iframeConfig);
             html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('iframeResizer.js mock');
@@ -142,7 +117,9 @@ describe('NodeViewIframe.vue', () => {
                 ...context,
                 attachToDocument: true,
                 propsData: {
-                    nodeId: '0.0.7',
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    },
                     nodeConfig: {
                         namespace: 'knimespace',
                         initMethodName: 'initMe',
@@ -160,11 +137,11 @@ describe('NodeViewIframe.vue', () => {
             // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'load' }
+                data: { nodeId: '0:0:7', type: 'load' }
             });
 
             expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
-                nodeId: '0.0.7',
+                nodeId: '0:0:7',
                 namespace: 'knimespace',
                 initMethodName: 'initMe',
                 viewRepresentation: { dummyRepresentation: true },
@@ -178,7 +155,9 @@ describe('NodeViewIframe.vue', () => {
                 ...context,
                 attachToDocument: true,
                 propsData: {
-                    nodeId: '0.0.7',
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    },
                     nodeConfig: {
                         namespace: 'knimespace',
                         initMethodName: 'initMe',
@@ -190,17 +169,17 @@ describe('NodeViewIframe.vue', () => {
             // before resource loading
             let calls = storeConfig.actions.setWebNodeLoading.mock.calls;
             let lastCall = calls[calls.length - 1];
-            expect(lastCall[1]).toMatchObject({ nodeId: '0.0.7', loading: true });
+            expect(lastCall[1]).toMatchObject({ nodeId: '0:0:7', loading: true });
             
             // mock resource loading done
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'load' }
+                data: { nodeId: '0:0:7', type: 'load' }
             });
 
             calls = storeConfig.actions.setWebNodeLoading.mock.calls;
             lastCall = calls[calls.length - 1];
-            expect(lastCall[1]).toMatchObject({ nodeId: '0.0.7', loading: false });
+            expect(lastCall[1]).toMatchObject({ nodeId: '0:0:7', loading: false });
         });
     });
 
@@ -210,7 +189,9 @@ describe('NodeViewIframe.vue', () => {
                 ...context,
                 attachToDocument: true,
                 propsData: {
-                    nodeId: '0.0.7',
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    },
                     nodeConfig: {
                         namespace: 'knimespace',
                         getViewValueMethodName: 'value'
@@ -221,7 +202,7 @@ describe('NodeViewIframe.vue', () => {
             jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
             wrapper.vm.getValue();
             expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
-                nodeId: '0.0.7',
+                nodeId: '0:0:7',
                 namespace: 'knimespace',
                 getViewValueMethodName: 'value',
                 type: 'getValue'
@@ -233,7 +214,9 @@ describe('NodeViewIframe.vue', () => {
                 ...context,
                 attachToDocument: true,
                 propsData: {
-                    nodeId: '0.0.7',
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    },
                     nodeConfig: {
                         namespace: 'knimespace',
                         getViewValueMethodName: 'value'
@@ -247,10 +230,10 @@ describe('NodeViewIframe.vue', () => {
             // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'getValue', value: { integer: 42 } }
+                data: { nodeId: '0:0:7', type: 'getValue', value: { integer: 42 } }
             });
 
-            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0.0.7', value: { integer: 42 } });
+            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', value: { integer: 42 } });
         });
 
         it('rejects getValue promise on error', () => {
@@ -258,7 +241,9 @@ describe('NodeViewIframe.vue', () => {
                 ...context,
                 attachToDocument: true,
                 propsData: {
-                    nodeId: '0.0.7',
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    },
                     nodeConfig: {
                         namespace: 'knimespace',
                         getViewValueMethodName: 'value'
@@ -272,7 +257,7 @@ describe('NodeViewIframe.vue', () => {
             // fake error returned
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'getValue', error: errorMessage }
+                data: { nodeId: '0:0:7', type: 'getValue', error: errorMessage }
             });
 
             return expect(valuePromise).rejects.toStrictEqual(new Error(errorMessage));
@@ -287,7 +272,9 @@ describe('NodeViewIframe.vue', () => {
                 ...context,
                 attachToDocument: true,
                 propsData: {
-                    nodeId: '0.0.7',
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    },
                     nodeConfig: {
                         namespace: 'knimespace',
                         validateMethodName: 'validate'
@@ -301,7 +288,7 @@ describe('NodeViewIframe.vue', () => {
             jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
             wrapper.vm.validate();
             expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
-                nodeId: '0.0.7',
+                nodeId: '0:0:7',
                 namespace: 'knimespace',
                 validateMethodName: 'validate',
                 type: 'validate'
@@ -314,9 +301,9 @@ describe('NodeViewIframe.vue', () => {
             // fake validation returned
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'validate', isValid: true }
+                data: { nodeId: '0:0:7', type: 'validate', isValid: true }
             });
-            return expect(validatePromise).resolves.toStrictEqual({ nodeId: '0.0.7', isValid: true });
+            return expect(validatePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: true });
         });
 
         it('returns invalid for errors with webnodes', () => {
@@ -325,9 +312,9 @@ describe('NodeViewIframe.vue', () => {
             // fake error
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'validate', error: true }
+                data: { nodeId: '0:0:7', type: 'validate', error: true }
             });
-            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0.0.7', isValid: false });
+            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
         });
 
         it('returns invalid when views timeout', () => {
@@ -336,7 +323,7 @@ describe('NodeViewIframe.vue', () => {
             let valuePromise = wrapper.vm.validate();
             // don't provide a message queue response
             jest.runAllTimers();
-            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0.0.7', isValid: false });
+            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
         });
     });
 
@@ -348,7 +335,9 @@ describe('NodeViewIframe.vue', () => {
                 ...context,
                 attachToDocument: true,
                 propsData: {
-                    nodeId: '0.0.7'
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    }
                 }
             });
         });
@@ -371,7 +360,7 @@ describe('NodeViewIframe.vue', () => {
             // mock postMessage call
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'interactivitySubscribe', id: '123' }
+                data: { nodeId: '0:0:7', type: 'interactivitySubscribe', id: '123' }
             });
             expect(interactivityConfig.actions.subscribe).toHaveBeenCalled();
         });
@@ -380,7 +369,7 @@ describe('NodeViewIframe.vue', () => {
             // mock postMessage call
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'interactivityUnsubscribe', id: '123' }
+                data: { nodeId: '0:0:7', type: 'interactivityUnsubscribe', id: '123' }
             });
             expect(interactivityConfig.actions.unsubscribe).toHaveBeenCalled();
         });
@@ -389,7 +378,7 @@ describe('NodeViewIframe.vue', () => {
             // mock postMessage call
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0.0.7', type: 'interactivityPublish', id: '123', payload: 'dummy' }
+                data: { nodeId: '0:0:7', type: 'interactivityPublish', id: '123', payload: 'dummy' }
             });
             expect(interactivityConfig.actions.publish).toHaveBeenCalled();
         });
@@ -398,7 +387,7 @@ describe('NodeViewIframe.vue', () => {
             // mock postMessage call
             wrapper.vm.messageFromIframe({ origin: window.origin,
                 data: {
-                    nodeId: '0.0.7',
+                    nodeId: '0:0:7',
                     type: 'interactivityRegisterSelectionTranslator',
                     id: '123',
                     translator: 'dummy'
@@ -413,7 +402,7 @@ describe('NodeViewIframe.vue', () => {
             let payload = 'dummyData';
             wrapper.vm.interactivityInformIframe(id, payload);
             expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
-                nodeId: '0.0.7',
+                nodeId: '0:0:7',
                 type: 'interactivityEvent',
                 id,
                 payload

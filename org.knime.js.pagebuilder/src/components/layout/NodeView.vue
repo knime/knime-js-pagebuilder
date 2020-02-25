@@ -49,11 +49,23 @@ export default {
         },
         classes() {
             let classes = ['view'];
-            if (this.webNodeAvailable && this.viewConfig.resizeMethod &&
+            if (this.webNodeAvailable) {
+                if (this.viewConfig.resizeMethod &&
                 this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
-                classes.push(this.viewConfig.resizeMethod);
+                    classes.push(this.viewConfig.resizeMethod);
+                }
+                if (Array.isArray(this.viewConfig.additionalClasses)) {
+                    classes = classes.concat(this.viewConfig.additionalClasses);
+                }
             }
             return classes;
+        },
+        style() {
+            let style = [];
+            if (this.webNodeAvailable && this.viewConfig.additionalStyles) {
+                style = style.concat(this.viewConfig.additionalStyles);
+            }
+            return style.join(';').replace(/;;/g, ';');
         },
         isWidget() {
             return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
@@ -66,6 +78,7 @@ export default {
 <template>
   <div
     :class="classes"
+    :style="style"
   >
     <template v-if="webNodeAvailable">
       <NotAvailable
