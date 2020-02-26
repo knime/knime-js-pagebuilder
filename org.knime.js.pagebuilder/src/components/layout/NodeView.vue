@@ -50,8 +50,8 @@ export default {
         classes() {
             let classes = ['view'];
             if (this.webNodeAvailable) {
-                if (this.viewConfig.resizeMethod &&
-                this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
+                // add aspect ratio sizing classes; other resize methods are handled by NodeViewIFrame itself
+                if (this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
                     classes.push(this.viewConfig.resizeMethod);
                 }
                 if (Array.isArray(this.viewConfig.additionalClasses)) {

@@ -1,6 +1,6 @@
 <script>
 import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
-import iFrameResize from 'iframe-resizer/js/iframeResizer';
+import iframeResizer from 'iframe-resizer/js/iframeResizer';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
@@ -44,9 +44,6 @@ export default {
     computed: {
         nodeId() {
             return this.viewConfig && this.viewConfig.nodeID;
-        },
-        iframeId() {
-            return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
         },
         webNode() {
             let page = this.$store.state.pagebuilder.page;
@@ -244,7 +241,7 @@ export default {
                     resizeSettings.interval = conf.resizeInterval;
                 }
                                 
-                iFrameResize(resizeSettings, `iframe#${this.iframeId}`);
+                iframeResizer(resizeSettings, this.$refs.iframe);
             }
         },
 
@@ -383,7 +380,6 @@ export default {
 <template>
   <div class="frame-container">
     <iframe
-      :id="iframeId"
       ref="iframe"
       :class="classes"
       @load="resizeIframe"
