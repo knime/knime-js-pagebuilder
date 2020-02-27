@@ -1,6 +1,4 @@
 <script>
-import { mapActions } from 'vuex';
-
 import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
 import ViewAlert from './ViewAlert';
 
@@ -369,11 +367,7 @@ export default {
             }
             // delete the alert data to close the alert
             this.alert = null;
-        },
-
-        ...mapActions({
-            showNotification: 'pagebuilder/showNotification'
-        })
+        }
     }
 };
 </script>

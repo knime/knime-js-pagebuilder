@@ -5,6 +5,9 @@ import Button from '~/webapps-common/ui/components/Button';
 import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg?inline';
 import CloseIcon from '~/webapps-common/ui/assets/img/icons/close.svg?inline';
 import DropdownIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline';
+import CopyIcon from '~/webapps-common/ui/assets/img/icons/copy.svg?inline';
+
+import { copyText } from '~/webapps-common/util/copyText';
 
 /**
  * This component serves as the override for window.alert when invoked from within a node
@@ -16,7 +19,8 @@ export default {
         Button,
         SignWarningIcon,
         CloseIcon,
-        DropdownIcon
+        DropdownIcon,
+        CopyIcon
     },
     props: {
         nodeInfo: {
@@ -85,12 +89,28 @@ export default {
         /**
          * Event handler for expanding message of the alert.
          *
-         * @emits {closeAlert} the event which the parent should use to inactivate the alert.
          * @returns {undefined}
          */
         expandMessage() {
             consola.trace('Expanding alert message.');
             this.messageExpanded = !this.messageExpanded;
+        },
+        /**
+         * Event handler for copying the text of the alert.
+         * Issues toast for successful copying of text.
+         *
+         * @returns {undefined}
+         */
+        copyText() {
+            consola.trace('Copying alert message.');
+            copyText(this.$refs.messageContent.textContent);
+            this.$store.dispatch('notification/show', {
+                notification: {
+                    message: 'Text copied!',
+                    type: 'success',
+                    autoRemove: true
+                }
+            });
         }
     }
 };
@@ -122,7 +142,7 @@ export default {
           </header>
           <div
             v-if="messageText"
-            :class="'alert-body expandable-message ' + type"
+            class="alert-body"
           >
             <div class="expand-controls">
               <span>{{ subTitle }}</span>
@@ -142,6 +162,7 @@ export default {
             <transition name="message-fade">
               <div
                 v-show="type === 'warn' || messageExpanded"
+                ref="messageContent"
                 class="scrollable-message"
               >
                 <span v-if="type !== 'warn'">
@@ -159,9 +180,22 @@ export default {
                     message:
                   </span>
                 </span>
-                {{ messageText }}
+                <span class="message-block">
+                  {{ messageText }}
+                </span>
               </div>
             </transition>
+            <div class="copy-button-container">
+              <Button
+                v-show="messageExpanded"
+                :compact="true"
+                class="copy-button"
+                @click="copyText"
+              >
+                Copy Text
+                <CopyIcon />
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -172,9 +206,9 @@ export default {
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
-.fade-leave-active,
+.message-fade-enter-active,
 .fade-enter-active {
-  transition: opacity 0.2s linear;
+  transition: opacity 0.1s ease-out;
 }
 
 .fade-enter,
@@ -184,9 +218,9 @@ export default {
   opacity: 0;
 }
 
-.message-fade-enter-active,
+.fade-leave-active,
 .message-fade-leave-active {
-  transition: opacity 0.1s linear;
+  transition: opacity 0.2s ease-in -0.1s;
 }
 
 .message-fade-enter-active {
@@ -194,9 +228,13 @@ export default {
   transition-delay: 0.3s;
 }
 
-.slide-fade-enter-active,
+
 .slide-fade-leave-active {
-  transition: all 0.3s linear 0.1s;
+  transition: all 0.3s ease-in 0.1s;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out 0.1s;
 }
 
 .slide-fade-enter,
@@ -216,7 +254,6 @@ export default {
 
 section {
   font-size: 16px;
-  white-space: pre-wrap;
   z-index: 1;
   position: absolute;
   top: 0;
@@ -241,7 +278,11 @@ section {
     & header {
       position: relative;
       color: rgba(255, 255, 255);
-      padding: 15px 20px 10px 59px;
+      padding: 15px 20px 15px 59px;
+
+      & .label >>> span.label-text {
+        margin: 4px 0 0 0;
+      }
 
       & .icon {
         stroke-width: calc(32px / 24);
@@ -250,6 +291,7 @@ section {
         &.warn-icon {
           position: absolute;
           left: 20px;
+          top: 18px;
           width: 24px;
           height: 24px;
         }
@@ -257,9 +299,13 @@ section {
 
       & .close-button {
         position: absolute;
-        top: 6px;
+        top: 8px;
         right: 4px;
         z-index: 2;
+
+        & svg {
+          margin: 0;
+        }
       }
     }
 
@@ -272,18 +318,47 @@ section {
       box-sizing: content-box;
 
       & .scrollable-message {
-        padding: 0 20px;
-        height: calc(100% - 56px);
-        overflow-y: scroll;
+        padding: 0 0 0 20px;
+        white-space: pre-line;
+        overflow-x: hidden;
+        width: calc(100% - 10px);
+        height: calc(100% - 76px);
 
         & .info-header {
           font-weight: bold;
         }
+
+        & .message-block {
+          overflow-x: hidden;
+          width: 100%;
+          text-overflow: ellipsis;
+          position: relative;
+          display: inline-block;
+        }
       }
     }
 
-    &.error header {
-      background-color: var(--theme-color-error);
+    & .expand-controls {
+      padding: 15px 20px 5px 20px;
+
+      & .expand-text {
+        float: right;
+        margin-right: 26px;
+      }
+
+      & .expand-button {
+        padding: 5px;
+        margin: 6px;
+        top: 6px;
+        right: 4px;
+        z-index: 2;
+        position: absolute;
+        transition: transform 0.4s ease-in-out;
+
+        & svg {
+          margin: 0;
+        }
+      }
     }
 
     &.expanded {
@@ -295,50 +370,48 @@ section {
       }
 
       & .alert-body {
-        height: calc(100% - 56px);
+        height: calc(100% - 58px);
         max-height: unset;
         box-sizing: content-box;
       }
+
+      & .copy-button-container {
+        display: flex;
+
+        & .copy-button {
+          margin: auto;
+
+          & svg {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    &.error header {
+      background-color: var(--theme-color-error);
     }
 
     &.warn {
       &.expanded {
         display: flex;
         flex-direction: column;
-        height: fit-content;
-        min-height: fit-content;
+        height: fit-content; /* firefox does not support yet; cause warning to always be 75% height */
         max-height: 75%;
         overflow-y: hidden;
 
         & .alert-body {
           height: unset;
+          min-height: 87px;
 
           & .scrollable-message {
-            padding: 0 20px 10px 20px;
+            height: calc(100% - 46px);
           }
         }
       }
 
       & header {
         background-color: var(--theme-color-action-required);
-      }
-    }
-
-    & .expand-controls {
-      padding: 15px 20px 15px 20px;
-
-      & .expand-text {
-        float: right;
-        margin-right: 26px;
-      }
-
-      & .expand-button {
-        margin: 0;
-        top: 6px;
-        right: 4px;
-        z-index: 2;
-        position: absolute;
-        transition: transform 0.4s ease-in-out;
       }
     }
   }
