@@ -4,7 +4,7 @@ import iframeResizer from 'iframe-resizer/js/iframeResizer';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
-import resizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow.js';
+import iframeResizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow.js';
 
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
@@ -131,7 +131,7 @@ export default {
             // postMessage receiver
             let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
             // iframe resizer content window script
-            let iframeResizer = this.autoHeight ? `<script>${resizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
+            let iframeResizer = this.autoHeight ? `<script>${iframeResizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
 
             this.document.write(`<!doctype html>
                 <html lang="en-US">
@@ -196,7 +196,7 @@ export default {
             return scripts.join('');
         },
 
-        resizeIframe() {
+        initIFrameResize() {
             if (this.autoHeight) {
                 // apply a default tolerance of 5px to avoid unnecessary screen flicker
                 const defaultResizeTolerance = 5;
@@ -220,7 +220,7 @@ export default {
                     log: false,
                     checkOrigin: [window.origin],
                     resizeFrom: 'child',
-                    warningTimeout: 0,
+                    warningTimeout: 0, // suppress warning
 
                     autoResize: conf.autoResize,
                     scrolling: conf.scrolling,
@@ -383,7 +383,7 @@ export default {
       :id="iframeId"
       ref="iframe"
       :class="classes"
-      @load="resizeIframe"
+      @load="initIFrameResize"
     />
     <ErrorMessage
       v-if="errorMessage"
