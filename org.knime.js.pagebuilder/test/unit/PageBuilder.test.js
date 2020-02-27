@@ -26,6 +26,7 @@ describe('PageBuilder.vue', () => {
 
     it('initializes the pagebuilder store', () => {
         expect(store.state.pagebuilder).toBeDefined();
+        expect(store.state['pagebuilder/interactivity']).toBeDefined();
     });
 
     it('renders page component', () => {

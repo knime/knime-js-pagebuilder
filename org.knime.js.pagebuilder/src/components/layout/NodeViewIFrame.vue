@@ -12,6 +12,8 @@ const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
 const setValidationErrorTimeout = 1000; // ms
 
+// TODO WEBP-227 split into multiple files
+
 /**
  * A single node view iframe
  */
@@ -82,6 +84,8 @@ export default {
         },
         innerStyle() {
             // prevent margin collapsation of body’s children, which causes incorrect height detection
+            /* FIXME: This breaks some views and prohibits stretching the full width for others, removing
+            this next line causes issues as well, see WEBP-219 */
             let style = 'body { display: inline-block; }';
             if (this.scrolling) {
                 if (this.pollHeight) {
@@ -121,6 +125,18 @@ export default {
             nodeId: this.nodeId,
             errorSetter: this.setValidationError
         });
+
+        // create global API which is accessed by knimeService running inside the iframe.
+        // This global API should only be used/extended for cases where window.postMessage can't be used
+        // due to the need of an immediate return value.
+        let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
+        if (!window.KnimePageBuilderAPI) {
+            window.KnimePageBuilderAPI = {
+                interactivityGetPublishedData(id) {
+                    return getPublishedDataFunc(id);
+                }
+            };
+        }
     },
 
     beforeDestroy() {
@@ -131,6 +147,9 @@ export default {
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
+
+        // remove global API
+        delete window.KnimePageBuilderAPI;
     },
 
     methods: {
@@ -225,6 +244,8 @@ export default {
             scripts.push(`<script>
                 if (typeof knimeService !== 'undefined') {
                     knimeService.resourceBaseUrl = '${resourceBaseUrl}';
+                    knimeService.pageBuilderPresent = true;
+                    knimeService.nodeId = '${this.nodeId}';
                 }
             <\/script>`); // eslint-disable-line no-useless-escape
 
@@ -287,6 +308,8 @@ export default {
                     ...data,
                     type: data.level === 'error' ? 'error' : 'warn'
                 };
+            } else if (data.type.startsWith('interactivity')) {
+                this.handleInteractivity(event);
             }
         },
 
@@ -367,13 +390,61 @@ export default {
             }
             // delete the alert data to close the alert
             this.alert = null;
+        },
+        
+        handleInteractivity(event) {
+            let interactivityType = event.data.type;
+            switch (interactivityType) {
+            case 'interactivitySubscribe':
+                consola.trace(`subscribe to event`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/subscribe', {
+                    id: event.data.id,
+                    callback: this.interactivityInformIframe,
+                    elementFilter: event.data.elementFilter
+                });
+                break;
+            case 'interactivityUnsubscribe':
+                consola.trace(`unsubscribe from event`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/unsubscribe', {
+                    id: event.data.id,
+                    callback: this.interactivityInformIframe
+                });
+                break;
+            case 'interactivityPublish':
+                consola.trace(`publish event called`, this.nodeId, event.data);
+                this.$store.dispatch('pagebuilder/interactivity/publish', {
+                    id: event.data.id,
+                    data: event.data.payload,
+                    skipCallback: this.interactivityInformIframe
+                });
+                break;
+            case 'interactivityRegisterSelectionTranslator':
+                consola.trace(`interactivityRegisterSelectionTranslator`);
+                this.$store.dispatch('pagebuilder/interactivity/registerSelectionTranslator', {
+                    translatorId: event.data.id,
+                    translator: event.data.translator
+                });
+                break;
+            default:
+                break;
+            }
+        },
+
+        interactivityInformIframe(id, payload) {
+            let data = {
+                nodeId: this.nodeId,
+                type: 'interactivityEvent',
+                id,
+                payload
+            };
+            this.document.defaultView.postMessage(data, window.origin);
         }
     }
 };
 </script>
 
 <template>
-  <div>
+  <div class="frame-container">
     <iframe
       ref="iframe"
       :class="{error: !isValid}"
@@ -396,6 +467,11 @@ export default {
 
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
+
+div.frame-container {
+  width: 100%;
+  height: 100%;
+}
 
 iframe {
   width: 100%;

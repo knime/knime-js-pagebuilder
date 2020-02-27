@@ -15,14 +15,31 @@ jest.mock('raw-loader!./injectedScripts/messageListener.js', () => '"messageList
 
 describe('NodeViewIframe.vue', () => {
 
-    let store, localVue, context;
+    let interactivityConfig, store, localVue, context, mockGetPublishedData;
 
     beforeAll(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
 
         storeConfig.actions.setWebNodeLoading = jest.fn();
-        store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        mockGetPublishedData = jest.fn();
+        interactivityConfig = {
+            namespaced: true,
+            actions: {
+                subscribe: jest.fn(),
+                unsubscribe: jest.fn(),
+                publish: jest.fn(),
+                registerSelectionTranslator: jest.fn(),
+                clear: jest.fn()
+            },
+            getters: {
+                getPublishedData: jest.fn().mockReturnValue(mockGetPublishedData)
+            }
+        };
+        store = new Vuex.Store({ modules: {
+            pagebuilder: storeConfig,
+            'pagebuilder/interactivity': interactivityConfig
+        } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
             wizardPageContent: {
@@ -68,7 +85,8 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: true
             }
         });
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).toContain('html { overflow: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
+            .toContain('html { overflow: hidden; }');
 
         wrapper = shallowMount(NodeViewIFrame, {
             ...context,
@@ -78,7 +96,8 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: true
             }
         });
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).toContain('html { overflow-y: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
+            .toContain('html { overflow-y: hidden; }');
 
         wrapper = shallowMount(NodeViewIFrame, {
             ...context,
@@ -88,8 +107,10 @@ describe('NodeViewIframe.vue', () => {
                 pollHeight: false
             }
         });
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).not.toContain('html { overflow: hidden; }');
-        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML).not.toContain('html { overflow-y: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
+            .not.toContain('html { overflow: hidden; }');
+        expect(wrapper.vm.$refs.iframe.contentDocument.documentElement.innerHTML)
+            .not.toContain('html { overflow-y: hidden; }');
 
     });
 
@@ -750,5 +771,87 @@ describe('NodeViewIframe.vue', () => {
                 expect(wrapper.vm.alert).toStrictEqual({ nodeId, type: 'warn', message: 'test' });
             });
         });
+    });
+
+    describe('Interactivity', () => {
+        let wrapper;
+
+        beforeEach(() => {
+            wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    nodeId: '0.0.7'
+                }
+            });
+        });
+
+        it('registers & unregisters global PageBuilder API', () => {
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
+            wrapper.destroy();
+            expect(window.KnimePageBuilderAPI).not.toBeDefined();
+        });
+
+        it('getPublishedData calls interactivity store', () => {
+            let id = 'selection-12345';
+            window.KnimePageBuilderAPI.interactivityGetPublishedData(id);
+            expect(interactivityConfig.getters.getPublishedData).toHaveBeenCalled();
+            expect(mockGetPublishedData).toHaveBeenCalledWith(id);
+        });
+
+        it('subscribe calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'interactivitySubscribe', id: '123' }
+            });
+            expect(interactivityConfig.actions.subscribe).toHaveBeenCalled();
+        });
+
+        it('unsubscribe calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'interactivityUnsubscribe', id: '123' }
+            });
+            expect(interactivityConfig.actions.unsubscribe).toHaveBeenCalled();
+        });
+
+        it('publish calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0.0.7', type: 'interactivityPublish', id: '123', payload: 'dummy' }
+            });
+            expect(interactivityConfig.actions.publish).toHaveBeenCalled();
+        });
+
+        it('registerSelectionTranslator calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({ origin: window.origin,
+                data: {
+                    nodeId: '0.0.7',
+                    type: 'interactivityRegisterSelectionTranslator',
+                    id: '123',
+                    translator: 'dummy'
+                } });
+            expect(interactivityConfig.actions.registerSelectionTranslator).toHaveBeenCalled();
+        });
+
+        it('informs iframe of interactivity events', () => {
+            window.origin = window.location.origin;
+            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+            let id = '123';
+            let payload = 'dummyData';
+            wrapper.vm.interactivityInformIframe(id, payload);
+            expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                nodeId: '0.0.7',
+                type: 'interactivityEvent',
+                id,
+                payload
+            }, window.origin);
+        });
+        
     });
 });
