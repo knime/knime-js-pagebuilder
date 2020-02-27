@@ -8,6 +8,7 @@ import * as storeConfig from '@/../store/pagebuilder';
 // extra mock to simulate a loaded view script
 jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
   foo = ['%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
+jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
 
@@ -181,6 +182,43 @@ describe('NodeViewIframe.vue', () => {
             lastCall = calls[calls.length - 1];
             expect(lastCall[1]).toMatchObject({ nodeId: '0:0:7', loading: false });
         });
+    });
+
+    it('passes sizing config to iframe-resizer', () => {
+        let iframeResizerMock = require('iframe-resizer/js/iframeResizer');
+        let viewConfig = {
+            nodeID: '0:0:7',
+            resizeMethod: 'viewLowestElement',
+            autoResize: true,
+            scrolling: false,
+            sizeHeight: true,
+            resizeTolerance: 10,
+            minWidth: 10,
+            maxWidth: 100,
+            minHeight: 5,
+            maxHeight: 50
+        };
+        shallowMount(NodeViewIFrame, {
+            ...context,
+            attachToDocument: true,
+            propsData: {
+                viewConfig,
+                nodeConfig: {
+                    namespace: 'knimespace'
+                }
+            }
+        });
+        expect(iframeResizerMock).toHaveBeenCalledWith(expect.objectContaining({
+            autoResize: viewConfig.autoResize,
+            scrolling: viewConfig.scrolling,
+            heightCalculationMethod: 'lowestElement',
+            sizeHeight: viewConfig.sizeHeight,
+            tolerance: viewConfig.resizeTolerance,
+            minWidth: viewConfig.minWidth,
+            maxWidth: viewConfig.maxWidth,
+            minHeight: viewConfig.minHeight,
+            maxHeight: viewConfig.maxHeight
+        }), expect.anything());
     });
 
     describe('view value retrieval', () => {

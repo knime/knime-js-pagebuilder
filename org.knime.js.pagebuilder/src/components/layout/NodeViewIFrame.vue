@@ -45,6 +45,10 @@ export default {
         nodeId() {
             return this.viewConfig && this.viewConfig.nodeID;
         },
+        iframeId() {
+            // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
+            return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
+        },
         webNode() {
             let page = this.$store.state.pagebuilder.page;
             if (page && page.webNodes) {
@@ -222,7 +226,6 @@ export default {
                     scrolling: conf.scrolling,
                     heightCalculationMethod: method,
                     sizeHeight: conf.sizeHeight,
-                    sizeWidth: conf.sizeWidth,
                     tolerance: conf.resizeTolerance || defaultResizeTolerance
                 };
                 if (conf.minWidth) {
@@ -237,10 +240,7 @@ export default {
                 if (conf.maxHeight) {
                     resizeSettings.maxHeight = conf.maxHeight;
                 }
-                if (conf.resizeInterval) {
-                    resizeSettings.interval = conf.resizeInterval;
-                }
-                                
+               
                 iframeResizer(resizeSettings, this.$refs.iframe);
             }
         },
@@ -380,6 +380,7 @@ export default {
 <template>
   <div class="frame-container">
     <iframe
+      :id="iframeId"
       ref="iframe"
       :class="classes"
       @load="resizeIframe"
@@ -402,8 +403,7 @@ div.frame-container {
 iframe {
   background-color: white;
   border: none;
-  min-width: 100%;
-  width: 1px;
+  width: 100%;
 
   &.full-height {
     height: 100%;
