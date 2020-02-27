@@ -401,6 +401,7 @@ div.frame-container {
 }
 
 iframe {
+  display: block;
   background-color: white;
   border: none;
   width: 100%;
