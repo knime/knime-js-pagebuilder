@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run opensourcecredits -- --no-overwrite && vue-cli-service serve",
-    "prebuild": "npm run opensourcecredits && vue-cli-service build --target lib --formats umd-min --mode production --name pagebuilder-credits src/components/PageBuilderCredits.vue",
+    "prebuild": "npm run opensourcecredits && vue-cli-service build --target lib --formats umd-min --mode production --name knime-pagebuilder-credits src/components/PageBuilderCredits.vue",
     "build": "npm run prebuild && vue-cli-service build --no-clean --target lib --formats umd-min --mode production src/components/PageBuilder.vue",
     "dev-inte": "concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist/ http-server\" \"npm run build -- --watch\"",
     "lint": "npm run lint:js && npm run lint:css",
