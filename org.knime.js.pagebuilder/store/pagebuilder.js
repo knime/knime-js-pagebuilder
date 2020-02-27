@@ -96,9 +96,22 @@ export const mutations = {
 };
 
 export const actions = {
-    setPage({ commit }, { page }) {
+    setPage({ commit, dispatch }, { page }) {
         consola.trace('PageBuilder: Set page via action: ', page);
         commit('setPage', page);
+
+        // clear any potential previous interactivity states
+        dispatch('interactivity/clear');
+
+        // register all defined selection translators from the page configuration
+        if (page && page.wizardPageContent) {
+            let pageConfig = page.wizardPageContent.webNodePageConfiguration;
+            if (pageConfig && pageConfig.selectionTranslators && pageConfig.selectionTranslators.length > 0) {
+                pageConfig.selectionTranslators.forEach((translator, i) => {
+                    dispatch('interactivity/registerSelectionTranslator', { translatorId: i, translator });
+                });
+            }
+        }
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {
