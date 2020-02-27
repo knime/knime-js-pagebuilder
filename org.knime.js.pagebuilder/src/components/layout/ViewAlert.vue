@@ -166,19 +166,9 @@ export default {
                 class="scrollable-message"
               >
                 <span v-if="type !== 'warn'">
-                  <span class="info-header">
-                    nodeID:
-                  </span>
-                  {{ nodeId }}
-                  <br>
-                  <span class="info-header">
-                    node annotation:
-                  </span>
-                  {{ nodeInfo.nodeAnnotation || 'N/A' }}
-                  <br>
-                  <span class="info-header">
-                    message:
-                  </span>
+                  <span class="info-header">Node:</span>
+                  {{ `${nodeId} ${nodeInfo.nodeAnnotation ? '(' + nodeInfo.nodeAnnotation + ')' : ''}\n` }}
+                  <span class="info-header">Message:</span>
                 </span>
                 <span class="message-block">
                   {{ messageText }}
@@ -192,8 +182,8 @@ export default {
                 class="copy-button"
                 @click="copyText"
               >
-                Copy Text
                 <CopyIcon />
+                Copy Text
               </Button>
             </div>
           </div>
@@ -265,7 +255,7 @@ section {
     min-width: var(--grid-min-width);
     max-height: 110px;
     height: unset;
-    transition: max-height 0.3s linear;
+    transition: max-height 0.3s ease-in;
     margin: auto;
     position: absolute;
     top: 0;
@@ -353,7 +343,7 @@ section {
         right: 4px;
         z-index: 2;
         position: absolute;
-        transition: transform 0.4s ease-in-out;
+        transition: transform 0.3s ease-in-out;
 
         & svg {
           margin: 0;
@@ -363,7 +353,7 @@ section {
 
     &.expanded {
       max-height: 75%;
-      transition: max-height 0.3s linear;
+      transition: max-height 0.3s ease-out;
 
       & .expand-button {
         transform: scaleY(-1);
