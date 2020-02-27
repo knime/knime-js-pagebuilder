@@ -4,8 +4,9 @@ window.onerror = (function () {
         var loadingErrRegExp = new this.RegExp(/load timeout/gmi);
         var postErrorResponse = function (errMsg) {
             var resp = {
-                isValid: false,
                 nodeId: nodeId,
+                type: 'error',
+                isValid: false,
                 error: errMsg
             };
             parent.postMessage(resp, window.origin);

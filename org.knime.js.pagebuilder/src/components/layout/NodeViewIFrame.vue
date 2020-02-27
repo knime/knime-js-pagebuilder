@@ -272,10 +272,11 @@ export default {
 
         messageFromIframe(event) {
             const data = event.data;
-            if (event.origin !== window.origin || !data || data.nodeId !== this.nodeId) {
+            if (event.origin !== window.origin || !data || !data.type || data.nodeId !== this.nodeId) {
                 return;
             }
             if (data.error) {
+                // errors can occur on any event type, further handling of the event might still be necessary
                 this.errorMessage = data.error;
                 this.isValid = false;
             }
@@ -298,11 +299,11 @@ export default {
                 }
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
             } else if (data.type === 'validate') {
-                this.validateCallback({ ...data });
+                this.validateCallback(data);
             } else if (data.type === 'getValue') {
-                this.getValueCallback({ ...data });
+                this.getValueCallback(data);
             } else if (data.type === 'setValidationError') {
-                this.setValidationErrorCallback({ ...data });
+                this.setValidationErrorCallback(data);
             } else if (data.type === 'alert') {
                 this.alert = {
                     ...data,

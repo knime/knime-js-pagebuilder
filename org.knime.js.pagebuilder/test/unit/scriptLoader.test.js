@@ -41,7 +41,11 @@ describe('script loader', () => {
         window.knimeLoader(true);
         expect(() => window.knimeLoader(false)).toThrowError(new Error(message));
 
-        expect(window.postMessage).toHaveBeenCalledWith({ nodeId: '%NODEID%', error: message }, '%ORIGIN%');
+        expect(window.postMessage).toHaveBeenCalledWith({
+            nodeId: '%NODEID%',
+            error: message,
+            type: 'load'
+        }, '%ORIGIN%');
     });
 
     it('handles successful load with missing view', () => {
@@ -52,7 +56,11 @@ describe('script loader', () => {
         expect(() => window.knimeLoader(true))
             .toThrowError(new ReferenceError(message));
 
-        expect(window.postMessage).toHaveBeenCalledWith({ nodeId: '%NODEID%', error: message }, '%ORIGIN%');
+        expect(window.postMessage).toHaveBeenCalledWith({
+            nodeId: '%NODEID%',
+            error: message,
+            type: 'load'
+        }, '%ORIGIN%');
     });
 
     it('handles empty script list', () => {

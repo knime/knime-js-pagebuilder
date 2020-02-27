@@ -41,7 +41,8 @@ describe('load error handler', () => {
         expect(window.postMessage).toHaveBeenCalledWith({
             isValid: false,
             nodeId: '%NODEID%',
-            error: 'Required web resources timed out and could not be loaded.'
+            error: 'Required web resources timed out and could not be loaded.',
+            type: 'error'
         }, window.undef);
     });
 });
