@@ -285,20 +285,20 @@ describe('NodeViewIframe.vue', () => {
         });
 
         expect(addValidator).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, validator: wrapper.vm.validate }, wrapper.undef);
+            { nodeId, validator: wrapper.vm.validate }, undefined); // eslint-disable-line no-undefined
         expect(addValueGetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, valueGetter: wrapper.vm.getValue }, wrapper.undef);
+            { nodeId, valueGetter: wrapper.vm.getValue }, undefined); // eslint-disable-line no-undefined
         expect(addValidationErrorSetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, errorSetter: wrapper.vm.setValidationError }, wrapper.undef);
+            { nodeId, errorSetter: wrapper.vm.setValidationError }, undefined); // eslint-disable-line no-undefined
 
         wrapper.destroy();
 
         expect(removeValidator).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, wrapper.undef);
+            { nodeId }, undefined); // eslint-disable-line no-undefined
         expect(removeValueGetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, wrapper.undef);
+            { nodeId }, undefined); // eslint-disable-line no-undefined
         expect(removeValidationErrorSetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, wrapper.undef);
+            { nodeId }, undefined); // eslint-disable-line no-undefined
     });
 
     describe('view value retrieval', () => {

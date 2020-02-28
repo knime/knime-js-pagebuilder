@@ -38,7 +38,7 @@ describe('view alert handler', () => {
             message,
             type: 'alert',
             level: 'error'
-        }, window.undef);
+        }, undefined); // eslint-disable-line no-undefined
     });
 
     it('handles in view warnings and info alerts', () => {
@@ -54,6 +54,6 @@ describe('view alert handler', () => {
             message,
             type: 'alert',
             level: 'info'
-        }, window.undef);
+        }, undefined); // eslint-disable-line no-undefined
     });
 });
