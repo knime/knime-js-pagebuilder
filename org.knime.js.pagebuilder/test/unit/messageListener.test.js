@@ -42,21 +42,70 @@ describe('message listener', () => {
         delete window['com.example'];
     });
 
-    it('handles the "getValue" message', () => {
+    it('handles errors in the "init" method', (done) => {
         let data = {
-            type: 'getValue',
+            type: 'init',
             nodeId,
             namespace: 'com.example',
-            getViewValueMethodName: 'value'
+            initMethodName: 'init',
+            viewValue: {},
+            viewRepresentation: {}
         };
+        let lastCalledData;
 
-        let spy = jest.fn();
-        window['com.example'] = { value: spy };
+        let errorSpy = jest.fn(() => { throw new Error('test'); });
+        let errorListener = jest.fn((event) => {
+            lastCalledData = event.data;
+        });
+        parent.addEventListener('message', errorListener);
+        window['com.example'] = { init: errorSpy };
 
         postMessage(data, window.origin);
 
-        expect(spy).toHaveBeenCalled();
-        delete window['com.example'];
+        expect(errorSpy).toHaveBeenCalledWith({}, {});
+        setTimeout(() => {
+            expect(lastCalledData).toBeDefined();
+            expect(lastCalledData.type).toBe(data.type);
+            expect(lastCalledData.nodeId).toBe(data.nodeId);
+            expect(lastCalledData.error).toBe('View initialization failed: Error: test');
+            expect(lastCalledData.isValid).toBe(false);
+            delete window['com.example'];
+            parent.removeEventListener('message', errorListener);
+            done();
+        }, 10); // eslint-disable-line no-magic-numbers
+    });
+
+    it('handles invalid "init" method', (done) => {
+        let data = {
+            type: 'init',
+            nodeId,
+            namespace: 'com.example',
+            initMethodName: 'DNE',
+            viewValue: {},
+            viewRepresentation: {}
+        };
+        let lastCalledData;
+
+        let errorSpy = jest.fn();
+        let errorListener = jest.fn((event) => {
+            lastCalledData = event.data;
+        });
+        parent.addEventListener('message', errorListener);
+        window['com.example'] = { init: errorSpy };
+
+        postMessage(data, window.origin);
+
+        expect(errorSpy).not.toHaveBeenCalled();
+        setTimeout(() => {
+            expect(lastCalledData).toBeDefined();
+            expect(lastCalledData.type).toBe(data.type);
+            expect(lastCalledData.nodeId).toBe(data.nodeId);
+            expect(lastCalledData.error).toBe('Init method not present in view.');
+            expect(lastCalledData.isValid).toBe(false);
+            delete window['com.example'];
+            parent.removeEventListener('message', errorListener);
+            done();
+        }, 10); // eslint-disable-line no-magic-numbers
     });
 
     it('retrieves a view value', (done) => {
@@ -147,6 +196,88 @@ describe('message listener', () => {
             expect(lastCalledData.nodeId).toBe(data.nodeId);
             expect(lastCalledData.error).toBeDefined();
             expect(lastCalledData.value).not.toBeDefined();
+            delete window['com.example'];
+            parent.removeEventListener('message', errorListener);
+            done();
+        }, 10); // eslint-disable-line no-magic-numbers
+    });
+
+    it('handles the "setValidationError" message', () => {
+        let data = {
+            type: 'setValidationError',
+            nodeId,
+            namespace: 'com.example',
+            setValidationErrorMethodName: 'setValidationError',
+            errorMessage: 'test'
+        };
+
+        let spy = jest.fn();
+        window['com.example'] = { setValidationError: spy };
+
+        postMessage(data, window.origin);
+
+        expect(spy).toHaveBeenCalledWith('test');
+        delete window['com.example'];
+    });
+
+    it('handles errors in the "setValidationError" method', (done) => {
+        let data = {
+            type: 'setValidationError',
+            nodeId,
+            namespace: 'com.example',
+            setValidationErrorMethodName: 'setValidationError',
+            errorMessage: 'test'
+        };
+        let lastCalledData;
+
+        let errorSpy = jest.fn(() => { throw new Error('test'); });
+        let errorListener = jest.fn((event) => {
+            lastCalledData = event.data;
+        });
+        parent.addEventListener('message', errorListener);
+        window['com.example'] = { setValidationError: errorSpy };
+
+        postMessage(data, window.origin);
+
+        expect(errorSpy).toHaveBeenCalledWith('test');
+        setTimeout(() => {
+            expect(lastCalledData).toBeDefined();
+            expect(lastCalledData.type).toBe(data.type);
+            expect(lastCalledData.nodeId).toBe(data.nodeId);
+            expect(lastCalledData.error).toBe('View error message could not be set: Error: test');
+            expect(lastCalledData.isValid).toBe(false);
+            delete window['com.example'];
+            parent.removeEventListener('message', errorListener);
+            done();
+        }, 10); // eslint-disable-line no-magic-numbers
+    });
+
+    it('handles invalid "setValidationError" method', (done) => {
+        let data = {
+            type: 'setValidationError',
+            nodeId,
+            namespace: 'com.example',
+            setValidationErrorMethodName: 'DNE',
+            errorMessage: 'test'
+        };
+        let lastCalledData;
+
+        let errorSpy = jest.fn();
+        let errorListener = jest.fn((event) => {
+            lastCalledData = event.data;
+        });
+        parent.addEventListener('message', errorListener);
+        window['com.example'] = { setValidationError: errorSpy };
+
+        postMessage(data, window.origin);
+
+        expect(errorSpy).not.toHaveBeenCalled();
+        setTimeout(() => {
+            expect(lastCalledData).toBeDefined();
+            expect(lastCalledData.type).toBe(data.type);
+            expect(lastCalledData.nodeId).toBe(data.nodeId);
+            expect(lastCalledData.error).toBe('Set error message method not present in view.');
+            expect(lastCalledData.isValid).toBe(false);
             delete window['com.example'];
             parent.removeEventListener('message', errorListener);
             done();

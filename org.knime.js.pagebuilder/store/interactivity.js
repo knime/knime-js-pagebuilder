@@ -7,6 +7,7 @@ export const namespaced = true;
  * That means this store is more a pubsub service wrapped in a store to provide a streamlined API.
  */
 
+// adding and initializing a new id (pub/sub topic or channel id) to the store
 const addInteractivityId = (state, { id, subscriberOnly }) => {
     if (!state[id]) {
         state[id] = { // we don't need reactivity, so no need to use Vue.set()
@@ -21,6 +22,11 @@ const addInteractivityId = (state, { id, subscriberOnly }) => {
     }
 };
 
+/*
+ * Some views can only be notified about parts (elements) of an event, these need to be extracted prior to sending.
+ * Also it is possible that only parts of an event payload have changed, that a particular view doesn't care about,
+ * in this case, the view does not need to be notified about changes at all.
+*/
 const getRelevantElements = (state, { id, filterIds, changedIds }) => {
     let data;
     if (state[id]) {
@@ -38,6 +44,59 @@ const getRelevantElements = (state, { id, filterIds, changedIds }) => {
     let relevantElements = data.elements.filter((value) => filterIds.includes(value.id));
     return { selectionMethod: data.selectionMethod, elements: relevantElements };
 };
+
+// notifying subscribers with respect to only inform about changed and relevant elements of published data
+const notifySubscribers = (state, { id, data, skipCallback, changedIds }) => {
+    if (state[id]) {
+        state[id].subscribers.forEach((subscriber) => {
+            if (!skipCallback || subscriber.callback !== skipCallback) {
+                let payload = data;
+                if (changedIds) {
+                    payload = getRelevantElements(state, {
+                        id,
+                        filterIds: subscriber.filterIds,
+                        changedIds
+                    });
+                }
+                if (payload) {
+                    subscriber.callback(id, payload);
+                }
+            }
+        });
+    }
+};
+
+/*
+ * Returns an array of element ids, which contain changes compared to the current published data belonging to the same
+ * pub/sub channel. Returns an empty array for no changes.
+ */
+const determineChangedIds = (state, { id, data }) => {
+    let changedIds = [];
+    
+    data.elements.forEach((element) => {
+        if (typeof element.id !== 'undefined') {
+            if (state[id] && state[id].data) {
+                // find the existing element with the same id, if it exists
+                let matched = state[id].data.elements.filter(existingElement => element.id === existingElement.id);
+                // if element could not be found or the elements differ, add current id to list of changed ids
+                if (!matched.length || JSON.stringify(element) !== JSON.stringify(matched[0])) {
+                    changedIds.push(element.id);
+                }
+            } else {
+                // nothing published yet
+                changedIds.push(element.id);
+            }
+        }
+    });
+    
+    return changedIds;
+};
+
+/*
+ * The next section is for changeset handling in interactivity events. Changesets only apply to selection events.
+ * A changeset basically contains of an array of added rows and an array for removed rows.
+ * Changesets are used to enhance performance and limit the payload size for selection events.
+*/
 
 const removeRows = (state, { id, rowsToRemove }) => {
     let removedRows = [];
@@ -179,48 +238,24 @@ const processChangeset = (state, { id, data }) => {
         partialRemovedRows: allRemovedPartial
     });
 };
+/*
+ * END selection changeset handling section
+ */
 
-const determineChangedIds = (state, { id, data }) => {
-    let changedIds = [];
-    
-    data.elements.forEach((element) => {
-        if (typeof element.id !== 'undefined') {
-            if (state[id] && state[id].data) {
-                // find the existing element with the same id, if it exists
-                let matched = state[id].data.elements.filter(existingElement => element.id === existingElement.id);
-                // if element could not be found or the elements differ, add current id to list of changed ids
-                if (!matched.length || JSON.stringify(element) !== JSON.stringify(matched[0])) {
-                    changedIds.push(element.id);
-                }
-            } else {
-                // nothing published yet
-                changedIds.push(element.id);
-            }
-        }
-    });
-    
-    return changedIds;
-};
-
-const notifySubscribers = (state, { id, data, skipCallback, changedIds }) => {
-    if (state[id]) {
-        state[id].subscribers.forEach((subscriber) => {
-            if (!skipCallback || subscriber.callback !== skipCallback) {
-                let payload = data;
-                if (changedIds) {
-                    payload = getRelevantElements(state, {
-                        id,
-                        filterIds: subscriber.filterIds,
-                        changedIds
-                    });
-                }
-                if (payload) {
-                    subscriber.callback(id, payload);
-                }
-            }
-        });
-    }
-};
+/*
+ * The next section of methods is concerned with selection translator handling and selection mapping.
+ *
+ * Selection translators always contain one source id and 1 to n target ids. To facilitate the mapping a subscriber
+ * is added to all source and target ids respectively and events can flow in both directions.
+ * There is two types of selection translators, a basic one which only forwards selection events from one
+ * channel to another one (1:1 row mapping) and selection translators which contain a mapping.
+ *
+ * A mapping consists of a number of (source) row ids which are each mapped to 1 to n (target) row ids. In the case of
+ * a mapping with more than 1 target ids it is possible (if there is an event on a target), that only part of a source
+ * row id are selected or unselected. For this case 'partialAdded' and 'partialRemoved' arrays are added to the
+ * resulting changeset. There can't be partial selection on a target, unless the target is itself connected as a source
+ * of another selection translator mapping.
+ */
 
 const concatenateRowsFromDataElement = function (dataElement) {
     let rows = [];
@@ -234,6 +269,7 @@ const concatenateRowsFromDataElement = function (dataElement) {
     return rows;
 };
 
+// creating a mapping for a changeset for an event that flows source to target
 const mapSelectionEventSource = function (changeSet, { addedRows, removedRows, mapping, curElementTarget }) {
     let curRowsTarget = concatenateRowsFromDataElement(curElementTarget);
     // determine mapped added rows
@@ -255,6 +291,7 @@ const mapSelectionEventSource = function (changeSet, { addedRows, removedRows, m
     });
 };
 
+// creating a mapping for a changeset for an event that flows target to source, which can lead to partial selection
 const mapSelectionEventTarget = function (changeSet,
     { mapping, addedRows, removedRows, curElementSource, curElementTarget }) {
     let curRowsSource = concatenateRowsFromDataElement(curElementSource);
@@ -290,6 +327,7 @@ const mapSelectionEventTarget = function (changeSet,
     changeSet.partialRemoved = curPartialRowsSource.filter((row) => !mappedPartial.includes(row));
 };
 
+// create a mapping for a selection event with a changeSet
 const mapSelectionEvent = function (data, { mapping, sourceToTarget, curElementSource, curElementTarget }) {
     if (!data || !data.changeSet) {
         throw new Error('Selection event could not be mapped because no change set was present.');
@@ -347,6 +385,10 @@ const mapSelectionEvent = function (data, { mapping, sourceToTarget, curElementS
     return mappedData;
 };
 
+/*
+ * Generic callback method which is used to subscribe a selection translator. Determines a mapped changeset and
+ * publishes those changes to the other side of the translator.
+ */
 const handleSelectionTranslatorEvent = function ({ dispatch, getters },
     { translatorId, data, translator, targetId, sourceToTarget, skipCallback }) {
     let mappedData = data;
@@ -364,6 +406,7 @@ const handleSelectionTranslatorEvent = function ({ dispatch, getters },
     dispatch('publish', { id, data: mappedData, skipCallback });
 };
 
+// Callback method for the source side of a selection translator, forwards selection events to all targets
 const subscribeSelectionSourceTranslator = function ({ dispatch, getters }, { translatorId, translator }) {
     let translatorCallback = (id, data) => {
         if (!data || data.mappedEvent === translatorId) {
@@ -383,6 +426,7 @@ const subscribeSelectionSourceTranslator = function ({ dispatch, getters }, { tr
     dispatch('subscribe', { id: `selection-${translator.sourceID}`, callback: translatorCallback });
 };
 
+// Callback method for one target of a selection translator. Forwards selection events to the source.
 const subscribeSelectionTargetTranslator = function ({ dispatch, getters }, { translator, translatorId, handlerId }) {
     let translatorCallback = (id, data) => {
         if (!data || data.mappedEvent === translatorId) {
@@ -399,8 +443,13 @@ const subscribeSelectionTargetTranslator = function ({ dispatch, getters }, { tr
     };
     dispatch('subscribe', { id: `selection-${handlerId}`, callback: translatorCallback });
 };
+/*
+ * END selection translation handling section
+ */
 
-
+/*
+ * Following is the Vuex store (and interactivity interface) exports. state, mutations, actions and getters
+ */
 export const state = () => ({
     // filled at runtime by mutations
 });

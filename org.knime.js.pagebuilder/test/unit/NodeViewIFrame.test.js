@@ -6,12 +6,15 @@ import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
 import * as storeConfig from '@/../store/pagebuilder';
 
 // extra mock to simulate a loaded view script
+jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
+    foo = ['%NODEID%'];`, { virtual: true });
+jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertHandler.js mock";
+    foo = ['%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
-  foo = ['%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
+    foo = ['%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-
     let interactivityConfig, store, localVue, context, mockGetPublishedData;
 
     beforeAll(() => {
@@ -96,6 +99,8 @@ describe('NodeViewIframe.vue', () => {
             let html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('messageListener.js mock');
             expect(html).toMatch('scriptLoader.js mock');
+            expect(html).toMatch('loadErrorHandler.js mock');
+            expect(html).toMatch('viewAlertHandler.js mock');
             expect(html).toMatch(`["${window.origin}", "knimespace", "0:0:7", 2]`);
             expect(html).toMatch('<script src="http://baseurl.test.example/foo/bar.js" ' +
                 'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
@@ -219,6 +224,81 @@ describe('NodeViewIframe.vue', () => {
             minHeight: viewConfig.minHeight,
             maxHeight: viewConfig.maxHeight
         }), expect.anything());
+    });
+
+    it('registers/de-registers methods with store', () => {
+        let addValidator, addValueGetter, addValidationErrorSetter,
+            removeValidator, removeValueGetter, removeValidationErrorSetter,
+            methodsStore, wrapper;
+
+        addValidator = jest.fn();
+        addValueGetter = jest.fn();
+        addValidationErrorSetter = jest.fn();
+        removeValidator = jest.fn();
+        removeValueGetter = jest.fn();
+        removeValidationErrorSetter = jest.fn();
+
+        methodsStore = new Vuex.Store({ modules: {
+            pagebuilder: {
+                namespaced: true,
+                ...storeConfig,
+                actions: {
+                    ...storeConfig.actions,
+                    setWebNodeLoading: jest.fn(),
+                    addValidator,
+                    addValueGetter,
+                    addValidationErrorSetter,
+                    removeValidator,
+                    removeValueGetter,
+                    removeValidationErrorSetter
+                }
+            }
+        } });
+        methodsStore.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
+        methodsStore.commit('pagebuilder/setPage', {
+            wizardPageContent: {
+                webNodes: {
+                    '0:0:7': {
+                        namespace: 'foo',
+                        javascriptLibraries: [],
+                        stylesheets: []
+                    },
+                    '0:0:9': {
+                        namespace: 'bar',
+                        javascriptLibraries: [],
+                        stylesheets: []
+                    }
+                }
+            }
+        });
+
+        let nodeId = '0:0:7';
+
+        wrapper = shallowMount(NodeViewIFrame, {
+            store: methodsStore,
+            localVue,
+            attachToDocument: true,
+            propsData: {
+                viewConfig: { nodeID: nodeId },
+                nodeConfig: {}
+            }
+        });
+
+        expect(addValidator).toHaveBeenCalledWith(expect.anything(),
+            { nodeId, validator: wrapper.vm.validate }, wrapper.undef);
+        expect(addValueGetter).toHaveBeenCalledWith(expect.anything(),
+            { nodeId, valueGetter: wrapper.vm.getValue }, wrapper.undef);
+        expect(addValidationErrorSetter).toHaveBeenCalledWith(expect.anything(),
+            { nodeId, errorSetter: wrapper.vm.setValidationError }, wrapper.undef);
+
+        wrapper.destroy();
+
+        expect(removeValidator).toHaveBeenCalledWith(expect.anything(),
+            { nodeId }, wrapper.undef);
+        expect(removeValueGetter).toHaveBeenCalledWith(expect.anything(),
+            { nodeId }, wrapper.undef);
+        expect(removeValidationErrorSetter).toHaveBeenCalledWith(expect.anything(),
+            { nodeId }, wrapper.undef);
     });
 
     describe('view value retrieval', () => {
@@ -350,7 +430,7 @@ describe('NodeViewIframe.vue', () => {
             // fake error
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0:0:7', type: 'validate', error: true }
+                data: { nodeId: '0:0:7', type: 'validate', error: 'Error', isValid: false }
             });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
         });
@@ -362,6 +442,238 @@ describe('NodeViewIframe.vue', () => {
             // don't provide a message queue response
             jest.runAllTimers();
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
+        });
+    });
+
+
+    describe('setting validation error', () => {
+        let wrapper;
+
+        beforeEach(() => {
+            wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    viewConfig: { nodeID: '0:0:7' },
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        setValidationErrorMethodName: 'setValidationError'
+                    }
+                }
+            });
+        });
+
+        it('handles validation', () => {
+            const testMsg = 'test value';
+            window.origin = window.location.origin;
+            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+            wrapper.vm.setValidationError(testMsg);
+            expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                nodeId: '0:0:7',
+                namespace: 'knimespace',
+                setValidationErrorMethodName: 'setValidationError',
+                type: 'setValidationError',
+                errorMessage: testMsg
+            }, window.origin);
+        });
+
+        it('resolves validate promise', () => {
+            window.origin = window.location.origin;
+            let validatePromise = wrapper.vm.setValidationError('test');
+            // fake validation returned
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0:0:7', type: 'setValidationError', isValid: false }
+            });
+            return expect(validatePromise).resolves.toStrictEqual(true);
+        });
+
+        it('catches errors from within view thrown while setting message', () => {
+            window.origin = window.location.origin;
+            let valuePromise = wrapper.vm.setValidationError('test');
+            // fake error
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0:0:7', type: 'setValidationError', error: 'Error', isValid: false }
+            });
+            return expect(valuePromise).rejects.toThrow('Error');
+        });
+
+        it('rejects with error when views timeout', () => {
+            jest.useFakeTimers();
+            window.origin = window.location.origin;
+            let valuePromise = wrapper.vm.setValidationError('test');
+            // don't provide a message queue response
+            jest.runAllTimers();
+            return expect(valuePromise).rejects
+                .toThrow('Validation error message could not be set in the allocated time.');
+        });
+    });
+
+    describe('handling messages from iFrame', () => {
+        let wrapper, validateCallbackMock, getValueCallbackMock, setValidationErrorCallbackMock, nodeId;
+
+        beforeEach(() => {
+            nodeId = '0:0:7';
+
+            wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    viewConfig: { nodeID: nodeId },
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        initMethodName: 'init',
+                        setValidationErrorMethodName: 'setValidationError',
+                        viewRepresentation: {},
+                        viewValue: {}
+                    }
+                }
+            });
+
+            validateCallbackMock = jest.fn();
+            getValueCallbackMock = jest.fn();
+            setValidationErrorCallbackMock = jest.fn();
+
+            wrapper.vm.validateCallback = validateCallbackMock;
+            wrapper.vm.getValueCallback = getValueCallbackMock;
+            wrapper.vm.setValidationErrorCallback = setValidationErrorCallbackMock;
+
+            window.origin = window.location.origin;
+            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+        });
+
+        it('ignores missing event data', () => {
+            // empty event
+            let messageEvent = {};
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).not.toHaveBeenCalled();
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toBe(null);
+            // missing origin
+            messageEvent = { data: { nodeId } };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).not.toHaveBeenCalled();
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toBe(null);
+            // mismatched nodeId
+            messageEvent = { data: { nodeId: 'other:node' } };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).not.toHaveBeenCalled();
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toBe(null);
+        });
+
+        it('handles load events', () => {
+            let messageEvent = {
+                origin: window.location.origin,
+                data: {
+                    nodeId,
+                    type: 'load'
+                }
+            };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
+                nodeId,
+                namespace: 'knimespace',
+                initMethodName: 'init',
+                type: 'init',
+                viewRepresentation: {},
+                viewValue: {}
+            }, window.origin);
+            expect(validateCallbackMock).not.toHaveBeenCalled();
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toBe(null);
+        });
+
+        it('handles validate events', () => {
+            let messageEvent = {
+                origin: window.location.origin,
+                data: {
+                    nodeId,
+                    type: 'validate'
+                }
+            };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'validate' });
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toBe(null);
+        });
+
+        it('handles getValue events', () => {
+            let messageEvent = {
+                origin: window.location.origin,
+                data: {
+                    nodeId,
+                    type: 'getValue'
+                }
+            };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).not.toHaveBeenCalled();
+            expect(getValueCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'getValue' });
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toBe(null);
+        });
+
+        it('handles setValidationError events', () => {
+            let messageEvent = {
+                origin: window.location.origin,
+                data: {
+                    nodeId,
+                    type: 'setValidationError'
+                }
+            };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).not.toHaveBeenCalled();
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'setValidationError' });
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toBe(null);
+        });
+
+        describe('using alerts via message', () => {
+            it('handles alert events', () => {
+                let messageEvent = {
+                    origin: window.location.origin,
+                    data: {
+                        nodeId,
+                        type: 'alert',
+                        message: 'test'
+                    }
+                };
+                wrapper.vm.messageFromIframe(messageEvent);
+                expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+                expect(validateCallbackMock).not.toHaveBeenCalled();
+                expect(getValueCallbackMock).not.toHaveBeenCalled();
+                expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+                expect(wrapper.vm.isValid).toBe(true);
+                expect(wrapper.vm.errorMessage).toBe(null);
+                expect(wrapper.vm.alert).toStrictEqual({ nodeId, type: 'warn', message: 'test' });
+            });
         });
     });
 

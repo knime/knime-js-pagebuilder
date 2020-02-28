@@ -6,8 +6,9 @@ export const state = () => ({
     page: null,
     resourceBaseUrl: '',
     webNodesLoading: [],
+    pageValueGetters: {},
     pageValidators: {},
-    pageValueGetters: {}
+    pageValidationErrorSetters: {}
 });
 
 export const mutations = {
@@ -92,6 +93,14 @@ export const mutations = {
 
     removeValidator(state, nodeId) {
         delete state.pageValidators[nodeId];
+    },
+
+    addValidationErrorSetter(state, { nodeId, errorSetter }) {
+        state.pageValidationErrorSetters[nodeId] = errorSetter;
+    },
+
+    removeValidationErrorSetter(state, nodeId) {
+        delete state.pageValidationErrorSetters[nodeId];
     }
 };
 
@@ -182,5 +191,25 @@ export const actions = {
                 throw new Error(errMsg);
             });
         return validity;
+    },
+
+    addValidationErrorSetter({ commit }, { nodeId, errorSetter }) {
+        consola.trace('PageBuilder: add validation error setter via action: ', nodeId);
+        commit('addValidationErrorSetter', { nodeId, errorSetter });
+    },
+
+    removeValidationErrorSetter({ commit }, { nodeId }) {
+        consola.trace('PageBuilder: remove validation error setter via action: ', nodeId);
+        commit('removeValidationErrorSetter', nodeId);
+    },
+
+    setValidationErrors({ commit, state }, { page }) {
+        const setValidationErrorPromises = [];
+        for (const nodeId in page) {
+            if (typeof state.pageValidationErrorSetters[nodeId] === 'function') {
+                setValidationErrorPromises.push(state.pageValidationErrorSetters[nodeId](page[nodeId].error));
+            }
+        }
+        return Promise.all(setValidationErrorPromises);
     }
 };
