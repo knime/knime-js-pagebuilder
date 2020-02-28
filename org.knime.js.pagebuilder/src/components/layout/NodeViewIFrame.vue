@@ -1,12 +1,17 @@
 <script>
 import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
+import ViewAlert from './ViewAlert';
+import iframeResizer from 'iframe-resizer/js/iframeResizer';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
+import iframeResizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow.js';
+import loadingErrorHandlerSrc from 'raw-loader!./injectedScripts/loadErrorHandler.js';
+import viewAlertHandlerSrc from 'raw-loader!./injectedScripts/viewAlertHandler.js';
 
-const heightPollInterval = 200; // ms
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
+const setValidationErrorTimeout = 1000; // ms
 
 // TODO WEBP-227 split into multiple files
 
@@ -15,15 +20,16 @@ const validatorTimeout = 5000; // ms
  */
 export default {
     components: {
-        ErrorMessage
+        ErrorMessage,
+        ViewAlert
     },
     props: {
         /**
-         * Node id
+         * View configuration, mainly layout and sizing options
          */
-        nodeId: {
-            default: null,
-            type: String
+        viewConfig: {
+            default: () => ({}),
+            type: Object
         },
         /**
          * Node configuration as received by API
@@ -31,38 +37,24 @@ export default {
         nodeConfig: {
             default: () => ({}),
             type: Object
-        },
-        /**
-         * Set height automatically depending on content?
-         */
-        autoHeight: {
-            type: Boolean,
-            default: false
-        },
-        /**
-         * Update height automatically when content size changes?
-         */
-        pollHeight: {
-            type: Boolean,
-            default: false
-        },
-        /**
-         * Render inner scrollbars?
-         */
-        scrolling: {
-            type: Boolean,
-            default: false
         }
     },
     data() {
         return {
-            height: 0,
             isValid: true,
-            errorMessage: null
+            errorMessage: null,
+            alert: null
         };
     },
 
     computed: {
+        nodeId() {
+            return this.viewConfig && this.viewConfig.nodeID;
+        },
+        iframeId() {
+            // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
+            return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
+        },
         webNode() {
             let page = this.$store.state.pagebuilder.page;
             if (page && page.webNodes) {
@@ -76,34 +68,18 @@ export default {
         nodeStylesheets() {
             return this.nodeConfig.stylesheets || [];
         },
-        innerStyle() {
-            // prevent margin collapsation of body’s children, which causes incorrect height detection
-            /* FIXME: This breaks some views and prohibits stretching the full width for others, removing
-            this next line causes issues as well, see WEBP-219 */
-            let style = 'body { display: inline-block; }';
-            if (this.scrolling) {
-                if (this.pollHeight) {
-                    // in case of auto height, a vertical scrollbar can interfere with the height calculation (in
-                    // combination with a horizontal scrollbar)
-                    style += 'html { overflow-y: hidden; }';
-                }
-            } else {
-                style += 'html { overflow: hidden; }';
+        autoHeight() {
+            return this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('view');
+        },
+        classes() {
+            let classes = [];
+            if (!this.isValid) {
+                classes.push('error');
             }
-            return style;
-        }
-    },
-
-    watch: {
-        height(newHeight) {
-            /**
-             * Fired when the iframe detects that its content’s height size has changed.
-             * Requires the `pollHeight` prop to be set to `true`.
-             *
-             * @event heightChange
-             * @type {number}
-             */
-            this.$emit('heightChange', newHeight);
+            if (!this.autoHeight) {
+                classes.push('full-height');
+            }
+            return classes;
         }
     },
 
@@ -115,6 +91,10 @@ export default {
         this.injectContent();
         this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
         this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
+        this.$store.dispatch('pagebuilder/addValidationErrorSetter', {
+            nodeId: this.nodeId,
+            errorSetter: this.setValidationError
+        });
 
         // create global API which is accessed by knimeService running inside the iframe.
         // This global API should only be used/extended for cases where window.postMessage can't be used
@@ -133,9 +113,7 @@ export default {
         window.removeEventListener('message', this.messageFromIframe);
         this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-        }
+        this.$store.dispatch('pagebuilder/removeValidationErrorSetter', { nodeId: this.nodeId });
 
         // remove global API
         delete window.KnimePageBuilderAPI;
@@ -153,6 +131,16 @@ export default {
             let styles = this.computeStyles(resourceBaseUrl);
             let scripts = this.computeScripts(resourceBaseUrl);
 
+            // runtime/script injection error handling
+            let loadingErrorHandler = `<script>${loadingErrorHandlerSrc
+                .replace("'%NODEID%'", JSON.stringify(this.nodeId))
+            }<\/script>`; // eslint-disable-line no-useless-escape
+
+            // view alert override
+            let viewAlertHandler = `<script>${viewAlertHandlerSrc
+                .replace("'%NODEID%'", JSON.stringify(this.nodeId))
+            }<\/script>`; // eslint-disable-line no-useless-escape
+
             // script loader
             let scriptLoader = `<script>${scriptLoaderSrc
                 .replace("'%ORIGIN%'", JSON.stringify(window.origin))
@@ -163,6 +151,8 @@ export default {
 
             // postMessage receiver
             let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
+            // iframe resizer content window script
+            let iframeResizer = this.autoHeight ? `<script>${iframeResizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
 
             this.document.write(`<!doctype html>
                 <html lang="en-US">
@@ -171,6 +161,9 @@ export default {
                   ${styles}
                   ${messageListener}
                   ${scriptLoader}
+                  ${viewAlertHandler}
+                  ${loadingErrorHandler}
+                  ${iframeResizer}
                   <title></title>
                 </head>
                 <body></body>
@@ -190,9 +183,6 @@ export default {
             let styles = this.nodeStylesheets.map(
                 style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${encodeURI(style)}">`
             );
-
-            // further node styles needed for sizing
-            styles.push(`<style>${this.innerStyle}</style>`);
 
             // custom CSS from node configuration
             if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
@@ -229,33 +219,66 @@ export default {
             return scripts.join('');
         },
 
-        initHeightPolling() {
-            consola.trace('Starting height polling');
-            this.intervalId = setInterval(this.setHeight, heightPollInterval);
-        },
+        initIFrameResize() {
+            if (this.autoHeight) {
+                // apply a default tolerance of 5px to avoid unnecessary screen flicker
+                const defaultResizeTolerance = 5;
+                const defaultResizeMethod = 'lowestElement';
+                let conf = this.viewConfig;
 
-        setHeight() {
-            let { document } = this;
-            if (!document || !document.body) {
-                return;
+                // strip prefix from resize method to determine heightCalculationMethod
+                let prefix = 'view'.length;
+                let method = defaultResizeMethod;
+                if (conf.resizeMethod) {
+                    method = conf.resizeMethod.substring(prefix, prefix + 1).toLowerCase() +
+                        conf.resizeMethod.substring(prefix + 1);
+                }
+                // special case, this used a different resize method for IE, but is not supported anymore
+                if (method === 'lowestElementIEMax') {
+                    method = defaultResizeMethod;
+                }
+
+                // populate settings object
+                let resizeSettings = {
+                    log: false,
+                    checkOrigin: [window.origin],
+                    resizeFrom: 'child',
+                    warningTimeout: 0, // suppress warning
+
+                    autoResize: conf.autoResize,
+                    scrolling: conf.scrolling,
+                    heightCalculationMethod: method,
+                    sizeHeight: conf.sizeHeight,
+                    tolerance: conf.resizeTolerance || defaultResizeTolerance
+                };
+                if (conf.minWidth) {
+                    resizeSettings.minWidth = conf.minWidth;
+                }
+                if (conf.maxWidth) {
+                    resizeSettings.maxWidth = conf.maxWidth;
+                }
+                if (conf.minHeight) {
+                    resizeSettings.minHeight = conf.minHeight;
+                }
+                if (conf.maxHeight) {
+                    resizeSettings.maxHeight = conf.maxHeight;
+                }
+               
+                iframeResizer(resizeSettings, this.$refs.iframe);
             }
-            let { defaultView } = document;
-            let htmlStyle = defaultView.getComputedStyle(document.documentElement);
-            let bodyStyle = defaultView.getComputedStyle(document.body);
-            this.height = document.body.scrollHeight +
-                parseInt(htmlStyle.paddingTop, 10) + parseInt(htmlStyle.paddingBottom, 10) +
-                parseInt(bodyStyle.marginTop, 10) + parseInt(bodyStyle.marginBottom, 10);
         },
 
         messageFromIframe(event) {
-            if (event.origin !== window.origin) {
+            const data = event.data;
+            if (event.origin !== window.origin || !data || !data.type || data.nodeId !== this.nodeId) {
                 return;
             }
-            if (!event.data || event.data.nodeId !== this.nodeId) {
-                return;
+            if (data.error) {
+                // errors can occur on any event type, further handling of the event might still be necessary
+                this.errorMessage = data.error;
+                this.isValid = false;
             }
-
-            if (event.data.type === 'load') {
+            if (data.type === 'load') {
                 consola.debug(`View resource loading for ${this.nodeId} completed`);
                 this.document.defaultView.postMessage({
                     nodeId: this.nodeId,
@@ -265,36 +288,28 @@ export default {
                     viewValue: this.nodeConfig.viewValue,
                     type: 'init'
                 }, window.origin);
-                if (this.autoHeight) {
-                    if (this.pollHeight) {
-                        this.initHeightPolling();
-                    } else {
-                        this.setHeight();
-                    }
-                }
-
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
-            } else if (event.data.type === 'validate') {
-                this.validateCallback({ isValid: event.data.isValid });
-            } else if (event.data.type === 'getValue') {
-                // call callback
-                if (typeof event.data.value === 'undefined') {
-                    this.getValueCallback({ error: new Error(event.data.error) });
-                } else {
-                    this.getValueCallback({ value: event.data.value });
-                }
-            } else if (event.data.type.startsWith('interactivity')) {
+            } else if (data.type === 'validate') {
+                this.validateCallback(data);
+            } else if (data.type === 'getValue') {
+                this.getValueCallback(data);
+            } else if (data.type === 'setValidationError') {
+                this.setValidationErrorCallback(data);
+            } else if (data.type === 'alert') {
+                this.alert = {
+                    ...data,
+                    type: data.level === 'error' ? 'error' : 'warn'
+                };
+            } else if (data.type.startsWith('interactivity')) {
                 this.handleInteractivity(event);
             }
         },
 
         validate() {
             return new Promise((resolve, reject) => {
-                this.validateCallback = ({ error, isValid = false }) => {
-                    if (error || !isValid) {
+                this.validateCallback = ({ isValid }) => {
+                    if (!isValid) {
                         this.errorMessage = 'View validation failed.';
-                    } else {
-                        this.errorMessage = null;
                     }
                     this.isValid = isValid;
                     window.clearTimeout(this.cancelValidate);
@@ -319,7 +334,7 @@ export default {
                 this.getValueCallback = ({ error, value }) => {
                     window.clearTimeout(this.cancelValueGetter);
                     if (error) {
-                        reject(error);
+                        reject(new Error(error));
                     } else {
                         resolve({ nodeId: this.nodeId, value });
                     }
@@ -336,6 +351,39 @@ export default {
             });
         },
 
+        setValidationError(errorMessage) {
+            return new Promise((resolve, reject) => {
+                this.setValidationErrorCallback = ({ error }) => {
+                    window.clearTimeout(this.cancelSetValidatorError);
+                    if (error) {
+                        reject(new Error(error));
+                    } else {
+                        resolve(true);
+                    }
+                };
+                this.document.defaultView.postMessage({
+                    nodeId: this.nodeId,
+                    namespace: this.nodeConfig.namespace,
+                    setValidationErrorMethodName: this.nodeConfig.setValidationErrorMethodName,
+                    type: 'setValidationError',
+                    errorMessage
+                }, window.origin);
+                this.cancelSetValidatorError = window.setTimeout(() => {
+                    reject(new Error('Validation error message could not be set in the allocated time.'));
+                }, setValidationErrorTimeout);
+            });
+        },
+        /* Event handler for closing an alert */
+        onCloseAlert() {
+            consola.trace('Closing view alert (NodeViewIFrame).');
+            // if there was an error, check to see if the view is responding (will update styles if not)
+            if (this.alert.type === 'error') {
+                this.validate();
+            }
+            // delete the alert data to close the alert
+            this.alert = null;
+        },
+        
         handleInteractivity(event) {
             let interactivityType = event.data.type;
             switch (interactivityType) {
@@ -390,11 +438,21 @@ export default {
 <template>
   <div class="frame-container">
     <iframe
+      :id="iframeId"
       ref="iframe"
-      :class="{error: !isValid}"
+      :class="classes"
+      @load="initIFrameResize"
+    />
+    <ViewAlert
+      :type="alert && alert.type"
+      :message="alert && alert.message"
+      :active="Boolean(alert)"
+      :node-id="nodeId"
+      :node-info="nodeConfig.nodeInfo"
+      @closeAlert="onCloseAlert"
     />
     <ErrorMessage
-      v-if="errorMessage"
+      v-if="errorMessage && !isValid"
       :error="errorMessage"
       class="error-message"
     />
@@ -406,14 +464,17 @@ export default {
 
 div.frame-container {
   width: 100%;
-  height: 100%;
 }
 
 iframe {
-  width: 100%;
-  height: 100%;
+  display: block;
   background-color: white;
   border: none;
+  width: 100%;
+
+  &.full-height {
+    height: 100%;
+  }
 
   &.error {
     outline: 2px solid var(--theme-color-error);

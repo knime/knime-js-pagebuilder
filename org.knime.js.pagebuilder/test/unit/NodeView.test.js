@@ -85,47 +85,6 @@ describe('NodeView.vue', () => {
         expect(wrapper.find('div').attributes('class')).toEqual('view');
     });
 
-    it('respects min/max size configuration', () => {
-        let viewConfig = {
-            nodeID: 'id1',
-            minWidth: 42,
-            minHeight: 12,
-            maxWidth: 200,
-            maxHeight: 1000
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        let style = wrapper.find('div').attributes('style');
-        expect(style).toContain('min-width: 42px;');
-        expect(style).toContain('min-height: 12px;');
-        expect(style).toContain('max-width: 200px;');
-        expect(style).toContain('max-height: 1000px;');
-    });
-
-    it('ignores min/max size configuration when webnode missing', () => {
-        let viewConfig = {
-            nodeID: '123',
-            minWidth: 42,
-            minHeight: 12,
-            maxWidth: 200,
-            maxHeight: 1000
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        let style = wrapper.find('div').attributes('style');
-        expect(style).not.toBeDefined();
-    });
-
     it('passes the webNode config to the iframe', () => {
         let viewConfig = {
             nodeID: 'id1'
@@ -147,18 +106,7 @@ describe('NodeView.vue', () => {
         };
 
         expect(wrapper.find(NodeViewIFrame).props('nodeConfig')).toEqual(expectedNodeConfig);
-        expect(wrapper.find(NodeViewIFrame).props('scrolling')).toBeFalsy();
-
-        wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: 'id1',
-                    scrolling: true
-                }
-            }
-        });
-        expect(wrapper.find(NodeViewIFrame).props('scrolling')).toBe(true);
+        expect(wrapper.find(NodeViewIFrame).props('viewConfig')).toEqual(viewConfig);
     });
 
     it('can detect widgets', () => {
@@ -203,34 +151,6 @@ describe('NodeView.vue', () => {
         expect(wrapper.contains(NodeViewIFrame)).toBe(false);
     });
 
-    it('detects autoHeight', () => {
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: 'id1',
-                    resizeMethod: 'somethingIrrelevant',
-                    autoResize: false
-                }
-            }
-        });
-        expect(wrapper.find(NodeViewIFrame).props('autoHeight')).toBe(false);
-        expect(wrapper.find(NodeViewIFrame).props('pollHeight')).toBe(false);
-
-        wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: 'id1',
-                    resizeMethod: 'viewLowestElement',
-                    autoResize: true
-                }
-            }
-        });
-        expect(wrapper.find(NodeViewIFrame).props('autoHeight')).toBe(true);
-        expect(wrapper.find(NodeViewIFrame).props('pollHeight')).toBe(true);
-    });
-
     it('renders with classes and styles', () => {
         let wrapper = shallowMount(NodeView, {
             ...context,
@@ -260,23 +180,6 @@ describe('NodeView.vue', () => {
         });
         expect(wrapper.attributes('class')).toEqual('view');
         expect(wrapper.attributes('style')).not.toBeDefined();
-    });
-
-    it('reacts to the heightChange event', () => {
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: 'id1',
-                    resizeMethod: 'viewLowestElement',
-                    autoResize: true
-                }
-            }
-        });
-
-        wrapper.find(NodeViewIFrame).vm.$emit('heightChange', '342');
-
-        expect(wrapper.attributes('style')).toEqual('height: 342px;');
     });
 
     it('renders not displayable nodes', () => {
