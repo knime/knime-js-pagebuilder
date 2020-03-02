@@ -1,7 +1,7 @@
 <script>
 import * as pagebuilderStoreConfig from '~/store/pagebuilder';
 import * as interactivityStoreConfig from '~/store/interactivity';
-import Page from '~/src/components/Page';
+import Page from '~/src/components/layout/Page';
 
 export default {
     components: {
