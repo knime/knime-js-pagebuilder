@@ -16,10 +16,10 @@
             parent.postMessage(resp, window.origin);
         };
         if (data.type === 'init') {
-            var initMethod = window[namespace] && window[namespace][data.initMethodName];
-            if (typeof initMethod === 'function') {
+            var initMethodName = data.initMethodName;
+            if (window[namespace] && typeof window[namespace][data.initMethodName] === 'function') {
                 try {
-                    initMethod(data.viewRepresentation, data.viewValue);
+                    window[namespace][initMethodName](data.viewRepresentation, data.viewValue);
                 } catch (err) {
                     postErrorResponse(data.type, 'View initialization failed: ' + err);
                 }
@@ -27,11 +27,11 @@
                 postErrorResponse(data.type, 'Init method not present in view.');
             }
         } else if (data.type === 'validate') {
-            var validateMethod = window[namespace] && window[namespace][data.validateMethodName];
-            if (typeof validateMethod === 'function') {
+            if (window[namespace] && typeof window[namespace][data.validateMethodName] === 'function') {
+                var valid = window[namespace][data.validateMethodName]();
                 try {
                     parent.postMessage({
-                        isValid: validateMethod(),
+                        isValid: valid,
                         nodeId: nodeId,
                         type: 'validate'
                     }, window.origin);
@@ -42,11 +42,11 @@
                 postErrorResponse(data.type, 'Validate method not present in view.');
             }
         } else if (data.type === 'getValue') {
-            var getValueMethod = window[namespace] && window[namespace][data.getViewValueMethodName];
-            if (typeof getValueMethod === 'function') {
+            if (window[namespace] && typeof window[namespace][data.getViewValueMethodName] === 'function') {
+                var value = window[namespace][data.getViewValueMethodName]();
                 try {
                     parent.postMessage({
-                        value: getValueMethod(),
+                        value: value,
                         nodeId: nodeId,
                         type: 'getValue'
                     }, window.origin);
@@ -57,10 +57,9 @@
                 postErrorResponse(data.type, 'Value method not present in view.');
             }
         } else if (data.type === 'setValidationError') {
-            var setValidationErrorMethod = window[namespace] && window[namespace][data.setValidationErrorMethodName];
-            if (typeof setValidationErrorMethod === 'function') {
+            if (window[namespace] && typeof window[namespace][data.setValidationErrorMethodName] === 'function') {
                 try {
-                    setValidationErrorMethod(data.errorMessage);
+                    window[namespace][data.setValidationErrorMethodName](data.errorMessage);
                     parent.postMessage({
                         nodeId: nodeId,
                         type: 'setValidationError',
