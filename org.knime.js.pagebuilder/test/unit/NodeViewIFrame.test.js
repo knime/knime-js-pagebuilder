@@ -488,25 +488,17 @@ describe('NodeViewIframe.vue', () => {
             return expect(validatePromise).resolves.toStrictEqual(true);
         });
 
-        it('catches errors from within view thrown while setting message', () => {
+        it('catches errors from within view thrown while setting message', async (done) => {
             window.origin = window.location.origin;
-            let valuePromise = wrapper.vm.setValidationError('test');
-            // fake error
+            let valuePromise = wrapper.vm.setValidationError('test').catch(e => e);
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
                 data: { nodeId: '0:0:7', type: 'setValidationError', error: 'Error', isValid: false }
             });
-            return expect(valuePromise).rejects.toThrow('Error');
-        });
-
-        it('rejects with error when views timeout', () => {
-            jest.useFakeTimers();
-            window.origin = window.location.origin;
-            let valuePromise = wrapper.vm.setValidationError('test');
-            // don't provide a message queue response
-            jest.runAllTimers();
-            return expect(valuePromise).rejects
-                .toThrow('Validation error message could not be set in the allocated time.');
+            let response = await Promise.resolve(valuePromise);
+            expect(response instanceof Error).toBe(true);
+            expect(response.message).toBe('Error');
+            done();
         });
     });
 

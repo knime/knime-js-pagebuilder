@@ -6,6 +6,10 @@
         }
         var namespace = data.namespace;
         var nodeId = data.nodeId;
+        var postMessageResponse = function (resp) {
+            resp.nodeId = nodeId;
+            parent.postMessage(resp, window.origin);
+        };
         var postErrorResponse = function (type, errMsg) {
             var resp = {
                 isValid: false,
@@ -28,18 +32,20 @@
             }
         } else if (data.type === 'validate') {
             var validateMethod = window[namespace] && window[namespace][data.validateMethodName];
+            var validResp = {
+                isValid: true,
+                type: 'validate'
+            };
+            // optional method; some views don't have (i.e. some quickforms)
             if (typeof validateMethod === 'function') {
                 try {
-                    parent.postMessage({
-                        isValid: validateMethod(),
-                        nodeId: nodeId,
-                        type: 'validate'
-                    }, window.origin);
+                    validResp.isValid = validateMethod();
+                    postMessageResponse(validResp);
                 } catch (err) {
                     postErrorResponse(data.type, 'View could not be validated: ' + err);
                 }
             } else {
-                postErrorResponse(data.type, 'Validate method not present in view.');
+                postMessageResponse(validResp);
             }
         } else if (data.type === 'getValue') {
             var getValueMethod = window[namespace] && window[namespace][data.getViewValueMethodName];
@@ -58,19 +64,20 @@
             }
         } else if (data.type === 'setValidationError') {
             var setValidationErrorMethod = window[namespace] && window[namespace][data.setValidationErrorMethodName];
+            var setErrorResp = {
+                message: data.errorMessage,
+                type: 'setValidationError'
+            };
+            // optional method; some views don't have (i.e. some quickforms)
             if (typeof setValidationErrorMethod === 'function') {
                 try {
                     setValidationErrorMethod(data.errorMessage);
-                    parent.postMessage({
-                        nodeId: nodeId,
-                        type: 'setValidationError',
-                        message: data.errorMessage
-                    }, window.origin);
+                    postMessageResponse(setErrorResp);
                 } catch (err) {
                     postErrorResponse(data.type, 'View error message could not be set: ' + err);
                 }
             } else {
-                postErrorResponse(data.type, 'Set error message method not present in view.');
+                postMessageResponse(setErrorResp);
             }
         }
     };
