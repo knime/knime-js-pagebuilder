@@ -28,8 +28,8 @@
             }
         } else if (data.type === 'validate') {
             if (window[namespace] && typeof window[namespace][data.validateMethodName] === 'function') {
-                var valid = window[namespace][data.validateMethodName]();
                 try {
+                    var valid = window[namespace][data.validateMethodName]();
                     parent.postMessage({
                         isValid: valid,
                         nodeId: nodeId,
@@ -43,8 +43,8 @@
             }
         } else if (data.type === 'getValue') {
             if (window[namespace] && typeof window[namespace][data.getViewValueMethodName] === 'function') {
-                var value = window[namespace][data.getViewValueMethodName]();
                 try {
+                    var value = window[namespace][data.getViewValueMethodName]();
                     parent.postMessage({
                         value: value,
                         nodeId: nodeId,
