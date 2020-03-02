@@ -31,21 +31,7 @@ export default {
             }
         }
     },
-    data() {
-        return {
-            height: null
-        };
-    },
     computed: {
-        autoHeight() {
-            // legacy implementation used the prefix `view` for various resizing detection methods.
-            // The current implementation uses only one method, so the only information needed is whether or not to use
-            // resizing detection at all
-            return this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('view');
-        },
-        pollHeight() {
-            return this.viewConfig.autoResize !== false;
-        },
         webNodeConfig() {
             let nodeConfigs = this.$store.state.pagebuilder.page.wizardPageContent.webNodes;
             let { nodeID } = this.viewConfig;
@@ -63,9 +49,11 @@ export default {
         },
         classes() {
             let classes = ['view'];
-            if (this.webNodeAvailable && this.viewConfig.resizeMethod &&
-                this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
-                classes.push(this.viewConfig.resizeMethod);
+            if (this.webNodeAvailable) {
+                // add aspect ratio sizing classes; other resize methods are handled by NodeViewIFrame itself
+                if (this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
+                    classes.push(this.viewConfig.resizeMethod);
+                }
                 if (Array.isArray(this.viewConfig.additionalClasses)) {
                     classes = classes.concat(this.viewConfig.additionalClasses);
                 }
@@ -74,40 +62,14 @@ export default {
         },
         style() {
             let style = [];
-
-            if (this.webNodeAvailable) {
-                const styleProps = ['minWidth', 'maxWidth', 'minHeight', 'maxHeight'];
-                styleProps.forEach(prop => {
-                    if (this.viewConfig.hasOwnProperty(prop)) {
-                        let value = this.viewConfig[prop];
-                        if (value) {
-                            let key = prop.replace(/[WH]/, x => `-${x.toLowerCase()}`);
-                            if (!value.toString().includes('px')) {
-                                value = `${value}px`;
-                            }
-                            style.push(`${key}:${value};`);
-                        }
-                    }
-                });
-                if (this.viewConfig.additionalStyles) {
-                    style = style.concat(this.viewConfig.additionalStyles);
-                }
+            if (this.webNodeAvailable && this.viewConfig.additionalStyles) {
+                style = style.concat(this.viewConfig.additionalStyles);
             }
-
-            if (this.height !== null) {
-                style.push(`height:${this.height}px;`);
-            }
-
-            return style.join(';');
+            return style.join(';').replace(/;;/g, ';');
         },
         isWidget() {
             return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
                 classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
-        }
-    },
-    methods: {
-        updateHeight(height) {
-            this.height = height;
         }
     }
 };
@@ -131,12 +93,8 @@ export default {
       />
       <NodeViewIFrame
         v-else
-        :node-id="viewConfig.nodeID"
+        :view-config="viewConfig"
         :node-config="webNodeConfig"
-        :auto-height="autoHeight"
-        :poll-height="pollHeight"
-        :scrolling="viewConfig.scrolling"
-        @heightChange="updateHeight"
       />
     </template>
   </div>

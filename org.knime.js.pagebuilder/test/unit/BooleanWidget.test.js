@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import { shallowMount } from '@vue/test-utils';
 
 import Checkbox from '~/webapps-common/ui/components/forms/Checkbox';

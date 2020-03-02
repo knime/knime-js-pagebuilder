@@ -32,7 +32,9 @@ export default {
             required: true,
             type: Object,
             validator(obj) {
-                return obj.nodeInfo && obj.viewRepresentation && getProp(obj, DEFAULT_VALUE_KEY);
+                return obj.nodeInfo &&
+                    obj.viewRepresentation &&
+                    typeof getProp(obj, DEFAULT_VALUE_KEY) === 'string';
             }
         },
         nodeId: {
