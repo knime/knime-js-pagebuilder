@@ -1,375 +1,1220 @@
 {
-  "hasPreviousPage": true,
-  "nodeMessages": {},
-  "wizardExecutionState": "INTERACTION_REQUIRED",
-  "wizardPageContent": {
-    "@class": "org.knime.js.core.JSONWebNodePage",
-    "webNodePageConfiguration": {
-      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
-      "layout": {
-        "rows": [
-          {
-            "type": "JSONLayoutRow",
-            "additionalClasses": [],
-            "additionalStyles": [],
-            "columns": [
+    "hasPreviousPage": true,
+    "nodeMessages": {},
+    "wizardExecutionState": "INTERACTION_REQUIRED",
+    "wizardPageContent": {
+      "@class": "org.knime.js.core.JSONWebNodePage",
+        "webNodePageConfiguration": {
+          "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+          "layout": {
+            "rows": [
               {
-                "widthMD": null,
-                "widthSM": null,
-                "widthLG": null,
-                "widthXS": 6,
-                "widthXL": null,
-                "content": [
+                "type": "JSONLayoutRow",
+                "additionalClasses": [],
+                "additionalStyles": [],
+                "columns": [
                   {
-                    "type": "JSONLayoutViewContent",
-                    "sizeHeight": true,
-                    "resizeTolerance": 5,
-                    "scrolling": false,
-                    "resizeMethod": "viewLowestElement",
-                    "resizeInterval": null,
-                    "sizeWidth": false,
-                    "autoResize": true,
-                    "maxHeight": null,
-                    "maxWidth": null,
-                    "minHeight": null,
-                    "minWidth": null,
-                    "nodeID": "4:0:6",
-                    "additionalClasses": [],
-                    "additionalStyles": []
-                  },
-                  {
-                    "type": "JSONLayoutViewContent",
-                    "sizeHeight": true,
-                    "resizeTolerance": 5,
-                    "scrolling": false,
-                    "resizeMethod": "viewLowestElement",
-                    "resizeInterval": null,
-                    "sizeWidth": false,
-                    "autoResize": true,
-                    "maxHeight": null,
-                    "maxWidth": null,
-                    "minHeight": null,
-                    "minWidth": null,
-                    "nodeID": "4:0:8",
+                    "content": [
+                      {
+                        "type": "JSONLayoutRow",
+                        "additionalClasses": [],
+                        "additionalStyles": [],
+                        "columns": [
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:13",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 3,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          },
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:16",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 3,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          },
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:17",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 3,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          },
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:18",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 3,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "JSONLayoutRow",
+                        "additionalClasses": [],
+                        "additionalStyles": [],
+                        "columns": [
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:19",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 6,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          },
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:20",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 6,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "JSONLayoutRow",
+                        "additionalClasses": [],
+                        "additionalStyles": [],
+                        "columns": [
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:21",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 3,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          },
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:22",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 3,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          },
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:23",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 3,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          },
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:24",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 3,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "JSONLayoutRow",
+                        "additionalClasses": [],
+                        "additionalStyles": [],
+                        "columns": [
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:25",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 6,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          },
+                          {
+                            "content": [
+                              {
+                                "type": "JSONLayoutViewContent",
+                                "nodeID": "14:0:26",
+                                "scrolling": false,
+                                "resizeInterval": null,
+                                "resizeMethod": "viewLowestElement",
+                                "sizeHeight": true,
+                                "sizeWidth": false,
+                                "resizeTolerance": 5,
+                                "autoResize": true,
+                                "maxHeight": null,
+                                "maxWidth": null,
+                                "minHeight": null,
+                                "minWidth": null,
+                                "additionalClasses": [],
+                                "additionalStyles": []
+                              }
+                            ],
+                            "widthLG": null,
+                            "widthXL": null,
+                            "widthMD": null,
+                            "widthSM": null,
+                            "widthXS": 6,
+                            "additionalClasses": [],
+                            "additionalStyles": []
+                          }
+                        ]
+                      }
+                    ],
+                    "widthLG": null,
+                    "widthXL": null,
+                    "widthMD": null,
+                    "widthSM": null,
+                    "widthXS": 12,
                     "additionalClasses": [],
                     "additionalStyles": []
                   }
-                ],
-                "additionalClasses": [],
-                "additionalStyles": []
-              },
-              {
-                "widthMD": null,
-                "widthSM": null,
-                "widthLG": null,
-                "widthXS": 6,
-                "widthXL": null,
-                "content": [
-                  {
-                    "type": "JSONLayoutViewContent",
-                    "sizeHeight": true,
-                    "resizeTolerance": 5,
-                    "scrolling": false,
-                    "resizeMethod": "viewLowestElement",
-                    "resizeInterval": null,
-                    "sizeWidth": false,
-                    "autoResize": true,
-                    "maxHeight": null,
-                    "maxWidth": null,
-                    "minHeight": null,
-                    "minWidth": null,
-                    "nodeID": "4:0:7",
-                    "additionalClasses": [],
-                    "additionalStyles": []
-                  },
-                  {
-                    "type": "JSONLayoutViewContent",
-                    "sizeHeight": true,
-                    "resizeTolerance": 5,
-                    "scrolling": false,
-                    "resizeMethod": "viewLowestElement",
-                    "resizeInterval": null,
-                    "sizeWidth": false,
-                    "autoResize": true,
-                    "maxHeight": null,
-                    "maxWidth": null,
-                    "minHeight": null,
-                    "minWidth": null,
-                    "nodeID": "4:0:9",
-                    "additionalClasses": [],
-                    "additionalStyles": []
-                  }
-                ],
-                "additionalClasses": [],
-                "additionalStyles": []
+                ]
               }
             ]
+          },
+          "blackBoard": null,
+          "selectionTranslators": null,
+          "version": "4.1.0.v201912201424"
+        },
+        "webNodes": {
+          "14:0:26": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "List Long Opts ",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "possibleChoices": [
+                "someReallyLongButImportantValue1",
+                "someReallyLongButImportantValue2",
+                "someReallyLongButImportantValue3",
+                "someReallyLongButImportantValue4",
+                "someReallyLongButImportantValue5",
+                "someReallyLongButImportantValue6",
+                "someReallyLongButImportantValue7",
+                "someReallyLongButImportantValue8",
+                "someReallyLongButImportantValue9",
+                "someReallyLongButImportantValue\t\t\t10"
+              ],
+              "type": "List",
+              "limitNumberVisOptions": false,
+              "numberVisOptions": 5
+            },
+            "customCSS": ""
+          },
+          "14:0:25": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "List Short Opts",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "possibleChoices": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+              ],
+              "type": "List",
+              "limitNumberVisOptions": false,
+              "numberVisOptions": 5
+            },
+            "customCSS": ""
+          },
+          "14:0:17": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "Radio Button Horizontal Short Opts",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "possibleChoices": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+              ],
+              "type": "Radio buttons (horizontal)",
+              "limitNumberVisOptions": false,
+              "numberVisOptions": 10
+            },
+            "customCSS": ""
+          },
+          "14:0:16": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "Dropdown Long Opts",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "possibleChoices": [
+                "someReallyLongButImportantValue1",
+                "someReallyLongButImportantValue2",
+                "someReallyLongButImportantValue3",
+                "someReallyLongButImportantValue4",
+                "someReallyLongButImportantValue5",
+                "someReallyLongButImportantValue6",
+                "someReallyLongButImportantValue7",
+                "someReallyLongButImportantValue8",
+                "someReallyLongButImportantValue9",
+                "someReallyLongButImportantValue10"
+              ],
+              "type": "Dropdown",
+              "limitNumberVisOptions": false,
+              "numberVisOptions": 10
+            },
+            "customCSS": ""
+          },
+          "14:0:22": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "Radio Button Vert Long Opts",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "possibleChoices": [
+                "someReallyLongButImportantValue1",
+                "someReallyLongButImportantValue2",
+                "someReallyLongButImportantValue3",
+                "someReallyLongButImportantValue4",
+                "someReallyLongButImportantValue5",
+                "someReallyLongButImportantValue6",
+                "someReallyLongButImportantValue7",
+                "someReallyLongButImportantValue8",
+                "someReallyLongButImportantValue9",
+                "someReallyLongButImportantValue\t\t\t10"
+              ],
+              "type": "Radio buttons (vertical)",
+              "limitNumberVisOptions": false,
+              "numberVisOptions": 10
+            },
+            "customCSS": ""
+          },
+          "14:0:21": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "Radio Button Vert Short Opts",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "possibleChoices": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+              ],
+              "type": "Radio buttons (vertical)",
+              "limitNumberVisOptions": false,
+              "numberVisOptions": 10
+            },
+            "customCSS": ""
+          },
+          "14:0:13": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "Dropdown Short Opts",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "possibleChoices": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+              ],
+              "type": "Dropdown",
+              "limitNumberVisOptions": false,
+              "numberVisOptions": 10
+            },
+            "customCSS": ""
+          },
+          "14:0:24": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "List Long Opts W Limit 5",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "possibleChoices": [
+                "someReallyLongButImportantValue1",
+                "someReallyLongButImportantValue2",
+                "someReallyLongButImportantValue3",
+                "someReallyLongButImportantValue4",
+                "someReallyLongButImportantValue5",
+                "someReallyLongButImportantValue6",
+                "someReallyLongButImportantValue7",
+                "someReallyLongButImportantValue8",
+                "someReallyLongButImportantValue9",
+                "someReallyLongButImportantValue\t\t\t10"
+              ],
+              "type": "List",
+              "limitNumberVisOptions": true,
+              "numberVisOptions": 5
+            },
+            "customCSS": ""
+          },
+          "14:0:23": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "List Short Opts W Limit 5",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "possibleChoices": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+              ],
+              "type": "List",
+              "limitNumberVisOptions": true,
+              "numberVisOptions": 5
+            },
+            "customCSS": ""
+          },
+          "14:0:20": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "Radio Button Horizontal Long Opts W Limit 5",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "possibleChoices": [
+                "someReallyLongButImportantValue1",
+                "someReallyLongButImportantValue2",
+                "someReallyLongButImportantValue3",
+                "someReallyLongButImportantValue4",
+                "someReallyLongButImportantValue5",
+                "someReallyLongButImportantValue6",
+                "someReallyLongButImportantValue7",
+                "someReallyLongButImportantValue8",
+                "someReallyLongButImportantValue9",
+                "someReallyLongButImportantValue\t\t\t10"
+              ],
+              "type": "Radio buttons (horizontal)",
+              "limitNumberVisOptions": true,
+              "numberVisOptions": 5
+            },
+            "customCSS": ""
+          },
+          "14:0:19": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "Radio Button Horizontal Short Opts W Limit 5",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "1"
+                ]
+              },
+              "possibleChoices": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10"
+              ],
+              "type": "Radio buttons (horizontal)",
+              "limitNumberVisOptions": true,
+              "numberVisOptions": 5
+            },
+            "customCSS": ""
+          },
+          "14:0:18": {
+            "@class": "org.knime.js.core.JSONWebNode",
+            "getViewValueMethodName": "value",
+            "validateMethodName": "validate",
+            "initMethodName": "init",
+            "javascriptLibraries": [
+              "/js-lib/knime/service/knime_service_1_0_0.js",
+              "/js-lib/jQuery/jquery-1.11.0.min.js",
+              "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+              "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+              "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+              "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+              "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
+            ],
+            "stylesheets": [
+              "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+              "/js-lib/knime/service/knime.css",
+              "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+              "/org/knime/js/base/util/quickform/quickformStyles.css"
+            ],
+            "nodeInfo": {
+              "@class": "org.knime.js.core.JSONWebNodeInfo",
+              "nodeName": "Single Selection Widget",
+              "nodeAnnotation": "",
+              "nodeState": "executed",
+              "nodeErrorMessage": null,
+              "nodeWarnMessage": null,
+              "displayPossible": true
+            },
+            "setValidationErrorMethodName": "setValidationErrorMessage",
+            "namespace": "knimeSingleSelectionWidget",
+            "viewValue": null,
+            "viewRepresentation": {
+              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "label": "Radio Button Horizontal Long Opts",
+              "description": "Enter Description test",
+              "required": true,
+              "defaultValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "currentValue": {
+                "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
+                "value": [
+                  "someReallyLongButImportantValue1"
+                ]
+              },
+              "possibleChoices": [
+                "someReallyLongButImportantValue1",
+                "someReallyLongButImportantValue2",
+                "someReallyLongButImportantValue3",
+                "someReallyLongButImportantValue4",
+                "someReallyLongButImportantValue5",
+                "someReallyLongButImportantValue6",
+                "someReallyLongButImportantValue7",
+                "someReallyLongButImportantValue8",
+                "someReallyLongButImportantValue9",
+                "someReallyLongButImportantValue\t\t\t10"
+              ],
+              "type": "Radio buttons (horizontal)",
+              "limitNumberVisOptions": false,
+              "numberVisOptions": 10
+            },
+            "customCSS": ""
           }
-        ]
-      },
-      "blackBoard": null,
-      "selectionTranslators": null,
+        },
       "version": "4.1.0.v201912041250"
-    },
-    "webNodes": {
-      "4:0:7": {
-        "@class": "org.knime.js.core.JSONWebNode",
-        "nodeInfo": {
-          "@class": "org.knime.js.core.JSONWebNodeInfo",
-          "nodeErrorMessage": null,
-          "nodeWarnMessage": null,
-          "displayPossible": true,
-          "nodeName": "Single Selection Widget",
-          "nodeAnnotation": "",
-          "nodeState": "executed"
-        },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
-        ],
-        "initMethodName": "init",
-        "validateMethodName": "validate",
-        "setValidationErrorMethodName": "setValidationErrorMessage",
-        "getViewValueMethodName": "value",
-        "namespace": "knimeSingleSelectionWidget",
-        "viewRepresentation": {
-          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
-          "label": "Radio Hor",
-          "description": "Enter Description\t\t",
-          "required": true,
-          "defaultValue": {
-            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "O3"
-            ]
-          },
-          "currentValue": {
-            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "O3"
-            ]
-          },
-          "possibleChoices": [
-            "O1 ",
-            "Option 2",
-            "O3"
-          ],
-          "type": "Radio buttons (horizontal)",
-          "limitNumberVisOptions": false,
-          "numberVisOptions": 10
-        },
-        "viewValue": null,
-        "customCSS": ""
-      },
-      "4:0:6": {
-        "@class": "org.knime.js.core.JSONWebNode",
-        "nodeInfo": {
-          "@class": "org.knime.js.core.JSONWebNodeInfo",
-          "nodeErrorMessage": null,
-          "nodeWarnMessage": null,
-          "displayPossible": true,
-          "nodeName": "Single Selection Widget",
-          "nodeAnnotation": "",
-          "nodeState": "executed"
-        },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
-        ],
-        "initMethodName": "init",
-        "validateMethodName": "validate",
-        "setValidationErrorMethodName": "setValidationErrorMessage",
-        "getViewValueMethodName": "value",
-        "namespace": "knimeSingleSelectionWidget",
-        "viewRepresentation": {
-          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
-          "label": "Dropdown",
-          "description": "Enter Description",
-          "required": true,
-          "defaultValue": {
-            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "Option 2"
-            ]
-          },
-          "currentValue": {
-            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "Option 2"
-            ]
-          },
-          "possibleChoices": [
-            "Option 1",
-            "Option 2",
-            "Option 3"
-          ],
-          "type": "Dropdown",
-          "limitNumberVisOptions": false,
-          "numberVisOptions": 10
-        },
-        "viewValue": null,
-        "customCSS": ""
-      },
-      "4:0:9": {
-        "@class": "org.knime.js.core.JSONWebNode",
-        "nodeInfo": {
-          "@class": "org.knime.js.core.JSONWebNodeInfo",
-          "nodeErrorMessage": null,
-          "nodeWarnMessage": null,
-          "displayPossible": true,
-          "nodeName": "Single Selection Widget",
-          "nodeAnnotation": "",
-          "nodeState": "executed"
-        },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
-        ],
-        "initMethodName": "init",
-        "validateMethodName": "validate",
-        "setValidationErrorMethodName": "setValidationErrorMessage",
-        "getViewValueMethodName": "value",
-        "namespace": "knimeSingleSelectionWidget",
-        "viewRepresentation": {
-          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
-          "label": "List",
-          "description": "Enter Description\t",
-          "required": true,
-          "defaultValue": {
-            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "List Item 3"
-            ]
-          },
-          "currentValue": {
-            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "List Item 3"
-            ]
-          },
-          "possibleChoices": [
-            "List Item 1",
-            "List Item 2",
-            "List Item 3",
-            "List Item 4",
-            "List Item 5",
-            "List Item 6",
-            "List Item 7",
-            "List Item 8",
-            "List Item 9",
-            "List Item 10",
-            "List Item 11",
-            "List Item 12",
-            "List Item 13",
-            "List Item 14",
-            "List Item 15",
-            "List Item 16"
-          ],
-          "type": "List",
-          "limitNumberVisOptions": true,
-          "numberVisOptions": 5
-        },
-        "viewValue": null,
-        "customCSS": ""
-      },
-      "4:0:8": {
-        "@class": "org.knime.js.core.JSONWebNode",
-        "nodeInfo": {
-          "@class": "org.knime.js.core.JSONWebNodeInfo",
-          "nodeErrorMessage": null,
-          "nodeWarnMessage": null,
-          "displayPossible": true,
-          "nodeName": "Single Selection Widget",
-          "nodeAnnotation": "",
-          "nodeState": "executed"
-        },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/single/singleSelectionWidget.js"
-        ],
-        "initMethodName": "init",
-        "validateMethodName": "validate",
-        "setValidationErrorMethodName": "setValidationErrorMessage",
-        "getViewValueMethodName": "value",
-        "namespace": "knimeSingleSelectionWidget",
-        "viewRepresentation": {
-          "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
-          "label": "Radio Vert",
-          "description": "Enter Description\t",
-          "required": true,
-          "defaultValue": {
-            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "This"
-            ]
-          },
-          "currentValue": {
-            "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "This"
-            ]
-          },
-          "possibleChoices": [
-            "This",
-            "That ",
-            "Option "
-          ],
-          "type": "Radio buttons (vertical)",
-          "limitNumberVisOptions": false,
-          "numberVisOptions": 10
-        },
-        "viewValue": null,
-        "customCSS": ""
-      }
-    },
-    "version": "4.1.0.v201912041250"
+    }
   }
-}
+  
