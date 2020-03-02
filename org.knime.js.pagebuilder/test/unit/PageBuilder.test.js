@@ -2,7 +2,7 @@ import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import PageBuilder from '@/components/PageBuilder';
-import Page from '@/components/Page';
+import Page from '@/components/layout/Page';
 
 describe('PageBuilder.vue', () => {
 
@@ -26,6 +26,7 @@ describe('PageBuilder.vue', () => {
 
     it('initializes the pagebuilder store', () => {
         expect(store.state.pagebuilder).toBeDefined();
+        expect(store.state['pagebuilder/interactivity']).toBeDefined();
     });
 
     it('renders page component', () => {
