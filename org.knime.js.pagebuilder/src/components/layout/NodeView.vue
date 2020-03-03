@@ -2,7 +2,7 @@
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
 import NotAvailable from './NotAvailable';
-import { classToComponentMap } from '../widgets/widgets.config';
+// import { classToComponentMap } from '../widgets/widgets.config';
 
 /**
  * Wrapper for a single node view iframe or widget
@@ -68,8 +68,10 @@ export default {
             return style.join(';').replace(/;;/g, ';');
         },
         isWidget() {
-            return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
-                classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
+            // temporarily disable widget detection for preview release
+            /* return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
+                classToComponentMap[this.webNodeConfig.viewRepresentation['@class']]; */
+            return false;
         }
     }
 };

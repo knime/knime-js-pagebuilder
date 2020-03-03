@@ -109,7 +109,8 @@ describe('NodeView.vue', () => {
         expect(wrapper.find(NodeViewIFrame).props('viewConfig')).toEqual(viewConfig);
     });
 
-    it('can detect widgets', () => {
+    // temporarily disable widget detection for preview build
+    /* ( it('can detect widgets', () => {
         let viewConfig = {
             nodeID: 'id2'
         };
@@ -121,7 +122,7 @@ describe('NodeView.vue', () => {
         });
 
         expect(wrapper.vm.isWidget).toBeTruthy();
-    });
+    }); */
 
     it('can detect non-widgets', () => {
         let viewConfig = {
