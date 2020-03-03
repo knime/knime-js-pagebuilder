@@ -177,7 +177,7 @@ export default {
   </div>
 </template>
 
-<style scoped>
+<style lang="postcss" scoped>
 .single-select-widget {
   & .fieldset {
     min-width: auto;
