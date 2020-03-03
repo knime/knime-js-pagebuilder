@@ -319,9 +319,9 @@ describe('SingleSelectWidget.vue', () => {
             propsData: propsDataRadioHorizonal
         });
 
-        let rb = wrapper.find(RadioButtons);
-        expect(rb).toBeTruthy();
-        expect(rb.props('alignment')).toBe('horizontal');
+        let rb = wrapper.findAll(RadioButtons);
+        expect(rb.length).toBeGreaterThanOrEqual(1);
+        expect(rb.at(0).props('alignment')).toBe('horizontal');
     });
 
     it('renders radiobuttons vertical', () => {
@@ -330,9 +330,9 @@ describe('SingleSelectWidget.vue', () => {
             propsData: propsDataRadioVertical
         });
 
-        let rb = wrapper.find(RadioButtons);
-        expect(rb).toBeTruthy();
-        expect(rb.props('alignment')).toBe('vertical');
+        let rb = wrapper.findAll(RadioButtons);
+        expect(rb.length).toBeGreaterThanOrEqual(1);
+        expect(rb.at(0).props('alignment')).toBe('vertical');
     });
 
     it('renders list component', () => {
@@ -341,18 +341,18 @@ describe('SingleSelectWidget.vue', () => {
             propsData: propsDataList
         });
 
-        let rb = wrapper.find(ListBox);
-        expect(rb).toBeTruthy();
+        let lb = wrapper.findAll(ListBox);
+        expect(lb.length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders dropdown component', () => {
         propsDataDropdown.isValid = true;
         let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataList
+            propsData: propsDataDropdown
         });
 
-        let rb = wrapper.find(Dropdown);
-        expect(rb).toBeTruthy();
+        let dropdown = wrapper.findAll(Dropdown);
+        expect(dropdown.length).toBeGreaterThanOrEqual(1);
     });
 
     it('has no error message when valid', () => {
