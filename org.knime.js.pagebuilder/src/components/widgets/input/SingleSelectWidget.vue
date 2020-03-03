@@ -9,13 +9,8 @@ import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 const DATA_TYPE = 'value';
 
 /**
- * This is the String Input widget implementation. At this component
- * level, the primary goal is to parse the view representation into
- * the necessary configuration values to render the correct input
- * element.
- *
- * This widget has two rendering options: a standard input field or
- * a text area.
+ * Implementation of the Single Select Widget. Allows the user to select one item from a list of possible choices.
+ * The view representation can either be a Dropdown, ListBox or RadioButtons.
  */
 export default {
     components: {
