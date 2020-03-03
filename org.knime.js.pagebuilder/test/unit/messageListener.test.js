@@ -367,7 +367,8 @@ describe('message listener', () => {
             expect(lastCalledData).toBeDefined();
             expect(lastCalledData.type).toBe(data.type);
             expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.message).toBe('test');
+            expect(lastCalledData.error).toBe('View error message could not be set: Method does not exist.');
+            expect(lastCalledData.isValid).toBe(false);
             delete window['com.example'];
             parent.removeEventListener('message', errorListener);
             done();
