@@ -300,28 +300,15 @@ describe('SingleSelectWidget.vue', () => {
         };
     });
 
-    it('renders', () => {
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioHorizonal
-        });
-        expect(wrapper.html()).toBeTruthy();
-        expect(wrapper.isVisible()).toBeTruthy();
-        let wrapper2 = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioVertical
-        });
-        expect(wrapper2.html()).toBeTruthy();
-        expect(wrapper2.isVisible()).toBeTruthy();
-    });
-
     it('renders radiobuttons horizontal', () => {
         propsDataRadioHorizonal.isValid = true;
         let wrapper = shallowMount(SingleSelectWidget, {
             propsData: propsDataRadioHorizonal
         });
 
-        let rb = wrapper.findAll(RadioButtons);
-        expect(rb.length).toBeGreaterThanOrEqual(1);
-        expect(rb.at(0).props('alignment')).toBe('horizontal');
+        let rb = wrapper.find(RadioButtons);
+        expect(rb.exists()).toBe(true);
+        expect(rb.props('alignment')).toBe('horizontal');
     });
 
     it('renders radiobuttons vertical', () => {
@@ -330,9 +317,9 @@ describe('SingleSelectWidget.vue', () => {
             propsData: propsDataRadioVertical
         });
 
-        let rb = wrapper.findAll(RadioButtons);
-        expect(rb.length).toBeGreaterThanOrEqual(1);
-        expect(rb.at(0).props('alignment')).toBe('vertical');
+        let rb = wrapper.find(RadioButtons);
+        expect(rb.exists()).toBe(true);
+        expect(rb.props('alignment')).toBe('vertical');
     });
 
     it('renders list component', () => {
@@ -341,8 +328,7 @@ describe('SingleSelectWidget.vue', () => {
             propsData: propsDataList
         });
 
-        let lb = wrapper.findAll(ListBox);
-        expect(lb.length).toBeGreaterThanOrEqual(1);
+        expect(wrapper.find(ListBox).exists()).toBe(true);
     });
 
     it('renders dropdown component', () => {
@@ -351,8 +337,7 @@ describe('SingleSelectWidget.vue', () => {
             propsData: propsDataDropdown
         });
 
-        let dropdown = wrapper.findAll(Dropdown);
-        expect(dropdown.length).toBeGreaterThanOrEqual(1);
+        expect(wrapper.find(Dropdown).exists()).toBe(true);
     });
 
     it('has no error message when valid', () => {
