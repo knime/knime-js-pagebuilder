@@ -3,6 +3,7 @@ import Label from '~/webapps-common/ui/components/forms/Label';
 import Button from '~/webapps-common/ui/components/Button';
 
 import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg?inline';
+import CircleWarningIcon from '~/webapps-common/ui/assets/img/icons/circle-warning.svg?inline';
 import CloseIcon from '~/webapps-common/ui/assets/img/icons/close.svg?inline';
 import DropdownIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline';
 import CopyIcon from '~/webapps-common/ui/assets/img/icons/copy.svg?inline';
@@ -18,6 +19,7 @@ export default {
         Label,
         Button,
         SignWarningIcon,
+        CircleWarningIcon,
         CloseIcon,
         DropdownIcon,
         CopyIcon
@@ -128,7 +130,10 @@ export default {
       <section v-if="active">
         <div :class="['pop-over', expandedClass, type]">
           <header>
-            <SignWarningIcon class="icon warn-icon" />
+            <Component
+              :is="type === 'warn' ? 'CircleWarningIcon' : 'SignWarningIcon'"
+              class="icon warn-icon"
+            />
             <Label
               :text="title"
               class="label"
