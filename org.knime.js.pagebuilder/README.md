@@ -7,7 +7,7 @@ The PageBuilder is built as an [Vue library] and used in KNIME Analytics Platfor
 
 ### Prerequisites
 
-* Install [Node.js version 12][node].
+* Install [Node.js **Version 12**][node].
 * Only for test coverage uploads to SonarQube: you also need [Java]™ 8 or 11.
 
 Newer versions may also work, but have not been tested.
@@ -246,7 +246,7 @@ let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
 
 
 [Vue]: https://vuejs.org/
-[node]: https://nodejs.org/en/download/
+[node]: https://knime-com.atlassian.net/wiki/spaces/SPECS/pages/905281540/Node.js+Installation
 [Java]: https://www.oracle.com/technetwork/java/javase/downloads/index.html
 [Vue CLI docs]: https://cli.vuejs.org/guide/
 [Vue library]: https://cli.vuejs.org/guide/build-targets.html#library
