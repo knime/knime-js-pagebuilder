@@ -331,6 +331,31 @@ describe('SingleSelectWidget.vue', () => {
         expect(wrapper.find(ListBox).exists()).toBe(true);
     });
 
+    it('list size is set', () => {
+        propsDataList.isValid = true;
+        let wrapper = shallowMount(SingleSelectWidget, {
+            propsData: propsDataList
+        });
+        let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
+        expect(wrapper.find(ListBox).props('size')).toBe(size);
+    });
+
+    it('list: isValid is passed proper', () => {
+        propsDataList.isValid = false;
+        let wrapper = shallowMount(SingleSelectWidget, {
+            propsData: propsDataList
+        });
+        expect(wrapper.find(ListBox).props('isValid')).toBe(false);
+    });
+
+    it('dropdown: isValid is passed proper', () => {
+        propsDataDropdown.isValid = false;
+        let wrapper = shallowMount(SingleSelectWidget, {
+            propsData: propsDataDropdown
+        });
+        expect(wrapper.find(Dropdown).props('isValid')).toBe(false);
+    });
+
     it('renders dropdown component', () => {
         propsDataDropdown.isValid = true;
         let wrapper = shallowMount(SingleSelectWidget, {
