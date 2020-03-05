@@ -6,57 +6,71 @@
         }
         var namespace = data.namespace;
         var nodeId = data.nodeId;
-        if (data.type === 'init') {
-            var initMethodName = data.initMethodName;
-            var viewRepresentation = data.viewRepresentation;
-            var viewValue = data.viewValue;
-            window[namespace][initMethodName](viewRepresentation, viewValue);
-        } else if (data.type === 'validate') {
-            var validateResponse = function (valid, errMsg) {
-                var resp = {
-                    isValid: valid,
-                    nodeId: nodeId,
-                    type: 'validate'
-                };
-                resp.error = errMsg || resp.error;
-                return resp;
+        var postMessageResponse = function (resp) {
+            resp.nodeId = nodeId;
+            parent.postMessage(resp, window.origin);
+        };
+        var postErrorResponse = function (type, errMsg) {
+            var resp = {
+                isValid: false,
+                nodeId: nodeId,
+                type: type,
+                error: errMsg
             };
-            var validateMethod = window[namespace] && window[namespace][data.validateMethodName];
-            if (typeof validateMethod === 'function') {
+            parent.postMessage(resp, window.origin);
+        };
+        if (data.type === 'init') {
+            if (window[namespace] && typeof window[namespace][data.initMethodName] === 'function') {
                 try {
-                    var validity = validateMethod();
-                    parent.postMessage(validateResponse(validity), window.origin);
+                    window[namespace][data.initMethodName](data.viewRepresentation, data.viewValue);
                 } catch (err) {
-                    parent.postMessage(validateResponse(false, 'View could not be validated: ' + err),
-                        window.origin);
+                    postErrorResponse(data.type, 'View initialization failed: ' + err);
                 }
             } else {
-                parent.postMessage(validateResponse(false, 'Validate method not present in view.'),
-                    window.origin);
+                postErrorResponse(data.type, 'Init method not present in view.');
+            }
+        } else if (data.type === 'validate') {
+            var validResp = {
+                isValid: true,
+                type: 'validate'
+            };
+            // optional method; some views don't have (i.e. some quickforms)
+            if (window[namespace] && typeof window[namespace][data.validateMethodName] === 'function') {
+                try {
+                    validResp.isValid = window[namespace][data.validateMethodName]();
+                    postMessageResponse(validResp);
+                } catch (err) {
+                    postErrorResponse(data.type, 'View could not be validated: ' + err);
+                }
+            } else {
+                postMessageResponse(validResp);
             }
         } else if (data.type === 'getValue') {
-            var getValueMethod = window[namespace] && window[namespace][data.getViewValueMethodName];
-            if (typeof getValueMethod === 'function') {
+            if (window[namespace] && typeof window[namespace][data.getViewValueMethodName] === 'function') {
                 try {
-                    var retrievedValue = getValueMethod();
+                    var value = window[namespace][data.getViewValueMethodName]();
                     parent.postMessage({
-                        value: retrievedValue,
+                        value: value,
                         nodeId: nodeId,
                         type: 'getValue'
                     }, window.origin);
                 } catch (err) {
-                    parent.postMessage({
-                        error: 'Value could not be retrieved from view: ' + err,
-                        nodeId: nodeId,
-                        type: 'getValue'
-                    }, window.origin);
+                    postErrorResponse(data.type, 'Value could not be retrieved from view: ' + err);
                 }
             } else {
-                parent.postMessage({
-                    error: 'Value method not present in view',
-                    nodeId: nodeId,
-                    type: 'getValue'
-                }, window.origin);
+                postErrorResponse(data.type, 'Value method not present in view.');
+            }
+        } else if (data.type === 'setValidationError') {
+            var errorMessagePrefix = 'View error message could not be set: ';
+            // optional method; some views don't have (i.e. some quickforms)
+            if (window[namespace] && typeof window[namespace][data.setValidationErrorMethodName] === 'function') {
+                try {
+                    window[namespace][data.setValidationErrorMethodName](data.errorMessage);
+                } catch (err) {
+                    postErrorResponse(data.type, errorMessagePrefix + err);
+                }
+            } else {
+                postErrorResponse(data.type, errorMessagePrefix + 'Method does not exist.');
             }
         }
     };

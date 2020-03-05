@@ -19,7 +19,7 @@ import { createSubTicks } from './subTickUtil';
  *          for the formatting of tick labels. (see util/numStrFormatter
  *          .js : format() for all possible keys).
  * @param  {Number} [tickConfig.config.density] - the user provided
- *          value for the 'density'setting; this essentially sets the
+ *          value for the 'density' setting; this essentially sets the
  *          'preferred' frequency of ticks on the slider. The number
  *          represents the distance as a percent of the whole slider
  *          where the user would like to see a tick (labelled or
@@ -44,9 +44,20 @@ export const createTicks = (tickConfig) => {
         switch (config.mode) {
         case 'steps':
         case 'count': {
-            const step = config.mode === 'steps'
+            const MAX_AUTO_GEN_TICKS = 10000;
+            const DEFAULT_DENSITY = 3;
+            let step = config.mode === 'steps'
                 ? Number(stepSize)
                 : (max - min) / config.values[0];
+            /*
+                Prevent people from crashing the browser by trying to use too many
+                steps. Default to using density which provides a reasonable number
+                of unlabeled ticks.
+            */
+            if ((max - min) / step > MAX_AUTO_GEN_TICKS) {
+                config.density = config.density || DEFAULT_DENSITY;
+                break;
+            }
             for (let i = 0; i < (max - min) / step; i++) {
                 let val = min + step * i;
                 markConfig[val] = format(val, config.format);

@@ -149,7 +149,7 @@ export default {
 .vue-slider-process {
   cursor: pointer;
   background-color: var(--theme-color-yellow);
-  border-radius: 0;
+  border-radius: 3.5px;
 }
 
 /* invalid state */
@@ -160,13 +160,13 @@ export default {
 .vue-slider-ttb .vue-slider-process,
 .vue-slider-btt .vue-slider-process {
   width: 7px !important;
-  left: -2.5px !important;
+  left: -3px !important;
 }
 
 .vue-slider-rtl .vue-slider-process,
 .vue-slider-ltr .vue-slider-process {
   height: 7px !important;
-  top: -2px !important;
+  top: -3px !important;
 }
 
 .none .vue-slider-process {
@@ -199,7 +199,6 @@ export default {
   width: 10px !important;
   height: 1px !important;
   left: 11px !important;
-  top: 2px !important;
 }
 
 .vue-slider-ltr .vue-slider-mark-step,
@@ -207,7 +206,6 @@ export default {
   width: 1px !important;
   height: 10px !important;
   top: 11px !important;
-  left: 2px !important;
 }
 
 .vue-slider-mark-label {
@@ -231,8 +229,9 @@ export default {
 .vue-slider-dot {
   cursor: pointer;
   height: 29px !important;
-  width: 19px !important;
+  width: 13px !important;
   border: 1px solid var(--theme-color-stone-gray);
+  border-radius: 9.5px;
   background: var(--theme-color-white);
   z-index: 1;
 }
@@ -244,7 +243,7 @@ export default {
 .vue-slider-ttb .vue-slider-dot,
 .vue-slider-btt .vue-slider-dot {
   left: 0 !important;
-  height: 19px !important;
+  height: 13px !important;
   width: 29px !important;
 }
 
@@ -254,37 +253,7 @@ export default {
 }
 
 .vue-slider-dot-handle {
-  cursor: pointer;
-  width: 5px;
-  height: 11px;
-  border-color: var(--theme-color-masala);
-  border-style: solid;
-  border-top: 0;
-  border-bottom: 0;
-  border-left-width: 1px;
-  border-right-width: 1px;
-  box-sizing: border-box;
-  position: relative;
-  left: 6px !important;
-  top: 8px !important;
-}
-
-.vue-slider-ttb .vue-slider-dot-handle,
-.vue-slider-btt .vue-slider-dot-handle {
-  width: 5px !important;
-  height: 11px !important;
-  top: 3px !important;
-  left: 11.75px !important;
-  transform: rotate(90deg);
-}
-
-.vue-slider-dot-handle-focus {
-  border-color: var(--theme-color-white);
-}
-
-.vue-slider-dot-handle-disabled {
-  cursor: not-allowed;
-  background-color: var(--theme-color-gray-dark-semi);
+  display: none;
 }
 
 .vue-slider-dot-tooltip-inner {

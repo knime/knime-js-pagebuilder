@@ -103,12 +103,26 @@ export default {
         hasValueGetter() {
             return typeof this.$refs.widget.onChange === 'function';
         },
+        /**
+         * Check for valid nodeConfig for setting validation failure messages.
+         *
+         * @returns {Boolean}
+         */
+        hasValidationErrorMessage() {
+            return typeof this.nodeConfig.nodeInfo !== 'undefined';
+        },
         valuePair() {
             return this.nodeConfig.viewRepresentation.currentValue;
         }
     },
     async mounted() {
-        // prevent incompatible widgets (i.e. output) from registering getter
+        // prevent incompatible widgets (i.e. output) from registering methods with store
+        if (this.hasValidationErrorMessage) {
+            this.$store.dispatch('pagebuilder/addValidationErrorSetter', {
+                nodeId: this.nodeId,
+                errorSetter: this.setValidationError
+            });
+        }
         if (this.hasValueGetter) {
             this.$store.dispatch('pagebuilder/addValueGetter', { nodeId: this.nodeId, valueGetter: this.getValue });
         }
@@ -120,6 +134,11 @@ export default {
         }
     },
     beforeDestroy() {
+        if (this.hasValidationErrorMessage) {
+            this.$store.dispatch('pagebuilder/removeValidationErrorSetter', {
+                nodeId: this.nodeId
+            });
+        }
         if (this.hasValidator) {
             this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         }
@@ -166,6 +185,18 @@ export default {
                 } finally {
                     resolve({ nodeId: this.nodeId, isValid });
                 }
+            });
+        },
+        setValidationError(errMsg) {
+            return new Promise((resolve, reject) => {
+                this.updateWebNode({
+                    nodeId: this.nodeId,
+                    update: {
+                        'nodeInfo.nodeErrorMessage': errMsg
+                    }
+                });
+                this.isValid = false;
+                resolve();
             });
         },
         ...mapActions({
