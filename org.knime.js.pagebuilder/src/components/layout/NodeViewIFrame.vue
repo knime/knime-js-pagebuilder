@@ -143,6 +143,7 @@ export default {
 
             // script loader
             let scriptLoader = `<script>${scriptLoaderSrc
+                .replace("'%RESOURCEBASEURL%'", JSON.stringify(resourceBaseUrl))
                 .replace("'%ORIGIN%'", JSON.stringify(window.origin))
                 .replace("'%NAMESPACE%'", JSON.stringify(this.nodeConfig.namespace))
                 .replace("'%NODEID%'", JSON.stringify(this.nodeId))
