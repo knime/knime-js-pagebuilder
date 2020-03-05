@@ -9,13 +9,8 @@ import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 const DATA_TYPE = 'value';
 
 /**
- * This is the String Input widget implementation. At this component
- * level, the primary goal is to parse the view representation into
- * the necessary configuration values to render the correct input
- * element.
- *
- * This widget has two rendering options: a standard input field or
- * a text area.
+ * Implementation of the Single Select Widget. Allows the user to select one item from a list of possible choices.
+ * The view representation can either be a Dropdown, ListBox or RadioButtons.
  */
 export default {
     components: {
@@ -62,7 +57,10 @@ export default {
             return this.viewRep.label;
         },
         possibleChoices() {
-            return this.viewRep.possibleChoices.map((x) => ({ id: x, text: x }));
+            return this.viewRep.possibleChoices.map((x) => ({
+                id: x,
+                text: x
+            }));
         },
         description() {
             return this.viewRep.description || null;
@@ -99,7 +97,7 @@ export default {
         },
         isRadioButtons() {
             return this.viewRep.type === 'Radio buttons (vertical)' ||
-                    this.viewRep.type === 'Radio buttons (horizontal)';
+                this.viewRep.type === 'Radio buttons (horizontal)';
         },
         radioButtonsAlignment() {
             if (this.viewRep.type === 'Radio buttons (vertical)') {
@@ -131,10 +129,11 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="single-select-widget">
     <Fieldset
       v-if="isRadioButtons"
       :text="label"
+      class="fieldset"
     >
       <RadioButtons
         v-if="isRadioButtons"
@@ -177,3 +176,12 @@ export default {
     </Label>
   </div>
 </template>
+
+<style lang="postcss" scoped>
+.single-select-widget {
+  & .fieldset {
+    min-width: auto;
+    overflow-x: hidden;
+  }
+}
+</style>

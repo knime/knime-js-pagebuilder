@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelectWidget from '@/components/widgets/input/SingleSelectWidget';
 import RadioButtons from '~/webapps-common/ui/components/forms/RadioButtons';
@@ -7,10 +7,10 @@ import ListBox from '~/webapps-common/ui/components/forms/ListBox';
 import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
 
 describe('SingleSelectWidget.vue', () => {
-    let propsDataRadioHorizonal, propsDataRadioVertical, propsDataDropdown, propsDataList;
+    let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
 
     beforeEach(() => {
-        propsDataRadioHorizonal = {
+        propsDataRadioHorizontal = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 nodeInfo: {
@@ -300,96 +300,214 @@ describe('SingleSelectWidget.vue', () => {
         };
     });
 
-    it('renders', () => {
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioHorizonal
+    describe('radiobuttons', () => {
+        it('renders horizontal', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioHorizontal
+            });
+
+            let rb = wrapper.find(RadioButtons);
+            expect(rb.exists()).toBe(true);
+            expect(rb.props('alignment')).toBe('horizontal');
         });
-        expect(wrapper.html()).toBeTruthy();
-        expect(wrapper.isVisible()).toBeTruthy();
-        let wrapper2 = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioVertical
+
+        it('fails on invalid type (alignment)', () => {
+            propsDataRadioHorizontal.nodeConfig.viewRepresentation.type = 'Radio buttons (vulcano)';
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioHorizontal
+            });
+
+            let rb = wrapper.find(RadioButtons);
+            expect(rb.exists()).toBe(false);
         });
-        expect(wrapper2.html()).toBeTruthy();
-        expect(wrapper2.isVisible()).toBeTruthy();
+
+        it('renders vertical', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioVertical
+            });
+
+            let rb = wrapper.find(RadioButtons);
+            expect(rb.exists()).toBe(true);
+            expect(rb.props('alignment')).toBe('vertical');
+        });
+
+        it('sends @updateWidget if child emits @input', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioVertical
+            });
+
+            const testValue = 'VALUE';
+            const lb = wrapper.find(RadioButtons);
+            lb.vm.$emit('input', testValue);
+
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsDataRadioVertical.nodeId,
+                type: 'value',
+                value: [testValue]
+            });
+        });
     });
 
-    it('renders radiobuttons horizontal', () => {
-        propsDataRadioHorizonal.isValid = true;
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioHorizonal
+    describe('list', () => {
+        it('renders', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataList
+            });
+
+            expect(wrapper.find(ListBox).exists()).toBe(true);
         });
 
-        let rb = wrapper.find(RadioButtons);
-        expect(rb).toBeTruthy();
-        expect(rb.props('alignment')).toBe('horizontal');
-    });
-
-    it('renders radiobuttons vertical', () => {
-        propsDataRadioVertical.isValid = true;
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioVertical
+        it('has size set', () => {
+            propsDataList.isValid = true;
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataList
+            });
+            let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
+            expect(wrapper.find(ListBox).props('size')).toBe(size);
         });
 
-        let rb = wrapper.find(RadioButtons);
-        expect(rb).toBeTruthy();
-        expect(rb.props('alignment')).toBe('vertical');
-    });
-
-    it('renders list component', () => {
-        propsDataList.isValid = true;
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataList
+        it('defaults to 0 if no size is set', () => {
+            const localThis = {
+                viewRep: {
+                    limitNumberVisOptions: false
+                }
+            };
+            expect(SingleSelectWidget.computed.maxVisibleListEntries.call(localThis)).toBe(0);
         });
 
-        let rb = wrapper.find(ListBox);
-        expect(rb).toBeTruthy();
-    });
-
-    it('renders dropdown component', () => {
-        propsDataDropdown.isValid = true;
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataList
+        it('passes isValid to component', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: { ...propsDataList, isValid: false }
+            });
+            expect(wrapper.find(ListBox).props('isValid')).toBe(false);
         });
 
-        let rb = wrapper.find(Dropdown);
-        expect(rb).toBeTruthy();
+        it('sends @updateWidget if child emits @input', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataList
+            });
+
+            const testValue = 'VALUE';
+            const lb = wrapper.find(ListBox);
+            lb.vm.$emit('input', testValue);
+
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsDataList.nodeId,
+                type: 'value',
+                value: [testValue]
+            });
+        });
     });
 
-    it('has no error message when valid', () => {
-        propsDataRadioHorizonal.isValid = true;
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioHorizonal
+    describe('dropdown', () => {
+        it('renders', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataDropdown
+            });
+
+            expect(wrapper.find(Dropdown).exists()).toBe(true);
         });
 
-        expect(wrapper.vm.errorMessage).toBe(null);
-    });
-
-    it('has default error message', () => {
-        propsDataRadioHorizonal.nodeConfig.viewRepresentation.errorMessage = false;
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioHorizonal
+        it('passes isValid to component', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: { ...propsDataDropdown, isValid: false }
+            });
+            expect(wrapper.find(Dropdown).props('isValid')).toBe(false);
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Current selected item is invalid');
+        it('sends @updateWidget if child emits @input', () => {
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataDropdown
+            });
+
+            const testValue = 'VALUE';
+            const lb = wrapper.find(Dropdown);
+            lb.vm.$emit('input', testValue);
+
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsDataDropdown.nodeId,
+                type: 'value',
+                value: [testValue]
+            });
+        });
     });
 
-    it('has warning message', () => {
-        propsDataRadioHorizonal.nodeConfig.viewRepresentation.errorMessage = false;
-        propsDataRadioHorizonal.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioHorizonal
+    describe('validation', () => {
+        it('is always positive if not required', () => {
+            propsDataList.nodeConfig.viewRepresentation.required = false;
+            propsDataList.nodeConfig.viewRepresentation.currentValue.value = [];
+            propsDataList.nodeConfig.viewRepresentation.defaultValue.value = [];
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataList
+            });
+
+            expect(wrapper.vm.validate()).toBe(true);
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Testing warning message');
+        it('is positive if it has a value', () => {
+            propsDataList.nodeConfig.viewRepresentation.required = true;
+            let wrapper = mount(SingleSelectWidget, {
+                propsData: propsDataList
+            });
+            // without this the sub component will never have a value in the test
+            // we do not want to set it in html as this would violate the test scope
+            wrapper.vm.$refs.form.$data.selectedIndex = 1;
+
+            expect(wrapper.vm.validate()).toBe(true);
+        });
     });
 
-    it('has error message', () => {
-        propsDataRadioHorizonal.nodeConfig.viewRepresentation.errorMessage = false;
-        propsDataRadioHorizonal.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-        let wrapper = shallowMount(SingleSelectWidget, {
-            propsData: propsDataRadioHorizonal
+    describe('error message', () => {
+
+        it('is absent when valid', () => {
+            propsDataRadioHorizontal.isValid = true;
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe(null);
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Testing error message');
+        it('is default if none is set', () => {
+            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe('Current selected item is invalid');
+        });
+
+        it('is node warning message if set', () => {
+            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
+            propsDataRadioHorizontal.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe('Testing warning message');
+        });
+
+        it('is node error message if provided', () => {
+            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
+            propsDataRadioHorizontal.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe('Testing error message');
+        });
+
+        it('is error message if provided', () => {
+            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
+            let wrapper = shallowMount(SingleSelectWidget, {
+                propsData: propsDataRadioHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
+        });
     });
+
 });
