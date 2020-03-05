@@ -74,7 +74,7 @@ export default {
             if (this.viewRep.limitNumberVisOptions) {
                 return this.viewRep.numberVisOptions;
             }
-            return 0;
+            return 8; // default size
         },
         errorMessage() {
             if (this.isValid) {
