@@ -134,10 +134,11 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="multi-select-widget">
     <Fieldset
       v-if="isCheckboxes || isTwinlist"
       :text="label"
+      class="fieldset"
     >
       <Checkboxes
         v-if="isCheckboxes"
@@ -183,3 +184,13 @@ export default {
     </Label>
   </div>
 </template>
+
+<style lang="postcss" scoped>
+.multi-select-widget {
+  /* required for text ellipsis on checkboxes */
+  & .fieldset {
+    min-width: auto;
+    overflow-x: hidden;
+  }
+}
+</style>
