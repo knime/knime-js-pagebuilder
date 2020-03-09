@@ -72,6 +72,23 @@ describe('NumberWidget.vue', () => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
+    it('emits @updateWidget if child emits @input', () => {
+        let wrapper = shallowMount(NumberWidget, {
+            propsData
+        });
+
+        const testValue = '5';
+        const input = wrapper.find(NumberInput);
+        input.vm.$emit('input', testValue);
+
+        expect(wrapper.emitted().updateWidget).toBeTruthy();
+        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+            nodeId: propsData.nodeId,
+            type: 'double',
+            value: testValue
+        });
+    });
+
     it('\'s children will change appearance when invalid', () => {
         let wrapper = mount(NumberWidget, {
             propsData
