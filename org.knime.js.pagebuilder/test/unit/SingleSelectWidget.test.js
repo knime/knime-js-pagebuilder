@@ -331,7 +331,7 @@ describe('SingleSelectWidget.vue', () => {
             expect(rb.props('alignment')).toBe('vertical');
         });
 
-        it('sends @updateWidget if child emits @input', () => {
+        it('emits @updateWidget if child emits @input', () => {
             let wrapper = shallowMount(SingleSelectWidget, {
                 propsData: propsDataRadioVertical
             });

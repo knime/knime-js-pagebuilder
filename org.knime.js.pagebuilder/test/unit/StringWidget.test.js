@@ -122,49 +122,102 @@ describe('StringWidget.vue', () => {
         };
     });
 
-    it('renders', () => {
-        let wrapper = shallowMount(StringWidget, {
-            propsData: propsDataInput
+    describe('input field', () => {
+        it('renders', () => {
+            let wrapper = shallowMount(StringWidget, {
+                propsData: propsDataInput
+            });
+            expect(wrapper.html()).toBeTruthy();
+            expect(wrapper.isVisible()).toBeTruthy();
+            expect(wrapper.find(InputField)).toBeTruthy();
         });
-        expect(wrapper.html()).toBeTruthy();
-        expect(wrapper.isVisible()).toBeTruthy();
-        let wrapper2 = shallowMount(StringWidget, {
-            propsData: propsDateTextArea
+
+        it('emits @updateWidget if child emits @input', () => {
+            let wrapper = shallowMount(StringWidget, {
+                propsData: propsDataInput
+            });
+    
+            const testValue = 'VALUE';
+            const input = wrapper.find(InputField);
+            input.vm.$emit('input', testValue);
+    
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsDataInput.nodeId,
+                type: 'string',
+                value: testValue
+            });
         });
-        expect(wrapper2.html()).toBeTruthy();
-        expect(wrapper2.isVisible()).toBeTruthy();
+
+        it('will be invalid if widget is', () => {
+            let widget = mount(StringWidget, {
+                propsData: { ...propsDataInput, isValid: true }
+            });
+
+            let textComponent = widget.find(InputField);
+            expect(textComponent.props('isValid')).toBe(true);
+            widget.setProps({ isValid: false });
+            expect(textComponent.props('isValid')).toBe(false);
+        });
+
+        it('will return invalid when the value is required but missing', () => {
+            let wrapper = mount(StringWidget, {
+                propsData: propsDataInput
+            });
+            wrapper.find(InputField).setProps({ value: '' });
+            expect(wrapper.vm.validate()).toBeFalsy();
+            wrapper.find(InputField).setProps({ value: 'a' });
+            expect(wrapper.vm.validate()).toBeTruthy();
+        });
     });
 
-    it('will render a text input field or a text area field based on settings', () => {
-        let wrapper = mount(StringWidget, {
-            propsData: propsDataInput
+    describe('text area', () => {
+        it('renders', () => {
+            let wrapper = shallowMount(StringWidget, {
+                propsData: propsDateTextArea
+            });
+            expect(wrapper.html()).toBeTruthy();
+            expect(wrapper.isVisible()).toBeTruthy();
+            expect(wrapper.find(TextArea)).toBeTruthy();
         });
 
-        expect(wrapper.find(InputField)).toBeTruthy();
-        wrapper.setProps(propsDateTextArea);
-        expect(wrapper.find(TextArea)).toBeTruthy();
-    });
-
-    it('\'s input will be invalid if widget is', () => {
-        let widget = mount(StringWidget, {
-            propsData: { ...propsDataInput, isValid: true }
+        it('emits @updateWidget if child emits @input', () => {
+            let wrapper = shallowMount(StringWidget, {
+                propsData: propsDataInput
+            });
+    
+            const testValue = 'VALUE';
+            const input = wrapper.find(InputField);
+            input.vm.$emit('input', testValue);
+    
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsDataInput.nodeId,
+                type: 'string',
+                value: testValue
+            });
         });
 
-        let textComponent = widget.find(InputField);
-        expect(textComponent.props('isValid')).toBe(true);
-        widget.setProps({ isValid: false });
-        expect(textComponent.props('isValid')).toBe(false);
-    });
+        it('will be invalid if widget is', () => {
+            let widget = mount(StringWidget, {
+                propsData: { ...propsDateTextArea, isValid: true }
+            });
 
-    it('\'s textarea will be invalid if widget is', () => {
-        let widget = mount(StringWidget, {
-            propsData: { ...propsDateTextArea, isValid: true }
+            let textComponent = widget.find(TextArea);
+            expect(textComponent.props('isValid')).toBe(true);
+            widget.setProps({ isValid: false });
+            expect(textComponent.props('isValid')).toBe(false);
         });
 
-        let textComponent = widget.find(TextArea);
-        expect(textComponent.props('isValid')).toBe(true);
-        widget.setProps({ isValid: false });
-        expect(textComponent.props('isValid')).toBe(false);
+        it('will return invalid when the value is required but missing', () => {
+            let wrapper = mount(StringWidget, {
+                propsData: propsDateTextArea
+            });
+            wrapper.find(TextArea).setProps({ value: '' });
+            expect(wrapper.vm.validate()).toBeFalsy();
+            wrapper.find(TextArea).setProps({ value: 'a' });
+            expect(wrapper.vm.validate()).toBeTruthy();
+        });
     });
 
     it('has validate logic to validate non-required values', () => {
@@ -176,24 +229,6 @@ describe('StringWidget.vue', () => {
         expect(wrapper.vm.validate()).toBe(true);
         wrapper.find(InputField).setProps({ value: '' });
         expect(wrapper.vm.validate()).toBe(true);
-    });
-
-    it('will return invalid when the value is required but missing', () => {
-        let wrapper = mount(StringWidget, {
-            propsData: propsDataInput
-        });
-        wrapper.find(InputField).setProps({ value: '' });
-        expect(wrapper.vm.validate()).toBeFalsy();
-        wrapper.find(InputField).setProps({ value: 'a' });
-        expect(wrapper.vm.validate()).toBeTruthy();
-
-        let wrapper2 = mount(StringWidget, {
-            propsData: propsDateTextArea
-        });
-        wrapper2.find(TextArea).setProps({ value: '' });
-        expect(wrapper2.vm.validate()).toBeFalsy();
-        wrapper2.find(TextArea).setProps({ value: 'a' });
-        expect(wrapper2.vm.validate()).toBeTruthy();
     });
 
     it('has no error message when valid', () => {
