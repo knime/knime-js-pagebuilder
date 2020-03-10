@@ -1,3 +1,5 @@
+window.knimeResourceBaseUrl = '%RESOURCEBASEURL%';
+
 window.knimeLoader = (function () {
     var origin = '%ORIGIN%';
     var namespace = '%NAMESPACE%';
@@ -33,4 +35,5 @@ window.knimeLoader = (function () {
             postResponse();
         }
     };
+
 })();

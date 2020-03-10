@@ -11,7 +11,7 @@ jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorH
 jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertHandler.js mock";
     foo = ['%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
-    foo = ['%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
+    foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
@@ -101,7 +101,7 @@ describe('NodeViewIframe.vue', () => {
             expect(html).toMatch('scriptLoader.js mock');
             expect(html).toMatch('loadErrorHandler.js mock');
             expect(html).toMatch('viewAlertHandler.js mock');
-            expect(html).toMatch(`["${window.origin}", "knimespace", "0:0:7", 2]`);
+            expect(html).toMatch(`["http://baseurl.test.example/", "${window.origin}", "knimespace", "0:0:7", 2]`);
             expect(html).toMatch('<script src="http://baseurl.test.example/foo/bar.js" ' +
                 'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
             expect(html).toMatch('<script src="http://baseurl.test.example/qux/baz.js" ' +
