@@ -74,6 +74,7 @@ export default {
             if (this.viewRep.limitNumberVisOptions) {
                 return this.viewRep.numberVisOptions;
             }
+            // eslint-disable-next-line no-magic-numbers
             return 8; // default size
         },
         errorMessage() {

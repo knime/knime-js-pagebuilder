@@ -1,10 +1,11 @@
 /* eslint-disable no-magic-numbers */
-import { shallowMount } from '@vue/test-utils';
+import { mount, shallowMount } from '@vue/test-utils';
 
 import MultiSelectWidget from '@/components/widgets/input/MultiSelectWidget';
 import Checkboxes from '~/webapps-common/ui/components/forms/Checkboxes';
 import MultiselectListBox from '~/webapps-common/ui/components/forms/MultiselectListBox';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
+import Vue from 'vue';
 
 
 describe('MultiSelectWidget.vue', () => {
@@ -372,51 +373,123 @@ describe('MultiSelectWidget.vue', () => {
         expect(rb).toBeTruthy();
     });
 
-    it('renders twinlist component', () => {
-        propsDataTwinlist.isValid = true;
-        let wrapper = shallowMount(MultiSelectWidget, {
-            propsData: propsDataTwinlist
+    describe('validation', () => {
+        it('is always positive if not required', () => {
+            propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = false;
+            propsDataMultiselectListBox.nodeConfig.viewRepresentation.currentValue.value = [];
+            propsDataMultiselectListBox.nodeConfig.viewRepresentation.defaultValue.value = [];
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataMultiselectListBox
+            });
+
+            expect(wrapper.vm.validate()).toBe(true);
         });
 
-        let rb = wrapper.find(Twinlist);
-        expect(rb).toBeTruthy();
+        it('is positive if it has a value', async () => {
+            propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = true;
+            let wrapper = mount(MultiSelectWidget, {
+                propsData: propsDataMultiselectListBox
+            });
+            // without this the sub component will never have a value in the test
+            // we do not want to set it in html as this would violate the test scope
+            wrapper.vm.$refs.form.setSelected(['test1']);
+            await Vue.nextTick();
+
+            expect(wrapper.vm.validate()).toBe(true);
+        });
     });
 
-    it('has no error message when valid', () => {
-        propsDataCheckboxHorizontal.isValid = true;
-        let wrapper = shallowMount(MultiSelectWidget, {
-            propsData: propsDataCheckboxHorizontal
+
+    describe('twinlist', () => {
+
+        it('renders twinlist component', () => {
+            propsDataTwinlist.isValid = true;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataTwinlist
+            });
+
+            let rb = wrapper.find(Twinlist);
+            expect(rb).toBeTruthy();
         });
 
-        expect(wrapper.vm.errorMessage).toBe(null);
-    });
+        it('size defaults to 8', () => {
+            propsDataTwinlist.isValid = true;
+            propsDataTwinlist.nodeConfig.viewRepresentation.limitNumberVisOptions = false;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataTwinlist
+            });
 
-    it('has default error message', () => {
-        propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-        let wrapper = shallowMount(MultiSelectWidget, {
-            propsData: propsDataCheckboxHorizontal
+            let rb = wrapper.find(Twinlist);
+            expect(rb.props('size')).toBe(8);
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Current selected item is invalid');
+        it('sends @updateWidget if child emits @input', () => {
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataTwinlist
+            });
+
+            const testValue = ['VALUE1', 'VALUE2'];
+            const lb = wrapper.find(Twinlist);
+            lb.vm.$emit('input', testValue);
+
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsDataTwinlist.nodeId,
+                type: 'value',
+                value: testValue
+            });
+        });
     });
 
-    it('has warning message', () => {
-        propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-        propsDataCheckboxHorizontal.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
-        let wrapper = shallowMount(MultiSelectWidget, {
-            propsData: propsDataCheckboxHorizontal
+    describe('error message', () => {
+
+        it('has no error message when valid', () => {
+            propsDataCheckboxHorizontal.isValid = true;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataCheckboxHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe(null);
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Testing warning message');
-    });
+        it('has default error message', () => {
+            propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataCheckboxHorizontal
+            });
 
-    it('has error message', () => {
-        propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-        propsDataCheckboxHorizontal.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-        let wrapper = shallowMount(MultiSelectWidget, {
-            propsData: propsDataCheckboxHorizontal
+            expect(wrapper.vm.errorMessage).toBe('Current selected item is invalid');
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Testing error message');
+        it('has warning message', () => {
+            propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
+            propsDataCheckboxHorizontal.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataCheckboxHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe('Testing warning message');
+        });
+
+        it('has error message', () => {
+            propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
+            propsDataCheckboxHorizontal.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataCheckboxHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe('Testing error message');
+        });
+
+        it('error msg is set if provided', () => {
+            propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataCheckboxHorizontal
+            });
+
+            expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
+        });
+
     });
+
 });
