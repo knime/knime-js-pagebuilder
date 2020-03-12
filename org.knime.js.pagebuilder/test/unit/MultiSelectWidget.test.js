@@ -341,36 +341,87 @@ describe('MultiSelectWidget.vue', () => {
         expect(wrapper4.isVisible()).toBeTruthy();
     });
 
-    it('renders checkboxes horizontal', () => {
-        propsDataCheckboxHorizontal.isValid = true;
-        let wrapper = shallowMount(MultiSelectWidget, {
-            propsData: propsDataCheckboxHorizontal
+    describe('checkboxes ', () => {
+        it('renders checkboxes horizontal', () => {
+            propsDataCheckboxHorizontal.isValid = true;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataCheckboxHorizontal
+            });
+
+            let rb = wrapper.find(Checkboxes);
+            expect(rb).toBeTruthy();
+            expect(rb.props('alignment')).toBe('horizontal');
         });
 
-        let rb = wrapper.find(Checkboxes);
-        expect(rb).toBeTruthy();
-        expect(rb.props('alignment')).toBe('horizontal');
+        it('renders checkboxes vertical', () => {
+            propsDataCheckboxVertical.isValid = true;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataCheckboxVertical
+            });
+
+            let rb = wrapper.find(Checkboxes);
+            expect(rb).toBeTruthy();
+            expect(rb.props('alignment')).toBe('vertical');
+        });
+
+        it('fails on invalid type (alignment)', () => {
+            propsDataCheckboxVertical.nodeConfig.viewRepresentation.type = 'Check boxes (vulcano)';
+            let wrapper = mount(MultiSelectWidget, {
+                propsData: propsDataCheckboxVertical
+            });
+
+            expect(wrapper.vm.checkBoxesAlignment).toBe('');
+            expect(wrapper.find(Checkboxes).exists()).toBe(false);
+        });
+
+        it('sends @updateWidget if child emits @input', () => {
+            let propsData = propsDataCheckboxVertical;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData
+            });
+
+            const testValue = ['VALUE1', 'VALUE2'];
+            const comp = wrapper.find(Checkboxes);
+            comp.vm.$emit('input', testValue);
+
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsData.nodeId,
+                type: 'value',
+                value: testValue
+            });
+        });
+
     });
 
-    it('renders checkboxes vertical', () => {
-        propsDataCheckboxVertical.isValid = true;
-        let wrapper = shallowMount(MultiSelectWidget, {
-            propsData: propsDataCheckboxVertical
+    describe('multiselect ', () => {
+        it('renders multiselect list box component', () => {
+            propsDataMultiselectListBox.isValid = true;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData: propsDataMultiselectListBox
+            });
+
+            let rb = wrapper.find(MultiselectListBox);
+            expect(rb).toBeTruthy();
         });
 
-        let rb = wrapper.find(Checkboxes);
-        expect(rb).toBeTruthy();
-        expect(rb.props('alignment')).toBe('vertical');
-    });
+        it('sends @updateWidget if child emits @input', () => {
+            let propsData = propsDataMultiselectListBox;
+            let wrapper = shallowMount(MultiSelectWidget, {
+                propsData
+            });
 
-    it('renders multiselect list box component', () => {
-        propsDataMultiselectListBox.isValid = true;
-        let wrapper = shallowMount(MultiSelectWidget, {
-            propsData: propsDataMultiselectListBox
+            const testValue = ['VALUE1', 'VALUE2'];
+            const comp = wrapper.find(MultiselectListBox);
+            comp.vm.$emit('input', testValue);
+
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsData.nodeId,
+                type: 'value',
+                value: testValue
+            });
         });
-
-        let rb = wrapper.find(MultiselectListBox);
-        expect(rb).toBeTruthy();
     });
 
     describe('validation', () => {
@@ -424,17 +475,18 @@ describe('MultiSelectWidget.vue', () => {
         });
 
         it('sends @updateWidget if child emits @input', () => {
+            let propsData = propsDataTwinlist;
             let wrapper = shallowMount(MultiSelectWidget, {
-                propsData: propsDataTwinlist
+                propsData
             });
 
             const testValue = ['VALUE1', 'VALUE2'];
-            const lb = wrapper.find(Twinlist);
-            lb.vm.$emit('input', testValue);
+            const comp = wrapper.find(Twinlist);
+            comp.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataTwinlist.nodeId,
+                nodeId: propsData.nodeId,
                 type: 'value',
                 value: testValue
             });
