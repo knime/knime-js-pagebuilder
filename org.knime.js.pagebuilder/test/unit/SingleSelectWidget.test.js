@@ -317,8 +317,8 @@ describe('SingleSelectWidget.vue', () => {
                 propsData: propsDataRadioHorizontal
             });
 
-            let rb = wrapper.find(RadioButtons);
-            expect(rb.exists()).toBe(false);
+            expect(wrapper.vm.radioButtonsAlignment).toBe('');
+            expect(wrapper.find(RadioButtons).exists()).toBe(false);
         });
 
         it('renders vertical', () => {
