@@ -225,7 +225,8 @@ export default {
                 min: this.min,
                 max: this.max,
                 direction: this.direction,
-                stepSize: this.stepSize
+                stepSize: this.stepSize,
+                hasSteps: this.sliderSettings.step
             }));
         }
     },
