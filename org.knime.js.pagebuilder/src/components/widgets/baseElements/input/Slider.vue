@@ -213,6 +213,7 @@ export default {
   font-size: 11px;
   line-height: 18px;
   white-space: nowrap;
+  color: var(--theme-color-masala);
 }
 
 .vue-slider-ttb .vue-slider-mark-label,
