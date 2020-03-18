@@ -37,7 +37,7 @@ import { createSubTicks } from './subTickUtil';
  *          labelled and formatted ticks for the slider.
  */
 export const createTicks = (tickConfig) => {
-    const { config, min, max, direction, stepSize } = tickConfig;
+    const { config, min, max, direction, stepSize, hasSteps } = tickConfig;
     let markConfig = {};
     const orderedValues = new Set([min]);
     if (config) {
@@ -95,7 +95,9 @@ export const createTicks = (tickConfig) => {
             min,
             max,
             direction,
-            density: config.density
+            density: config.density,
+            hasSteps,
+            mode: config.mode
         };
         orderedValues.add(max);
         createSubTicks(markConfig, orderedValues, subTickConfig);
