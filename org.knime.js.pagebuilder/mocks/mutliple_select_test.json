@@ -452,7 +452,7 @@
               "possibleChoices": [
                 "SomeReallyReallyLongValueThatsImportant1",
                 "SomeReallyReallyLongValueThatsImportant2",
-                "SomeReallyReallyLongValueThatsImportant3",
+                "SomeReallyReallyLongValueThatsImportant3 but still has some text with spaces to check if it wraps",
                 "SomeReallyReallyLongValueThatsImportant4",
                 "SomeReallyReallyLongValueThatsImportant5",
                 "SomeReallyReallyLongValueThatsImportant6",
@@ -1188,4 +1188,3 @@
         "version": "4.1.0.v201912201424"
       }
   }
-  
