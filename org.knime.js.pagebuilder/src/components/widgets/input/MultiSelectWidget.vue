@@ -107,7 +107,7 @@ export default {
             } else if (this.viewRep.type === 'Check boxes (horizontal)') {
                 return 'horizontal';
             }
-            return '';
+            return null;
         }
     },
     methods: {

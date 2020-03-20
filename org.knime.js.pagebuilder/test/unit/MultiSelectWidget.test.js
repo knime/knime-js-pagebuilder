@@ -370,7 +370,7 @@ describe('MultiSelectWidget.vue', () => {
                 propsData: propsDataCheckboxVertical
             });
 
-            expect(wrapper.vm.checkBoxesAlignment).toBe('');
+            expect(wrapper.vm.checkBoxesAlignment).toBe(null);
             expect(wrapper.find(Checkboxes).exists()).toBe(false);
         });
 
