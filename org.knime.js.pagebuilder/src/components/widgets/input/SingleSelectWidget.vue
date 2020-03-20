@@ -105,7 +105,7 @@ export default {
             } else if (this.viewRep.type === 'Radio buttons (horizontal)') {
                 return 'horizontal';
             }
-            return '';
+            return null;
         }
     },
     methods: {
