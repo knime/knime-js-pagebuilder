@@ -452,7 +452,6 @@ describe('MultiSelectWidget.vue', () => {
 
 
     describe('twinlist', () => {
-
         it('renders component', () => {
             propsDataTwinlist.isValid = true;
             let wrapper = shallowMount(MultiSelectWidget, {
@@ -494,7 +493,6 @@ describe('MultiSelectWidget.vue', () => {
     });
 
     describe('error message', () => {
-
         it('is not set when valid', () => {
             propsDataCheckboxHorizontal.isValid = true;
             let wrapper = shallowMount(MultiSelectWidget, {
@@ -541,7 +539,5 @@ describe('MultiSelectWidget.vue', () => {
 
             expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
         });
-
     });
-
 });
