@@ -9,13 +9,9 @@ import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
 const DATA_TYPE = 'value';
 
 /**
- * This is the String Input widget implementation. At this component
- * level, the primary goal is to parse the view representation into
- * the necessary configuration values to render the correct input
- * element.
- *
- * This widget has two rendering options: a standard input field or
- * a text area.
+ * MultiSelect Widget
+ * Allows the user to select multiple items from a list of possible choices.
+ * The view representation can either be a Twinlist, Checkboxes or a ListBox
  */
 export default {
     components: {
@@ -157,8 +153,8 @@ export default {
         ref="form"
         :value="value"
         :size="maxVisibleListEntries"
-        aria-label-left="Excludes"
-        aria-label-right="Includes"
+        label-left="Excludes"
+        label-right="Includes"
         :possible-values="possibleChoices"
         :is-valid="isValid"
         :title="description"
