@@ -341,7 +341,7 @@ describe('MultiSelectWidget.vue', () => {
         expect(wrapper4.isVisible()).toBeTruthy();
     });
 
-    describe('checkboxes ', () => {
+    describe('checkboxes', () => {
         it('render horizontal', () => {
             propsDataCheckboxHorizontal.isValid = true;
             let wrapper = shallowMount(MultiSelectWidget, {
@@ -394,7 +394,7 @@ describe('MultiSelectWidget.vue', () => {
 
     });
 
-    describe('multiselect ', () => {
+    describe('multiselect', () => {
         it('renders list box component', () => {
             propsDataMultiselectListBox.isValid = true;
             let wrapper = shallowMount(MultiSelectWidget, {
