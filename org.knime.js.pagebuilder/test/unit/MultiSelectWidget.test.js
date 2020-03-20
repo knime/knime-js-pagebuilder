@@ -441,6 +441,9 @@ describe('MultiSelectWidget.vue', () => {
             let wrapper = mount(MultiSelectWidget, {
                 propsData: propsDataMultiselectListBox
             });
+
+            expect(wrapper.vm.validate()).toBe(false);
+
             // without this the sub component will never have a value in the test
             // we do not want to set it in html as this would violate the test scope
             wrapper.vm.$refs.form.setSelected(['test1']);
