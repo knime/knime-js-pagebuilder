@@ -130,9 +130,16 @@ const addSubInterval = (tickObj, intervalConfig) => {
  *          provided tickObj.
  */
 export const createSubTicks = (tickObj, vals, subTickConfig) => {
-    const { min, max, direction, density } = subTickConfig;
+    const { min, max, direction, density, hasSteps, mode } = subTickConfig;
     // if the user requested ticks via density
     if (density) {
+        // if stepping is disabled, but pips is set to steps
+        // expected behavior (as found in AP) is to show min
+        // & max labels
+        if (!hasSteps && mode === 'steps') {
+            tickObj[min] = min.toString();
+            tickObj[max] = max.toString();
+        }
         // if the user has an empty slider (no labels) but
         // indicated they want ticks via the density option,
         // add master ticks for the min and max values.
@@ -148,7 +155,7 @@ export const createSubTicks = (tickObj, vals, subTickConfig) => {
         const labelValues = Array.from(vals);
         // calculate the preferred number of steps.
         let numSteps = 100 / density;
-        // find what the total number of steps would be if preffered
+        // find what the total number of steps would be if preferred
         // steps all have space.
         let allSteps = numSteps + labelValues.length;
         // calculate the ideal distance between ticks to perfectly
@@ -163,12 +170,12 @@ export const createSubTicks = (tickObj, vals, subTickConfig) => {
                 : acc;
         }, []);
         // track the label index.
-        let currLableInd = 0;
+        let currLabelInd = 0;
         // get the iterator for the values
         let diffIterator = diffArr[Symbol.iterator]();
         // format the configuration needed by the sub-tick function
         let intervalConfig = {
-            prevValue: labelValues[currLableInd],
+            prevValue: labelValues[currLabelInd],
             diff: diffIterator.next(),
             direction,
             densitySize
@@ -182,8 +189,8 @@ export const createSubTicks = (tickObj, vals, subTickConfig) => {
                 allSteps -= addSubInterval(tickObj, intervalConfig);
             }
             allSteps--;
-            currLableInd++;
-            intervalConfig.prevValue = labelValues[currLableInd];
+            currLabelInd++;
+            intervalConfig.prevValue = labelValues[currLabelInd];
             intervalConfig.diff = diffIterator.next();
         } while (allSteps > 0 && !intervalConfig.diff.done);
     }

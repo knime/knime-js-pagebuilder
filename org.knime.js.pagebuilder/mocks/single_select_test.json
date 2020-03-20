@@ -613,7 +613,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "List Long Opts ",
               "description": "Enter Description test",
               "required": true,
@@ -681,7 +681,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "List Short Opts",
               "description": "Enter Description test",
               "required": true,
@@ -749,7 +749,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Radio Button Horizontal Short Opts",
               "description": "Enter Description test",
               "required": true,
@@ -817,7 +817,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Dropdown Long Opts",
               "description": "Enter Description test",
               "required": true,
@@ -885,7 +885,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Radio Button Vert Long Opts",
               "description": "Enter Description test",
               "required": true,
@@ -953,7 +953,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Radio Button Vert Short Opts",
               "description": "Enter Description test",
               "required": true,
@@ -1021,7 +1021,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Dropdown Short Opts",
               "description": "Enter Description test",
               "required": true,
@@ -1089,7 +1089,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "List Long Opts W Limit 5",
               "description": "Enter Description test",
               "required": true,
@@ -1157,7 +1157,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "List Short Opts W Limit 5",
               "description": "Enter Description test",
               "required": true,
@@ -1225,7 +1225,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Radio Button Horizontal Long Opts W Limit 5",
               "description": "Enter Description test",
               "required": true,
@@ -1293,7 +1293,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Radio Button Horizontal Short Opts W Limit 5",
               "description": "Enter Description test",
               "required": true,
@@ -1361,7 +1361,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Radio Button Horizontal Long Opts",
               "description": "Enter Description test",
               "required": true,
@@ -1429,7 +1429,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Dropdown invalid value",
               "description": "Enter Description test",
               "required": true,
@@ -1497,7 +1497,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Dropdown without value",
               "description": "Enter Description test",
               "required": true,
@@ -1565,7 +1565,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Radio Button invalid value",
               "description": "Enter Description test",
               "required": true,
@@ -1633,7 +1633,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "Radio Button without value",
               "description": "Enter Description test",
               "required": true,
@@ -1701,7 +1701,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "List Short invalid value",
               "description": "Enter Description test",
               "required": true,
@@ -1769,7 +1769,7 @@
             "namespace": "knimeSingleSelectionWidget",
             "viewValue": null,
             "viewRepresentation": {
-              "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeRepresentation",
+              "@class": "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation",
               "label": "List Short without value",
               "description": "Enter Description test",
               "required": true,

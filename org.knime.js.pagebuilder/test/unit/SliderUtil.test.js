@@ -181,4 +181,36 @@ describe('tickUtil.js', () => {
             }
         });
     });
+
+    it('handles PIP steps only', () => {
+        const tickConfig = {
+            config: {
+                mode: 'steps',
+                density: 50,
+                format: {
+                    negative: '-',
+                    decimals: 2,
+                    mark: '.'
+                }
+            },
+            min: 0,
+            max: 100,
+            direction: 'ltr',
+            hasSteps: false
+        };
+
+        expect(createTicks(tickConfig)).toEqual({
+            '0': '0',
+            '100': '100',
+            '50': {
+                label: '',
+                labelStyle: {
+                    display: 'none'
+                },
+                style: {
+                    height: '5px !important'
+                }
+            }
+        });
+    });
 });
