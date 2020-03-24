@@ -80,10 +80,3 @@ export default {
   </Checkbox>
   <!-- no ErrorMessage needed yet -->
 </template>
-
-<style lang="postcss" scoped>
->>> span {
-  font-size: 16px;
-  line-height: 20px;
-}
-</style>

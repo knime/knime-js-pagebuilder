@@ -237,9 +237,8 @@ export default {
   z-index: 1;
 }
 
-/* Transparency not wokring here */
 .vue-slider-dot:hover {
-  background-color: var(--theme-color-silver-sand);
+  background-color: var(--theme-color-silver-sand); /* transparency not working here */
 }
 
 .vue-slider-ttb .vue-slider-dot,
