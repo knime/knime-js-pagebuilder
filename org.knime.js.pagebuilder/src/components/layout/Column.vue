@@ -152,6 +152,13 @@ export default {
   }
 }
 
+@media only screen and (max-width: 900px) {
+  .col {
+    min-width: 100%;
+    max-width: unset;
+  }
+}
+
 /* compatible with Bootstrap 4 grid */
 .col-1 {
   -ms-flex: 0 0 calc(100% / 12);
