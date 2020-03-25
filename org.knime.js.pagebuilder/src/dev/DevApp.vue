@@ -101,9 +101,7 @@ export default {
 </template>
 
 <style lang="postcss">
-@import "normalize.css";
-@import "webapps-common/ui/css/fonts.css";
-@import "webapps-common/ui/css/variables";
+@import "webapps-common/ui/css";
 
 body {
   margin: 10px;
