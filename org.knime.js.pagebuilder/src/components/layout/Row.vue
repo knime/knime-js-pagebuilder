@@ -67,12 +67,4 @@ export default {
   margin-right: -15px;
   margin-left: -15px;
 }
-
-@media only screen and (max-width: 900px) {
-  .row {
-    margin-right: 0;
-    margin-left: 0;
-  }
-}
-
 </style>
