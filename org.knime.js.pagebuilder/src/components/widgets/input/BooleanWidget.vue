@@ -76,7 +76,7 @@ export default {
     :title="description"
     @input="onChange"
   >
-    {{ label }}
+    <span :title="label">{{ label }}</span>
   </Checkbox>
   <!-- no ErrorMessage needed yet -->
 </template>
