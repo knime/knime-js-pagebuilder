@@ -269,7 +269,10 @@ export default {
   border-color: var(--theme-color-masala);
   background-color: var(--theme-color-masala);
   box-sizing: content-box !important;
-  backface-visibility: hidden; /* prevents blurry text in Chrome */
+
+  /* prevents blurry text in Chrome on Windows */
+  backface-visibility: hidden;
+  transform: perspective(1px) translateZ(0);
 }
 
 .vue-slider-dot-tooltip-inner::after {
