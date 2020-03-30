@@ -1,14 +1,14 @@
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
-import MultiSelectWidget from '@/components/widgets/input/MultiSelectWidget';
+import MultipleSelectionWidget from '@/components/widgets/input/MultipleSelectionWidget';
 import Checkboxes from '~/webapps-common/ui/components/forms/Checkboxes';
 import MultiselectListBox from '~/webapps-common/ui/components/forms/MultiselectListBox';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
 import Vue from 'vue';
 
 
-describe('MultiSelectWidget.vue', () => {
+describe('MultipleSelectionWidget.vue', () => {
     let propsDataTwinlist, propsDataCheckboxHorizontal, propsDataCheckboxVertical, propsDataMultiselectListBox;
 
     beforeEach(() => {
@@ -316,25 +316,25 @@ describe('MultiSelectWidget.vue', () => {
     });
 
     it('renders all different types', () => {
-        let wrapper = shallowMount(MultiSelectWidget, {
+        let wrapper = shallowMount(MultipleSelectionWidget, {
             propsData: propsDataTwinlist
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
 
-        let wrapper2 = shallowMount(MultiSelectWidget, {
+        let wrapper2 = shallowMount(MultipleSelectionWidget, {
             propsData: propsDataCheckboxHorizontal
         });
         expect(wrapper2.html()).toBeTruthy();
         expect(wrapper2.isVisible()).toBeTruthy();
 
-        let wrapper3 = shallowMount(MultiSelectWidget, {
+        let wrapper3 = shallowMount(MultipleSelectionWidget, {
             propsData: propsDataCheckboxVertical
         });
         expect(wrapper3.html()).toBeTruthy();
         expect(wrapper3.isVisible()).toBeTruthy();
 
-        let wrapper4 = shallowMount(MultiSelectWidget, {
+        let wrapper4 = shallowMount(MultipleSelectionWidget, {
             propsData: propsDataMultiselectListBox
         });
         expect(wrapper4.html()).toBeTruthy();
@@ -344,7 +344,7 @@ describe('MultiSelectWidget.vue', () => {
     describe('checkboxes', () => {
         it('render horizontal', () => {
             propsDataCheckboxHorizontal.isValid = true;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataCheckboxHorizontal
             });
 
@@ -355,7 +355,7 @@ describe('MultiSelectWidget.vue', () => {
 
         it('render vertical', () => {
             propsDataCheckboxVertical.isValid = true;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataCheckboxVertical
             });
 
@@ -366,7 +366,7 @@ describe('MultiSelectWidget.vue', () => {
 
         it('fail on invalid type (alignment)', () => {
             propsDataCheckboxVertical.nodeConfig.viewRepresentation.type = 'Check boxes (vulcano)';
-            let wrapper = mount(MultiSelectWidget, {
+            let wrapper = mount(MultipleSelectionWidget, {
                 propsData: propsDataCheckboxVertical
             });
 
@@ -376,7 +376,7 @@ describe('MultiSelectWidget.vue', () => {
 
         it('send @updateWidget if child emits @input', () => {
             let propsData = propsDataCheckboxVertical;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData
             });
 
@@ -394,10 +394,10 @@ describe('MultiSelectWidget.vue', () => {
 
     });
 
-    describe('multiselect', () => {
+    describe('listbox', () => {
         it('renders list box component', () => {
             propsDataMultiselectListBox.isValid = true;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataMultiselectListBox
             });
 
@@ -407,7 +407,7 @@ describe('MultiSelectWidget.vue', () => {
 
         it('sends @updateWidget if child emits @input', () => {
             let propsData = propsDataMultiselectListBox;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData
             });
 
@@ -424,40 +424,10 @@ describe('MultiSelectWidget.vue', () => {
         });
     });
 
-    describe('validation', () => {
-        it('is always positive if not required', () => {
-            propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = false;
-            propsDataMultiselectListBox.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsDataMultiselectListBox.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(MultiSelectWidget, {
-                propsData: propsDataMultiselectListBox
-            });
-
-            expect(wrapper.vm.validate()).toBe(true);
-        });
-
-        it('is positive if it has a value', async () => {
-            propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = true;
-            let wrapper = mount(MultiSelectWidget, {
-                propsData: propsDataMultiselectListBox
-            });
-
-            expect(wrapper.vm.validate()).toBe(false);
-
-            // without this the sub component will never have a value in the test
-            // we do not want to set it in html as this would violate the test scope
-            wrapper.vm.$refs.form.setSelected(['test1']);
-            await Vue.nextTick();
-
-            expect(wrapper.vm.validate()).toBe(true);
-        });
-    });
-
-
     describe('twinlist', () => {
         it('renders component', () => {
             propsDataTwinlist.isValid = true;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataTwinlist
             });
 
@@ -468,7 +438,7 @@ describe('MultiSelectWidget.vue', () => {
         it('size defaults to 0', () => {
             propsDataTwinlist.isValid = true;
             propsDataTwinlist.nodeConfig.viewRepresentation.limitNumberVisOptions = false;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataTwinlist
             });
 
@@ -478,7 +448,7 @@ describe('MultiSelectWidget.vue', () => {
 
         it('sends @updateWidget if child emits @input', () => {
             let propsData = propsDataTwinlist;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData
             });
 
@@ -495,10 +465,40 @@ describe('MultiSelectWidget.vue', () => {
         });
     });
 
+    describe('validation', () => {
+        it('is always positive if not required', () => {
+            propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = false;
+            propsDataMultiselectListBox.nodeConfig.viewRepresentation.currentValue.value = [];
+            propsDataMultiselectListBox.nodeConfig.viewRepresentation.defaultValue.value = [];
+            let wrapper = shallowMount(MultipleSelectionWidget, {
+                propsData: propsDataMultiselectListBox
+            });
+
+            expect(wrapper.vm.validate()).toBe(true);
+        });
+
+        it('is positive if it has a value', async () => {
+            propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = true;
+            let wrapper = mount(MultipleSelectionWidget, {
+                propsData: propsDataMultiselectListBox
+            });
+
+            expect(wrapper.vm.validate()).toBe(false);
+
+            // without this the sub component will never have a value in the test
+            // we do not want to set it in html as this would violate the test scope
+            wrapper.vm.$refs.form.setSelected(['test1']);
+            await Vue.nextTick();
+
+            expect(wrapper.vm.validate()).toBe(true);
+        });
+    });
+
+
     describe('error message', () => {
         it('is not set when valid', () => {
             propsDataCheckboxHorizontal.isValid = true;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataCheckboxHorizontal
             });
 
@@ -507,7 +507,7 @@ describe('MultiSelectWidget.vue', () => {
 
         it('is default if not set', () => {
             propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataCheckboxHorizontal
             });
 
@@ -517,7 +517,7 @@ describe('MultiSelectWidget.vue', () => {
         it('is warning message if set', () => {
             propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
             propsDataCheckboxHorizontal.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataCheckboxHorizontal
             });
 
@@ -527,7 +527,7 @@ describe('MultiSelectWidget.vue', () => {
         it('is nodeErrorMessage if set', () => {
             propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
             propsDataCheckboxHorizontal.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataCheckboxHorizontal
             });
 
@@ -536,7 +536,7 @@ describe('MultiSelectWidget.vue', () => {
 
         it('is errorMessage if set (viewRep)', () => {
             propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
-            let wrapper = shallowMount(MultiSelectWidget, {
+            let wrapper = shallowMount(MultipleSelectionWidget, {
                 propsData: propsDataCheckboxHorizontal
             });
 
