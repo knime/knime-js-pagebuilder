@@ -465,7 +465,7 @@ describe('MultiSelectWidget.vue', () => {
             expect(rb).toBeTruthy();
         });
 
-        it('size defaults to 8', () => {
+        it('size defaults to 0', () => {
             propsDataTwinlist.isValid = true;
             propsDataTwinlist.nodeConfig.viewRepresentation.limitNumberVisOptions = false;
             let wrapper = shallowMount(MultiSelectWidget, {
@@ -473,7 +473,7 @@ describe('MultiSelectWidget.vue', () => {
             });
 
             let rb = wrapper.find(Twinlist);
-            expect(rb.props('size')).toBe(8);
+            expect(rb.props('size')).toBe(0);
         });
 
         it('sends @updateWidget if child emits @input', () => {
