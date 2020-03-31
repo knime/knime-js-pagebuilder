@@ -436,7 +436,7 @@ describe('SingleSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is always positive if not required', () => {
+        it('is always valid if not required', () => {
             propsDataList.nodeConfig.viewRepresentation.required = false;
             propsDataList.nodeConfig.viewRepresentation.currentValue.value = [];
             propsDataList.nodeConfig.viewRepresentation.defaultValue.value = [];
@@ -447,11 +447,14 @@ describe('SingleSelectionWidget.vue', () => {
             expect(wrapper.vm.validate()).toBe(true);
         });
 
-        it('is positive if it has a value', () => {
+        it('is invalid/valid if required and no selection/a selection was made', () => {
             propsDataList.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(SingleSelectionWidget, {
                 propsData: propsDataList
             });
+
+            expect(wrapper.vm.validate()).toBe(false);
+
             // without this the sub component will never have a value in the test
             // we do not want to set it in html as this would violate the test scope
             wrapper.vm.$refs.form.$data.selectedIndex = 1;

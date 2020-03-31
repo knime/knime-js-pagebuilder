@@ -466,7 +466,7 @@ describe('MultipleSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is always positive if not required', () => {
+        it('is always valid if not required', () => {
             propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = false;
             propsDataMultiselectListBox.nodeConfig.viewRepresentation.currentValue.value = [];
             propsDataMultiselectListBox.nodeConfig.viewRepresentation.defaultValue.value = [];
@@ -477,7 +477,7 @@ describe('MultipleSelectionWidget.vue', () => {
             expect(wrapper.vm.validate()).toBe(true);
         });
 
-        it('is positive if it has a value', async () => {
+        it('is invalid/valid if required and no selection/a selection was made', async () => {
             propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(MultipleSelectionWidget, {
                 propsData: propsDataMultiselectListBox
