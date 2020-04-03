@@ -97,6 +97,10 @@ export default {
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
             }
+            // check for invalid values
+            if (isValid) {
+                isValid = this.$refs.form.validate();
+            }
             return isValid;
         }
     }

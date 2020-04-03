@@ -440,7 +440,7 @@
           "currentValue": {
             "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
             "columns": [
-              "Universe_0_0",
+              "Universe_0_99",
               "Universe_1_0"
             ]
           },
