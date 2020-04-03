@@ -269,6 +269,7 @@ export default {
   border-color: var(--theme-color-masala);
   background-color: var(--theme-color-masala);
   box-sizing: content-box !important;
+  text-decoration: none;
 
   /* prevents blurry text in Chrome on Windows */
   backface-visibility: hidden;
