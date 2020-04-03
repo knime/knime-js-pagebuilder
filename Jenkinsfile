@@ -65,17 +65,14 @@ timeout(time: 15, unit: 'MINUTES') {
                 }
 
                 stage('Unit Tests') {
-					env.lastStage = env.STAGE_NAME
-                    try {
-                        // trows exception on failing test
+                    env.lastStage = env.STAGE_NAME
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                    // trows exception on failing test
                         sh '''
                             npm run coverage -- --ci
                         '''
-                    } catch (ignore) {
-                        // failing tests should not result in a pipeline exception
-                    } finally {
-                        junit 'coverage/junit.xml'
                     }
+                    junit 'coverage/junit.xml'
                 }
 
                 if (BRANCH_NAME == "master") {
