@@ -151,7 +151,7 @@ describe('ColumnFilterWidget.vue', () => {
             propsData.nodeConfig.viewRepresentation.required = false;
             propsData.nodeConfig.viewRepresentation.currentValue.value = [];
             propsData.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(ColumnFilterWidget, {
+            let wrapper = mount(ColumnFilterWidget, {
                 propsData
             });
 
