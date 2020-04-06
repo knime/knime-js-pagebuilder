@@ -68,13 +68,13 @@ export default {
             type: Object
         }
     },
-    data() {
-        return {
-            viewRep: this.nodeConfig.viewRepresentation,
-            sliderSettings: this.nodeConfig.viewRepresentation.sliderSettings
-        };
-    },
     computed: {
+        viewRep() {
+            return this.nodeConfig.viewRepresentation;
+        },
+        sliderSettings() {
+            return this.viewRep.sliderSettings;
+        },
         /**
          * TODO: AP-12916 Frontend: rewrite interactive range slider filter widget
          *

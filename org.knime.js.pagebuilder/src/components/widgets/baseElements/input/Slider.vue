@@ -213,6 +213,7 @@ export default {
   font-size: 11px;
   line-height: 18px;
   white-space: nowrap;
+  color: var(--theme-color-masala);
 }
 
 .vue-slider-ttb .vue-slider-mark-label,
@@ -237,7 +238,7 @@ export default {
 }
 
 .vue-slider-dot:hover {
-  background-color: var(--theme-color-porcelain);
+  background-color: var(--theme-color-silver-sand); /* transparency not working here */
 }
 
 .vue-slider-ttb .vue-slider-dot,
@@ -268,8 +269,10 @@ export default {
   border-color: var(--theme-color-masala);
   background-color: var(--theme-color-masala);
   box-sizing: content-box !important;
-  backface-visibility: hidden; /* prevent chrome blurry text */
-  transform: perspective(1px) translateZ(0); /* prevent chrome blurry text */
+
+  /* prevents blurry text in Chrome on Windows */
+  backface-visibility: hidden;
+  transform: perspective(1px) translateZ(0);
 }
 
 .vue-slider-dot-tooltip-inner::after {

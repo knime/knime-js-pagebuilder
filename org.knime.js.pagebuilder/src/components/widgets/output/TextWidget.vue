@@ -49,12 +49,10 @@ export default {
             type: Boolean
         }
     },
-    data() {
-        return {
-            viewRep: this.nodeConfig.viewRepresentation
-        };
-    },
     computed: {
+        viewRep() {
+            return this.nodeConfig.viewRepresentation;
+        },
         label() {
             return this.viewRep.label;
         },

@@ -9,7 +9,7 @@ import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 const DATA_TYPE = 'value';
 
 /**
- * Implementation of the Single Select Widget. Allows the user to select one item from a list of possible choices.
+ * Implementation of the Single Selection Widget. Allows the user to select one item from a list of possible choices.
  * The view representation can either be a Dropdown, ListBox or RadioButtons.
  */
 export default {
@@ -47,12 +47,10 @@ export default {
             type: Object
         }
     },
-    data() {
-        return {
-            viewRep: this.nodeConfig.viewRepresentation
-        };
-    },
     computed: {
+        viewRep() {
+            return this.nodeConfig.viewRepresentation;
+        },
         label() {
             return this.viewRep.label;
         },
@@ -105,7 +103,7 @@ export default {
             } else if (this.viewRep.type === 'Radio buttons (horizontal)') {
                 return 'horizontal';
             }
-            return '';
+            return null;
         }
     },
     methods: {

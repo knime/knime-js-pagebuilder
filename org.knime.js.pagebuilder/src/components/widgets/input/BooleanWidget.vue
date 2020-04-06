@@ -36,12 +36,10 @@ export default {
             type: Object
         }
     },
-    data() {
-        return {
-            viewRep: this.nodeConfig.viewRepresentation
-        };
-    },
     computed: {
+        viewRep() {
+            return this.nodeConfig.viewRepresentation;
+        },
         label() {
             return this.viewRep.label;
         },
@@ -76,7 +74,7 @@ export default {
     :title="description"
     @input="onChange"
   >
-    {{ label }}
+    <span :title="label">{{ label }}</span>
   </Checkbox>
   <!-- no ErrorMessage needed yet -->
 </template>

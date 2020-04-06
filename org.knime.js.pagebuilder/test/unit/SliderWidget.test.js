@@ -135,12 +135,10 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.find(Slider)).toBeTruthy();
     });
 
-    it('has correct data properties', () => {
+    it('has correct computed properties', () => {
         expect(wrapper.vm.viewRep).toBe(nodeConfig.viewRepresentation);
         expect(wrapper.vm.sliderSettings).toBe(nodeConfig.viewRepresentation.sliderSettings);
-    });
 
-    it('has correct computed properties', () => {
         // tooltip format and marks and labels tested separately
         expect(wrapper.vm.label).toBe('Testing Slider');
         expect(wrapper.vm.min).toBe(5);
@@ -159,13 +157,19 @@ describe('SliderWidget.vue', () => {
 
         nodeConfig.viewRepresentation['@class'] = 'org.knime.js.base.node.widget' +
             '.rangeSlider.InteractiveFilterRangeSliderDefinition';
+        wrapper.setProps({
+            nodeConfig: { ...nodeConfig }
+        });
         
         expect(wrapper.vm.min).toBe(0);
         expect(wrapper.vm.max).toBe(100);
 
         nodeConfig.viewRepresentation.useCustomMin = false;
         nodeConfig.viewRepresentation.useCustomMax = false;
-
+        wrapper.setProps({
+            nodeConfig: { ...nodeConfig }
+        });
+        
         expect(wrapper.vm.min).toBe(5);
         expect(wrapper.vm.max).toBe(25);
     });
@@ -175,6 +179,10 @@ describe('SliderWidget.vue', () => {
 
         nodeConfig.viewRepresentation.sliderSettings.orientation = 'horizontal';
 
+        wrapper.setProps({
+            nodeConfig: { ...nodeConfig }
+        });
+
         expect(wrapper.vm.height).toBe(null);
     });
 
@@ -183,6 +191,9 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.tooltipFormat(1.234)).toBe('$1.23_');
 
         nodeConfig.viewRepresentation.sliderSettings.tooltips = [];
+        wrapper.setProps({
+            nodeConfig: { ...nodeConfig }
+        });
 
         expect(typeof wrapper.vm.tooltipFormat).toBe('function');
         expect(wrapper.vm.tooltipFormat(1.234, {})).toBe('1.234');

@@ -7,7 +7,8 @@ import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
-import SingleSelectWidget from './input/SingleSelectWidget';
+import SingleSelectionWidget from './input/SingleSelectionWidget';
+import MultipleSelectionWidget from './input/MultipleSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 
@@ -48,7 +49,8 @@ export default {
         DoubleWidget,
         StringWidget,
         SliderWidget,
-        SingleSelectWidget,
+        SingleSelectionWidget,
+        MultipleSelectionWidget,
         // output widgets
         TextWidget
     },
