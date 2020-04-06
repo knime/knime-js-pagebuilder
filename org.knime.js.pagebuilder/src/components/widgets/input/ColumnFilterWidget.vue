@@ -4,7 +4,6 @@ import ErrorMessage from '../baseElements/text/ErrorMessage';
 import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
 
 const VALUE_KEY = 'columns';
-
 /**
  * Column Filter Widget
  * Allows the user to select multiple columns from a Twinlist
@@ -41,6 +40,11 @@ export default {
             type: Object
         }
     },
+    data() {
+        return {
+            frontendErrorMessage: null
+        };
+    },
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -65,19 +69,12 @@ export default {
             return 0; // default: show all
         },
         errorMessage() {
+            // set by Widget.vue based on or validate() method and backend errors
             if (this.isValid) {
                 return null;
             }
-            if (this.viewRep.errorMessage) {
-                return this.viewRep.errorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            }
-            return 'Current selected item is invalid';
+            // backend error message or frontend or default
+            return this.viewRep.errorMessage || this.frontendErrorMessage || 'Selection is invalid or missing';
         },
         value() {
             return this.valuePair[VALUE_KEY];
@@ -93,13 +90,18 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
+            // reset
             let isValid = true;
+            this.frontendErrorMessage = null;
+            // run checks
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
+                this.frontendErrorMessage = 'Selection is required';
             }
             // check for invalid values
             if (isValid) {
                 isValid = this.$refs.form.validate();
+                this.frontendErrorMessage = 'One or more values in the selection is missing';
             }
             return isValid;
         }
