@@ -110,6 +110,7 @@ export default {
       :drag-on-click="dragOnClick"
       :contained="contained"
       :lazy="true"
+      x-ms-format-detection="none"
       @change="onInput"
     />
   </div>
