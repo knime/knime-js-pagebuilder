@@ -21,6 +21,7 @@ timeout(time: 15, unit: 'MINUTES') {
         node('nodejs') {
             cleanWs()
             checkout scm
+            knimetools.reportJIRAIssues()
 
             dir('org.knime.js.pagebuilder') {
                 stage('Install npm Dependencies') {
