@@ -169,6 +169,25 @@ describe('StringWidget.vue', () => {
             wrapper.find(InputField).setProps({ value: 'a' });
             expect(wrapper.vm.validate()).toBeTruthy();
         });
+
+        it('defaults regex to null', () => {
+            let wrapper = mount(StringWidget, {
+                propsData: propsDataInput
+            });
+            expect(wrapper.find(InputField).props('pattern')).toEqual(null);
+        });
+
+        it('passes correct regex', () => {
+            let wrapper = mount(StringWidget, {
+                propsData: { ...propsDataInput,
+                    nodeConfig: {
+                        ...propsDataInput.nodeConfig,
+                        viewRepresentation: { ...propsDataInput.nodeConfig.viewRepresentation,
+                            regex: 'test' }
+                    } }
+            });
+            expect(wrapper.find(InputField).props('pattern')).toEqual('test');
+        });
     });
 
     describe('text area', () => {

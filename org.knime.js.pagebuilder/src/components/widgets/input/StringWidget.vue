@@ -86,7 +86,7 @@ export default {
             return this.viewRep.multilineEditorHeight;
         },
         regex() {
-            return this.viewRep.regex || '.*';
+            return this.viewRep.regex || null;
         }
     },
     methods: {
@@ -134,6 +134,7 @@ export default {
         :value="value"
         :is-valid="isValid"
         :title="description"
+        :pattern="regex"
         @input="onChange"
       />
       <ErrorMessage :error="errorMessage" />
