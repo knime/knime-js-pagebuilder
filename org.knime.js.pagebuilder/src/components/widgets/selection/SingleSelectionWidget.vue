@@ -176,7 +176,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-/* required for text ellipsis on checkboxes */
+/* required for text ellipsis on radio-buttons */
 .fieldset {
   min-width: auto;
   overflow-x: hidden;

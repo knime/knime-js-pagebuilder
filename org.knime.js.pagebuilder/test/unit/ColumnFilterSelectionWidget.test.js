@@ -1,11 +1,11 @@
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
-import ColumnFilterWidget from '@/components/widgets/filter/ColumnFilterWidget';
+import ColumnFilterWidget from '@/components/widgets/selection/ColumnFilterSelectionWidget';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
 import Vue from 'vue';
 
-describe('ColumnFilterWidget.vue', () => {
+describe('ColumnFilterSelectionWidget.vue', () => {
     let propsData;
 
     beforeEach(() => {
@@ -176,6 +176,5 @@ describe('ColumnFilterWidget.vue', () => {
             expect(wrapper.vm.validate()).toBe(true);
         });
     });
-
 });
 

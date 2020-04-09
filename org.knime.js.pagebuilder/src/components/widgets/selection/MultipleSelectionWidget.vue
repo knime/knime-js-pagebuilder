@@ -68,7 +68,6 @@ export default {
             if (this.viewRep.limitNumberVisOptions) {
                 return this.viewRep.numberVisOptions;
             }
-            // eslint-disable-next-line no-magic-numbers
             return 0; // default: show all
         },
         errorMessage() {
@@ -84,7 +83,7 @@ export default {
             if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
                 return this.nodeConfig.nodeInfo.nodeWarnMessage;
             }
-            return 'Current selected item is invalid';
+            return 'Current selection is invalid';
         },
         value() {
             return this.valuePair[DATA_TYPE];
@@ -129,7 +128,7 @@ export default {
 </script>
 
 <template>
-  <div class="multi-select-widget">
+  <div>
     <Fieldset
       v-if="isCheckboxes || isTwinlist"
       :text="label"

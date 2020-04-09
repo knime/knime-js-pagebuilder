@@ -4,9 +4,9 @@ import ErrorMessage from '../baseElements/text/ErrorMessage';
 import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
 
 const VALUE_KEY = 'columns';
+
 /**
- * Column Filter Widget
- * Allows the user to select multiple columns from a Twinlist
+ * Allows the user to select multiple columns from a Twinlist.
  */
 export default {
     components: {
@@ -42,7 +42,7 @@ export default {
     },
     data() {
         return {
-            frontendErrorMessage: null
+            customValidationErrorMessage: null
         };
     },
     computed: {
@@ -65,7 +65,6 @@ export default {
             if (this.viewRep.limitNumberVisOptions) {
                 return this.viewRep.numberVisOptions;
             }
-            // eslint-disable-next-line no-magic-numbers
             return 0; // default: show all
         },
         errorMessage() {
@@ -74,7 +73,7 @@ export default {
                 return null;
             }
             // backend error message or frontend or default
-            return this.viewRep.errorMessage || this.frontendErrorMessage || 'Selection is invalid or missing';
+            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
         },
         value() {
             return this.valuePair[VALUE_KEY];
@@ -96,12 +95,12 @@ export default {
             // run checks
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
-                this.frontendErrorMessage = 'Selection is required';
+                this.customValidationErrorMessage = 'Selection is required';
             }
             // check for invalid values
             if (isValid) {
                 isValid = this.$refs.form.validate();
-                this.frontendErrorMessage = 'One or more values in the selection is invalid';
+                this.customValidationErrorMessage = 'Current selection is invalid';
             }
             return isValid;
         }

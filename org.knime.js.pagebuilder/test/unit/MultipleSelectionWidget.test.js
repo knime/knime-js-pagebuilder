@@ -509,7 +509,7 @@ describe('MultipleSelectionWidget.vue', () => {
                 propsData: propsDataCheckboxHorizontal
             });
 
-            expect(wrapper.vm.errorMessage).toBe('Current selected item is invalid');
+            expect(wrapper.vm.errorMessage).toBe('Current selection is invalid');
         });
 
         it('is warning message if set', () => {
