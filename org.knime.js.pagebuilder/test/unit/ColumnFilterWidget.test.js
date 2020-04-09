@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
-import ColumnFilterWidget from '@/components/widgets/input/ColumnFilterWidget';
+import ColumnFilterWidget from '@/components/widgets/filter/ColumnFilterWidget';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
 import Vue from 'vue';
 

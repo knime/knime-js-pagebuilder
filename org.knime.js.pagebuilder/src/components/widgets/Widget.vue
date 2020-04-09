@@ -7,9 +7,9 @@ import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
-import SingleSelectionWidget from './input/SingleSelectionWidget';
-import MultipleSelectionWidget from './input/MultipleSelectionWidget';
-import ColumnFilterWidget from './input/ColumnFilterWidget';
+import SingleSelectionWidget from './selection/SingleSelectionWidget';
+import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
+import ColumnFilterWidget from './filter/ColumnFilterWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 

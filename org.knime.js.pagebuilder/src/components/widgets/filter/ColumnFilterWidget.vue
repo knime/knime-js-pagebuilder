@@ -101,7 +101,7 @@ export default {
             // check for invalid values
             if (isValid) {
                 isValid = this.$refs.form.validate();
-                this.frontendErrorMessage = 'One or more values in the selection is missing';
+                this.frontendErrorMessage = 'One or more values in the selection is invalid';
             }
             return isValid;
         }
@@ -110,13 +110,16 @@ export default {
 </script>
 
 <template>
-  <Fieldset :text="label">
+  <Fieldset
+    class="fieldset"
+    :text="label"
+  >
     <Twinlist
       ref="form"
-      :value="value"
-      :size="maxVisibleListEntries"
       label-left="Excludes"
       label-right="Includes"
+      :value="value"
+      :size="maxVisibleListEntries"
       :possible-values="possibleColumns"
       :is-valid="isValid"
       :title="description"
@@ -125,3 +128,10 @@ export default {
     <ErrorMessage :error="errorMessage" />
   </Fieldset>
 </template>
+
+<style lang="postcss" scoped>
+.fieldset {
+  min-width: auto;
+  overflow-x: hidden;
+}
+</style>

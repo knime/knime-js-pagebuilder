@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
-import MultipleSelectionWidget from '@/components/widgets/input/MultipleSelectionWidget';
+import MultipleSelectionWidget from '@/components/widgets/selection/MultipleSelectionWidget';
 import Checkboxes from '~/webapps-common/ui/components/forms/Checkboxes';
 import MultiselectListBox from '~/webapps-common/ui/components/forms/MultiselectListBox';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
