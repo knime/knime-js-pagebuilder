@@ -110,6 +110,7 @@ export default {
       :drag-on-click="dragOnClick"
       :contained="contained"
       :lazy="true"
+      x-ms-format-detection="none"
       @change="onInput"
     />
   </div>
@@ -270,7 +271,7 @@ export default {
   background-color: var(--theme-color-masala);
   box-sizing: content-box !important;
 
-  /* prevents blurry text in Chrome on Windows */
+  /* prevents blurry text in Chrome */
   backface-visibility: hidden;
   transform: perspective(1px) translateZ(0);
 }
