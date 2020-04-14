@@ -10,6 +10,7 @@ import SliderWidget from './input/SliderWidget';
 import SingleSelectionWidget from './selection/SingleSelectionWidget';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
 import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget';
+import ColumnSelectionWidget from './selection/ColumnSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 
@@ -53,6 +54,7 @@ export default {
         SingleSelectionWidget,
         MultipleSelectionWidget,
         ColumnFilterSelectionWidget,
+        ColumnSelectionWidget,
         // output widgets
         TextWidget
     },

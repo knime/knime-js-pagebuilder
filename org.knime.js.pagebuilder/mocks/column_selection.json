@@ -1,0 +1,1305 @@
+{
+  "hasPreviousPage": true,
+  "nodeMessages": {},
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:1",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:5",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 4,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:6",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 4,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:7",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 4,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:8",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 12,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:9",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:10",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:11",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:12",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:13",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:14",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:15",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          }
+        ]
+      },
+      "blackBoard": null,
+      "selectionTranslators": null,
+      "version": "4.2.0.v202003061457"
+    },
+    "webNodes": {
+      "3:0:9": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "Auto-guessing default column.",
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Crazy Columns (List)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": null
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": null
+          },
+          "possibleColumns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ],
+          "type": "List",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": null
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:1": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Widget (Dropdown)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "Dropdown",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": "Universe_0_0"
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:15": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Widget Limit 5 (Radio Horiz.)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "Radio buttons (horizontal)",
+          "limitNumberVisOptions": true,
+          "numberVisOptions": 5
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": "Universe_0_0"
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:14": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Widget Limit 5 (List)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "List",
+          "limitNumberVisOptions": true,
+          "numberVisOptions": 5
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": "Universe_0_0"
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:6": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Widget (Radio Horiz.)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "Radio buttons (horizontal)",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": "Universe_0_0"
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:13": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Crazy Columns Limit 5 (Radio Horiz.)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Duration"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Duration"
+          },
+          "possibleColumns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ],
+          "type": "Radio buttons (horizontal)",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 5
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": "Duration"
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:5": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Widget (List)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "List",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": "Universe_0_0"
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:12": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Crazy Columns (List)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Duration"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Duration"
+          },
+          "possibleColumns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ],
+          "type": "List",
+          "limitNumberVisOptions": true,
+          "numberVisOptions": 5
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": "Duration"
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:8": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "Auto-guessing default column.",
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Crazy Columns (Dropdown)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": null
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": null
+          },
+          "possibleColumns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ],
+          "type": "Dropdown",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": null
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:11": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "Auto-guessing default column.",
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Crazy Columns (Radio Horiz.)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": null
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": null
+          },
+          "possibleColumns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ],
+          "type": "Radio buttons (horizontal)",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": null
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:7": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Widget (Radio Vert.)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": "Universe_0_0"
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "Radio buttons (vertical)",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": "Universe_0_0"
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      },
+      "3:0:10": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Selection Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "Auto-guessing default column.",
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation",
+          "label": "Column Selection Crazy Columns (Radio Vert.)",
+          "description": "Column Selection Widget",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": null
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+            "column": null
+          },
+          "possibleColumns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ],
+          "type": "Radio buttons (vertical)",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue",
+          "column": null
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnSelectionWidget"
+      }
+    },
+    "version": "4.2.0.v202003061457"
+  }
+}
