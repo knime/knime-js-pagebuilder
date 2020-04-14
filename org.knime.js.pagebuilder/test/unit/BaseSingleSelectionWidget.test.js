@@ -1,12 +1,12 @@
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 
-import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget';
+import BaseSingleSelectionWidget from '@/components/widgets/BaseSingleSelectionWidget';
 import RadioButtons from '~/webapps-common/ui/components/forms/RadioButtons';
 import ListBox from '~/webapps-common/ui/components/forms/ListBox';
 import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
 
-describe('SingleSelectionWidget.vue', () => {
+describe('BaseSingleSelectionWidget.vue', () => {
     let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
 
     beforeEach(() => {
@@ -302,7 +302,7 @@ describe('SingleSelectionWidget.vue', () => {
 
     describe('radiobuttons', () => {
         it('renders horizontal', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
 
@@ -313,7 +313,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('fails on invalid type (alignment)', () => {
             propsDataRadioHorizontal.nodeConfig.viewRepresentation.type = 'Radio buttons (vulcano)';
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
 
@@ -322,7 +322,7 @@ describe('SingleSelectionWidget.vue', () => {
         });
 
         it('renders vertical', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioVertical
             });
 
@@ -332,7 +332,7 @@ describe('SingleSelectionWidget.vue', () => {
         });
 
         it('emits @updateWidget if child emits @input', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioVertical
             });
 
@@ -351,7 +351,7 @@ describe('SingleSelectionWidget.vue', () => {
 
     describe('list', () => {
         it('renders', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataList
             });
 
@@ -360,7 +360,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('has size set', () => {
             propsDataList.isValid = true;
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataList
             });
             let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
@@ -373,18 +373,18 @@ describe('SingleSelectionWidget.vue', () => {
                     limitNumberVisOptions: false
                 }
             };
-            expect(SingleSelectionWidget.computed.maxVisibleListEntries.call(localThis)).toBe(0);
+            expect(BaseSingleSelectionWidget.computed.maxVisibleListEntries.call(localThis)).toBe(0);
         });
 
         it('passes isValid to component', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: { ...propsDataList, isValid: false }
             });
             expect(wrapper.find(ListBox).props('isValid')).toBe(false);
         });
 
         it('sends @updateWidget if child emits @input', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataList
             });
 
@@ -403,7 +403,7 @@ describe('SingleSelectionWidget.vue', () => {
 
     describe('dropdown', () => {
         it('renders', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataDropdown
             });
 
@@ -411,14 +411,14 @@ describe('SingleSelectionWidget.vue', () => {
         });
 
         it('passes isValid to component', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: { ...propsDataDropdown, isValid: false }
             });
             expect(wrapper.find(Dropdown).props('isValid')).toBe(false);
         });
 
         it('sends @updateWidget if child emits @input', () => {
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataDropdown
             });
 
@@ -440,7 +440,7 @@ describe('SingleSelectionWidget.vue', () => {
             propsDataList.nodeConfig.viewRepresentation.required = false;
             propsDataList.nodeConfig.viewRepresentation.currentValue.value = [];
             propsDataList.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataList
             });
 
@@ -449,7 +449,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
             propsDataList.nodeConfig.viewRepresentation.required = true;
-            let wrapper = mount(SingleSelectionWidget, {
+            let wrapper = mount(BaseSingleSelectionWidget, {
                 propsData: propsDataList
             });
 
@@ -467,7 +467,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('is absent when valid', () => {
             propsDataRadioHorizontal.isValid = true;
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
 
@@ -476,7 +476,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('is default if none is set', () => {
             propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
 
@@ -486,7 +486,7 @@ describe('SingleSelectionWidget.vue', () => {
         it('is node warning message if set', () => {
             propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
             propsDataRadioHorizontal.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
 
@@ -496,7 +496,7 @@ describe('SingleSelectionWidget.vue', () => {
         it('is node error message if provided', () => {
             propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
             propsDataRadioHorizontal.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
 
@@ -505,7 +505,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('is error message if provided', () => {
             propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
-            let wrapper = shallowMount(SingleSelectionWidget, {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
 
