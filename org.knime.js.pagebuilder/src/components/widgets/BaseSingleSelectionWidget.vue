@@ -44,7 +44,7 @@ export default {
             default: null,
             type: Object
         },
-        // re-usable config
+        // viewRep handling settings
         dataTypeKey: {
             type: String,
             default: 'value'

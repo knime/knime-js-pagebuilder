@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 
@@ -7,9 +8,106 @@ import ListBox from '~/webapps-common/ui/components/forms/ListBox';
 import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
 
 describe('BaseSingleSelectionWidget.vue', () => {
-    let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
+    let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList,
+        propsDataColumnSelectionList;
 
     beforeEach(() => {
+        propsDataColumnSelectionList = {
+            nodeConfig: {
+                '@class': 'org.knime.js.core.JSONWebNode',
+                initMethodName: 'init',
+                validateMethodName: 'validate',
+                setValidationErrorMethodName: 'setValidationErrorMessage',
+                javascriptLibraries: [
+                    '/js-lib/knime/service/knime_service_1_0_0.js',
+                    '/js-lib/jQuery/jquery-1.11.0.min.js',
+                    '/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js',
+                    '/org/knime/js/base/dialog/selection/single/ListSingleSelection.js',
+                    '/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js',
+                    '/js-lib/jQueryUI/min/ui/jquery-ui.min.js',
+                    '/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js',
+                    '/org/knime/js/base/node/widget/selection/column/columnSelectionWidget.js'
+                ],
+                stylesheets: [
+                    '/js-lib/font-awesome/4_7_0/css/font-awesome.min.css',
+                    '/js-lib/knime/service/knime.css',
+                    '/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css',
+                    '/org/knime/js/base/util/quickform/quickformStyles.css'
+                ],
+                getViewValueMethodName: 'value',
+                nodeInfo: {
+                    '@class': 'org.knime.js.core.JSONWebNodeInfo',
+                    nodeAnnotation: '',
+                    nodeState: 'executed',
+                    nodeName: 'Column Selection Widget',
+                    nodeErrorMessage: null,
+                    nodeWarnMessage: 'Auto-guessing default column.',
+                    displayPossible: true
+                },
+                viewRepresentation: {
+                    '@class': 'org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation',
+                    label: 'Column Selection Crazy Columns (List)',
+                    description: 'Column Selection Widget',
+                    required: true,
+                    defaultValue: {
+                        '@class': 'org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue',
+                        column: null
+                    },
+                    currentValue: {
+                        '@class': 'org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue',
+                        column: null
+                    },
+                    possibleColumns: [
+                        'StringCol',
+                        'StringListCol',
+                        'StringSetCol',
+                        'IntCol',
+                        'IntListCol',
+                        'IntSetCol',
+                        'LongCol',
+                        'LongListCol',
+                        'LongSetCol',
+                        'DoubleCol',
+                        'DoubleListCol',
+                        'DoubleSetCol',
+                        'TimestampCol',
+                        'TimestampListCol',
+                        'TimestampSetCol',
+                        'BooleanCol',
+                        'BooleanListCol',
+                        'BooleanSetCol',
+                        'UriCol',
+                        'UriListCol',
+                        'UriSetCol',
+                        'MissingValStringCol',
+                        'MissingValStringListCol',
+                        'MissingValStringSetCol',
+                        'Local Date',
+                        'Local Time',
+                        'Local Date Time',
+                        'Zoned Date Time',
+                        'Period',
+                        'Duration'
+                    ],
+                    type: 'List',
+                    limitNumberVisOptions: false,
+                    numberVisOptions: 10
+                },
+                viewValue: {
+                    '@class': 'org.knime.js.base.node.base.selection.column.ColumnSelectionNodeValue',
+                    column: null
+                },
+                customCSS: '',
+                namespace: 'knimeColumnSelectionWidget'
+            },
+            nodeId: '3:0:9',
+            isValid: false,
+            // configure base single selection for column selection
+            dataTypeKey: 'column',
+            possibleChoicesKey: 'possibleColumns',
+            valueIsArray: false
+        };
+
         propsDataRadioHorizontal = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
@@ -378,7 +476,10 @@ describe('BaseSingleSelectionWidget.vue', () => {
 
         it('passes isValid to component', () => {
             let wrapper = shallowMount(BaseSingleSelectionWidget, {
-                propsData: { ...propsDataList, isValid: false }
+                propsData: {
+                    ...propsDataList,
+                    isValid: false
+                }
             });
             expect(wrapper.find(ListBox).props('isValid')).toBe(false);
         });
@@ -412,7 +513,10 @@ describe('BaseSingleSelectionWidget.vue', () => {
 
         it('passes isValid to component', () => {
             let wrapper = shallowMount(BaseSingleSelectionWidget, {
-                propsData: { ...propsDataDropdown, isValid: false }
+                propsData: {
+                    ...propsDataDropdown,
+                    isValid: false
+                }
             });
             expect(wrapper.find(Dropdown).props('isValid')).toBe(false);
         });
@@ -460,6 +564,16 @@ describe('BaseSingleSelectionWidget.vue', () => {
             wrapper.vm.$refs.form.$data.selectedIndex = 1;
 
             expect(wrapper.vm.validate()).toBe(true);
+        });
+    });
+
+    describe('viewRep handling settings', () => {
+        it('renders with column selection nodeConfig', () => {
+            let wrapper = shallowMount(BaseSingleSelectionWidget, {
+                propsData: propsDataColumnSelectionList
+            });
+
+            expect(wrapper.find(ListBox).exists()).toBe(true);
         });
     });
 
