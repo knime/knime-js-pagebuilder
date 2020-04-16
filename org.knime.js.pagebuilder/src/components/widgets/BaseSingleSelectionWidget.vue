@@ -138,6 +138,9 @@ export default {
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
             }
+            if (isValid && this.$refs.form.validate) {
+                isValid = this.$refs.form.validate();
+            }
             return isValid;
         }
     }
