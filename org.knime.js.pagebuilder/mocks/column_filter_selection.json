@@ -1,0 +1,888 @@
+{
+  "hasPreviousPage": true,
+  "nodeMessages": {},
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:1",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:4",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:5",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:6",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:8",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              },
+              {
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 6,
+                "widthXL": null,
+                "widthLG": null,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "nodeID": "3:0:9",
+                    "resizeInterval": null,
+                    "sizeWidth": false,
+                    "resizeTolerance": 5,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "autoResize": true,
+                    "resizeMethod": "viewLowestElement",
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          }
+        ]
+      },
+      "blackBoard": null,
+      "selectionTranslators": null,
+      "version": "4.2.0.v202003061457"
+    },
+    "webNodes": {
+      "3:0:9": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/filter/column/columnFilterWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Filter Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeRepresentation",
+          "label": "Crazy Columns (Limit 5)",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "StringCol",
+              "StringListCol",
+              "StringSetCol",
+              "IntCol",
+              "IntListCol",
+              "IntSetCol",
+              "LongCol",
+              "LongListCol",
+              "LongSetCol",
+              "DoubleCol",
+              "DoubleListCol",
+              "DoubleSetCol",
+              "TimestampCol",
+              "TimestampListCol",
+              "TimestampSetCol",
+              "BooleanCol",
+              "BooleanListCol",
+              "BooleanSetCol",
+              "UriCol",
+              "UriListCol",
+              "UriSetCol",
+              "MissingValStringCol",
+              "MissingValStringListCol",
+              "MissingValStringSetCol",
+              "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+              "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+              "Local Date",
+              "Local Time",
+              "Local Date Time",
+              "Zoned Date Time",
+              "Period",
+              "Duration"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "StringCol",
+              "StringListCol",
+              "StringSetCol",
+              "IntCol",
+              "IntListCol",
+              "IntSetCol",
+              "LongCol",
+              "LongListCol",
+              "LongSetCol",
+              "DoubleCol",
+              "DoubleListCol",
+              "DoubleSetCol",
+              "TimestampCol",
+              "TimestampListCol",
+              "TimestampSetCol",
+              "BooleanCol",
+              "BooleanListCol",
+              "BooleanSetCol",
+              "UriCol",
+              "UriListCol",
+              "UriSetCol",
+              "MissingValStringCol",
+              "MissingValStringListCol",
+              "MissingValStringSetCol",
+              "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+              "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+              "Local Date",
+              "Local Time",
+              "Local Date Time",
+              "Zoned Date Time",
+              "Period",
+              "Duration"
+            ]
+          },
+          "possibleColumns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ],
+          "type": "Twinlist",
+          "limitNumberVisOptions": true,
+          "numberVisOptions": 5
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+          "columns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ]
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnFilterWidget"
+      },
+      "3:0:1": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/filter/column/columnFilterWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Filter Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeRepresentation",
+          "label": "Default (WildCard *0)",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "Universe_0_0",
+              "Universe_1_0"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "Universe_0_99",
+              "Universe_1_0"
+            ]
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "Twinlist",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+          "columns": [
+            "Universe_0_0",
+            "Universe_1_0"
+          ]
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnFilterWidget"
+      },
+      "3:0:4": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/filter/column/columnFilterWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Filter Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeRepresentation",
+          "label": "Default (Manual Select)",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "Universe_0_0",
+              "Universe_0_1",
+              "Universe_1_0",
+              "Universe_1_1",
+              "Cluster Membership"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "Universe_0_0",
+              "Universe_0_1",
+              "Universe_1_0",
+              "Universe_1_1",
+              "Cluster Membership"
+            ]
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "Twinlist",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+          "columns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ]
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnFilterWidget"
+      },
+      "3:0:6": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/filter/column/columnFilterWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Filter Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeRepresentation",
+          "label": "Default (Type Selection String)",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "Cluster Membership"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "Cluster Membership"
+            ]
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "Twinlist",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+          "columns": [
+            "Cluster Membership"
+          ]
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnFilterWidget"
+      },
+      "3:0:5": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/filter/column/columnFilterWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Filter Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeRepresentation",
+          "label": "Default (Regex .*([0-9]))",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "Universe_0_0",
+              "Universe_0_1",
+              "Universe_1_0",
+              "Universe_1_1"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "Universe_0_0",
+              "Universe_0_1",
+              "Universe_1_0",
+              "Universe_1_1"
+            ]
+          },
+          "possibleColumns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1",
+            "Cluster Membership"
+          ],
+          "type": "Twinlist",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+          "columns": [
+            "Universe_0_0",
+            "Universe_0_1",
+            "Universe_1_0",
+            "Universe_1_1"
+          ]
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnFilterWidget"
+      },
+      "3:0:8": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/filter/column/columnFilterWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "getViewValueMethodName": "value",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "Column Filter Widget",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeRepresentation",
+          "label": "Crazy Columns",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "StringCol",
+              "StringListCol",
+              "StringSetCol",
+              "IntCol",
+              "IntListCol",
+              "IntSetCol",
+              "LongCol",
+              "LongListCol",
+              "LongSetCol",
+              "DoubleCol",
+              "DoubleListCol",
+              "DoubleSetCol",
+              "TimestampCol",
+              "TimestampListCol",
+              "TimestampSetCol",
+              "BooleanCol",
+              "BooleanListCol",
+              "BooleanSetCol",
+              "UriCol",
+              "UriListCol",
+              "UriSetCol",
+              "MissingValStringCol",
+              "MissingValStringListCol",
+              "MissingValStringSetCol",
+              "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+              "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+              "Local Date",
+              "Local Time",
+              "Local Date Time",
+              "Zoned Date Time",
+              "Period",
+              "Duration"
+            ]
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+            "columns": [
+              "StringCol",
+              "StringListCol",
+              "StringSetCol",
+              "IntCol",
+              "IntListCol",
+              "IntSetCol",
+              "LongCol",
+              "LongListCol",
+              "LongSetCol",
+              "DoubleCol",
+              "DoubleListCol",
+              "DoubleSetCol",
+              "TimestampCol",
+              "TimestampListCol",
+              "TimestampSetCol",
+              "BooleanCol",
+              "BooleanListCol",
+              "BooleanSetCol",
+              "UriCol",
+              "UriListCol",
+              "UriSetCol",
+              "MissingValStringCol",
+              "MissingValStringListCol",
+              "MissingValStringSetCol",
+              "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+              "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+              "Local Date",
+              "Local Time",
+              "Local Date Time",
+              "Zoned Date Time",
+              "Period",
+              "Duration"
+            ]
+          },
+          "possibleColumns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ],
+          "type": "Twinlist",
+          "limitNumberVisOptions": false,
+          "numberVisOptions": 10
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
+          "columns": [
+            "StringCol",
+            "StringListCol",
+            "StringSetCol",
+            "IntCol",
+            "IntListCol",
+            "IntSetCol",
+            "LongCol",
+            "LongListCol",
+            "LongSetCol",
+            "DoubleCol",
+            "DoubleListCol",
+            "DoubleSetCol",
+            "TimestampCol",
+            "TimestampListCol",
+            "TimestampSetCol",
+            "BooleanCol",
+            "BooleanListCol",
+            "BooleanSetCol",
+            "UriCol",
+            "UriListCol",
+            "UriSetCol",
+            "MissingValStringCol",
+            "MissingValStringListCol",
+            "MissingValStringSetCol",
+            "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName",
+            "LongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnNameLongDoubleColumnName",
+            "Local Date",
+            "Local Time",
+            "Local Date Time",
+            "Zoned Date Time",
+            "Period",
+            "Duration"
+          ]
+        },
+        "customCSS": "",
+        "namespace": "knimeColumnFilterWidget"
+      }
+    },
+    "version": "4.2.0.v202003061457"
+  }
+}

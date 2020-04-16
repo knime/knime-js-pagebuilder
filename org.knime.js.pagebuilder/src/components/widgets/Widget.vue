@@ -7,8 +7,9 @@ import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
-import SingleSelectionWidget from './input/SingleSelectionWidget';
-import MultipleSelectionWidget from './input/MultipleSelectionWidget';
+import SingleSelectionWidget from './selection/SingleSelectionWidget';
+import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
+import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 
@@ -51,6 +52,7 @@ export default {
         SliderWidget,
         SingleSelectionWidget,
         MultipleSelectionWidget,
+        ColumnFilterSelectionWidget,
         // output widgets
         TextWidget
     },

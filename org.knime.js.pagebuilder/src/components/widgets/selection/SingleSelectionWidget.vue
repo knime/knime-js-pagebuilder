@@ -1,25 +1,24 @@
 <script>
+import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox';
-import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
+import ListBox from 'webapps-common/ui/components/forms/ListBox';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
 
 const DATA_TYPE = 'value';
 
 /**
- * Multiple Selection Widget
- * Allows the user to select multiple items from a list of possible choices.
- * The view representation can either be a Twinlist, Checkboxes or a ListBox
+ * Implementation of the Single Selection Widget. Allows the user to select one item from a list of possible choices.
+ * The view representation can either be a Dropdown, ListBox or RadioButtons.
  */
 export default {
     components: {
-        Checkboxes,
         Fieldset,
-        MultiselectListBox,
-        Twinlist,
+        ListBox,
         Label,
+        Dropdown,
+        RadioButtons,
         ErrorMessage
     },
     props: {
@@ -43,7 +42,7 @@ export default {
         },
         valuePair: {
             default: () => ({
-                [DATA_TYPE]: []
+                [DATA_TYPE]: 0
             }),
             type: Object
         }
@@ -68,8 +67,7 @@ export default {
             if (this.viewRep.limitNumberVisOptions) {
                 return this.viewRep.numberVisOptions;
             }
-            // eslint-disable-next-line no-magic-numbers
-            return 0; // default: show all
+            return 0;
         },
         errorMessage() {
             if (this.isValid) {
@@ -87,22 +85,22 @@ export default {
             return 'Current selected item is invalid';
         },
         value() {
-            return this.valuePair[DATA_TYPE];
+            return this.valuePair[DATA_TYPE][0];
         },
         isList() {
             return this.viewRep.type === 'List';
         },
-        isTwinlist() {
-            return this.viewRep.type === 'Twinlist';
+        isDropdown() {
+            return this.viewRep.type === 'Dropdown';
         },
-        isCheckboxes() {
-            return this.viewRep.type === 'Check boxes (horizontal)' ||
-                this.viewRep.type === 'Check boxes (vertical)';
+        isRadioButtons() {
+            return this.viewRep.type === 'Radio buttons (vertical)' ||
+                this.viewRep.type === 'Radio buttons (horizontal)';
         },
-        checkBoxesAlignment() {
-            if (this.viewRep.type === 'Check boxes (vertical)') {
+        radioButtonsAlignment() {
+            if (this.viewRep.type === 'Radio buttons (vertical)') {
                 return 'vertical';
-            } else if (this.viewRep.type === 'Check boxes (horizontal)') {
+            } else if (this.viewRep.type === 'Radio buttons (horizontal)') {
                 return 'horizontal';
             }
             return null;
@@ -113,7 +111,7 @@ export default {
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
-                value
+                value: [value]
             };
             this.$emit('updateWidget', changeEventObj);
         },
@@ -129,30 +127,17 @@ export default {
 </script>
 
 <template>
-  <div class="multi-select-widget">
+  <div>
     <Fieldset
-      v-if="isCheckboxes || isTwinlist"
+      v-if="isRadioButtons"
       :text="label"
       class="fieldset"
     >
-      <Checkboxes
-        v-if="isCheckboxes"
+      <RadioButtons
+        v-if="isRadioButtons"
         ref="form"
+        :alignment="radioButtonsAlignment"
         :value="value"
-        :alignment="checkBoxesAlignment"
-        :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <Twinlist
-        v-if="isTwinlist"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        label-left="Excludes"
-        label-right="Includes"
         :possible-values="possibleChoices"
         :is-valid="isValid"
         :title="description"
@@ -161,14 +146,24 @@ export default {
       <ErrorMessage :error="errorMessage" />
     </Fieldset>
     <Label
-      v-else
+      v-if="!isRadioButtons"
       :text="label"
     >
-      <MultiselectListBox
+      <ListBox
         v-if="isList"
         ref="form"
         :value="value"
         :size="maxVisibleListEntries"
+        :aria-label="label"
+        :possible-values="possibleChoices"
+        :is-valid="isValid"
+        :title="description"
+        @input="onChange"
+      />
+      <Dropdown
+        v-if="isDropdown"
+        ref="form"
+        :value="value"
         :aria-label="label"
         :possible-values="possibleChoices"
         :is-valid="isValid"
@@ -181,11 +176,9 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.multi-select-widget {
-  /* required for text ellipsis on checkboxes */
-  & .fieldset {
-    min-width: auto;
-    overflow-x: hidden;
-  }
+/* required for text ellipsis on radio-buttons */
+.fieldset {
+  min-width: auto;
+  overflow-x: hidden;
 }
 </style>

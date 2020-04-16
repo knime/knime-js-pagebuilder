@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 
-import SingleSelectionWidget from '@/components/widgets/input/SingleSelectionWidget';
+import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget';
 import RadioButtons from '~/webapps-common/ui/components/forms/RadioButtons';
 import ListBox from '~/webapps-common/ui/components/forms/ListBox';
 import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';

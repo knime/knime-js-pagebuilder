@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
-import MultipleSelectionWidget from '@/components/widgets/input/MultipleSelectionWidget';
+import MultipleSelectionWidget from '@/components/widgets/selection/MultipleSelectionWidget';
 import Checkboxes from '~/webapps-common/ui/components/forms/Checkboxes';
 import MultiselectListBox from '~/webapps-common/ui/components/forms/MultiselectListBox';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
@@ -348,9 +348,9 @@ describe('MultipleSelectionWidget.vue', () => {
                 propsData: propsDataCheckboxHorizontal
             });
 
-            let rb = wrapper.find(Checkboxes);
-            expect(rb).toBeTruthy();
-            expect(rb.props('alignment')).toBe('horizontal');
+            let checkboxes = wrapper.find(Checkboxes);
+            expect(checkboxes.exists()).toBeTruthy();
+            expect(checkboxes.props('alignment')).toBe('horizontal');
         });
 
         it('render vertical', () => {
@@ -359,9 +359,9 @@ describe('MultipleSelectionWidget.vue', () => {
                 propsData: propsDataCheckboxVertical
             });
 
-            let rb = wrapper.find(Checkboxes);
-            expect(rb).toBeTruthy();
-            expect(rb.props('alignment')).toBe('vertical');
+            let checkboxes = wrapper.find(Checkboxes);
+            expect(checkboxes.exists()).toBeTruthy();
+            expect(checkboxes.props('alignment')).toBe('vertical');
         });
 
         it('fail on invalid type (alignment)', () => {
@@ -401,8 +401,7 @@ describe('MultipleSelectionWidget.vue', () => {
                 propsData: propsDataMultiselectListBox
             });
 
-            let rb = wrapper.find(MultiselectListBox);
-            expect(rb).toBeTruthy();
+            expect(wrapper.find(MultiselectListBox).exists()).toBeTruthy();
         });
 
         it('sends @updateWidget if child emits @input', () => {
@@ -431,8 +430,7 @@ describe('MultipleSelectionWidget.vue', () => {
                 propsData: propsDataTwinlist
             });
 
-            let rb = wrapper.find(Twinlist);
-            expect(rb).toBeTruthy();
+            expect(wrapper.find(Twinlist).exists()).toBeTruthy();
         });
 
         it('size defaults to 0', () => {
@@ -511,7 +509,7 @@ describe('MultipleSelectionWidget.vue', () => {
                 propsData: propsDataCheckboxHorizontal
             });
 
-            expect(wrapper.vm.errorMessage).toBe('Current selected item is invalid');
+            expect(wrapper.vm.errorMessage).toBe('Current selection is invalid');
         });
 
         it('is warning message if set', () => {
