@@ -130,7 +130,7 @@ export default {
 
 <style lang="postcss" scoped>
 .fieldset {
-  min-width: auto;
+  min-width: 100% !important; /* fix for Edge Legacy (v18) */
   overflow-x: hidden;
 }
 </style>
