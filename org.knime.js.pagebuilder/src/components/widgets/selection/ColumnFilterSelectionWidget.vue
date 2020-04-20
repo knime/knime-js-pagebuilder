@@ -91,7 +91,7 @@ export default {
         validate() {
             // reset
             let isValid = true;
-            this.frontendErrorMessage = null;
+            this.customValidationErrorMessage = null;
             // run checks
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
