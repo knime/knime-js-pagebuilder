@@ -58,6 +58,11 @@ export default {
             default: true
         }
     },
+    data() {
+        return {
+            customValidationErrorMessage: null
+        };
+    },
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -84,16 +89,9 @@ export default {
             if (this.isValid) {
                 return null;
             }
-            if (this.viewRep.errorMessage) {
-                return this.viewRep.errorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            }
-            return 'Current selected item is invalid';
+
+            // backend error message or frontend or default
+            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
         },
         value() {
             // case if we did not get a value pair
@@ -135,11 +133,14 @@ export default {
         },
         validate() {
             let isValid = true;
+            this.customValidationErrorMessage = null;
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
+                this.customValidationErrorMessage = 'Selection is required';
             }
             if (isValid && this.$refs.form.validate) {
                 isValid = this.$refs.form.validate();
+                this.customValidationErrorMessage = 'Current selection is invalid';
             }
             return isValid;
         }

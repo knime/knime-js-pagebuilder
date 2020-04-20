@@ -593,28 +593,18 @@ describe('BaseSingleSelectionWidget.vue', () => {
             let wrapper = shallowMount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
-
-            expect(wrapper.vm.errorMessage).toBe('Current selected item is invalid');
+            wrapper.setData({ customValidationErrorMessage: null });
+            expect(wrapper.vm.errorMessage).toBe('Selection is invalid or missing');
         });
 
-        it('is node warning message if set', () => {
+        it('is custom required message', () => {
             propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            propsDataRadioHorizontal.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
-            let wrapper = shallowMount(BaseSingleSelectionWidget, {
+            propsDataRadioHorizontal.nodeConfig.viewRepresentation.currentValue.value = [];
+            let wrapper = mount(BaseSingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
-
-            expect(wrapper.vm.errorMessage).toBe('Testing warning message');
-        });
-
-        it('is node error message if provided', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            propsDataRadioHorizontal.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-            let wrapper = shallowMount(BaseSingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-
-            expect(wrapper.vm.errorMessage).toBe('Testing error message');
+            wrapper.vm.validate();
+            expect(wrapper.vm.errorMessage).toBe('Selection is required');
         });
 
         it('is error message if provided', () => {
