@@ -1,7 +1,6 @@
 <script>
 /**
  * Default error message for widgets.
- * NOTE: The visibility was added to fix bugs in Edge classic with missing updates of empty strings
  */
 export default {
     props: {
@@ -20,6 +19,9 @@ export default {
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
+/**
+ * NOTE: The visibility was added to fix bugs in Edge classic with missing updates of empty strings
+ */
 .invisible {
   visibility: hidden;
 }
