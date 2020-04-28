@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-/* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 
 import BaseSingleSelectionWidget from '@/components/widgets/BaseSingleSelectionWidget';
