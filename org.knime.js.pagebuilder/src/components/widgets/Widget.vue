@@ -83,7 +83,9 @@ export default {
     },
     data() {
         return {
-            isValid: true
+            isValid: true,
+            errorMessage: null,
+            serverValidationErrorMessage: null
         };
     },
     computed: {
@@ -132,9 +134,7 @@ export default {
         }
         if (this.hasValidator) {
             this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
-            await this.validate().then((resp, err) => {
-                this.isValid = resp.isValid;
-            });
+            await this.validate();
         }
     },
     beforeDestroy() {
@@ -157,9 +157,7 @@ export default {
             };
             this.updateWebNode(changeObj);
             if (this.hasValidator) {
-                await this.validate().then((resp, err) => {
-                    this.isValid = resp.isValid;
-                });
+                await this.validate();
             }
         },
         getValue() {
@@ -178,27 +176,23 @@ export default {
         },
         validate() {
             return new Promise((resolve, reject) => {
-                let isValid;
+                let isValid = true;
+                let errorMessage = null;
                 try {
-                    isValid = this.$refs.widget.validate();
-                    if (typeof isValid === 'undefined') {
-                        throw new Error('Widget validation failed.');
-                    }
+                    ({ isValid, errorMessage } = this.$refs.widget.validate());
                 } catch (error) {
                     isValid = false;
+                    errorMessage = 'Something is not right. Please check this element.';
                 } finally {
-                    resolve({ nodeId: this.nodeId, isValid });
+                    this.isValid = isValid;
+                    this.errorMessage = errorMessage;
+                    resolve({ nodeId: this.nodeId, isValid, errorMessage });
                 }
             });
         },
         setValidationError(errMsg) {
             return new Promise((resolve, reject) => {
-                this.updateWebNode({
-                    nodeId: this.nodeId,
-                    update: {
-                        'nodeInfo.nodeErrorMessage': errMsg
-                    }
-                });
+                this.serverValidationErrorMessage = errMsg;
                 this.isValid = false;
                 resolve();
             });
@@ -218,6 +212,7 @@ export default {
       v-bind="$props"
       :is-valid="isValid"
       :value-pair="valuePair"
+      :error-message="serverValidationErrorMessage || errorMessage"
       @updateWidget="publishUpdate"
     />
   </div>

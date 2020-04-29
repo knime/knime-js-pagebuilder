@@ -46,6 +46,10 @@ export default {
                 [DATA_TYPE]: []
             }),
             type: Object
+        },
+        errorMessage: {
+            type: String,
+            default: null
         }
     },
     computed: {
@@ -69,21 +73,6 @@ export default {
                 return this.viewRep.numberVisOptions;
             }
             return 0; // default: show all
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-            if (this.viewRep.errorMessage) {
-                return this.viewRep.errorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            }
-            return 'Current selection is invalid';
         },
         value() {
             return this.valuePair[DATA_TYPE];
@@ -118,10 +107,17 @@ export default {
         },
         validate() {
             let isValid = true;
-            if (this.viewRep.required) {
-                isValid = this.$refs.form.hasSelection();
+            let errorMessage;
+            if (this.viewRep.required && !this.$refs.form.hasSelection()) {
+                isValid = false;
+                errorMessage = 'At least one element must be selected';
             }
-            return isValid;
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = validateEvent.isValid && isValid;
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };
