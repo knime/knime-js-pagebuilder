@@ -13,11 +13,18 @@ export default {
 </script>
 
 <template>
-  <span>{{ error || '' }}</span>
+  <span :class="{ invisible: error === null }">{{ error || '' }}</span>
 </template>
 
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
+
+/**
+ * NOTE: The visibility was added to fix bugs in Edge classic with missing updates of empty strings
+ */
+.invisible {
+  visibility: hidden;
+}
 
 span {
   font-weight: 300;

@@ -91,7 +91,7 @@ export default {
         validate() {
             // reset
             let isValid = true;
-            this.frontendErrorMessage = null;
+            this.customValidationErrorMessage = null;
             // run checks
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
@@ -130,7 +130,7 @@ export default {
 
 <style lang="postcss" scoped>
 .fieldset {
-  min-width: auto;
+  min-width: 100% !important; /* fix for Edge Legacy (v18) */
   overflow-x: hidden;
 }
 </style>
