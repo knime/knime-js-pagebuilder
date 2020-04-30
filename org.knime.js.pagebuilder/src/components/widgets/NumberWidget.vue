@@ -1,7 +1,7 @@
 <script>
-import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../text/ErrorMessage';
+import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
+import Label from 'webapps-common/ui/components/forms/Label';
+import ErrorMessage from './baseElements/text/ErrorMessage';
 
 /**
  * This is the implementation of the Number Input Widget. The primary goal of this component

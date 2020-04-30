@@ -1,5 +1,5 @@
 <script>
-import NumberWidget from '../baseElements/input/NumberWidget';
+import NumberWidget from '../NumberWidget';
 
 /**
  * This is the implementation of the Double Input Widget. This component relies
