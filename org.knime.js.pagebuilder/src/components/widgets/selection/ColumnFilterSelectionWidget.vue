@@ -110,7 +110,6 @@ export default {
 
 <template>
   <Fieldset
-    class="fieldset"
     :text="label"
   >
     <Twinlist
@@ -127,10 +126,3 @@ export default {
     <ErrorMessage :error="errorMessage" />
   </Fieldset>
 </template>
-
-<style lang="postcss" scoped>
-.fieldset {
-  min-width: 100% !important; /* fix for Edge Legacy (v18) */
-  overflow-x: hidden;
-}
-</style>
