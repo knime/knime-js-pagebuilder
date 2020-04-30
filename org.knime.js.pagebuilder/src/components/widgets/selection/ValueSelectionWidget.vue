@@ -138,7 +138,8 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validateColumn() {
-            return this.isColumnLocked || (this.$refs.column && this.$refs.column.hasSelection());
+            const columnHasSelection = this.$refs.column && this.$refs.column.hasSelection();
+            return this.isColumnLocked || columnHasSelection;
         },
         validate() {
             let isValid = true;

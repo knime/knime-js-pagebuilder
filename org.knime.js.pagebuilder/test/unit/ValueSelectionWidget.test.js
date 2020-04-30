@@ -2,9 +2,6 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
 import ValueSelectionWidget from '@/components/widgets/selection/ValueSelectionWidget';
-import RadioButtons from '~/webapps-common/ui/components/forms/RadioButtons';
-import ListBox from '~/webapps-common/ui/components/forms/ListBox';
-import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
 
 describe('ValueSelectionWidget.vue', () => {
     let propsDataRadioHorizontal,
@@ -305,7 +302,7 @@ describe('ValueSelectionWidget.vue', () => {
                             'carriage return and new line \r\n carriage return and new line',
                             'tab\ttab',
                             'comma,comma',
-                            "single quote'single quote",
+                            "single quote'single quote"
                         ],
                         StringCol: [
                             'semicolon;semicolon',
