@@ -118,6 +118,15 @@ export default {
         },
         isColumnLocked() {
             return this.viewRep.lockColumn;
+        },
+        isColumnValid() {
+            if (this.isColumnLocked) {
+                return true;
+            }
+            return this.possibleColumns.map(x => x.id).includes(this.column);
+        },
+        hasSelection() {
+            return this.possibleChoices.map(x => x.id).includes(this.value);
         }
     },
     methods: {
@@ -137,24 +146,23 @@ export default {
             };
             this.$emit('updateWidget', changeEventObj);
         },
-        validateColumn() {
-            const columnHasSelection = this.$refs.column && this.$refs.column.hasSelection();
-            return this.isColumnLocked || columnHasSelection;
-        },
         validate() {
             let isValid = true;
             this.customValidationErrorMessage = null;
             if (this.viewRep.required) {
-                isValid = this.$refs.form.hasSelection() && this.validateColumn();
-                if (this.validateColumn()) {
+                isValid = this.hasSelection && this.isColumnValid;
+                if (!this.hasSelection) {
                     this.customValidationErrorMessage = 'Selection is required';
-                } else {
-                    this.customValidationErrorMessage = 'Select a Column first';
+                }
+                if (!this.isColumnValid) {
+                    this.customValidationErrorMessage = 'Select a valid Column first';
                 }
             }
             if (isValid && this.$refs.form.validate) {
                 isValid = this.$refs.form.validate();
-                this.customValidationErrorMessage = 'Current selection is invalid';
+                if (!isValid) {
+                    this.customValidationErrorMessage = 'Current selection is invalid';
+                }
             }
             return isValid;
         }
@@ -177,7 +185,7 @@ export default {
         v-if="!isColumnLocked"
         ref="column"
         :value="column"
-        :is-valid="validateColumn()"
+        :is-valid="isColumnValid"
         aria-label="Column"
         :possible-values="possibleColumns"
         @input="onColumnChange"
