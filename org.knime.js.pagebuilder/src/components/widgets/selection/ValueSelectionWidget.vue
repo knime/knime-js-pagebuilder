@@ -160,9 +160,6 @@ export default {
             }
             if (isValid && this.$refs.form.validate) {
                 isValid = this.$refs.form.validate();
-                if (!isValid) {
-                    this.customValidationErrorMessage = 'Current selection is invalid';
-                }
             }
             return isValid;
         }

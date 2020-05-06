@@ -302,7 +302,7 @@ describe('ValueSelectionWidget.vue', () => {
                             'carriage return and new line \r\n carriage return and new line',
                             'tab\ttab',
                             'comma,comma',
-                            "single quote'single quote"
+                            'single quote\'single quote'
                         ],
                         StringCol: [
                             'semicolon;semicolon',
@@ -313,7 +313,7 @@ describe('ValueSelectionWidget.vue', () => {
                             'carriage return and new line \r\n carriage return and new line',
                             'tab\ttab',
                             'comma,comma',
-                            "single quote'single quote",
+                            'single quote\'single quote',
                             '    ',
                             ''
                         ],
@@ -513,6 +513,23 @@ describe('ValueSelectionWidget.vue', () => {
                 value: testValue
             });
         });
+
+        it('sends @updateWidget if column emits @input', () => {
+            let wrapper = shallowMount(ValueSelectionWidget, {
+                propsData: propsDataRadioVertical
+            });
+
+            const testValue = 'MYCOL';
+            const lb = wrapper.find({ ref: 'column' });
+            lb.vm.$emit('input', testValue);
+
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: propsDataRadioVertical.nodeId,
+                type: 'column',
+                value: testValue
+            });
+        });
     });
 
     describe('list', () => {
@@ -627,18 +644,18 @@ describe('ValueSelectionWidget.vue', () => {
             expect(wrapper.vm.validate()).toBe(true);
         });
 
-        it('is invalid/valid if required and no selection/a selection was made', () => {
+        it('does respect required validation', () => {
             propsDataList.nodeConfig.viewRepresentation.required = true;
+            propsDataList.nodeConfig.viewRepresentation.lockColumn = true;
             let wrapper = mount(ValueSelectionWidget, {
                 propsData: propsDataList
             });
 
+            // by default in tests there is no valuePair set (so we don't have a value)
             expect(wrapper.vm.validate()).toBe(false);
 
-            // without this the sub component will never have a value in the test
-            // we do not want to set it in html as this would violate the test scope
-            wrapper.find({ ref: 'form' }).setData({ selectedIndex: 1 });
-            wrapper.find({ ref: 'column' }).setData({ selectedIndex: 0 });
+            // set the value
+            wrapper.setProps({ valuePair: propsDataList.nodeConfig.viewRepresentation.currentValue });
 
             expect(wrapper.vm.validate()).toBe(true);
         });
@@ -683,6 +700,25 @@ describe('ValueSelectionWidget.vue', () => {
 
             expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
         });
+
+        it('custom column invalid message', () => {
+            propsDataList.nodeConfig.viewRepresentation.required = true;
+            propsDataList.nodeConfig.viewRepresentation.lockColumn = false;
+            let wrapper = mount(ValueSelectionWidget, {
+                propsData: propsDataList
+            });
+
+            // set a value
+            wrapper.setProps({ valuePair: propsDataList.nodeConfig.viewRepresentation.currentValue });
+
+            expect(wrapper.vm.isColumnValid).toBe(true);
+            propsDataList.nodeConfig.viewRepresentation.currentValue.column = 'DOES_NOT_EXIST';
+            expect(wrapper.vm.isColumnValid).toBe(false);
+
+            expect(wrapper.vm.validate()).toBe(false);
+            expect(wrapper.vm.customValidationErrorMessage).toBe('Select a valid Column first');
+        });
+
     });
 
 });
