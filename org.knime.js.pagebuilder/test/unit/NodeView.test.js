@@ -137,6 +137,20 @@ describe('NodeView.vue', () => {
         expect(wrapper.vm.isWidget).toBeFalsy();
     });
 
+    it('can detect legacy flags', () => {
+        let viewConfig = {
+            useLegacyMode: true
+        };
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.isWidget).toBeFalsy();
+    });
+
     it('does not render iframe if webNode config is missing', () => {
         let viewConfig = {
             nodeID: '123'

@@ -68,7 +68,7 @@ export default {
             return style.join(';').replace(/;;/g, ';');
         },
         isWidget() {
-            return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
+            return !this.viewConfig.useLegacyMode && this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
                 classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
         }
     }
