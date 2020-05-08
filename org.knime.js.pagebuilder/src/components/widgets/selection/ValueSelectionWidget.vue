@@ -53,6 +53,7 @@ export default {
     },
     data() {
         return {
+            // TODO: WEBP-292 remove
             customValidationErrorMessage: null
         };
     },
@@ -148,7 +149,7 @@ export default {
         },
         validate() {
             let isValid = true;
-            this.customValidationErrorMessage = null;
+            this.customValidationErrorMessage = null; // TODO: WEBP-292 remove
             if (this.viewRep.required) {
                 isValid = this.hasSelection && this.isColumnValid;
                 if (!this.hasSelection) {
@@ -159,7 +160,7 @@ export default {
                 }
             }
             if (isValid && this.$refs.form.validate) {
-                isValid = this.$refs.form.validate();
+                isValid = this.$refs.form.validate(); // TODO: WEBP-292 update
             }
             return isValid;
         }
@@ -226,13 +227,3 @@ export default {
     </Component>
   </div>
 </template>
-
-<style lang="postcss" scoped>
-/* TODO remove me */
-
-/* required for text ellipsis on radio-buttons */
-.fieldset {
-  min-width: 100% !important; /* fix for Edge Legacy (v18) */
-  overflow-x: hidden;
-}
-</style>
