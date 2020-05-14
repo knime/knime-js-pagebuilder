@@ -51,12 +51,6 @@ export default {
         label() {
             return this.viewRep.label;
         },
-        possibleChoices() {
-            return this.viewRep.possibleChoices.map((x) => ({
-                id: x,
-                text: x
-            }));
-        },
         description() {
             return this.viewRep.description || null;
         },
@@ -107,7 +101,7 @@ export default {
       :type="viewRep.type"
       :number-vis-options="viewRep.numberVisOptions"
       :limit-number-vis-options="viewRep.limitNumberVisOptions"
-      :possible-values="possibleChoices"
+      :possible-value-list="viewRep.possibleChoices"
       :is-valid="isValid"
       :description="description"
       :label="label"

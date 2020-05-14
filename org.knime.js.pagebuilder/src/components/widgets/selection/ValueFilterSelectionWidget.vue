@@ -63,10 +63,7 @@ export default {
             return this.viewRep.label;
         },
         possibleValues() {
-            return this.viewRep.possibleValues[this.column].map((x) => ({
-                id: x,
-                text: x
-            }));
+            return this.viewRep.possibleValues[this.column];
         },
         description() {
             return this.viewRep.description || null;
@@ -103,6 +100,9 @@ export default {
                 return true;
             }
             return this.viewRep.possibleColumns.includes(this.column);
+        },
+        isList() {
+            return this.viewRep.type === 'List';
         }
     },
     methods: {
@@ -155,7 +155,7 @@ export default {
       />
     </Label>
     <Component
-      :is="viewRep.type == 'List' ? 'Label' : 'Fieldset'"
+      :is="isList ? 'Label' : 'Fieldset'"
       :text="isColumnLocked ? label : 'Value'"
     >
       <MultiSelectView
@@ -164,7 +164,7 @@ export default {
         :type="viewRep.type"
         :number-vis-options="viewRep.numberVisOptions"
         :limit-number-vis-options="viewRep.limitNumberVisOptions"
-        :possible-values="possibleValues"
+        :possible-value-list="possibleValues"
         :is-valid="isValid"
         :description="description"
         :label="label"

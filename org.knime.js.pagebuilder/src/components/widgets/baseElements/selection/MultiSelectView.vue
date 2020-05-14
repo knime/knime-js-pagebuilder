@@ -5,8 +5,13 @@ import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
 
 /**
  * Multi Select View Component
+ *
  * Allows the user to select multiple items from a list of possible values.
  * The view is either a Twinlist, Checkboxes or a ListBox.
+ *
+ * This can be seen as a glue element between the regular components (most of them living in webapps-common) and the
+ * actual widgets implementation. It can take strings directly from the nodeConfig (like type) but still does not
+ * handle everything a widget does.
  */
 export default {
     components: {
@@ -24,24 +29,13 @@ export default {
             type: String
         },
         /**
-         * List of possible values. Each item must have an `id` and a `text` property
-         * @example
-         * [{
-         *   id: 'pdf',
-         *   text: 'PDF'
-         * }, {
-         *   id: 'XLS',
-         *   text: 'Excel',
-         * }]
+         * List of possible values. Each item is used as text and id
          */
-        possibleValues: {
+        possibleValueList: {
             type: Array,
             default: () => [],
             validator(values) {
-                if (!Array.isArray(values)) {
-                    return false;
-                }
-                return values.every(item => item.hasOwnProperty('id') && item.hasOwnProperty('text'));
+                return Array.isArray(values);
             }
         },
         limitNumberVisOptions: {
@@ -89,6 +83,12 @@ export default {
                 return 'horizontal';
             }
             return null;
+        },
+        possibleValues() {
+            return this.possibleValueList.map((x) => ({
+                id: x,
+                text: x
+            }));
         }
     },
     methods: {
