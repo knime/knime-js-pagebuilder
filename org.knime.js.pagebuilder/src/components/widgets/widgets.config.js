@@ -11,6 +11,7 @@ export const classToComponentMap = {
     'org.knime.js.base.node.widget.selection.multiple.MultipleSelectionWidgetRepresentation': 'MultipleSelectionWidget',
     'org.knime.js.base.node.base.filter.column.ColumnFilterNodeRepresentation': 'ColumnFilterSelectionWidget',
     'org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation': 'ColumnSelectionWidget',
+    'org.knime.js.base.node.base.filter.value.ValueFilterNodeRepresentation': 'ValueFilterSelectionWidget',
 
     // output widgets
     'org.knime.js.base.node.output.text.TextOutputRepresentation': 'TextWidget'

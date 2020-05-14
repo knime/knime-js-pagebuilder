@@ -11,6 +11,7 @@ import SingleSelectionWidget from './selection/SingleSelectionWidget';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
 import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget';
 import ColumnSelectionWidget from './selection/ColumnSelectionWidget';
+import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 
@@ -55,6 +56,7 @@ export default {
         MultipleSelectionWidget,
         ColumnFilterSelectionWidget,
         ColumnSelectionWidget,
+        ValueFilterSelectionWidget,
         // output widgets
         TextWidget
     },
