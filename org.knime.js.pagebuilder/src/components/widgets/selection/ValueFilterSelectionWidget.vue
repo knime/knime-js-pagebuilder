@@ -1,11 +1,9 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox';
-import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
-import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
+import MultiSelectView from '@/components/widgets/baseElements/selection/MultiSelectView';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 
 const VALUE_KEY_NAME = 'values';
 const COLUMN_KEY_NAME = 'column';
@@ -13,19 +11,16 @@ const COLUMN_KEY_NAME = 'column';
 /**
  * Value Filter Selection Widget
  *
- * TODO: update
- * Allows the user to select multiple items from a list of possible choices.
- * The view representation can either be a Twinlist, Checkboxes or a ListBox.
+ * Allows the user to select multiple items from a list of possible choices. This list depends on a 'column' selected
+ * in a dropdown. The dropdown is only shown if the column is not locked by configuration.
  *
  */
 export default {
     components: {
-        Checkboxes,
-        Fieldset,
-        MultiselectListBox,
-        Twinlist,
-        Label,
+        MultiSelectView,
         Dropdown,
+        Label,
+        Fieldset,
         ErrorMessage
     },
     props: {
@@ -76,12 +71,6 @@ export default {
         description() {
             return this.viewRep.description || null;
         },
-        maxVisibleListEntries() {
-            if (this.viewRep.limitNumberVisOptions) {
-                return this.viewRep.numberVisOptions;
-            }
-            return 0; // default: show all
-        },
         errorMessage() {
             if (this.isValid) {
                 return null;
@@ -100,29 +89,11 @@ export default {
         column() {
             return this.valuePair[COLUMN_KEY_NAME];
         },
-        isList() {
-            return this.viewRep.type === 'List';
-        },
-        isTwinlist() {
-            return this.viewRep.type === 'Twinlist';
-        },
         possibleColumns() {
             return this.viewRep.possibleColumns.map((x) => ({
                 id: x,
                 text: x
             }));
-        },
-        isCheckboxes() {
-            return this.viewRep.type === 'Check boxes (horizontal)' ||
-                this.viewRep.type === 'Check boxes (vertical)';
-        },
-        checkBoxesAlignment() {
-            if (this.viewRep.type === 'Check boxes (vertical)') {
-                return 'vertical';
-            } else if (this.viewRep.type === 'Check boxes (horizontal)') {
-                return 'horizontal';
-            }
-            return null;
         },
         isColumnLocked() {
             return this.viewRep.lockColumn;
@@ -165,16 +136,14 @@ export default {
 </script>
 
 <template>
-  <div>
-    <Component
-      :is="isColumnLocked && !isCheckboxes ? 'Label' : 'Fieldset'"
-      :text="label"
-      class="fieldset"
+  <Component
+    :is="isColumnLocked ? 'div' : 'Fieldset'"
+    :text="isColumnLocked ? null : label"
+  >
+    <Label
+      v-if="!isColumnLocked"
+      text="Column"
     >
-      <Label
-        v-if="!isColumnLocked"
-        text="Column"
-      />
       <Dropdown
         v-if="!isColumnLocked"
         ref="column"
@@ -184,45 +153,24 @@ export default {
         :possible-values="possibleColumns"
         @input="onColumnChange"
       />
-      <Label
-        v-if="!isColumnLocked"
-        text="Value"
-      />
-      <Checkboxes
-        v-if="isCheckboxes"
+    </Label>
+    <Component
+      :is="viewRep.type == 'List' ? 'Label' : 'Fieldset'"
+      :text="isColumnLocked ? label : 'Value'"
+    >
+      <MultiSelectView
         ref="form"
         :value="value"
-        :alignment="checkBoxesAlignment"
-        :aria-label="label"
+        :type="viewRep.type"
+        :number-vis-options="viewRep.numberVisOptions"
+        :limit-number-vis-options="viewRep.limitNumberVisOptions"
         :possible-values="possibleValues"
         :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <MultiselectListBox
-        v-if="isList"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        :aria-label="label"
-        :possible-values="possibleValues"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <Twinlist
-        v-if="isTwinlist"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        label-left="Excludes"
-        label-right="Includes"
-        :possible-values="possibleValues"
-        :is-valid="isValid"
-        :title="description"
+        :description="description"
+        :label="label"
         @input="onChange"
       />
       <ErrorMessage :error="errorMessage" />
     </Component>
-  </div>
+  </Component>
 </template>

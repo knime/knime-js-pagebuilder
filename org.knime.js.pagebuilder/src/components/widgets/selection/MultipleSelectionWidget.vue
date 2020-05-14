@@ -1,10 +1,8 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox';
-import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
+import MultiSelectView from '@/components/widgets/baseElements/selection/MultiSelectView';
 
 const DATA_TYPE = 'value';
 
@@ -15,10 +13,8 @@ const DATA_TYPE = 'value';
  */
 export default {
     components: {
-        Checkboxes,
+        MultiSelectView,
         Fieldset,
-        MultiselectListBox,
-        Twinlist,
         Label,
         ErrorMessage
     },
@@ -64,24 +60,12 @@ export default {
         description() {
             return this.viewRep.description || null;
         },
-        maxVisibleListEntries() {
-            if (this.viewRep.limitNumberVisOptions) {
-                return this.viewRep.numberVisOptions;
-            }
-            return 0; // default: show all
-        },
         errorMessage() {
             if (this.isValid) {
                 return null;
             }
             if (this.viewRep.errorMessage) {
                 return this.viewRep.errorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
             }
             return 'Current selection is invalid';
         },
@@ -90,21 +74,6 @@ export default {
         },
         isList() {
             return this.viewRep.type === 'List';
-        },
-        isTwinlist() {
-            return this.viewRep.type === 'Twinlist';
-        },
-        isCheckboxes() {
-            return this.viewRep.type === 'Check boxes (horizontal)' ||
-                this.viewRep.type === 'Check boxes (vertical)';
-        },
-        checkBoxesAlignment() {
-            if (this.viewRep.type === 'Check boxes (vertical)') {
-                return 'vertical';
-            } else if (this.viewRep.type === 'Check boxes (horizontal)') {
-                return 'horizontal';
-            }
-            return null;
         }
     },
     methods: {
@@ -128,52 +97,22 @@ export default {
 </script>
 
 <template>
-  <div>
-    <Fieldset
-      v-if="isCheckboxes || isTwinlist"
-      :text="label"
-    >
-      <Checkboxes
-        v-if="isCheckboxes"
-        ref="form"
-        :value="value"
-        :alignment="checkBoxesAlignment"
-        :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <Twinlist
-        v-if="isTwinlist"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        label-left="Excludes"
-        label-right="Includes"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
-    </Fieldset>
-    <Label
-      v-else
-      :text="label"
-    >
-      <MultiselectListBox
-        v-if="isList"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
-    </Label>
-  </div>
+  <Component
+    :is="isList ? 'Label' : 'Fieldset'"
+    :text="label"
+  >
+    <MultiSelectView
+      ref="form"
+      :value="value"
+      :type="viewRep.type"
+      :number-vis-options="viewRep.numberVisOptions"
+      :limit-number-vis-options="viewRep.limitNumberVisOptions"
+      :possible-values="possibleChoices"
+      :is-valid="isValid"
+      :description="description"
+      :label="label"
+      @input="onChange"
+    />
+    <ErrorMessage :error="errorMessage" />
+  </Component>
 </template>
