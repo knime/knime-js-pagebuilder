@@ -52,7 +52,7 @@ export default {
     },
     data() {
         return {
-            customValidationErrorMessage: null
+            customValidationErrorMessage: null // TODO: WEBP-292 remove
         };
     },
     computed: {
@@ -69,6 +69,7 @@ export default {
             return this.viewRep.description || null;
         },
         errorMessage() {
+            // TODO: WEBP-292 simplify (no tests for this as it will be removed soon)
             if (this.isValid) {
                 return null;
             }
@@ -124,10 +125,13 @@ export default {
         },
         validate() {
             let isValid = true;
-            this.customValidationErrorMessage = null;
+            this.customValidationErrorMessage = null; // TODO: WEBP-292 remove
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
-                this.customValidationErrorMessage = 'Selection is required';
+                this.customValidationErrorMessage = 'Selection is required'; // TODO: WEBP-292 update
+                if (!this.isColumnValid) {
+                    this.customValidationErrorMessage = 'Select a valid Column first'; // TODO: WEBP-292 update
+                }
             }
             return isValid;
         }
