@@ -6,11 +6,14 @@ import ListBox from 'webapps-common/ui/components/forms/ListBox';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 
-/**
- * Reusable base implementation of a Single Selection Widget.
- * Allows the user to select one item from a list of possible choices.
- * The view representation can either be a Dropdown, ListBox or RadioButtons.
- * Can be configured to use different data types (key names in the json config)
+const VALUE_KEY_NAME = 'value';
+const COLUMN_KEY_NAME = 'column';
+
+/*
+ * Implementation of the Value Selection Widget. Allows the user to select one column from a list of possible columns.
+ * With a second form element the values in that column can be selected. This form element can either be a Dropdown,
+ * ListBox or RadioButtons. The column may be locked and not changeable by the user.
+ * In this mode it is still possible to select the value.
  */
 export default {
     components: {
@@ -41,28 +44,16 @@ export default {
             type: Boolean
         },
         valuePair: {
-            default: null,
+            default: () => ({
+                [VALUE_KEY_NAME]: '',
+                [COLUMN_KEY_NAME]: ''
+            }),
             type: Object
-        },
-        dataTypeKey: {
-            type: String,
-            default: 'value'
-        },
-        possibleChoicesKey: {
-            type: String,
-            default: 'possibleChoices'
-        },
-        valueIsArray: {
-            type: Boolean,
-            default: true
-        },
-        errorMessage: {
-            type: String,
-            default: null
         }
     },
     data() {
         return {
+            // TODO: WEBP-292 remove
             customValidationErrorMessage: null
         };
     },
@@ -74,7 +65,13 @@ export default {
             return this.viewRep.label;
         },
         possibleChoices() {
-            return this.viewRep[this.possibleChoicesKey].map((x) => ({
+            return (this.viewRep.possibleValues[this.column] || []).map((x) => ({
+                id: x,
+                text: x
+            }));
+        },
+        possibleColumns() {
+            return this.viewRep.possibleColumns.map((x) => ({
                 id: x,
                 text: x
             }));
@@ -88,15 +85,19 @@ export default {
             }
             return 0;
         },
-        value() {
-            // case if we did not get a value pair
-            if (this.valuePair === null) {
-                return ''; // this method unwraps the value so no array check here
+        errorMessage() {
+            if (this.isValid) {
+                return null;
             }
-            // unwrap the value form the array, single selection values are still arrays in the json
-            // because they share some impl parts with multiple selection values
-            const val = this.valuePair[this.dataTypeKey];
-            return this.valueIsArray ? val[0] : val;
+
+            // backend error message or frontend or default
+            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
+        },
+        value() {
+            return this.valuePair[VALUE_KEY_NAME];
+        },
+        column() {
+            return this.valuePair[COLUMN_KEY_NAME];
         },
         isList() {
             return this.viewRep.type === 'List';
@@ -115,29 +116,53 @@ export default {
                 return 'horizontal';
             }
             return null;
+        },
+        isColumnLocked() {
+            return this.viewRep.lockColumn;
+        },
+        isColumnValid() {
+            if (this.isColumnLocked) {
+                return true;
+            }
+            return this.possibleColumns.map(x => x.id).includes(this.column);
+        },
+        hasSelection() {
+            return this.possibleChoices.map(x => x.id).includes(this.value);
         }
     },
     methods: {
         onChange(value) {
             const changeEventObj = {
                 nodeId: this.nodeId,
-                type: this.dataTypeKey,
-                value: this.valueIsArray ? [value] : value
+                type: VALUE_KEY_NAME,
+                value
+            };
+            this.$emit('updateWidget', changeEventObj);
+        },
+        onColumnChange(value) {
+            const changeEventObj = {
+                nodeId: this.nodeId,
+                type: COLUMN_KEY_NAME,
+                value
             };
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
             let isValid = true;
-            let errorMessage;
+            this.customValidationErrorMessage = null; // TODO: WEBP-292 remove
             if (this.viewRep.required) {
-                isValid = this.$refs.form.hasSelection();
-                errorMessage = 'Selection is required';
+                isValid = this.hasSelection && this.isColumnValid;
+                if (!this.hasSelection) {
+                    this.customValidationErrorMessage = 'Selection is required';
+                }
+                if (!this.isColumnValid) {
+                    this.customValidationErrorMessage = 'Select a valid Column first';
+                }
             }
             if (isValid && this.$refs.form.validate) {
-                isValid = this.$refs.form.validate();
-                errorMessage = 'Current selection is invalid';
+                isValid = this.$refs.form.validate(); // TODO: WEBP-292 update
             }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
+            return isValid;
         }
     }
 };
@@ -145,10 +170,28 @@ export default {
 
 <template>
   <div>
-    <Fieldset
-      v-if="isRadioButtons"
+    <Component
+      :is="isColumnLocked && !isRadioButtons ? 'Label' : 'Fieldset'"
       :text="label"
+      class="fieldset"
     >
+      <Label
+        v-if="!isColumnLocked"
+        text="Column"
+      />
+      <Dropdown
+        v-if="!isColumnLocked"
+        ref="column"
+        :value="column"
+        :is-valid="isColumnValid"
+        aria-label="Column"
+        :possible-values="possibleColumns"
+        @input="onColumnChange"
+      />
+      <Label
+        v-if="!isColumnLocked"
+        text="Value"
+      />
       <RadioButtons
         v-if="isRadioButtons"
         ref="form"
@@ -159,12 +202,6 @@ export default {
         :title="description"
         @input="onChange"
       />
-      <ErrorMessage :error="errorMessage" />
-    </Fieldset>
-    <Label
-      v-if="!isRadioButtons"
-      :text="label"
-    >
       <ListBox
         v-if="isList"
         ref="form"
@@ -187,6 +224,6 @@ export default {
         @input="onChange"
       />
       <ErrorMessage :error="errorMessage" />
-    </Label>
+    </Component>
   </div>
 </template>

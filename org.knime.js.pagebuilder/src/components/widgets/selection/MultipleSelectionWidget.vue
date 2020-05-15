@@ -128,7 +128,6 @@ export default {
     <Fieldset
       v-if="isCheckboxes || isTwinlist"
       :text="label"
-      class="fieldset"
     >
       <Checkboxes
         v-if="isCheckboxes"
@@ -174,11 +173,3 @@ export default {
     </Label>
   </div>
 </template>
-
-<style lang="postcss" scoped>
-/* required for text ellipsis on checkboxes */
-.fieldset {
-  min-width: 100% !important; /* fix for Edge Legacy (v18) */
-  overflow-x: hidden;
-}
-</style>

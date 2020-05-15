@@ -1,12 +1,13 @@
 <script>
-import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../text/ErrorMessage';
+import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
+import Label from 'webapps-common/ui/components/forms/Label';
+import ErrorMessage from './baseElements/text/ErrorMessage';
 
 /**
- * This is the implementation of the Number Input Widget. The primary goal of this component
- * is to parse the various settings from the nodeConfig provided by the parent
- * Widget component and parse them correctly for the NumberInput component.
+ * Reusable base implementation of the Number Input Widget. Used by DoubleWidget and IntegerWidget.
+ * The primary goal of this component is to parse the various settings
+ * from the nodeConfig provided by the parent Widget component and parse
+ * them correctly for the NumberInput component.
  */
 export default {
     components: {
