@@ -109,7 +109,7 @@ describe('NumberWidget.vue', () => {
 
         wrapper.find(NumberInput).setProps({ value: null });
 
-        expect(wrapper.vm.validate()).toBe(false);
+        expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Input is not a number.', isValid: false });
     });
 
     it('has validate logic to validate non-required values', () => {
@@ -156,6 +156,6 @@ describe('NumberWidget.vue', () => {
             propsData
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Testing error message');
+        expect(wrapper.vm.validate().errorMessage).toBe('Testing error message');
     });
 });

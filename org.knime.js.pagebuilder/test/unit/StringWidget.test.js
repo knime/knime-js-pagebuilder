@@ -165,7 +165,9 @@ describe('StringWidget.vue', () => {
                 propsData: propsDataInput
             });
             wrapper.find(InputField).setProps({ value: '' });
-            expect(wrapper.vm.validate()).toBeFalsy();
+            expect(wrapper.vm.validate()).toStrictEqual(
+                { errorMessage: 'Input string is required and is currently missing.', isValid: false }
+            );
             wrapper.find(InputField).setProps({ value: 'a' });
             expect(wrapper.vm.validate()).toBeTruthy();
         });
@@ -233,7 +235,9 @@ describe('StringWidget.vue', () => {
                 propsData: propsDateTextArea
             });
             wrapper.find(TextArea).setProps({ value: '' });
-            expect(wrapper.vm.validate()).toBeFalsy();
+            expect(wrapper.vm.validate()).toStrictEqual(
+                { errorMessage: 'Input string is required and is currently missing.', isValid: false }
+            );
             wrapper.find(TextArea).setProps({ value: 'a' });
             expect(wrapper.vm.validate()).toBeTruthy();
         });
@@ -245,7 +249,7 @@ describe('StringWidget.vue', () => {
             propsData: propsDataInput
         });
 
-        expect(wrapper.vm.validate()).toBe(true);
+        expect(wrapper.vm.validate().isValid).toBe(true);
         wrapper.find(InputField).setProps({ value: '' });
         expect(wrapper.vm.validate()).toBe(true);
     });

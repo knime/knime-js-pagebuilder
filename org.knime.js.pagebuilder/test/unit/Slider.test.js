@@ -63,7 +63,7 @@ describe('Slider.vue', () => {
         // should be undefined
         wrapper.vm.$refs.slider.setValue(propsData.newValue);
 
-        expect(wrapper.vm.validate()).toBe(false);
+        expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Value is not a number.', isValid: false });
     });
 
     it('invalidates values outside the given range', () => {
@@ -77,15 +77,18 @@ describe('Slider.vue', () => {
 
         // too low
         wrapper.vm.$refs.slider.setValue(lowValue);
-        expect(wrapper.vm.validate()).toBe(false);
-
+        expect(wrapper.vm.validate()).toStrictEqual(
+            { errorMessage: 'Value is not inside the valid range.', isValid: false }
+        );
         // valid
         wrapper.vm.$refs.slider.setValue(okayValue);
-        expect(wrapper.vm.validate()).toBe(true);
+        expect(wrapper.vm.validate().isValid).toBe(true);
 
         // too high
         wrapper.vm.$refs.slider.setValue(highValue);
-        expect(wrapper.vm.validate()).toBe(false);
+        expect(wrapper.vm.validate()).toStrictEqual(
+            { errorMessage: 'Value is not inside the valid range.', isValid: false }
+        );
     });
 
     it('invalidates incorrect range', () => {
@@ -96,6 +99,8 @@ describe('Slider.vue', () => {
             propsData
         });
 
-        expect(wrapper.vm.validate()).toBe(false);
+        expect(wrapper.vm.validate()).toStrictEqual(
+            { errorMessage: 'Value is not inside the valid range.', isValid: false }
+        );
     });
 });

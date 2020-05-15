@@ -547,7 +547,7 @@ describe('BaseSingleSelectionWidget.vue', () => {
                 propsData: propsDataList
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
@@ -556,7 +556,7 @@ describe('BaseSingleSelectionWidget.vue', () => {
                 propsData: propsDataList
             });
 
-            expect(wrapper.vm.validate()).toBe(false);
+            expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Selection is required', isValid: false });
 
             // without this the sub component will never have a value in the test
             // we do not want to set it in html as this would violate the test scope

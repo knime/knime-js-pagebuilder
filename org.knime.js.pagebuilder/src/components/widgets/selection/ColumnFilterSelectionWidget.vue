@@ -38,12 +38,11 @@ export default {
                 [VALUE_KEY]: []
             }),
             type: Object
+        },
+        errorMessage: {
+            default: null,
+            type: String
         }
-    },
-    data() {
-        return {
-            customValidationErrorMessage: null
-        };
     },
     computed: {
         viewRep() {
@@ -67,14 +66,6 @@ export default {
             }
             return 0; // default: show all
         },
-        errorMessage() {
-            // set by Widget.vue based on or validate() method and backend errors
-            if (this.isValid) {
-                return null;
-            }
-            // backend error message or frontend or default
-            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
-        },
         value() {
             return this.valuePair[VALUE_KEY];
         }
@@ -91,18 +82,18 @@ export default {
         validate() {
             // reset
             let isValid = true;
-            this.customValidationErrorMessage = null;
+            let errorMessage;
             // run checks
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
-                this.customValidationErrorMessage = 'Selection is required';
+                errorMessage = 'Selection is required';
             }
             // check for invalid values
             if (isValid) {
                 isValid = this.$refs.form.validate();
-                this.customValidationErrorMessage = 'Current selection is invalid';
+                errorMessage = 'Current selection is invalid';
             }
-            return isValid;
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

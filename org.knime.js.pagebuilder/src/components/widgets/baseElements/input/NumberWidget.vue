@@ -55,6 +55,10 @@ export default {
                 double: 0
             }),
             type: Object
+        },
+        errorMessage: {
+            type: String,
+            default: null
         }
     },
     computed: {
@@ -66,18 +70,6 @@ export default {
         },
         description() {
             return this.viewRep.description || null;
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            }
-            return 'Current input value is invalid';
         },
         value() {
             return this.valuePair[this.type];
@@ -103,14 +95,23 @@ export default {
                 return true;
             }
             let value = this.$refs.form.getValue();
+            let errorMessage;
             let isValid = true;
-            if (isNaN(value)) {
+            if (isNaN(value)) { // TODO double validation??
                 isValid = false;
+                errorMessage = 'The entered value is not a number.';
             }
             if (value < this.min || this.max < value) {
                 isValid = false;
+                errorMessage = 'The entered value is not inside of the allowed range';
             }
-            return this.$refs.form.validate() && isValid;
+
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = validateEvent.isValid && isValid;
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

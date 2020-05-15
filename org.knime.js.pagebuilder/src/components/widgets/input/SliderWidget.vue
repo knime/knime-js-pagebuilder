@@ -66,6 +66,10 @@ export default {
                 [DATA_TYPE]: 0
             }),
             type: Object
+        },
+        errorMessage: {
+            default: null,
+            type: String
         }
     },
     computed: {
@@ -88,18 +92,6 @@ export default {
         },
         label() {
             return this.viewRep.label;
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            }
-            return 'Current slider value is invalid';
         },
         min() {
             if (this.isInteractiveRangeSlider && this.viewRep.useCustomMin) {
@@ -240,11 +232,18 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
+            let errorMessage;
+            let isValid = true;
             if (!this.viewRep.required) {
-                return true;
+                return true; // TODO ask if necessary or reversable
             }
             let value = this.$refs.form.getValue();
-            return Boolean(this.$refs.form.validate() && (value || value === 0));
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = validateEvent.isValid && Boolean(value || value === 0);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

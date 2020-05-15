@@ -55,6 +55,10 @@ export default {
         valueIsArray: {
             type: Boolean,
             default: true
+        },
+        errorMessage: {
+            type: String,
+            default: null
         }
     },
     data() {
@@ -83,14 +87,6 @@ export default {
                 return this.viewRep.numberVisOptions;
             }
             return 0;
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-
-            // backend error message or frontend or default
-            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
         },
         value() {
             // case if we did not get a value pair
@@ -132,16 +128,16 @@ export default {
         },
         validate() {
             let isValid = true;
-            this.customValidationErrorMessage = null;
+            let errorMessage;
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
-                this.customValidationErrorMessage = 'Selection is required';
+                errorMessage = 'Selection is required';
             }
             if (isValid && this.$refs.form.validate) {
                 isValid = this.$refs.form.validate();
-                this.customValidationErrorMessage = 'Current selection is invalid';
+                errorMessage = 'Current selection is invalid';
             }
-            return isValid;
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

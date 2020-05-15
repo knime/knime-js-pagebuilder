@@ -472,7 +472,7 @@ describe('MultipleSelectionWidget.vue', () => {
                 propsData: propsDataMultiselectListBox
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
         it('is invalid/valid if required and no selection/a selection was made', async () => {
@@ -481,7 +481,9 @@ describe('MultipleSelectionWidget.vue', () => {
                 propsData: propsDataMultiselectListBox
             });
 
-            expect(wrapper.vm.validate()).toBe(false);
+            expect(wrapper.vm.validate()).toStrictEqual(
+                { errorMessage: 'At least one element must be selected', isValid: false }
+            );
 
             // without this the sub component will never have a value in the test
             // we do not want to set it in html as this would violate the test scope
