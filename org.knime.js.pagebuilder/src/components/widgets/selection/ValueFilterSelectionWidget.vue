@@ -1,7 +1,7 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
-import MultiSelectView from '@/components/widgets/baseElements/selection/MultiSelectView';
+import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 
@@ -17,7 +17,7 @@ const COLUMN_KEY_NAME = 'column';
  */
 export default {
     components: {
-        MultiSelectView,
+        Multiselect,
         Dropdown,
         Label,
         Fieldset,
@@ -162,7 +162,7 @@ export default {
       :is="isList ? 'Label' : 'Fieldset'"
       :text="isColumnLocked ? label : 'Value'"
     >
-      <MultiSelectView
+      <Multiselect
         ref="form"
         :value="value"
         :type="viewRep.type"

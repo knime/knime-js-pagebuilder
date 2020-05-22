@@ -1,7 +1,7 @@
 import { mount, shallowMount } from '@vue/test-utils';
 
 import ValueFilterSelectionWidget from '@/components/widgets/selection/ValueFilterSelectionWidget';
-import MultiSelectView from '@/components/widgets/baseElements/selection/MultiSelectView';
+import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
 
 describe('ValueFilterSelectionWidget.vue', () => {
     let propsData, propsDataColumnLocked;
@@ -191,13 +191,13 @@ describe('ValueFilterSelectionWidget.vue', () => {
 
     });
 
-    it('sends @updateWidget if MultiSelectView emits @input', () => {
+    it('sends @updateWidget if Multiselect emits @input', () => {
         let wrapper = shallowMount(ValueFilterSelectionWidget, {
             propsData
         });
 
         const testValue = ['VALUE1', 'VALUE2'];
-        const comp = wrapper.find(MultiSelectView);
+        const comp = wrapper.find(Multiselect);
         comp.vm.$emit('input', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();

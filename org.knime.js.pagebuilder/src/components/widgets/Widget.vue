@@ -14,7 +14,6 @@ import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget
 import ColumnSelectionWidget from './selection/ColumnSelectionWidget';
 import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
 import ValueSelectionWidget from './selection/ValueSelectionWidget';
-
 // output widgets
 import TextWidget from './output/TextWidget';
 

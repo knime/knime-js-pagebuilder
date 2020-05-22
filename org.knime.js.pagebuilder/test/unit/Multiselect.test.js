@@ -1,12 +1,12 @@
 import { mount, shallowMount } from '@vue/test-utils';
 
-import MultiSelectView from '@/components/widgets/baseElements/selection/MultiSelectView';
+import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
 import Checkboxes from '~/webapps-common/ui/components/forms/Checkboxes';
 import MultiselectListBox from '~/webapps-common/ui/components/forms/MultiselectListBox';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
 
 
-describe('MultiSelectView.vue', () => {
+describe('Multiselect.vue', () => {
     let propsDataTwinlist, propsDataCheckboxHorizontal, propsDataCheckboxVertical, propsDataMultiselectListBox;
 
     beforeEach(() => {
@@ -91,25 +91,25 @@ describe('MultiSelectView.vue', () => {
     });
 
     it('renders all different types', () => {
-        let wrapper = shallowMount(MultiSelectView, {
+        let wrapper = shallowMount(Multiselect, {
             propsData: propsDataTwinlist
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
 
-        let wrapper2 = shallowMount(MultiSelectView, {
+        let wrapper2 = shallowMount(Multiselect, {
             propsData: propsDataCheckboxHorizontal
         });
         expect(wrapper2.html()).toBeTruthy();
         expect(wrapper2.isVisible()).toBeTruthy();
 
-        let wrapper3 = shallowMount(MultiSelectView, {
+        let wrapper3 = shallowMount(Multiselect, {
             propsData: propsDataCheckboxVertical
         });
         expect(wrapper3.html()).toBeTruthy();
         expect(wrapper3.isVisible()).toBeTruthy();
 
-        let wrapper4 = shallowMount(MultiSelectView, {
+        let wrapper4 = shallowMount(Multiselect, {
             propsData: propsDataMultiselectListBox
         });
         expect(wrapper4.html()).toBeTruthy();
@@ -119,7 +119,7 @@ describe('MultiSelectView.vue', () => {
     describe('checkboxes', () => {
         it('render horizontal', () => {
             propsDataCheckboxHorizontal.isValid = true;
-            let wrapper = shallowMount(MultiSelectView, {
+            let wrapper = shallowMount(Multiselect, {
                 propsData: propsDataCheckboxHorizontal
             });
 
@@ -130,7 +130,7 @@ describe('MultiSelectView.vue', () => {
 
         it('render vertical', () => {
             propsDataCheckboxVertical.isValid = true;
-            let wrapper = shallowMount(MultiSelectView, {
+            let wrapper = shallowMount(Multiselect, {
                 propsData: propsDataCheckboxVertical
             });
 
@@ -141,7 +141,7 @@ describe('MultiSelectView.vue', () => {
 
         it('fail on invalid type (alignment)', () => {
             propsDataCheckboxVertical.type = 'Check boxes (vulcano)';
-            let wrapper = mount(MultiSelectView, {
+            let wrapper = mount(Multiselect, {
                 propsData: propsDataCheckboxVertical
             });
 
@@ -151,7 +151,7 @@ describe('MultiSelectView.vue', () => {
 
         it('emits @input', () => {
             let propsData = propsDataCheckboxVertical;
-            let wrapper = shallowMount(MultiSelectView, {
+            let wrapper = shallowMount(Multiselect, {
                 propsData
             });
 
@@ -168,7 +168,7 @@ describe('MultiSelectView.vue', () => {
     describe('listbox', () => {
         it('renders list box component', () => {
             propsDataMultiselectListBox.isValid = true;
-            let wrapper = shallowMount(MultiSelectView, {
+            let wrapper = shallowMount(Multiselect, {
                 propsData: propsDataMultiselectListBox
             });
 
@@ -177,7 +177,7 @@ describe('MultiSelectView.vue', () => {
 
         it('emits @input', () => {
             let propsData = propsDataMultiselectListBox;
-            let wrapper = shallowMount(MultiSelectView, {
+            let wrapper = shallowMount(Multiselect, {
                 propsData
             });
 
@@ -193,7 +193,7 @@ describe('MultiSelectView.vue', () => {
     describe('twinlist', () => {
         it('renders component', () => {
             propsDataTwinlist.isValid = true;
-            let wrapper = shallowMount(MultiSelectView, {
+            let wrapper = shallowMount(Multiselect, {
                 propsData: propsDataTwinlist
             });
 
@@ -203,7 +203,7 @@ describe('MultiSelectView.vue', () => {
         it('size defaults to 0', () => {
             propsDataTwinlist.isValid = true;
             propsDataTwinlist.limitNumberVisOptions = false;
-            let wrapper = shallowMount(MultiSelectView, {
+            let wrapper = shallowMount(Multiselect, {
                 propsData: propsDataTwinlist
             });
 
@@ -213,7 +213,7 @@ describe('MultiSelectView.vue', () => {
 
         it('emits @input', () => {
             let propsData = propsDataTwinlist;
-            let wrapper = shallowMount(MultiSelectView, {
+            let wrapper = shallowMount(Multiselect, {
                 propsData
             });
 

@@ -2,7 +2,7 @@
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import MultiSelectView from '@/components/widgets/baseElements/selection/MultiSelectView';
+import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
 
 const DATA_TYPE = 'value';
 
@@ -13,7 +13,7 @@ const DATA_TYPE = 'value';
  */
 export default {
     components: {
-        MultiSelectView,
+        Multiselect,
         Fieldset,
         Label,
         ErrorMessage
@@ -95,7 +95,7 @@ export default {
     :is="isList ? 'Label' : 'Fieldset'"
     :text="label"
   >
-    <MultiSelectView
+    <Multiselect
       ref="form"
       :value="value"
       :type="viewRep.type"
