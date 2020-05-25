@@ -1,10 +1,8 @@
 <script>
-import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
-import ListBox from 'webapps-common/ui/components/forms/ListBox';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
+import Singleselect from '@/components/widgets/baseElements/selection/Singleselect';
 
 /**
  * Reusable base implementation of a Single Selection Widget.
@@ -14,11 +12,9 @@ import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
  */
 export default {
     components: {
+        Singleselect,
         Fieldset,
-        ListBox,
         Label,
-        Dropdown,
-        RadioButtons,
         ErrorMessage
     },
     props: {
@@ -69,20 +65,8 @@ export default {
         label() {
             return this.viewRep.label;
         },
-        possibleChoices() {
-            return this.viewRep[this.possibleChoicesKey].map((x) => ({
-                id: x,
-                text: x
-            }));
-        },
         description() {
             return this.viewRep.description || null;
-        },
-        maxVisibleListEntries() {
-            if (this.viewRep.limitNumberVisOptions) {
-                return this.viewRep.numberVisOptions;
-            }
-            return 0;
         },
         errorMessage() {
             if (this.isValid) {
@@ -102,23 +86,9 @@ export default {
             const val = this.valuePair[this.dataTypeKey];
             return this.valueIsArray ? val[0] : val;
         },
-        isList() {
-            return this.viewRep.type === 'List';
-        },
-        isDropdown() {
-            return this.viewRep.type === 'Dropdown';
-        },
         isRadioButtons() {
             return this.viewRep.type === 'Radio buttons (vertical)' ||
                 this.viewRep.type === 'Radio buttons (horizontal)';
-        },
-        radioButtonsAlignment() {
-            if (this.viewRep.type === 'Radio buttons (vertical)') {
-                return 'vertical';
-            } else if (this.viewRep.type === 'Radio buttons (horizontal)') {
-                return 'horizontal';
-            }
-            return null;
         }
     },
     methods: {
@@ -148,49 +118,22 @@ export default {
 </script>
 
 <template>
-  <div>
-    <Fieldset
-      v-if="isRadioButtons"
-      :text="label"
-    >
-      <RadioButtons
-        v-if="isRadioButtons"
-        ref="form"
-        :alignment="radioButtonsAlignment"
-        :value="value"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
-    </Fieldset>
-    <Label
-      v-if="!isRadioButtons"
-      :text="label"
-    >
-      <ListBox
-        v-if="isList"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <Dropdown
-        v-if="isDropdown"
-        ref="form"
-        :value="value"
-        :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
-    </Label>
-  </div>
+  <Component
+    :is="isRadioButtons ? 'Fieldset' : 'Label'"
+    :text="label"
+  >
+    <Singleselect
+      ref="form"
+      :value="value"
+      :type="viewRep.type"
+      :number-vis-options="viewRep.numberVisOptions"
+      :limit-number-vis-options="viewRep.limitNumberVisOptions"
+      :is-valid="isValid"
+      :title="description"
+      :possible-value-list="viewRep[possibleChoicesKey]"
+      :label="label"
+      @input="onChange"
+    />
+    <ErrorMessage :error="errorMessage" />
+  </Component>
 </template>

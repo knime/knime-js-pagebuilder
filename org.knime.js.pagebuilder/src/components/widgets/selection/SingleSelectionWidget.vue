@@ -2,9 +2,9 @@
 import BaseSingleSelectionWidget from '../BaseSingleSelectionWidget';
 
 /**
-* Implementation of the Single Selection Widget. Allows the user to select one item from a list of possible choices.
-* The view representation can either be a Dropdown, ListBox or RadioButtons.
-*/
+ * Implementation of the Single Selection Widget. Allows the user to select one item from a list of possible choices.
+ * The view representation can either be a Dropdown, ListBox or RadioButtons.
+ */
 export default {
     components: {
         BaseSingleSelectionWidget
