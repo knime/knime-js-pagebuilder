@@ -490,57 +490,62 @@ describe('MultipleSelectionWidget.vue', () => {
             wrapper.vm.$refs.form.setSelected(['test1']);
             await Vue.nextTick();
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
     });
 
 
     describe('error message', () => {
-        it('is not set when valid', () => {
-            propsDataCheckboxHorizontal.isValid = true;
+        it('is not set when valid', async () => {
             let wrapper = shallowMount(MultipleSelectionWidget, {
-                propsData: propsDataCheckboxHorizontal
+                propsData: propsDataCheckboxHorizontal,
+                stubs: {
+                    Checkboxes: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(true)
+                        }
+                    }
+                }
             });
-
-            expect(wrapper.vm.errorMessage).toBe(null);
+    
+            await Vue.nextTick();
+            expect(wrapper.vm.validate().errorMessage).toBe(null);
+        });
+    
+        it('takes child error message over parent error message', async () => {
+            let wrapper = mount(MultipleSelectionWidget, {
+                propsData: propsDataCheckboxHorizontal,
+                stubs: {
+                    Checkboxes: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(null),
+                            validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        }
+                    }
+                }
+            });
+            await Vue.nextTick();
+            expect(wrapper.vm.validate().isValid).toBe(false);
+            expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
         });
 
-        it('is default if not set', () => {
-            propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
+        it('has error message', async () => {
             let wrapper = shallowMount(MultipleSelectionWidget, {
-                propsData: propsDataCheckboxHorizontal
+                propsData: propsDataCheckboxHorizontal,
+                stubs: {
+                    Checkboxes: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(null)
+                        }
+                    }
+                }
             });
-
-            expect(wrapper.vm.errorMessage).toBe('Current selection is invalid');
-        });
-
-        it('is warning message if set', () => {
-            propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            propsDataCheckboxHorizontal.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
-            let wrapper = shallowMount(MultipleSelectionWidget, {
-                propsData: propsDataCheckboxHorizontal
-            });
-
-            expect(wrapper.vm.errorMessage).toBe('Testing warning message');
-        });
-
-        it('is nodeErrorMessage if set', () => {
-            propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            propsDataCheckboxHorizontal.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-            let wrapper = shallowMount(MultipleSelectionWidget, {
-                propsData: propsDataCheckboxHorizontal
-            });
-
-            expect(wrapper.vm.errorMessage).toBe('Testing error message');
-        });
-
-        it('is errorMessage if set (viewRep)', () => {
-            propsDataCheckboxHorizontal.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
-            let wrapper = shallowMount(MultipleSelectionWidget, {
-                propsData: propsDataCheckboxHorizontal
-            });
-
-            expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
+    
+            await Vue.nextTick();
+            expect(wrapper.vm.validate().errorMessage).toBe('At least one element must be selected');
         });
     });
 });

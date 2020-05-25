@@ -49,13 +49,11 @@ export default {
                 [COLUMN_KEY_NAME]: ''
             }),
             type: Object
+        },
+        errorMessage: {
+            default: null,
+            type: String
         }
-    },
-    data() {
-        return {
-            // TODO: WEBP-292 remove
-            customValidationErrorMessage: null
-        };
     },
     computed: {
         viewRep() {
@@ -84,14 +82,6 @@ export default {
                 return this.viewRep.numberVisOptions;
             }
             return 0;
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-
-            // backend error message or frontend or default
-            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
         },
         value() {
             return this.valuePair[VALUE_KEY_NAME];
@@ -149,20 +139,22 @@ export default {
         },
         validate() {
             let isValid = true;
-            this.customValidationErrorMessage = null; // TODO: WEBP-292 remove
+            let errorMessage = null;
             if (this.viewRep.required) {
                 isValid = this.hasSelection && this.isColumnValid;
                 if (!this.hasSelection) {
-                    this.customValidationErrorMessage = 'Selection is required';
+                    errorMessage = 'Selection is required.';
                 }
                 if (!this.isColumnValid) {
-                    this.customValidationErrorMessage = 'Select a valid Column first';
+                    errorMessage = 'Select a valid Column first.';
                 }
             }
             if (isValid && this.$refs.form.validate) {
-                isValid = this.$refs.form.validate(); // TODO: WEBP-292 update
+                let validateEvent = this.$refs.form.validate();
+                isValid = validateEvent.isValid;
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Selection is invalid or missing';
             }
-            return isValid;
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

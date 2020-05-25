@@ -1,5 +1,6 @@
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
+import Vue from 'vue';
 
 import StringWidget from '@/components/widgets/input/StringWidget';
 import InputField from '~/webapps-common/ui/components/forms/InputField';
@@ -239,64 +240,78 @@ describe('StringWidget.vue', () => {
                 { errorMessage: 'Input string is required and is currently missing.', isValid: false }
             );
             wrapper.find(TextArea).setProps({ value: 'a' });
-            expect(wrapper.vm.validate()).toBeTruthy();
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
     });
 
-    it('has validate logic to validate non-required values', () => {
+    it('takes child validation in favor of parent validation', async () => {
         propsDataInput.nodeConfig.viewRepresentation.required = false;
         let wrapper = mount(StringWidget, {
-            propsData: propsDataInput
+            propsData: propsDataInput,
+            stubs: {
+                InputField: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(null),
+                        validate: jest.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                    }
+                }
+            }
         });
-
+        await Vue.nextTick();
         expect(wrapper.vm.validate().isValid).toBe(true);
-        wrapper.find(InputField).setProps({ value: '' });
-        expect(wrapper.vm.validate()).toBe(true);
     });
 
-    it('has no error message when valid', () => {
-        propsDataInput.isValid = true;
-        let wrapper = shallowMount(StringWidget, {
-            propsData: propsDataInput
+    it('takes child error message over parent error message', async () => {
+        propsDataInput.nodeConfig.viewRepresentation.required = false;
+        let wrapper = mount(StringWidget, {
+            propsData: propsDataInput,
+            stubs: {
+                InputField: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(null),
+                        validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                    }
+                }
+            }
         });
-
-        expect(wrapper.vm.errorMessage).toBe(null);
+        await Vue.nextTick();
+        expect(wrapper.vm.validate().isValid).toBe(false);
+        expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
     });
 
-    it('has error message when valid', () => {
+    it('has no error message when valid', async () => {
         let wrapper = shallowMount(StringWidget, {
-            propsData: propsDataInput
+            propsData: propsDataInput,
+            stubs: {
+                InputField: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue('abc')
+                    }
+                }
+            }
         });
 
-        expect(wrapper.vm.errorMessage).toBe(propsDataInput.nodeConfig.viewRepresentation.errorMessage);
+        await Vue.nextTick();
+        expect(wrapper.vm.validate().errorMessage).toBe(null);
     });
 
-    it('has default error message', () => {
-        propsDataInput.nodeConfig.viewRepresentation.errorMessage = false;
+    it('has error message', async () => {
         let wrapper = shallowMount(StringWidget, {
-            propsData: propsDataInput
+            propsData: propsDataInput,
+            stubs: {
+                InputField: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(null)
+                    }
+                }
+            }
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Current string input value is invalid');
-    });
-
-    it('has warning message', () => {
-        propsDataInput.nodeConfig.viewRepresentation.errorMessage = false;
-        propsDataInput.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
-        let wrapper = shallowMount(StringWidget, {
-            propsData: propsDataInput
-        });
-
-        expect(wrapper.vm.errorMessage).toBe('Testing warning message');
-    });
-
-    it('has error message', () => {
-        propsDataInput.nodeConfig.viewRepresentation.errorMessage = false;
-        propsDataInput.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-        let wrapper = shallowMount(StringWidget, {
-            propsData: propsDataInput
-        });
-
-        expect(wrapper.vm.errorMessage).toBe('Testing error message');
+        await Vue.nextTick();
+        expect(wrapper.vm.validate().errorMessage).toBe('Input string is required and is currently missing.');
     });
 });

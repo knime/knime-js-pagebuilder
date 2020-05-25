@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import { shallowMount, mount } from '@vue/test-utils';
+import Vue from 'vue';
 
 import BaseSingleSelectionWidget from '@/components/widgets/BaseSingleSelectionWidget';
 import RadioButtons from '~/webapps-common/ui/components/forms/RadioButtons';
@@ -556,13 +557,13 @@ describe('BaseSingleSelectionWidget.vue', () => {
                 propsData: propsDataList
             });
 
-            expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Selection is required', isValid: false });
+            expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Selection is required.', isValid: false });
 
             // without this the sub component will never have a value in the test
             // we do not want to set it in html as this would violate the test scope
             wrapper.vm.$refs.form.$data.selectedIndex = 1;
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
     });
 
@@ -578,41 +579,56 @@ describe('BaseSingleSelectionWidget.vue', () => {
 
     describe('error message', () => {
 
-        it('is absent when valid', () => {
-            propsDataRadioHorizontal.isValid = true;
+        it('is absent when valid', async () => {
             let wrapper = shallowMount(BaseSingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
+                propsData: propsDataRadioHorizontal,
+                stubs: {
+                    RadioButtons: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(true)
+                        }
+                    }
+                }
             });
-
-            expect(wrapper.vm.errorMessage).toBe(null);
+    
+            await Vue.nextTick();
+            expect(wrapper.vm.validate().errorMessage).toBe(null);
         });
-
-        it('is default if none is set', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            let wrapper = shallowMount(BaseSingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-            wrapper.setData({ customValidationErrorMessage: null });
-            expect(wrapper.vm.errorMessage).toBe('Selection is invalid or missing');
-        });
-
-        it('is custom required message', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.currentValue.value = [];
+    
+        it('takes child error message over parent error message', async () => {
             let wrapper = mount(BaseSingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
+                propsData: propsDataRadioHorizontal,
+                stubs: {
+                    RadioButtons: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(true),
+                            validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        }
+                    }
+                }
             });
-            wrapper.vm.validate();
-            expect(wrapper.vm.errorMessage).toBe('Selection is required');
+            await Vue.nextTick();
+            expect(wrapper.vm.validate().isValid).toBe(false);
+            expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
         });
 
-        it('is error message if provided', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
+        it('has error message', async () => {
             let wrapper = shallowMount(BaseSingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
+                propsData: propsDataRadioHorizontal,
+                stubs: {
+                    RadioButtons: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(false)
+                        }
+                    }
+                }
             });
-
-            expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
+    
+            await Vue.nextTick();
+            expect(wrapper.vm.validate().errorMessage).toBe('Selection is required.');
         });
     });
 

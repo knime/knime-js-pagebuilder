@@ -90,7 +90,7 @@ export default {
             }
             // check for invalid values
             if (isValid) {
-                isValid = this.$refs.form.validate();
+                isValid = this.$refs.form.validate().isValid;
                 errorMessage = 'Current selection is invalid';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };

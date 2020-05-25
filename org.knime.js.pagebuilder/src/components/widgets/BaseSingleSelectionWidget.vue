@@ -131,11 +131,12 @@ export default {
             let errorMessage;
             if (this.viewRep.required) {
                 isValid = this.$refs.form.hasSelection();
-                errorMessage = 'Selection is required';
+                errorMessage = isValid ? null : 'Selection is required.';
             }
-            if (isValid && this.$refs.form.validate) {
-                isValid = this.$refs.form.validate();
-                errorMessage = 'Current selection is invalid';
+            if (isValid && typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = validateEvent.isValid && isValid;
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
         }

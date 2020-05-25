@@ -155,7 +155,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
                 propsData
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
         it('is invalid/valid if required and no selection/a selection was made', async () => {
@@ -173,7 +173,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
             wrapper.vm.$refs.form.moveRight(['IntCol']);
             await Vue.nextTick();
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
     });
 });

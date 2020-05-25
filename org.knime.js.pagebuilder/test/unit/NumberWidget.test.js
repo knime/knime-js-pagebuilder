@@ -1,4 +1,5 @@
 import { shallowMount, mount } from '@vue/test-utils';
+import Vue from 'vue';
 
 import NumberWidget from '@/components/widgets/NumberWidget';
 import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
@@ -112,50 +113,92 @@ describe('NumberWidget.vue', () => {
         expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Input is not a number.', isValid: false });
     });
 
-    it('has validate logic to validate non-required values', () => {
-        propsData.nodeConfig.viewRepresentation.required = false;
+    it('takes child validation in favor of parent validation', async () => {
         let wrapper = mount(NumberWidget, {
-            propsData
+            propsData,
+            stubs: {
+                NumberInput: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(null),
+                        validate: jest.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                    }
+                }
+            }
         });
-
-        expect(wrapper.vm.validate()).toBe(true);
+        await Vue.nextTick();
+        expect(wrapper.vm.validate().isValid).toBe(true);
     });
 
-    it('has no error message when valid', () => {
-        propsData.isValid = true;
-        let wrapper = shallowMount(NumberWidget, {
-            propsData
+    it('takes child error message over parent error message', async () => {
+        let wrapper = mount(NumberWidget, {
+            propsData,
+            stubs: {
+                NumberInput: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(null),
+                        validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                    }
+                }
+            }
         });
-
-        expect(wrapper.vm.errorMessage).toBe(null);
+        await Vue.nextTick();
+        expect(wrapper.vm.validate().isValid).toBe(false);
+        expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
     });
 
-    it('has default error message', () => {
-        propsData.nodeConfig.viewRepresentation.errorMessage = false;
+
+    it('has no error message when valid', async () => {
         let wrapper = shallowMount(NumberWidget, {
-            propsData
+            propsData,
+            stubs: {
+                NumberInput: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(3)
+                    }
+                }
+            }
         });
 
-        expect(wrapper.vm.errorMessage).toBe('Current input value is invalid');
+        await Vue.nextTick();
+        expect(wrapper.vm.validate().errorMessage).toBe(null);
     });
 
-    it('has warning message', () => {
-        propsData.nodeConfig.viewRepresentation.errorMessage = false;
-        propsData.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
+    it('has error message', async () => {
         let wrapper = shallowMount(NumberWidget, {
-            propsData
+            propsData,
+            stubs: {
+                NumberInput: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue('abc')
+                    }
+                }
+            }
         });
+        await Vue.nextTick();
 
-        expect(wrapper.vm.errorMessage).toBe('Testing warning message');
+        expect(wrapper.vm.validate().errorMessage).toBe('The entered value is not a number.');
     });
 
-    it('has error message', () => {
-        propsData.nodeConfig.viewRepresentation.errorMessage = false;
-        propsData.nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
+    it('validates min/max values', async () => {
+        propsData.nodeConfig.viewRepresentation.usemin = true;
+        propsData.nodeConfig.viewRepresentation.min = 10;
         let wrapper = shallowMount(NumberWidget, {
-            propsData
+            propsData,
+            stubs: {
+                NumberInput: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(9)
+                    }
+                }
+            }
         });
+        await Vue.nextTick();
 
-        expect(wrapper.vm.validate().errorMessage).toBe('Testing error message');
+        expect(wrapper.vm.validate().errorMessage).toBe('The entered value is not inside of the allowed range.');
     });
 });

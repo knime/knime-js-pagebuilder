@@ -92,19 +92,19 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
+            let isValid = true;
             if (!this.viewRep.required) {
-                return true;
+                return { isValid, errorMessage: null };
             }
             let value = this.$refs.form.getValue();
             let errorMessage;
-            let isValid = true;
             if (isNaN(value)) { // TODO double validation??
                 isValid = false;
                 errorMessage = 'The entered value is not a number.';
             }
             if (value < this.min || this.max < value) {
                 isValid = false;
-                errorMessage = 'The entered value is not inside of the allowed range';
+                errorMessage = 'The entered value is not inside of the allowed range.';
             }
 
             if (typeof this.$refs.form.validate === 'function') {
