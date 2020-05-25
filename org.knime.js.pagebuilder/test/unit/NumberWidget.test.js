@@ -150,13 +150,14 @@ describe('NumberWidget.vue', () => {
 
 
     it('has no error message when valid', async () => {
+        const validValue = 3;
         let wrapper = shallowMount(NumberWidget, {
             propsData,
             stubs: {
                 NumberInput: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(3)
+                        getValue: jest.fn().mockReturnValue(validValue)
                     }
                 }
             }
@@ -184,6 +185,7 @@ describe('NumberWidget.vue', () => {
     });
 
     it('validates min/max values', async () => {
+        const invalidValue = 9;
         propsData.nodeConfig.viewRepresentation.usemin = true;
         propsData.nodeConfig.viewRepresentation.min = 10;
         let wrapper = shallowMount(NumberWidget, {
@@ -192,7 +194,7 @@ describe('NumberWidget.vue', () => {
                 NumberInput: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(9)
+                        getValue: jest.fn().mockReturnValue(invalidValue)
                     }
                 }
             }
