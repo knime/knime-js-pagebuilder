@@ -161,7 +161,7 @@ export default {
             changeObj.update = {
                 [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
             };
-            this.updateWebNode(changeObj);
+            await this.updateWebNode(changeObj);
             if (this.hasValidator) {
                 await this.validate().then((resp, err) => {
                     this.isValid = resp.isValid;
