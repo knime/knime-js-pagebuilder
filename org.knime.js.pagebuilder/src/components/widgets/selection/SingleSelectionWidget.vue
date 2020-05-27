@@ -37,7 +37,9 @@ export default {
             type: Boolean
         },
         valuePair: {
-            default: null,
+            default: () => ({
+                [DATA_TYPE_KEY]: ''
+            }),
             type: Object
         }
     },
@@ -66,10 +68,6 @@ export default {
             return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
         },
         value() {
-            // case if we did not get a value pair
-            if (this.valuePair === null) {
-                return ''; // this method unwraps the value so no array check here
-            }
             // unwrap the value form the array, single selection values are still arrays in the json
             // because they share some impl parts with multiple selection values
             return this.valuePair[DATA_TYPE_KEY][0];

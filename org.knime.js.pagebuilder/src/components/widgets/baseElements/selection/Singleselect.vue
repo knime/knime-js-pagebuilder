@@ -57,7 +57,7 @@ export default {
             default: ''
         },
         value: {
-            type: Array,
+            type: String,
             default: () => ''
         }
     },
