@@ -393,7 +393,7 @@ describe('SingleSelectionWidget.vue', () => {
 
             expect(wrapper.vm.validate()).toBe(false);
 
-            wrapper.find(Singleselect).setProps({ value: 'List Item 3' });
+            wrapper.find({ ref: 'form' }).setProps({ value: 'List Item 3' });
 
             expect(wrapper.vm.validate()).toBe(true);
         });

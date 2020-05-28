@@ -63,7 +63,7 @@ export default {
             return this.viewRep.label;
         },
         possibleValueList() {
-            return this.viewRep.possibleValues[this.column];
+            return this.viewRep.possibleValues[this.column] || [];
         },
         possibleColumns() {
             return this.viewRep.possibleColumns.map((x) => ({

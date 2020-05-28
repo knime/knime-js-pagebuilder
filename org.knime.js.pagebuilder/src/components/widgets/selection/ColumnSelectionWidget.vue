@@ -63,13 +63,11 @@ export default {
             if (this.isValid) {
                 return null;
             }
-
             // backend error message or frontend or default
             return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
         },
         value() {
-            // no unwrapping here as the column value is no array
-            console.log(this.valuePair[DATA_TYPE_KEY]);
+            // no unwrapping here as the column value is not an array
             return this.valuePair[DATA_TYPE_KEY];
         },
         isRadioButtons() {

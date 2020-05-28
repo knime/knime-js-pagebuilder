@@ -17,9 +17,7 @@ describe('Singleselect.vue', () => {
                 'Option 2',
                 'O3'
             ],
-            value: [
-                'O3'
-            ],
+            value: 'O3',
             type: 'Radio buttons (horizontal)',
             limitNumberVisOptions: false,
             numberVisOptions: 10,
@@ -28,9 +26,7 @@ describe('Singleselect.vue', () => {
 
         propsDataRadioVertical = {
             label: 'Radio Vertical',
-            value: [
-                'O3'
-            ],
+            value: 'O3',
             possibleChoices: [
                 'O1 ',
                 'Option 2',
@@ -44,9 +40,7 @@ describe('Singleselect.vue', () => {
 
         propsDataDropdown = {
             label: 'Dropdown',
-            value: [
-                'Option 2'
-            ],
+            value: 'Option 2',
             possibleChoices: [
                 'Option 1',
                 'Option 2',
@@ -60,9 +54,7 @@ describe('Singleselect.vue', () => {
 
         propsDataList = {
             label: 'List',
-            value: [
-                'List Item 3'
-            ],
+            value: 'List Item 3',
             possibleChoices: [
                 'List Item 1',
                 'List Item 2',

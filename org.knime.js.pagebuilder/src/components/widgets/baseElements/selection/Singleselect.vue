@@ -102,8 +102,22 @@ export default {
         onInput(value) {
             this.$emit('input', value);
         },
+        /**
+         * Has a selection?
+         * @returns {boolean}
+         */
         hasSelection() {
             return this.$refs.form.hasSelection();
+        },
+        /**
+         * Validation
+         * @returns {boolean}
+         */
+        validate() {
+            if (this.$refs.form.validate) {
+                return this.$refs.form.validate();
+            }
+            return true;
         }
     }
 };
