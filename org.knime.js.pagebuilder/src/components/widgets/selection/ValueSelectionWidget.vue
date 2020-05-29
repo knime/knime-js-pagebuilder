@@ -2,7 +2,7 @@
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import Singleselect from '@/components/widgets/baseElements/selection/Singleselect';
+import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 
 const VALUE_KEY_NAME = 'value';
@@ -16,7 +16,7 @@ const COLUMN_KEY_NAME = 'column';
  */
 export default {
     components: {
-        Singleselect,
+        SingleSelect,
         Dropdown,
         Fieldset,
         Label,
@@ -167,7 +167,7 @@ export default {
         v-if="!isColumnLocked"
         text="Value"
       />
-      <Singleselect
+      <SingleSelect
         ref="form"
         :value="value"
         :type="viewRep.type"

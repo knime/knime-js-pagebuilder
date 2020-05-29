@@ -1,7 +1,7 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
 import ColumnSelectionWidget from '@/components/widgets/selection/ColumnSelectionWidget';
-import Singleselect from '@/components/widgets/baseElements/selection/SingleSelect';
+import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
 import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget';
 
 describe('ColumnSelectionWidget.vue', () => {
@@ -112,7 +112,7 @@ describe('ColumnSelectionWidget.vue', () => {
 
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(Singleselect).exists()).toBeTruthy();
+        expect(wrapper.find(SingleSelect).exists()).toBeTruthy();
     });
 
     it('emits @updateWidget if child emits @input', () => {
@@ -138,7 +138,7 @@ describe('ColumnSelectionWidget.vue', () => {
             propsData: propsDataColumnSelectionList
         });
         let size = propsDataColumnSelectionList.nodeConfig.viewRepresentation.numberVisOptions;
-        expect(wrapper.find(Singleselect).props('numberVisOptions')).toBe(size);
+        expect(wrapper.find(SingleSelect).props('numberVisOptions')).toBe(size);
     });
 
     describe('validation', () => {

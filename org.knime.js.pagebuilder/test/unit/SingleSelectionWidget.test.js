@@ -1,7 +1,7 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget';
-import Singleselect from '@/components/widgets/baseElements/selection/SingleSelect';
+import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
 
 describe('SingleSelectionWidget.vue', () => {
     let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
@@ -341,7 +341,7 @@ describe('SingleSelectionWidget.vue', () => {
             propsData: propsDataList
         });
         let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
-        expect(wrapper.find(Singleselect).props('numberVisOptions')).toBe(size);
+        expect(wrapper.find(SingleSelect).props('numberVisOptions')).toBe(size);
     });
 
 
@@ -352,16 +352,16 @@ describe('SingleSelectionWidget.vue', () => {
                 isValid: false
             }
         });
-        expect(wrapper.find(Singleselect).props('isValid')).toBe(false);
+        expect(wrapper.find(SingleSelect).props('isValid')).toBe(false);
     });
 
-    it('sends @updateWidget if Singleselect emits @input', () => {
+    it('sends @updateWidget if SingleSelect emits @input', () => {
         let wrapper = shallowMount(SingleSelectionWidget, {
             propsData: propsDataDropdown
         });
 
         const testValue = 'VALUE';
-        const lb = wrapper.find(Singleselect);
+        const lb = wrapper.find(SingleSelect);
         lb.vm.$emit('input', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();

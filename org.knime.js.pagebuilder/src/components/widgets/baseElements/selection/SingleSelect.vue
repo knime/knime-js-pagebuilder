@@ -4,13 +4,13 @@ import ListBox from 'webapps-common/ui/components/forms/ListBox';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 
 /**
- * Singleselect Component
+ * SingleSelect Component
  *
  * Allows the user to select a single item from a list of possible values.
- * The view is either a Radiobuttons, Dropdown or a ListBox.
+ * The view is either a RadioButtons, Dropdown or a ListBox.
  *
  * This component acts as a base element. It's agnostic to any knowledge of KNIME API's
- * and can be used in the same way as any of it's children components (Radiobuttons, Dropdown, ListBox).
+ * and can be used in the same way as any of it's children components (RadioButtons, Dropdown, ListBox).
  */
 export default {
     components: {

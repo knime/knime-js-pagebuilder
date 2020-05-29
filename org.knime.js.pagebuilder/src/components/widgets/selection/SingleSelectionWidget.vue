@@ -2,7 +2,7 @@
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import Singleselect from '@/components/widgets/baseElements/selection/Singleselect';
+import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
 
 const DATA_TYPE_KEY = 'value';
 
@@ -12,7 +12,7 @@ const DATA_TYPE_KEY = 'value';
  */
 export default {
     components: {
-        Singleselect,
+        SingleSelect,
         Fieldset,
         Label,
         ErrorMessage
@@ -108,7 +108,7 @@ export default {
     :is="isRadioButtons ? 'Fieldset' : 'Label'"
     :text="label"
   >
-    <Singleselect
+    <SingleSelect
       ref="form"
       :value="value"
       :type="viewRep.type"
