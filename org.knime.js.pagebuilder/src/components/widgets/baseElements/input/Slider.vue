@@ -117,7 +117,7 @@ export default {
 </template>
 
 <style lang="postcss">
-@import "webapps-common/ui/css/variables/webportal-theme.css";
+@import "webapps-common/ui/css/variables";
 
 .vue-slider {
   cursor: pointer;
