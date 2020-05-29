@@ -1,8 +1,7 @@
-/* eslint-disable max-lines */
 import { shallowMount, mount } from '@vue/test-utils';
 
 import ColumnSelectionWidget from '@/components/widgets/selection/ColumnSelectionWidget';
-import Singleselect from '@/components/widgets/baseElements/selection/Singleselect';
+import Singleselect from '@/components/widgets/baseElements/selection/SingleSelect';
 import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget';
 
 describe('ColumnSelectionWidget.vue', () => {

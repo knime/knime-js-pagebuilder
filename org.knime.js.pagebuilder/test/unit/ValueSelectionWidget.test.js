@@ -466,8 +466,8 @@ describe('ValueSelectionWidget.vue', () => {
         };
     });
 
-    describe('renders', () => {
-        it('radio horizontal', () => {
+    describe('render', () => {
+        it('renders as radio buttons horizontal', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
@@ -476,7 +476,7 @@ describe('ValueSelectionWidget.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('radio vertical', () => {
+        it('renders as radio buttons vertical', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
                 propsData: propsDataRadioVertical
             });
@@ -485,7 +485,7 @@ describe('ValueSelectionWidget.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('list', () => {
+        it('renders as list', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
                 propsData: propsDataList
             });
@@ -494,7 +494,7 @@ describe('ValueSelectionWidget.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('dropdown', () => {
+        it('renders as dropdown', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
                 propsData: propsDataDropdown
             });
@@ -503,7 +503,7 @@ describe('ValueSelectionWidget.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('list column locked', () => {
+        it('renders as list with column locked', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
                 propsData: propsDataColumnLockedList
             });

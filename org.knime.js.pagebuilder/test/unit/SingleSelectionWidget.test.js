@@ -1,8 +1,7 @@
-/* eslint-disable max-lines */
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget';
-import Singleselect from '@/components/widgets/baseElements/selection/Singleselect';
+import Singleselect from '@/components/widgets/baseElements/selection/SingleSelect';
 
 describe('SingleSelectionWidget.vue', () => {
     let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
@@ -298,8 +297,8 @@ describe('SingleSelectionWidget.vue', () => {
         };
     });
 
-    describe('renders', () => {
-        it('Radiobuttons horizontal', () => {
+    describe('render', () => {
+        it('renders as radio buttons horizontal', () => {
             let wrapper = shallowMount(SingleSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
@@ -308,7 +307,7 @@ describe('SingleSelectionWidget.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('Radiobuttons vertical', () => {
+        it('renders as  radio buttons vertical', () => {
             let wrapper = shallowMount(SingleSelectionWidget, {
                 propsData: propsDataRadioVertical
             });
@@ -317,7 +316,7 @@ describe('SingleSelectionWidget.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('ListBox', () => {
+        it('renders as list', () => {
             let wrapper = shallowMount(SingleSelectionWidget, {
                 propsData: propsDataList
             });
@@ -326,7 +325,7 @@ describe('SingleSelectionWidget.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('Dropdown', () => {
+        it('renders as dropdown', () => {
             let wrapper = shallowMount(SingleSelectionWidget, {
                 propsData: propsDataDropdown
             });
