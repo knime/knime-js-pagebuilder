@@ -69,7 +69,9 @@ export default {
             return this.nodeConfig.stylesheets || [];
         },
         autoHeight() {
-            return this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('view');
+            return !this.isSingleView &&
+                this.viewConfig.resizeMethod &&
+                this.viewConfig.resizeMethod.startsWith('view');
         },
         classes() {
             let classes = [];
@@ -80,6 +82,18 @@ export default {
                 classes.push('full-height');
             }
             return classes;
+        },
+        origin() { // react to current browser environment
+            let postMessageOrigin = window.origin;
+            if (typeof postMessageOrigin === 'undefined') { // possible IE11
+                postMessageOrigin = window.location.origin;
+            } else if (postMessageOrigin === 'null') { // possible debug HTML
+                postMessageOrigin = this.$refs.iframe;
+            }
+            return postMessageOrigin;
+        },
+        isSingleView() {
+            return this.$store.state.pagebuilder.page.wizardPageContent.isSingleView;
         }
     },
 
@@ -242,7 +256,7 @@ export default {
                 // populate settings object
                 let resizeSettings = {
                     log: false,
-                    checkOrigin: [window.origin],
+                    checkOrigin: [window.origin || window.location.origin], // IE 11 support
                     resizeFrom: 'child',
                     warningTimeout: 0, // suppress warning
 
@@ -271,7 +285,8 @@ export default {
 
         messageFromIframe(event) {
             const data = event.data;
-            if (event.origin !== window.origin || !data || !data.type || data.nodeId !== this.nodeId) {
+            let originCheck = window.origin || window.location.origin; // pass check in SWT and debug HTML
+            if (event.origin !== originCheck || !data || !data.type || data.nodeId !== this.nodeId) {
                 return;
             }
             if (data.error) {
@@ -288,7 +303,7 @@ export default {
                     viewRepresentation: this.nodeConfig.viewRepresentation,
                     viewValue: this.nodeConfig.viewValue,
                     type: 'init'
-                }, window.origin);
+                }, this.origin);
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
             } else if (data.type === 'validate') {
                 this.validateCallback(data);
@@ -321,7 +336,7 @@ export default {
                     namespace: this.nodeConfig.namespace,
                     validateMethodName: this.nodeConfig.validateMethodName,
                     type: 'validate'
-                }, window.origin);
+                }, this.origin);
                 this.cancelValidate = window.setTimeout(() => {
                     this.isValid = false;
                     this.errorMessage = 'View is not responding.';
@@ -345,7 +360,7 @@ export default {
                     namespace: this.nodeConfig.namespace,
                     getViewValueMethodName: this.nodeConfig.getViewValueMethodName,
                     type: 'getValue'
-                }, window.origin);
+                }, this.origin);
                 this.cancelValueGetter = window.setTimeout(() => {
                     reject(new Error('Value could not be retrieved in the allocated time.'));
                 }, valueGetterTimeout);
@@ -368,7 +383,7 @@ export default {
                     setValidationErrorMethodName: this.nodeConfig.setValidationErrorMethodName,
                     type: 'setValidationError',
                     errorMessage
-                }, window.origin);
+                }, this.origin);
                 this.cancelSetValidatorError = window.setTimeout(() => {
                     reject(new Error('Validation error message could not be set in the allocated time.'));
                 }, setValidationErrorTimeout);
@@ -430,14 +445,14 @@ export default {
                 id,
                 payload
             };
-            this.document.defaultView.postMessage(data, window.origin);
+            this.document.defaultView.postMessage(data, this.origin);
         }
     }
 };
 </script>
 
 <template>
-  <div class="frame-container">
+  <div :class="['frame-container', { 'single-view': isSingleView }]">
     <iframe
       :id="iframeId"
       ref="iframe"
@@ -465,6 +480,10 @@ export default {
 
 div.frame-container {
   width: 100%;
+
+  &.single-view {
+    height: 100vh;
+  }
 }
 
 iframe {

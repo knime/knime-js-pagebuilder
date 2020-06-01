@@ -27,7 +27,13 @@ export const mutations = {
             state.pageValueGetters = {};
         }
     },
-
+    /**
+     * Set base URL for any external libraries or resources served to the views.
+     *
+     * @param {*} storeState automatically supplied by vuex
+     * @param {String} resourceBaseUrl the base URL from which resources are served
+     * @return {undefined}
+     */
     setResourceBaseUrl(storeState, resourceBaseUrl) {
         storeState.resourceBaseUrl = resourceBaseUrl;
     },
@@ -153,12 +159,12 @@ export const actions = {
         let valuePromises = Object.values(state.pageValueGetters)
             .map(getter => getter());
 
+        // eslint-disable-next-line arrow-body-style
         let values = await Promise.all(valuePromises).then((values) => {
-            let viewValues = {};
-            values.forEach(element => {
-                viewValues[element.nodeId] = JSON.stringify(element.value);
-            });
-            return viewValues;
+            return values.reduce((agg, element) => {
+                agg[element.nodeId] = element.value;
+                return agg;
+            }, {});
         }).catch((e) => {
             consola.error(`Could not retrieve all view values: ${e}`);
             throw new Error(`Could not retrieve all view values`);
