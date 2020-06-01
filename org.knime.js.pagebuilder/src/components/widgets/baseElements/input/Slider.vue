@@ -65,10 +65,6 @@ export default {
         contained: {
             default: false,
             type: Boolean
-        },
-        errorMessage: {
-            default: null,
-            type: String
         }
     },
     methods: {

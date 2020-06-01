@@ -48,12 +48,11 @@ export default {
                 [VALUE_KEY_NAME]: []
             }),
             type: Object
+        },
+        errorMessage: {
+            type: String,
+            default: null
         }
-    },
-    data() {
-        return {
-            customValidationErrorMessage: null // TODO: WEBP-292 remove
-        };
     },
     computed: {
         viewRep() {
@@ -67,19 +66,6 @@ export default {
         },
         description() {
             return this.viewRep.description || null;
-        },
-        errorMessage() {
-            // TODO: WEBP-292 simplify (no tests for this as it will be removed soon)
-            if (this.isValid) {
-                return null;
-            }
-            if (this.viewRep.errorMessage) {
-                return this.viewRep.errorMessage;
-            }
-            if (this.customValidationErrorMessage) {
-                return this.customValidationErrorMessage;
-            }
-            return 'Current selection is invalid';
         },
         value() {
             return this.valuePair[VALUE_KEY_NAME];
@@ -125,15 +111,20 @@ export default {
         },
         validate() {
             let isValid = true;
-            this.customValidationErrorMessage = null; // TODO: WEBP-292 remove
-            if (this.viewRep.required) {
-                isValid = this.$refs.form.hasSelection();
-                this.customValidationErrorMessage = 'Selection is required'; // TODO: WEBP-292 update
-                if (!this.isColumnValid) {
-                    this.customValidationErrorMessage = 'Select a valid Column first'; // TODO: WEBP-292 update
-                }
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
-            return isValid;
+            isValid = this.$refs.form.hasSelection() && this.isColumnValid;
+            if (!isValid) {
+                errorMessage = this.isColumnValid ? 'Selection is required.' : 'Selected column is invalid.';
+            }
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Selection is invalid or missing.';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

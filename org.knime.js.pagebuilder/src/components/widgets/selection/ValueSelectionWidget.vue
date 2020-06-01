@@ -114,20 +114,18 @@ export default {
         },
         validate() {
             let isValid = true;
-            let errorMessage = null;
-            if (this.viewRep.required) {
-                isValid = this.hasSelection && this.isColumnValid;
-                if (!this.hasSelection) {
-                    errorMessage = 'Selection is required.';
-                }
-                if (!this.isColumnValid) {
-                    errorMessage = 'Select a valid Column first.';
-                }
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
-            if (isValid && this.$refs.form.validate) {
+            isValid = this.hasSelection && this.isColumnValid;
+            if (!isValid) {
+                errorMessage = this.isColumnValid ? 'Selection is required.' : 'Selected column is invalid.';
+            }
+            if (typeof this.$refs.form.validate === 'function') {
                 let validateEvent = this.$refs.form.validate();
-                isValid = validateEvent.isValid;
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Selection is invalid or missing';
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Selection is invalid or missing.';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
         }

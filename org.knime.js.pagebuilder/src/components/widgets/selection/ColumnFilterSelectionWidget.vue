@@ -80,18 +80,19 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            // reset
             let isValid = true;
             let errorMessage;
-            // run checks
-            if (this.viewRep.required) {
-                isValid = this.$refs.form.hasSelection();
-                errorMessage = 'Selection is required';
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
-            // check for invalid values
-            if (isValid) {
-                isValid = this.$refs.form.validate().isValid;
-                errorMessage = 'Current selection is invalid';
+            if (!this.$refs.form.hasSelection()) {
+                isValid = false;
+                errorMessage = 'Selection is required.';
+            }
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid.';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
         }

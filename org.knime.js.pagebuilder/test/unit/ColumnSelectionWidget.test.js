@@ -150,61 +150,48 @@ describe('ColumnSelectionWidget.vue', () => {
                 propsData: propsDataColumnSelectionList
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
             propsDataColumnSelectionList.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(ColumnSelectionWidget, {
-                propsData: propsDataColumnSelectionList
+                propsData: propsDataColumnSelectionList,
+                stubs: {
+                    SingleSelect: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValueOnce(false)
+                                .mockReturnValueOnce(true)
+                        }
+                    }
+                }
             });
 
-            expect(wrapper.vm.validate()).toBe(false);
-
-            // set a valid value
-            wrapper.setProps({ nodeConfig: { viewRepresentation: { currentValue: { column: 'IntCol' } } } });
-
-            expect(wrapper.vm.validate()).toBe(true);
-        });
-    });
-
-    describe('error message', () => {
-        it('is absent when valid', () => {
-            propsDataColumnSelectionList.isValid = true;
-            let wrapper = shallowMount(ColumnSelectionWidget, {
-                propsData: propsDataColumnSelectionList
-            });
-
-            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
         });
 
-        it('is default if none is set', () => {
-            propsDataColumnSelectionList.nodeConfig.viewRepresentation.errorMessage = false;
-            let wrapper = shallowMount(ColumnSelectionWidget, {
-                propsData: propsDataColumnSelectionList
-            });
-            wrapper.setData({ customValidationErrorMessage: null });
-            expect(wrapper.vm.errorMessage).toBe('Selection is invalid or missing');
-        });
-
-        it('is custom required message', () => {
-            propsDataColumnSelectionList.nodeConfig.viewRepresentation.errorMessage = false;
-            propsDataColumnSelectionList.nodeConfig.viewRepresentation.currentValue.value = [];
+        it('handles child validation', () => {
+            let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ColumnSelectionWidget, {
-                propsData: propsDataColumnSelectionList
+                propsData: propsDataColumnSelectionList,
+                stubs: {
+                    SingleSelect: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(true),
+                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                                .mockReturnValueOnce({ isValid: false })
+                        }
+                    }
+                }
             });
-            wrapper.vm.validate();
-            expect(wrapper.vm.errorMessage).toBe('Selection is required');
-        });
-
-        it('is error message if provided', () => {
-            propsDataColumnSelectionList.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
-            let wrapper = shallowMount(ColumnSelectionWidget, {
-                propsData: propsDataColumnSelectionList
-            });
-
-            expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
+            // child message
+            expect(wrapper.vm.validate()).toStrictEqual(childResponse);
+            // default message
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Current column is invalid.' });
         });
     });
-
 });

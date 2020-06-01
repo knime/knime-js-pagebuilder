@@ -381,61 +381,48 @@ describe('SingleSelectionWidget.vue', () => {
                 propsData: propsDataList
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
             propsDataList.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(SingleSelectionWidget, {
-                propsData: propsDataList
+                propsData: propsDataList,
+                stubs: {
+                    SingleSelect: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValueOnce(false)
+                                .mockReturnValueOnce(true)
+                        }
+                    }
+                }
             });
 
-            expect(wrapper.vm.validate()).toBe(false);
-
-            wrapper.find({ ref: 'form' }).setProps({ value: 'List Item 3' });
-
-            expect(wrapper.vm.validate()).toBe(true);
-        });
-    });
-
-    describe('error message', () => {
-
-        it('is absent when valid', () => {
-            propsDataRadioHorizontal.isValid = true;
-            let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-
-            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
         });
 
-        it('is default if none is set', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-            wrapper.setData({ customValidationErrorMessage: null });
-            expect(wrapper.vm.errorMessage).toBe('Selection is invalid or missing');
-        });
-
-        it('is custom required message', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.currentValue.value = [];
+        it('handles child validation', () => {
+            let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(SingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
+                propsData: propsDataList,
+                stubs: {
+                    SingleSelect: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(true),
+                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                                .mockReturnValueOnce({ isValid: false })
+                        }
+                    }
+                }
             });
-            wrapper.vm.validate();
-            expect(wrapper.vm.errorMessage).toBe('Selection is required');
-        });
-
-        it('is error message if provided', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
-            let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-
-            expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
+            // child message
+            expect(wrapper.vm.validate()).toStrictEqual(childResponse);
+            // default message
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Current selection is invalid.' });
         });
     });
-
 });

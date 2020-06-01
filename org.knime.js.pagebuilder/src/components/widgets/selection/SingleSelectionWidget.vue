@@ -41,13 +41,11 @@ export default {
                 [DATA_TYPE_KEY]: ''
             }),
             type: Object
+        },
+        errorMessage: {
+            type: String,
+            default: null
         }
-    },
-    data() {
-        return {
-            // TODO: WEBP-292 remove
-            customValidationErrorMessage: null
-        };
     },
     computed: {
         viewRep() {
@@ -58,14 +56,6 @@ export default {
         },
         description() {
             return this.viewRep.description || null;
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-
-            // backend error message or frontend or default
-            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
         },
         value() {
             // unwrap the value form the array, single selection values are still arrays in the json
@@ -88,16 +78,20 @@ export default {
         },
         validate() {
             let isValid = true;
-            this.customValidationErrorMessage = null;
-            if (this.viewRep.required) {
-                isValid = this.$refs.form.hasSelection();
-                this.customValidationErrorMessage = 'Selection is required';
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
-            if (isValid && this.$refs.form.validate) {
-                isValid = this.$refs.form.validate();
-                this.customValidationErrorMessage = 'Current selection is invalid';
+            if (!this.$refs.form.hasSelection()) {
+                isValid = false;
+                errorMessage = 'Selection is required.';
             }
-            return isValid;
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid.';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

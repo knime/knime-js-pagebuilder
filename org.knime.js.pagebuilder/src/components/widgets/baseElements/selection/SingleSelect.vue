@@ -111,13 +111,12 @@ export default {
         },
         /**
          * Validation
-         * @returns {boolean}
+         * @returns {Object}
          */
         validate() {
-            if (this.$refs.form.validate) {
-                return this.$refs.form.validate();
-            }
-            return true;
+            return typeof this.$refs.form.validate === 'function'
+                ? this.$refs.form.validate()
+                : { isValid: true };
         }
     }
 };

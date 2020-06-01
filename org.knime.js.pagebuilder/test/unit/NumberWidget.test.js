@@ -1,5 +1,4 @@
 import { shallowMount, mount } from '@vue/test-utils';
-import Vue from 'vue';
 
 import NumberWidget from '@/components/widgets/NumberWidget';
 import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
@@ -110,10 +109,10 @@ describe('NumberWidget.vue', () => {
 
         wrapper.find(NumberInput).setProps({ value: null });
 
-        expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Input is not a number.', isValid: false });
+        expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Current value is not a number.', isValid: false });
     });
 
-    it('takes child validation in favor of parent validation', async () => {
+    it('takes child validation in favor of parent validation', () => {
         let wrapper = mount(NumberWidget, {
             propsData,
             stubs: {
@@ -126,11 +125,10 @@ describe('NumberWidget.vue', () => {
                 }
             }
         });
-        await Vue.nextTick();
         expect(wrapper.vm.validate().isValid).toBe(true);
     });
 
-    it('takes child error message over parent error message', async () => {
+    it('takes child error message over parent error message', () => {
         let wrapper = mount(NumberWidget, {
             propsData,
             stubs: {
@@ -143,13 +141,12 @@ describe('NumberWidget.vue', () => {
                 }
             }
         });
-        await Vue.nextTick();
         expect(wrapper.vm.validate().isValid).toBe(false);
         expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
     });
 
 
-    it('has no error message when valid', async () => {
+    it('has no error message when valid', () => {
         const validValue = 3;
         let wrapper = shallowMount(NumberWidget, {
             propsData,
@@ -162,12 +159,10 @@ describe('NumberWidget.vue', () => {
                 }
             }
         });
-
-        await Vue.nextTick();
         expect(wrapper.vm.validate().errorMessage).toBe(null);
     });
 
-    it('has error message', async () => {
+    it('has error message', () => {
         let wrapper = shallowMount(NumberWidget, {
             propsData,
             stubs: {
@@ -179,12 +174,10 @@ describe('NumberWidget.vue', () => {
                 }
             }
         });
-        await Vue.nextTick();
-
-        expect(wrapper.vm.validate().errorMessage).toBe('The entered value is not a number.');
+        expect(wrapper.vm.validate().errorMessage).toBe('Current value is not a number.');
     });
 
-    it('validates min/max values', async () => {
+    it('validates min/max values', () => {
         const invalidValue = 9;
         propsData.nodeConfig.viewRepresentation.usemin = true;
         propsData.nodeConfig.viewRepresentation.min = 10;
@@ -199,8 +192,6 @@ describe('NumberWidget.vue', () => {
                 }
             }
         });
-        await Vue.nextTick();
-
-        expect(wrapper.vm.validate().errorMessage).toBe('The entered value is not inside of the allowed range.');
+        expect(wrapper.vm.validate().errorMessage).toBe('Current value is outside allowed range.');
     });
 });

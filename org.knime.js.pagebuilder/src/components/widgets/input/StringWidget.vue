@@ -90,15 +90,18 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required && !this.$refs.form.getValue()) {
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
+            }
+            if (!this.$refs.form.getValue()) {
                 isValid = false;
-                errorMessage = 'Input string is required and is currently missing.';
+                errorMessage = 'Input is required.';
             }
             // text area doesn't have a validate method
             if (typeof this.$refs.form.validate === 'function') {
                 let validateEvent = this.$refs.form.validate();
-                isValid = validateEvent.isValid && isValid;
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid';
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
         }

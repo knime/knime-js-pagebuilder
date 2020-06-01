@@ -167,7 +167,7 @@ describe('StringWidget.vue', () => {
             });
             wrapper.find(InputField).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'Input string is required and is currently missing.', isValid: false }
+                { errorMessage: 'Input is required.', isValid: false }
             );
             wrapper.find(InputField).setProps({ value: 'a' });
             expect(wrapper.vm.validate()).toBeTruthy();
@@ -237,7 +237,7 @@ describe('StringWidget.vue', () => {
             });
             wrapper.find(TextArea).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'Input string is required and is currently missing.', isValid: false }
+                { errorMessage: 'Input is required.', isValid: false }
             );
             wrapper.find(TextArea).setProps({ value: 'a' });
             expect(wrapper.vm.validate().isValid).toBe(true);
@@ -245,14 +245,13 @@ describe('StringWidget.vue', () => {
     });
 
     it('takes child validation in favor of parent validation', async () => {
-        propsDataInput.nodeConfig.viewRepresentation.required = false;
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput,
             stubs: {
                 InputField: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(null),
+                        getValue: jest.fn().mockReturnValue('test_string'),
                         validate: jest.fn().mockReturnValue({ isValid: true, errorMessage: null })
                     }
                 }
@@ -263,14 +262,13 @@ describe('StringWidget.vue', () => {
     });
 
     it('takes child error message over parent error message', async () => {
-        propsDataInput.nodeConfig.viewRepresentation.required = false;
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput,
             stubs: {
                 InputField: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(null),
+                        getValue: jest.fn().mockReturnValue('test_string'),
                         validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
                     }
                 }
@@ -312,6 +310,6 @@ describe('StringWidget.vue', () => {
         });
 
         await Vue.nextTick();
-        expect(wrapper.vm.validate().errorMessage).toBe('Input string is required and is currently missing.');
+        expect(wrapper.vm.validate().errorMessage).toBe('Input is required.');
     });
 });

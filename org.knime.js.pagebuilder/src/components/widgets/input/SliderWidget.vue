@@ -232,16 +232,16 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            let errorMessage;
             let isValid = true;
-            if (!this.viewRep.required) {
-                return true; // TODO ask if necessary or reversable
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
             let value = this.$refs.form.getValue();
             if (typeof this.$refs.form.validate === 'function') {
                 let validateEvent = this.$refs.form.validate();
                 isValid = validateEvent.isValid && Boolean(value || value === 0);
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid';
+                errorMessage = validateEvent.errorMessage || 'Current input is invalid.';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
         }

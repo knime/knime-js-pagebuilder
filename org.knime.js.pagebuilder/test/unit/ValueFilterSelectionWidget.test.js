@@ -226,16 +226,6 @@ describe('ValueFilterSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is invalid if isValid is false', () => {
-            propsData.nodeConfig.viewRepresentation.required = false;
-            propsData.isValid = true;
-            let wrapper = shallowMount(ValueFilterSelectionWidget, {
-                propsData
-            });
-
-            expect(wrapper.vm.validate()).toBe(true);
-        });
-
         it('is always valid if not required', () => {
             propsData.nodeConfig.viewRepresentation.required = false;
             propsData.nodeConfig.viewRepresentation.currentValue.value = [];
@@ -244,43 +234,71 @@ describe('ValueFilterSelectionWidget.vue', () => {
                 propsData
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
-        it('is valid even with locked invalid column', () => {
-            propsData.nodeConfig.viewRepresentation.required = false;
-            propsData.nodeConfig.viewRepresentation.lockColumn = true;
+        it('invalidates with unlocked column and invalid column selected', () => {
+            propsData.nodeConfig.viewRepresentation.required = true;
+            propsData.nodeConfig.viewRepresentation.lockColumn = false;
             propsData.nodeConfig.viewRepresentation.currentValue.column = 'INVALID';
-            let wrapper = shallowMount(ValueFilterSelectionWidget, {
-                propsData
+            let wrapper = mount(ValueFilterSelectionWidget, {
+                propsData,
+                stubs: {
+                    Multiselect: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValueOnce(true)
+                        }
+                    }
+                }
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Selected column is invalid.' });
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
             propsData.nodeConfig.viewRepresentation.required = true;
-            let wrapper = mount(ValueFilterSelectionWidget, {
-                propsData
-            });
-
-            expect(wrapper.vm.validate()).toBe(false);
-
-            // set the value
-            wrapper.setProps({ valuePair: propsData.nodeConfig.viewRepresentation.currentValue });
-
-            expect(wrapper.vm.validate()).toBe(true);
-        });
-
-        it('is valid if required and a selection was made in lockColumn mode', () => {
-            propsData.nodeConfig.viewRepresentation.required = true;
             propsData.nodeConfig.viewRepresentation.lockColumn = true;
             let wrapper = mount(ValueFilterSelectionWidget, {
-                propsData
+                propsData,
+                stubs: {
+                    Multiselect: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValueOnce(false)
+                                .mockReturnValueOnce(true)
+                        }
+                    }
+                }
             });
-            // set the value
-            wrapper.setProps({ valuePair: propsData.nodeConfig.viewRepresentation.currentValue });
-            expect(wrapper.vm.validate()).toBe(true);
+
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
+        });
+
+        it('handles child validation', () => {
+            propsData.nodeConfig.viewRepresentation.required = true;
+            propsData.nodeConfig.viewRepresentation.lockColumn = true;
+            let childResponse = { isValid: false, errorMessage: 'test Error Message' };
+            let wrapper = mount(ValueFilterSelectionWidget, {
+                propsData,
+                stubs: {
+                    Multiselect: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(true),
+                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                                .mockReturnValueOnce({ isValid: false })
+                        }
+                    }
+                }
+            });
+            // child message
+            expect(wrapper.vm.validate()).toStrictEqual(childResponse);
+            // default message
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Selection is invalid or missing.' });
         });
     });
 });

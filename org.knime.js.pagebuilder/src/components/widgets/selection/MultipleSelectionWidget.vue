@@ -77,14 +77,17 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required && !this.$refs.form.hasSelection()) {
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
+            }
+            if (!this.$refs.form.hasSelection()) {
                 isValid = false;
-                errorMessage = 'At least one element must be selected';
+                errorMessage = 'Selection is required.';
             }
             if (typeof this.$refs.form.validate === 'function') {
                 let validateEvent = this.$refs.form.validate();
-                isValid = validateEvent.isValid && isValid;
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid';
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid.';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
         }

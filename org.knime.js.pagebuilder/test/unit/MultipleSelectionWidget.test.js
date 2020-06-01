@@ -2,7 +2,6 @@ import { mount, shallowMount } from '@vue/test-utils';
 
 import MultipleSelectionWidget from '@/components/widgets/selection/MultipleSelectionWidget';
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
-import Vue from 'vue';
 
 describe('MultipleSelectionWidget.vue', () => {
     let propsDataTwinlist, propsDataCheckboxHorizontal, propsDataCheckboxVertical, propsDataMultiselectListBox;
@@ -370,72 +369,42 @@ describe('MultipleSelectionWidget.vue', () => {
         it('is invalid/valid if required and no selection/a selection was made', () => {
             propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(MultipleSelectionWidget, {
-                propsData: propsDataMultiselectListBox
-            });
-
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'At least one element must be selected', isValid: false }
-            );
-
-            // set the value
-            wrapper.setProps({ valuePair: propsDataMultiselectListBox.nodeConfig.viewRepresentation.currentValue });
-
-            expect(wrapper.vm.validate().isValid).toBe(true);
-        });
-    });
-
-
-    describe('error message', () => {
-        it('is not set when valid', async () => {
-            let wrapper = shallowMount(MultipleSelectionWidget, {
-                propsData: propsDataCheckboxHorizontal,
+                propsData: propsDataMultiselectListBox,
                 stubs: {
-                    Checkboxes: {
+                    Multiselect: {
                         template: '<div />',
                         methods: {
-                            hasSelection: jest.fn().mockReturnValue(true)
+                            hasSelection: jest.fn().mockReturnValueOnce(false)
+                                .mockReturnValueOnce(true)
                         }
                     }
                 }
             });
-    
-            await Vue.nextTick();
-            expect(wrapper.vm.validate().errorMessage).toBe(null);
+
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
         });
-    
-        it('takes child error message over parent error message', async () => {
+
+        it('handles child validation', () => {
+            let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(MultipleSelectionWidget, {
-                propsData: propsDataCheckboxHorizontal,
+                propsData: propsDataMultiselectListBox,
                 stubs: {
-                    Checkboxes: {
+                    Multiselect: {
                         template: '<div />',
                         methods: {
-                            hasSelection: jest.fn().mockReturnValue(null),
-                            validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                            hasSelection: jest.fn().mockReturnValue(true),
+                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                                .mockReturnValueOnce({ isValid: false })
                         }
                     }
                 }
             });
-            await Vue.nextTick();
-            expect(wrapper.vm.validate().isValid).toBe(false);
-            expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
-        });
-
-        it('has error message', async () => {
-            let wrapper = shallowMount(MultipleSelectionWidget, {
-                propsData: propsDataCheckboxHorizontal,
-                stubs: {
-                    Checkboxes: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: jest.fn().mockReturnValue(null)
-                        }
-                    }
-                }
-            });
-    
-            await Vue.nextTick();
-            expect(wrapper.vm.validate().errorMessage).toBe('At least one element must be selected');
+            // child message
+            expect(wrapper.vm.validate()).toStrictEqual(childResponse);
+            // default message
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Current selection is invalid.' });
         });
     });
 });

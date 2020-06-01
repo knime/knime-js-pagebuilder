@@ -93,24 +93,24 @@ export default {
         },
         validate() {
             let isValid = true;
-            if (!this.viewRep.required) {
-                return { isValid, errorMessage: null };
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
             let value = this.$refs.form.getValue();
-            let errorMessage;
-            if (isNaN(value)) { // TODO double validation??
+            if (isNaN(value)) {
                 isValid = false;
-                errorMessage = 'The entered value is not a number.';
+                errorMessage = 'Current value is not a number.';
             }
             if (value < this.min || this.max < value) {
                 isValid = false;
-                errorMessage = 'The entered value is not inside of the allowed range.';
+                errorMessage = 'Current value is outside allowed range.';
             }
 
             if (typeof this.$refs.form.validate === 'function') {
                 let validateEvent = this.$refs.form.validate();
-                isValid = validateEvent.isValid && isValid;
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid';
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
         }

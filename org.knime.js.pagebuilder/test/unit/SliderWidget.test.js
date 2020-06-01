@@ -320,6 +320,6 @@ describe('SliderWidget.vue', () => {
         });
         await Vue.nextTick();
         expect(wrapper2.vm.validate().isValid).toBe(false);
-        expect(wrapper2.vm.validate().errorMessage).toBe('Current input is invalid');
+        expect(wrapper2.vm.validate().errorMessage).toBe('Current input is invalid.');
     });
 });

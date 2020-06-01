@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 import { shallowMount, mount } from '@vue/test-utils';
-import Vue from 'vue';
 
 import ValueSelectionWidget from '@/components/widgets/selection/ValueSelectionWidget';
 
@@ -580,97 +579,60 @@ describe('ValueSelectionWidget.vue', () => {
             expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
-        it('does respect required validation', () => {
+        it('invalidates with unlocked column and invalid column selected', () => {
             propsDataDropdown.nodeConfig.viewRepresentation.required = true;
-            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = false;
+            propsDataDropdown.nodeConfig.viewRepresentation.currentValue.column = 'INVALID';
             let wrapper = mount(ValueSelectionWidget, {
                 propsData: propsDataDropdown
             });
 
-            // by default in tests there is no valuePair set (so we don't have a value)
-            expect(wrapper.vm.validate().isValid).toBe(false);
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Selected column is invalid.' });
+        });
 
-            // set the value
-            wrapper.setProps({ valuePair: propsDataDropdown.nodeConfig.viewRepresentation.currentValue });
+        it('is invalid if required and no selection was made', () => {
+            propsDataDropdown.nodeConfig.viewRepresentation.required = true;
+            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDataDropdown.nodeConfig.viewRepresentation.currentValue.column = 'UriCol';
+            let wrapper = mount(ValueSelectionWidget, {
+                propsData: propsDataDropdown
+            });
 
-            expect(wrapper.vm.validate().isValid).toBe(true);
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
+        });
+
+        it('is valid if required and a selection was made', () => {
+            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDataDropdown.valuePair = { value: 'URI: http://cepetakagtksslf; EXT: ', column: 'UriCol' };
+            let wrapper = mount(ValueSelectionWidget, {
+                propsData: propsDataDropdown
+            });
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
+        });
+
+        it('handles child validation', () => {
+            propsDataDropdown.nodeConfig.viewRepresentation.required = true;
+            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDataDropdown.valuePair = { value: 'URI: http://cepetakagtksslf; EXT: ', column: 'UriCol' };
+            let childResponse = { isValid: false, errorMessage: 'test Error Message' };
+            let wrapper = mount(ValueSelectionWidget, {
+                propsData: propsDataDropdown,
+                stubs: {
+                    SingleSelect: {
+                        template: '<div />',
+                        methods: {
+                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                                .mockReturnValueOnce({ isValid: false })
+                        }
+                    }
+                }
+            });
+            // child message
+            expect(wrapper.vm.validate()).toStrictEqual(childResponse);
+            // default message
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Selection is invalid or missing.' });
         });
     });
-
-    describe('error message', () => {
-
-        it('has no error message when valid', async () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.required = false;
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioHorizontal,
-                stubs: {
-                    RadioButtons: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: jest.fn().mockReturnValue(true)
-                        }
-                    }
-                }
-            });
-    
-            await Vue.nextTick();
-            expect(wrapper.vm.validate().errorMessage).toBe(null);
-        });
-
-        it('has error message', async () => {
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioHorizontal,
-                stubs: {
-                    RadioButtons: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: jest.fn().mockReturnValue(false)
-                        }
-                    }
-                }
-            });
-    
-            await Vue.nextTick();
-            expect(wrapper.vm.validate().errorMessage).toBe('Selection is required.');
-        });
-
-        it('takes child error message over parent error message', async () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.required = false;
-            let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataRadioHorizontal,
-                stubs: {
-                    RadioButtons: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: jest.fn().mockReturnValue(true),
-                            validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
-                        }
-                    }
-                }
-            });
-            await Vue.nextTick();
-            expect(wrapper.vm.validate().isValid).toBe(false);
-            expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
-        });
-
-        it('custom column invalid message', () => {
-            propsDataList.nodeConfig.viewRepresentation.required = true;
-            propsDataList.nodeConfig.viewRepresentation.lockColumn = false;
-            let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataList
-            });
-
-            // set a value
-            wrapper.setProps({ valuePair: propsDataList.nodeConfig.viewRepresentation.currentValue });
-
-            expect(wrapper.vm.isColumnValid).toBe(true);
-            propsDataList.nodeConfig.viewRepresentation.currentValue.column = 'DOES_NOT_EXIST';
-            expect(wrapper.vm.isColumnValid).toBe(false);
-
-            expect(wrapper.vm.validate().isValid).toBe(false);
-            expect(wrapper.vm.validate().errorMessage).toBe('Select a valid Column first.');
-        });
-
-    });
-
 });
