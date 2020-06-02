@@ -16,6 +16,8 @@ import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
 import ValueSelectionWidget from './selection/ValueSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
+// interactive widgets
+import InteractiveValueWidget from './interactive/InteractiveValueWidget';
 
 /**
  * A Widget node view. This top level component sits at
@@ -62,7 +64,9 @@ export default {
         ValueFilterSelectionWidget,
         ValueSelectionWidget,
         // output widgets
-        TextWidget
+        TextWidget,
+        // interactive widgets
+        InteractiveValueWidget
     },
     props: {
         /**
@@ -125,6 +129,9 @@ export default {
         },
         valuePair() {
             return this.nodeConfig.viewRepresentation.currentValue;
+        },
+        isInteractiveWidget() {
+            return typeof this.valuePair === 'undefined' && typeof this.$refs.widget.getValue === 'function';
         }
     },
     async mounted() {
@@ -158,18 +165,22 @@ export default {
     },
     methods: {
         async publishUpdate(changeObj) {
+            let configUpdateJSONPath = changeObj.key || `viewRepresentation.currentValue.${changeObj.type}`;
             changeObj.update = {
-                [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
+                [configUpdateJSONPath]: changeObj.value
             };
             await this.updateWebNode(changeObj);
             if (this.hasValidator) {
                 await this.validate();
             }
+            if (typeof changeObj.callback === 'function') {
+                changeObj.callback();
+            }
         },
         getValue() {
             return new Promise((resolve, reject) => {
                 try {
-                    let value = this.valuePair;
+                    let value = this.isInteractiveWidget ? this.$refs.widget.getValue() : this.valuePair;
                     if (typeof value === 'undefined') {
                         reject(new Error('Value of widget could not be retrieved.'));
                     } else {

@@ -57,6 +57,9 @@ export const getProp = (obj, key) => {
  *
  * @param  {Object} obj the object with the deep/nested property
  * @param  {String} key the string key with '.' delimited properties
+ *      - can also have '$<insert number>' groups to access objects in
+ *        nested arrays; where the number following the '$' is the index
+ *        of the object you want to update.
  * @param  {Object} val the value to set as the new value
  * @returns {undefined}
  * @throws error if the provided key does not exist in the obj
@@ -67,8 +70,21 @@ export const setProp = (obj, key, val) => {
     }
     if (key.length > 1) {
         let newKey = key.shift();
-        obj[newKey] = typeof obj[newKey] === 'object' ? obj[newKey] : {};
-        setProp(obj[newKey], key, val);
+        let index;
+        if (newKey.includes('$')) {
+            newKey = newKey.split('$');
+            index = parseInt(newKey[1], 10);
+            if (isNaN(index)) {
+                newKey = newKey.join('$');
+            } else {
+                newKey = newKey[0];
+            }
+        }
+        let nestedTarget = typeof obj[newKey] === 'object' ? obj[newKey] : {};
+        if (index || index === 0) {
+            nestedTarget = obj[newKey][index];
+        }
+        setProp(nestedTarget, key, val);
     } else {
         if (typeof obj[key[0]] === 'undefined') {
             throw Error('Provided key does not exist!');

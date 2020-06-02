@@ -103,7 +103,14 @@ describe('Widget.vue', () => {
         let page = {
             wizardPageContent: {
                 webNodes: {
-                    [nodeId]: nodeConfig
+                    [nodeId]: nodeConfig,
+                    SINGLE: {
+                        filters: [
+                            {
+                                test: 0
+                            }
+                        ]
+                    }
                 }
             }
         };
@@ -161,6 +168,83 @@ describe('Widget.vue', () => {
             wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.id1.viewRepresentation
                 .currentValue.testValue
         ).toEqual(newValue);
+    });
+
+    it('uses provided key in change event if provided', () => {
+        let updateMock = jest.spyOn(wrapper.vm, 'updateWebNode');
+        let testKey = 'foo';
+        wrapper.vm.publishUpdate({
+            nodeId,
+            type: 'testValue',
+            key: testKey,
+            value: 0
+        });
+
+        expect(updateMock).toHaveBeenCalledWith({
+            nodeId,
+            type: 'testValue',
+            key: testKey,
+            value: 0,
+            update: {
+                foo: 0
+            }
+        });
+    });
+
+    it('updates objects inside arrays in the store', () => {
+        let nodeId = 'SINGLE';
+        let testKey = 'filters$0.test';
+        expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toEqual(0);
+        wrapper.vm.publishUpdate({
+            nodeId,
+            type: 'testValue',
+            key: testKey,
+            value: 1
+        });
+        expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toEqual(1);
+    });
+
+    it('calls callback after change event if provided', async () => {
+        let localNodeConfig = JSON.parse(JSON.stringify(nodeConfigBlueprint));
+        let localVue1 = createLocalVue();
+        localVue1.use(Vuex);
+
+        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        let page = {
+            wizardPageContent: {
+                webNodes: {
+                    [nodeId]: localNodeConfig,
+                    SINGLE: {
+                        filters: [
+                            {
+                                test: 0
+                            }
+                        ]
+                    }
+                }
+            }
+        };
+        localStore.commit('pagebuilder/setPage', page);
+        let localContext = {
+            store: localStore,
+            localVue: localVue1
+        };
+        let localWrapper = shallowMount(Widget, {
+            ...localContext,
+            propsData: {
+                nodeConfig: localNodeConfig,
+                nodeId
+            }
+        });
+        let mock = jest.fn();
+        localWrapper.vm.publishUpdate({
+            nodeId,
+            type: 'testValue',
+            value: 0,
+            callback: mock
+        });
+        await localWrapper.vm.$nextTick();
+        expect(mock).toHaveBeenCalled();
     });
 
     it('test getting deep properties with util', () => {
