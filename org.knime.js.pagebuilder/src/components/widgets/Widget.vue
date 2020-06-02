@@ -7,6 +7,7 @@ import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
+import ListBoxInputWidget from './input/ListBoxInputWidget';
 // selection widgets
 import SingleSelectionWidget from './selection/SingleSelectionWidget';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
@@ -54,6 +55,7 @@ export default {
         DoubleWidget,
         StringWidget,
         SliderWidget,
+        ListBoxInputWidget,
         // selection widgets
         SingleSelectionWidget,
         MultipleSelectionWidget,
