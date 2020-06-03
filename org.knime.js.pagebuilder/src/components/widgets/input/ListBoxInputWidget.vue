@@ -88,17 +88,21 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         getSplittedValues() {
+            let value = this.$refs.form.getValue();
+            if (!value) {
+                return [];
+            }
             // fix seperator
             let sep = this.separator === '\\n' ? '\n' : this.separator;
             // split by each char or by sep
-            let values = this.value.split(this.separateEachCharacter ? '' : sep);
+            let valuesArray = value.split(this.separateEachCharacter ? '' : sep);
 
-            // remove empty values
+            // remove empty valuesArray
             if (this.omitEmpty) {
-                values = values.filter(x => x !== '');
+                valuesArray = valuesArray.filter(x => x !== '');
             }
 
-            return values;
+            return valuesArray;
         },
         validate() {
             let values = this.getSplittedValues();
