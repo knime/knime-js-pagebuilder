@@ -324,7 +324,8 @@ describe('ListBoxInputWidget.vue', () => {
 
             await Vue.nextTick();
             expect(wrapper.vm.validate().errorMessage).toBe(
-                'Value 2 is not valid. The given input \'abc\' is not a valid email address');
+                'Value 2 is not valid. The given input \'abc\' is not a valid email address'
+            );
         });
 
         it('has error message', async () => {
