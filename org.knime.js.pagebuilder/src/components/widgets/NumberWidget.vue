@@ -56,6 +56,10 @@ export default {
                 double: 0
             }),
             type: Object
+        },
+        errorMessage: {
+            type: String,
+            default: null
         }
     },
     computed: {
@@ -67,18 +71,6 @@ export default {
         },
         description() {
             return this.viewRep.description || null;
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            }
-            return 'Current input value is invalid';
         },
         value() {
             return this.valuePair[this.type];
@@ -100,18 +92,27 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            if (!this.viewRep.required) {
-                return true;
+            let isValid = true;
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
             let value = this.$refs.form.getValue();
-            let isValid = true;
             if (isNaN(value)) {
                 isValid = false;
+                errorMessage = 'Current value is not a number.';
             }
             if (value < this.min || this.max < value) {
                 isValid = false;
+                errorMessage = 'Current value is outside allowed range.';
             }
-            return this.$refs.form.validate() && isValid;
+
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

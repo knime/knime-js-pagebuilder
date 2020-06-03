@@ -466,170 +466,105 @@ describe('ValueSelectionWidget.vue', () => {
         };
     });
 
-    describe('radiobuttons', () => {
-        it('renders horizontal', () => {
+    describe('render', () => {
+        it('renders as radio buttons horizontal', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
                 propsData: propsDataRadioHorizontal
             });
 
-            let rb = wrapper.find({ ref: 'form' });
-            expect(rb.exists()).toBe(true);
-            expect(rb.props('alignment')).toBe('horizontal');
+            expect(wrapper.html()).toBeTruthy();
+            expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('fails on invalid type (alignment)', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.type = 'Radio buttons (vulcano)';
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-
-            expect(wrapper.vm.radioButtonsAlignment).toBe(null);
-            expect(wrapper.find({ ref: 'form' }).exists()).toBe(false);
-        });
-
-        it('renders vertical', () => {
+        it('renders as radio buttons vertical', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
                 propsData: propsDataRadioVertical
             });
 
-            let rb = wrapper.find({ ref: 'form' });
-            expect(rb.exists()).toBe(true);
-            expect(rb.props('alignment')).toBe('vertical');
+            expect(wrapper.html()).toBeTruthy();
+            expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('sends @updateWidget if child emits @input', () => {
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioVertical
-            });
-
-            const testValue = 'VALUE';
-            const lb = wrapper.find({ ref: 'form' });
-            lb.vm.$emit('input', testValue);
-
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataRadioVertical.nodeId,
-                type: 'value',
-                value: testValue
-            });
-        });
-
-        it('sends @updateWidget if column emits @input', () => {
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioVertical
-            });
-
-            const testValue = 'MYCOL';
-            const lb = wrapper.find({ ref: 'column' });
-            lb.vm.$emit('input', testValue);
-
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataRadioVertical.nodeId,
-                type: 'column',
-                value: testValue
-            });
-        });
-    });
-
-    describe('list', () => {
-        it('renders', () => {
+        it('renders as list', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
                 propsData: propsDataList
             });
 
-            expect(wrapper.find({ ref: 'form' }).exists()).toBe(true);
+            expect(wrapper.html()).toBeTruthy();
+            expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('has size set', () => {
-            propsDataList.isValid = true;
-            propsDataList.nodeConfig.viewRepresentation.limitNumberVisOptions = true;
+        it('renders as dropdown', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataList
+                propsData: propsDataDropdown
             });
-            let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
-            expect(wrapper.find({ ref: 'form' }).props('size')).toBe(size);
+
+            expect(wrapper.html()).toBeTruthy();
+            expect(wrapper.isVisible()).toBeTruthy();
         });
 
-        it('defaults to 0 if no size is set', () => {
-            const localThis = {
-                viewRep: {
-                    limitNumberVisOptions: false
-                }
-            };
-            expect(ValueSelectionWidget.computed.maxVisibleListEntries.call(localThis)).toBe(0);
-        });
-
-        it('passes isValid to component', () => {
+        it('renders as list with column locked', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: {
-                    ...propsDataList,
-                    isValid: false
-                }
-            });
-            expect(wrapper.find({ ref: 'form' }).props('isValid')).toBe(false);
-        });
-
-        it('sends @updateWidget if child emits @input', () => {
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataList
-            });
-
-            const testValue = 'VALUE';
-            const lb = wrapper.find({ ref: 'form' });
-            lb.vm.$emit('input', testValue);
-
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataList.nodeId,
-                type: 'value',
-                value: testValue
-            });
-        });
-
-        it('has not column dropdown because it is locked', () => {
-            let wrapper = mount(ValueSelectionWidget, {
                 propsData: propsDataColumnLockedList
             });
-            expect(wrapper.find({ ref: 'colmn' }).exists()).toBe(false);
+
+            expect(wrapper.html()).toBeTruthy();
+            expect(wrapper.isVisible()).toBeTruthy();
         });
     });
 
-    describe('dropdown', () => {
-        it('renders', () => {
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataDropdown
-            });
-
-            expect(wrapper.find({ ref: 'form' }).exists()).toBe(true);
+    it('sends @updateWidget if SingleSelect emits @input', () => {
+        let wrapper = shallowMount(ValueSelectionWidget, {
+            propsData: propsDataRadioVertical
         });
 
-        it('passes isValid to component', () => {
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: {
-                    ...propsDataDropdown,
-                    isValid: false
-                }
-            });
-            expect(wrapper.find({ ref: 'form' }).props('isValid')).toBe(false);
+        const testValue = 'VALUE';
+        const lb = wrapper.find({ ref: 'form' });
+        lb.vm.$emit('input', testValue);
+
+        expect(wrapper.emitted().updateWidget).toBeTruthy();
+        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+            nodeId: propsDataRadioVertical.nodeId,
+            type: 'value',
+            value: testValue
+        });
+    });
+
+    it('sends @updateWidget if column emits @input', () => {
+        let wrapper = shallowMount(ValueSelectionWidget, {
+            propsData: propsDataRadioVertical
         });
 
-        it('sends @updateWidget if child emits @input', () => {
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataDropdown
-            });
+        const testValue = 'MYCOL';
+        const lb = wrapper.find({ ref: 'column' });
+        lb.vm.$emit('input', testValue);
 
-            const testValue = 'VALUE';
-            const lb = wrapper.find({ ref: 'form' });
-            lb.vm.$emit('input', testValue);
-
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataDropdown.nodeId,
-                type: 'value',
-                value: testValue
-            });
+        expect(wrapper.emitted().updateWidget).toBeTruthy();
+        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+            nodeId: propsDataRadioVertical.nodeId,
+            type: 'column',
+            value: testValue
         });
+    });
+
+    it('has size set', () => {
+        propsDataList.isValid = true;
+        propsDataList.nodeConfig.viewRepresentation.limitNumberVisOptions = true;
+        let wrapper = shallowMount(ValueSelectionWidget, {
+            propsData: propsDataList
+        });
+        let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
+        expect(wrapper.find({ ref: 'form' }).props('numberVisOptions')).toBe(size);
+    });
+
+    it('passes isValid to component', () => {
+        let wrapper = shallowMount(ValueSelectionWidget, {
+            propsData: {
+                ...propsDataList,
+                isValid: false
+            }
+        });
+        expect(wrapper.find({ ref: 'form' }).props('isValid')).toBe(false);
     });
 
     describe('validation', () => {
@@ -641,84 +576,63 @@ describe('ValueSelectionWidget.vue', () => {
                 propsData: propsDataList
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
-        it('does respect required validation', () => {
-            propsDataList.nodeConfig.viewRepresentation.required = true;
-            propsDataList.nodeConfig.viewRepresentation.lockColumn = true;
+        it('invalidates with unlocked column and invalid column selected', () => {
+            propsDataDropdown.nodeConfig.viewRepresentation.required = true;
+            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = false;
+            propsDataDropdown.nodeConfig.viewRepresentation.currentValue.column = 'INVALID';
             let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataList
+                propsData: propsDataDropdown
             });
 
-            // by default in tests there is no valuePair set (so we don't have a value)
-            expect(wrapper.vm.validate()).toBe(false);
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Selected column is invalid.' });
+        });
 
-            // set the value
-            wrapper.setProps({ valuePair: propsDataList.nodeConfig.viewRepresentation.currentValue });
+        it('is invalid if required and no selection was made', () => {
+            propsDataDropdown.nodeConfig.viewRepresentation.required = true;
+            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDataDropdown.nodeConfig.viewRepresentation.currentValue.column = 'UriCol';
+            let wrapper = mount(ValueSelectionWidget, {
+                propsData: propsDataDropdown
+            });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
+        });
+
+        it('is valid if required and a selection was made', () => {
+            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDataDropdown.valuePair = { value: 'URI: http://cepetakagtksslf; EXT: ', column: 'UriCol' };
+            let wrapper = mount(ValueSelectionWidget, {
+                propsData: propsDataDropdown
+            });
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
+        });
+
+        it('handles child validation', () => {
+            propsDataDropdown.nodeConfig.viewRepresentation.required = true;
+            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDataDropdown.valuePair = { value: 'URI: http://cepetakagtksslf; EXT: ', column: 'UriCol' };
+            let childResponse = { isValid: false, errorMessage: 'test Error Message' };
+            let wrapper = mount(ValueSelectionWidget, {
+                propsData: propsDataDropdown,
+                stubs: {
+                    SingleSelect: {
+                        template: '<div />',
+                        methods: {
+                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                                .mockReturnValueOnce({ isValid: false })
+                        }
+                    }
+                }
+            });
+            // child message
+            expect(wrapper.vm.validate()).toStrictEqual(childResponse);
+            // default message
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Selection is invalid or missing.' });
         });
     });
-
-    describe('error message', () => {
-
-        it('is absent when valid', () => {
-            propsDataRadioHorizontal.isValid = true;
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-
-            expect(wrapper.vm.errorMessage).toBe(null);
-        });
-
-        it('is default if none is set', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-            wrapper.setData({ customValidationErrorMessage: null });
-            expect(wrapper.vm.errorMessage).toBe('Selection is invalid or missing');
-        });
-
-        it('is custom required message', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = false;
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.lockColumn = true;
-            let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataColumnLockedList
-            });
-            wrapper.vm.validate();
-            expect(wrapper.vm.errorMessage).toBe('Selection is required');
-        });
-
-        it('is error message if provided', () => {
-            propsDataRadioHorizontal.nodeConfig.viewRepresentation.errorMessage = 'Test ERROR MSG';
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioHorizontal
-            });
-
-            expect(wrapper.vm.errorMessage).toBe('Test ERROR MSG');
-        });
-
-        it('custom column invalid message', () => {
-            propsDataList.nodeConfig.viewRepresentation.required = true;
-            propsDataList.nodeConfig.viewRepresentation.lockColumn = false;
-            let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataList
-            });
-
-            // set a value
-            wrapper.setProps({ valuePair: propsDataList.nodeConfig.viewRepresentation.currentValue });
-
-            expect(wrapper.vm.isColumnValid).toBe(true);
-            propsDataList.nodeConfig.viewRepresentation.currentValue.column = 'DOES_NOT_EXIST';
-            expect(wrapper.vm.isColumnValid).toBe(false);
-
-            expect(wrapper.vm.validate()).toBe(false);
-            expect(wrapper.vm.customValidationErrorMessage).toBe('Select a valid Column first');
-        });
-
-    });
-
 });

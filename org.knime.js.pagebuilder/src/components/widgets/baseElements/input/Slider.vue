@@ -76,16 +76,21 @@ export default {
         },
         validate() {
             let value = this.getValue();
+            let errorMessage;
+            let isValid = true;
             if (this.minimum >= this.maximum || this.maximum <= this.minimum) {
-                return false;
+                errorMessage = 'Specified range is not valid.';
+                isValid = false;
             }
             if (typeof value !== 'number') {
-                return false;
+                errorMessage = 'Value is not a number.';
+                isValid = false;
             }
             if (value < this.minimum || value > this.maximum) {
-                return false;
+                errorMessage = 'Value is not inside the valid range.';
+                isValid = false;
             }
-            return true;
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

@@ -1,10 +1,9 @@
 <script>
-import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
-import ListBox from 'webapps-common/ui/components/forms/ListBox';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
+import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 
 const VALUE_KEY_NAME = 'value';
 const COLUMN_KEY_NAME = 'column';
@@ -17,11 +16,10 @@ const COLUMN_KEY_NAME = 'column';
  */
 export default {
     components: {
-        Fieldset,
-        ListBox,
-        Label,
+        SingleSelect,
         Dropdown,
-        RadioButtons,
+        Fieldset,
+        Label,
         ErrorMessage
     },
     props: {
@@ -49,13 +47,11 @@ export default {
                 [COLUMN_KEY_NAME]: ''
             }),
             type: Object
+        },
+        errorMessage: {
+            default: null,
+            type: String
         }
-    },
-    data() {
-        return {
-            // TODO: WEBP-292 remove
-            customValidationErrorMessage: null
-        };
     },
     computed: {
         viewRep() {
@@ -64,11 +60,8 @@ export default {
         label() {
             return this.viewRep.label;
         },
-        possibleChoices() {
-            return (this.viewRep.possibleValues[this.column] || []).map((x) => ({
-                id: x,
-                text: x
-            }));
+        possibleValueList() {
+            return this.viewRep.possibleValues[this.column] || [];
         },
         possibleColumns() {
             return this.viewRep.possibleColumns.map((x) => ({
@@ -79,43 +72,15 @@ export default {
         description() {
             return this.viewRep.description || null;
         },
-        maxVisibleListEntries() {
-            if (this.viewRep.limitNumberVisOptions) {
-                return this.viewRep.numberVisOptions;
-            }
-            return 0;
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-
-            // backend error message or frontend or default
-            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
-        },
         value() {
             return this.valuePair[VALUE_KEY_NAME];
         },
         column() {
             return this.valuePair[COLUMN_KEY_NAME];
         },
-        isList() {
-            return this.viewRep.type === 'List';
-        },
-        isDropdown() {
-            return this.viewRep.type === 'Dropdown';
-        },
         isRadioButtons() {
             return this.viewRep.type === 'Radio buttons (vertical)' ||
                 this.viewRep.type === 'Radio buttons (horizontal)';
-        },
-        radioButtonsAlignment() {
-            if (this.viewRep.type === 'Radio buttons (vertical)') {
-                return 'vertical';
-            } else if (this.viewRep.type === 'Radio buttons (horizontal)') {
-                return 'horizontal';
-            }
-            return null;
         },
         isColumnLocked() {
             return this.viewRep.lockColumn;
@@ -124,10 +89,10 @@ export default {
             if (this.isColumnLocked) {
                 return true;
             }
-            return this.possibleColumns.map(x => x.id).includes(this.column);
+            return this.viewRep.possibleColumns.includes(this.column);
         },
         hasSelection() {
-            return this.possibleChoices.map(x => x.id).includes(this.value);
+            return this.possibleValueList.includes(this.value);
         }
     },
     methods: {
@@ -149,20 +114,20 @@ export default {
         },
         validate() {
             let isValid = true;
-            this.customValidationErrorMessage = null; // TODO: WEBP-292 remove
-            if (this.viewRep.required) {
-                isValid = this.hasSelection && this.isColumnValid;
-                if (!this.hasSelection) {
-                    this.customValidationErrorMessage = 'Selection is required';
-                }
-                if (!this.isColumnValid) {
-                    this.customValidationErrorMessage = 'Select a valid Column first';
-                }
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
-            if (isValid && this.$refs.form.validate) {
-                isValid = this.$refs.form.validate(); // TODO: WEBP-292 update
+            isValid = this.hasSelection && this.isColumnValid;
+            if (!isValid) {
+                errorMessage = this.isColumnValid ? 'Selection is required.' : 'Selected column is invalid.';
             }
-            return isValid;
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Selection is invalid or missing.';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };
@@ -192,35 +157,16 @@ export default {
         v-if="!isColumnLocked"
         text="Value"
       />
-      <RadioButtons
-        v-if="isRadioButtons"
-        ref="form"
-        :alignment="radioButtonsAlignment"
-        :value="value"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <ListBox
-        v-if="isList"
+      <SingleSelect
         ref="form"
         :value="value"
-        :size="maxVisibleListEntries"
-        :aria-label="label"
-        :possible-values="possibleChoices"
+        :type="viewRep.type"
+        :number-vis-options="viewRep.numberVisOptions"
+        :limit-number-vis-options="viewRep.limitNumberVisOptions"
         :is-valid="isValid"
         :title="description"
-        @input="onChange"
-      />
-      <Dropdown
-        v-if="isDropdown"
-        ref="form"
-        :value="value"
-        :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
+        :possible-value-list="possibleValueList"
+        :label="label"
         @input="onChange"
       />
       <ErrorMessage :error="errorMessage" />

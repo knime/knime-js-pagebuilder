@@ -80,4 +80,36 @@ describe('BooleanWidget.vue', () => {
         wrapper.find(Checkbox).vm.$emit('input', false);
         expect(wrapper.emitted().updateWidget).toBeTruthy();
     });
+
+    describe('validation', () => {
+        it('is valid if not required', () => {
+            propsData.nodeConfig.viewRepresentation.required = false;
+            propsData.valuePair = {};
+            let wrapper = shallowMount(BooleanWidget, {
+                propsData
+            });
+
+            expect(wrapper.vm.validate().isValid).toBe(true);
+        });
+
+        it('is valid if boolean', () => {
+            propsData.nodeConfig.viewRepresentation.required = true;
+            propsData.valuePair = { boolean: false };
+            let wrapper = shallowMount(BooleanWidget, {
+                propsData
+            });
+
+            expect(wrapper.vm.validate().isValid).toBe(true);
+        });
+
+        it('is invalid if value is undefined', () => {
+            propsData.nodeConfig.viewRepresentation.required = true;
+            propsData.valuePair = {};
+            let wrapper = shallowMount(BooleanWidget, {
+                propsData
+            });
+
+            expect(wrapper.vm.validate().isValid).toBe(false);
+        });
+    });
 });

@@ -1,10 +1,8 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox';
-import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
+import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
 
 const DATA_TYPE = 'value';
 
@@ -15,10 +13,8 @@ const DATA_TYPE = 'value';
  */
 export default {
     components: {
-        Checkboxes,
+        Multiselect,
         Fieldset,
-        MultiselectListBox,
-        Twinlist,
         Label,
         ErrorMessage
     },
@@ -46,6 +42,10 @@ export default {
                 [DATA_TYPE]: []
             }),
             type: Object
+        },
+        errorMessage: {
+            type: String,
+            default: null
         }
     },
     computed: {
@@ -55,56 +55,14 @@ export default {
         label() {
             return this.viewRep.label;
         },
-        possibleChoices() {
-            return this.viewRep.possibleChoices.map((x) => ({
-                id: x,
-                text: x
-            }));
-        },
         description() {
             return this.viewRep.description || null;
-        },
-        maxVisibleListEntries() {
-            if (this.viewRep.limitNumberVisOptions) {
-                return this.viewRep.numberVisOptions;
-            }
-            return 0; // default: show all
-        },
-        errorMessage() {
-            if (this.isValid) {
-                return null;
-            }
-            if (this.viewRep.errorMessage) {
-                return this.viewRep.errorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeErrorMessage) {
-                return this.nodeConfig.nodeInfo.nodeErrorMessage;
-            }
-            if (this.nodeConfig.nodeInfo.nodeWarnMessage) {
-                return this.nodeConfig.nodeInfo.nodeWarnMessage;
-            }
-            return 'Current selection is invalid';
         },
         value() {
             return this.valuePair[DATA_TYPE];
         },
         isList() {
             return this.viewRep.type === 'List';
-        },
-        isTwinlist() {
-            return this.viewRep.type === 'Twinlist';
-        },
-        isCheckboxes() {
-            return this.viewRep.type === 'Check boxes (horizontal)' ||
-                this.viewRep.type === 'Check boxes (vertical)';
-        },
-        checkBoxesAlignment() {
-            if (this.viewRep.type === 'Check boxes (vertical)') {
-                return 'vertical';
-            } else if (this.viewRep.type === 'Check boxes (horizontal)') {
-                return 'horizontal';
-            }
-            return null;
         }
     },
     methods: {
@@ -118,62 +76,42 @@ export default {
         },
         validate() {
             let isValid = true;
-            if (this.viewRep.required) {
-                isValid = this.$refs.form.hasSelection();
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
-            return isValid;
+            if (!this.$refs.form.hasSelection()) {
+                isValid = false;
+                errorMessage = 'Selection is required.';
+            }
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid.';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };
 </script>
 
 <template>
-  <div>
-    <Fieldset
-      v-if="isCheckboxes || isTwinlist"
-      :text="label"
-    >
-      <Checkboxes
-        v-if="isCheckboxes"
-        ref="form"
-        :value="value"
-        :alignment="checkBoxesAlignment"
-        :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <Twinlist
-        v-if="isTwinlist"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        label-left="Excludes"
-        label-right="Includes"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
-    </Fieldset>
-    <Label
-      v-else
-      :text="label"
-    >
-      <MultiselectListBox
-        v-if="isList"
-        ref="form"
-        :value="value"
-        :size="maxVisibleListEntries"
-        :aria-label="label"
-        :possible-values="possibleChoices"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
-    </Label>
-  </div>
+  <Component
+    :is="isList ? 'Label' : 'Fieldset'"
+    :text="label"
+  >
+    <Multiselect
+      ref="form"
+      :value="value"
+      :type="viewRep.type"
+      :number-vis-options="viewRep.numberVisOptions"
+      :limit-number-vis-options="viewRep.limitNumberVisOptions"
+      :possible-value-list="viewRep.possibleChoices"
+      :is-valid="isValid"
+      :description="description"
+      :label="label"
+      @input="onChange"
+    />
+    <ErrorMessage :error="errorMessage" />
+  </Component>
 </template>
