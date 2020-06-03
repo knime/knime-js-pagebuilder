@@ -98,7 +98,7 @@ export default {
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
-                key: 'viewValue.filter.columns$0.values',
+                key: 'viewValue.filter.columns.0.values',
                 value: Array.isArray(value) ? value : [value],
                 callback: this.updateCallback
             };

@@ -193,7 +193,7 @@ describe('Widget.vue', () => {
 
     it('updates objects inside arrays in the store', () => {
         let nodeId = 'SINGLE';
-        let testKey = 'filters$0.test';
+        let testKey = 'filters.0.test';
         expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toEqual(0);
         wrapper.vm.publishUpdate({
             nodeId,

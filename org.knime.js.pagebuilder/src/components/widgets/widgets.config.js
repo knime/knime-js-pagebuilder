@@ -18,5 +18,6 @@ export const classToComponentMap = {
     'org.knime.js.base.node.output.text.TextOutputRepresentation': 'TextWidget',
 
     // interactive widgets
-    'org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation': 'InteractiveValueWidget'
+    'org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation':
+        'InteractiveValueWidget'
 };
