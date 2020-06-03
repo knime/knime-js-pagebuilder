@@ -144,7 +144,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="listBoxInput">
     <Label
       :text="label"
     >
@@ -161,3 +161,12 @@ export default {
     </Label>
   </div>
 </template>
+
+<style lang="postcss" scoped>
+.listBoxInput {
+  & >>> textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+</style>
