@@ -118,19 +118,13 @@ export default {
             }
             // regex
             if (this.regex) {
-                let source, srcIndex;
-                if (values.some((value, index) => {
-                    const matches = value.match(new RegExp(`^(?:${this.regex})$`, 'u'));
-                    let matchingRegex = matches !== null && matches[0] === value;
+                for (let i = 0; i < values.length; i++) {
+                    const matches = values[i].match(new RegExp(`^(?:${this.regex})$`, 'u'));
+                    let matchingRegex = matches !== null && matches[0] === values[i];
                     if (!matchingRegex) {
-                        source = value;
-                        srcIndex = index;
-                        return true;
+                        return err([`Value ${i + 1} is not valid.`,
+                            this.viewErrorMessage].filter(Boolean).join(' '), values[i]);
                     }
-                    return false;
-                })) {
-                    return err([`Value ${srcIndex + 1} is not valid.`,
-                        this.viewErrorMessage].filter(Boolean).join(' '), source);
                 }
             }
             // all ok
