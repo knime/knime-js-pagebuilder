@@ -225,7 +225,7 @@ describe('ListBoxInputWidget.vue', () => {
                 }
             });
 
-            expect(widget.vm.getSplittedValues()).toStrictEqual(['A', 'B', 'C', 'D', '\n', 'E', 'F']);
+            expect(widget.vm.getSplitValues()).toStrictEqual(['A', 'B', 'C', 'D', '\n', 'E', 'F']);
         });
 
         it('will split values by comma (CSV)', () => {
@@ -241,7 +241,7 @@ describe('ListBoxInputWidget.vue', () => {
                 }
             });
 
-            expect(widget.vm.getSplittedValues()).toStrictEqual(['Test 1', '', 'Test 2', 'Test 3']);
+            expect(widget.vm.getSplitValues()).toStrictEqual(['Test 1', '', 'Test 2', 'Test 3']);
         });
 
         it('will omit empty', () => {
@@ -257,11 +257,11 @@ describe('ListBoxInputWidget.vue', () => {
                 }
             });
 
-            expect(widget.vm.getSplittedValues()).toStrictEqual(['Test 1', 'Test 2', 'Test 3']);
+            expect(widget.vm.getSplitValues()).toStrictEqual(['Test 1', 'Test 2', 'Test 3']);
         });
     });
 
-    describe('validation and erros', () => {
+    describe('validation and errors', () => {
         it('will be invalid if widget is', () => {
             let widget = mount(ListBoxInputWidget, {
                 propsData: {

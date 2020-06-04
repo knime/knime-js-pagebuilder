@@ -87,7 +87,7 @@ export default {
             };
             this.$emit('updateWidget', changeEventObj);
         },
-        getSplittedValues() {
+        getSplitValues() {
             let value = this.$refs.form.getValue();
             if (!value) {
                 return [];
@@ -105,7 +105,7 @@ export default {
             return valuesArray;
         },
         validate() {
-            let values = this.getSplittedValues();
+            let values = this.getSplitValues();
             let err = (msg, item) => ({
                 isValid: false,
                 errorMessage: item ? msg.replace('?', item) : msg
