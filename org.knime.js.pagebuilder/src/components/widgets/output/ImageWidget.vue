@@ -65,6 +65,52 @@ export default {
         valueAsDataUri() {
             return ['data:image/', this.imageFormat.toLowerCase(), ';base64,', this.value].join('');
         }
+    },
+    watch: {
+        value() {
+            this.$nextTick(this.updateSvgSize);
+        }
+    },
+    mounted() {
+        this.updateSvgSize();
+    },
+    methods: {
+        updateSvgSize() {
+            let svg = this.$refs.svg && this.$refs.svg.children[0];
+            if (svg) {
+                this.svgModifySize(svg, this.maxWidth, this.maxHeight);
+            }
+        },
+        svgModifySize(element, width, height) {
+            let originalWidth = parseInt(element.getAttribute('width'), 10);
+            let originalHeight = parseInt(element.getAttribute('height'), 10);
+            let svgWidth = originalWidth;
+            let svgHeight = originalHeight;
+            let svgAspect = svgWidth / svgHeight;
+            if (width >= 0 && svgWidth > width) {
+                svgWidth = width;
+                svgHeight = svgWidth / svgAspect;
+                this.svgCreateViewBox(element, svgWidth, svgHeight, originalWidth, originalHeight);
+                element.style.overflow = 'hidden';
+            }
+            if (height >= 0 && svgHeight > height) {
+                svgHeight = height;
+                svgWidth = svgHeight * svgAspect;
+                this.svgCreateViewBox(element, svgWidth, svgHeight, originalWidth, originalHeight);
+                element.style.overflow = 'hidden';
+            }
+            element.style.width = `${svgWidth}px`;
+            element.style.height = `${svgHeight}px`;
+        },
+        // eslint-disable-next-line max-params
+        svgCreateViewBox(element, width, height, oldWidth, oldHeight) {
+            element.setAttribute('viewBox', `0 0 ${oldWidth} ${oldHeight}`);
+            element.setAttribute('preserveAspectRatio', 'xMinYMin meet');
+            element.setAttribute('width', Math.round(width));
+            element.setAttribute('height', Math.round(height));
+            element.style.width = `${Math.round(width)}px`;
+            element.style.height = `${Math.round(height)}px`;
+        }
     }
 };
 </script>
@@ -80,11 +126,10 @@ export default {
     <!-- eslint-disable vue/no-v-html -->
     <div
       v-if="imageFormat === 'SVG'"
-      :style="cssStyle"
+      ref="svg"
       v-html="value"
     />
     <img
-      v-else
       :style="cssStyle"
       :src="valueAsDataUri"
       :alt="description"
@@ -96,11 +141,6 @@ export default {
 .imageOutput {
   & img {
     display: block;
-  }
-
-  & svg {
-    max-width: 100% !important;
-    max-height: 100% !important;
   }
 }
 </style>
