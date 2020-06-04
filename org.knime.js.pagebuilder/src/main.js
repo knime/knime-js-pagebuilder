@@ -22,47 +22,8 @@ if (typeof KnimePageLoader === 'undefined') {
      *
      */
     window.KnimePageLoader = (function () {
-        // private fields
-        let requestSequence = 0;
-        // utility functions
-        let getNextRequestSequence = (sequence) => {
-            let mod = typeof Number.MAX_SAFE_INTEGER === 'undefined' ? Number.MAX_VALUE : Number.MAX_SAFE_INTEGER;
-            return ++sequence % mod;
-        };
-        let getAndSetNextRequestSequence = () => {
-            requestSequence = getNextRequestSequence(requestSequence);
-            return requestSequence;
-        };
-        let getNodeIdFromFrameID = frameID => frameID.substring('node'.length).replace(/-/g, ':');
-        let buildFrameIDFromNodeId = nodeId => `node${nodeId.replace(/:/g, '-')}`;
-        // main application mapping
-        let pageBuilder = {
-            app: null,
-            el: null,
-            isSingleView: false,
-            viewRequests: [],
-            isDebug: false,
-            isDebugHTML: false
-        };
-
-        pageBuilder.init = async (arg1, arg2, arg3, debug) => {
-            window.consola = consola.create({
-                level: debug ? CONST_DEBUG_LOG_LEVEL : -1
-            });
-
-            pageBuilder.isDebug = debug;
-            pageBuilder.isDebugHTML = typeof debugHTML !== 'undefined';
-            // parse page
-            let page = {
-                wizardPageContent: typeof arg1 === 'string' ? JSON.parse(arg1) : arg1,
-                // for now, page will always be "Interaction Required" until we have Wizard Navigation in the AP
-                wizardExecutionState: 'INTERACTION_REQUIRED'
-            };
-            pageBuilder.isSingleView = page.wizardPageContent.isSingleView;
-            // create element
-            pageBuilder.el = document.createElement('div');
-            pageBuilder.el.setAttribute('id', DIV_TARGET);
-            document.body.appendChild(pageBuilder.el);
+        // PageBuilder Library loading
+        let loadPageBuilderLibrary = async () => {
             // initialize VueX
             Vue.config.productionTip = false;
             Vue.use(Vuex);
@@ -87,6 +48,39 @@ if (typeof KnimePageLoader === 'undefined') {
                 throw new Error(`PageBuilder component loading failed. Script invalid.`);
             }
             delete window['knime-pagebuilder'];
+            return Component;
+        };
+        // main application mapping
+        let pageBuilder = {
+            app: null,
+            el: null,
+            isSingleView: false,
+            viewRequests: [],
+            isDebug: false,
+            isDebugHTML: false
+        };
+        // application entry
+        pageBuilder.init = async (arg1, arg2, arg3, debug) => {
+            // set log levels
+            window.consola = consola.create({
+                level: debug ? CONST_DEBUG_LOG_LEVEL : -1
+            });
+            // parse page
+            let page = {
+                wizardPageContent: typeof arg1 === 'string' ? JSON.parse(arg1) : arg1,
+                // for now, page will always be "Interaction Required" until we have Wizard Navigation in the AP
+                wizardExecutionState: 'INTERACTION_REQUIRED'
+            };
+            // set application settings
+            pageBuilder.isDebug = debug;
+            pageBuilder.isDebugHTML = typeof debugHTML !== 'undefined';
+            pageBuilder.isSingleView = page.wizardPageContent.isSingleView;
+            // create element
+            pageBuilder.el = document.createElement('div');
+            pageBuilder.el.setAttribute('id', DIV_TARGET);
+            document.body.appendChild(pageBuilder.el);
+            // Load PageBuilder component library
+            let Component = await loadPageBuilderLibrary();
             // initialize Vue
             pageBuilder.app = new Vue({
                 created() {
@@ -103,7 +97,7 @@ if (typeof KnimePageLoader === 'undefined') {
             window.isPushSupported = () => true;
         };
 
-        // standard js framework methods
+        // KAP Public API methods called by selenium-knime-bridge or SWT browser
         pageBuilder.getPageValues = () => {
             return pageBuilder.app.$store.dispatch('pagebuilder/getViewValues', null)
                 .then(values => {
@@ -142,28 +136,33 @@ if (typeof KnimePageLoader === 'undefined') {
             pageBuilder.app.$store.dispatch('pagebuilder/setValidationErrors', { page: errorResponse.data });
         };
 
-        // interactivity API
-        pageBuilder.subscribe = (id, callback, elementFilter) => {
-            consola.debug('subscribe');
-            pageBuilder.app.$state.dispatch('interactivity/subscribe', { id, callback, elementFilter });
+        // environment detection methods
+        pageBuilder.isPushSupported = () => !pageBuilder.isDebugHTML; // window.isDebugHTML set in debug HTML creation only
+
+        pageBuilder.isRunningInWebportal = () => false; // wrapper is only in AP
+        
+        pageBuilder.isRunningInSeleniumBrowser = () => typeof parent.seleniumKnimeBridge !== 'undefined';
+
+        pageBuilder.autoResize = () => {
+            // provide method to prevent errors from child views; we handle resizing differently now
+            consola.debug('PageBuilder Wrapper: autoResize');
         };
 
-        pageBuilder.unsubscribe = (id, callback) => {
-            consola.debug('unsubscribe');
-            pageBuilder.app.$state.dispatch('interactivity/unsubscribe', { id, callback });
+        // Lazy Loading "private" fields (TODO: remove with WEBP-157)
+        let requestSequence = 0;
+        // Lazy Loading utility functions (TODO: remove with WEBP-157)
+        let getNextRequestSequence = (sequence) => {
+            let mod = typeof Number.MAX_SAFE_INTEGER === 'undefined' ? Number.MAX_VALUE : Number.MAX_SAFE_INTEGER;
+            return ++sequence % mod;
         };
-
-        pageBuilder.publish = (id, data, skipCallback) => {
-            consola.debug('publish');
-            pageBuilder.app.$state.dispatch('interactivity/publish', { id, data, skipCallback });
+        let getAndSetNextRequestSequence = () => {
+            requestSequence = getNextRequestSequence(requestSequence);
+            return requestSequence;
         };
+        let getNodeIdFromFrameID = frameID => frameID.substring('node'.length).replace(/-/g, ':');
+        let buildFrameIDFromNodeId = nodeId => `node${nodeId.replace(/:/g, '-')}`;
 
-        pageBuilder.registerSelectionTranslator = (translatorID, translator) => {
-            consola.debug('registerSelectionTranslator');
-            pageBuilder.app.$state.dispatch('interactivity/registerSelectionTranslator', { translatorID, translator });
-        };
-
-        // AP/seleniumKnimeBridge communication API
+        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         pageBuilder.requestViewUpdate = (frameID, request, requestSequence) => {
             consola.debug('PageBuilder Wrapper: requestViewUpdate');
             let nodeID = getNodeIdFromFrameID(frameID);
@@ -185,7 +184,7 @@ if (typeof KnimePageLoader === 'undefined') {
             }
             pageBuilder.viewRequests.push(resolvable);
             let monitor;
-            if (!pageBuilder.isRunningInWebportal() && typeof knimeViewRequest === 'function') {
+            if (typeof knimeViewRequest === 'function') {
                 monitor = knimeViewRequest(requestContainer);
             }
             if (!monitor) {
@@ -199,6 +198,7 @@ if (typeof KnimePageLoader === 'undefined') {
             return monitor;
         };
 
+        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         pageBuilder.respondToViewRequest = (responseContainer) => {
             consola.debug('PageBuilder Wrapper: respondToViewRequest');
             let response = pageBuilder.isSingleView ? responseContainer : responseContainer.jsonResponse;
@@ -215,6 +215,7 @@ if (typeof KnimePageLoader === 'undefined') {
             }
         };
 
+        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         // eslint-disable-next-line consistent-return
         pageBuilder.updateRequestStatus = (frameID, monitorID) => {
             let resolvable;
@@ -228,7 +229,7 @@ if (typeof KnimePageLoader === 'undefined') {
             if (resolvable) {
                 try {
                     let updatedMonitor;
-                    if (!pageBuilder.isRunningInWebportal() && typeof knimeUpdateRequestStatus === 'function') {
+                    if (typeof knimeUpdateRequestStatus === 'function') {
                         updatedMonitor = knimeUpdateRequestStatus(monitorID);
                     }
                     if (updatedMonitor) {
@@ -248,6 +249,7 @@ if (typeof KnimePageLoader === 'undefined') {
             }
         };
 
+        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         pageBuilder.updateResponseMonitor = (monitor) => {
             consola.debug('PageBuilder Wrapper: updateResponseMonitor');
             if (typeof monitor === 'string') {
@@ -281,6 +283,7 @@ if (typeof KnimePageLoader === 'undefined') {
             }
         };
 
+        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         pageBuilder.cancelViewRequest = (frameID, monitorID, invokeCatch) => {
             consola.debug('PageBuilder Wrapper: cancelViewRequest');
             let nodeID = getNodeIdFromFrameID(frameID);
@@ -298,7 +301,7 @@ if (typeof KnimePageLoader === 'undefined') {
                 }
             }
             try {
-                if (!pageBuilder.isRunningInWebportal() && typeof knimeCancelRequest === 'function') {
+                if (typeof knimeCancelRequest === 'function') {
                     knimeCancelRequest(monitorID);
                 }
                 if (!invokeCatch && index > -1) {
@@ -308,24 +311,12 @@ if (typeof KnimePageLoader === 'undefined') {
                 consola.error(`Could not cancel view request: ${err}`);
             }
         };
-        // environment detection methods
-        pageBuilder.isPushSupported = () => {
-            return !pageBuilder.isRunningInWebportal() && !pageBuilder.isDebugHTML;
-        };
-
-        pageBuilder.isRunningInWebportal = () => false; // wrapper is only in AP
-        
-        pageBuilder.isRunningInSeleniumBrowser = () => typeof parent.seleniumKnimeBridge !== 'undefined';
-
-        pageBuilder.autoResize = () => {
-            // provide method to prevent errors from child views; we handle resizing differently now
-            consola.debug('PageBuilder Wrapper: autoResize');
-        };
 
         return pageBuilder;
     })();
 }
 
+// TODO: remove with WEBP-157
 if (typeof KnimeInteractivity === 'undefined') {
     window.KnimeInteractivity = {
         respondToViewRequest(response) {

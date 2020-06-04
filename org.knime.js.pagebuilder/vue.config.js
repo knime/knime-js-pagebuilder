@@ -22,6 +22,17 @@ module.exports = {
 
         // rename Vue application
         config.output.set('filename', 'knime-pagebuilder2-ap.js');
+
+        // remove hashes from font output
+        config.module.rule('fonts').use('url-loader').tap(options => ({
+            ...options,
+            fallback: {
+                ...options.fallback,
+                options: {
+                    name: 'fonts/[name].[ext]'
+                }
+            }
+        }));
     },
     // allow relative paths for serving font files in the AP
     publicPath: ''

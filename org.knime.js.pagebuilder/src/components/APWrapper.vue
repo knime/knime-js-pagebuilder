@@ -18,7 +18,6 @@ export default {
   <PageBuilder v-if="pageBuilderLoaded" />
 </template>
 <style lang="postcss">
-/* TODO: remove dynamically for the LIB WP Build */
 @import "webapps-common/ui/css";
 
 body {
