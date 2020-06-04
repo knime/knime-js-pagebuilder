@@ -7,12 +7,18 @@ import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
+import ListBoxInputWidget from './input/ListBoxInputWidget';
+// selection widgets
 import SingleSelectionWidget from './selection/SingleSelectionWidget';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
 import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget';
 import ColumnSelectionWidget from './selection/ColumnSelectionWidget';
+import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
+import ValueSelectionWidget from './selection/ValueSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
+// interactive widgets
+import InteractiveValueWidget from './interactive/InteractiveValueWidget';
 
 /**
  * A Widget node view. This top level component sits at
@@ -51,12 +57,18 @@ export default {
         DoubleWidget,
         StringWidget,
         SliderWidget,
+        ListBoxInputWidget,
+        // selection widgets
         SingleSelectionWidget,
         MultipleSelectionWidget,
         ColumnFilterSelectionWidget,
         ColumnSelectionWidget,
+        ValueFilterSelectionWidget,
+        ValueSelectionWidget,
         // output widgets
-        TextWidget
+        TextWidget,
+        // interactive widgets
+        InteractiveValueWidget
     },
     props: {
         /**
@@ -77,13 +89,15 @@ export default {
             required: true,
             type: String,
             validator(nodeId) {
-                return Boolean(nodeId);
+                return nodeId !== '';
             }
         }
     },
     data() {
         return {
-            isValid: true
+            isValid: true,
+            errorMessage: null,
+            serverValidationErrorMessage: null
         };
     },
     computed: {
@@ -117,6 +131,9 @@ export default {
         },
         valuePair() {
             return this.nodeConfig.viewRepresentation.currentValue;
+        },
+        isInteractiveWidget() {
+            return typeof this.valuePair === 'undefined' && typeof this.$refs.widget.getValue === 'function';
         }
     },
     async mounted() {
@@ -132,9 +149,7 @@ export default {
         }
         if (this.hasValidator) {
             this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
-            await this.validate().then((resp, err) => {
-                this.isValid = resp.isValid;
-            });
+            await this.validate();
         }
     },
     beforeDestroy() {
@@ -152,20 +167,22 @@ export default {
     },
     methods: {
         async publishUpdate(changeObj) {
+            let configUpdateJSONPath = changeObj.key || `viewRepresentation.currentValue.${changeObj.type}`;
             changeObj.update = {
-                [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
+                [configUpdateJSONPath]: changeObj.value
             };
-            this.updateWebNode(changeObj);
+            await this.updateWebNode(changeObj);
             if (this.hasValidator) {
-                await this.validate().then((resp, err) => {
-                    this.isValid = resp.isValid;
-                });
+                await this.validate();
+            }
+            if (typeof changeObj.callback === 'function') {
+                changeObj.callback();
             }
         },
         getValue() {
             return new Promise((resolve, reject) => {
                 try {
-                    let value = this.valuePair;
+                    let value = this.isInteractiveWidget ? this.$refs.widget.getValue() : this.valuePair;
                     if (typeof value === 'undefined') {
                         reject(new Error('Value of widget could not be retrieved.'));
                     } else {
@@ -178,27 +195,23 @@ export default {
         },
         validate() {
             return new Promise((resolve, reject) => {
-                let isValid;
+                let isValid = true;
+                let errorMessage = null;
                 try {
-                    isValid = this.$refs.widget.validate();
-                    if (typeof isValid === 'undefined') {
-                        throw new Error('Widget validation failed.');
-                    }
+                    ({ isValid, errorMessage } = this.$refs.widget.validate());
                 } catch (error) {
                     isValid = false;
+                    errorMessage = 'Something is not right. Please check this element.';
                 } finally {
-                    resolve({ nodeId: this.nodeId, isValid });
+                    this.isValid = isValid;
+                    this.errorMessage = errorMessage;
+                    resolve({ nodeId: this.nodeId, isValid, errorMessage });
                 }
             });
         },
         setValidationError(errMsg) {
             return new Promise((resolve, reject) => {
-                this.updateWebNode({
-                    nodeId: this.nodeId,
-                    update: {
-                        'nodeInfo.nodeErrorMessage': errMsg
-                    }
-                });
+                this.serverValidationErrorMessage = errMsg;
                 this.isValid = false;
                 resolve();
             });
@@ -218,6 +231,7 @@ export default {
       v-bind="$props"
       :is-valid="isValid"
       :value-pair="valuePair"
+      :error-message="serverValidationErrorMessage || errorMessage"
       @updateWidget="publishUpdate"
     />
   </div>

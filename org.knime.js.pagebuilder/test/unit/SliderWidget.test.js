@@ -1,5 +1,6 @@
 /* eslint-disable no-magic-numbers */
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, mount } from '@vue/test-utils';
+import Vue from 'vue';
 
 import SliderWidget from '@/components/widgets/input/SliderWidget';
 import Slider from '@/components/widgets/baseElements/input/Slider';
@@ -258,67 +259,67 @@ describe('SliderWidget.vue', () => {
         expect(updateWidget[0][0].value).toBe(10);
     });
 
-    it('has no error message when valid', () => {
-        expect(wrapper.vm.errorMessage).toBe(null);
-    });
-
-    it('has default error message', () => {
+    it('has no error message when valid', async () => {
         let wrapper2 = shallowMount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
-                nodeId,
-                isValid: false
+                nodeId
             },
             stubs: {
-                form: {
-                    ref: 'form',
-                    name: 'slider',
+                Slider: {
                     template: '<div />',
                     methods: {
-                        getValue() { return true; },
-                        validate() { return true; }
+                        getValue: jest.fn().mockReturnValue(50)
                     }
                 }
             }
         });
 
-        expect(wrapper2.vm.errorMessage).toBe('Current slider value is invalid');
+        await Vue.nextTick();
+        expect(wrapper2.vm.validate().errorMessage).toBe(null);
     });
 
-    it('has warning message', () => {
-        nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
-        let wrapper = shallowMount(SliderWidget, {
-            ...context,
+    it('takes child error message over parent error message', async () => {
+        let wrapper2 = mount(SliderWidget, {
             propsData: {
                 nodeConfig,
-                nodeId,
-                isValid: false
+                nodeId
+            },
+            stubs: {
+                Slider: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(null),
+                        validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                    }
+                }
             }
         });
-
-        expect(wrapper.vm.errorMessage).toBe('Testing warning message');
+        await Vue.nextTick();
+        expect(wrapper2.vm.validate().isValid).toBe(false);
+        expect(wrapper2.vm.validate().errorMessage).toBe('test Error Message');
     });
 
-    it('has error message', () => {
-        nodeConfig.nodeInfo.nodeErrorMessage = 'Testing error message';
-        let wrapper2 = shallowMount(SliderWidget, {
-            ...context,
-            propsData: {
-                nodeConfig,
-                nodeId,
-                isValid: false
-            }
-        });
-
-        expect(wrapper2.vm.errorMessage).toBe('Testing error message');
-    });
-
-    it('only displays error message when invalid', () => {
+    it('only displays error message when invalid', async () => {
         expect(wrapper.find(ErrorMessage).isVisible()).toBe(true);
-        expect(wrapper.find(ErrorMessage).vm.error).toBe(null);
-
-        wrapper.setProps({ isValid: false });
-        expect(wrapper.find(ErrorMessage).vm.error).toBe('Current slider value is invalid');
+        let wrapper2 = mount(SliderWidget, {
+            propsData: {
+                nodeConfig,
+                nodeId
+            },
+            stubs: {
+                Slider: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue(null),
+                        validate: jest.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                    }
+                }
+            }
+        });
+        await Vue.nextTick();
+        expect(wrapper2.vm.validate().isValid).toBe(false);
+        expect(wrapper2.vm.validate().errorMessage).toBe('Current input is invalid.');
     });
 });

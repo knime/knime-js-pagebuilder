@@ -76,16 +76,21 @@ export default {
         },
         validate() {
             let value = this.getValue();
+            let errorMessage;
+            let isValid = true;
             if (this.minimum >= this.maximum || this.maximum <= this.minimum) {
-                return false;
+                errorMessage = 'Specified range is not valid.';
+                isValid = false;
             }
             if (typeof value !== 'number') {
-                return false;
+                errorMessage = 'Value is not a number.';
+                isValid = false;
             }
             if (value < this.minimum || value > this.maximum) {
-                return false;
+                errorMessage = 'Value is not inside the valid range.';
+                isValid = false;
             }
-            return true;
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };
@@ -149,8 +154,8 @@ export default {
 /* process style */
 .vue-slider-process {
   cursor: pointer;
-  background-color: var(--theme-color-yellow);
-  border-radius: 3.5px;
+  background-color: var(--theme-slider-background-color);
+  border-radius: var(--theme-slider-bar-radius, 3.5px);
 }
 
 /* invalid state */
@@ -232,14 +237,15 @@ export default {
   cursor: pointer;
   height: 29px !important;
   width: 13px !important;
-  border: 1px solid var(--theme-color-stone-gray);
-  border-radius: 9.5px;
-  background: var(--theme-color-white);
+  border: 1px solid var(--theme-slider-border-color);
+  border-radius: var(--theme-slider-border-radius, 9.5px);
+  background: var(--theme-slider-foreground-color);
   z-index: 1;
 }
 
 .vue-slider-dot:hover {
-  background-color: var(--theme-color-silver-sand); /* transparency not working here */
+  border-color: var(--theme-slider-border-color-hover);
+  background-color: var(--theme-slider-foreground-color-hover); /* transparency not working here */
 }
 
 .vue-slider-ttb .vue-slider-dot,
@@ -250,8 +256,8 @@ export default {
 }
 
 .vue-slider-dot-focus {
-  background-color: var(--theme-color-masala) !important;
-  border-color: var(--theme-color-masala) !important;
+  background-color: var(--theme-slider-foreground-color-focus) !important;
+  border-color: var(--theme-slider-border-color-focus) !important;
 }
 
 .vue-slider-dot-handle {
@@ -266,9 +272,9 @@ export default {
   padding: 5px;
   min-width: 20px;
   text-align: center;
-  color: var(--theme-color-white);
-  border-color: var(--theme-color-masala);
-  background-color: var(--theme-color-masala);
+  color: var(--theme-tooltip-foreground-color);
+  border-color: var(--theme-tooltip-background-color);
+  background-color: var(--theme-tooltip-background-color);
   box-sizing: content-box !important;
 }
 

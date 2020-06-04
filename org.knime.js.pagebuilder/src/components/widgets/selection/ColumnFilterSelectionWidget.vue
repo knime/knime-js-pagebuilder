@@ -26,7 +26,7 @@ export default {
             required: true,
             type: String,
             validator(nodeId) {
-                return Boolean(nodeId);
+                return nodeId !== '';
             }
         },
         isValid: {
@@ -38,12 +38,11 @@ export default {
                 [VALUE_KEY]: []
             }),
             type: Object
+        },
+        errorMessage: {
+            default: null,
+            type: String
         }
-    },
-    data() {
-        return {
-            customValidationErrorMessage: null
-        };
     },
     computed: {
         viewRep() {
@@ -67,14 +66,6 @@ export default {
             }
             return 0; // default: show all
         },
-        errorMessage() {
-            // set by Widget.vue based on or validate() method and backend errors
-            if (this.isValid) {
-                return null;
-            }
-            // backend error message or frontend or default
-            return this.viewRep.errorMessage || this.customValidationErrorMessage || 'Selection is invalid or missing';
-        },
         value() {
             return this.valuePair[VALUE_KEY];
         }
@@ -89,20 +80,21 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            // reset
             let isValid = true;
-            this.customValidationErrorMessage = null;
-            // run checks
-            if (this.viewRep.required) {
-                isValid = this.$refs.form.hasSelection();
-                this.customValidationErrorMessage = 'Selection is required';
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
             }
-            // check for invalid values
-            if (isValid) {
-                isValid = this.$refs.form.validate();
-                this.customValidationErrorMessage = 'Current selection is invalid';
+            if (!this.$refs.form.hasSelection()) {
+                isValid = false;
+                errorMessage = 'Selection is required.';
             }
-            return isValid;
+            if (typeof this.$refs.form.validate === 'function') {
+                let validateEvent = this.$refs.form.validate();
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid.';
+            }
+            return { isValid, errorMessage: isValid ? null : errorMessage };
         }
     }
 };

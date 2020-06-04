@@ -3,7 +3,6 @@ import { mount, shallowMount } from '@vue/test-utils';
 
 import ColumnFilterWidget from '@/components/widgets/selection/ColumnFilterSelectionWidget';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
-import Vue from 'vue';
 
 describe('ColumnFilterSelectionWidget.vue', () => {
     let propsData;
@@ -151,29 +150,52 @@ describe('ColumnFilterSelectionWidget.vue', () => {
             propsData.nodeConfig.viewRepresentation.required = false;
             propsData.nodeConfig.viewRepresentation.currentValue.value = [];
             propsData.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = mount(ColumnFilterWidget, {
+            let wrapper = shallowMount(ColumnFilterWidget, {
                 propsData
             });
 
-            expect(wrapper.vm.validate()).toBe(true);
+            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
-        it('is invalid/valid if required and no selection/a selection was made', async () => {
+        it('is invalid/valid if required and no selection/a selection was made', () => {
             propsData.nodeConfig.viewRepresentation.required = true;
-            propsData.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsData.nodeConfig.viewRepresentation.defaultValue.value = [];
             let wrapper = mount(ColumnFilterWidget, {
-                propsData
+                propsData,
+                stubs: {
+                    Twinlist: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValueOnce(false)
+                                .mockReturnValueOnce(true)
+                        }
+                    }
+                }
             });
 
-            expect(wrapper.vm.validate()).toBe(false);
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
+        });
 
-            // without this the sub component will never have a value in the test
-            // we do not want to set it in html as this would violate the test scope
-            wrapper.vm.$refs.form.moveRight(['IntCol']);
-            await Vue.nextTick();
-
-            expect(wrapper.vm.validate()).toBe(true);
+        it('handles child validation', () => {
+            let childResponse = { isValid: false, errorMessage: 'test Error Message' };
+            let wrapper = mount(ColumnFilterWidget, {
+                propsData,
+                stubs: {
+                    Twinlist: {
+                        template: '<div />',
+                        methods: {
+                            hasSelection: jest.fn().mockReturnValue(true),
+                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                                .mockReturnValueOnce({ isValid: false })
+                        }
+                    }
+                }
+            });
+            // child message
+            expect(wrapper.vm.validate()).toStrictEqual(childResponse);
+            // default message
+            expect(wrapper.vm.validate())
+                .toStrictEqual({ isValid: false, errorMessage: 'Current selection is invalid.' });
         });
     });
 });

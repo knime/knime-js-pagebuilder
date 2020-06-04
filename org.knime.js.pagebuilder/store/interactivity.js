@@ -522,6 +522,16 @@ export const actions = {
             notifySubscribers(state, { id, data, skipCallback, changedIds });
         }
     },
+    updateFilter({ getters, state, dispatch }, { id, data, callback }) {
+        let elements;
+        if (!state[id] || !state[id].data) {
+            elements = [data];
+        } else {
+            elements = getters.getPublishedData(id)
+                .elements.map(filter => JSON.parse(JSON.stringify(data.id === filter.id ? data : filter)));
+        }
+        dispatch('publish', { id, data: { elements }, callback });
+    },
     registerSelectionTranslator({ dispatch, commit, getters }, { translatorId, translator }) {
         // check non-existing IDs
         if (!translator.sourceID || !translator.targetIDs) {

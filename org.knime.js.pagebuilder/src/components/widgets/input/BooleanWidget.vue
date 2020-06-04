@@ -22,7 +22,7 @@ export default {
             required: true,
             type: String,
             validator(nodeId) {
-                return Boolean(nodeId);
+                return nodeId !== '';
             }
         },
         isValid: {
@@ -60,7 +60,13 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            return typeof this.value === 'boolean';
+            let isValid = true;
+            let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
+            }
+            isValid = typeof this.value === 'boolean';
+            return { isValid, errorMessage: isValid ? null : 'Input is not responding.' };
         }
     }
 };
