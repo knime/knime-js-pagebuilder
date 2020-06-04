@@ -1,5 +1,4 @@
 import { shallowMount, mount } from '@vue/test-utils';
-import Vue from 'vue';
 
 import ListBoxInputWidget from '@/components/widgets/input/ListBoxInputWidget';
 import TextArea from '~/webapps-common/ui/components/forms/TextArea';
