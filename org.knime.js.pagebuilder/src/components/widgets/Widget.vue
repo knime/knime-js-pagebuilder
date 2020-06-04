@@ -16,6 +16,7 @@ import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
 import ValueSelectionWidget from './selection/ValueSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
+import ImageWidget from './output/ImageWidget';
 
 /**
  * A Widget node view. This top level component sits at
@@ -62,7 +63,8 @@ export default {
         ValueFilterSelectionWidget,
         ValueSelectionWidget,
         // output widgets
-        TextWidget
+        TextWidget,
+        ImageWidget
     },
     props: {
         /**

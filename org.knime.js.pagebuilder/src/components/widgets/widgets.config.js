@@ -15,5 +15,6 @@ export const classToComponentMap = {
     'org.knime.js.base.node.base.selection.value.ValueSelectionNodeRepresentation': 'ValueSelectionWidget',
 
     // output widgets
-    'org.knime.js.base.node.output.text.TextOutputRepresentation': 'TextWidget'
+    'org.knime.js.base.node.output.text.TextOutputRepresentation': 'TextWidget',
+    'org.knime.js.base.node.output.image.ImageOutputRepresentation': 'ImageWidget'
 };
