@@ -7,10 +7,13 @@ import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
+// selection widgets
 import SingleSelectionWidget from './selection/SingleSelectionWidget';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
 import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget';
 import ColumnSelectionWidget from './selection/ColumnSelectionWidget';
+import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
+import ValueSelectionWidget from './selection/ValueSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 
@@ -51,10 +54,13 @@ export default {
         DoubleWidget,
         StringWidget,
         SliderWidget,
+        // selection widgets
         SingleSelectionWidget,
         MultipleSelectionWidget,
         ColumnFilterSelectionWidget,
         ColumnSelectionWidget,
+        ValueFilterSelectionWidget,
+        ValueSelectionWidget,
         // output widgets
         TextWidget
     },
@@ -83,7 +89,9 @@ export default {
     },
     data() {
         return {
-            isValid: true
+            isValid: true,
+            errorMessage: null,
+            serverValidationErrorMessage: null
         };
     },
     computed: {
@@ -132,9 +140,7 @@ export default {
         }
         if (this.hasValidator) {
             this.$store.dispatch('pagebuilder/addValidator', { nodeId: this.nodeId, validator: this.validate });
-            await this.validate().then((resp, err) => {
-                this.isValid = resp.isValid;
-            });
+            await this.validate();
         }
     },
     beforeDestroy() {
@@ -155,11 +161,9 @@ export default {
             changeObj.update = {
                 [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
             };
-            this.updateWebNode(changeObj);
+            await this.updateWebNode(changeObj);
             if (this.hasValidator) {
-                await this.validate().then((resp, err) => {
-                    this.isValid = resp.isValid;
-                });
+                await this.validate();
             }
         },
         getValue() {
@@ -178,27 +182,23 @@ export default {
         },
         validate() {
             return new Promise((resolve, reject) => {
-                let isValid;
+                let isValid = true;
+                let errorMessage = null;
                 try {
-                    isValid = this.$refs.widget.validate();
-                    if (typeof isValid === 'undefined') {
-                        throw new Error('Widget validation failed.');
-                    }
+                    ({ isValid, errorMessage } = this.$refs.widget.validate());
                 } catch (error) {
                     isValid = false;
+                    errorMessage = 'Something is not right. Please check this element.';
                 } finally {
-                    resolve({ nodeId: this.nodeId, isValid });
+                    this.isValid = isValid;
+                    this.errorMessage = errorMessage;
+                    resolve({ nodeId: this.nodeId, isValid, errorMessage });
                 }
             });
         },
         setValidationError(errMsg) {
             return new Promise((resolve, reject) => {
-                this.updateWebNode({
-                    nodeId: this.nodeId,
-                    update: {
-                        'nodeInfo.nodeErrorMessage': errMsg
-                    }
-                });
+                this.serverValidationErrorMessage = errMsg;
                 this.isValid = false;
                 resolve();
             });
@@ -218,6 +218,7 @@ export default {
       v-bind="$props"
       :is-valid="isValid"
       :value-pair="valuePair"
+      :error-message="serverValidationErrorMessage || errorMessage"
       @updateWidget="publishUpdate"
     />
   </div>
