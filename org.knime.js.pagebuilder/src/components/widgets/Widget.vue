@@ -87,7 +87,7 @@ export default {
             required: true,
             type: String,
             validator(nodeId) {
-                return Boolean(nodeId);
+                return nodeId !== '';
             }
         }
     },

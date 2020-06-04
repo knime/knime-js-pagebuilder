@@ -139,12 +139,12 @@ describe('InteractiveValueWidget.vue', () => {
         });
         expect(wrapperEnable.vm.label).toBe('Cluster Membership');
 
-        propsData.nodeConfig.viewRepresentation.disabled = true;
+        propsData.nodeConfig.viewRepresentation.label = null;
         let wrapperDisable = shallowMount(InteractiveValueWidget, {
             ...context,
             propsData
         });
-        expect(wrapperDisable.vm.label).toBe(null);
+        expect(wrapperDisable.vm.label).toBe('');
     });
 
     it('sends @updateWidget if child emits @input', () => {

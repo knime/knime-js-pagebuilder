@@ -32,7 +32,7 @@ export default {
             required: true,
             type: String,
             validator(nodeId) {
-                return Boolean(nodeId);
+                return nodeId !== '';
             }
         },
         isValid: {
@@ -68,10 +68,7 @@ export default {
             }
         },
         label() {
-            return this.viewRep.disabled ? null : this.viewRep.label;
-        },
-        description() {
-            return this.viewRep.description || null;
+            return this.viewRep.label || '';
         },
         valueArray() {
             return this.viewValue.filter.columns[0].values;
@@ -137,8 +134,7 @@ export default {
       :limit-number-vis-options="viewRep.limitNumberVisOptions"
       :possible-value-list="viewRep.possibleValues"
       :is-valid="isValid"
-      :description="description"
-      :label="label || 'null'"
+      :label="label"
       @input="onChange"
     />
     <ErrorMessage :error="errorMessage" />
