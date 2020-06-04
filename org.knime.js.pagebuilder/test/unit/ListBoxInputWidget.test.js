@@ -292,7 +292,7 @@ describe('ListBoxInputWidget.vue', () => {
         });
 
 
-        it('has no error message when valid', async () => {
+        it('has no error message when valid', () => {
             let wrapper = shallowMount(ListBoxInputWidget, {
                 propsData: propsDataEmailRegexLineSplit,
                 stubs: {
@@ -305,11 +305,10 @@ describe('ListBoxInputWidget.vue', () => {
                 }
             });
 
-            await Vue.nextTick();
             expect(wrapper.vm.validate().errorMessage).toBe(null);
         });
 
-        it('has validation error message when not valid', async () => {
+        it('has validation error message when not valid', () => {
             let wrapper = shallowMount(ListBoxInputWidget, {
                 propsData: propsDataEmailRegexLineSplit,
                 stubs: {
@@ -322,13 +321,12 @@ describe('ListBoxInputWidget.vue', () => {
                 }
             });
 
-            await Vue.nextTick();
             expect(wrapper.vm.validate().errorMessage).toBe(
                 'Value 2 is not valid. The given input \'abc\' is not a valid email address'
             );
         });
 
-        it('has error message', async () => {
+        it('has error message', () => {
             let wrapper = shallowMount(ListBoxInputWidget, {
                 propsData: propsDataEmailRegexLineSplit,
                 stubs: {
@@ -341,7 +339,6 @@ describe('ListBoxInputWidget.vue', () => {
                 }
             });
 
-            await Vue.nextTick();
             expect(wrapper.vm.validate().errorMessage).toBe('Input is required.');
         });
     });
