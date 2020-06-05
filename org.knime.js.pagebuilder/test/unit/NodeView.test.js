@@ -111,7 +111,8 @@ describe('NodeView.vue', () => {
 
     it('can detect widgets', () => {
         let viewConfig = {
-            nodeID: 'id2'
+            nodeID: 'id2',
+            useLegacyMode: false
         };
         let wrapper = shallowMount(NodeView, {
             ...context,
@@ -123,7 +124,7 @@ describe('NodeView.vue', () => {
         expect(wrapper.vm.isWidget).toBeTruthy();
     });
 
-    it('can detect non-widgets', () => {
+    it('can detect non-widgets or widgets without a legacy mode flag set', () => {
         let viewConfig = {
             nodeID: 'id1'
         };
