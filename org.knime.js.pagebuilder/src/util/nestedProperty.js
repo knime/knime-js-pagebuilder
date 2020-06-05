@@ -1,6 +1,6 @@
 /**
  * Utility function to retrieve the value of a property when passed
- * a string representation of it's key.
+ * a string representation of its key.
  *
  * ex:
  *      obj = {
@@ -35,7 +35,7 @@ export const getProp = (obj, key) => {
 
 /**
  * Utility function to set the value of a property when passed
- * a string representation of it's key and the new value.
+ * a string representation of its key and the new value.
  *
  * ex:
  *      obj = {
