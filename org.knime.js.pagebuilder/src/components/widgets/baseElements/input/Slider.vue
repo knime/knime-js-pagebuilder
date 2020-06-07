@@ -16,7 +16,7 @@ export default {
     props: {
         value: {
             default: DEFAULT_SLIDER_VALUE,
-            type: Number
+            type: [Number, Array]
         },
         maximum: {
             default: 1,
@@ -43,12 +43,12 @@ export default {
             type: Number
         },
         tooltips: {
-            default: 'always',
-            type: String
+            default: () => [{ tooltip: 'always' }],
+            type: Array
         },
         tooltipFormat: {
-            default: x => x,
-            type: Function
+            default: () => [x => x.toString()],
+            type: Array
         },
         marks: {
             default: () => ({}),
@@ -109,12 +109,13 @@ export default {
       :interval="stepSize"
       :marks="marks"
       :height="direction.includes('tt') ? height : 1"
-      :tooltip="tooltips"
+      :dot-options="tooltips"
       :tooltip-formatter="tooltipFormat"
       :class="[connect]"
       :drag-on-click="dragOnClick"
       :contained="contained"
       :lazy="true"
+      :enable-cross="false"
       x-ms-format-detection="none"
       @change="onInput"
     />

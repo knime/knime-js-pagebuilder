@@ -7,6 +7,7 @@ import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
 
 const DATA_TYPE = 'double';
 const MINIMUM_SLIDER_STEP = .000001;
+const MAX_DECIMAL_PRECISION = 6;
 const VERTICAL_SLIDER_HEIGHT = 533;
 
 /**
@@ -65,7 +66,7 @@ export default {
             default: () => ({
                 [DATA_TYPE]: 0
             }),
-            type: Object
+            type: [Object, Array]
         },
         errorMessage: {
             default: null,
@@ -79,34 +80,17 @@ export default {
         sliderSettings() {
             return this.viewRep.sliderSettings;
         },
-        /**
-         * TODO: AP-12916 Frontend: rewrite interactive range slider filter widget
-         *
-         * Returns true if the slider component represents an Interactive Range
-         * Slider Filter Widget Node and, therefore, should publish interactivity events.
-         *
-         * @returns {undefined}
-         */
-        isInteractiveRangeSlider() {
-            return this.viewRep['@class'].includes('range');
-        },
         label() {
             return this.viewRep.label;
         },
         min() {
-            if (this.isInteractiveRangeSlider && this.viewRep.useCustomMin) {
-                return this.viewRep.customMin;
-            }
-            return this.sliderSettings.range.min[0];
+            return parseFloat(this.sliderSettings.range.min[0].toFixed(MAX_DECIMAL_PRECISION));
         },
         max() {
-            if (this.isInteractiveRangeSlider && this.viewRep.useCustomMax) {
-                return this.viewRep.customMax;
-            }
-            return this.sliderSettings.range.max[0];
+            return parseFloat(this.sliderSettings.range.max[0].toFixed(MAX_DECIMAL_PRECISION));
         },
         value() {
-            return this.valuePair[DATA_TYPE];
+            return Array.isArray(this.valuePair) ? this.valuePair : this.valuePair[DATA_TYPE];
         },
         /**
          * Maps the KNIME configuration settings to the appropriate direction
@@ -148,26 +132,43 @@ export default {
             }
             return null;
         },
+        /**
+         * Tooltips are configured via an array of options in the sliderSettings.
+         * If the property "tooltips" is undefined, then the tooltips are disabled
+         * by default. Tooltips can be disabled for a single handle by setting the
+         * value in the array of options to false. If the option is truthy, then we
+         * set the tooltip option to 'always'.
+         *
+         * @returns {Array} an array of objects containing the tooltip settings for
+         *          each handle.
+         */
         tooltips() {
-            return this.sliderSettings.tooltips ? 'always' : 'none';
+            let createTooltip = setting => ({ tooltip: setting });
+            if (this.sliderSettings.tooltips) {
+                return this.sliderSettings.tooltips.map(options => createTooltip(options ? 'always' : 'none'));
+            }
+            return [createTooltip('none')];
         },
         /**
-         * This method provided the function to be passed to the vue-slider-component
-         * (npm) which it uses to format the tooltips of the slider. The function should
-         * accept a value as a parameter and return the String (label) to be shown on
-         * the slider. The sliderLabelFormatter utility function consumes a tooltip
-         * settings from the KNIME AP (seen below as tooltips[0]) and returns a function
-         * that correctly formats labels based on all of the existing configuration
-         * options from KNIME AP.
+         * Tooltip formatting is done via function. For each handle present in the
+         * slider, we configure the formatting function for its tooltip. We provide
+         * a default formatting function for disabled or "true" (unconfigured) tool-
+         * tip options.
          *
-         * @returns {Function} the formatting function to be used on the tooltips.
+         * @returns {Array} an array of functions for formatting the tooltips.
          */
         tooltipFormat() {
             const { tooltips } = this.sliderSettings;
-            if (tooltips && typeof tooltips[0] === 'object') {
-                return (val) => sliderLabelFormatter(val, tooltips[0]);
+            const baseFormatter = val => val.toString();
+            if (tooltips) {
+                return tooltips.map(options => {
+                    if (typeof options === 'object') {
+                        return (val) => sliderLabelFormatter(val, options);
+                    }
+                    return baseFormatter;
+                });
             }
-            return (val) => val.toString();
+            return [baseFormatter];
         },
         /**
          * This config option comes from KNIME as an array of length 2 containing
@@ -179,11 +180,17 @@ export default {
          * behavior in the KNIME AP and return either 'top' or 'bottom' to be used
          * on the vue-slider-component.
          *
+         * If sliderSettings.connect is {undefined}, this means the slider doesn't
+         * have connect settings and we will just return null;
+         *
          * @returns {String} config for connecting the colored part of the slider
          *      to the slider handle.
          */
         connect() {
             const { connect } = this.sliderSettings;
+            if (!connect) {
+                return null;
+            }
             if (connect[0]) {
                 return connect[1] ? 'both' : 'top';
             }

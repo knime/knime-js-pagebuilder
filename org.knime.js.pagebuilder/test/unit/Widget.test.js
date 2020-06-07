@@ -170,21 +170,17 @@ describe('Widget.vue', () => {
         ).toEqual(newValue);
     });
 
-    it('uses provided key in change event if provided', () => {
+    it('uses update object in change event if provided', () => {
         let updateMock = jest.spyOn(wrapper.vm, 'updateWebNode');
-        let testKey = 'foo';
         wrapper.vm.publishUpdate({
             nodeId,
-            type: 'testValue',
-            key: testKey,
-            value: 0
+            update: {
+                foo: 0
+            }
         });
 
         expect(updateMock).toHaveBeenCalledWith({
             nodeId,
-            type: 'testValue',
-            key: testKey,
-            value: 0,
             update: {
                 foo: 0
             }
@@ -193,13 +189,12 @@ describe('Widget.vue', () => {
 
     it('updates objects inside arrays in the store', () => {
         let nodeId = 'SINGLE';
-        let testKey = 'filters.0.test';
         expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toEqual(0);
         wrapper.vm.publishUpdate({
             nodeId,
-            type: 'testValue',
-            key: testKey,
-            value: 1
+            update: {
+                'filters.0.test': 1
+            }
         });
         expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toEqual(1);
     });

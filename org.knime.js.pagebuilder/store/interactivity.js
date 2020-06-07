@@ -523,12 +523,19 @@ export const actions = {
         }
     },
     updateFilter({ getters, state, dispatch }, { id, data, callback }) {
-        let elements;
-        if (!state[id] || !state[id].data) {
-            elements = [data];
-        } else {
-            elements = getters.getPublishedData(id)
-                .elements.map(filter => JSON.parse(JSON.stringify(data.id === filter.id ? data : filter)));
+        let elements = [];
+        let foundAndUpdated = false;
+        if (state[id] && state[id].data) {
+            elements = getters.getPublishedData(id).elements.map(filter => {
+                if (data.id === filter.id) {
+                    foundAndUpdated = true;
+                    return JSON.parse(JSON.stringify(data));
+                }
+                return filter;
+            });
+        }
+        if (!foundAndUpdated) {
+            elements.push(JSON.parse(JSON.stringify(data)));
         }
         dispatch('publish', { id, data: { elements }, callback });
     },

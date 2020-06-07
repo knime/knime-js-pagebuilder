@@ -19,6 +19,7 @@ import ValueSelectionWidget from './selection/ValueSelectionWidget';
 import TextWidget from './output/TextWidget';
 // interactive widgets
 import InteractiveValueWidget from './interactive/InteractiveValueWidget';
+import InteractiveRangeWidget from './interactive/InteractiveRangeWidget';
 
 /**
  * A Widget node view. This top level component sits at
@@ -68,7 +69,8 @@ export default {
         // output widgets
         TextWidget,
         // interactive widgets
-        InteractiveValueWidget
+        InteractiveValueWidget,
+        InteractiveRangeWidget
     },
     props: {
         /**
@@ -167,10 +169,11 @@ export default {
     },
     methods: {
         async publishUpdate(changeObj) {
-            let configUpdateJSONPath = changeObj.key || `viewRepresentation.currentValue.${changeObj.type}`;
-            changeObj.update = {
-                [configUpdateJSONPath]: changeObj.value
-            };
+            if (!changeObj.update) {
+                changeObj.update = {
+                    [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
+                };
+            }
             await this.updateWebNode(changeObj);
             if (this.hasValidator) {
                 await this.validate();

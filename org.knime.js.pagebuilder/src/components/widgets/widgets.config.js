@@ -20,5 +20,8 @@ export const classToComponentMap = {
 
     // interactive widgets
     'org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation':
-        'InteractiveValueWidget'
+        'InteractiveValueWidget',
+    'org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation':
+        'InteractiveRangeWidget'
+    
 };
