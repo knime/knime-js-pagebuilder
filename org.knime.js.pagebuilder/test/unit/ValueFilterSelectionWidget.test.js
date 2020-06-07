@@ -252,7 +252,10 @@ describe('ValueFilterSelectionWidget.vue', () => {
                     }
                 }
             });
-
+            // invalid column should not display any possible or selected values
+            expect(wrapper.vm.value).toStrictEqual([]);
+            expect(wrapper.vm.possibleValues).toStrictEqual([]);
+            // it should return the correct invalid response for validation
             expect(wrapper.vm.validate())
                 .toStrictEqual({ isValid: false, errorMessage: 'Selected column is invalid.' });
         });
@@ -272,7 +275,10 @@ describe('ValueFilterSelectionWidget.vue', () => {
                     }
                 }
             });
-
+            wrapper.setProps({ valuePair: {
+                value: [],
+                column: 'Cluster Membership'
+            } });
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
         });
@@ -294,6 +300,10 @@ describe('ValueFilterSelectionWidget.vue', () => {
                     }
                 }
             });
+            wrapper.setProps({ valuePair: {
+                value: [],
+                column: 'Cluster Membership'
+            } });
             // child message
             expect(wrapper.vm.validate()).toStrictEqual(childResponse);
             // default message
