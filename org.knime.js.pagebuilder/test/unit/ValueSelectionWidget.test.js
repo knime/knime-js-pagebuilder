@@ -586,7 +586,10 @@ describe('ValueSelectionWidget.vue', () => {
             let wrapper = mount(ValueSelectionWidget, {
                 propsData: propsDataDropdown
             });
-
+            // invalid column should not display any possible or selected values
+            expect(wrapper.vm.value).toStrictEqual('');
+            expect(wrapper.vm.possibleValueList).toStrictEqual([]);
+            // it should return the correct invalid response for validation
             expect(wrapper.vm.validate())
                 .toStrictEqual({ isValid: false, errorMessage: 'Selected column is invalid.' });
         });
@@ -594,11 +597,13 @@ describe('ValueSelectionWidget.vue', () => {
         it('is invalid if required and no selection was made', () => {
             propsDataDropdown.nodeConfig.viewRepresentation.required = true;
             propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
-            propsDataDropdown.nodeConfig.viewRepresentation.currentValue.column = 'UriCol';
             let wrapper = mount(ValueSelectionWidget, {
                 propsData: propsDataDropdown
             });
-
+            wrapper.setProps({ valuePair: {
+                value: '',
+                column: 'UriCol'
+            } });
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
         });
 
