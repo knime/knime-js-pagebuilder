@@ -32,7 +32,7 @@ span {
   color: var(--theme-color-error);
   line-height: 18px;
   height: 18px;
-  display: block;
+  display: inline-block;
   position: relative;
 }
 </style>
