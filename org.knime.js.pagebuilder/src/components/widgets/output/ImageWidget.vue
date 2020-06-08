@@ -110,6 +110,18 @@ export default {
             element.setAttribute('height', Math.round(height));
             element.style.width = `${Math.round(width)}px`;
             element.style.height = `${Math.round(height)}px`;
+        },
+        validate() {
+            if (!['SVG', 'PNG'].includes(this.imageFormat)) {
+                return {
+                    isValid: false,
+                    errorMessage: `Unsupported image format: ${this.imageFormat}`
+                };
+            }
+            return {
+                isValid: true,
+                errorMessage: null
+            };
         }
     }
 };
