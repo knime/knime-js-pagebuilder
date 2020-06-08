@@ -34,7 +34,7 @@ export default {
             required: true,
             type: String,
             validator(nodeId) {
-                return Boolean(nodeId);
+                return nodeId !== '';
             }
         },
         isValid: {
@@ -61,7 +61,7 @@ export default {
             return this.viewRep.label;
         },
         possibleValueList() {
-            return this.viewRep.possibleValues[this.column] || [];
+            return this.isColumnValid ? this.viewRep.possibleValues[this.column] : [];
         },
         possibleColumns() {
             return this.viewRep.possibleColumns.map((x) => ({
@@ -73,7 +73,7 @@ export default {
             return this.viewRep.description || null;
         },
         value() {
-            return this.valuePair[VALUE_KEY_NAME];
+            return this.isColumnValid ? this.valuePair[VALUE_KEY_NAME] : '';
         },
         column() {
             return this.valuePair[COLUMN_KEY_NAME];
@@ -86,13 +86,10 @@ export default {
             return this.viewRep.lockColumn;
         },
         isColumnValid() {
-            if (this.isColumnLocked) {
-                return true;
-            }
             return this.viewRep.possibleColumns.includes(this.column);
         },
         hasSelection() {
-            return this.possibleValueList.includes(this.value);
+            return this.isColumnValid && this.possibleValueList.includes(this.value);
         }
     },
     methods: {

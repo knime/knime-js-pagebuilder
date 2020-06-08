@@ -7,6 +7,7 @@ import IntegerWidget from './input/IntegerWidget';
 import DoubleWidget from './input/DoubleWidget';
 import StringWidget from './input/StringWidget';
 import SliderWidget from './input/SliderWidget';
+import ListBoxInputWidget from './input/ListBoxInputWidget';
 // selection widgets
 import SingleSelectionWidget from './selection/SingleSelectionWidget';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
@@ -17,6 +18,8 @@ import ValueSelectionWidget from './selection/ValueSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 import ImageWidget from './output/ImageWidget';
+// interactive widgets
+import InteractiveValueWidget from './interactive/InteractiveValueWidget';
 
 /**
  * A Widget node view. This top level component sits at
@@ -55,6 +58,7 @@ export default {
         DoubleWidget,
         StringWidget,
         SliderWidget,
+        ListBoxInputWidget,
         // selection widgets
         SingleSelectionWidget,
         MultipleSelectionWidget,
@@ -64,7 +68,9 @@ export default {
         ValueSelectionWidget,
         // output widgets
         TextWidget,
-        ImageWidget
+        ImageWidget,
+        // interactive widgets
+        InteractiveValueWidget
     },
     props: {
         /**
@@ -85,7 +91,7 @@ export default {
             required: true,
             type: String,
             validator(nodeId) {
-                return Boolean(nodeId);
+                return nodeId !== '';
             }
         }
     },
@@ -127,6 +133,9 @@ export default {
         },
         valuePair() {
             return this.nodeConfig.viewRepresentation.currentValue;
+        },
+        isInteractiveWidget() {
+            return typeof this.valuePair === 'undefined' && typeof this.$refs.widget.getValue === 'function';
         }
     },
     async mounted() {
@@ -160,18 +169,22 @@ export default {
     },
     methods: {
         async publishUpdate(changeObj) {
+            let configUpdateJSONPath = changeObj.key || `viewRepresentation.currentValue.${changeObj.type}`;
             changeObj.update = {
-                [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
+                [configUpdateJSONPath]: changeObj.value
             };
             await this.updateWebNode(changeObj);
             if (this.hasValidator) {
                 await this.validate();
             }
+            if (typeof changeObj.callback === 'function') {
+                changeObj.callback();
+            }
         },
         getValue() {
             return new Promise((resolve, reject) => {
                 try {
-                    let value = this.valuePair;
+                    let value = this.isInteractiveWidget ? this.$refs.widget.getValue() : this.valuePair;
                     if (typeof value === 'undefined') {
                         reject(new Error('Value of widget could not be retrieved.'));
                     } else {

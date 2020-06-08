@@ -5,6 +5,7 @@ export const classToComponentMap = {
     'org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation': 'DoubleWidget',
     'org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation': 'IntegerWidget',
     'org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation': 'BooleanWidget',
+    'org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation': 'ListBoxInputWidget',
 
     // selection widgets
     'org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation': 'SingleSelectionWidget',
@@ -16,5 +17,9 @@ export const classToComponentMap = {
 
     // output widgets
     'org.knime.js.base.node.output.text.TextOutputRepresentation': 'TextWidget',
-    'org.knime.js.base.node.output.image.ImageOutputRepresentation': 'ImageWidget'
+    'org.knime.js.base.node.output.image.ImageOutputRepresentation': 'ImageWidget',
+
+    // interactive widgets
+    'org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation':
+        'InteractiveValueWidget'
 };

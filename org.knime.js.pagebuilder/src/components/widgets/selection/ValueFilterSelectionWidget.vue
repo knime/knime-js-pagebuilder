@@ -35,7 +35,7 @@ export default {
             required: true,
             type: String,
             validator(nodeId) {
-                return Boolean(nodeId);
+                return nodeId !== '';
             }
         },
         isValid: {
@@ -62,13 +62,13 @@ export default {
             return this.viewRep.label;
         },
         possibleValues() {
-            return this.viewRep.possibleValues[this.column];
+            return this.isColumnValid ? this.viewRep.possibleValues[this.column] : [];
         },
         description() {
             return this.viewRep.description || null;
         },
         value() {
-            return this.valuePair[VALUE_KEY_NAME];
+            return this.isColumnValid ? this.valuePair[VALUE_KEY_NAME] : [];
         },
         column() {
             return this.valuePair[COLUMN_KEY_NAME];
@@ -83,9 +83,6 @@ export default {
             return this.viewRep.lockColumn;
         },
         isColumnValid() {
-            if (this.isColumnLocked) {
-                return true;
-            }
             return this.viewRep.possibleColumns.includes(this.column);
         },
         isList() {

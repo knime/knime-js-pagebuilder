@@ -176,6 +176,41 @@ describe('Interactivity store', () => {
             });
         });
 
+        describe('updating filters', () => {
+            const id = 'filter-12345-12345-12345';
+            const filterId = '0.0.9 Spectre';
+            const payload = { id, data: { id: filterId, data: 42 }, callback: jest.fn() };
+            
+            it('adds a filter if it hasn\'t been added', () => {
+                expect(store.state[payload.id]).not.toBeDefined();
+                store.dispatch('updateFilter', payload);
+                expect(store.state[payload.id].data).toStrictEqual({
+                    elements: [{
+                        data: 42,
+                        id: filterId
+                    }]
+                });
+            });
+
+            it('updates existing filters', () => {
+                store.dispatch('updateFilter', payload);
+                expect(store.state[payload.id].data).toStrictEqual({
+                    elements: [{
+                        data: 42,
+                        id: filterId
+                    }]
+                });
+                payload.data.data = 13;
+                store.dispatch('updateFilter', payload);
+                expect(store.state[payload.id].data).toStrictEqual({
+                    elements: [{
+                        data: 13,
+                        id: filterId
+                    }]
+                });
+            });
+        });
+
         describe('publishing data', () => {
             const publishId = '0.0.7 Bond';
 
