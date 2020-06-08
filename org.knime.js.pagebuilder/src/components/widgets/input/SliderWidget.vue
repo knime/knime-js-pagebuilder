@@ -2,7 +2,7 @@
 import Slider from '../baseElements/input/Slider';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import { format as sliderLabelFormatter } from '../../../util/numStrFormatter';
+import formatTooltip from '../../../util/tooltipFormatter';
 import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
 
 const DATA_TYPE = 'double';
@@ -84,9 +84,17 @@ export default {
             return this.viewRep.label;
         },
         min() {
+            /* Currently vue-slider-component only supports limited precision. The backend is using
+            BigDecimals, so it's possible to get a number with an very large precision. A feature
+            request was opened with vue-slider-component to support more precision and it can be
+            found here: https://github.com/NightCatSama/vue-slider-component/issues/462#issue-634463578 */
             return parseFloat(this.sliderSettings.range.min[0].toFixed(MAX_DECIMAL_PRECISION));
         },
         max() {
+            /* Currently vue-slider-component only supports limited precision. The backend is using
+            BigDecimals, so it's possible to get a number with an very large precision. A feature
+            request was opened with vue-slider-component to support more precision and it can be
+            found here: https://github.com/NightCatSama/vue-slider-component/issues/462#issue-634463578 */
             return parseFloat(this.sliderSettings.range.max[0].toFixed(MAX_DECIMAL_PRECISION));
         },
         value() {
@@ -159,11 +167,11 @@ export default {
          */
         tooltipFormat() {
             const { tooltips } = this.sliderSettings;
-            const baseFormatter = val => val.toString();
+            const baseFormatter = val => `${val}`;
             if (tooltips) {
                 return tooltips.map(options => {
                     if (typeof options === 'object') {
-                        return (val) => sliderLabelFormatter(val, options);
+                        return (val) => formatTooltip(val, options);
                     }
                     return baseFormatter;
                 });

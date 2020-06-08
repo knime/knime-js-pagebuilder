@@ -522,6 +522,21 @@ export const actions = {
             notifySubscribers(state, { id, data, skipCallback, changedIds });
         }
     },
+    /**
+     * This method is used by interactive filter publishers which have been implemented in Vue (as opposed
+     * to legacy implementations which are loaded in iFrames). This method can be used to register a filter
+     * with the global interactivity store if it doesn't yet exist, or can update an existing filter with
+     * a matching filter id.
+     *
+     * @param {Object} store_context - provided by Vuex.
+     * @param {Object} param
+     * @param {String} param.id - the table ID for the provided filter; should be prefixed by "filter-".
+     * @param {Object} param.data - the filter data from the calling view.
+     * @param {String} param.data.id - the filter id; unique to the calling view.
+     * @param {String} [param.callback] - the optional callback to skip when publishing to subscribers.
+     * @returns {undefined}
+     * @emits 'publish' - Vuex action to publish updated filters to any subscribers.
+     */
     updateFilter({ getters, state, dispatch }, { id, data, callback }) {
         let elements = [];
         let foundAndUpdated = false;

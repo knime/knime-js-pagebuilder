@@ -47,7 +47,7 @@ export default {
             type: Array
         },
         tooltipFormat: {
-            default: () => [x => x.toString()],
+            default: () => [x => `${x}`],
             type: Array
         },
         marks: {

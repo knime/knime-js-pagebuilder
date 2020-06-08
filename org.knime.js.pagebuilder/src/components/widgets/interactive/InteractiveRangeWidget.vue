@@ -47,10 +47,18 @@ export default {
             return this.viewValue.filter;
         },
         valueMinimum() {
+            /* Currently vue-slider-component only supports limited precision. The backend is using
+            BigDecimals, so it's possible to get a number with an very large precision. A feature
+            request was opened with vue-slider-component to support more precision and it can be
+            found here: https://github.com/NightCatSama/vue-slider-component/issues/462#issue-634463578 */
             let min = this.filter.columns[0].minimum;
             return min === '-Infinity' ? false : parseFloat(min.toFixed(MAX_DECIMAL_PRECISION));
         },
         valueMaximum() {
+            /* Currently vue-slider-component only supports limited precision. The backend is using
+            BigDecimals, so it's possible to get a number with an very large precision. A feature
+            request was opened with vue-slider-component to support more precision and it can be
+            found here: https://github.com/NightCatSama/vue-slider-component/issues/462#issue-634463578 */
             let max = this.filter.columns[0].maximum;
             return max === 'Infinity' ? false : parseFloat(max.toFixed(MAX_DECIMAL_PRECISION));
         },
