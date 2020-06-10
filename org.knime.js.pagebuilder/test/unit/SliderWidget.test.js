@@ -148,31 +148,36 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.direction).toBe('ttb');
         expect(wrapper.vm.stepSize).toBe(.000001);
         expect(wrapper.vm.height).toBe(533);
-        expect(wrapper.vm.tooltips).toBe('always');
+        expect(wrapper.vm.tooltips).toStrictEqual([{ tooltip: 'always' }]);
         expect(wrapper.vm.connect).toBe('none');
     });
 
-    it('uses custom max and min if present and appropriate', () => {
-        expect(wrapper.vm.min).toBe(5);
-        expect(wrapper.vm.max).toBe(25);
+    it('ignores connect settings if missing', () => {
+        nodeConfig.viewRepresentation.sliderSettings.connect = null;
+        wrapper.setProps({
+            nodeConfig: { ...nodeConfig }
+        });
+        
+        expect(wrapper.vm.connect).toBe(null);
+    });
 
-        nodeConfig.viewRepresentation['@class'] = 'org.knime.js.base.node.widget' +
-            '.rangeSlider.InteractiveFilterRangeSliderDefinition';
+    it('rounds values which exceed the supported precision', () => {
+        nodeConfig.viewRepresentation.sliderSettings.range.min = [.000000001];
+        nodeConfig.viewRepresentation.sliderSettings.range.max = [.999999999];
         wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
         
         expect(wrapper.vm.min).toBe(0);
-        expect(wrapper.vm.max).toBe(100);
+        expect(wrapper.vm.max).toBe(1);
+    });
 
-        nodeConfig.viewRepresentation.useCustomMin = false;
-        nodeConfig.viewRepresentation.useCustomMax = false;
+    it('can accept an array of values', () => {
         wrapper.setProps({
-            nodeConfig: { ...nodeConfig }
+            valuePair: [0, 1]
         });
         
-        expect(wrapper.vm.min).toBe(5);
-        expect(wrapper.vm.max).toBe(25);
+        expect(wrapper.vm.value).toStrictEqual([0, 1]);
     });
 
     it('sets height if slider is vertical', () => {
@@ -188,16 +193,36 @@ describe('SliderWidget.vue', () => {
     });
 
     it('creates tooltip formatting function if present', () => {
-        expect(typeof wrapper.vm.tooltipFormat).toBe('function');
-        expect(wrapper.vm.tooltipFormat(1.234)).toBe('$1.23_');
+        expect(typeof wrapper.vm.tooltipFormat[0]).toBe('function');
+        expect(wrapper.vm.tooltipFormat[0](1.234)).toBe('$1.23_');
 
-        nodeConfig.viewRepresentation.sliderSettings.tooltips = [];
+        nodeConfig.viewRepresentation.sliderSettings.tooltips = [true];
         wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
 
-        expect(typeof wrapper.vm.tooltipFormat).toBe('function');
-        expect(wrapper.vm.tooltipFormat(1.234, {})).toBe('1.234');
+        expect(typeof wrapper.vm.tooltipFormat[0]).toBe('function');
+        expect(wrapper.vm.tooltipFormat[0](1.234, {})).toBe('1.234');
+    });
+
+    it('properly disables tooltips for multiple handles', () => {
+        nodeConfig.viewRepresentation.sliderSettings.tooltips = [false,
+            {
+                prefix: '$',
+                negative: '-',
+                thousand: ',',
+                decimals: 2,
+                postfix: '_',
+                mark: '.',
+                negativeBefore: '-'
+            }];
+        wrapper.setProps({
+            nodeConfig: { ...nodeConfig }
+        });
+        expect(wrapper.vm.tooltips).toStrictEqual([{ tooltip: 'none' }, { tooltip: 'always' }]);
+        expect(wrapper.vm.tooltipFormat).toStrictEqual([expect.any(Function), expect.any(Function)]);
+        expect(wrapper.vm.tooltipFormat[0](1.234, {})).toBe('1.234');
+        expect(wrapper.vm.tooltipFormat[1](1.234)).toBe('$1.23_');
     });
 
     // determines if the slider bar is filled, half (w/ orientation) or none
