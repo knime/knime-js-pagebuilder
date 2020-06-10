@@ -154,8 +154,13 @@ export default {
 
 <style lang="postcss" scoped>
 .imageOutput {
-  & img {
+  & > img {
     display: block;
+  }
+
+  & > div {
+    /* fix firefox bug when resizing svg */
+    line-height: 100%;
   }
 }
 </style>
