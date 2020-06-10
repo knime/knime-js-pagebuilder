@@ -100,10 +100,15 @@ export default {
         // This global API should only be used/extended for cases where window.postMessage can't be used
         // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
+        let getDownloadLinkFunc = this.$store.getters['wizardExecution/downloadResourceLink'];
         if (!window.KnimePageBuilderAPI) {
+            let nodeId = this.nodeId;
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
                     return getPublishedDataFunc(id);
+                },
+                getDownloadLink(resourceId) {
+                    return getDownloadLinkFunc({ resourceId, nodeId });
                 }
             };
         }
@@ -296,6 +301,13 @@ export default {
                 this.getValueCallback(data);
             } else if (data.type === 'setValidationError') {
                 this.setValidationErrorCallback(data);
+            } else if (data.type === 'uploadResource') {
+                if (this.$store._actions['wizardExecution/uploadResource']) {
+                    this.$store.dispatch('wizardExecution/uploadResource',
+                        { resourceId: data.resourceName, data: data.data });
+                } else {
+                    // TODO display error?
+                }
             } else if (data.type === 'alert') {
                 this.alert = {
                     ...data,
