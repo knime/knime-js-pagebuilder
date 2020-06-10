@@ -108,6 +108,8 @@ describe('ImageWidget.vue', () => {
             propsData: propsDataSvg
         });
         expect(wrapper.html()).toBeTruthy();
+        expect(wrapper.find('img').exists()).toBeFalsy();
+        expect(wrapper.find('svg').exists()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
@@ -116,6 +118,8 @@ describe('ImageWidget.vue', () => {
             propsData: propsDataPng
         });
         expect(wrapper.html()).toBeTruthy();
+        expect(wrapper.find('img').exists()).toBeTruthy();
+        expect(wrapper.find('svg').exists()).toBeFalsy();
         expect(wrapper.isVisible()).toBeTruthy();
     });
 

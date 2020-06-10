@@ -63,7 +63,8 @@ export default {
             };
         },
         valueAsDataUri() {
-            return ['data:image/', this.imageFormat.toLowerCase(), ';base64,', this.value].join('');
+            // only used for base64 encoded PNGs (possibly other base64 encoded format)
+            return `data:image/${this.imageFormat.toLowerCase()};base64,${this.value}`;
         }
     },
     watch: {
@@ -114,7 +115,7 @@ export default {
         validate() {
             if (!['SVG', 'PNG'].includes(this.imageFormat)) {
                 return {
-                    isValid: false,
+                    isValid: true,
                     errorMessage: `Unsupported image format: ${this.imageFormat}`
                 };
             }
@@ -142,6 +143,7 @@ export default {
       v-html="value"
     />
     <img
+      v-else
       :style="cssStyle"
       :src="valueAsDataUri"
       :alt="description"
@@ -149,6 +151,7 @@ export default {
     <ErrorMessage :error="errorMessage" />
   </div>
 </template>
+
 <style lang="postcss" scoped>
 .imageOutput {
   & img {
