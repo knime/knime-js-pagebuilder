@@ -15,7 +15,7 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-    let interactivityConfig, store, localVue, context, mockGetPublishedData;
+    let interactivityConfig, wizardExecutionConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -36,9 +36,17 @@ describe('NodeViewIframe.vue', () => {
                 getPublishedData: jest.fn().mockReturnValue(mockGetPublishedData)
             }
         };
+        mockGetDownloadLink = jest.fn();
+        wizardExecutionConfig = {
+            namespaced: true,
+            getters: {
+                downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink)
+            }
+        };
         store = new Vuex.Store({ modules: {
             pagebuilder: storeConfig,
-            'pagebuilder/interactivity': interactivityConfig
+            'pagebuilder/interactivity': interactivityConfig,
+            wizardExecution: wizardExecutionConfig
         } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
@@ -669,7 +677,7 @@ describe('NodeViewIframe.vue', () => {
         });
     });
 
-    describe('Interactivity', () => {
+    describe('PageBuilder API', () => {
         let wrapper;
 
         beforeEach(() => {
@@ -687,6 +695,7 @@ describe('NodeViewIframe.vue', () => {
         it('registers & unregisters global PageBuilder API', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
             expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getDownloadLink).toBeDefined();
             wrapper.destroy();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
@@ -696,6 +705,30 @@ describe('NodeViewIframe.vue', () => {
             window.KnimePageBuilderAPI.interactivityGetPublishedData(id);
             expect(interactivityConfig.getters.getPublishedData).toHaveBeenCalled();
             expect(mockGetPublishedData).toHaveBeenCalledWith(id);
+        });
+
+        it('getDownloadLink calls wizardExecution store', () => {
+            let resourceId = 'file-donwload';
+            window.KnimePageBuilderAPI.getDownloadLink(resourceId);
+            expect(wizardExecutionConfig.getters.downloadResourceLink).toHaveBeenCalled();
+            expect(mockGetDownloadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
+        });
+
+    });
+
+    describe('Interactivity', () => {
+        let wrapper;
+
+        beforeEach(() => {
+            wrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    }
+                }
+            });
         });
 
         it('subscribe calls interactivity store', () => {
