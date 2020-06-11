@@ -301,13 +301,6 @@ export default {
                 this.getValueCallback(data);
             } else if (data.type === 'setValidationError') {
                 this.setValidationErrorCallback(data);
-            } else if (data.type === 'uploadResource') {
-                if (this.$store._actions['wizardExecution/uploadResource']) {
-                    this.$store.dispatch('wizardExecution/uploadResource',
-                        { resourceId: data.resourceName, data: data.data });
-                } else {
-                    // TODO display error?
-                }
             } else if (data.type === 'alert') {
                 this.alert = {
                     ...data,
