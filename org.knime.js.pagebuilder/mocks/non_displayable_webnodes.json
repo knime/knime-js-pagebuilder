@@ -1,445 +1,377 @@
 {
-    "nodeMessages": null,
-    "wizardExecutionState": "INTERACTION_REQUIRED",
-    "hasPreviousPage": false,
-    "wizardPageContent": {
-      "@class": "org.knime.js.core.JSONWebNodePage",
-      "webNodePageConfiguration": {
-        "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
-        "layout": {
-          "rows": [
-            {
-              "type": "row",
-              "additionalClasses": [
-                
-              ],
-              "additionalStyles": [
-                
-              ],
-              "columns": [
-                {
-                  "widthXS": 4,
-                  "widthSM": null,
-                  "widthMD": null,
-                  "widthLG": null,
-                  "widthXL": null,
-                  "content": [
-                    
-                  ],
-                  "additionalClasses": [
-                    
-                  ],
-                  "additionalStyles": [
-                    
-                  ]
-                },
-                {
-                  "widthXS": 7,
-                  "widthSM": null,
-                  "widthMD": null,
-                  "widthLG": null,
-                  "widthXL": null,
-                  "content": [
-                    {
-                      "type": "view",
-                      "resizeMethod": "viewLowestElement",
-                      "maxHeight": null,
-                      "maxWidth": null,
-                      "minHeight": null,
-                      "minWidth": null,
-                      "resizeInterval": null,
-                      "resizeTolerance": 5,
-                      "autoResize": true,
-                      "scrolling": false,
-                      "sizeHeight": true,
-                      "sizeWidth": false,
-                      "nodeID": "9:0:10",
-                      "additionalClasses": [
-                        
-                      ],
-                      "additionalStyles": [
-                        
-                      ]
-                    }
-                  ],
-                  "additionalClasses": [
-                    
-                  ],
-                  "additionalStyles": [
-                    
-                  ]
-                },
-                {
-                  "widthXS": 1,
-                  "widthSM": null,
-                  "widthMD": null,
-                  "widthLG": null,
-                  "widthXL": null,
-                  "content": [
-                    
-                  ],
-                  "additionalClasses": [
-                    
-                  ],
-                  "additionalStyles": [
-                    
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "row",
-              "additionalClasses": [
-                
-              ],
-              "additionalStyles": [
-                
-              ],
-              "columns": [
-                {
-                  "widthXS": 6,
-                  "widthSM": null,
-                  "widthMD": null,
-                  "widthLG": null,
-                  "widthXL": null,
-                  "content": [
-                    {
-                      "type": "view",
-                      "resizeMethod": "viewLowestElement",
-                      "maxHeight": null,
-                      "maxWidth": null,
-                      "minHeight": null,
-                      "minWidth": null,
-                      "resizeInterval": null,
-                      "resizeTolerance": 5,
-                      "autoResize": true,
-                      "scrolling": false,
-                      "sizeHeight": true,
-                      "sizeWidth": false,
-                      "nodeID": "9:0:15",
-                      "additionalClasses": [
-                        
-                      ],
-                      "additionalStyles": [
-                        
-                      ]
-                    }
-                  ],
-                  "additionalClasses": [
-                    
-                  ],
-                  "additionalStyles": [
-                    
-                  ]
-                },
-                {
-                  "widthXS": 6,
-                  "widthSM": null,
-                  "widthMD": null,
-                  "widthLG": null,
-                  "widthXL": null,
-                  "content": [
-                    {
-                      "type": "view",
-                      "resizeMethod": "viewLowestElement",
-                      "maxHeight": null,
-                      "maxWidth": null,
-                      "minHeight": null,
-                      "minWidth": null,
-                      "resizeInterval": null,
-                      "resizeTolerance": 5,
-                      "autoResize": true,
-                      "scrolling": false,
-                      "sizeHeight": true,
-                      "sizeWidth": false,
-                      "nodeID": "9:0:21",
-                      "additionalClasses": [
-                        
-                      ],
-                      "additionalStyles": [
-                        
-                      ]
-                    }
-                  ],
-                  "additionalClasses": [
-                    
-                  ],
-                  "additionalStyles": [
-                    
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "row",
-              "additionalClasses": [
-                
-              ],
-              "additionalStyles": [
-                
-              ],
-              "columns": [
-                {
-                  "widthXS": 6,
-                  "widthSM": null,
-                  "widthMD": null,
-                  "widthLG": null,
-                  "widthXL": null,
-                  "content": [
-                    {
-                      "type": "view",
-                      "resizeMethod": "aspectRatio16by9",
-                      "maxHeight": null,
-                      "maxWidth": null,
-                      "minHeight": null,
-                      "minWidth": null,
-                      "resizeInterval": null,
-                      "resizeTolerance": 5,
-                      "autoResize": true,
-                      "scrolling": false,
-                      "sizeHeight": true,
-                      "sizeWidth": false,
-                      "nodeID": "9:0:12",
-                      "additionalClasses": [
-                        
-                      ],
-                      "additionalStyles": [
-                        
-                      ]
-                    },
-                    {
-                      "type": "view",
-                      "resizeMethod": "viewLowestElement",
-                      "maxHeight": null,
-                      "maxWidth": null,
-                      "minHeight": null,
-                      "minWidth": null,
-                      "resizeInterval": null,
-                      "resizeTolerance": 5,
-                      "autoResize": true,
-                      "scrolling": false,
-                      "sizeHeight": true,
-                      "sizeWidth": false,
-                      "nodeID": "9:0:25",
-                      "additionalClasses": [
-                        
-                      ],
-                      "additionalStyles": [
-                        
-                      ]
-                    }
-                  ],
-                  "additionalClasses": [
-                    
-                  ],
-                  "additionalStyles": [
-                    
-                  ]
-                },
-                {
-                  "widthXS": 6,
-                  "widthSM": null,
-                  "widthMD": null,
-                  "widthLG": null,
-                  "widthXL": null,
-                  "content": [
-                    {
-                      "type": "view",
-                      "resizeMethod": "aspectRatio16by9",
-                      "maxHeight": null,
-                      "maxWidth": null,
-                      "minHeight": null,
-                      "minWidth": null,
-                      "resizeInterval": null,
-                      "resizeTolerance": 5,
-                      "autoResize": true,
-                      "scrolling": false,
-                      "sizeHeight": true,
-                      "sizeWidth": false,
-                      "nodeID": "9:0:23",
-                      "additionalClasses": [
-                        
-                      ],
-                      "additionalStyles": [
-                        
-                      ]
-                    }
-                  ],
-                  "additionalClasses": [
-                    
-                  ],
-                  "additionalStyles": [
-                    
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        "blackBoard": null,
-        "selectionTranslators": null,
-        "version": "4.1.0.v201912121556"
+  "nodeMessages": null,
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "hasPreviousPage": false,
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "row",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
+              {
+                "widthXS": 4,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [],
+                "additionalClasses": [],
+                "additionalStyles": []
+              },
+              {
+                "widthXS": 7,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
+                  {
+                    "type": "view",
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "9:0:10",
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              },
+              {
+                "widthXS": 1,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [],
+                "additionalClasses": [],
+                "additionalStyles": []
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
+              {
+                "widthXS": 6,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
+                  {
+                    "type": "view",
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "9:0:15",
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              },
+              {
+                "widthXS": 6,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
+                  {
+                    "type": "view",
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "9:0:21",
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
+              {
+                "widthXS": 6,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
+                  {
+                    "type": "view",
+                    "resizeMethod": "aspectRatio16by9",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "9:0:12",
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  },
+                  {
+                    "type": "view",
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "9:0:25",
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              },
+              {
+                "widthXS": 6,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
+                  {
+                    "type": "view",
+                    "resizeMethod": "aspectRatio16by9",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "9:0:23",
+                    "additionalClasses": [],
+                    "additionalStyles": []
+                  }
+                ],
+                "additionalClasses": [],
+                "additionalStyles": []
+              }
+            ]
+          }
+        ]
       },
-      "webNodes": {
-        "9:0:12": {
-          "@class": "org.knime.js.core.JSONWebNode",
-          "namespace": null,
-          "viewValue": null,
-          "initMethodName": null,
-          "customCSS": null,
-          "viewRepresentation": null,
-          "validateMethodName": null,
-          "setValidationErrorMethodName": null,
-          "nodeInfo": {
-            "@class": "org.knime.js.core.JSONWebNodeInfo",
-            "nodeName": "Bar Chart",
-            "nodeAnnotation": "Node with error",
-            "nodeState": "configured",
-            "nodeErrorMessage": "Execute failed: Index for category column with name Cluster Membership not found.",
-            "nodeWarnMessage": null,
-            "displayPossible": false
-          },
-          "stylesheets": null,
-          "javascriptLibraries": null,
-          "getViewValueMethodName": null
-        },
-        "9:0:23": {
-          "@class": "org.knime.js.core.JSONWebNode",
-          "namespace": null,
-          "viewValue": null,
-          "initMethodName": null,
-          "customCSS": null,
-          "viewRepresentation": null,
-          "validateMethodName": null,
-          "setValidationErrorMethodName": null,
-          "nodeInfo": {
-            "@class": "org.knime.js.core.JSONWebNodeInfo",
-            "nodeName": "Scatter Plot",
-            "nodeAnnotation": null,
-            "nodeState": "configured",
-            "nodeErrorMessage": null,
-            "nodeWarnMessage": null,
-            "displayPossible": false
-          },
-          "stylesheets": null,
-          "javascriptLibraries": null,
-          "getViewValueMethodName": null
-        },
-        "9:0:25": {
-          "@class": "org.knime.js.core.JSONWebNode",
-          "namespace": null,
-          "viewValue": null,
-          "initMethodName": null,
-          "customCSS": null,
-          "viewRepresentation": null,
-          "validateMethodName": null,
-          "setValidationErrorMethodName": null,
-          "nodeInfo": {
-            "@class": "org.knime.js.core.JSONWebNodeInfo",
-            "nodeName": "Credentials Widget",
-            "nodeAnnotation": "Node with warning",
-            "nodeState": "idle",
-            "nodeErrorMessage": null,
-            "nodeWarnMessage": "No user name set",
-            "displayPossible": false
-          },
-          "stylesheets": null,
-          "javascriptLibraries": null,
-          "getViewValueMethodName": null
-        },
-        "9:0:15": {
-          "@class": "org.knime.js.core.JSONWebNode",
-          "namespace": "knimeBooleanWidget",
-          "viewValue": null,
-          "initMethodName": "init",
-          "customCSS": "",
-          "viewRepresentation": {
-            "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
-            "label": "this is next to a disabled node",
-            "description": "Enter Description",
-            "required": true,
-            "defaultValue": {
-              "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
-              "boolean": false
-            },
-            "currentValue": {
-              "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
-              "boolean": false
-            }
-          },
-          "validateMethodName": "validate",
-          "setValidationErrorMethodName": "setValidationErrorMessage",
-          "nodeInfo": {
-            "@class": "org.knime.js.core.JSONWebNodeInfo",
-            "nodeName": "Boolean Widget",
-            "nodeAnnotation": "",
-            "nodeState": "executed",
-            "nodeErrorMessage": null,
-            "nodeWarnMessage": null,
-            "displayPossible": true
-          },
-          "stylesheets": [
-            "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-            "/js-lib/knime/service/knime.css",
-            "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-            "/org/knime/js/base/util/quickform/quickformStyles.css"
-          ],
-          "javascriptLibraries": [
-            "/js-lib/knime/service/knime_service_1_0_0.js",
-            "/js-lib/jQuery/jquery-1.11.0.min.js",
-            "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-            "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-            "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-          ],
-          "getViewValueMethodName": "value"
-        },
-        "9:0:10": {
-          "@class": "org.knime.js.core.JSONWebNode",
-          "namespace": "knimeBooleanWidget",
-          "viewValue": null,
-          "initMethodName": "init",
-          "customCSS": "",
-          "viewRepresentation": {
-            "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
-            "label": "this is next to a deleted node",
-            "description": "Enter Description",
-            "required": true,
-            "defaultValue": {
-              "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
-              "boolean": false
-            },
-            "currentValue": {
-              "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
-              "boolean": false
-            }
-          },
-          "validateMethodName": "validate",
-          "setValidationErrorMethodName": "setValidationErrorMessage",
-          "nodeInfo": {
-            "@class": "org.knime.js.core.JSONWebNodeInfo",
-            "nodeName": "Boolean Widget",
-            "nodeAnnotation": "",
-            "nodeState": "executed",
-            "nodeErrorMessage": null,
-            "nodeWarnMessage": null,
-            "displayPossible": true
-          },
-          "stylesheets": [
-            "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-            "/js-lib/knime/service/knime.css",
-            "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-            "/org/knime/js/base/util/quickform/quickformStyles.css"
-          ],
-          "javascriptLibraries": [
-            "/js-lib/knime/service/knime_service_1_0_0.js",
-            "/js-lib/jQuery/jquery-1.11.0.min.js",
-            "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-            "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-            "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-          ],
-          "getViewValueMethodName": "value"
-        }
-      },
+      "blackBoard": null,
+      "selectionTranslators": null,
       "version": "4.1.0.v201912121556"
-    }
+    },
+    "webNodes": {
+      "9:0:12": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": null,
+        "viewValue": null,
+        "initMethodName": null,
+        "customCSS": null,
+        "viewRepresentation": null,
+        "validateMethodName": null,
+        "setValidationErrorMethodName": null,
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeName": "Bar Chart",
+          "nodeAnnotation": "Node with error",
+          "nodeState": "configured",
+          "nodeErrorMessage": "Execute failed: Index for category column with name Cluster Membership not found.",
+          "nodeWarnMessage": null,
+          "displayPossible": false
+        },
+        "stylesheets": null,
+        "javascriptLibraries": null,
+        "getViewValueMethodName": null
+      },
+      "9:0:23": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": null,
+        "viewValue": null,
+        "initMethodName": null,
+        "customCSS": null,
+        "viewRepresentation": null,
+        "validateMethodName": null,
+        "setValidationErrorMethodName": null,
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeName": "Scatter Plot",
+          "nodeAnnotation": null,
+          "nodeState": "configured",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": false
+        },
+        "stylesheets": null,
+        "javascriptLibraries": null,
+        "getViewValueMethodName": null
+      },
+      "9:0:25": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": null,
+        "viewValue": null,
+        "initMethodName": null,
+        "customCSS": null,
+        "viewRepresentation": null,
+        "validateMethodName": null,
+        "setValidationErrorMethodName": null,
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeName": "Credentials Widget",
+          "nodeAnnotation": "Node with warning",
+          "nodeState": "idle",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "No user name set",
+          "displayPossible": false
+        },
+        "stylesheets": null,
+        "javascriptLibraries": null,
+        "getViewValueMethodName": null
+      },
+      "9:0:15": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeBooleanWidget",
+        "viewValue": null,
+        "initMethodName": "init",
+        "customCSS": "",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+          "label": "this is next to a disabled node",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+            "boolean": false
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+            "boolean": false
+          }
+        },
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeName": "Boolean Widget",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      },
+      "9:0:10": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "namespace": "knimeBooleanWidget",
+        "viewValue": null,
+        "initMethodName": "init",
+        "customCSS": "",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation",
+          "label": "this is next to a deleted node",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+            "boolean": false
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+            "boolean": false
+          }
+        },
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeName": "Boolean Widget",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
+        ],
+        "getViewValueMethodName": "value"
+      }
+    },
+    "version": "4.1.0.v201912121556"
   }
+}

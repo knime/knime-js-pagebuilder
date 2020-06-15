@@ -805,7 +805,6 @@
       "3:0:9": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -878,7 +877,6 @@
       "3:0:2": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -951,7 +949,6 @@
       "3:0:6": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1024,7 +1021,6 @@
       "3:0:5": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1097,7 +1093,6 @@
       "3:0:8": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1170,7 +1165,6 @@
       "3:0:7": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1243,7 +1237,6 @@
       "3:0:19": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1297,7 +1290,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -1398,7 +1391,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -1722,7 +1715,6 @@
       "3:0:18": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1776,7 +1768,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -1877,7 +1869,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -2201,7 +2193,6 @@
       "3:0:17": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -2255,7 +2246,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -2356,7 +2347,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -2680,7 +2671,6 @@
       "3:0:28": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -2753,7 +2743,6 @@
       "3:0:16": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -2807,7 +2796,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -2908,7 +2897,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -3232,7 +3221,6 @@
       "3:0:27": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -3305,7 +3293,6 @@
       "3:0:15": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -3359,7 +3346,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -3460,7 +3447,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -3784,7 +3771,6 @@
       "3:0:26": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -3857,7 +3843,6 @@
       "3:0:14": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -3911,7 +3896,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -4012,7 +3997,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -4336,7 +4321,6 @@
       "3:0:25": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -4409,7 +4393,6 @@
       "3:0:13": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -4463,7 +4446,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -4564,7 +4547,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -4888,7 +4871,6 @@
       "3:0:24": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -4942,7 +4924,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -5043,7 +5025,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -5367,7 +5349,6 @@
       "3:0:12": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -5421,7 +5402,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -5522,7 +5503,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -5846,7 +5827,6 @@
       "3:0:23": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -5900,7 +5880,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -6001,7 +5981,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -6325,7 +6305,6 @@
       "3:0:11": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -6398,7 +6377,6 @@
       "3:0:22": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -6452,7 +6430,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -6553,7 +6531,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -6877,7 +6855,6 @@
       "3:0:10": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -6950,7 +6927,6 @@
       "3:0:21": {
         "@class": "org.knime.js.core.JSONWebNode",
         "useLegacyMode": false,
-"useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -7004,7 +6980,7 @@
             ],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",
@@ -7105,7 +7081,7 @@
             ],
             "StringCol": [
               "semicolon;semicolon",
-              "backslash\\bakslash",
+              "backslash\bakslash",
               "quotes\"quotes",
               "carriage return \r carriage return",
               "new line \n new line",

@@ -1,684 +1,684 @@
 {
-    "hasPreviousPage": true,
-    "nodeMessages": {},
-    "wizardExecutionState": "INTERACTION_REQUIRED",
-    "wizardPageContent": {
-        "@class": "org.knime.js.core.JSONWebNodePage",
-        "webNodePageConfiguration": {
-            "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
-            "layout": {
-                "rows": [
-                    {
-                        "type": "JSONLayoutRow",
-                        "additionalStyles": [],
-                        "additionalClasses": [],
-                        "columns": [
-                            {
-                                "widthXL": null,
-                                "widthLG": null,
-                                "widthMD": null,
-                                "widthSM": null,
-                                "widthXS": 12,
-                                "content": [
-                                    {
-                                        "type": "JSONLayoutViewContent",
+  "hasPreviousPage": true,
+  "nodeMessages": {},
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthXL": null,
+                "widthLG": null,
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 12,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
                     "useLegacyMode": false,
-                                        "resizeMethod": "viewLowestElement",
-                                        "resizeInterval": null,
-                                        "resizeTolerance": 5,
-                                        "autoResize": true,
-                                        "scrolling": false,
-                                        "sizeHeight": true,
-                                        "sizeWidth": false,
-                                        "nodeID": "33:0:27",
-                                        "maxHeight": null,
-                                        "maxWidth": null,
-                                        "minHeight": null,
-                                        "minWidth": null,
-                                        "additionalStyles": [],
-                                        "additionalClasses": []
-                                    }
-                                ],
-                                "additionalStyles": [],
-                                "additionalClasses": []
-                            }
-                        ]
-                    },
-                    {
-                        "type": "JSONLayoutRow",
-                        "additionalStyles": [],
-                        "additionalClasses": [],
-                        "columns": [
-                            {
-                                "widthXL": null,
-                                "widthLG": null,
-                                "widthMD": null,
-                                "widthSM": null,
-                                "widthXS": 12,
-                                "content": [
-                                    {
-                                        "type": "JSONLayoutViewContent",
+                    "resizeMethod": "viewLowestElement",
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "33:0:27",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthXL": null,
+                "widthLG": null,
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 12,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
                     "useLegacyMode": false,
-                                        "resizeMethod": "viewLowestElement",
-                                        "resizeInterval": null,
-                                        "resizeTolerance": 5,
-                                        "autoResize": true,
-                                        "scrolling": false,
-                                        "sizeHeight": true,
-                                        "sizeWidth": false,
-                                        "nodeID": "33:0:28",
-                                        "maxHeight": null,
-                                        "maxWidth": null,
-                                        "minHeight": null,
-                                        "minWidth": null,
-                                        "additionalStyles": [],
-                                        "additionalClasses": []
-                                    }
-                                ],
-                                "additionalStyles": [],
-                                "additionalClasses": []
-                            }
-                        ]
-                    },
-                    {
-                        "type": "JSONLayoutRow",
-                        "additionalStyles": [],
-                        "additionalClasses": [],
-                        "columns": [
-                            {
-                                "widthXL": null,
-                                "widthLG": null,
-                                "widthMD": null,
-                                "widthSM": null,
-                                "widthXS": 12,
-                                "content": [
-                                    {
-                                        "type": "JSONLayoutViewContent",
+                    "resizeMethod": "viewLowestElement",
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "33:0:28",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthXL": null,
+                "widthLG": null,
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 12,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
                     "useLegacyMode": false,
-                                        "resizeMethod": "viewLowestElement",
-                                        "resizeInterval": null,
-                                        "resizeTolerance": 5,
-                                        "autoResize": true,
-                                        "scrolling": false,
-                                        "sizeHeight": true,
-                                        "sizeWidth": false,
-                                        "nodeID": "33:0:29",
-                                        "maxHeight": null,
-                                        "maxWidth": null,
-                                        "minHeight": null,
-                                        "minWidth": null,
-                                        "additionalStyles": [],
-                                        "additionalClasses": []
-                                    }
-                                ],
-                                "additionalStyles": [],
-                                "additionalClasses": []
-                            }
-                        ]
-                    },
-                    {
-                        "type": "JSONLayoutRow",
-                        "additionalStyles": [],
-                        "additionalClasses": [],
-                        "columns": [
-                            {
-                                "widthXL": null,
-                                "widthLG": null,
-                                "widthMD": null,
-                                "widthSM": null,
-                                "widthXS": 12,
-                                "content": [
-                                    {
-                                        "type": "JSONLayoutViewContent",
+                    "resizeMethod": "viewLowestElement",
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "33:0:29",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthXL": null,
+                "widthLG": null,
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 12,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
                     "useLegacyMode": false,
-                                        "resizeMethod": "viewLowestElement",
-                                        "resizeInterval": null,
-                                        "resizeTolerance": 5,
-                                        "autoResize": true,
-                                        "scrolling": false,
-                                        "sizeHeight": true,
-                                        "sizeWidth": false,
-                                        "nodeID": "33:0:30",
-                                        "maxHeight": null,
-                                        "maxWidth": null,
-                                        "minHeight": null,
-                                        "minWidth": null,
-                                        "additionalStyles": [],
-                                        "additionalClasses": []
-                                    }
-                                ],
-                                "additionalStyles": [],
-                                "additionalClasses": []
-                            }
-                        ]
-                    },
-                    {
-                        "type": "JSONLayoutRow",
-                        "additionalStyles": [],
-                        "additionalClasses": [],
-                        "columns": [
-                            {
-                                "widthXL": null,
-                                "widthLG": null,
-                                "widthMD": null,
-                                "widthSM": null,
-                                "widthXS": 12,
-                                "content": [
-                                    {
-                                        "type": "JSONLayoutViewContent",
+                    "resizeMethod": "viewLowestElement",
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "33:0:30",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthXL": null,
+                "widthLG": null,
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 12,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
                     "useLegacyMode": false,
-                                        "resizeMethod": "viewLowestElement",
-                                        "resizeInterval": null,
-                                        "resizeTolerance": 5,
-                                        "autoResize": true,
-                                        "scrolling": false,
-                                        "sizeHeight": true,
-                                        "sizeWidth": false,
-                                        "nodeID": "33:0:31",
-                                        "maxHeight": null,
-                                        "maxWidth": null,
-                                        "minHeight": null,
-                                        "minWidth": null,
-                                        "additionalStyles": [],
-                                        "additionalClasses": []
-                                    }
-                                ],
-                                "additionalStyles": [],
-                                "additionalClasses": []
-                            }
-                        ]
-                    },
-                    {
-                        "type": "JSONLayoutRow",
-                        "additionalStyles": [],
-                        "additionalClasses": [],
-                        "columns": [
-                            {
-                                "widthXL": null,
-                                "widthLG": null,
-                                "widthMD": null,
-                                "widthSM": null,
-                                "widthXS": 12,
-                                "content": [
-                                    {
-                                        "type": "JSONLayoutViewContent",
+                    "resizeMethod": "viewLowestElement",
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "33:0:31",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          },
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthXL": null,
+                "widthLG": null,
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 12,
+                "content": [
+                  {
+                    "type": "JSONLayoutViewContent",
                     "useLegacyMode": false,
-                                        "resizeMethod": "viewLowestElement",
-                                        "resizeInterval": null,
-                                        "resizeTolerance": 5,
-                                        "autoResize": true,
-                                        "scrolling": false,
-                                        "sizeHeight": true,
-                                        "sizeWidth": false,
-                                        "nodeID": "33:0:32",
-                                        "maxHeight": null,
-                                        "maxWidth": null,
-                                        "minHeight": null,
-                                        "minWidth": null,
-                                        "additionalStyles": [],
-                                        "additionalClasses": []
-                                    }
-                                ],
-                                "additionalStyles": [],
-                                "additionalClasses": []
-                            }
-                        ]
-                    }
-                ]
-            },
-            "blackBoard": null,
-            "selectionTranslators": null,
-            "version": "4.1.0.v201912041250"
+                    "resizeMethod": "viewLowestElement",
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "scrolling": false,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "nodeID": "33:0:32",
+                    "maxHeight": null,
+                    "maxWidth": null,
+                    "minHeight": null,
+                    "minWidth": null,
+                    "additionalStyles": [],
+                    "additionalClasses": []
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          }
+        ]
+      },
+      "blackBoard": null,
+      "selectionTranslators": null,
+      "version": "4.1.0.v201912041250"
+    },
+    "webNodes": {
+      "33:0:27": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Value Filter Widget"
         },
-        "webNodes": {
-            "33:0:27": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Value Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/jQuery/jquery-1.11.0.min.js",
-                    "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-                    "/js-lib/knime/knime_twinlist_1_0_0.js",
-                    "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-                    "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-                    "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-                    "/org/knime/js/base/util/quickform/quickformStyles.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
-                    "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "multipleValues": false,
-                    "label": "Cluster Membership",
-                    "disabled": false,
-                    "filterID": "8eb44367-7be8-4837-8f6e-4de925c79a6a",
-                    "limitNumberVisOptions": true,
-                    "possibleValues": [
-                        "Cluster_0",
-                        "Cluster_1",
-                        "Cluster_2",
-                        "Cluster_3"
-                    ],
-                    "numberVisOptions": 10,
-                    "column": "Cluster Membership",
-                    "type": "List"
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "nominal",
-                                "values": [
-                                    "Cluster_0"
-                                ],
-                                "columnName": "Cluster Membership"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "8eb44367-7be8-4837-8f6e-4de925c79a6a"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "getComponentValue"
-            },
-            "33:0:28": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Value Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/jQuery/jquery-1.11.0.min.js",
-                    "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-                    "/js-lib/knime/knime_twinlist_1_0_0.js",
-                    "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-                    "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-                    "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-                    "/org/knime/js/base/util/quickform/quickformStyles.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
-                    "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "multipleValues": true,
-                    "label": "multi",
-                    "disabled": false,
-                    "filterID": "873cc7a9-1a6c-4c4a-81e9-7ff83701a852",
-                    "limitNumberVisOptions": true,
-                    "possibleValues": [
-                        "Cluster_0",
-                        "Cluster_1",
-                        "Cluster_2",
-                        "Cluster_3"
-                    ],
-                    "numberVisOptions": 10,
-                    "column": "Cluster Membership",
-                    "type": "Twinlist"
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "nominal",
-                                "values": [
-                                    "Cluster_0",
-                                    "Cluster_1",
-                                    "Cluster_2",
-                                    "Cluster_3"
-                                ],
-                                "columnName": "Cluster Membership"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "873cc7a9-1a6c-4c4a-81e9-7ff83701a852"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "getComponentValue"
-            },
-            "33:0:29": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Value Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/jQuery/jquery-1.11.0.min.js",
-                    "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-                    "/js-lib/knime/knime_twinlist_1_0_0.js",
-                    "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-                    "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-                    "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-                    "/org/knime/js/base/util/quickform/quickformStyles.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
-                    "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "multipleValues": true,
-                    "label": "no merge",
-                    "disabled": false,
-                    "filterID": "6013b384-32f1-401f-9632-022100393bc6",
-                    "limitNumberVisOptions": true,
-                    "possibleValues": [
-                        "Cluster_0",
-                        "Cluster_1",
-                        "Cluster_2",
-                        "Cluster_3"
-                    ],
-                    "numberVisOptions": 10,
-                    "column": "Cluster Membership",
-                    "type": "Twinlist"
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "nominal",
-                                "values": [
-                                    "Cluster_0",
-                                    "Cluster_1",
-                                    "Cluster_2",
-                                    "Cluster_3"
-                                ],
-                                "columnName": "Cluster Membership"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "6013b384-32f1-401f-9632-022100393bc6"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "getComponentValue"
-            },
-            "33:0:30": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Value Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/jQuery/jquery-1.11.0.min.js",
-                    "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-                    "/js-lib/knime/knime_twinlist_1_0_0.js",
-                    "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-                    "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-                    "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-                    "/org/knime/js/base/util/quickform/quickformStyles.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
-                    "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "multipleValues": false,
-                    "label": "Cluster Membership No merge",
-                    "disabled": false,
-                    "filterID": "83854978-6226-413f-ae13-00f106eeddb4",
-                    "limitNumberVisOptions": true,
-                    "possibleValues": [
-                        "Cluster_0",
-                        "Cluster_1",
-                        "Cluster_2",
-                        "Cluster_3"
-                    ],
-                    "numberVisOptions": 10,
-                    "column": "Cluster Membership",
-                    "type": "List"
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "nominal",
-                                "values": [
-                                    "Cluster_0"
-                                ],
-                                "columnName": "Cluster Membership"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "83854978-6226-413f-ae13-00f106eeddb4"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "getComponentValue"
-            },
-            "33:0:31": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Value Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/jQuery/jquery-1.11.0.min.js",
-                    "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-                    "/js-lib/knime/knime_twinlist_1_0_0.js",
-                    "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-                    "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-                    "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-                    "/org/knime/js/base/util/quickform/quickformStyles.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
-                    "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "multipleValues": true,
-                    "label": null,
-                    "disabled": false,
-                    "filterID": "fce6cec5-af32-4837-99e1-2a5d0b68300d",
-                    "limitNumberVisOptions": true,
-                    "possibleValues": [
-                        "Cluster_0",
-                        "Cluster_1",
-                        "Cluster_2",
-                        "Cluster_3"
-                    ],
-                    "numberVisOptions": 10,
-                    "column": "Cluster Membership",
-                    "type": "Twinlist"
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "nominal",
-                                "values": [
-                                    "Cluster_0",
-                                    "Cluster_1",
-                                    "Cluster_2",
-                                    "Cluster_3"
-                                ],
-                                "columnName": "Cluster Membership"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "fce6cec5-af32-4837-99e1-2a5d0b68300d"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "getComponentValue"
-            },
-            "33:0:32": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Value Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/jQuery/jquery-1.11.0.min.js",
-                    "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-                    "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-                    "/js-lib/knime/knime_twinlist_1_0_0.js",
-                    "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-                    "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-                    "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-                    "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-                    "/org/knime/js/base/util/quickform/quickformStyles.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
-                    "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "multipleValues": false,
-                    "label": null,
-                    "disabled": false,
-                    "filterID": "ce35d452-b062-4489-8e27-28a5feb56757",
-                    "limitNumberVisOptions": true,
-                    "possibleValues": [
-                        "Cluster_0",
-                        "Cluster_1",
-                        "Cluster_2",
-                        "Cluster_3"
-                    ],
-                    "numberVisOptions": 10,
-                    "column": "Cluster Membership",
-                    "type": "List"
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "nominal",
-                                "values": [
-                                    "Cluster_0"
-                                ],
-                                "columnName": "Cluster Membership"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "ce35d452-b062-4489-8e27-28a5feb56757"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "getComponentValue"
-            }
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
+          "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "multipleValues": false,
+          "label": "Cluster Membership",
+          "disabled": false,
+          "filterID": "8eb44367-7be8-4837-8f6e-4de925c79a6a",
+          "limitNumberVisOptions": true,
+          "possibleValues": [
+            "Cluster_0",
+            "Cluster_1",
+            "Cluster_2",
+            "Cluster_3"
+          ],
+          "numberVisOptions": 10,
+          "column": "Cluster Membership",
+          "type": "List"
         },
-        "version": "4.1.0.v201912041250"
-    }
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "nominal",
+                "values": [
+                  "Cluster_0"
+                ],
+                "columnName": "Cluster Membership"
+              }
+            ],
+            "rows": null,
+            "id": "8eb44367-7be8-4837-8f6e-4de925c79a6a"
+          }
+        },
+        "customCSS": "",
+        "getViewValueMethodName": "getComponentValue"
+      },
+      "33:0:28": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Value Filter Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
+          "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "multipleValues": true,
+          "label": "multi",
+          "disabled": false,
+          "filterID": "873cc7a9-1a6c-4c4a-81e9-7ff83701a852",
+          "limitNumberVisOptions": true,
+          "possibleValues": [
+            "Cluster_0",
+            "Cluster_1",
+            "Cluster_2",
+            "Cluster_3"
+          ],
+          "numberVisOptions": 10,
+          "column": "Cluster Membership",
+          "type": "Twinlist"
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "nominal",
+                "values": [
+                  "Cluster_0",
+                  "Cluster_1",
+                  "Cluster_2",
+                  "Cluster_3"
+                ],
+                "columnName": "Cluster Membership"
+              }
+            ],
+            "rows": null,
+            "id": "873cc7a9-1a6c-4c4a-81e9-7ff83701a852"
+          }
+        },
+        "customCSS": "",
+        "getViewValueMethodName": "getComponentValue"
+      },
+      "33:0:29": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Value Filter Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
+          "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "multipleValues": true,
+          "label": "no merge",
+          "disabled": false,
+          "filterID": "6013b384-32f1-401f-9632-022100393bc6",
+          "limitNumberVisOptions": true,
+          "possibleValues": [
+            "Cluster_0",
+            "Cluster_1",
+            "Cluster_2",
+            "Cluster_3"
+          ],
+          "numberVisOptions": 10,
+          "column": "Cluster Membership",
+          "type": "Twinlist"
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "nominal",
+                "values": [
+                  "Cluster_0",
+                  "Cluster_1",
+                  "Cluster_2",
+                  "Cluster_3"
+                ],
+                "columnName": "Cluster Membership"
+              }
+            ],
+            "rows": null,
+            "id": "6013b384-32f1-401f-9632-022100393bc6"
+          }
+        },
+        "customCSS": "",
+        "getViewValueMethodName": "getComponentValue"
+      },
+      "33:0:30": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Value Filter Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
+          "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "multipleValues": false,
+          "label": "Cluster Membership No merge",
+          "disabled": false,
+          "filterID": "83854978-6226-413f-ae13-00f106eeddb4",
+          "limitNumberVisOptions": true,
+          "possibleValues": [
+            "Cluster_0",
+            "Cluster_1",
+            "Cluster_2",
+            "Cluster_3"
+          ],
+          "numberVisOptions": 10,
+          "column": "Cluster Membership",
+          "type": "List"
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "nominal",
+                "values": [
+                  "Cluster_0"
+                ],
+                "columnName": "Cluster Membership"
+              }
+            ],
+            "rows": null,
+            "id": "83854978-6226-413f-ae13-00f106eeddb4"
+          }
+        },
+        "customCSS": "",
+        "getViewValueMethodName": "getComponentValue"
+      },
+      "33:0:31": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Value Filter Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
+          "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "multipleValues": true,
+          "label": null,
+          "disabled": false,
+          "filterID": "fce6cec5-af32-4837-99e1-2a5d0b68300d",
+          "limitNumberVisOptions": true,
+          "possibleValues": [
+            "Cluster_0",
+            "Cluster_1",
+            "Cluster_2",
+            "Cluster_3"
+          ],
+          "numberVisOptions": 10,
+          "column": "Cluster Membership",
+          "type": "Twinlist"
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "nominal",
+                "values": [
+                  "Cluster_0",
+                  "Cluster_1",
+                  "Cluster_2",
+                  "Cluster_3"
+                ],
+                "columnName": "Cluster Membership"
+              }
+            ],
+            "rows": null,
+            "id": "fce6cec5-af32-4837-99e1-2a5d0b68300d"
+          }
+        },
+        "customCSS": "",
+        "getViewValueMethodName": "getComponentValue"
+      },
+      "33:0:32": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Value Filter Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
+          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
+          "/js-lib/knime/knime_twinlist_1_0_0.js",
+          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
+          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/quickform/filter/definition/value/ValueFilterDefinition.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "org_knime_js_base_node_quickform_filter_definition_value",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation",
+          "tableID": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "multipleValues": false,
+          "label": null,
+          "disabled": false,
+          "filterID": "ce35d452-b062-4489-8e27-28a5feb56757",
+          "limitNumberVisOptions": true,
+          "possibleValues": [
+            "Cluster_0",
+            "Cluster_1",
+            "Cluster_2",
+            "Cluster_3"
+          ],
+          "numberVisOptions": 10,
+          "column": "Cluster Membership",
+          "type": "List"
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "nominal",
+                "values": [
+                  "Cluster_0"
+                ],
+                "columnName": "Cluster Membership"
+              }
+            ],
+            "rows": null,
+            "id": "ce35d452-b062-4489-8e27-28a5feb56757"
+          }
+        },
+        "customCSS": "",
+        "getViewValueMethodName": "getComponentValue"
+      }
+    },
+    "version": "4.1.0.v201912041250"
+  }
 }

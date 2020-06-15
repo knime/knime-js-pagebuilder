@@ -2,7 +2,7 @@
   "hasPreviousPage": true,
   "nodeMessages": {},
   "wizardExecutionState": "INTERACTION_REQUIRED",
-    "wizardPageContent": {
+  "wizardPageContent": {
     "@class": "org.knime.js.core.JSONWebNodePage",
     "webNodePageConfiguration": {
       "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
@@ -24,7 +24,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "13:0:12",
                             "resizeInterval": null,
@@ -53,7 +53,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "13:0:15",
                             "resizeInterval": null,
@@ -82,7 +82,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "13:0:16",
                             "resizeInterval": null,
@@ -118,7 +118,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "13:0:17",
                             "resizeInterval": null,
@@ -147,7 +147,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "13:0:18",
                             "resizeInterval": null,

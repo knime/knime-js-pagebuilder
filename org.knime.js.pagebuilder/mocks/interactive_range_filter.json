@@ -1,533 +1,533 @@
 {
-    "hasPreviousPage": true,
-    "nodeMessages": {},
-    "wizardExecutionState": "INTERACTION_REQUIRED",
-    "wizardPageContent": {
-        "@class": "org.knime.js.core.JSONWebNodePage",
-        "webNodePageConfiguration": {
-            "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
-            "layout": {
-                "rows": [
-                    {
-                        "type": "JSONLayoutRow",
+  "hasPreviousPage": true,
+  "nodeMessages": {},
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "widthXL": null,
+                "widthLG": null,
+                "widthMD": null,
+                "widthSM": null,
+                "widthXS": 12,
+                "content": [
+                  {
+                    "type": "JSONLayoutRow",
+                    "additionalStyles": [],
+                    "additionalClasses": [],
+                    "columns": [
+                      {
+                        "widthXL": null,
+                        "widthLG": null,
+                        "widthMD": null,
+                        "widthSM": null,
+                        "widthXS": 2,
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
+                            "resizeMethod": "viewLowestElement",
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "autoResize": true,
+                            "scrolling": false,
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "nodeID": "35:0:38",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "additionalStyles": [],
+                            "additionalClasses": []
+                          }
+                        ],
                         "additionalStyles": [],
-                        "additionalClasses": [],
-                        "columns": [
-                            {
-                                "widthXL": null,
-                                "widthLG": null,
-                                "widthMD": null,
-                                "widthSM": null,
-                                "widthXS": 12,
-                                "content": [
-                                    {
-                                        "type": "JSONLayoutRow",
-                                        "additionalStyles": [],
-                                        "additionalClasses": [],
-                                        "columns": [
-                                            {
-                                                "widthXL": null,
-                                                "widthLG": null,
-                                                "widthMD": null,
-                                                "widthSM": null,
-                                                "widthXS": 2,
-                                                "content": [
-                                                    {
-                                                        "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
-                                                        "resizeMethod": "viewLowestElement",
-                                                        "resizeInterval": null,
-                                                        "resizeTolerance": 5,
-                                                        "autoResize": true,
-                                                        "scrolling": false,
-                                                        "sizeHeight": true,
-                                                        "sizeWidth": false,
-                                                        "nodeID": "35:0:38",
-                                                        "maxHeight": null,
-                                                        "maxWidth": null,
-                                                        "minHeight": null,
-                                                        "minWidth": null,
-                                                        "additionalStyles": [],
-                                                        "additionalClasses": []
-                                                    }
-                                                ],
-                                                "additionalStyles": [],
-                                                "additionalClasses": []
-                                            },
-                                            {
-                                                "widthXL": null,
-                                                "widthLG": null,
-                                                "widthMD": null,
-                                                "widthSM": null,
-                                                "widthXS": 10,
-                                                "content": [
-                                                    {
-                                                        "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
-                                                        "resizeMethod": "viewLowestElement",
-                                                        "resizeInterval": null,
-                                                        "resizeTolerance": 5,
-                                                        "autoResize": true,
-                                                        "scrolling": false,
-                                                        "sizeHeight": true,
-                                                        "sizeWidth": false,
-                                                        "nodeID": "35:0:34",
-                                                        "maxHeight": null,
-                                                        "maxWidth": null,
-                                                        "minHeight": null,
-                                                        "minWidth": null,
-                                                        "additionalStyles": [],
-                                                        "additionalClasses": []
-                                                    },
-                                                    {
-                                                        "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
-                                                        "resizeMethod": "viewLowestElement",
-                                                        "resizeInterval": null,
-                                                        "resizeTolerance": 5,
-                                                        "autoResize": true,
-                                                        "scrolling": false,
-                                                        "sizeHeight": true,
-                                                        "sizeWidth": false,
-                                                        "nodeID": "35:0:39",
-                                                        "maxHeight": null,
-                                                        "maxWidth": null,
-                                                        "minHeight": null,
-                                                        "minWidth": null,
-                                                        "additionalStyles": [],
-                                                        "additionalClasses": []
-                                                    },
-                                                    {
-                                                        "type": "JSONLayoutViewContent",
-                    "useLegacyMode": false,
-                                                        "resizeMethod": "viewLowestElement",
-                                                        "resizeInterval": null,
-                                                        "resizeTolerance": 5,
-                                                        "autoResize": true,
-                                                        "scrolling": false,
-                                                        "sizeHeight": true,
-                                                        "sizeWidth": false,
-                                                        "nodeID": "35:0:37",
-                                                        "maxHeight": null,
-                                                        "maxWidth": null,
-                                                        "minHeight": null,
-                                                        "minWidth": null,
-                                                        "additionalStyles": [],
-                                                        "additionalClasses": []
-                                                    }
-                                                ],
-                                                "additionalStyles": [],
-                                                "additionalClasses": []
-                                            }
-                                        ]
-                                    }
-                                ],
-                                "additionalStyles": [],
-                                "additionalClasses": []
-                            }
-                        ]
-                    }
-                ]
-            },
-            "blackBoard": null,
-            "selectionTranslators": [
-                {
-                    "targetIDs": [
-                        "fe84d58d-4801-4422-8e9f-44c5cab8deee"
-                    ],
-                    "sourceID": "40d472cb-4e2b-4cee-b695-d52ff01bec2a",
-                    "forward": false,
-                    "mapping": null
-                },
-                {
-                    "targetIDs": [
-                        "fe84d58d-4801-4422-8e9f-44c5cab8deee"
-                    ],
-                    "sourceID": "40d472cb-4e2b-4cee-b695-d52ff01bec2a",
-                    "forward": false,
-                    "mapping": null
-                }
+                        "additionalClasses": []
+                      },
+                      {
+                        "widthXL": null,
+                        "widthLG": null,
+                        "widthMD": null,
+                        "widthSM": null,
+                        "widthXS": 10,
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
+                            "resizeMethod": "viewLowestElement",
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "autoResize": true,
+                            "scrolling": false,
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "nodeID": "35:0:34",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "additionalStyles": [],
+                            "additionalClasses": []
+                          },
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
+                            "resizeMethod": "viewLowestElement",
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "autoResize": true,
+                            "scrolling": false,
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "nodeID": "35:0:39",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "additionalStyles": [],
+                            "additionalClasses": []
+                          },
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
+                            "resizeMethod": "viewLowestElement",
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "autoResize": true,
+                            "scrolling": false,
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "nodeID": "35:0:37",
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "additionalStyles": [],
+                            "additionalClasses": []
+                          }
+                        ],
+                        "additionalStyles": [],
+                        "additionalClasses": []
+                      }
+                    ]
+                  }
+                ],
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          }
+        ]
+      },
+      "blackBoard": null,
+      "selectionTranslators": [
+        {
+          "targetIDs": [
+            "fe84d58d-4801-4422-8e9f-44c5cab8deee"
+          ],
+          "sourceID": "40d472cb-4e2b-4cee-b695-d52ff01bec2a",
+          "forward": false,
+          "mapping": null
+        },
+        {
+          "targetIDs": [
+            "fe84d58d-4801-4422-8e9f-44c5cab8deee"
+          ],
+          "sourceID": "40d472cb-4e2b-4cee-b695-d52ff01bec2a",
+          "forward": false,
+          "mapping": null
+        }
+      ],
+      "version": "4.1.0.v201912041250"
+    },
+    "webNodes": {
+      "35:0:37": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Range Slider Filter Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/wNumb/wNumb.js",
+          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+          "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+          "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "knimeQuickformFilterSlider",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation",
+          "label": "2nd",
+          "disabled": false,
+          "tableId": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "columnName": "Universe_1_1",
+          "filterId": "5052b399-1bf5-405a-8e7e-b2175a1382b6",
+          "sliderSettings": {
+            "@class": "org.knime.js.core.settings.slider.SliderSettings",
+            "behaviour": "drag-tap",
+            "fix": [
+              true,
+              false,
+              false
             ],
-            "version": "4.1.0.v201912041250"
+            "range": {
+              "min": [
+                0.001010167098195791
+              ],
+              "max": [
+                0.9997572421887096
+              ]
+            },
+            "start": [
+              0.001010167098195791,
+              0.9997572421887096
+            ],
+            "pips": {
+              "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+              "density": 3,
+              "format": {
+                "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                "decimals": 2,
+                "negative": "-",
+                "mark": "."
+              },
+              "mode": "range"
+            },
+            "direction": "ltr",
+            "orientation": "horizontal",
+            "tooltips": [
+              {
+                "decimals": 2,
+                "negative": "-",
+                "mark": "."
+              },
+              {
+                "decimals": 2,
+                "negative": "-",
+                "mark": "."
+              }
+            ]
+          }
         },
-        "webNodes": {
-            "35:0:37": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Range Slider Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/wNumb/wNumb.js",
-                    "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-                    "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "knimeQuickformFilterSlider",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation",
-                    "label": "2nd",
-                    "disabled": false,
-                    "tableId": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "columnName": "Universe_1_1",
-                    "filterId": "5052b399-1bf5-405a-8e7e-b2175a1382b6",
-                    "sliderSettings": {
-                        "@class": "org.knime.js.core.settings.slider.SliderSettings",
-                        "behaviour": "drag-tap",
-                        "fix": [
-                            true,
-                            false,
-                            false
-                        ],
-                        "range": {
-                            "min": [
-                                0.001010167098195791
-                            ],
-                            "max": [
-                                0.9997572421887096
-                            ]
-                        },
-                        "start": [
-                            0.001010167098195791,
-                            0.9997572421887096
-                        ],
-                        "pips": {
-                            "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
-                            "density": 3,
-                            "format": {
-                                "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
-                                "decimals": 2,
-                                "negative": "-",
-                                "mark": "."
-                            },
-                            "mode": "range"
-                        },
-                        "direction": "ltr",
-                        "orientation": "horizontal",
-                        "tooltips": [
-                            {
-                                "decimals": 2,
-                                "negative": "-",
-                                "mark": "."
-                            },
-                            {
-                                "decimals": 2,
-                                "negative": "-",
-                                "mark": "."
-                            }
-                        ]
-                    }
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "numeric",
-                                "maximumInclusive": true,
-                                "minimumInclusive": true,
-                                "maximum": 0.9997572421887096,
-                                "minimum": "-Infinity",
-                                "columnName": "Universe_1_1"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "5052b399-1bf5-405a-8e7e-b2175a1382b6"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "value"
-            },
-            "35:0:38": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Range Slider Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/wNumb/wNumb.js",
-                    "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-                    "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "knimeQuickformFilterSlider",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation",
-                    "label": "3rd",
-                    "disabled": false,
-                    "tableId": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "columnName": "Universe_1_1",
-                    "filterId": "af8f0a7d-e519-407a-a525-ff04b5f485d7",
-                    "sliderSettings": {
-                        "@class": "org.knime.js.core.settings.slider.SliderSettings",
-                        "behaviour": "drag-tap",
-                        "fix": [
-                            false,
-                            false,
-                            true
-                        ],
-                        "range": {
-                            "min": [
-                                0.001010167098195791
-                            ],
-                            "max": [
-                                0.9997572421887096
-                            ]
-                        },
-                        "start": [
-                            0.001010167098195791,
-                            0.9997572421887096
-                        ],
-                        "pips": {
-                            "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
-                            "density": 3,
-                            "format": {
-                                "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
-                                "decimals": 2,
-                                "negative": "-",
-                                "mark": "."
-                            },
-                            "mode": "range"
-                        },
-                        "direction": "ltr",
-                        "orientation": "vertical",
-                        "tooltips": [
-                            {
-                                "decimals": 2,
-                                "negative": "-",
-                                "mark": "."
-                            },
-                            {
-                                "decimals": 2,
-                                "negative": "-",
-                                "mark": "."
-                            }
-                        ]
-                    }
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "numeric",
-                                "maximumInclusive": true,
-                                "minimumInclusive": true,
-                                "maximum": "Infinity",
-                                "minimum": 0.001010167098195791,
-                                "columnName": "Universe_1_1"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "af8f0a7d-e519-407a-a525-ff04b5f485d7"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "value"
-            },
-            "35:0:34": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Interactive Range Slider Filter Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/wNumb/wNumb.js",
-                    "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-                    "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-                    "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "knimeQuickformFilterSlider",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation",
-                    "label": null,
-                    "disabled": false,
-                    "tableId": "359ffa64-a233-4f2e-bf2a-c264a4048573",
-                    "columnName": "Universe_1_1",
-                    "filterId": "4c72ac00-08f9-4d57-acff-163d1b54a05f",
-                    "sliderSettings": {
-                        "@class": "org.knime.js.core.settings.slider.SliderSettings",
-                        "behaviour": "drag-tap",
-                        "fix": [
-                            false,
-                            true,
-                            false
-                        ],
-                        "range": {
-                            "min": [
-                                0.001010167098195791
-                            ],
-                            "max": [
-                                0.9997572421887096
-                            ]
-                        },
-                        "start": [
-                            0.001010167098195791,
-                            0.9997572421887096
-                        ],
-                        "pips": {
-                            "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
-                            "density": 3,
-                            "format": {
-                                "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
-                                "decimals": 2,
-                                "negative": "-",
-                                "mark": "."
-                            },
-                            "mode": "range"
-                        },
-                        "direction": "ltr",
-                        "orientation": "horizontal",
-                        "tooltips": [
-                            false,
-                            {
-                                "decimals": 2,
-                                "negative": "-",
-                                "mark": "."
-                            }
-                        ]
-                    }
-                },
-                "viewValue": {
-                    "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
-                    "filter": {
-                        "type": "range",
-                        "columns": [
-                            {
-                                "type": "numeric",
-                                "maximumInclusive": true,
-                                "minimumInclusive": true,
-                                "maximum": 0.9997572421887096,
-                                "minimum": 0.001010167098195791,
-                                "columnName": "Universe_1_1"
-                            }
-                        ],
-                        "rows": null,
-                        "id": "4c72ac00-08f9-4d57-acff-163d1b54a05f"
-                    }
-                },
-                "customCSS": "",
-                "getViewValueMethodName": "value"
-            },
-            "35:0:39": {
-                "@class": "org.knime.js.core.JSONWebNode",
-                "initMethodName": "init",
-                "validateMethodName": "validate",
-                "nodeInfo": {
-                    "@class": "org.knime.js.core.JSONWebNodeInfo",
-                    "nodeAnnotation": "",
-                    "nodeState": "executed",
-                    "displayPossible": true,
-                    "nodeErrorMessage": null,
-                    "nodeWarnMessage": null,
-                    "nodeName": "Slider Widget"
-                },
-                "javascriptLibraries": [
-                    "/js-lib/knime/service/knime_service_1_0_0.js",
-                    "/js-lib/jQuery/jquery-1.11.0.min.js",
-                    "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-                    "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-                    "/js-lib/wNumb/wNumb.js",
-                    "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-                    "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-                ],
-                "stylesheets": [
-                    "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-                    "/js-lib/knime/service/knime.css",
-                    "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-                    "/org/knime/js/base/util/quickform/quickformStyles.css",
-                    "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-                    "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-                ],
-                "setValidationErrorMethodName": "setValidationErrorMessage",
-                "namespace": "knimeSliderWidget",
-                "viewRepresentation": {
-                    "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
-                    "sliderSettings": {
-                        "@class": "org.knime.js.core.settings.slider.SliderSettings",
-                        "range": {
-                            "min": [
-                                0.0
-                            ],
-                            "max": [
-                                100.0
-                            ]
-                        },
-                        "start": [
-                            50.0
-                        ],
-                        "direction": "ltr",
-                        "orientation": "horizontal",
-                        "connect": [
-                            false,
-                            false
-                        ]
-                    },
-                    "useCustomMin": true,
-                    "useCustomMax": true,
-                    "customMin": 0.0,
-                    "customMax": 100.0,
-                    "label": "Label",
-                    "currentValue": {
-                        "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
-                        "double": 50.0
-                    },
-                    "required": true,
-                    "description": "Enter Description",
-                    "defaultValue": {
-                        "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
-                        "double": 50.0
-                    }
-                },
-                "viewValue": null,
-                "customCSS": "",
-                "getViewValueMethodName": "value"
-            }
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "numeric",
+                "maximumInclusive": true,
+                "minimumInclusive": true,
+                "maximum": 0.9997572421887096,
+                "minimum": "-Infinity",
+                "columnName": "Universe_1_1"
+              }
+            ],
+            "rows": null,
+            "id": "5052b399-1bf5-405a-8e7e-b2175a1382b6"
+          }
         },
-        "version": "4.1.0.v201912041250"
-    }
+        "customCSS": "",
+        "getViewValueMethodName": "value"
+      },
+      "35:0:38": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Range Slider Filter Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/wNumb/wNumb.js",
+          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+          "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+          "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "knimeQuickformFilterSlider",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation",
+          "label": "3rd",
+          "disabled": false,
+          "tableId": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "columnName": "Universe_1_1",
+          "filterId": "af8f0a7d-e519-407a-a525-ff04b5f485d7",
+          "sliderSettings": {
+            "@class": "org.knime.js.core.settings.slider.SliderSettings",
+            "behaviour": "drag-tap",
+            "fix": [
+              false,
+              false,
+              true
+            ],
+            "range": {
+              "min": [
+                0.001010167098195791
+              ],
+              "max": [
+                0.9997572421887096
+              ]
+            },
+            "start": [
+              0.001010167098195791,
+              0.9997572421887096
+            ],
+            "pips": {
+              "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+              "density": 3,
+              "format": {
+                "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                "decimals": 2,
+                "negative": "-",
+                "mark": "."
+              },
+              "mode": "range"
+            },
+            "direction": "ltr",
+            "orientation": "vertical",
+            "tooltips": [
+              {
+                "decimals": 2,
+                "negative": "-",
+                "mark": "."
+              },
+              {
+                "decimals": 2,
+                "negative": "-",
+                "mark": "."
+              }
+            ]
+          }
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "numeric",
+                "maximumInclusive": true,
+                "minimumInclusive": true,
+                "maximum": "Infinity",
+                "minimum": 0.001010167098195791,
+                "columnName": "Universe_1_1"
+              }
+            ],
+            "rows": null,
+            "id": "af8f0a7d-e519-407a-a525-ff04b5f485d7"
+          }
+        },
+        "customCSS": "",
+        "getViewValueMethodName": "value"
+      },
+      "35:0:34": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Interactive Range Slider Filter Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/wNumb/wNumb.js",
+          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+          "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+          "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "knimeQuickformFilterSlider",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation",
+          "label": null,
+          "disabled": false,
+          "tableId": "359ffa64-a233-4f2e-bf2a-c264a4048573",
+          "columnName": "Universe_1_1",
+          "filterId": "4c72ac00-08f9-4d57-acff-163d1b54a05f",
+          "sliderSettings": {
+            "@class": "org.knime.js.core.settings.slider.SliderSettings",
+            "behaviour": "drag-tap",
+            "fix": [
+              false,
+              true,
+              false
+            ],
+            "range": {
+              "min": [
+                0.001010167098195791
+              ],
+              "max": [
+                0.9997572421887096
+              ]
+            },
+            "start": [
+              0.001010167098195791,
+              0.9997572421887096
+            ],
+            "pips": {
+              "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
+              "density": 3,
+              "format": {
+                "@class": "org.knime.js.core.settings.numberFormat.NumberFormatSettings",
+                "decimals": 2,
+                "negative": "-",
+                "mark": "."
+              },
+              "mode": "range"
+            },
+            "direction": "ltr",
+            "orientation": "horizontal",
+            "tooltips": [
+              false,
+              {
+                "decimals": 2,
+                "negative": "-",
+                "mark": "."
+              }
+            ]
+          }
+        },
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.filter.definition.RangeFilterValue",
+          "filter": {
+            "type": "range",
+            "columns": [
+              {
+                "type": "numeric",
+                "maximumInclusive": true,
+                "minimumInclusive": true,
+                "maximum": 0.9997572421887096,
+                "minimum": 0.001010167098195791,
+                "columnName": "Universe_1_1"
+              }
+            ],
+            "rows": null,
+            "id": "4c72ac00-08f9-4d57-acff-163d1b54a05f"
+          }
+        },
+        "customCSS": "",
+        "getViewValueMethodName": "value"
+      },
+      "35:0:39": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "nodeName": "Slider Widget"
+        },
+        "javascriptLibraries": [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/js-lib/wNumb/wNumb.js",
+          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
+          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
+        ],
+        "stylesheets": [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css",
+          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
+          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
+        ],
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "namespace": "knimeSliderWidget",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
+          "sliderSettings": {
+            "@class": "org.knime.js.core.settings.slider.SliderSettings",
+            "range": {
+              "min": [
+                0
+              ],
+              "max": [
+                100
+              ]
+            },
+            "start": [
+              50
+            ],
+            "direction": "ltr",
+            "orientation": "horizontal",
+            "connect": [
+              false,
+              false
+            ]
+          },
+          "useCustomMin": true,
+          "useCustomMax": true,
+          "customMin": 0,
+          "customMax": 100,
+          "label": "Label",
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+            "double": 50
+          },
+          "required": true,
+          "description": "Enter Description",
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.slider.SliderNodeValue",
+            "double": 50
+          }
+        },
+        "viewValue": null,
+        "customCSS": "",
+        "getViewValueMethodName": "value"
+      }
+    },
+    "version": "4.1.0.v201912041250"
+  }
 }
