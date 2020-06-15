@@ -29,7 +29,7 @@
  *          num = -1; => '⁒1'
  * @returns {String} label - string representation of input number
  */
-export const format = (num, obj) => {
+export default (num, obj) => {
     // Significant digit rounding and string conversion
     let label = obj.decimals
         ? num.toFixed(obj.decimals)

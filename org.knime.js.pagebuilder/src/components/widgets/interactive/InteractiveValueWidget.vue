@@ -5,7 +5,7 @@ import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
 import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
 
-const DATA_TYPE = 'value';
+const UPDATE_KEY = 'viewValue.filter.columns.0.values';
 
 /**
  * Interactive Value Filter Widget.
@@ -89,17 +89,16 @@ export default {
     },
     methods: {
         getValue() {
-            return this.nodeConfig.viewValue;
+            return this.viewValue;
         },
         onChange(value) {
-            const changeEventObj = {
+            this.$emit('updateWidget', {
                 nodeId: this.nodeId,
-                type: DATA_TYPE,
-                key: 'viewValue.filter.columns.0.values',
-                value: Array.isArray(value) ? value : [value],
+                update: {
+                    [UPDATE_KEY]: Array.isArray(value) ? value : [value]
+                },
                 callback: this.updateCallback
-            };
-            this.$emit('updateWidget', changeEventObj);
+            });
         },
         /**
          * Do not call directly except in mounted. Must be called after the asynchronous data
