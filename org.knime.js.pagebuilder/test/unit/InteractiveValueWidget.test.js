@@ -110,7 +110,6 @@ describe('InteractiveValueWidget.vue', () => {
                 ...context,
                 propsData
             });
-            expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.find(Multiselect)).toBeTruthy();
         });
@@ -160,10 +159,10 @@ describe('InteractiveValueWidget.vue', () => {
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
             callback: expect.anything(),
-            key: 'viewValue.filter.columns.0.values',
             nodeId: propsData.nodeId,
-            type: 'value',
-            value: testValue
+            update: {
+                'viewValue.filter.columns.0.values': testValue
+            }
         });
     });
 
