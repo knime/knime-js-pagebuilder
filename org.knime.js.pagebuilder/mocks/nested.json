@@ -22,6 +22,7 @@
                 "content": [
                   {
                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                     "scrolling": false,
                     "maxHeight": null,
                     "maxWidth": null,
@@ -67,6 +68,7 @@
                               "content": [
                                 {
                                   "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                   "scrolling": false,
                                   "maxHeight": null,
                                   "maxWidth": null,
@@ -113,6 +115,7 @@
                 "content": [
                   {
                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                     "scrolling": false,
                     "maxHeight": null,
                     "maxWidth": null,
@@ -182,6 +185,7 @@
                                             "content": [
                                               {
                                                 "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                                 "scrolling": false,
                                                 "maxHeight": null,
                                                 "maxWidth": null,

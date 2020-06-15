@@ -34,6 +34,7 @@
                                                 "content": [
                                                     {
                                                         "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                                         "resizeMethod": "viewLowestElement",
                                                         "resizeInterval": null,
                                                         "resizeTolerance": 5,
@@ -62,6 +63,7 @@
                                                 "content": [
                                                     {
                                                         "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                                         "resizeMethod": "viewLowestElement",
                                                         "resizeInterval": null,
                                                         "resizeTolerance": 5,
@@ -79,6 +81,7 @@
                                                     },
                                                     {
                                                         "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                                         "resizeMethod": "viewLowestElement",
                                                         "resizeInterval": null,
                                                         "resizeTolerance": 5,
@@ -96,6 +99,7 @@
                                                     },
                                                     {
                                                         "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                                         "resizeMethod": "viewLowestElement",
                                                         "resizeInterval": null,
                                                         "resizeTolerance": 5,

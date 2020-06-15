@@ -24,6 +24,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                             "sizeHeight": true,
                             "sizeWidth": false,
                             "autoResize": true,
@@ -52,6 +53,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                             "sizeHeight": true,
                             "sizeWidth": false,
                             "autoResize": true,
@@ -80,6 +82,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                             "sizeHeight": true,
                             "sizeWidth": false,
                             "autoResize": true,
@@ -115,6 +118,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                             "sizeHeight": true,
                             "sizeWidth": false,
                             "autoResize": true,
@@ -143,6 +147,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                             "sizeHeight": true,
                             "sizeWidth": false,
                             "autoResize": true,
@@ -178,6 +183,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                             "sizeHeight": true,
                             "sizeWidth": false,
                             "autoResize": true,
@@ -206,6 +212,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                             "sizeHeight": true,
                             "sizeWidth": false,
                             "autoResize": true,

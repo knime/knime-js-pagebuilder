@@ -22,6 +22,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:1",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -50,6 +51,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:4",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -85,6 +87,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:5",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -113,6 +116,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:6",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -148,6 +152,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:7",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -176,6 +181,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:8",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -211,6 +217,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:9",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -239,6 +246,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:10",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -274,6 +282,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:11",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -302,6 +311,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:12",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -337,6 +347,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:13",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -365,6 +376,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:14",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -400,6 +412,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:15",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -428,6 +441,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:16",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -463,6 +477,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:17",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -491,6 +506,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:18",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -526,6 +542,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:19",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -554,6 +571,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:20",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -589,6 +607,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:21",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -617,6 +636,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:22",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -652,6 +672,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:23",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -680,6 +701,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:24",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -715,6 +737,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:25",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -743,6 +766,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:26",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -778,6 +802,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:29",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -806,6 +831,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:35",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -841,6 +867,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:36",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -869,6 +896,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:38",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -904,6 +932,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:41",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
@@ -932,6 +961,7 @@
                             "content": [
                                 {
                                     "type": "JSONLayoutViewContent",
+                    "useLegacyMode": false,
                                     "nodeID": "2:0:44",
                                     "resizeMethod": "viewLowestElement",
                                     "resizeInterval": null,
