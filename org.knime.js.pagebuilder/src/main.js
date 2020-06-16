@@ -22,6 +22,7 @@ if (typeof KnimePageLoader === 'undefined') {
      *
      */
     window.KnimePageLoader = (function () {
+
         // PageBuilder Library loading
         let loadPageBuilderLibrary = async () => {
             // initialize VueX
@@ -63,7 +64,7 @@ if (typeof KnimePageLoader === 'undefined') {
         pageBuilder.init = async (arg1, arg2, arg3, debug) => {
             // set log levels
             window.consola = consola.create({
-                level: debug ? CONST_DEBUG_LOG_LEVEL : -1
+                level: debug && !window.headless ? CONST_DEBUG_LOG_LEVEL : -1
             });
             // parse page
             let page = {
@@ -114,7 +115,7 @@ if (typeof KnimePageLoader === 'undefined') {
                     return {};
                 });
         };
-        
+
         pageBuilder.validate = () => {
             return pageBuilder.app.$store.dispatch('pagebuilder/getValidity', null)
                 .then(res => {
@@ -131,7 +132,7 @@ if (typeof KnimePageLoader === 'undefined') {
                     return false;
                 });
         };
-        
+
         pageBuilder.setValidationError = (errorResponse) => {
             pageBuilder.app.$store.dispatch('pagebuilder/setValidationErrors', { page: errorResponse.data });
         };
@@ -140,7 +141,7 @@ if (typeof KnimePageLoader === 'undefined') {
         pageBuilder.isPushSupported = () => !pageBuilder.isDebugHTML; // window.isDebugHTML set in debug HTML creation only
 
         pageBuilder.isRunningInWebportal = () => false; // wrapper is only in AP
-        
+
         pageBuilder.isRunningInSeleniumBrowser = () => typeof parent.seleniumKnimeBridge !== 'undefined';
 
         pageBuilder.autoResize = () => {
