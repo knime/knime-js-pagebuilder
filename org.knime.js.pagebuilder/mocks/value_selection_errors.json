@@ -804,6 +804,7 @@
     "webNodes": {
       "3:0:9": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -875,6 +876,7 @@
       },
       "3:0:2": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -916,7 +918,7 @@
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
-            "column": "Cluster Membership",
+            "column": "Cluster MemberFAIL",
             "value": "Cluster_0"
           },
           "columnType": "All",
@@ -938,7 +940,7 @@
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
-          "column": "Cluster Membership",
+          "column": "Cluster MemberFAIL",
           "value": "Cluster_0"
         },
         "customCSS": "",
@@ -946,6 +948,7 @@
       },
       "3:0:6": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -987,7 +990,7 @@
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
-            "column": "Cluster Membership",
+            "column": "Cluster MembershipFAIL",
             "value": "Cluster_0"
           },
           "columnType": "All",
@@ -1017,6 +1020,7 @@
       },
       "3:0:5": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1058,8 +1062,8 @@
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
-            "column": "Cluster Membership",
-            "value": "Cluster_0"
+            "column": "Cluster Membership FAIL",
+            "value": "Cluster_FAIL"
           },
           "columnType": "All",
           "lockColumn": false,
@@ -1088,6 +1092,7 @@
       },
       "3:0:8": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1130,7 +1135,7 @@
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
             "column": "Cluster Membership",
-            "value": "Cluster_0"
+            "value": "Cluster_0FAIL"
           },
           "columnType": "All",
           "lockColumn": true,
@@ -1159,6 +1164,7 @@
       },
       "3:0:7": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1230,6 +1236,7 @@
       },
       "3:0:19": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -1707,6 +1714,7 @@
       },
       "3:0:18": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -2184,6 +2192,7 @@
       },
       "3:0:17": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -2661,6 +2670,7 @@
       },
       "3:0:28": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -2732,6 +2742,7 @@
       },
       "3:0:16": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -3209,6 +3220,7 @@
       },
       "3:0:27": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -3280,6 +3292,7 @@
       },
       "3:0:15": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -3757,6 +3770,7 @@
       },
       "3:0:26": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -3828,6 +3842,7 @@
       },
       "3:0:14": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -4305,6 +4320,7 @@
       },
       "3:0:25": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -4376,6 +4392,7 @@
       },
       "3:0:13": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -4853,6 +4870,7 @@
       },
       "3:0:24": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -5330,6 +5348,7 @@
       },
       "3:0:12": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -5807,6 +5826,7 @@
       },
       "3:0:23": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -6284,6 +6304,7 @@
       },
       "3:0:11": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -6355,6 +6376,7 @@
       },
       "3:0:22": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -6832,6 +6854,7 @@
       },
       "3:0:10": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -6903,6 +6926,7 @@
       },
       "3:0:21": {
         "@class": "org.knime.js.core.JSONWebNode",
+        "useLegacyMode": false,
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
