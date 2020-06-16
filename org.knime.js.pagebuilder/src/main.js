@@ -120,13 +120,13 @@ if (typeof KnimePageLoader === 'undefined') {
                 .then(res => {
                     let isValid = !Object.values(res).some(isValid => isValid === false);
                     if (typeof validateCurrentValueInView === 'function') {
-                        validateCurrentValueInView(JSON.stringify(isValid));
+                        validateCurrentValueInView(Boolean(isValid));
                     }
                     return isValid;
                 })
                 .catch(e => {
                     if (typeof validateCurrentValueInView === 'function') {
-                        validateCurrentValueInView(JSON.stringify(false));
+                        validateCurrentValueInView(Boolean(false));
                     }
                     return false;
                 });
