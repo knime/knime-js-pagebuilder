@@ -3,8 +3,8 @@
   "nodeMessages": {},
   "wizardExecutionState": "INTERACTION_REQUIRED",
   "wizardPageContent": {
-  "@class": "org.knime.js.core.JSONWebNodePage",
-  "webNodePageConfiguration": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
       "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
       "layout": {
         "rows": [
@@ -24,6 +24,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:14",
                             "resizeInterval": null,
@@ -52,6 +53,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:17",
                             "resizeInterval": null,
@@ -87,6 +89,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:18",
                             "resizeInterval": null,
@@ -115,6 +118,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:19",
                             "resizeInterval": null,
@@ -143,6 +147,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:20",
                             "resizeInterval": null,
@@ -171,6 +176,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:21",
                             "resizeInterval": null,
@@ -206,6 +212,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:22",
                             "resizeInterval": null,
@@ -234,6 +241,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:23",
                             "resizeInterval": null,
@@ -262,6 +270,7 @@
                         "content": [
                           {
                             "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
                             "resizeMethod": "viewLowestElement",
                             "nodeID": "15:0:24",
                             "resizeInterval": null,
