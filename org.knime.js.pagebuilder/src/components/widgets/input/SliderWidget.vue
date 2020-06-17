@@ -287,13 +287,13 @@ export default {
         :marks="marks"
         :connect="connect"
         :class="[`slider-${sliderSettings.orientation}`,
-                   {'tooltip-slider': tooltips }]"
+                 {'tooltip-slider': tooltips }]"
         @input="onChange"
       />
       <ErrorMessage
         :error="errorMessage"
         :class="[`slider-${sliderSettings.orientation}-error`,
-                   {'tooltip-error': tooltips}]"
+                 {'tooltip-error': tooltips}]"
       />
     </Label>
   </div>
