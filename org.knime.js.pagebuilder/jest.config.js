@@ -35,7 +35,8 @@ module.exports = {
         '!.stylelintrc.js'
     ],
     coveragePathIgnorePatterns: [
-        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|src/dev)/'
+        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|src/dev)/',
+        '^<rootDir>/src/(main.js|dev.js)'
     ],
     watchPathIgnorePatterns: [
         '^<rootDir>/(coverage|dist|target|node_modules|bin|webapps-common)/'

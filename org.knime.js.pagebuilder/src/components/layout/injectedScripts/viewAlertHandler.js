@@ -9,7 +9,13 @@ window.alert = (function () {
                 message: message,
                 level: level
             };
-            parent.postMessage(resp, window.origin);
+            var messageTarget = window.origin;
+            if (typeof messageTarget === 'undefined') {
+                messageTarget = window.location.origin;
+            } else if (messageTarget === 'null') {
+                messageTarget = window;
+            }
+            parent.postMessage(resp, messageTarget);
         };
 
         if (loadingErrRegExp.test(msg)) {

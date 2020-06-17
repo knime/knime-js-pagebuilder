@@ -1,14 +1,19 @@
+/* eslint-disable complexity */
 (function () {
     var messageFromParent = function (event) {
         var data = event.data;
-        if (event.origin !== window.origin || !data) {
+        var postOrigin = window.origin || window.location.origin;
+        if (event.origin !== postOrigin || !data) {
             return;
+        }
+        if (postOrigin === 'null') {
+            postOrigin = window;
         }
         var namespace = data.namespace;
         var nodeId = data.nodeId;
         var postMessageResponse = function (resp) {
             resp.nodeId = nodeId;
-            parent.postMessage(resp, window.origin);
+            parent.postMessage(resp, postOrigin);
         };
         var postErrorResponse = function (type, errMsg) {
             var resp = {
@@ -17,7 +22,7 @@
                 type: type,
                 error: errMsg
             };
-            parent.postMessage(resp, window.origin);
+            parent.postMessage(resp, postOrigin);
         };
         if (data.type === 'init') {
             if (window[namespace] && typeof window[namespace][data.initMethodName] === 'function') {
@@ -48,12 +53,10 @@
         } else if (data.type === 'getValue') {
             if (window[namespace] && typeof window[namespace][data.getViewValueMethodName] === 'function') {
                 try {
-                    var value = window[namespace][data.getViewValueMethodName]();
-                    parent.postMessage({
-                        value: value,
-                        nodeId: nodeId,
+                    postMessageResponse({
+                        value: window[namespace][data.getViewValueMethodName](),
                         type: 'getValue'
-                    }, window.origin);
+                    });
                 } catch (err) {
                     postErrorResponse(data.type, 'Value could not be retrieved from view: ' + err);
                 }
