@@ -15,7 +15,7 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-    let interactivityConfig, wizardExecutionConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink;
+    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -37,7 +37,7 @@ describe('NodeViewIframe.vue', () => {
             }
         };
         mockGetDownloadLink = jest.fn();
-        wizardExecutionConfig = {
+        apiConfig = {
             namespaced: true,
             getters: {
                 downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink)
@@ -46,7 +46,7 @@ describe('NodeViewIframe.vue', () => {
         store = new Vuex.Store({ modules: {
             pagebuilder: storeConfig,
             'pagebuilder/interactivity': interactivityConfig,
-            wizardExecution: wizardExecutionConfig
+            api: apiConfig
         } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
@@ -710,7 +710,7 @@ describe('NodeViewIframe.vue', () => {
         it('getDownloadLink calls wizardExecution store', () => {
             let resourceId = 'file-donwload';
             window.KnimePageBuilderAPI.getDownloadLink(resourceId);
-            expect(wizardExecutionConfig.getters.downloadResourceLink).toHaveBeenCalled();
+            expect(apiConfig.getters.downloadResourceLink).toHaveBeenCalled();
             expect(mockGetDownloadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
         });
 
