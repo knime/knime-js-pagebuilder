@@ -137,52 +137,46 @@ export default {
 </script>
 
 <template>
-  <div>
-    <Component
-      :is="isColumnLocked && !isRadioButtons ? 'Label' : 'Fieldset'"
-      :text="label"
-      class="fieldset"
-    >
-      <template #default="{ labelForId }">
-        <Label
-          v-if="!isColumnLocked"
-          text="Column"
-        >
-          <template #default="{ labelForId }">
-            <Dropdown
-              v-if="!isColumnLocked"
-              :id="labelForId"
-              ref="column"
-              :value="column"
-              :is-valid="isColumnValid"
-              aria-label="Column"
-              :possible-values="possibleColumns"
-              @input="onColumnChange"
-            />
-          </template>
-        </Label>
-        <Label
-          v-if="!isColumnLocked"
-          text="Value"
-        >
-          <template #default="{ labelForId }">
-            <SingleSelect
-              :id="labelForId"
-              ref="form"
-              :value="value"
-              :type="viewRep.type"
-              :number-vis-options="viewRep.numberVisOptions"
-              :limit-number-vis-options="viewRep.limitNumberVisOptions"
-              :is-valid="isValid"
-              :title="description"
-              :possible-value-list="possibleValueList"
-              :label="label"
-              @input="onChange"
-            />
-          </template>
-        </Label>
-        <ErrorMessage :error="errorMessage" />
-      </template>
-    </Component>
-  </div>
+  <Component
+    :is="isColumnLocked && !isRadioButtons ? 'Label' : 'Fieldset'"
+    :text="label"
+    class="fieldset"
+  >
+    <template #default="mainLabel">
+      <Label
+        v-if="!isColumnLocked"
+        v-slot="columnLabel"
+        text="Column"
+      >
+        <Dropdown
+          :id="columnLabel.labelForId"
+          ref="column"
+          :value="column"
+          :is-valid="isColumnValid"
+          aria-label="Column"
+          :possible-values="possibleColumns"
+          @input="onColumnChange"
+        />
+      </Label>
+      <Label
+        v-if="!isColumnLocked"
+        :generate-id="false"
+        text="Value"
+      />
+      <SingleSelect
+        :id="mainLabel.labelForId"
+        ref="form"
+        :value="value"
+        :type="viewRep.type"
+        :number-vis-options="viewRep.numberVisOptions"
+        :limit-number-vis-options="viewRep.limitNumberVisOptions"
+        :is-valid="isValid"
+        :title="description"
+        :possible-value-list="possibleValueList"
+        :label="label"
+        @input="onChange"
+      />
+      <ErrorMessage :error="errorMessage" />
+    </template>
+  </Component>
 </template>
