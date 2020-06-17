@@ -121,16 +121,19 @@ export default {
 <template>
   <div>
     <Label :text="label">
-      <NumberInput
-        ref="form"
-        :type="type"
-        :value="value"
-        :min="min"
-        :max="max"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
+      <template #default="{ labelForId }">
+        <NumberInput
+          :id="labelForId"
+          ref="form"
+          :type="type"
+          :value="value"
+          :min="min"
+          :max="max"
+          :is-valid="isValid"
+          :title="description"
+          @input="onChange"
+        />
+      </template>
     </Label>
     <ErrorMessage :error="errorMessage" />
   </div>

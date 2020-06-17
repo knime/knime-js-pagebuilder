@@ -23,6 +23,10 @@ export default {
             default: true,
             type: Boolean
         },
+        id: {
+            type: String,
+            default: null
+        },
         /**
          * @values List, Dropdown, Radio buttons (horizontal), Radio buttons (vertical)
          */
@@ -126,6 +130,7 @@ export default {
   <div>
     <RadioButtons
       v-if="isRadioButtons"
+      :id="id"
       ref="form"
       :alignment="radioButtonsAlignment"
       :value="value"
@@ -136,6 +141,7 @@ export default {
     />
     <ListBox
       v-if="isList"
+      :id="id"
       ref="form"
       :value="value"
       :size="maxVisibleListEntries"
@@ -147,6 +153,7 @@ export default {
     />
     <Dropdown
       v-if="isDropdown"
+      :id="id"
       ref="form"
       :value="value"
       :aria-label="label"

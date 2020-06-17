@@ -270,29 +270,33 @@ export default {
       :text="label"
       :class="[`slider-${sliderSettings.orientation}-label`,
                { 'tooltip-label': tooltips }]"
-    />
-    <Slider
-      ref="form"
-      :minimum="min"
-      :maximum="max"
-      :value="value"
-      :is-valid="isValid"
-      :direction="direction"
-      :step-size="stepSize"
-      :height="height"
-      :tooltips="tooltips"
-      :tooltip-format="tooltipFormat"
-      :marks="marks"
-      :connect="connect"
-      :class="[`slider-${sliderSettings.orientation}`,
-               {'tooltip-slider': tooltips }]"
-      @input="onChange"
-    />
-    <ErrorMessage
-      :error="errorMessage"
-      :class="[`slider-${sliderSettings.orientation}-error`,
-               {'tooltip-error': tooltips}]"
-    />
+    >
+      <template #default="{ labelForId }">
+        <Slider
+          :id="labelForId"
+          ref="form"
+          :minimum="min"
+          :maximum="max"
+          :value="value"
+          :is-valid="isValid"
+          :direction="direction"
+          :step-size="stepSize"
+          :height="height"
+          :tooltips="tooltips"
+          :tooltip-format="tooltipFormat"
+          :marks="marks"
+          :connect="connect"
+          :class="[`slider-${sliderSettings.orientation}`,
+                   {'tooltip-slider': tooltips }]"
+          @input="onChange"
+        />
+        <ErrorMessage
+          :error="errorMessage"
+          :class="[`slider-${sliderSettings.orientation}-error`,
+                   {'tooltip-error': tooltips}]"
+        />
+      </template>
+    </Label>
   </div>
 </template>
 

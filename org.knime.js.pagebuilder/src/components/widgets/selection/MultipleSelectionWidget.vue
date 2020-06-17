@@ -100,18 +100,21 @@ export default {
     :is="isList ? 'Label' : 'Fieldset'"
     :text="label"
   >
-    <Multiselect
-      ref="form"
-      :value="value"
-      :type="viewRep.type"
-      :number-vis-options="viewRep.numberVisOptions"
-      :limit-number-vis-options="viewRep.limitNumberVisOptions"
-      :possible-value-list="viewRep.possibleChoices"
-      :is-valid="isValid"
-      :description="description"
-      :label="label"
-      @input="onChange"
-    />
-    <ErrorMessage :error="errorMessage" />
+    <template #default="{ labelForId }">
+      <Multiselect
+        :id="labelForId"
+        ref="form"
+        :value="value"
+        :type="viewRep.type"
+        :number-vis-options="viewRep.numberVisOptions"
+        :limit-number-vis-options="viewRep.limitNumberVisOptions"
+        :possible-value-list="viewRep.possibleChoices"
+        :is-valid="isValid"
+        :description="description"
+        :label="label"
+        @input="onChange"
+      />
+      <ErrorMessage :error="errorMessage" />
+    </template>
   </Component>
 </template>

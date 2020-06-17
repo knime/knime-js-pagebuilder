@@ -91,7 +91,10 @@ export default {
             let isValid = true;
             let errorMessage;
             if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
+                return {
+                    isValid,
+                    errorMessage
+                };
             }
             if (!this.$refs.form.getValue()) {
                 isValid = false;
@@ -103,7 +106,10 @@ export default {
                 isValid = Boolean(validateEvent.isValid && isValid);
                 errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
             }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
+            return {
+                isValid,
+                errorMessage: isValid ? null : errorMessage
+            };
         }
     }
 };
@@ -114,25 +120,29 @@ export default {
     <Label
       :text="label"
     >
-      <TextArea
-        v-if="isMultiLine"
-        ref="form"
-        :value="value"
-        :cols="multiColumns"
-        :rows="multiRows"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <InputField
-        v-else
-        ref="form"
-        :value="value"
-        :is-valid="isValid"
-        :title="description"
-        :pattern="regex"
-        @input="onChange"
-      />
+      <template #default="{ labelForId }">
+        <TextArea
+          v-if="isMultiLine"
+          ref="form"
+          :value="value"
+          :cols="multiColumns"
+          :rows="multiRows"
+          :is-valid="isValid"
+          :title="description"
+          :id="labelForId"
+          @input="onChange"
+        />
+        <InputField
+          v-else
+          ref="form"
+          :value="value"
+          :is-valid="isValid"
+          :title="description"
+          :pattern="regex"
+          :id="labelForId"
+          @input="onChange"
+        />
+      </template>
       <ErrorMessage :error="errorMessage" />
     </Label>
   </div>

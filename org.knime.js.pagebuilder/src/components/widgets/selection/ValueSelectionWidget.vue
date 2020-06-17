@@ -113,7 +113,10 @@ export default {
             let isValid = true;
             let errorMessage;
             if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
+                return {
+                    isValid,
+                    errorMessage
+                };
             }
             isValid = this.hasSelection && this.isColumnValid;
             if (!isValid) {
@@ -124,7 +127,10 @@ export default {
                 isValid = Boolean(validateEvent.isValid && isValid);
                 errorMessage = validateEvent.errorMessage || errorMessage || 'Selection is invalid or missing.';
             }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
+            return {
+                isValid,
+                errorMessage: isValid ? null : errorMessage
+            };
         }
     }
 };
@@ -137,36 +143,46 @@ export default {
       :text="label"
       class="fieldset"
     >
-      <Label
-        v-if="!isColumnLocked"
-        text="Column"
-      />
-      <Dropdown
-        v-if="!isColumnLocked"
-        ref="column"
-        :value="column"
-        :is-valid="isColumnValid"
-        aria-label="Column"
-        :possible-values="possibleColumns"
-        @input="onColumnChange"
-      />
-      <Label
-        v-if="!isColumnLocked"
-        text="Value"
-      />
-      <SingleSelect
-        ref="form"
-        :value="value"
-        :type="viewRep.type"
-        :number-vis-options="viewRep.numberVisOptions"
-        :limit-number-vis-options="viewRep.limitNumberVisOptions"
-        :is-valid="isValid"
-        :title="description"
-        :possible-value-list="possibleValueList"
-        :label="label"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
+      <template #default="{ labelForId }">
+        <Label
+          v-if="!isColumnLocked"
+          text="Column"
+        >
+          <template #default="{ labelForId }">
+            <Dropdown
+              v-if="!isColumnLocked"
+              :id="labelForId"
+              ref="column"
+              :value="column"
+              :is-valid="isColumnValid"
+              aria-label="Column"
+              :possible-values="possibleColumns"
+              @input="onColumnChange"
+            />
+          </template>
+        </Label>
+        <Label
+          v-if="!isColumnLocked"
+          text="Value"
+        >
+          <template #default="{ labelForId }">
+            <SingleSelect
+              :id="labelForId"
+              ref="form"
+              :value="value"
+              :type="viewRep.type"
+              :number-vis-options="viewRep.numberVisOptions"
+              :limit-number-vis-options="viewRep.limitNumberVisOptions"
+              :is-valid="isValid"
+              :title="description"
+              :possible-value-list="possibleValueList"
+              :label="label"
+              @input="onChange"
+            />
+          </template>
+        </Label>
+        <ErrorMessage :error="errorMessage" />
+      </template>
     </Component>
   </div>
 </template>
