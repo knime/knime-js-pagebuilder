@@ -337,7 +337,7 @@ describe('SingleSelectionWidget.vue', () => {
 
     it('has size set', () => {
         propsDataList.isValid = true;
-        let wrapper = shallowMount(SingleSelectionWidget, {
+        let wrapper = mount(SingleSelectionWidget, {
             propsData: propsDataList
         });
         let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
@@ -346,7 +346,7 @@ describe('SingleSelectionWidget.vue', () => {
 
 
     it('passes isValid to component', () => {
-        let wrapper = shallowMount(SingleSelectionWidget, {
+        let wrapper = mount(SingleSelectionWidget, {
             propsData: {
                 ...propsDataDropdown,
                 isValid: false
@@ -356,7 +356,7 @@ describe('SingleSelectionWidget.vue', () => {
     });
 
     it('sends @updateWidget if SingleSelect emits @input', () => {
-        let wrapper = shallowMount(SingleSelectionWidget, {
+        let wrapper = mount(SingleSelectionWidget, {
             propsData: propsDataDropdown
         });
 
