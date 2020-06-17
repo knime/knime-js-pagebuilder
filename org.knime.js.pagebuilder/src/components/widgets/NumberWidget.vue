@@ -120,20 +120,21 @@ export default {
 
 <template>
   <div>
-    <Label :text="label">
-      <template #default="{ labelForId }">
-        <NumberInput
-          :id="labelForId"
-          ref="form"
-          :type="type"
-          :value="value"
-          :min="min"
-          :max="max"
-          :is-valid="isValid"
-          :title="description"
-          @input="onChange"
-        />
-      </template>
+    <Label
+      v-slot="{ labelForId }"
+      :text="label"
+    >
+      <NumberInput
+        :id="labelForId"
+        ref="form"
+        :type="type"
+        :value="value"
+        :min="min"
+        :max="max"
+        :is-valid="isValid"
+        :title="description"
+        @input="onChange"
+      />
     </Label>
     <ErrorMessage :error="errorMessage" />
   </div>

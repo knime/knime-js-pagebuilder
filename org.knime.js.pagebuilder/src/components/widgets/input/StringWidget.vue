@@ -118,31 +118,30 @@ export default {
 <template>
   <div>
     <Label
+      v-slot="{ labelForId }"
       :text="label"
     >
-      <template #default="{ labelForId }">
-        <TextArea
-          v-if="isMultiLine"
-          ref="form"
-          :value="value"
-          :cols="multiColumns"
-          :rows="multiRows"
-          :is-valid="isValid"
-          :title="description"
-          :id="labelForId"
-          @input="onChange"
-        />
-        <InputField
-          v-else
-          ref="form"
-          :value="value"
-          :is-valid="isValid"
-          :title="description"
-          :pattern="regex"
-          :id="labelForId"
-          @input="onChange"
-        />
-      </template>
+      <TextArea
+        v-if="isMultiLine"
+        :id="labelForId"
+        ref="form"
+        :value="value"
+        :cols="multiColumns"
+        :rows="multiRows"
+        :is-valid="isValid"
+        :title="description"
+        @input="onChange"
+      />
+      <InputField
+        v-else
+        :id="labelForId"
+        ref="form"
+        :value="value"
+        :is-valid="isValid"
+        :title="description"
+        :pattern="regex"
+        @input="onChange"
+      />
       <ErrorMessage :error="errorMessage" />
     </Label>
   </div>
