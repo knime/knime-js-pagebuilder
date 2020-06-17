@@ -13,7 +13,6 @@
     <artifactId>org.knime.js.pagebuilder</artifactId>
     <name>KNIME JS PageBuilder</name>
     <description>KNIME PageBuilder based on Vue.js</description>
-    <version>4.2.0-SNAPSHOT</version>
     <packaging>eclipse-plugin</packaging>
 
     <properties>

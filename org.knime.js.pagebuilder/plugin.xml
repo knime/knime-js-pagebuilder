@@ -6,7 +6,7 @@
       <webResourceBundle
             debug="false"
             exports="KnimePageLoader"
-            name="KNIME Page Builder"
+            name="KNIME Page Builder WebPortal Resources"
             usesDefine="false"
             version="2.0.0"
             webResourceBundleID="knimePageBuilder_2.0.0">
@@ -17,6 +17,38 @@
          <webResource
                relativePathSource="dist/knime-pagebuilder-credits.umd.min.js"
                relativePathTarget="org/knime/core/knime-pagebuilder2-credits.js">
+         </webResource>
+      </webResourceBundle>
+      <webResourceBundle
+            debug="false"
+            exports="KnimePageLoader"
+            name="KNIME Page Builder WebPortal AP Wrapper"
+            usesDefine="false"
+            version="2.0.0"
+            webResourceBundleID="knimePageBuilder_2.0.0_AP">
+         <webResource	
+               relativePathSource="dist/knime-pagebuilder2-ap.js"
+               relativePathTarget="org/knime/core/knime-pagebuilder2-ap.js">
+         </webResource>
+         <webResource	
+               relativePathSource="dist/fonts/"
+               relativePathTarget="fonts/">
+         </webResource>
+      </webResourceBundle>
+      <webResourceBundle
+            debug="true"
+            exports="KnimePageLoader"
+            name="KNIME Page Builder AP Wrapper Debug"
+            usesDefine="false"
+            version="2.0.0"
+            webResourceBundleID="knimePageBuilder_2.0.0_AP_DEBUG">
+         <webResource
+               relativePathSource="dist/knime-pagebuilder.umd.min.js.map"
+               relativePathTarget="org/knime/core/knime-pagebuilder.umd.min.js.map">
+         </webResource>
+         <webResource
+               relativePathSource="dist/knime-pagebuilder2-ap.js.map"
+               relativePathTarget="org/knime/core/knime-pagebuilder2-ap.js.map">
          </webResource>
       </webResourceBundle>
    </extension>

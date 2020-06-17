@@ -17,8 +17,12 @@ export const classToComponentMap = {
 
     // output widgets
     'org.knime.js.base.node.output.text.TextOutputRepresentation': 'TextWidget',
+    'org.knime.js.base.node.output.image.ImageOutputRepresentation': 'ImageWidget',
 
     // interactive widgets
     'org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation':
-        'InteractiveValueWidget'
+        'InteractiveValueWidget',
+    'org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation':
+        'InteractiveRangeWidget'
+    
 };

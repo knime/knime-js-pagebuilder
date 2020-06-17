@@ -67,8 +67,12 @@ export default {
             }
             return style.join(';').replace(/;;/g, ';');
         },
+        legacyModeDisabled() {
+            // only return true if legacy flag *explicitly* set to false; default workflows with unset legacy flag to use legacy mode
+            return this.viewConfig.useLegacyMode === false;
+        },
         isWidget() {
-            return this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
+            return this.legacyModeDisabled && this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
                 classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
         }
     }

@@ -127,7 +127,7 @@ describe('PageBuilder store', () => {
             });
 
             let viewValues = await store.dispatch('getViewValues');
-            expect(viewValues).toEqual({ [nodeId]: JSON.stringify(sampleVal) });
+            expect(viewValues).toEqual({ [nodeId]: sampleVal });
         });
 
         it('throws error when getting view values failed', async () => {
