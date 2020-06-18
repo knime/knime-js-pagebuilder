@@ -15,7 +15,7 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink;
+    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -37,8 +37,12 @@ describe('NodeViewIframe.vue', () => {
             }
         };
         mockGetDownloadLink = jest.fn();
+        mockUpload = jest.fn();
         apiConfig = {
             namespaced: true,
+            actions: {
+                uploadResource: mockUpload
+            },
             getters: {
                 downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink)
             }
@@ -653,6 +657,26 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.isValid).toBe(true);
             expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
+        });
+
+        it('handles file upload events', () => {
+            let messageEvent = {
+                origin: window.location.origin,
+                data: {
+                    nodeId,
+                    type: 'uploadResource',
+                    resourceName: 'file.txt',
+                    data: 'blob'
+                }
+            };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).not.toHaveBeenCalled();
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(mockUpload).toHaveBeenCalledWith(expect.anything(), {
+                resourceId: 'file.txt', data: 'blob'
+            }, undefined); // eslint-disable-line no-undefined
         });
 
         describe('using alerts via message', () => {

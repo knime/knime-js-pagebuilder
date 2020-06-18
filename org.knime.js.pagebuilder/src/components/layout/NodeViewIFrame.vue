@@ -320,6 +320,12 @@ export default {
                 this.getValueCallback(data);
             } else if (data.type === 'setValidationError') {
                 this.setValidationErrorCallback(data);
+            } else if (data.type === 'uploadResource') {
+                if (this.$store._actions['api/uploadResource']) {
+                    this.$store.dispatch('api/uploadResource', { resourceId: data.resourceName, data: data.data });
+                } else {
+                    // TODO display error?
+                }
             } else if (data.type === 'alert') {
                 this.alert = {
                     ...data,
