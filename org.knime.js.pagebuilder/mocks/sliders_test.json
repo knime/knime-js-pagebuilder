@@ -24,6 +24,7 @@
                         "content": [
                           {
                             "type": "view",
+                            "useLegacyMode": false,
                             "nodeID": "5:0:21",
                             "resizeMethod": "viewLowestElement",
                             "autoResize": true,
@@ -52,6 +53,7 @@
                         "content": [
                           {
                             "type": "view",
+                            "useLegacyMode": false,
                             "nodeID": "5:0:15",
                             "resizeMethod": "viewLowestElement",
                             "autoResize": true,
@@ -80,6 +82,7 @@
                         "content": [
                           {
                             "type": "view",
+                            "useLegacyMode": false,
                             "nodeID": "5:0:22",
                             "resizeMethod": "viewLowestElement",
                             "autoResize": true,
@@ -108,6 +111,7 @@
                         "content": [
                           {
                             "type": "view",
+                            "useLegacyMode": false,
                             "nodeID": "5:0:14",
                             "resizeMethod": "viewLowestElement",
                             "autoResize": true,
@@ -136,6 +140,7 @@
                         "content": [
                           {
                             "type": "view",
+                            "useLegacyMode": false,
                             "nodeID": "5:0:11",
                             "resizeMethod": "viewLowestElement",
                             "autoResize": true,
@@ -164,6 +169,7 @@
                         "content": [
                           {
                             "type": "view",
+                            "useLegacyMode": false,
                             "nodeID": "5:0:23",
                             "resizeMethod": "viewLowestElement",
                             "autoResize": true,
@@ -210,6 +216,7 @@
                 "content": [
                   {
                     "type": "view",
+                    "useLegacyMode": false,
                     "nodeID": "5:0:10",
                     "resizeMethod": "viewLowestElement",
                     "autoResize": true,
@@ -238,6 +245,7 @@
                 "content": [
                   {
                     "type": "view",
+                    "useLegacyMode": false,
                     "nodeID": "5:0:13",
                     "resizeMethod": "viewLowestElement",
                     "autoResize": true,
@@ -273,6 +281,7 @@
                 "content": [
                   {
                     "type": "view",
+                    "useLegacyMode": false,
                     "nodeID": "5:0:19",
                     "resizeMethod": "viewLowestElement",
                     "autoResize": true,
@@ -301,6 +310,7 @@
                 "content": [
                   {
                     "type": "view",
+                    "useLegacyMode": false,
                     "nodeID": "5:0:20",
                     "resizeMethod": "viewLowestElement",
                     "autoResize": true,
@@ -336,6 +346,7 @@
                 "content": [
                   {
                     "type": "view",
+                    "useLegacyMode": false,
                     "nodeID": "5:0:17",
                     "resizeMethod": "viewLowestElement",
                     "autoResize": true,
@@ -371,6 +382,7 @@
                 "content": [
                   {
                     "type": "view",
+                    "useLegacyMode": false,
                     "nodeID": "5:0:24",
                     "resizeMethod": "viewLowestElement",
                     "autoResize": true,
