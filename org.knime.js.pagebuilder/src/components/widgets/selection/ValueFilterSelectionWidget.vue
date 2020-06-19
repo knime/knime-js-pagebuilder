@@ -74,7 +74,7 @@ export default {
             return this.valuePair[COLUMN_KEY_NAME];
         },
         possibleColumns() {
-            return this.viewRep.possibleColumns.map((x) => ({
+            return [...new Set(this.viewRep.possibleColumns)].map((x) => ({
                 id: x,
                 text: x
             }));
