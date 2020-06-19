@@ -28,7 +28,7 @@ timeout(time: 15, unit: 'MINUTES') {
                         '''
                     }
 
-                    parallel 'npm Security Audit': {
+                    stage('Security Audit') {
                         env.lastStage = 'Security Audit'
 
                         catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
@@ -38,8 +38,9 @@ timeout(time: 15, unit: 'MINUTES') {
                                 '''
                             }
                         }
-                    },
-                    'Static Code Analysis': {
+                    }
+
+                    stage('Static Code Analysis') {
                         env.lastStage = 'Lint'
                         sh '''
                             npm run lint
