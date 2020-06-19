@@ -4,6 +4,7 @@ import Multiselect from '@/components/widgets/baseElements/selection/Multiselect
 import Checkboxes from '~/webapps-common/ui/components/forms/Checkboxes';
 import MultiselectListBox from '~/webapps-common/ui/components/forms/MultiselectListBox';
 import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
+import Checkbox from '~/webapps-common/ui/components/forms/Checkbox';
 
 
 describe('Multiselect.vue', () => {
@@ -11,7 +12,7 @@ describe('Multiselect.vue', () => {
 
     beforeEach(() => {
         propsDataTwinlist = {
-            possibleValues: [
+            possibleValueList: [
                 'TwinList 1',
                 'TwinList 2',
                 'TwinList 3',
@@ -35,7 +36,7 @@ describe('Multiselect.vue', () => {
                 'List 4',
                 'List 7'
             ],
-            possibleValues: [
+            possibleValueList: [
                 'List 1',
                 'List 2',
                 'List 3',
@@ -56,7 +57,7 @@ describe('Multiselect.vue', () => {
                 'CBV 4',
                 'CBV 6'
             ],
-            possibleValues: [
+            possibleValueList: [
                 'CBV 1',
                 'CBV 2',
                 'CBV 3',
@@ -74,7 +75,7 @@ describe('Multiselect.vue', () => {
                 'CBH 1',
                 'CBH 4'
             ],
-            possibleValues: [
+            possibleValueList: [
                 'CBH 1',
                 'CBH 2',
                 'CBH 3',
@@ -119,13 +120,15 @@ describe('Multiselect.vue', () => {
     describe('checkboxes', () => {
         it('render horizontal', () => {
             propsDataCheckboxHorizontal.isValid = true;
-            let wrapper = shallowMount(Multiselect, {
+            let wrapper = mount(Multiselect, {
                 propsData: propsDataCheckboxHorizontal
             });
 
             let checkboxes = wrapper.find(Checkboxes);
             expect(checkboxes.exists()).toBeTruthy();
             expect(checkboxes.props('alignment')).toBe('horizontal');
+            // eslint-disable-next-line no-magic-numbers
+            expect(wrapper.findAll(Checkbox).length).toBe(7);
         });
 
         it('render vertical', () => {
@@ -173,6 +176,16 @@ describe('Multiselect.vue', () => {
             });
 
             expect(wrapper.find(MultiselectListBox).exists()).toBeTruthy();
+        });
+
+        it('does not render duplicate entries', () => {
+            propsDataMultiselectListBox.possibleValueList = ['1', '2', '3', '3', '3', '4'];
+            let wrapper = mount(Multiselect, {
+                propsData: propsDataMultiselectListBox
+            });
+            // duplicate entry will not be shown twice
+            const choicesUnique = [...new Set(propsDataMultiselectListBox.possibleValueList)].length;
+            expect(wrapper.vm.possibleValues.length).toBe(choicesUnique);
         });
 
         it('emits @input', () => {
