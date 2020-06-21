@@ -166,3 +166,8 @@ export default {
     </Component>
   </Component>
 </template>
+<style lang="postcss" scoped>
+fieldset {
+  text-overflow: ellipsis;
+}
+</style>

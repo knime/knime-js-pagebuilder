@@ -139,7 +139,11 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-div {
-  overflow: hidden !important;
+div >>> label span + div {
+  max-width: 100%;
+
+  & textarea {
+    max-width: 100%;
+  }
 }
 </style>

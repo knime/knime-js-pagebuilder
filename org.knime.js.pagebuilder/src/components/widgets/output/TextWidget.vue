@@ -132,5 +132,6 @@ export default {
 .multiline {
   line-height: 18px;
   font-size: 13px;
+  text-overflow: ellipsis;
 }
 </style>
