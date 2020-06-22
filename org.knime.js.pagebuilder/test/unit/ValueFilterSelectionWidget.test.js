@@ -225,6 +225,16 @@ describe('ValueFilterSelectionWidget.vue', () => {
         });
     });
 
+    it('does not render duplicate entries', () => {
+        propsData.nodeConfig.viewRepresentation.possibleColumns = ['1', '2', '3', '3', '3', '4'];
+        let wrapper = mount(ValueFilterSelectionWidget, {
+            propsData
+        });
+        // duplicate column entry will not be shown twice
+        // eslint-disable-next-line no-magic-numbers
+        expect(wrapper.vm.possibleColumns.length).toBe(4);
+    });
+
     describe('validation', () => {
         it('is always valid if not required', () => {
             propsData.nodeConfig.viewRepresentation.required = false;
