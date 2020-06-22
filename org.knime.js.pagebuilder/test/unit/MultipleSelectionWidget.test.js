@@ -338,7 +338,7 @@ describe('MultipleSelectionWidget.vue', () => {
 
     it('sends @updateWidget if Multiselect emits @input', () => {
         let propsData = propsDataMultiselectListBox;
-        let wrapper = shallowMount(MultipleSelectionWidget, {
+        let wrapper = mount(MultipleSelectionWidget, {
             propsData
         });
 

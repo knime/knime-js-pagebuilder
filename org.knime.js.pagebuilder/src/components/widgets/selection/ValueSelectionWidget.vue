@@ -113,7 +113,10 @@ export default {
             let isValid = true;
             let errorMessage;
             if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
+                return {
+                    isValid,
+                    errorMessage
+                };
             }
             isValid = this.hasSelection && this.isColumnValid;
             if (!isValid) {
@@ -124,37 +127,44 @@ export default {
                 isValid = Boolean(validateEvent.isValid && isValid);
                 errorMessage = validateEvent.errorMessage || errorMessage || 'Selection is invalid or missing.';
             }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
+            return {
+                isValid,
+                errorMessage: isValid ? null : errorMessage
+            };
         }
     }
 };
 </script>
 
 <template>
-  <div>
-    <Component
-      :is="isColumnLocked && !isRadioButtons ? 'Label' : 'Fieldset'"
-      :text="label"
-      class="fieldset"
-    >
+  <Component
+    :is="isColumnLocked && !isRadioButtons ? 'Label' : 'Fieldset'"
+    :text="label"
+    class="fieldset"
+  >
+    <template #default="mainLabel">
       <Label
         v-if="!isColumnLocked"
+        v-slot="columnLabel"
         text="Column"
-      />
-      <Dropdown
-        v-if="!isColumnLocked"
-        ref="column"
-        :value="column"
-        :is-valid="isColumnValid"
-        aria-label="Column"
-        :possible-values="possibleColumns"
-        @input="onColumnChange"
-      />
+      >
+        <Dropdown
+          :id="columnLabel.labelForId"
+          ref="column"
+          :value="column"
+          :is-valid="isColumnValid"
+          aria-label="Column"
+          :possible-values="possibleColumns"
+          @input="onColumnChange"
+        />
+      </Label>
       <Label
         v-if="!isColumnLocked"
+        :generate-id="false"
         text="Value"
       />
       <SingleSelect
+        :id="mainLabel.labelForId"
         ref="form"
         :value="value"
         :type="viewRep.type"
@@ -167,6 +177,6 @@ export default {
         @input="onChange"
       />
       <ErrorMessage :error="errorMessage" />
-    </Component>
-  </div>
+    </template>
+  </Component>
 </template>

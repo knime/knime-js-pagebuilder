@@ -142,16 +142,19 @@ export default {
     <Label
       :text="label"
     >
-      <TextArea
-        ref="form"
-        :value="value"
-        :cols="20"
-        :rows="numberVisOptions"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
+      <template #default="{ labelForId }">
+        <TextArea
+          :id="labelForId"
+          ref="form"
+          :value="value"
+          :cols="20"
+          :rows="numberVisOptions"
+          :is-valid="isValid"
+          :title="description"
+          @input="onChange"
+        />
+        <ErrorMessage :error="errorMessage" />
+      </template>
     </Label>
   </div>
 </template>
