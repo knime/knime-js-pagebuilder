@@ -194,7 +194,7 @@ describe('ListBoxInputWidget.vue', () => {
     });
 
     it('emits @updateWidget if child emits @input', () => {
-        let wrapper = shallowMount(ListBoxInputWidget, {
+        let wrapper = mount(ListBoxInputWidget, {
             propsData: propsDataEmailRegexLineSplit
         });
 
@@ -292,7 +292,7 @@ describe('ListBoxInputWidget.vue', () => {
 
 
         it('has no error message when valid', () => {
-            let wrapper = shallowMount(ListBoxInputWidget, {
+            let wrapper = mount(ListBoxInputWidget, {
                 propsData: propsDataEmailRegexLineSplit,
                 stubs: {
                     TextArea: {
@@ -308,7 +308,7 @@ describe('ListBoxInputWidget.vue', () => {
         });
 
         it('has validation error message when not valid', () => {
-            let wrapper = shallowMount(ListBoxInputWidget, {
+            let wrapper = mount(ListBoxInputWidget, {
                 propsData: propsDataEmailRegexLineSplit,
                 stubs: {
                     TextArea: {
@@ -326,7 +326,7 @@ describe('ListBoxInputWidget.vue', () => {
         });
 
         it('has error message', () => {
-            let wrapper = shallowMount(ListBoxInputWidget, {
+            let wrapper = mount(ListBoxInputWidget, {
                 propsData: propsDataEmailRegexLineSplit,
                 stubs: {
                     TextArea: {

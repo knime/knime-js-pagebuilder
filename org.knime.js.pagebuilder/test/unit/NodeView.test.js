@@ -182,6 +182,28 @@ describe('NodeView.vue', () => {
         expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
     });
 
+    it('adds classes for min/max height & width', () => {
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig: {
+                    nodeID: 'id2',
+                    useLegacyMode: false,
+                    resizeMethod: 'viewLowestElement',
+                    additionalClasses: ['class1', 'class2'],
+                    additionalStyles: ['color: red;', 'border: 1px solid green;'],
+                    minHeight: 100,
+                    maxHeight: 200,
+                    minWidth: 100,
+                    maxWidth: 200
+                }
+            }
+        });
+        expect(wrapper.attributes('class')).toEqual('view class1 class2');
+        expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green; max-height: 200px;' +
+            ' max-width: 200px; min-height: 200px; min-width: 200px;');
+    });
+
     it('ignores classes and styles when webnode missing', () => {
         let wrapper = shallowMount(NodeView, {
             ...context,

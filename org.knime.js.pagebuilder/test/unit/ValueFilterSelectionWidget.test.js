@@ -192,7 +192,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
     });
 
     it('sends @updateWidget if Multiselect emits @input', () => {
-        let wrapper = shallowMount(ValueFilterSelectionWidget, {
+        let wrapper = mount(ValueFilterSelectionWidget, {
             propsData
         });
 
@@ -209,7 +209,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
     });
 
     it('sends @updateWidget if column emits @input', () => {
-        let wrapper = shallowMount(ValueFilterSelectionWidget, {
+        let wrapper = mount(ValueFilterSelectionWidget, {
             propsData
         });
 

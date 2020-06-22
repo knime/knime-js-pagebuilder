@@ -47,12 +47,15 @@ export default {
             // in that case we simply display a corresponding message to show that the node is not displayable
             return this.webNodeConfig.nodeInfo.displayPossible;
         },
+        resizeMethod() {
+            return this.viewConfig.resizeMethod || '';
+        },
         classes() {
             let classes = ['view'];
             if (this.webNodeAvailable) {
                 // add aspect ratio sizing classes; other resize methods are handled by NodeViewIFrame itself
-                if (this.viewConfig.resizeMethod && this.viewConfig.resizeMethod.startsWith('aspectRatio')) {
-                    classes.push(this.viewConfig.resizeMethod);
+                if (this.resizeMethod.startsWith('aspectRatio')) {
+                    classes.push(this.resizeMethod);
                 }
                 if (Array.isArray(this.viewConfig.additionalClasses)) {
                     classes = classes.concat(this.viewConfig.additionalClasses);
@@ -64,6 +67,21 @@ export default {
             let style = [];
             if (this.webNodeAvailable && this.viewConfig.additionalStyles) {
                 style = style.concat(this.viewConfig.additionalStyles);
+            }
+            if (this.resizeMethod.startsWith('viewLowestElement') && this.isWidget) {
+                let { maxHeight = null, maxWidth = null, minHeight = null, minWidth = null } = this.viewConfig;
+                if (maxHeight !== null) {
+                    style.push(`max-height:${maxHeight}px`);
+                }
+                if (maxWidth !== null) {
+                    style.push(`max-width:${maxHeight}px`);
+                }
+                if (minHeight !== null) {
+                    style.push(`min-height:${maxHeight}px`);
+                }
+                if (minWidth !== null) {
+                    style.push(`min-width:${maxHeight}px`);
+                }
             }
             return style.join(';').replace(/;;/g, ';');
         },

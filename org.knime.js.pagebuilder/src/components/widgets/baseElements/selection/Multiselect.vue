@@ -24,6 +24,10 @@ export default {
             default: true,
             type: Boolean
         },
+        id: {
+            type: String,
+            default: null
+        },
         /**
          * @values List, Twinlist, Check boxes (horizontal), Check boxes (vertical)
          */
@@ -119,6 +123,7 @@ export default {
   <div>
     <Checkboxes
       v-if="isCheckboxes"
+      :id="id"
       ref="form"
       :value="value"
       :alignment="checkBoxesAlignment"
@@ -130,6 +135,7 @@ export default {
     />
     <Twinlist
       v-if="isTwinlist"
+      :id="id"
       ref="form"
       :value="value"
       :size="maxVisibleListEntries"
@@ -142,6 +148,7 @@ export default {
     />
     <MultiselectListBox
       v-if="isList"
+      :id="id"
       ref="form"
       :value="value"
       :size="maxVisibleListEntries"

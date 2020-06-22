@@ -248,6 +248,5 @@ export default {
   height: 100%;
   background-color: white;
   border: none;
-  overflow: hidden;
 }
 </style>

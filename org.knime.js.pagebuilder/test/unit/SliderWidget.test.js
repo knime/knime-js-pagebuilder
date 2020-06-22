@@ -157,7 +157,7 @@ describe('SliderWidget.vue', () => {
         wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
-        
+
         expect(wrapper.vm.connect).toBe(null);
     });
 
@@ -167,7 +167,7 @@ describe('SliderWidget.vue', () => {
         wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
-        
+
         expect(wrapper.vm.min).toBe(0);
         expect(wrapper.vm.max).toBe(1);
     });
@@ -176,7 +176,7 @@ describe('SliderWidget.vue', () => {
         wrapper.setProps({
             valuePair: [0, 1]
         });
-        
+
         expect(wrapper.vm.value).toStrictEqual([0, 1]);
     });
 
@@ -277,15 +277,24 @@ describe('SliderWidget.vue', () => {
     });
 
     it('correctly emits the updateWidget payload', () => {
-        wrapper.find(Slider).vm.$emit('input', 10);
-        const { updateWidget } = wrapper.emitted();
+        const wrapper2 = mount(SliderWidget, {
+            ...context,
+            propsData: {
+                nodeConfig,
+                nodeId,
+                isValid,
+                valuePair: nodeConfig.viewRepresentation.currentValue
+            }
+        });
+        wrapper2.find(Slider).vm.$emit('input', 10);
+        const { updateWidget } = wrapper2.emitted();
         expect(updateWidget[0][0]).toBeTruthy();
         expect(updateWidget[0][0].type).toBe('double');
         expect(updateWidget[0][0].value).toBe(10);
     });
 
     it('has no error message when valid', async () => {
-        let wrapper2 = shallowMount(SliderWidget, {
+        let wrapper2 = mount(SliderWidget, {
             ...context,
             propsData: {
                 nodeConfig,
@@ -327,7 +336,16 @@ describe('SliderWidget.vue', () => {
     });
 
     it('only displays error message when invalid', async () => {
-        expect(wrapper.find(ErrorMessage).isVisible()).toBe(true);
+        const wrapperFull = mount(SliderWidget, {
+            ...context,
+            propsData: {
+                nodeConfig,
+                nodeId,
+                isValid,
+                valuePair: nodeConfig.viewRepresentation.currentValue
+            }
+        });
+        expect(wrapperFull.find(ErrorMessage).isVisible()).toBe(true);
         let wrapper2 = mount(SliderWidget, {
             propsData: {
                 nodeConfig,

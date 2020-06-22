@@ -136,33 +136,45 @@ export default {
       v-if="!isColumnLocked"
       text="Column"
     >
-      <Dropdown
-        v-if="!isColumnLocked"
-        ref="column"
-        :value="column"
-        :is-valid="isColumnValid"
-        aria-label="Column"
-        :possible-values="possibleColumns"
-        @input="onColumnChange"
-      />
+      <template #default="{ labelForId }">
+        <Dropdown
+          v-if="!isColumnLocked"
+          :id="labelForId"
+          ref="column"
+          :value="column"
+          :is-valid="isColumnValid"
+          aria-label="Column"
+          :possible-values="possibleColumns"
+          @input="onColumnChange"
+        />
+      </template>
     </Label>
     <Component
       :is="isList ? 'Label' : 'Fieldset'"
       :text="isColumnLocked ? label : 'Value'"
     >
-      <Multiselect
-        ref="form"
-        :value="value"
-        :type="viewRep.type"
-        :number-vis-options="viewRep.numberVisOptions"
-        :limit-number-vis-options="viewRep.limitNumberVisOptions"
-        :possible-value-list="possibleValues"
-        :is-valid="isValid"
-        :description="description"
-        :label="label"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
+      <template #default="{ labelForId }">
+        <Multiselect
+          :id="labelForId"
+          ref="form"
+          :value="value"
+          :type="viewRep.type"
+          :number-vis-options="viewRep.numberVisOptions"
+          :limit-number-vis-options="viewRep.limitNumberVisOptions"
+          :possible-value-list="possibleValues"
+          :is-valid="isValid"
+          :description="description"
+          :label="label"
+          @input="onChange"
+        />
+        <ErrorMessage :error="errorMessage" />
+      </template>
     </Component>
   </Component>
 </template>
+
+<style lang="postcss" scoped>
+fieldset {
+  text-overflow: ellipsis;
+}
+</style>
