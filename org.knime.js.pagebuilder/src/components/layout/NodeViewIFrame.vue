@@ -93,7 +93,8 @@ export default {
             return postMessageOrigin;
         },
         isSingleView() {
-            return this.$store.state.pagebuilder.page.wizardPageContent.isSingleView;
+            let page = this.$store.state.pagebuilder.page;
+            return page && page.wizardPageContent && page.wizardPageContent.isSingleView;
         }
     },
 
