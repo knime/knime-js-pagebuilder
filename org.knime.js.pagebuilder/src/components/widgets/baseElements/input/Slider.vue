@@ -97,12 +97,15 @@ export default {
 </script>
 
 <template>
-  <div
-    tabindex="0"
-    class="slider-wrapper"
-    @focus="$refs.slider.focus()"
-    @blur="$refs.slider.blur()"
-  >
+  <div>
+    <div
+      v-for="(v, i) in (value.length ? value : [value])"
+      :key="i"
+      class="slider-focusable"
+      tabindex="0"
+      @focus="$refs.slider.focus(i)"
+      @blur="$refs.slider.blur(i)"
+    />
     <VueSlider
       ref="slider"
       :width="direction.includes('tt') ? 1 : 'auto'"
@@ -131,7 +134,7 @@ export default {
 <style lang="postcss">
 @import "webapps-common/ui/css/variables";
 
-.slider-wrapper:focus {
+.slider-focusable:focus {
   outline: none;
 }
 
