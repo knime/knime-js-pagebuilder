@@ -2,7 +2,7 @@
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
 import NotAvailable from './NotAvailable';
-import { classToComponentMap } from '../widgets/widgets.config';
+import { configToComponentMap } from '../widgets/widgets.config';
 
 /**
  * Wrapper for a single node view iframe or widget
@@ -86,12 +86,19 @@ export default {
             return style.join(';').replace(/;;/g, ';');
         },
         legacyModeDisabled() {
-            // only return true if legacy flag *explicitly* set to false; default workflows with unset legacy flag to use legacy mode
+            // only return true if legacy flag *explicitly* set to false; default workflows with unset legacy flag to
+            // use legacy mode
             return this.viewConfig.useLegacyMode === false;
+        },
+        // returns the Vue Widget Component name for the node it is a widget
+        componentMapping() {
+            // check the representation class or the node name (for widgets which share code with the old quickforms)
+            return configToComponentMap[this.webNodeConfig.viewRepresentation['@class']] ||
+                configToComponentMap[this.webNodeConfig.nodeInfo.nodeName];
         },
         isWidget() {
             return this.legacyModeDisabled && this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
-                classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
+                this.componentMapping;
         }
     }
 };
@@ -110,6 +117,7 @@ export default {
       />
       <Widget
         v-else-if="isWidget"
+        :type="componentMapping"
         :node-config="webNodeConfig"
         :node-id="viewConfig.nodeID"
       />

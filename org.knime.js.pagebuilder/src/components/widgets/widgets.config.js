@@ -1,4 +1,4 @@
-export const classToComponentMap = {
+export const configToComponentMap = {
     // input widgets
     'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation': 'SliderWidget',
     'org.knime.js.base.node.base.input.string.StringNodeRepresentation': 'StringWidget',
@@ -16,13 +16,11 @@ export const classToComponentMap = {
     'org.knime.js.base.node.base.selection.value.ValueSelectionNodeRepresentation': 'ValueSelectionWidget',
 
     // output widgets
-    'org.knime.js.base.node.output.text.TextOutputRepresentation': 'TextWidget',
-    'org.knime.js.base.node.output.image.ImageOutputRepresentation': 'ImageWidget',
+    'Text Output Widget': 'TextWidget',
+    'Image Output Widget': 'ImageWidget',
 
     // interactive widgets
-    'org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation':
-        'InteractiveValueWidget',
-    'org.knime.js.base.node.quickform.filter.definition.rangeslider.RangeSliderFilterRepresentation':
-        'InteractiveRangeWidget'
+    'Interactive Value Filter Widget': 'InteractiveValueWidget',
+    'Interactive Range Slider Filter Widget': 'InteractiveRangeWidget'
     
 };

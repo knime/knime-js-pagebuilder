@@ -137,7 +137,8 @@ describe('Widget.vue', () => {
             ...context,
             propsData: {
                 nodeConfig,
-                nodeId
+                nodeId,
+                type: 'SliderWidget'
             }
         });
     });
@@ -145,10 +146,6 @@ describe('Widget.vue', () => {
     it('renders', () => {
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-    });
-
-    it('detects correct widget type', () => {
-        expect(wrapper.vm.type).toEqual('SliderWidget');
     });
 
     it('publishes update to store', () => {
@@ -228,7 +225,8 @@ describe('Widget.vue', () => {
             ...localContext,
             propsData: {
                 nodeConfig: localNodeConfig,
-                nodeId
+                nodeId,
+                type: 'SliderWidget'
             }
         });
         let mock = jest.fn();
@@ -316,7 +314,8 @@ describe('Widget.vue', () => {
                         text: 'Test String to prevent TextWidget prop validation failure'
                     }
                 },
-                nodeId: nodeId2
+                nodeId: nodeId2,
+                type: 'TextWidget'
             },
             stubs: {
                 TextOutput: {
