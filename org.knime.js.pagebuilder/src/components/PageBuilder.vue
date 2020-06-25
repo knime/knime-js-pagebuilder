@@ -15,13 +15,7 @@ export default {
     computed: {
         hasPage() {
             let page = this.$store.state.pagebuilder.page;
-            let state = page && page.wizardExecutionState;
-            if (state === 'INTERACTION_REQUIRED') {
-                return true;
-            } else {
-                consola.error(`PageBuilder used with unsupported state: ${state}`);
-                return false;
-            }
+            return Boolean(page && page.wizardPageContent);
         }
     }
 };

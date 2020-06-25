@@ -120,8 +120,12 @@ export default {
 
 <template>
   <div>
-    <Label :text="label">
+    <Label
+      v-slot="{ labelForId }"
+      :text="label"
+    >
       <NumberInput
+        :id="labelForId"
         ref="form"
         :type="type"
         :value="value"

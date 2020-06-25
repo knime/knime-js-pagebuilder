@@ -101,18 +101,21 @@ export default {
     :is="isRadioButtons ? 'Fieldset' : 'Label'"
     :text="label"
   >
-    <SingleSelect
-      ref="form"
-      :value="value"
-      :type="viewRep.type"
-      :number-vis-options="viewRep.numberVisOptions"
-      :limit-number-vis-options="viewRep.limitNumberVisOptions"
-      :is-valid="isValid"
-      :title="description"
-      :possible-value-list="viewRep.possibleColumns"
-      :label="label"
-      @input="onChange"
-    />
-    <ErrorMessage :error="errorMessage" />
+    <template #default="{ labelForId }">
+      <SingleSelect
+        :id="labelForId"
+        ref="form"
+        :value="value"
+        :type="viewRep.type"
+        :number-vis-options="viewRep.numberVisOptions"
+        :limit-number-vis-options="viewRep.limitNumberVisOptions"
+        :is-valid="isValid"
+        :title="description"
+        :possible-value-list="viewRep.possibleColumns"
+        :label="label"
+        @input="onChange"
+      />
+      <ErrorMessage :error="errorMessage" />
+    </template>
   </Component>
 </template>

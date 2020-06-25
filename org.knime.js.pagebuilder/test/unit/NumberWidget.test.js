@@ -73,7 +73,7 @@ describe('NumberWidget.vue', () => {
     });
 
     it('emits @updateWidget if child emits @input', () => {
-        let wrapper = shallowMount(NumberWidget, {
+        let wrapper = mount(NumberWidget, {
             propsData
         });
 
@@ -148,7 +148,7 @@ describe('NumberWidget.vue', () => {
 
     it('has no error message when valid', () => {
         const validValue = 3;
-        let wrapper = shallowMount(NumberWidget, {
+        let wrapper = mount(NumberWidget, {
             propsData,
             stubs: {
                 NumberInput: {
@@ -163,7 +163,7 @@ describe('NumberWidget.vue', () => {
     });
 
     it('has error message', () => {
-        let wrapper = shallowMount(NumberWidget, {
+        let wrapper = mount(NumberWidget, {
             propsData,
             stubs: {
                 NumberInput: {
@@ -181,7 +181,7 @@ describe('NumberWidget.vue', () => {
         const invalidValue = 9;
         propsData.nodeConfig.viewRepresentation.usemin = true;
         propsData.nodeConfig.viewRepresentation.min = 10;
-        let wrapper = shallowMount(NumberWidget, {
+        let wrapper = mount(NumberWidget, {
             propsData,
             stubs: {
                 NumberInput: {

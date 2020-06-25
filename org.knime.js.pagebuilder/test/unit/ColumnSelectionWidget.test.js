@@ -106,7 +106,7 @@ describe('ColumnSelectionWidget.vue', () => {
     });
 
     it('renders', () => {
-        let wrapper = shallowMount(SingleSelectionWidget, {
+        let wrapper = mount(SingleSelectionWidget, {
             propsData: propsDataColumnSelectionList
         });
 
@@ -116,7 +116,7 @@ describe('ColumnSelectionWidget.vue', () => {
     });
 
     it('emits @updateWidget if child emits @input', () => {
-        let wrapper = shallowMount(ColumnSelectionWidget, {
+        let wrapper = mount(ColumnSelectionWidget, {
             propsData: propsDataColumnSelectionList
         });
 
@@ -134,7 +134,7 @@ describe('ColumnSelectionWidget.vue', () => {
 
     it('has size set', () => {
         propsDataColumnSelectionList.isValid = true;
-        let wrapper = shallowMount(ColumnSelectionWidget, {
+        let wrapper = mount(ColumnSelectionWidget, {
             propsData: propsDataColumnSelectionList
         });
         let size = propsDataColumnSelectionList.nodeConfig.viewRepresentation.numberVisOptions;

@@ -97,7 +97,12 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div
+    tabindex="0"
+    class="slider-wrapper"
+    @focus="$refs.slider.focus()"
+    @blur="$refs.slider.blur()"
+  >
     <VueSlider
       ref="slider"
       :width="direction.includes('tt') ? 1 : 'auto'"
@@ -105,6 +110,7 @@ export default {
       :min="minimum"
       :max="maximum"
       :silent="true"
+      :use-keyboard="true"
       :direction="direction"
       :interval="stepSize"
       :marks="marks"
@@ -124,6 +130,10 @@ export default {
 
 <style lang="postcss">
 @import "webapps-common/ui/css/variables";
+
+.slider-wrapper:focus {
+  outline: none;
+}
 
 .vue-slider {
   cursor: pointer;

@@ -59,13 +59,13 @@ export default {
 <style lang="postcss" scoped>
 .container-fluid {
   width: 100%;
+  padding-top: 24px;
 
   &,
   & >>> *,
   & >>> *::before,
   & >>> *::after {
     box-sizing: border-box;
-    overflow: visible;
   }
 }
 </style>

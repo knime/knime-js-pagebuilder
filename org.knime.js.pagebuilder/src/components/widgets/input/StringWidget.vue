@@ -91,7 +91,10 @@ export default {
             let isValid = true;
             let errorMessage;
             if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
+                return {
+                    isValid,
+                    errorMessage
+                };
             }
             if (!this.$refs.form.getValue()) {
                 isValid = false;
@@ -103,7 +106,10 @@ export default {
                 isValid = Boolean(validateEvent.isValid && isValid);
                 errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
             }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
+            return {
+                isValid,
+                errorMessage: isValid ? null : errorMessage
+            };
         }
     }
 };
@@ -112,10 +118,12 @@ export default {
 <template>
   <div>
     <Label
+      v-slot="{ labelForId }"
       :text="label"
     >
       <TextArea
         v-if="isMultiLine"
+        :id="labelForId"
         ref="form"
         :value="value"
         :cols="multiColumns"
@@ -126,6 +134,7 @@ export default {
       />
       <InputField
         v-else
+        :id="labelForId"
         ref="form"
         :value="value"
         :is-valid="isValid"
@@ -139,7 +148,11 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-div {
-  overflow: hidden !important;
+div >>> label span + div {
+  max-width: 100%;
+
+  & textarea {
+    max-width: 100%;
+  }
 }
 </style>

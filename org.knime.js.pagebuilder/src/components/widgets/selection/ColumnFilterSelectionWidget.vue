@@ -52,7 +52,7 @@ export default {
             return this.viewRep.label;
         },
         possibleColumns() {
-            return this.viewRep.possibleColumns.map((x) => ({
+            return [...new Set(this.viewRep.possibleColumns)].map((x) => ({
                 id: x,
                 text: x
             }));

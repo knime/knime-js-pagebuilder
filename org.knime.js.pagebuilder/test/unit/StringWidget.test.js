@@ -134,14 +134,14 @@ describe('StringWidget.vue', () => {
         });
 
         it('emits @updateWidget if child emits @input', () => {
-            let wrapper = shallowMount(StringWidget, {
+            let wrapper = mount(StringWidget, {
                 propsData: propsDataInput
             });
-    
+
             const testValue = 'VALUE';
             const input = wrapper.find(InputField);
             input.vm.$emit('input', testValue);
-    
+
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
                 nodeId: propsDataInput.nodeId,
@@ -204,14 +204,14 @@ describe('StringWidget.vue', () => {
         });
 
         it('emits @updateWidget if child emits @input', () => {
-            let wrapper = shallowMount(StringWidget, {
+            let wrapper = mount(StringWidget, {
                 propsData: propsDataInput
             });
-    
+
             const testValue = 'VALUE';
             const input = wrapper.find(InputField);
             input.vm.$emit('input', testValue);
-    
+
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
                 nodeId: propsDataInput.nodeId,
@@ -280,7 +280,7 @@ describe('StringWidget.vue', () => {
     });
 
     it('has no error message when valid', async () => {
-        let wrapper = shallowMount(StringWidget, {
+        let wrapper = mount(StringWidget, {
             propsData: propsDataInput,
             stubs: {
                 InputField: {
@@ -297,7 +297,7 @@ describe('StringWidget.vue', () => {
     });
 
     it('has error message', async () => {
-        let wrapper = shallowMount(StringWidget, {
+        let wrapper = mount(StringWidget, {
             propsData: propsDataInput,
             stubs: {
                 InputField: {

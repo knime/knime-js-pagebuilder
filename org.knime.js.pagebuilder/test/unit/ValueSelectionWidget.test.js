@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import { shallowMount, mount } from '@vue/test-utils';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 
 import ValueSelectionWidget from '@/components/widgets/selection/ValueSelectionWidget';
 
@@ -495,11 +496,12 @@ describe('ValueSelectionWidget.vue', () => {
         });
 
         it('renders as dropdown', () => {
-            let wrapper = shallowMount(ValueSelectionWidget, {
+            let wrapper = mount(ValueSelectionWidget, {
                 propsData: propsDataDropdown
             });
 
             expect(wrapper.html()).toBeTruthy();
+            expect(wrapper.findAll(Dropdown).length).toBe(2);
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
@@ -514,7 +516,7 @@ describe('ValueSelectionWidget.vue', () => {
     });
 
     it('sends @updateWidget if SingleSelect emits @input', () => {
-        let wrapper = shallowMount(ValueSelectionWidget, {
+        let wrapper = mount(ValueSelectionWidget, {
             propsData: propsDataRadioVertical
         });
 
@@ -531,7 +533,7 @@ describe('ValueSelectionWidget.vue', () => {
     });
 
     it('sends @updateWidget if column emits @input', () => {
-        let wrapper = shallowMount(ValueSelectionWidget, {
+        let wrapper = mount(ValueSelectionWidget, {
             propsData: propsDataRadioVertical
         });
 
@@ -550,15 +552,26 @@ describe('ValueSelectionWidget.vue', () => {
     it('has size set', () => {
         propsDataList.isValid = true;
         propsDataList.nodeConfig.viewRepresentation.limitNumberVisOptions = true;
-        let wrapper = shallowMount(ValueSelectionWidget, {
+        let wrapper = mount(ValueSelectionWidget, {
             propsData: propsDataList
         });
         let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
         expect(wrapper.find({ ref: 'form' }).props('numberVisOptions')).toBe(size);
     });
 
+    it('does not render duplicate entries', () => {
+        propsDataDropdown.nodeConfig.viewRepresentation.possibleColumns = ['1', '2', '3', '3', '3', '4'];
+
+        let wrapper = mount(ValueSelectionWidget, {
+            propsData: propsDataDropdown
+        });
+        // duplicate column entry will not be shown twice
+        // eslint-disable-next-line no-magic-numbers
+        expect(wrapper.vm.possibleColumns.length).toBe(4);
+    });
+
     it('passes isValid to component', () => {
-        let wrapper = shallowMount(ValueSelectionWidget, {
+        let wrapper = mount(ValueSelectionWidget, {
             propsData: {
                 ...propsDataList,
                 isValid: false
@@ -595,14 +608,14 @@ describe('ValueSelectionWidget.vue', () => {
         });
 
         it('is invalid if required and no selection was made', () => {
-            propsDataDropdown.nodeConfig.viewRepresentation.required = true;
-            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDataList.nodeConfig.viewRepresentation.required = true;
+            propsDataList.nodeConfig.viewRepresentation.lockColumn = true;
             let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataDropdown
+                propsData: propsDataList
             });
             wrapper.setProps({ valuePair: {
                 value: '',
-                column: 'UriCol'
+                column: 'Cluster Membership'
             } });
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
         });
