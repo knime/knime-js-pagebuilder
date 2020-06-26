@@ -662,26 +662,6 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toBe(null);
         });
 
-        it('handles file upload events', () => {
-            let messageEvent = {
-                origin: window.location.origin,
-                data: {
-                    nodeId,
-                    type: 'uploadResource',
-                    resourceName: 'file.txt',
-                    data: 'blob'
-                }
-            };
-            wrapper.vm.messageFromIframe(messageEvent);
-            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
-            expect(validateCallbackMock).not.toHaveBeenCalled();
-            expect(getValueCallbackMock).not.toHaveBeenCalled();
-            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(mockUpload).toHaveBeenCalledWith(expect.anything(), {
-                resourceId: 'file.txt', data: 'blob'
-            }, undefined); // eslint-disable-line no-undefined
-        });
-
         describe('using alerts via message', () => {
             it('handles alert events', () => {
                 let messageEvent = {
