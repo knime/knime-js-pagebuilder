@@ -11,8 +11,9 @@ describe('SingleSelect.vue', () => {
     beforeEach(() => {
         propsDataRadioHorizontal = {
             label: 'Radio Hor',
-            possibleChoices: [
+            possibleValueList: [
                 'O1 ',
+                '',
                 'Option 2',
                 'O3'
             ],
@@ -26,8 +27,9 @@ describe('SingleSelect.vue', () => {
         propsDataRadioVertical = {
             label: 'Radio Vertical',
             value: 'O3',
-            possibleChoices: [
+            possibleValueList: [
                 'O1 ',
+                '',
                 'Option 2',
                 'O3'
             ],
@@ -40,10 +42,11 @@ describe('SingleSelect.vue', () => {
         propsDataDropdown = {
             label: 'Dropdown',
             value: 'Option 2',
-            possibleChoices: [
+            possibleValueList: [
                 'Option 1',
                 'Option 2',
-                'Option 3'
+                'Option 3',
+                ''
             ],
             type: 'Dropdown',
             limitNumberVisOptions: false,
@@ -54,7 +57,7 @@ describe('SingleSelect.vue', () => {
         propsDataList = {
             label: 'List',
             value: 'List Item 3',
-            possibleChoices: [
+            possibleValueList: [
                 'List Item 1',
                 'List Item 2',
                 'List Item 3',
@@ -69,7 +72,9 @@ describe('SingleSelect.vue', () => {
                 'List Item 12',
                 'List Item 13',
                 'List Item 14',
+                'List Item 15', // duplicate test
                 'List Item 15',
+                '',
                 'List Item 16'
             ],
             type: 'List',
@@ -145,6 +150,16 @@ describe('SingleSelect.vue', () => {
             });
             let size = propsDataList.numberVisOptions;
             expect(wrapper.find(ListBox).props('size')).toBe(size);
+        });
+
+        it('does not render duplicate entries', () => {
+            propsDataList.possibleValueList = ['1', '2', '3', '3', '3', '4'];
+            let wrapper = mount(SingleSelect, {
+                propsData: propsDataList
+            });
+            // duplicate entry will not be shown twice
+            const choicesUnique = [...new Set(propsDataList.possibleValueList)].length;
+            expect(wrapper.vm.possibleChoices.length).toBe(choicesUnique);
         });
 
         it('defaults to 0 if no size is set', () => {

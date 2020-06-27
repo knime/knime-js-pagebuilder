@@ -72,7 +72,8 @@ export default {
     },
     computed: {
         possibleChoices() {
-            return this.possibleValueList.map((x) => ({
+            // remove duplicate elements (as they cause key problems); id must be unique
+            return [...new Set(this.possibleValueList)].map((x) => ({
                 id: x,
                 text: x
             }));

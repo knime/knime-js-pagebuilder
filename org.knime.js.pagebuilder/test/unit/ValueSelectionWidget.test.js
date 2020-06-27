@@ -559,6 +559,17 @@ describe('ValueSelectionWidget.vue', () => {
         expect(wrapper.find({ ref: 'form' }).props('numberVisOptions')).toBe(size);
     });
 
+    it('does not render duplicate entries', () => {
+        propsDataDropdown.nodeConfig.viewRepresentation.possibleColumns = ['1', '2', '3', '3', '3', '4'];
+
+        let wrapper = mount(ValueSelectionWidget, {
+            propsData: propsDataDropdown
+        });
+        // duplicate column entry will not be shown twice
+        // eslint-disable-next-line no-magic-numbers
+        expect(wrapper.vm.possibleColumns.length).toBe(4);
+    });
+
     it('passes isValid to component', () => {
         let wrapper = mount(ValueSelectionWidget, {
             propsData: {

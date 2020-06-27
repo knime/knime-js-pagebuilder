@@ -109,13 +109,47 @@ describe('NodeView.vue', () => {
         expect(wrapper.find(NodeViewIFrame).props('viewConfig')).toEqual(viewConfig);
     });
 
-    it('can detect widgets', () => {
+    it('can detect widgets using the representation class', () => {
         let viewConfig = {
             nodeID: 'id2',
             useLegacyMode: false
         };
         let wrapper = shallowMount(NodeView, {
             ...context,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.isWidget).toBeTruthy();
+    });
+
+    it('can detect widgets using the nodeName', () => {
+        let viewConfig = {
+            nodeID: 'id2',
+            useLegacyMode: false
+        };
+        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        localStore.commit('pagebuilder/setPage', {
+            wizardPageContent: {
+                webNodes: {
+                    id2: {
+                        baz: 'qux',
+                        viewRepresentation: {
+                            '@class': 'not a defined widget class'
+                        },
+                        nodeInfo: {
+                            displayPossible: true,
+                            nodeName: 'Interactive Value Filter Widget'
+                        }
+                    }
+                }
+            }
+        });
+
+        let wrapper = shallowMount(NodeView, {
+            store,
+            localVue,
             propsData: {
                 viewConfig
             }
