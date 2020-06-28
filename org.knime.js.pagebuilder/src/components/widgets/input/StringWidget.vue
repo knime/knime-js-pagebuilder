@@ -116,42 +116,42 @@ export default {
 </script>
 
 <template>
-  <div>
-    <Label
-      v-slot="{ labelForId }"
-      :text="label"
-    >
-      <TextArea
-        v-if="isMultiLine"
-        :id="labelForId"
-        ref="form"
-        :value="value"
-        :cols="multiColumns"
-        :rows="multiRows"
-        :is-valid="isValid"
-        :title="description"
-        @input="onChange"
-      />
-      <InputField
-        v-else
-        :id="labelForId"
-        ref="form"
-        :value="value"
-        :is-valid="isValid"
-        :title="description"
-        :pattern="regex"
-        @input="onChange"
-      />
-      <ErrorMessage :error="errorMessage" />
-    </Label>
-  </div>
+  <Label
+    v-slot="{ labelForId }"
+    class="label"
+    :text="label"
+  >
+    <TextArea
+      v-if="isMultiLine"
+      :id="labelForId"
+      ref="form"
+      :value="value"
+      :cols="multiColumns"
+      :rows="multiRows"
+      :is-valid="isValid"
+      :title="description"
+      @input="onChange"
+    />
+    <InputField
+      v-else
+      :id="labelForId"
+      ref="form"
+      :value="value"
+      :is-valid="isValid"
+      :title="description"
+      :pattern="regex"
+      @input="onChange"
+    />
+    <ErrorMessage :error="errorMessage" />
+  </Label>
 </template>
 
 <style lang="postcss" scoped>
-div >>> label span + div {
+.label {
   max-width: 100%;
 
-  & textarea {
+  & >>> textarea,
+  & >>> label {
     max-width: 100%;
   }
 }
