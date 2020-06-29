@@ -1,7 +1,6 @@
 <script>
 import SliderWidget from '@/components/widgets/input/SliderWidget';
 
-const DATA_TYPE = 'double';
 const UPDATE_KEY_MIN = 'viewValue.filter.columns.0.minimum';
 const UPDATE_KEY_MAX = 'viewValue.filter.columns.0.maximum';
 const MAX_DECIMAL_PRECISION = 6;
@@ -66,13 +65,6 @@ export default {
             return this.valueMinimum !== false && this.valueMaximum !== false;
         },
         value() {
-            if (!this.isRangeSlider) {
-                return {
-                    [DATA_TYPE]: this.valueMinimum === false
-                        ? this.valueMaximum
-                        : this.valueMinimum
-                };
-            }
             return [this.valueMinimum, this.valueMaximum];
         }
     },
@@ -90,7 +82,7 @@ export default {
                 update[UPDATE_KEY_MAX] = value.value[1];
             } else {
                 let key =  this.valueMinimum === false ? [UPDATE_KEY_MAX] : [UPDATE_KEY_MIN];
-                update[key] = value.value;
+                update[key] = this.valueMinimum === false ? value.value[1] : value.value[0];
             }
             this.$emit('updateWidget', {
                 nodeId: this.nodeId,

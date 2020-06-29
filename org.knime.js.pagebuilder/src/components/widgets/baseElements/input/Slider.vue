@@ -278,6 +278,10 @@ export default {
   display: none;
 }
 
+.vue-slider-dot-disabled {
+  display: none;
+}
+
 .vue-slider-dot-tooltip-inner {
   cursor: pointer;
   font-size: 11px;
