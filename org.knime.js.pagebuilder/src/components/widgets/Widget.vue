@@ -1,6 +1,5 @@
 <script>
 import { mapActions } from 'vuex';
-import { classToComponentMap } from './widgets.config';
 // input widgets
 import BooleanWidget from './input/BooleanWidget';
 import IntegerWidget from './input/IntegerWidget';
@@ -95,6 +94,16 @@ export default {
             validator(nodeId) {
                 return nodeId !== '';
             }
+        },
+        /**
+         * The Vue Widget Component name as mapped to the node settings.
+         */
+        type: {
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return nodeId !== '';
+            }
         }
     },
     data() {
@@ -105,9 +114,6 @@ export default {
         };
     },
     computed: {
-        type() {
-            return classToComponentMap[this.nodeConfig.viewRepresentation['@class']];
-        },
         /**
          * Check for a validator. Some widgets (like output widgets) are static so they don't need to be validated.
          *
