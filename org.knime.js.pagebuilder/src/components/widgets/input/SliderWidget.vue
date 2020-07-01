@@ -98,13 +98,7 @@ export default {
             return parseFloat(this.sliderSettings.range.max[0].toFixed(MAX_DECIMAL_PRECISION));
         },
         value() {
-            let value = this.valuePair;
-            if (Array.isArray(value)) {
-                const minMax = [this.min, this.max];
-                return value.map((v, i) => v === false ? minMax[i] : v);
-            } else {
-                return value[DATA_TYPE];
-            }
+            return Array.isArray(this.valuePair) ? this.valuePair : this.valuePair[DATA_TYPE];
         },
         /**
          * Maps the KNIME configuration settings to the appropriate direction
@@ -146,12 +140,6 @@ export default {
             }
             return null;
         },
-        disabledDots() {
-            if (Array.isArray(this.valuePair)) {
-                return this.valuePair.map(v => v === false);
-            }
-            return [false];
-        },
         /**
          * Tooltips are configured via an array of options in the sliderSettings.
          * If the property "tooltips" is undefined, then the tooltips are disabled
@@ -163,16 +151,11 @@ export default {
          *          each handle.
          */
         tooltips() {
-            let createTooltip = (setting, i) => ({
-                tooltip: this.disabledDots[i] ? 'none' : setting,
-                disabled: this.disabledDots[i]
-            });
+            let createTooltip = setting => ({ tooltip: setting });
             if (this.sliderSettings.tooltips) {
-                return this.sliderSettings.tooltips.map(
-                    (options, i) => createTooltip(options ? 'always' : 'none', i)
-                );
+                return this.sliderSettings.tooltips.map(options => createTooltip(options ? 'always' : 'none'));
             }
-            return [createTooltip('none', 0)];
+            return [createTooltip('none')];
         },
         /**
          * Tooltip formatting is done via function. For each handle present in the
