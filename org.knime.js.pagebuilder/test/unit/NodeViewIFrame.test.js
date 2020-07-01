@@ -15,7 +15,8 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink;
+    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink,
+        mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -37,10 +38,16 @@ describe('NodeViewIframe.vue', () => {
             }
         };
         mockGetDownloadLink = jest.fn();
+        mockGetUploadLink = jest.fn();
+        mockUpload = jest.fn();
         apiConfig = {
             namespaced: true,
+            actions: {
+                uploadResource: mockUpload
+            },
             getters: {
-                downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink)
+                downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink),
+                uploadResourceLink: jest.fn().mockReturnValue(mockGetUploadLink)
             }
         };
         store = new Vuex.Store({ modules: {
@@ -696,6 +703,7 @@ describe('NodeViewIframe.vue', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
             expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
             expect(window.KnimePageBuilderAPI.getDownloadLink).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getUploadLink).toBeDefined();
             wrapper.destroy();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
@@ -707,11 +715,18 @@ describe('NodeViewIframe.vue', () => {
             expect(mockGetPublishedData).toHaveBeenCalledWith(id);
         });
 
-        it('getDownloadLink calls wizardExecution store', () => {
+        it('getDownloadLink calls api store', () => {
             let resourceId = 'file-donwload';
             window.KnimePageBuilderAPI.getDownloadLink(resourceId);
             expect(apiConfig.getters.downloadResourceLink).toHaveBeenCalled();
             expect(mockGetDownloadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
+        });
+
+        it('getDownloadLink calls api store', () => {
+            let resourceId = 'sample.txt';
+            window.KnimePageBuilderAPI.getUploadLink(resourceId);
+            expect(apiConfig.getters.uploadResourceLink).toHaveBeenCalled();
+            expect(mockGetUploadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
         });
 
     });
