@@ -116,6 +116,7 @@ export default {
         // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
+        let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
         if (!window.KnimePageBuilderAPI) {
             let nodeId = this.nodeId;
             window.KnimePageBuilderAPI = {
@@ -125,6 +126,13 @@ export default {
                 getDownloadLink(resourceId) {
                     if (typeof getDownloadLinkFunc === 'function') {
                         return getDownloadLinkFunc({ resourceId, nodeId });
+                    } else {
+                        return null;
+                    }
+                },
+                getUploadLink(resourceId) {
+                    if (typeof getUploadLinkFunc === 'function') {
+                        return getUploadLinkFunc({ resourceId, nodeId });
                     } else {
                         return null;
                     }
