@@ -293,6 +293,22 @@ describe('SliderWidget.vue', () => {
         expect(updateWidget[0][0].value).toBe(10);
     });
 
+    it('supports inverted process config', () => {
+        const wrapper2 = mount(SliderWidget, {
+            ...context,
+            propsData: {
+                nodeConfig,
+                nodeId,
+                isValid,
+                invertProcess: true,
+                valuePair: { double: 0 }
+            }
+        });
+        const p = wrapper2.vm.process;
+        expect(typeof p).toBe('function');
+        expect(p([0])).toStrictEqual([[0, 100]]);
+    });
+
     it('has no error message when valid', async () => {
         let wrapper2 = mount(SliderWidget, {
             ...context,
