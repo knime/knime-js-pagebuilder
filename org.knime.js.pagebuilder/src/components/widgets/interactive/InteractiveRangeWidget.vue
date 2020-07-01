@@ -121,6 +121,7 @@ export default {
   <SliderWidget
     v-bind="$props"
     :value-pair="value"
+    :invert-process="valueMaximum === false"
     @updateWidget="onChange"
   />
 </template>

@@ -54,6 +54,10 @@ export default {
             default: () => ({}),
             type: Object
         },
+        process: {
+            type: [Boolean, Function],
+            default: true
+        },
         connect: {
             default: 'both',
             type: String
@@ -117,6 +121,7 @@ export default {
       :direction="direction"
       :interval="stepSize"
       :marks="marks"
+      :process="process"
       :height="direction.includes('tt') ? height : 1"
       :dot-options="tooltips"
       :tooltip-formatter="tooltipFormat"
