@@ -6,8 +6,8 @@ const DEFAULT_STEP_SIZE = .1;
 const DEFAULT_HEIGHT = 20;
 
 /**
- * This KNIME slider input element implementation relies on
- * the vue-slider-component (npm) library.
+ * This KNIME slider input element implementation relies on the vue-slider-component (npm) library.
+ * @see https://github.com/NightCatSama/vue-slider-component
  */
 export default {
     components: {

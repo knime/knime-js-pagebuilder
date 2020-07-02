@@ -68,6 +68,10 @@ export default {
             }),
             type: [Object, Array]
         },
+        /**
+         * If the process (colored bar) should be flipped to connect the draggable handle
+         * from one origin on the slider to the other.
+         */
         invertProcess: {
             type: Boolean,
             default: false

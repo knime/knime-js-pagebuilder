@@ -65,6 +65,14 @@ export default {
         isRangeSlider() {
             return this.valueMinimum !== false && this.valueMaximum !== false;
         },
+        /*
+         * Detect if the slider need to have the process (the colored part of the rail) flipped to the other
+         * side of the slider. This prevents a slider e.g. which is defining the minimum value between 1-100
+         * from having the filled part of the slider connecting pt. 1 on the slider and the draggable handle.
+         */
+        invertProcess() {
+            return this.valueMaximum === false;
+        },
         value() {
             if (!this.isRangeSlider) {
                 return {
@@ -121,7 +129,7 @@ export default {
   <SliderWidget
     v-bind="$props"
     :value-pair="value"
-    :invert-process="valueMaximum === false"
+    :invert-process="invertProcess"
     @updateWidget="onChange"
   />
 </template>
