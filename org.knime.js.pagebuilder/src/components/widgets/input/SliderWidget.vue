@@ -68,6 +68,14 @@ export default {
             }),
             type: [Object, Array]
         },
+        /**
+         * If the process (colored bar) should be flipped to connect the draggable handle
+         * from one origin on the slider to the other.
+         */
+        invertProcess: {
+            type: Boolean,
+            default: false
+        },
         errorMessage: {
             default: null,
             type: String
@@ -127,6 +135,18 @@ export default {
         },
         stepSize() {
             return this.sliderSettings.step || MINIMUM_SLIDER_STEP;
+        },
+        /**
+         * Process is the bar which is shown in yellow in KNIME theme. Inverted it starts with 100% and ends with the
+         * dot (handle).
+         * @returns {(Function|Boolean)} true or a process function
+         */
+        process() {
+            // invert only works with single dots
+            if (!Array.isArray(this.value) && this.invertProcess) {
+                return dotsPos => [[dotsPos[0], 100]];
+            }
+            return true;
         },
         /**
          * Because we computed the direction above, we can check for the 'b' in
@@ -278,6 +298,7 @@ export default {
         :minimum="min"
         :maximum="max"
         :value="value"
+        :process="process"
         :is-valid="isValid"
         :direction="direction"
         :step-size="stepSize"

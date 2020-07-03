@@ -6,8 +6,8 @@ const DEFAULT_STEP_SIZE = .1;
 const DEFAULT_HEIGHT = 20;
 
 /**
- * This KNIME slider input element implementation relies on
- * the vue-slider-component (npm) library.
+ * This KNIME slider input element implementation relies on the vue-slider-component (npm) library.
+ * @see https://github.com/NightCatSama/vue-slider-component
  */
 export default {
     components: {
@@ -53,6 +53,10 @@ export default {
         marks: {
             default: () => ({}),
             type: Object
+        },
+        process: {
+            type: [Boolean, Function],
+            default: true
         },
         connect: {
             default: 'both',
@@ -117,6 +121,7 @@ export default {
       :direction="direction"
       :interval="stepSize"
       :marks="marks"
+      :process="process"
       :height="direction.includes('tt') ? height : 1"
       :dot-options="tooltips"
       :tooltip-formatter="tooltipFormat"
