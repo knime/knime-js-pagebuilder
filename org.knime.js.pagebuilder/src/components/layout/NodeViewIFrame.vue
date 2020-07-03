@@ -115,6 +115,7 @@ export default {
         // This global API should only be used/extended for cases where window.postMessage can't be used
         // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
+        let getRepositoryFunc = this.$store.getters['api/repository'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
         if (!window.KnimePageBuilderAPI) {
@@ -122,6 +123,13 @@ export default {
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
                     return getPublishedDataFunc(id);
+                },
+                getRepository({ path, filter }) {
+                    if (typeof getRepositoryFunc === 'function') {
+                        return getRepositoryFunc({ path, filter });
+                    } else {
+                        return null;
+                    }
                 },
                 getDownloadLink(resourceId) {
                     if (typeof getDownloadLinkFunc === 'function') {

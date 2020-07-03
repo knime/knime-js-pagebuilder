@@ -15,8 +15,8 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink,
-        mockGetUploadLink, mockUpload;
+    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetRepository,
+        mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -37,6 +37,7 @@ describe('NodeViewIframe.vue', () => {
                 getPublishedData: jest.fn().mockReturnValue(mockGetPublishedData)
             }
         };
+        mockGetRepository = jest.fn();
         mockGetDownloadLink = jest.fn();
         mockGetUploadLink = jest.fn();
         mockUpload = jest.fn();
@@ -46,6 +47,7 @@ describe('NodeViewIframe.vue', () => {
                 uploadResource: mockUpload
             },
             getters: {
+                repository: jest.fn().mockReturnValue(mockGetRepository),
                 downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink),
                 uploadResourceLink: jest.fn().mockReturnValue(mockGetUploadLink)
             }
@@ -715,6 +717,13 @@ describe('NodeViewIframe.vue', () => {
             expect(mockGetPublishedData).toHaveBeenCalledWith(id);
         });
 
+        it('getRepository calls api store', () => {
+            let config = { path: '/', filter: null };
+            window.KnimePageBuilderAPI.getRepository(config);
+            expect(apiConfig.getters.repository).toHaveBeenCalled();
+            expect(mockGetRepository).toHaveBeenCalledWith(config);
+        });
+
         it('getDownloadLink calls api store', () => {
             let resourceId = 'file-donwload';
             window.KnimePageBuilderAPI.getDownloadLink(resourceId);
@@ -722,7 +731,7 @@ describe('NodeViewIframe.vue', () => {
             expect(mockGetDownloadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
         });
 
-        it('getDownloadLink calls api store', () => {
+        it('getUploadLink calls api store', () => {
             let resourceId = 'sample.txt';
             window.KnimePageBuilderAPI.getUploadLink(resourceId);
             expect(apiConfig.getters.uploadResourceLink).toHaveBeenCalled();
