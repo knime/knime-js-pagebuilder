@@ -30,8 +30,6 @@ span {
   font-weight: 300;
   font-size: 13px;
   color: var(--theme-color-error);
-  line-height: 18px;
-  height: 18px;
   display: inline-block;
   position: relative;
 }
