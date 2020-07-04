@@ -109,12 +109,13 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
+            if (this.viewRep.required && !this.$refs.form.hasSelection()) {
+                isValid = false;
+                errorMessage = 'Selection is required.';
             }
-            isValid = this.$refs.form.hasSelection() && this.isColumnValid;
-            if (!isValid) {
-                errorMessage = this.isColumnValid ? 'Selection is required.' : 'Selected column is invalid.';
+            if (!this.isColumnValid) {
+                isValid = false;
+                errorMessage = 'Selected column is invalid.';
             }
             if (typeof this.$refs.form.validate === 'function') {
                 let validateEvent = this.$refs.form.validate();
