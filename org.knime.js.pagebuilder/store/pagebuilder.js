@@ -167,7 +167,7 @@ export const actions = {
             }, {});
         }).catch((e) => {
             consola.error(`Could not retrieve all view values: ${e}`);
-            throw new Error(`Could not retrieve all view values`);
+            return {};
         });
 
         return values;
@@ -192,9 +192,8 @@ export const actions = {
                 return obj;
             }, {}))
             .catch((e) => {
-                let errMsg = `Page validation failed: ${e}`;
-                consola.error(errMsg);
-                throw new Error(errMsg);
+                consola.error(`Page validation failed: ${e}`);
+                return {};
             });
         return validity;
     },
@@ -216,6 +215,6 @@ export const actions = {
                 setValidationErrorPromises.push(state.pageValidationErrorSetters[nodeId](page[nodeId].error));
             }
         }
-        return Promise.all(setValidationErrorPromises);
+        return Promise.all(setValidationErrorPromises).then(res => true).catch(e => false);
     }
 };

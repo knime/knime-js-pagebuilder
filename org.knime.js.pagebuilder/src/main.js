@@ -102,7 +102,11 @@ if (typeof KnimePageLoader === 'undefined') {
         pageBuilder.getPageValues = () => {
             return pageBuilder.app.$store.dispatch('pagebuilder/getViewValues', null)
                 .then(values => {
-                    let parsedValues = pageBuilder.isSingleView ? values[Object.keys(values)[0]] : values;
+                    let parsedValues = {};
+                    let nodeIds = Object.keys(values);
+                    if (nodeIds && nodeIds.length > 0) {
+                        parsedValues = pageBuilder.isSingleView ? values[nodeIds[0]] : values;
+                    }
                     if (typeof retrieveCurrentValueFromView === 'function') {
                         retrieveCurrentValueFromView(JSON.stringify(parsedValues));
                     }
@@ -119,7 +123,11 @@ if (typeof KnimePageLoader === 'undefined') {
         pageBuilder.validate = () => {
             return pageBuilder.app.$store.dispatch('pagebuilder/getValidity', null)
                 .then(res => {
-                    let isValid = !Object.values(res).some(isValid => isValid === false);
+                    let isValid = false;
+                    let viewValidities = Object.values(res);
+                    if (viewValidities || viewValidities.length > 0) {
+                        isValid = viewValidities.every(isValid => isValid === true);
+                    }
                     if (typeof validateCurrentValueInView === 'function') {
                         validateCurrentValueInView(Boolean(isValid));
                     }
@@ -134,7 +142,7 @@ if (typeof KnimePageLoader === 'undefined') {
         };
 
         pageBuilder.setValidationError = (errorResponse) => {
-            pageBuilder.app.$store.dispatch('pagebuilder/setValidationErrors', { page: errorResponse.data });
+            return pageBuilder.app.$store.dispatch('pagebuilder/setValidationErrors', { page: errorResponse.data });
         };
 
         // environment detection methods
