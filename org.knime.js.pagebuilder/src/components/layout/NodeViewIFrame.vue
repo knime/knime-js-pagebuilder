@@ -124,6 +124,13 @@ export default {
                 interactivityGetPublishedData(id) {
                     return getPublishedDataFunc(id);
                 },
+                getDefaultMountId() {
+                    if (this.$store.settings) {
+                        return this.$store.settings.state.defaultMountId;
+                    } else {
+                        return null;
+                    }
+                },
                 getRepository({ path, filter }) {
                     if (typeof getRepositoryFunc === 'function') {
                         return getRepositoryFunc({ path, filter });
