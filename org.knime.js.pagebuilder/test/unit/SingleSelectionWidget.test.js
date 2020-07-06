@@ -403,6 +403,21 @@ describe('SingleSelectionWidget.vue', () => {
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
         });
 
+        it('shows a different error message when no choices are available', () => {
+            propsDataList.nodeConfig.viewRepresentation.required = true;
+            propsDataList.nodeConfig.viewRepresentation.possibleChoices = [];
+            let wrapper = mount(SingleSelectionWidget, {
+                propsData: propsDataList,
+                stubs: {
+                    SingleSelect: {
+                        template: '<div />'
+                    }
+                }
+            });
+
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'No choices were specified.' });
+        });
+
         it('handles child validation', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(SingleSelectionWidget, {
