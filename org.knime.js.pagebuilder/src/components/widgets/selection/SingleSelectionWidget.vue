@@ -80,11 +80,11 @@ export default {
             if (this.viewRep.possibleChoices.length === 0) {
                 return { isValid: false, errorMessage: 'No choices were specified.' };
             }
-            if (this.viewRep.required === false) {
-                return { isValid: true, errorMessage: null };
-            }
             let isValid = true;
             let errorMessage;
+            if (this.viewRep.required === false) {
+                return { isValid, errorMessage };
+            }
             if (!this.$refs.form.hasSelection()) {
                 isValid = false;
                 errorMessage = 'Selection is required.';
