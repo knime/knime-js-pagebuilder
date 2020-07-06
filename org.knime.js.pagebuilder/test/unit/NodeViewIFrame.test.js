@@ -16,7 +16,7 @@ jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
     let interactivityConfig, apiConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
-        mockGetDownloadLink, mockGetUploadLink, mockUpload, mockCustomSketcherPath;
+        mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -40,7 +40,6 @@ describe('NodeViewIframe.vue', () => {
         mockGetDownloadLink = jest.fn();
         mockGetUploadLink = jest.fn();
         mockUpload = jest.fn();
-        mockCustomSketcherPath = jest.fn();
         apiConfig = {
             namespaced: true,
             actions: {
@@ -54,7 +53,7 @@ describe('NodeViewIframe.vue', () => {
         settingsConfig = {
             namespaced: true,
             getters: {
-                getCustomSketcherPath: mockCustomSketcherPath
+                getCustomSketcherPath: jest.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
         };
         store = new Vuex.Store({ modules: {
@@ -739,8 +738,8 @@ describe('NodeViewIframe.vue', () => {
         });
 
         it('getCustomSketcherPath calls settings store', () => {
-            window.KnimePageBuilderAPI.getCustomSketcherPath();
-            expect(mockCustomSketcherPath).toHaveBeenCalled();
+            let path = window.KnimePageBuilderAPI.getCustomSketcherPath();
+            expect(path).toEqual('sample/sketcher/path/sketcher.html');
         });
 
     });
