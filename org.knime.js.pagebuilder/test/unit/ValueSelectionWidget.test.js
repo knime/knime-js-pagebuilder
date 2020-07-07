@@ -581,12 +581,16 @@ describe('ValueSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is always valid if not required', () => {
+        it('is valid if not required and no selection made', () => {
             propsDataList.nodeConfig.viewRepresentation.required = false;
-            propsDataList.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsDataList.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataList
+            let wrapper = mount(ValueSelectionWidget, {
+                propsData: {
+                    ...propsDataList,
+                    valuePair: {
+                        value: '',
+                        column: 'Cluster Membership'
+                    }
+                }
             });
 
             expect(wrapper.vm.validate().isValid).toBe(true);

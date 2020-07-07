@@ -506,9 +506,10 @@ export default {
 
 div.frame-container {
   width: 100%;
+  padding-top: 10px; /* provides default spacing between page content */
 
   &.single-view {
-    height: 100vh;
+    height: calc(100vh - 10px);
   }
 }
 

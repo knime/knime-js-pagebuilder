@@ -269,9 +269,6 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
-            }
             let value = this.$refs.form.getValue();
             if (typeof this.$refs.form.validate === 'function') {
                 let validateEvent = this.$refs.form.validate();

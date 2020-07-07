@@ -74,7 +74,9 @@ timeout(time: 15, unit: 'MINUTES') {
         },
 
         'Tycho Build': {
-            knimetools.defaultTychoBuild('org.knime.update.js.pagebuilder')
+            node('maven') {
+                knimetools.defaultTychoBuild(updateSiteProject: 'org.knime.update.js.pagebuilder', disableOWASP: true)
+            }
         }
 
     } catch (ex) {

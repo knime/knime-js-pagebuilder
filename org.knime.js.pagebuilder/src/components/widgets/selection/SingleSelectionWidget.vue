@@ -77,12 +77,12 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
+            if (this.viewRep.possibleChoices.length === 0) {
+                return { isValid: false, errorMessage: 'No choices were specified.' };
+            }
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
-            }
-            if (!this.$refs.form.hasSelection()) {
+            if (this.viewRep.required && !this.$refs.form.hasSelection()) {
                 isValid = false;
                 errorMessage = 'Selection is required.';
             }

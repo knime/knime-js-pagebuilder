@@ -147,6 +147,8 @@ export default {
         }
     },
     async mounted() {
+        // TODO WEBP-182 File Upload Vue Widget should be required; WEBP-327 Remove if dialog option added.
+        this.nodeConfig.viewRepresentation.required = false;
         // prevent incompatible widgets (i.e. output) from registering methods with store
         if (this.hasValidationErrorMessage) {
             this.$store.dispatch('pagebuilder/addValidationErrorSetter', {
@@ -254,5 +256,6 @@ export default {
   height: 100%;
   background-color: white;
   border: none;
+  padding-top: 10px; /* provides default spacing between page content */
 }
 </style>

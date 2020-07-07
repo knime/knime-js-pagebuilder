@@ -82,16 +82,6 @@ describe('BooleanWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is valid if not required', () => {
-            propsData.nodeConfig.viewRepresentation.required = false;
-            propsData.valuePair = {};
-            let wrapper = shallowMount(BooleanWidget, {
-                propsData
-            });
-
-            expect(wrapper.vm.validate().isValid).toBe(true);
-        });
-
         it('is valid if boolean', () => {
             propsData.nodeConfig.viewRepresentation.required = true;
             propsData.valuePair = { boolean: false };

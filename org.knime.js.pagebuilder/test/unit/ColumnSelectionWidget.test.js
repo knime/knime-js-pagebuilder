@@ -1,4 +1,4 @@
-import { shallowMount, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 
 import ColumnSelectionWidget from '@/components/widgets/selection/ColumnSelectionWidget';
 import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
@@ -142,12 +142,15 @@ describe('ColumnSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is always valid if not required', () => {
+        it('is valid if not required and no selection made', () => {
             propsDataColumnSelectionList.nodeConfig.viewRepresentation.required = false;
-            propsDataColumnSelectionList.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsDataColumnSelectionList.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(ColumnSelectionWidget, {
-                propsData: propsDataColumnSelectionList
+            let wrapper = mount(ColumnSelectionWidget, {
+                propsData: {
+                    ...propsDataColumnSelectionList,
+                    valuePair: {
+                        value: []
+                    }
+                }
             });
 
             expect(wrapper.vm.validate().isValid).toBe(true);
