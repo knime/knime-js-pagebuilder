@@ -373,12 +373,15 @@ describe('SingleSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is always valid if not required', () => {
+        it('is valid if not required and no selection made', () => {
             propsDataList.nodeConfig.viewRepresentation.required = false;
-            propsDataList.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsDataList.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataList
+            let wrapper = mount(SingleSelectionWidget, {
+                propsData: {
+                    ...propsDataList,
+                    valuePair: {
+                        value: []
+                    }
+                }
             });
 
             expect(wrapper.vm.validate().isValid).toBe(true);

@@ -94,9 +94,6 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
-            }
             let value = this.$refs.form.getValue();
             if (isNaN(value)) {
                 isValid = false;

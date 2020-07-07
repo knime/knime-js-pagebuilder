@@ -15,8 +15,8 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink,
-        mockGetUploadLink, mockUpload;
+    let interactivityConfig, apiConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
+        mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -50,10 +50,17 @@ describe('NodeViewIframe.vue', () => {
                 uploadResourceLink: jest.fn().mockReturnValue(mockGetUploadLink)
             }
         };
+        settingsConfig = {
+            namespaced: true,
+            getters: {
+                getCustomSketcherPath: jest.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
+            }
+        };
         store = new Vuex.Store({ modules: {
             pagebuilder: storeConfig,
             'pagebuilder/interactivity': interactivityConfig,
-            api: apiConfig
+            api: apiConfig,
+            settings: settingsConfig
         } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
@@ -704,6 +711,7 @@ describe('NodeViewIframe.vue', () => {
             expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
             expect(window.KnimePageBuilderAPI.getDownloadLink).toBeDefined();
             expect(window.KnimePageBuilderAPI.getUploadLink).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getCustomSketcherPath).toBeDefined();
             wrapper.destroy();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
@@ -727,6 +735,11 @@ describe('NodeViewIframe.vue', () => {
             window.KnimePageBuilderAPI.getUploadLink(resourceId);
             expect(apiConfig.getters.uploadResourceLink).toHaveBeenCalled();
             expect(mockGetUploadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
+        });
+
+        it('getCustomSketcherPath calls settings store', () => {
+            let path = window.KnimePageBuilderAPI.getCustomSketcherPath();
+            expect(path).toEqual('sample/sketcher/path/sketcher.html');
         });
 
     });

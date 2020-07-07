@@ -1,4 +1,4 @@
-import { mount, shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 
 import ValueFilterSelectionWidget from '@/components/widgets/selection/ValueFilterSelectionWidget';
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
@@ -236,12 +236,16 @@ describe('ValueFilterSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is always valid if not required', () => {
+        it('is valid if not required and no selection made', () => {
             propsData.nodeConfig.viewRepresentation.required = false;
-            propsData.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsData.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(ValueFilterSelectionWidget, {
-                propsData
+            let wrapper = mount(ValueFilterSelectionWidget, {
+                propsData: {
+                    ...propsData,
+                    valuePair: {
+                        value: [],
+                        column: 'Cluster Membership'
+                    }
+                }
             });
 
             expect(wrapper.vm.validate().isValid).toBe(true);
