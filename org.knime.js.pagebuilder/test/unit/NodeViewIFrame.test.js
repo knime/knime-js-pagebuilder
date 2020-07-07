@@ -62,7 +62,7 @@ describe('NodeViewIframe.vue', () => {
             namespaced: true,
             state: () => ({ defaultMountId: 'MOUNTIE' }),
             getters: {
-                someGetter: jest.fn()
+                getCustomSketcherPath: jest.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
         };
         store = new Vuex.Store({ modules: {
@@ -724,6 +724,7 @@ describe('NodeViewIframe.vue', () => {
             expect(window.KnimePageBuilderAPI.getWorkflow).toBeDefined();
             expect(window.KnimePageBuilderAPI.getDownloadLink).toBeDefined();
             expect(window.KnimePageBuilderAPI.getUploadLink).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getCustomSketcherPath).toBeDefined();
             wrapper.destroy();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
@@ -764,6 +765,11 @@ describe('NodeViewIframe.vue', () => {
             window.KnimePageBuilderAPI.getUploadLink(resourceId);
             expect(apiConfig.getters.uploadResourceLink).toHaveBeenCalled();
             expect(mockGetUploadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
+        });
+
+        it('getCustomSketcherPath calls settings store', () => {
+            let path = window.KnimePageBuilderAPI.getCustomSketcherPath();
+            expect(path).toEqual('sample/sketcher/path/sketcher.html');
         });
 
     });

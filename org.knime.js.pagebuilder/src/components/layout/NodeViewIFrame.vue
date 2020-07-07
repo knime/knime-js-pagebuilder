@@ -120,6 +120,7 @@ export default {
         let getRepositoryFunc = this.$store.getters['api/repository'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
+        let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
         if (!window.KnimePageBuilderAPI) {
             let nodeId = this.nodeId;
             window.KnimePageBuilderAPI = {
@@ -157,6 +158,13 @@ export default {
                 getUploadLink(resourceId) {
                     if (typeof getUploadLinkFunc === 'function') {
                         return getUploadLinkFunc({ resourceId, nodeId });
+                    } else {
+                        return null;
+                    }
+                },
+                getCustomSketcherPath() {
+                    if (typeof sketcherPath === 'string') {
+                        return sketcherPath;
                     } else {
                         return null;
                     }
@@ -522,9 +530,10 @@ export default {
 
 div.frame-container {
   width: 100%;
+  padding-top: 10px; /* provides default spacing between page content */
 
   &.single-view {
-    height: 100vh;
+    height: calc(100vh - 10px);
   }
 }
 

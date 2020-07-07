@@ -373,12 +373,15 @@ describe('SingleSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is always valid if not required', () => {
+        it('is valid if not required and no selection made', () => {
             propsDataList.nodeConfig.viewRepresentation.required = false;
-            propsDataList.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsDataList.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataList
+            let wrapper = mount(SingleSelectionWidget, {
+                propsData: {
+                    ...propsDataList,
+                    valuePair: {
+                        value: []
+                    }
+                }
             });
 
             expect(wrapper.vm.validate().isValid).toBe(true);
@@ -401,6 +404,21 @@ describe('SingleSelectionWidget.vue', () => {
 
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'Selection is required.' });
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
+        });
+
+        it('shows a different error message when no choices are available', () => {
+            propsDataList.nodeConfig.viewRepresentation.required = true;
+            propsDataList.nodeConfig.viewRepresentation.possibleChoices = [];
+            let wrapper = mount(SingleSelectionWidget, {
+                propsData: propsDataList,
+                stubs: {
+                    SingleSelect: {
+                        template: '<div />'
+                    }
+                }
+            });
+
+            expect(wrapper.vm.validate()).toStrictEqual({ isValid: false, errorMessage: 'No choices were specified.' });
         });
 
         it('handles child validation', () => {
