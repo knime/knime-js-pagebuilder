@@ -90,7 +90,7 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage;
-            if (!this.$refs.form.getValue()) {
+            if (this.viewRep.required && !this.$refs.form.getValue()) {
                 isValid = false;
                 errorMessage = 'Input is required.';
             }
