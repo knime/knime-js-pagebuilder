@@ -115,6 +115,8 @@ export default {
         // This global API should only be used/extended for cases where window.postMessage can't be used
         // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
+        let defaultMountId = this.$store.state.settings.defaultMountId;
+        let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
         let getRepositoryFunc = this.$store.getters['api/repository'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
@@ -125,8 +127,15 @@ export default {
                     return getPublishedDataFunc(id);
                 },
                 getDefaultMountId() {
-                    if (this.$store.settings) {
-                        return this.$store.settings.state.defaultMountId;
+                    if (typeof defaultMountId === 'string') {
+                        return defaultMountId;
+                    } else {
+                        return null;
+                    }
+                },
+                getWorkflow() {
+                    if (typeof workflowPath === 'string') {
+                        return workflowPath;
                     } else {
                         return null;
                     }

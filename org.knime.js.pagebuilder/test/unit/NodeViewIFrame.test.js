@@ -15,8 +15,8 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetRepository,
-        mockGetDownloadLink, mockGetUploadLink, mockUpload;
+    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
+        mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -52,10 +52,25 @@ describe('NodeViewIframe.vue', () => {
                 uploadResourceLink: jest.fn().mockReturnValue(mockGetUploadLink)
             }
         };
+        wizardConfig = {
+            namespaced: true,
+            getters: {
+                workflowPath: jest.fn().mockReturnValue('/some/path')
+            }
+        };
+        settingsConfig = {
+            namespaced: true,
+            state: () => ({ defaultMountId: 'MOUNTIE' }),
+            getters: {
+                someGetter: jest.fn()
+            }
+        };
         store = new Vuex.Store({ modules: {
             pagebuilder: storeConfig,
             'pagebuilder/interactivity': interactivityConfig,
-            api: apiConfig
+            api: apiConfig,
+            settings: settingsConfig,
+            wizardExecution: wizardConfig
         } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
@@ -269,7 +284,8 @@ describe('NodeViewIframe.vue', () => {
                     removeValueGetter,
                     removeValidationErrorSetter
                 }
-            }
+            },
+            settings: settingsConfig
         } });
         methodsStore.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         methodsStore.commit('pagebuilder/setPage', {
@@ -704,6 +720,8 @@ describe('NodeViewIframe.vue', () => {
         it('registers & unregisters global PageBuilder API', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
             expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getDefaultMountId).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getWorkflow).toBeDefined();
             expect(window.KnimePageBuilderAPI.getDownloadLink).toBeDefined();
             expect(window.KnimePageBuilderAPI.getUploadLink).toBeDefined();
             wrapper.destroy();
@@ -715,6 +733,16 @@ describe('NodeViewIframe.vue', () => {
             window.KnimePageBuilderAPI.interactivityGetPublishedData(id);
             expect(interactivityConfig.getters.getPublishedData).toHaveBeenCalled();
             expect(mockGetPublishedData).toHaveBeenCalledWith(id);
+        });
+
+        it('getDefaultMountId calls settings store', () => {
+            let id = window.KnimePageBuilderAPI.getDefaultMountId();
+            expect(id).toEqual('MOUNTIE');
+        });
+
+        it('getWorkflow calls wizardExecution store', () => {
+            let workflow =  window.KnimePageBuilderAPI.getWorkflow();
+            expect(workflow).toEqual('/some/path');
         });
 
         it('getRepository calls api store', () => {
