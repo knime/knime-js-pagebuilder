@@ -1,4 +1,5 @@
 window.knimeResourceBaseUrl = '%RESOURCEBASEURL%';
+window.pageBuilderPresent = true;
 
 window.knimeLoader = (function () {
     var origin = '%ORIGIN%';
