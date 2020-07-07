@@ -256,5 +256,6 @@ export default {
   height: 100%;
   background-color: white;
   border: none;
+  padding-top: 10px; /* provides default spacing between page content */
 }
 </style>
