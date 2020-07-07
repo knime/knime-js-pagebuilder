@@ -355,12 +355,15 @@ describe('MultipleSelectionWidget.vue', () => {
     });
 
     describe('validation', () => {
-        it('is always valid if not required', () => {
+        it('is valid if not required and no selection made', () => {
             propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = false;
-            propsDataMultiselectListBox.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsDataMultiselectListBox.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(MultipleSelectionWidget, {
-                propsData: propsDataMultiselectListBox
+            let wrapper = mount(MultipleSelectionWidget, {
+                propsData: {
+                    ...propsDataMultiselectListBox,
+                    valuePair: {
+                        value: []
+                    }
+                }
             });
 
             expect(wrapper.vm.validate().isValid).toBe(true);

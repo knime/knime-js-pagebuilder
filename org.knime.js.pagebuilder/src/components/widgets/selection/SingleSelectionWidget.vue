@@ -82,10 +82,7 @@ export default {
             }
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
-            }
-            if (!this.$refs.form.hasSelection()) {
+            if (this.viewRep.required && !this.$refs.form.hasSelection()) {
                 isValid = false;
                 errorMessage = 'Selection is required.';
             }

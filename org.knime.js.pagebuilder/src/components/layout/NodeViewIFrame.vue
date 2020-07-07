@@ -117,6 +117,7 @@ export default {
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
+        let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
         if (!window.KnimePageBuilderAPI) {
             let nodeId = this.nodeId;
             window.KnimePageBuilderAPI = {
@@ -133,6 +134,13 @@ export default {
                 getUploadLink(resourceId) {
                     if (typeof getUploadLinkFunc === 'function') {
                         return getUploadLinkFunc({ resourceId, nodeId });
+                    } else {
+                        return null;
+                    }
+                },
+                getCustomSketcherPath() {
+                    if (typeof sketcherPath === 'string') {
+                        return sketcherPath;
                     } else {
                         return null;
                     }
@@ -244,7 +252,6 @@ export default {
             scripts.push(`<script>
                 if (typeof knimeService !== 'undefined') {
                     knimeService.resourceBaseUrl = '${resourceBaseUrl}';
-                    knimeService.pageBuilderPresent = true;
                     knimeService.nodeId = '${this.nodeId}';
                 }
             <\/script>`); // eslint-disable-line no-useless-escape
