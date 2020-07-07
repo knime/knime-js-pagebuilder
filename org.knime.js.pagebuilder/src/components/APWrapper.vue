@@ -17,6 +17,7 @@ export default {
 <template>
   <PageBuilder v-if="pageBuilderLoaded" />
 </template>
+
 <style lang="postcss">
 @import "webapps-common/ui/css";
 
