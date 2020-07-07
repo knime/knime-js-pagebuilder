@@ -60,12 +60,7 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            let isValid = true;
-            let errorMessage;
-            if (this.viewRep.required === false) {
-                return { isValid, errorMessage };
-            }
-            isValid = typeof this.value === 'boolean';
+            let isValid = typeof this.value === 'boolean';
             return { isValid, errorMessage: isValid ? null : 'Input is not responding.' };
         }
     }

@@ -115,13 +115,38 @@ export default {
         // This global API should only be used/extended for cases where window.postMessage can't be used
         // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
+        let storeSettings = this.$store.state.settings;
+        let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
+        let getRepositoryFunc = this.$store.getters['api/repository'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
+        let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
         if (!window.KnimePageBuilderAPI) {
             let nodeId = this.nodeId;
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
                     return getPublishedDataFunc(id);
+                },
+                getDefaultMountId() {
+                    if (typeof storeSettings === 'undefined') {
+                        return null;
+                    } else {
+                        return storeSettings.defaultMountId;
+                    }
+                },
+                getWorkflow() {
+                    if (typeof workflowPath === 'string') {
+                        return workflowPath;
+                    } else {
+                        return null;
+                    }
+                },
+                getRepository({ path, filter }) {
+                    if (typeof getRepositoryFunc === 'function') {
+                        return getRepositoryFunc({ path, filter });
+                    } else {
+                        return null;
+                    }
                 },
                 getDownloadLink(resourceId) {
                     if (typeof getDownloadLinkFunc === 'function') {
@@ -133,6 +158,13 @@ export default {
                 getUploadLink(resourceId) {
                     if (typeof getUploadLinkFunc === 'function') {
                         return getUploadLinkFunc({ resourceId, nodeId });
+                    } else {
+                        return null;
+                    }
+                },
+                getCustomSketcherPath() {
+                    if (typeof sketcherPath === 'string') {
+                        return sketcherPath;
                     } else {
                         return null;
                     }
@@ -244,7 +276,6 @@ export default {
             scripts.push(`<script>
                 if (typeof knimeService !== 'undefined') {
                     knimeService.resourceBaseUrl = '${resourceBaseUrl}';
-                    knimeService.pageBuilderPresent = true;
                     knimeService.nodeId = '${this.nodeId}';
                 }
             <\/script>`); // eslint-disable-line no-useless-escape
@@ -498,9 +529,10 @@ export default {
 
 div.frame-container {
   width: 100%;
+  padding-top: 10px; /* provides default spacing between page content */
 
   &.single-view {
-    height: 100vh;
+    height: calc(100vh - 10px);
   }
 }
 

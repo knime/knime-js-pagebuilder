@@ -136,7 +136,7 @@ export default {
   </div>
 </template>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
 .slider-focusable:focus {

@@ -15,8 +15,8 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
 jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
-    let interactivityConfig, apiConfig, store, localVue, context, mockGetPublishedData, mockGetDownloadLink,
-        mockGetUploadLink, mockUpload;
+    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
+        mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -37,6 +37,7 @@ describe('NodeViewIframe.vue', () => {
                 getPublishedData: jest.fn().mockReturnValue(mockGetPublishedData)
             }
         };
+        mockGetRepository = jest.fn();
         mockGetDownloadLink = jest.fn();
         mockGetUploadLink = jest.fn();
         mockUpload = jest.fn();
@@ -46,14 +47,30 @@ describe('NodeViewIframe.vue', () => {
                 uploadResource: mockUpload
             },
             getters: {
+                repository: jest.fn().mockReturnValue(mockGetRepository),
                 downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink),
                 uploadResourceLink: jest.fn().mockReturnValue(mockGetUploadLink)
+            }
+        };
+        wizardConfig = {
+            namespaced: true,
+            getters: {
+                workflowPath: jest.fn().mockReturnValue('/some/path')
+            }
+        };
+        settingsConfig = {
+            namespaced: true,
+            state: () => ({ defaultMountId: 'MOUNTIE' }),
+            getters: {
+                getCustomSketcherPath: jest.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
         };
         store = new Vuex.Store({ modules: {
             pagebuilder: storeConfig,
             'pagebuilder/interactivity': interactivityConfig,
-            api: apiConfig
+            api: apiConfig,
+            settings: settingsConfig,
+            wizardExecution: wizardConfig
         } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
@@ -267,7 +284,8 @@ describe('NodeViewIframe.vue', () => {
                     removeValueGetter,
                     removeValidationErrorSetter
                 }
-            }
+            },
+            settings: settingsConfig
         } });
         methodsStore.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         methodsStore.commit('pagebuilder/setPage', {
@@ -702,8 +720,11 @@ describe('NodeViewIframe.vue', () => {
         it('registers & unregisters global PageBuilder API', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
             expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getDefaultMountId).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getWorkflow).toBeDefined();
             expect(window.KnimePageBuilderAPI.getDownloadLink).toBeDefined();
             expect(window.KnimePageBuilderAPI.getUploadLink).toBeDefined();
+            expect(window.KnimePageBuilderAPI.getCustomSketcherPath).toBeDefined();
             wrapper.destroy();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
@@ -715,6 +736,23 @@ describe('NodeViewIframe.vue', () => {
             expect(mockGetPublishedData).toHaveBeenCalledWith(id);
         });
 
+        it('getDefaultMountId calls settings store', () => {
+            let id = window.KnimePageBuilderAPI.getDefaultMountId();
+            expect(id).toEqual('MOUNTIE');
+        });
+
+        it('getWorkflow calls wizardExecution store', () => {
+            let workflow =  window.KnimePageBuilderAPI.getWorkflow();
+            expect(workflow).toEqual('/some/path');
+        });
+
+        it('getRepository calls api store', () => {
+            let config = { path: '/', filter: null };
+            window.KnimePageBuilderAPI.getRepository(config);
+            expect(apiConfig.getters.repository).toHaveBeenCalled();
+            expect(mockGetRepository).toHaveBeenCalledWith(config);
+        });
+
         it('getDownloadLink calls api store', () => {
             let resourceId = 'file-donwload';
             window.KnimePageBuilderAPI.getDownloadLink(resourceId);
@@ -722,11 +760,16 @@ describe('NodeViewIframe.vue', () => {
             expect(mockGetDownloadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
         });
 
-        it('getDownloadLink calls api store', () => {
+        it('getUploadLink calls api store', () => {
             let resourceId = 'sample.txt';
             window.KnimePageBuilderAPI.getUploadLink(resourceId);
             expect(apiConfig.getters.uploadResourceLink).toHaveBeenCalled();
             expect(mockGetUploadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
+        });
+
+        it('getCustomSketcherPath calls settings store', () => {
+            let path = window.KnimePageBuilderAPI.getCustomSketcherPath();
+            expect(path).toEqual('sample/sketcher/path/sketcher.html');
         });
 
     });
