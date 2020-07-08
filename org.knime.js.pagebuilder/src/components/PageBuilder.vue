@@ -8,7 +8,6 @@ export default {
         Page
     },
     initStore(store) { // this method is to be called by the embedding app, cf. README
-        consola.debug('PageBuilder initStore');
         store.registerModule('pagebuilder', pagebuilderStoreConfig);
         store.registerModule('pagebuilder/interactivity', interactivityStoreConfig);
     },

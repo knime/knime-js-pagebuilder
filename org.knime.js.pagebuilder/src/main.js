@@ -62,10 +62,23 @@ if (typeof KnimePageLoader === 'undefined') {
         };
         // application entry
         pageBuilder.init = async (arg1, arg2, arg3, debug) => {
-            // set log levels
-            window.consola = consola.create({
-                level: debug && !window.headless ? CONST_DEBUG_LOG_LEVEL : -1
-            });
+            // likely running in IE11 where console is not defined without devtools
+            if (typeof window.console === 'undefined') {
+                window.console = {
+                    error: () => {},
+                    warn: () => {},
+                    log: () => {},
+                    info: () => {},
+                    debug: () => {},
+                    trace: () => {}
+                };
+                window.consola = window.console;
+            } else { // set the global consola object to allow debugging and successful headless image generation
+                // set log levels
+                window.consola = consola.create({
+                    level: debug && !window.headless ? CONST_DEBUG_LOG_LEVEL : -1
+                });
+            }
             // parse page
             let page = {
                 wizardPageContent: typeof arg1 === 'string' ? JSON.parse(arg1) : arg1,
