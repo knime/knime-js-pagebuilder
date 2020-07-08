@@ -127,7 +127,10 @@ export default {
       />
     </transition>
     <transition name="slide-fade">
-      <section v-if="active">
+      <div
+        v-if="active"
+        class="alert-body"
+      >
         <div :class="['pop-over', expandedClass, type]">
           <header>
             <Component
@@ -193,7 +196,7 @@ export default {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </transition>
   </div>
 </template>
@@ -242,16 +245,18 @@ export default {
   z-index: 1;
   position: absolute;
   top: 0;
+  left: 0;
   background-color: rgba(255, 255, 255, 0.7);
   width: 100%;
   height: 100%;
 }
 
-section {
+.alert-body {
   font-size: 16px;
   z-index: 1;
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 
