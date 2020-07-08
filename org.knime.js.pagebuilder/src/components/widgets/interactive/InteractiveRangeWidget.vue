@@ -4,7 +4,7 @@ import SliderWidget from '@/components/widgets/input/SliderWidget';
 const DATA_TYPE = 'double';
 const UPDATE_KEY_MIN = 'viewValue.filter.columns.0.minimum';
 const UPDATE_KEY_MAX = 'viewValue.filter.columns.0.maximum';
-const MAX_DECIMAL_PRECISION = 6;
+const MAX_DECIMAL_PRECISION = 7;
 
 /**
  * Interactive Range Slider Filter Widget.
@@ -89,7 +89,10 @@ export default {
     },
     methods: {
         getValue() {
-            return this.viewValue;
+            let value = JSON.parse(JSON.stringify(this.viewValue));
+            value.filter.columns[0].maximum = typeof this.valueMaximum === 'number' ? this.valueMaximum : 'Infinity';
+            value.filter.columns[0].minimum = typeof this.valueMinimum === 'number' ? this.valueMinimum : '-Infinity';
+            return value;
         },
         onChange(value) {
             let update = {};

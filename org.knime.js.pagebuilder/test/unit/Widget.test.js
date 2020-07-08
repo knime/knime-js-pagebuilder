@@ -143,9 +143,11 @@ describe('Widget.vue', () => {
         });
     });
 
-    it('renders', () => {
+    it('renders and updates the required field in the viewRepresentation', () => {
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
+        // TODO WEBP-182 File Upload Vue Widget should be required; WEBP-327 Remove if dialog option added.
+        expect(wrapper.vm.nodeConfig.viewRepresentation.required).toBe(false);
     });
 
     it('publishes update to store', () => {

@@ -183,6 +183,25 @@ describe('InteractiveRangeWidget.vue', () => {
         });
     });
 
+    it('rounds values when returning the value with the getValue method', () => {
+        const originalMaximum = .9876543210123;
+        const originalMinimum = .0123456789098;
+        let highPrecisionNodeConfig = JSON.parse(JSON.stringify(propsData));
+        highPrecisionNodeConfig.nodeConfig.viewValue.filter.columns[0].maximum = originalMaximum;
+        highPrecisionNodeConfig.nodeConfig.viewValue.filter.columns[0].minimum = originalMinimum;
+        let wrapper = shallowMount(InteractiveRangeWidget, {
+            ...context,
+            propsData: highPrecisionNodeConfig
+        });
+        let currentValue = wrapper.vm.getValue();
+        expect(currentValue.filter.columns[0].maximum < originalMaximum).toBe(true);
+        expect(currentValue.filter.columns[0].minimum > originalMinimum).toBe(true);
+        // eslint-disable-next-line no-magic-numbers
+        expect(currentValue.filter.columns[0].maximum).toBe(.9876543);
+        // eslint-disable-next-line no-magic-numbers
+        expect(currentValue.filter.columns[0].minimum).toBe(.0123457);
+    });
+
     describe('validation', () => {
         it('is always valid get value method works', () => {
             let wrapper = shallowMount(InteractiveRangeWidget, {

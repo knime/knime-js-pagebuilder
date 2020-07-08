@@ -146,7 +146,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.max).toBe(25);
         expect(wrapper.vm.value).toBe(5);
         expect(wrapper.vm.direction).toBe('ttb');
-        expect(wrapper.vm.stepSize).toBe(.000001);
+        expect(wrapper.vm.stepSize).toBe(.0000001);
         expect(wrapper.vm.height).toBe(533);
         expect(wrapper.vm.tooltips).toStrictEqual([{ tooltip: 'always' }]);
         expect(wrapper.vm.connect).toBe('none');

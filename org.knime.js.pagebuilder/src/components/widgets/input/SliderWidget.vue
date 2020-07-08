@@ -6,8 +6,8 @@ import formatTooltip from '../../../util/tooltipFormatter';
 import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
 
 const DATA_TYPE = 'double';
-const MINIMUM_SLIDER_STEP = .000001;
-const MAX_DECIMAL_PRECISION = 6;
+const MINIMUM_SLIDER_STEP = .0000001;
+const MAX_DECIMAL_PRECISION = 7;
 const VERTICAL_SLIDER_HEIGHT = 533;
 
 /**
