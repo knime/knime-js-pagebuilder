@@ -130,7 +130,7 @@ describe('PageBuilder store', () => {
             expect(viewValues).toEqual({ [nodeId]: sampleVal });
         });
 
-        it('throws error when getting view values failed', async () => {
+        it('returns empty object when getting view values fails', async () => {
             let nodeId = '0.0.7';
             store.dispatch('addValueGetter', {
                 nodeId,
@@ -139,7 +139,7 @@ describe('PageBuilder store', () => {
                 }
             });
 
-            await expect(store.dispatch('getViewValues')).rejects.toThrow();
+            await expect(store.dispatch('getViewValues')).resolves.toStrictEqual({});
         });
     });
 
@@ -215,6 +215,18 @@ describe('PageBuilder store', () => {
             store.dispatch('addValidator', { nodeId, validator });
             let pageValidity = await store.dispatch('getValidity');
             expect(pageValidity).toEqual({ [nodeId]: true });
+        });
+
+        it('returns empty object when validation fails', async () => {
+            let nodeId = '0.0.7';
+            store.dispatch('addValidator', {
+                nodeId,
+                validator() {
+                    return Promise.reject(new Error('error'));
+                }
+            });
+
+            await expect(store.dispatch('getValidity')).resolves.toStrictEqual({});
         });
     });
 
