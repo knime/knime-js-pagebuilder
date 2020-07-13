@@ -755,14 +755,16 @@ describe('NodeViewIframe.vue', () => {
 
         it('getDownloadLink calls api store', () => {
             let resourceId = 'file-donwload';
-            window.KnimePageBuilderAPI.getDownloadLink(resourceId);
+            let nodeId = '0:0:7';
+            window.KnimePageBuilderAPI.getDownloadLink({ resourceId, nodeId });
             expect(apiConfig.getters.downloadResourceLink).toHaveBeenCalled();
             expect(mockGetDownloadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
         });
 
         it('getUploadLink calls api store', () => {
             let resourceId = 'sample.txt';
-            window.KnimePageBuilderAPI.getUploadLink(resourceId);
+            let nodeId = '0:0:7';
+            window.KnimePageBuilderAPI.getUploadLink({ resourceId, nodeId });
             expect(apiConfig.getters.uploadResourceLink).toHaveBeenCalled();
             expect(mockGetUploadLink).toHaveBeenCalledWith({ nodeId: '0:0:7', resourceId });
         });

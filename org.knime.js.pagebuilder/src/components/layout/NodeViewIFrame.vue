@@ -122,7 +122,6 @@ export default {
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
         let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
         if (!window.KnimePageBuilderAPI) {
-            let nodeId = this.nodeId;
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
                     return getPublishedDataFunc(id);
@@ -148,14 +147,14 @@ export default {
                         return null;
                     }
                 },
-                getDownloadLink(resourceId) {
+                getDownloadLink({ resourceId, nodeId }) {
                     if (typeof getDownloadLinkFunc === 'function') {
                         return getDownloadLinkFunc({ resourceId, nodeId });
                     } else {
                         return null;
                     }
                 },
-                getUploadLink(resourceId) {
+                getUploadLink({ resourceId, nodeId }) {
                     if (typeof getUploadLinkFunc === 'function') {
                         return getUploadLinkFunc({ resourceId, nodeId });
                     } else {
