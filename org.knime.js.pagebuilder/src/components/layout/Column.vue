@@ -1,4 +1,5 @@
 <script>
+import wrapViewContent from '../../util/wrapViewContent';
 import NodeView from './NodeView';
 
 const maxGridWidth = 12;
@@ -63,7 +64,7 @@ export default {
     },
     computed: {
         content() {
-            return this.columnConfig.content;
+            return wrapViewContent(this.columnConfig.content);
         },
         classes() {
             let classes = ['col'];

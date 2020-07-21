@@ -3,6 +3,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import PageBuilder from '@/components/PageBuilder';
 import Page from '@/components/layout/Page';
+import AlertGlobal from '@/components/layout/AlertGlobal';
 
 describe('PageBuilder.vue', () => {
 
@@ -29,13 +30,14 @@ describe('PageBuilder.vue', () => {
         expect(store.state['pagebuilder/interactivity']).toBeDefined();
     });
 
-    it('renders page component', () => {
+    it('renders', () => {
         let wrapper = shallowMount(PageBuilder, context);
 
         expect(wrapper.find(Page).exists()).toBeTruthy();
+        expect(wrapper.find(AlertGlobal).exists()).toBeTruthy();
     });
 
-    it('renders nothing if called with unsupported wizardExecutionState', () => {
+    it('does not render Page if called with unsupported wizardExecutionState', () => {
         const page = {
             wizardExecutionState: 'SOMEFAKESTATE'
         };
@@ -43,7 +45,7 @@ describe('PageBuilder.vue', () => {
 
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.html()).toBeUndefined();
+        expect(wrapper.find(Page).exists()).toBeFalsy();
     });
 
 });
