@@ -16,7 +16,7 @@ jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
     let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
-        mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
+        mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -37,6 +37,7 @@ describe('NodeViewIframe.vue', () => {
                 getPublishedData: jest.fn().mockReturnValue(mockGetPublishedData)
             }
         };
+        mockGetUser = jest.fn();
         mockGetRepository = jest.fn();
         mockGetDownloadLink = jest.fn();
         mockGetUploadLink = jest.fn();
@@ -47,6 +48,7 @@ describe('NodeViewIframe.vue', () => {
                 uploadResource: mockUpload
             },
             getters: {
+                user: jest.fn().mockReturnValue(mockGetUser),
                 repository: jest.fn().mockReturnValue(mockGetRepository),
                 downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink),
                 uploadResourceLink: jest.fn().mockReturnValue(mockGetUploadLink)
@@ -751,6 +753,12 @@ describe('NodeViewIframe.vue', () => {
             window.KnimePageBuilderAPI.getRepository(config);
             expect(apiConfig.getters.repository).toHaveBeenCalled();
             expect(mockGetRepository).toHaveBeenCalledWith(config);
+        });
+
+        it('getUser calls api store', () => {
+            window.KnimePageBuilderAPI.getUser();
+            expect(apiConfig.getters.user).toHaveBeenCalled();
+            expect(mockGetUser).toHaveBeenCalled();
         });
 
         it('getDownloadLink calls api store', () => {
