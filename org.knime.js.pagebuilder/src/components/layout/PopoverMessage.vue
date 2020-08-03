@@ -12,6 +12,9 @@ import CopyIcon from '~/webapps-common/ui/assets/img/icons/copy.svg?inline';
 
 import { copyText } from '~/webapps-common/util/copyText';
 
+// Arbitrary length limit to determine if messages should be expandable or displayed initially.
+const MAX_EXPANDED_MESSAGE_LENGTH = 280;
+
 /**
  * An absolutely-positioned, centered, expandable message component. This component centers itself inside of the parent
  * container and consists of a title, subtitle, message body, slot for a message body header as well as controls for
@@ -62,8 +65,14 @@ export default {
         };
     },
     computed: {
-        expandedClass() {
-            return this.type === 'warn' || this.messageExpanded ? 'expanded' : null;
+        /**
+         * @returns {Boolean} - if the message should be expandable or if it's short enough to be pre-exapanded.
+         */
+        expandable() {
+            return this.messageBody && this.messageBody.length > MAX_EXPANDED_MESSAGE_LENGTH;
+        },
+        expanded() {
+            return !this.expandable || this.messageExpanded;
         }
     },
     methods: {
@@ -93,19 +102,17 @@ export default {
         copyText() {
             copyText(this.$refs.messageContent.textContent);
             this.$store.dispatch('notification/show', {
-                notification: {
-                    message: 'Text copied!',
-                    type: 'success',
-                    autoRemove: true
-                }
-            });
+                message: 'Text copied!',
+                type: 'success',
+                autoRemove: true
+            }, { root: true });
         }
     }
 };
 </script>
 
 <template>
-  <div :class="['pop-over', expandedClass, type]">
+  <div :class="['pop-over',{ expanded, expandable }, type]">
     <header>
       <Component
         :is="type === 'warn' ? 'CircleWarningIcon' : 'SignWarningIcon'"
@@ -138,10 +145,10 @@ export default {
       <div class="expand-controls">
         <span>{{ subtitle }}</span>
         <span
-          v-if="type !== 'warn'"
+          v-if="expandable"
           class="expand-text"
         >
-          (See {{ messageExpanded ? 'less' : 'more' }})
+          (See {{ expanded ? 'less' : 'more' }})
           <Button
             class="expand-button"
             title="Show more"
@@ -153,7 +160,7 @@ export default {
       </div>
       <transition name="message-fade">
         <div
-          v-show="type === 'warn' || messageExpanded"
+          v-show="expanded"
           ref="messageContent"
           class="scrollable-message"
         >
@@ -165,7 +172,7 @@ export default {
       </transition>
       <div class="copy-button-container">
         <FunctionButton
-          v-show="messageExpanded"
+          v-show="expanded"
           :compact="true"
           class="copy-button"
           @click="copyText"
@@ -372,7 +379,11 @@ export default {
     background-color: var(--theme-color-error);
   }
 
-  &.warn {
+  &.warn header {
+    background-color: var(--theme-color-action-required);
+  }
+
+  &:not(.expandable) {
     &.expanded {
       display: flex;
       flex-direction: column;
@@ -388,10 +399,6 @@ export default {
           height: calc(100% - 50px);
         }
       }
-    }
-
-    & header {
-      background-color: var(--theme-color-action-required);
     }
   }
 }
