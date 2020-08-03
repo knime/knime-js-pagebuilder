@@ -39,8 +39,6 @@ export default {
     },
     data() {
         return {
-            isValid: true,
-            errorMessage: null,
             alert: null
         };
     },
@@ -375,9 +373,8 @@ export default {
             return new Promise((resolve, reject) => {
                 this.validateCallback = ({ isValid }) => {
                     if (!isValid) {
-                        this.errorMessage = 'View validation failed.';
+                        this.setLocalError('View validation failed.');
                     }
-                    this.isValid = isValid;
                     window.clearTimeout(this.cancelValidate);
                     resolve({ nodeId: this.nodeId, isValid });
                 };
@@ -388,9 +385,8 @@ export default {
                     type: 'validate'
                 }, this.origin);
                 this.cancelValidate = window.setTimeout(() => {
-                    this.isValid = false;
-                    this.errorMessage = 'View is not responding.';
-                    resolve({ nodeId: this.nodeId, isValid: this.isValid });
+                    this.setLocalError('View is not responding.');
+                    resolve({ nodeId: this.nodeId, isValid: false });
                 }, validatorTimeout);
             });
         },
@@ -400,6 +396,7 @@ export default {
                 this.getValueCallback = ({ error, value }) => {
                     window.clearTimeout(this.cancelValueGetter);
                     if (error) {
+                        this.setLocalError(error);
                         reject(new Error(error));
                     } else {
                         resolve({ nodeId: this.nodeId, value });
@@ -412,7 +409,9 @@ export default {
                     type: 'getValue'
                 }, this.origin);
                 this.cancelValueGetter = window.setTimeout(() => {
-                    reject(new Error('Value could not be retrieved in the allocated time.'));
+                    let errorMessage = 'Value could not be retrieved in the allocated time.';
+                    this.setLocalError(errorMessage);
+                    reject(new Error(errorMessage));
                 }, valueGetterTimeout);
             });
         },
@@ -422,6 +421,7 @@ export default {
                 this.setValidationErrorCallback = ({ error }) => {
                     window.clearTimeout(this.cancelSetValidatorError);
                     if (error) {
+                        this.setLocalError(error);
                         reject(new Error(error));
                     } else {
                         resolve(true);
@@ -435,8 +435,23 @@ export default {
                     errorMessage
                 }, this.origin);
                 this.cancelSetValidatorError = window.setTimeout(() => {
-                    reject(new Error('Validation error message could not be set in the allocated time.'));
+                    let errorMessage = 'Validation error message could not be set in the allocated time.';
+                    this.setLocalError(errorMessage);
+                    reject(new Error(errorMessage));
                 }, setValidationErrorTimeout);
+            });
+        },
+
+        /**
+         * The local helper function to create an error alert to display node specific information.
+         *s
+         * @param {String} message - the message to set on the global alert when details are shown.
+         * @returns {undefined}
+         */
+        setLocalError(message) {
+            this.handleAlert({
+                message,
+                level: 'error'
             });
         },
 

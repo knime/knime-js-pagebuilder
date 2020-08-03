@@ -417,6 +417,12 @@ describe('NodeViewIframe.vue', () => {
                 data: { nodeId: '0:0:7', type: 'getValue', error: errorMessage }
             });
 
+            expect(wrapper.vm.alert).toStrictEqual({
+                level: 'error',
+                message: 'some error message',
+                nodeInfo: undefined, // eslint-disable-line no-undefined
+                type: 'error'
+            });
             return expect(valuePromise).rejects.toStrictEqual(new Error(errorMessage));
         });
     });
@@ -471,6 +477,12 @@ describe('NodeViewIframe.vue', () => {
                 origin: window.origin,
                 data: { nodeId: '0:0:7', type: 'validate', error: 'Error', isValid: false }
             });
+            expect(wrapper.vm.alert).toStrictEqual({
+                level: 'error',
+                message: 'View validation failed.',
+                nodeInfo: undefined, // eslint-disable-line no-undefined
+                type: 'error'
+            });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
         });
 
@@ -480,6 +492,12 @@ describe('NodeViewIframe.vue', () => {
             let valuePromise = wrapper.vm.validate();
             // don't provide a message queue response
             jest.runAllTimers();
+            expect(wrapper.vm.alert).toStrictEqual({
+                level: 'error',
+                message: 'View is not responding.',
+                nodeInfo: undefined, // eslint-disable-line no-undefined
+                type: 'error'
+            });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
         });
     });
@@ -534,6 +552,12 @@ describe('NodeViewIframe.vue', () => {
                 origin: window.origin,
                 data: { nodeId: '0:0:7', type: 'setValidationError', error: 'Error', isValid: false }
             });
+            expect(wrapper.vm.alert).toStrictEqual({
+                level: 'error',
+                message: 'Error',
+                nodeInfo: undefined, // eslint-disable-line no-undefined
+                type: 'error'
+            });
             let response = await Promise.resolve(valuePromise);
             expect(response instanceof Error).toBe(true);
             expect(response.message).toBe('Error');
@@ -583,8 +607,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
             // missing origin
             messageEvent = { data: { nodeId } };
@@ -593,8 +615,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
             // mismatched nodeId
             messageEvent = { data: { nodeId: 'other:node' } };
@@ -603,8 +623,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -628,8 +646,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -646,8 +662,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'validate' });
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -664,8 +678,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'getValue' });
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -682,8 +694,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'setValidationError' });
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -701,8 +711,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toStrictEqual({ nodeId, nodeInfo: {}, type: 'warn', message: 'test' });
         });
 
@@ -720,8 +728,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toStrictEqual({
                 nodeId, nodeInfo: {}, type: 'error', message: 'Something went wrong', error: 'Something went wrong'
             });
