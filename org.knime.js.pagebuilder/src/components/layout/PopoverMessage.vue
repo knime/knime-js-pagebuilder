@@ -281,7 +281,7 @@ export default {
       white-space: pre-line;
       overflow-x: hidden;
       width: calc(100% - 16px);
-      height: calc(100% - 90px);
+      height: calc(100% - 85px);
       position: absolute;
 
       & .info-header {
@@ -321,7 +321,8 @@ export default {
       justify-content: center;
 
       & .copy-button {
-        margin-top: 5px;
+        margin-top: 2.5px;
+        margin-bottom: 2.5px;
       }
     }
   }
@@ -387,16 +388,26 @@ export default {
     &.expanded {
       display: flex;
       flex-direction: column;
-      height: fit-content; /* firefox does not support yet; cause warning to always be 75% height */
-      max-height: 75%;
+      height: fit-content; /* firefox does not support yet; causes non-expandable message to always be 50% height */
+      max-height: 50%;
       overflow-y: hidden;
 
       & .message-body {
-        height: unset;
-        min-height: 90px;
+        height: 100%;
+
+        /* autoprefixer: ignore next */
+        height: fit-content;
+        min-height: 115px;
 
         & .scrollable-message {
-          height: calc(100% - 50px);
+          max-height: calc(50vh - 135px);
+          height: calc(100% - 85px);
+        }
+      }
+
+      &.error {
+        & .message-body {
+          min-height: 150px;
         }
       }
     }
