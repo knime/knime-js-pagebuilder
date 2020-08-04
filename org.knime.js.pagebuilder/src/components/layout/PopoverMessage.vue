@@ -199,7 +199,7 @@ export default {
   max-height: 100px;
   height: unset;
   transition: max-height 0.3s ease-in;
-  margin: auto;
+  margin: auto 25%;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -308,11 +308,11 @@ export default {
 
     & .message-body {
       height: calc(100% - 50px);
-      max-height: unset;
+      max-height: 100%;
       box-sizing: content-box;
 
       & .scrollable-message {
-        position: unset;
+        position: relative;
       }
     }
 
