@@ -52,6 +52,7 @@ export default {
       v-for="(row, index) in layout.rows"
       :key="index"
       :row-config="row"
+      class="parent-row"
     />
   </div>
 </template>
@@ -65,6 +66,12 @@ export default {
   & >>> *::before,
   & >>> *::after {
     box-sizing: border-box;
+  }
+
+  & .parent-row.row {
+    /* prevent top level overflow of layout which will cause a small scroll on small screens */
+    margin-right: -12px;
+    margin-left: -12px;
   }
 }
 </style>
