@@ -1,6 +1,5 @@
 <script>
-import ErrorMessage from '../widgets/baseElements/text/ErrorMessage';
-import ViewAlert from './ViewAlert';
+import AlertLocal from './AlertLocal';
 import iframeResizer from 'iframe-resizer/js/iframeResizer';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
@@ -20,8 +19,7 @@ const setValidationErrorTimeout = 1000; // ms
  */
 export default {
     components: {
-        ErrorMessage,
-        ViewAlert
+        AlertLocal
     },
     props: {
         /**
@@ -75,9 +73,6 @@ export default {
         },
         classes() {
             let classes = [];
-            if (!this.isValid) {
-                classes.push('error');
-            }
             if (!this.autoHeight) {
                 classes.push('full-height');
             }
@@ -95,6 +90,9 @@ export default {
         isSingleView() {
             let page = this.$store.state.pagebuilder.page;
             return page && page.wizardPageContent && page.wizardPageContent.isSingleView;
+        },
+        displayAlert() {
+            return this.alert && this.alert.type === 'error';
         }
     },
 
@@ -345,10 +343,9 @@ export default {
             if (event.origin !== originCheck || !data || !data.type || data.nodeId !== this.nodeId) {
                 return;
             }
+            // Important: allow processing of the message to continue even if there was an error.
             if (data.error) {
-                // errors can occur on any event type, further handling of the event might still be necessary
-                this.errorMessage = data.error;
-                this.isValid = false;
+                this.handleAlert(data);
             }
             if (data.type === 'load') {
                 consola.debug(`View resource loading for ${this.nodeId} completed`);
@@ -368,10 +365,7 @@ export default {
             } else if (data.type === 'setValidationError') {
                 this.setValidationErrorCallback(data);
             } else if (data.type === 'alert') {
-                this.alert = {
-                    ...data,
-                    type: data.level === 'error' ? 'error' : 'warn'
-                };
+                this.handleAlert(data);
             } else if (data.type.startsWith('interactivity')) {
                 this.handleInteractivity(event);
             }
@@ -445,15 +439,19 @@ export default {
                 }, setValidationErrorTimeout);
             });
         },
-        /* Event handler for closing an alert */
-        onCloseAlert() {
-            consola.trace('Closing view alert (NodeViewIFrame).');
-            // if there was an error, check to see if the view is responding (will update styles if not)
-            if (this.alert.type === 'error') {
-                this.validate();
+
+        handleAlert(data) {
+            // allow further processing of the original message data by copying before modification
+            let alert = JSON.parse(JSON.stringify(data));
+            this.alert = {
+                ...alert,
+                type: alert.level === 'error' || alert.error ? 'error' : 'warn',
+                nodeInfo: this.nodeConfig.nodeInfo,
+                message: alert.message || alert.error
+            };
+            if (this.alert.type === 'warn') {
+                this.showAlert();
             }
-            // delete the alert data to close the alert
-            this.alert = null;
         },
         
         handleInteractivity(event) {
@@ -502,31 +500,50 @@ export default {
                 payload
             };
             this.document.defaultView.postMessage(data, this.origin);
+        },
+
+        /**
+         * Dispatches an event to show the local alert details with the global alert via store action.
+         *
+         * @returns {undefined}
+         */
+        showAlert() {
+            this.$store.dispatch('pagebuilder/alert/showAlert', {
+                ...this.alert,
+                callback: this.closeAlert
+            });
+        },
+
+        /**
+         * Callback function passed to the alert store to close the local alert when a global alert action is
+         * triggered. Can be used locally if needed.
+         *
+         * @param {Boolean} [remove] - optionally if the local alert should be cleared.
+         * @returns {undefined}
+         */
+        closeAlert(remove) {
+            if (remove) {
+                this.alert = null;
+            }
         }
     }
 };
 </script>
 
 <template>
-  <div :class="['frame-container', { 'single-view': isSingleView }]">
+  <div :class="['frame-container', { 'single-view': isSingleView }, { 'with-alert': displayAlert }]">
     <iframe
       :id="iframeId"
       ref="iframe"
       :class="classes"
       @load="initIFrameResize"
     />
-    <ViewAlert
-      :type="alert && alert.type"
-      :message="alert && alert.message"
-      :active="Boolean(alert)"
+    <AlertLocal
+      :active="displayAlert"
+      :alert="alert || {}"
       :node-id="nodeId"
-      :node-info="nodeConfig.nodeInfo"
-      @closeAlert="onCloseAlert"
-    />
-    <ErrorMessage
-      v-if="errorMessage && !isValid"
-      :error="errorMessage"
-      class="error-message"
+      :type="alert && alert.type"
+      @showAlert="showAlert"
     />
   </div>
 </template>
@@ -537,9 +554,17 @@ export default {
 div.frame-container {
   width: 100%;
   padding-top: 10px; /* provides default spacing between page content */
+  min-height: 0;
+  transition: min-height 0.4s ease-in 0.1s;
 
   &.single-view {
     height: calc(100vh - 10px);
+  }
+
+  &.with-alert {
+    min-height: 60px; /* min height of 50px (alert icon) + top padding */
+    min-width: 50px; /* min width of (alert icon) */
+    transition: min-height 0.2s ease-out;
   }
 }
 
@@ -552,17 +577,5 @@ iframe {
   &.full-height {
     height: 100%;
   }
-
-  &.error {
-    outline: 2px solid var(--theme-color-error);
-  }
-}
-
-.error-message {
-  position: absolute !important;
-  top: 0;
-  margin: 2px 0 0 2px;
-  padding: 5px;
-  background-color: white;
 }
 </style>

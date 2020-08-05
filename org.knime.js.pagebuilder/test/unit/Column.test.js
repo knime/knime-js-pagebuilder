@@ -80,6 +80,28 @@ describe('Column.vue', () => {
         let content = [{
             type: 'view',
             nodeID: '9:0:4'
+        }];
+
+        let wrapper = shallowMount(Column, {
+            stubs,
+            propsData: {
+                columnConfig: {
+                    content
+                }
+            }
+        });
+
+        const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
+        expect(views.length).toBe(1);
+        expect(views.at(0).props('viewConfig')).toBe(content[0]);
+        expect(rows.length).toBe(0);
+        expect(divs.length).toBe(0);
+    });
+
+    it('wraps multiple views', () => {
+        let content = [{
+            type: 'view',
+            nodeID: '9:0:4'
         }, {
             type: 'JSONLayoutViewContent',
             nodeID: '9:0:5'
@@ -94,11 +116,24 @@ describe('Column.vue', () => {
             }
         });
 
-        const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
-        expect(views.length).toBe(2);
-        expect(views.at(0).props('viewConfig')).toBe(content[0]);
-        expect(views.at(1).props('viewConfig')).toBe(content[1]);
-        expect(rows.length).toBe(0);
+        let [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
+        expect(views.length).toBe(0);
+        expect(rows.length).toBe(2);
+        rows.wrappers.forEach((row, rowInd) => {
+            expect(row.props('rowConfig')).toStrictEqual({
+                type: 'JSONLayoutRow',
+                additionalStyles: [],
+                additionalClasses: [],
+                columns: [
+                    {
+                        content: [content[rowInd]],
+                        widthXS: 12,
+                        additionalStyles: [],
+                        additionalClasses: []
+                    }
+                ]
+            });
+        });
         expect(divs.length).toBe(0);
     });
 

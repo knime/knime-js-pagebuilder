@@ -2,8 +2,10 @@ import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
+import AlertLocal from '@/components/layout/AlertLocal';
 
 import * as storeConfig from '@/../store/pagebuilder';
+import * as alertStoreConfig from '@/../store/alert';
 
 // extra mock to simulate a loaded view script
 jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
@@ -72,7 +74,8 @@ describe('NodeViewIframe.vue', () => {
             'pagebuilder/interactivity': interactivityConfig,
             api: apiConfig,
             settings: settingsConfig,
-            wizardExecution: wizardConfig
+            wizardExecution: wizardConfig,
+            'pagebuilder/alert': alertStoreConfig
         } });
         store.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         store.commit('pagebuilder/setPage', {
@@ -287,7 +290,8 @@ describe('NodeViewIframe.vue', () => {
                     removeValidationErrorSetter
                 }
             },
-            settings: settingsConfig
+            settings: settingsConfig,
+            'pagebuilder/alert': alertStoreConfig
         } });
         methodsStore.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
         methodsStore.commit('pagebuilder/setPage', {
@@ -553,7 +557,8 @@ describe('NodeViewIframe.vue', () => {
                         initMethodName: 'init',
                         setValidationErrorMethodName: 'setValidationError',
                         viewRepresentation: {},
-                        viewValue: {}
+                        viewValue: {},
+                        nodeInfo: {}
                     }
                 }
             });
@@ -682,25 +687,134 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toBe(null);
         });
 
-        describe('using alerts via message', () => {
-            it('handles alert events', () => {
-                let messageEvent = {
-                    origin: window.location.origin,
-                    data: {
-                        nodeId,
-                        type: 'alert',
-                        message: 'test'
-                    }
-                };
-                wrapper.vm.messageFromIframe(messageEvent);
-                expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
-                expect(validateCallbackMock).not.toHaveBeenCalled();
-                expect(getValueCallbackMock).not.toHaveBeenCalled();
-                expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-                expect(wrapper.vm.isValid).toBe(true);
-                expect(wrapper.vm.errorMessage).toBe(null);
-                expect(wrapper.vm.alert).toStrictEqual({ nodeId, type: 'warn', message: 'test' });
+        it('handles alert events', () => {
+            let messageEvent = {
+                origin: window.location.origin,
+                data: {
+                    nodeId,
+                    type: 'alert',
+                    message: 'test'
+                }
+            };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).not.toHaveBeenCalled();
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toStrictEqual({ nodeId, nodeInfo: {}, type: 'warn', message: 'test' });
+        });
+
+        it('handles other messages with errors (failed validation, etc.) as alerts', () => {
+            let messageEvent = {
+                origin: window.location.origin,
+                data: {
+                    nodeId,
+                    type: 'validate',
+                    error: 'Something went wrong'
+                }
+            };
+            wrapper.vm.messageFromIframe(messageEvent);
+            expect(wrapper.vm.document.defaultView.postMessage).not.toHaveBeenCalled();
+            expect(validateCallbackMock).toHaveBeenCalled();
+            expect(getValueCallbackMock).not.toHaveBeenCalled();
+            expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
+            expect(wrapper.vm.isValid).toBe(true);
+            expect(wrapper.vm.errorMessage).toBe(null);
+            expect(wrapper.vm.alert).toStrictEqual({
+                nodeId, nodeInfo: {}, type: 'error', message: 'Something went wrong', error: 'Something went wrong'
             });
+        });
+    });
+
+    describe('NodeViewIFrame alerts', () => {
+        let nodeId = '0:0:7';
+
+        it('manages its own alert state', () => {
+            let localWrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                attachToDocument: true,
+                propsData: {
+                    viewConfig: { nodeID: nodeId },
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        initMethodName: 'init',
+                        setValidationErrorMethodName: 'setValidationError',
+                        viewRepresentation: {},
+                        viewValue: {},
+                        nodeInfo: {}
+                    }
+                }
+            });
+            let alertData = {
+                nodeId,
+                message: 'test',
+                level: 'error'
+            };
+
+            expect(localWrapper.vm.alert).toBe(null);
+            expect(localWrapper.vm.displayAlert).toBe(null);
+            localWrapper.vm.handleAlert(alertData);
+            expect(localWrapper.vm.alert).toStrictEqual({
+                ...alertData,
+                nodeInfo: {},
+                type: 'error'
+            });
+            expect(localWrapper.vm.displayAlert).toBe(true);
+            localWrapper.vm.closeAlert(true);
+            expect(localWrapper.vm.displayAlert).toBe(null);
+            expect(localWrapper.vm.alert).toBe(null);
+        });
+
+        it('handles show alert events', () => {
+            let showAlertMock = jest.fn();
+            let localWrapper = shallowMount(NodeViewIFrame, {
+                ...context,
+                store: new Vuex.Store({ modules: {
+                    pagebuilder: storeConfig,
+                    'pagebuilder/interactivity': interactivityConfig,
+                    api: apiConfig,
+                    settings: settingsConfig,
+                    wizardExecution: wizardConfig,
+                    'pagebuilder/alert': {
+                        ...alertStoreConfig,
+                        actions: {
+                            ...alertStoreConfig.actions,
+                            showAlert: showAlertMock
+                        }
+                    }
+                } }),
+                attachToDocument: true,
+                propsData: {
+                    viewConfig: { nodeID: nodeId },
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        initMethodName: 'init',
+                        setValidationErrorMethodName: 'setValidationError',
+                        viewRepresentation: {},
+                        viewValue: {},
+                        nodeInfo: {}
+                    }
+                }
+            });
+
+            let alertData = {
+                nodeId,
+                message: 'test'
+            };
+
+            localWrapper.vm.handleAlert(alertData);
+            expect(localWrapper.vm.alert).toStrictEqual({
+                ...alertData,
+                nodeInfo: {},
+                type: 'warn'
+            });
+            localWrapper.find(AlertLocal).trigger('showAlert');
+            expect(showAlertMock).toHaveBeenCalledWith(expect.anything(), {
+                ...localWrapper.vm.alert,
+                callback: localWrapper.vm.closeAlert
+            }, undefined); // eslint-disable-line no-undefined
         });
     });
 
