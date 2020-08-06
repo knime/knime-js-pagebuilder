@@ -116,6 +116,7 @@ export default {
         let storeSettings = this.$store.state.settings;
         let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
         let getRepositoryFunc = this.$store.getters['api/repository'];
+        let getUserFunc = this.$store.getters['api/user'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
         let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
@@ -143,6 +144,13 @@ export default {
                         return getRepositoryFunc({ path, filter });
                     } else {
                         return null;
+                    }
+                },
+                getUser() {
+                    if (typeof getUserFunc === 'function') {
+                        return getUserFunc();
+                    } else {
+                        return Promise.resolve(null);
                     }
                 },
                 getDownloadLink({ resourceId, nodeId }) {
