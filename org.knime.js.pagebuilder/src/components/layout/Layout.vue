@@ -70,8 +70,8 @@ export default {
 
   & .parent-row.row {
     /* prevent top level overflow of layout which will cause a small scroll on small screens */
-    margin-right: -12px;
-    margin-left: -12px;
+    margin-right: var(--grid-gap-width);
+    margin-left: var(--grid-gap-width);
   }
 }
 </style>
