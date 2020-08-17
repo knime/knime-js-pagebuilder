@@ -148,12 +148,14 @@ export default {
     },
     async mounted() {
         // TODO WEBP-182 File Upload Vue Widget should be required; WEBP-327 Remove if dialog option added.
-        this.updateWebNode({
-            nodeId: this.nodeId,
-            update: {
-                'viewRepresentation.required': false
-            }
-        });
+        if (this.nodeConfig.viewRepresentation.required) {
+            this.updateWebNode({
+                nodeId: this.nodeId,
+                update: {
+                    'viewRepresentation.required': false
+                }
+            });
+        }
         // prevent incompatible widgets (i.e. output) from registering methods with store
         if (this.hasValidationErrorMessage) {
             this.$store.dispatch('pagebuilder/addValidationErrorSetter', {
