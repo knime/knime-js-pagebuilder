@@ -827,6 +827,68 @@ describe('NodeViewIframe.vue', () => {
     describe('PageBuilder API', () => {
         let wrapper;
 
+        let createLocalWrapper = (jobId) => {
+            let localWizardConfig = {
+                namespaced: true,
+                state: {
+                    currentJobId: null
+                },
+                getters: {
+                    workflowPath: jest.fn().mockReturnValue('/some/path'),
+                    currentJobId(state) {
+                        return state.currentJobId;
+                    }
+                },
+                mutations: {
+                    setJobId(state, jobId) {
+                        state.currentJobId = jobId;
+                    }
+                }
+            };
+            let localStore = new Vuex.Store({ modules: {
+                pagebuilder: storeConfig,
+                'pagebuilder/interactivity': interactivityConfig,
+                api: apiConfig,
+                settings: settingsConfig,
+                wizardExecution: localWizardConfig,
+                'pagebuilder/alert': alertStoreConfig
+            } });
+            if (jobId) {
+                localStore.commit('wizardExecution/setJobId', jobId);
+            }
+            localStore.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
+            localStore.commit('pagebuilder/setPage', {
+                wizardPageContent: {
+                    webNodes: {
+                        '0:0:7': {
+                            namespace: 'foo',
+                            javascriptLibraries: [],
+                            stylesheets: []
+                        },
+                        '0:0:9': {
+                            namespace: 'bar',
+                            javascriptLibraries: [],
+                            stylesheets: []
+                        }
+                    }
+                }
+            });
+    
+            let localContext = {
+                store: localStore,
+                localVue
+            };
+            return shallowMount(NodeViewIFrame, {
+                ...localContext,
+                attachToDocument: true,
+                propsData: {
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    }
+                }
+            });
+        };
+
         beforeEach(() => {
             wrapper = shallowMount(NodeViewIFrame, {
                 ...context,
@@ -839,7 +901,11 @@ describe('NodeViewIframe.vue', () => {
             });
         });
 
-        it('registers & unregisters global PageBuilder API', () => {
+        afterEach(() => {
+            delete window.KnimePageBuilderAPI;
+        });
+
+        it('registers global PageBuilder API', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
             expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
             expect(window.KnimePageBuilderAPI.getDefaultMountId).toBeDefined();
@@ -847,7 +913,59 @@ describe('NodeViewIframe.vue', () => {
             expect(window.KnimePageBuilderAPI.getDownloadLink).toBeDefined();
             expect(window.KnimePageBuilderAPI.getUploadLink).toBeDefined();
             expect(window.KnimePageBuilderAPI.getCustomSketcherPath).toBeDefined();
+        });
+
+        it('registers but doesn\'t unregister global PageBuilder API in the AP', () => {
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(window.KnimePageBuilderAPI.currentJobId).not.toBeDefined();
+            expect(wrapper.vm.currentJobId).not.toBeDefined();
+            expect(window.KnimePageBuilderAPI.teardown(wrapper.currentJobId)).toBe(false);
             wrapper.destroy();
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+        });
+
+        it('registers but doesn\'t unregister global PageBuilder API between pages if Job ID stays the same', () => {
+            let jobId = '1234-5678-9012-3456';
+            let localWrapper = createLocalWrapper(jobId);
+
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(localWrapper.vm.currentJobId).toBe(jobId);
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+            localWrapper.destroy();
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+        });
+
+        it('registers & unregisters global PageBuilder API when JobIDs change', () => {
+            let jobId = '1234-5678-9012-3456';
+            let jobId2 = '0987-6543-2109-8765';
+            let localWrapper = createLocalWrapper(jobId);
+
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(localWrapper.vm.currentJobId).toBe(jobId);
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+
+            localWrapper.vm.$store.commit('wizardExecution/setJobId', jobId2);
+
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+            expect(localWrapper.vm.currentJobId).toBe(jobId2);
+            localWrapper.destroy();
+            expect(window.KnimePageBuilderAPI).not.toBeDefined();
+        });
+
+        it('registers & unregisters global PageBuilder API when JobID changes to null from navigation', () => {
+            let jobId = '1234-5678-9012-3456';
+            let jobId2 = null;
+            let localWrapper = createLocalWrapper(jobId);
+
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(localWrapper.vm.currentJobId).toBe(jobId);
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+
+            localWrapper.vm.$store.commit('wizardExecution/setJobId', jobId2);
+
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+            expect(localWrapper.vm.currentJobId).toBe(jobId2);
+            localWrapper.destroy();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
 
