@@ -82,7 +82,9 @@ export default {
         },
         size() {
             return -1; // unknown for now
-        },
+        }
+    },
+    methods: {
         validate() {
             if (this.link === null) {
                 return {
@@ -105,6 +107,7 @@ export default {
       :text="label"
     />
     <FileLink
+      v-if="link != null"
       :href="link"
       :text="linkTitle"
       :file-ext="fileExt"
