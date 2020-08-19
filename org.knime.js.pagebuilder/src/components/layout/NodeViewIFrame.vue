@@ -39,8 +39,6 @@ export default {
     },
     data() {
         return {
-            isValid: true,
-            errorMessage: null,
             alert: null
         };
     },
@@ -53,10 +51,12 @@ export default {
             // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
             return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
         },
+        page() {
+            return this.$store.state.pagebuilder.page;
+        },
         webNode() {
-            let page = this.$store.state.pagebuilder.page;
-            if (page && page.webNodes) {
-                return page.webNodes.filter(node => this.nodeId === node.nodeId)[0];
+            if (this.page && this.page.webNodes) {
+                return this.page.webNodes.filter(node => this.nodeId === node.nodeId)[0];
             }
             return null;
         },
@@ -88,11 +88,14 @@ export default {
             return postMessageOrigin;
         },
         isSingleView() {
-            let page = this.$store.state.pagebuilder.page;
-            return page && page.wizardPageContent && page.wizardPageContent.isSingleView;
+            return this.page && this.page.wizardPageContent && this.page.wizardPageContent.isSingleView;
         },
         displayAlert() {
             return this.alert && this.alert.type === 'error';
+        },
+        currentJobId() {
+            // Expected values include null (no job) or undefined (AP execution).
+            return this.$store.getters['wizardExecution/currentJobId'];
         }
     },
 
@@ -116,10 +119,11 @@ export default {
         let storeSettings = this.$store.state.settings;
         let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
         let getRepositoryFunc = this.$store.getters['api/repository'];
+        let getUserFunc = this.$store.getters['api/user'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
         let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
-        if (!window.KnimePageBuilderAPI) {
+        if (!window.KnimePageBuilderAPI || window.KnimePageBuilderAPI.teardown(this.currentJobId)) {
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
                     return getPublishedDataFunc(id);
@@ -145,6 +149,13 @@ export default {
                         return null;
                     }
                 },
+                getUser() {
+                    if (typeof getUserFunc === 'function') {
+                        return getUserFunc();
+                    } else {
+                        return Promise.resolve(null);
+                    }
+                },
                 getDownloadLink({ resourceId, nodeId }) {
                     if (typeof getDownloadLinkFunc === 'function') {
                         return getDownloadLinkFunc({ resourceId, nodeId });
@@ -165,7 +176,22 @@ export default {
                     } else {
                         return null;
                     }
-                }
+                },
+                /**
+                 * Utility check method to prevent concurrent/unnecessary initialization of the global
+                 * KnimePageBuilderAPI. Vue can create race conditions during create and destory hooks depending on the
+                 * layout of the Page, so global API initialization and destruction should only occur when necessary
+                 * (i.e. when a new job is loaded or the pagebuilder is being destroyed).
+                 *
+                 * @param {String} [jobId] - the optional jobId of the current NodeViewIFrame (expected to be null if the
+                 *  NVIF is being destroyed or undefined if the NVIF is running in the AP).
+                 * @returns {Boolean} - if the global API was created with a different JobID and should be either deleted
+                 *      or reinitialized.
+                 */
+                teardown(jobId) {
+                    return jobId !== this.currentJobId;
+                },
+                currentJobId: this.currentJobId
             };
         }
     },
@@ -175,9 +201,9 @@ export default {
         this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValidationErrorSetter', { nodeId: this.nodeId });
-
-        // remove global API
-        delete window.KnimePageBuilderAPI;
+        if (window.KnimePageBuilderAPI && window.KnimePageBuilderAPI.teardown(this.currentJobId)) {
+            delete window.KnimePageBuilderAPI;
+        }
     },
 
     methods: {
@@ -367,9 +393,8 @@ export default {
             return new Promise((resolve, reject) => {
                 this.validateCallback = ({ isValid }) => {
                     if (!isValid) {
-                        this.errorMessage = 'View validation failed.';
+                        this.setLocalError('View validation failed.');
                     }
-                    this.isValid = isValid;
                     window.clearTimeout(this.cancelValidate);
                     resolve({ nodeId: this.nodeId, isValid });
                 };
@@ -380,9 +405,8 @@ export default {
                     type: 'validate'
                 }, this.origin);
                 this.cancelValidate = window.setTimeout(() => {
-                    this.isValid = false;
-                    this.errorMessage = 'View is not responding.';
-                    resolve({ nodeId: this.nodeId, isValid: this.isValid });
+                    this.setLocalError('View is not responding.');
+                    resolve({ nodeId: this.nodeId, isValid: false });
                 }, validatorTimeout);
             });
         },
@@ -392,6 +416,7 @@ export default {
                 this.getValueCallback = ({ error, value }) => {
                     window.clearTimeout(this.cancelValueGetter);
                     if (error) {
+                        this.setLocalError(error);
                         reject(new Error(error));
                     } else {
                         resolve({ nodeId: this.nodeId, value });
@@ -404,7 +429,9 @@ export default {
                     type: 'getValue'
                 }, this.origin);
                 this.cancelValueGetter = window.setTimeout(() => {
-                    reject(new Error('Value could not be retrieved in the allocated time.'));
+                    let errorMessage = 'Value could not be retrieved in the allocated time.';
+                    this.setLocalError(errorMessage);
+                    reject(new Error(errorMessage));
                 }, valueGetterTimeout);
             });
         },
@@ -414,6 +441,7 @@ export default {
                 this.setValidationErrorCallback = ({ error }) => {
                     window.clearTimeout(this.cancelSetValidatorError);
                     if (error) {
+                        this.setLocalError(error);
                         reject(new Error(error));
                     } else {
                         resolve(true);
@@ -427,8 +455,23 @@ export default {
                     errorMessage
                 }, this.origin);
                 this.cancelSetValidatorError = window.setTimeout(() => {
-                    reject(new Error('Validation error message could not be set in the allocated time.'));
+                    let errorMessage = 'Validation error message could not be set in the allocated time.';
+                    this.setLocalError(errorMessage);
+                    reject(new Error(errorMessage));
                 }, setValidationErrorTimeout);
+            });
+        },
+
+        /**
+         * The local helper function to create an error alert to display node specific information.
+         *s
+         * @param {String} message - the message to set on the global alert when details are shown.
+         * @returns {undefined}
+         */
+        setLocalError(message) {
+            this.handleAlert({
+                message,
+                level: 'error'
             });
         },
 

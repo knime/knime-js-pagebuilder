@@ -18,7 +18,7 @@ jest.mock('iframe-resizer/js/iframeResizer');
 
 describe('NodeViewIframe.vue', () => {
     let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
-        mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
+        mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -39,6 +39,7 @@ describe('NodeViewIframe.vue', () => {
                 getPublishedData: jest.fn().mockReturnValue(mockGetPublishedData)
             }
         };
+        mockGetUser = jest.fn();
         mockGetRepository = jest.fn();
         mockGetDownloadLink = jest.fn();
         mockGetUploadLink = jest.fn();
@@ -49,6 +50,7 @@ describe('NodeViewIframe.vue', () => {
                 uploadResource: mockUpload
             },
             getters: {
+                user: jest.fn().mockReturnValue(mockGetUser),
                 repository: jest.fn().mockReturnValue(mockGetRepository),
                 downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink),
                 uploadResourceLink: jest.fn().mockReturnValue(mockGetUploadLink)
@@ -415,6 +417,12 @@ describe('NodeViewIframe.vue', () => {
                 data: { nodeId: '0:0:7', type: 'getValue', error: errorMessage }
             });
 
+            expect(wrapper.vm.alert).toStrictEqual({
+                level: 'error',
+                message: 'some error message',
+                nodeInfo: undefined, // eslint-disable-line no-undefined
+                type: 'error'
+            });
             return expect(valuePromise).rejects.toStrictEqual(new Error(errorMessage));
         });
     });
@@ -469,6 +477,12 @@ describe('NodeViewIframe.vue', () => {
                 origin: window.origin,
                 data: { nodeId: '0:0:7', type: 'validate', error: 'Error', isValid: false }
             });
+            expect(wrapper.vm.alert).toStrictEqual({
+                level: 'error',
+                message: 'View validation failed.',
+                nodeInfo: undefined, // eslint-disable-line no-undefined
+                type: 'error'
+            });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
         });
 
@@ -478,6 +492,12 @@ describe('NodeViewIframe.vue', () => {
             let valuePromise = wrapper.vm.validate();
             // don't provide a message queue response
             jest.runAllTimers();
+            expect(wrapper.vm.alert).toStrictEqual({
+                level: 'error',
+                message: 'View is not responding.',
+                nodeInfo: undefined, // eslint-disable-line no-undefined
+                type: 'error'
+            });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
         });
     });
@@ -532,6 +552,12 @@ describe('NodeViewIframe.vue', () => {
                 origin: window.origin,
                 data: { nodeId: '0:0:7', type: 'setValidationError', error: 'Error', isValid: false }
             });
+            expect(wrapper.vm.alert).toStrictEqual({
+                level: 'error',
+                message: 'Error',
+                nodeInfo: undefined, // eslint-disable-line no-undefined
+                type: 'error'
+            });
             let response = await Promise.resolve(valuePromise);
             expect(response instanceof Error).toBe(true);
             expect(response.message).toBe('Error');
@@ -581,8 +607,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
             // missing origin
             messageEvent = { data: { nodeId } };
@@ -591,8 +615,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
             // mismatched nodeId
             messageEvent = { data: { nodeId: 'other:node' } };
@@ -601,8 +623,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -626,8 +646,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -644,8 +662,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'validate' });
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -662,8 +678,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'getValue' });
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -680,8 +694,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'setValidationError' });
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toBe(null);
         });
 
@@ -699,8 +711,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toStrictEqual({ nodeId, nodeInfo: {}, type: 'warn', message: 'test' });
         });
 
@@ -718,8 +728,6 @@ describe('NodeViewIframe.vue', () => {
             expect(validateCallbackMock).toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.isValid).toBe(true);
-            expect(wrapper.vm.errorMessage).toBe(null);
             expect(wrapper.vm.alert).toStrictEqual({
                 nodeId, nodeInfo: {}, type: 'error', message: 'Something went wrong', error: 'Something went wrong'
             });
@@ -819,6 +827,68 @@ describe('NodeViewIframe.vue', () => {
     describe('PageBuilder API', () => {
         let wrapper;
 
+        let createLocalWrapper = (jobId) => {
+            let localWizardConfig = {
+                namespaced: true,
+                state: {
+                    currentJobId: null
+                },
+                getters: {
+                    workflowPath: jest.fn().mockReturnValue('/some/path'),
+                    currentJobId(state) {
+                        return state.currentJobId;
+                    }
+                },
+                mutations: {
+                    setJobId(state, jobId) {
+                        state.currentJobId = jobId;
+                    }
+                }
+            };
+            let localStore = new Vuex.Store({ modules: {
+                pagebuilder: storeConfig,
+                'pagebuilder/interactivity': interactivityConfig,
+                api: apiConfig,
+                settings: settingsConfig,
+                wizardExecution: localWizardConfig,
+                'pagebuilder/alert': alertStoreConfig
+            } });
+            if (jobId) {
+                localStore.commit('wizardExecution/setJobId', jobId);
+            }
+            localStore.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
+            localStore.commit('pagebuilder/setPage', {
+                wizardPageContent: {
+                    webNodes: {
+                        '0:0:7': {
+                            namespace: 'foo',
+                            javascriptLibraries: [],
+                            stylesheets: []
+                        },
+                        '0:0:9': {
+                            namespace: 'bar',
+                            javascriptLibraries: [],
+                            stylesheets: []
+                        }
+                    }
+                }
+            });
+    
+            let localContext = {
+                store: localStore,
+                localVue
+            };
+            return shallowMount(NodeViewIFrame, {
+                ...localContext,
+                attachToDocument: true,
+                propsData: {
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    }
+                }
+            });
+        };
+
         beforeEach(() => {
             wrapper = shallowMount(NodeViewIFrame, {
                 ...context,
@@ -831,7 +901,11 @@ describe('NodeViewIframe.vue', () => {
             });
         });
 
-        it('registers & unregisters global PageBuilder API', () => {
+        afterEach(() => {
+            delete window.KnimePageBuilderAPI;
+        });
+
+        it('registers global PageBuilder API', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
             expect(window.KnimePageBuilderAPI.interactivityGetPublishedData).toBeDefined();
             expect(window.KnimePageBuilderAPI.getDefaultMountId).toBeDefined();
@@ -839,7 +913,59 @@ describe('NodeViewIframe.vue', () => {
             expect(window.KnimePageBuilderAPI.getDownloadLink).toBeDefined();
             expect(window.KnimePageBuilderAPI.getUploadLink).toBeDefined();
             expect(window.KnimePageBuilderAPI.getCustomSketcherPath).toBeDefined();
+        });
+
+        it('registers but doesn\'t unregister global PageBuilder API in the AP', () => {
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(window.KnimePageBuilderAPI.currentJobId).not.toBeDefined();
+            expect(wrapper.vm.currentJobId).not.toBeDefined();
+            expect(window.KnimePageBuilderAPI.teardown(wrapper.currentJobId)).toBe(false);
             wrapper.destroy();
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+        });
+
+        it('registers but doesn\'t unregister global PageBuilder API between pages if Job ID stays the same', () => {
+            let jobId = '1234-5678-9012-3456';
+            let localWrapper = createLocalWrapper(jobId);
+
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(localWrapper.vm.currentJobId).toBe(jobId);
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+            localWrapper.destroy();
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+        });
+
+        it('registers & unregisters global PageBuilder API when JobIDs change', () => {
+            let jobId = '1234-5678-9012-3456';
+            let jobId2 = '0987-6543-2109-8765';
+            let localWrapper = createLocalWrapper(jobId);
+
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(localWrapper.vm.currentJobId).toBe(jobId);
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+
+            localWrapper.vm.$store.commit('wizardExecution/setJobId', jobId2);
+
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+            expect(localWrapper.vm.currentJobId).toBe(jobId2);
+            localWrapper.destroy();
+            expect(window.KnimePageBuilderAPI).not.toBeDefined();
+        });
+
+        it('registers & unregisters global PageBuilder API when JobID changes to null from navigation', () => {
+            let jobId = '1234-5678-9012-3456';
+            let jobId2 = null;
+            let localWrapper = createLocalWrapper(jobId);
+
+            expect(window.KnimePageBuilderAPI).toBeDefined();
+            expect(localWrapper.vm.currentJobId).toBe(jobId);
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+
+            localWrapper.vm.$store.commit('wizardExecution/setJobId', jobId2);
+
+            expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
+            expect(localWrapper.vm.currentJobId).toBe(jobId2);
+            localWrapper.destroy();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
 
@@ -865,6 +991,12 @@ describe('NodeViewIframe.vue', () => {
             window.KnimePageBuilderAPI.getRepository(config);
             expect(apiConfig.getters.repository).toHaveBeenCalled();
             expect(mockGetRepository).toHaveBeenCalledWith(config);
+        });
+
+        it('getUser calls api store', () => {
+            window.KnimePageBuilderAPI.getUser();
+            expect(apiConfig.getters.user).toHaveBeenCalled();
+            expect(mockGetUser).toHaveBeenCalled();
         });
 
         it('getDownloadLink calls api store', () => {

@@ -52,11 +52,14 @@ export default {
       v-for="(row, index) in layout.rows"
       :key="index"
       :row-config="row"
+      class="parent-row"
     />
   </div>
 </template>
 
 <style lang="postcss" scoped>
+@import "webapps-common/ui/css/variables";
+
 .container-fluid {
   width: 100%;
 
@@ -65,6 +68,12 @@ export default {
   & >>> *::before,
   & >>> *::after {
     box-sizing: border-box;
+  }
+
+  & .parent-row.row {
+    /* prevent top level overflow of layout which will cause a small scroll on small screens */
+    margin-right: var(--grid-gap-width);
+    margin-left: var(--grid-gap-width);
   }
 }
 </style>
