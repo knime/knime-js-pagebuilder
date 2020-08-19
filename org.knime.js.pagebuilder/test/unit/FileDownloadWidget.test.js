@@ -1,4 +1,4 @@
-import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
+import { createLocalVue, mount } from '@vue/test-utils';
 
 import FileDownloadWidget from '@/components/widgets/output/FileDownloadWidget.vue';
 import FileLink from 'webapps-common/ui/components/FileLink';
