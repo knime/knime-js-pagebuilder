@@ -74,6 +74,7 @@ export default {
     bottom: calc(50% - 20px);
     background-color: var(--theme-color-error);
     box-shadow: 0 0 10px 0 var(--theme-color-stone-gray);
+    cursor: pointer;
 
     & .icon {
       stroke-width: calc(32px / 24);
