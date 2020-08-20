@@ -29,3 +29,9 @@ export default {
     v-on="$listeners"
   />
 </template>
+
+<style lang="postcss" scoped>
+>>> label {
+  cursor: pointer;
+}
+</style>

@@ -136,3 +136,10 @@ export default {
     <ErrorMessage :error="errorMessage" />
   </div>
 </template>
+
+
+<style lang="postcss" scoped>
+>>> label {
+  cursor: pointer;
+}
+</style>
