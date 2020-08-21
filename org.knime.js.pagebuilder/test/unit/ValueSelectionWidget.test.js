@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { shallowMount, mount } from '@vue/test-utils';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 

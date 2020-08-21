@@ -212,7 +212,7 @@ export default {
     padding: 8px 80px 8px 50px;
 
     & .label >>> label.label-text {
-      color: rgb(255, 255, 255);
+      color: white;
       margin: 6px 0 4px 0;
       line-height: 24px;
       max-width: 100%;
@@ -223,7 +223,7 @@ export default {
 
     & .icon {
       stroke-width: calc(32px / 24);
-      stroke: rgb(255, 255, 255);
+      stroke: white;
 
       &.warn-icon {
         position: absolute;

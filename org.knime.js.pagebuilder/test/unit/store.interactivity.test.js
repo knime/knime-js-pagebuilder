@@ -1,4 +1,3 @@
-/* eslint-disable max-lines, max-nested-callbacks */
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -74,7 +73,7 @@ describe('Interactivity store', () => {
             let dataPayload = { id: subscriberId, data: 'dummyData' };
             store.commit('updateData', dataPayload);
             expect(store.state[dataPayload.id].subscribers.length).toEqual(0);
-            
+
             let payload = { id: subscriberId, callback: jest.fn() };
             store.commit('addSubscriber', payload);
             expect(store.state[payload.id].subscribers.length).toEqual(1);
@@ -115,7 +114,7 @@ describe('Interactivity store', () => {
             const subscriberId = 'selection-0.0.9';
             const dataId = 'selection-0.0.7';
             const data = { elements: ['dummyData'] };
-        
+
             beforeEach(() => {
                 store.commit('updateData', { id: dataId, data });
             });
@@ -162,7 +161,7 @@ describe('Interactivity store', () => {
         describe('removing subscribers', () => {
             const id = 'selection-12345-12345-12345';
             const payload = { id, callback: jest.fn(), elementFilter: 2 };
-            
+
             it('allows removing a subscriber', () => {
                 store.commit('addSubscriber', payload);
                 expect(store.state[payload.id].subscribers.length).toEqual(1);
@@ -180,7 +179,7 @@ describe('Interactivity store', () => {
             const id = 'filter-12345-12345-12345';
             const filterId = '0.0.9 Spectre';
             const payload = { id, data: { id: filterId, data: 42 }, callback: jest.fn() };
-            
+
             it('adds a filter if it hasn\'t been added', () => {
                 expect(store.state[payload.id]).not.toBeDefined();
                 store.dispatch('updateFilter', payload);
@@ -220,7 +219,7 @@ describe('Interactivity store', () => {
                 const minimalData = { elements: [{ id: filterId, data: 42 }] };
                 let subscriberCallback = jest.fn();
                 let filteredCallback = jest.fn();
-                
+
                 beforeEach(() => {
                     let subscriber = { id: publishId, callback: subscriberCallback };
                     store.commit('addSubscriber', subscriber);
@@ -258,7 +257,7 @@ describe('Interactivity store', () => {
                     let payload = { id: publishId, data: doubleData };
                     store.dispatch('publish', payload);
                     jest.resetAllMocks();
-                    
+
                     // relevant element changed
                     let filteredData = JSON.parse(JSON.stringify(minimalData));
                     filteredData.elements[0].data = 'wobble';
@@ -441,7 +440,7 @@ describe('Interactivity store', () => {
                     expect(store.state[publishId]).toBeDefined();
                     expect(store.state[publishId].data).toEqual(minimalData);
                 });
-                
+
                 it('updates existing id', () => {
                     let payload = { id: publishId, data: minimalData };
                     store.dispatch('publish', payload);
@@ -652,20 +651,20 @@ describe('Interactivity store', () => {
                     store.dispatch('registerSelectionTranslator', { translatorId, translator });
                     let subscriber = jest.fn();
                     store.dispatch('subscribe', { id: prefix + sourceID, callback: subscriber });
-                    
+
                     let payload = { changeSet: { added: ['wobble'] } };
                     store.dispatch('publish', { id: prefix + targetIDs[0], data: payload });
                     // adding a single mapped item results in a new partial selection
                     expect(subscriber).toHaveBeenCalledWith(prefix + sourceID, expect.objectContaining({
                         changeSet: { partialAdded: ['wibble'] }
                     }));
-                    
+
                     jest.resetAllMocks();
                     payload = { changeSet: { added: ['wubble'] } };
                     store.dispatch('publish', { id: prefix + targetIDs[0], data: payload });
                     // no change to mapped event, subscriber is not called
                     expect(subscriber).not.toHaveBeenCalled();
-                    
+
                     payload = { changeSet: { added: ['flob'] } };
                     store.dispatch('publish', { id: prefix + targetIDs[0], data: payload });
                     // all mapped items added which adds the whole item and removes partial
