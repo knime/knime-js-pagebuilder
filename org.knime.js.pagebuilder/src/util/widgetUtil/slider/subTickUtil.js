@@ -114,14 +114,14 @@ const addSubInterval = (tickObj, intervalConfig) => {
  *
  * @param  {Object} tickObj - the object holding all of the ticks as key/value
  *          pairs.
- * @param  {Set} vals - the ordered collection (Set) of all the existing numberic values
+ * @param  {Set} vals - the ordered collection (Set) of all the existing numeric values
  *          of the labels for the slider in ascending order (as they appear on the
  *          slider).
  * @param  {Object} subTickConfig - the configuration options for the subticks of
  *          the slider.
  * @param  {Number} subTickConfig.min - the minimum value on the slider.
  * @param  {Number} subTickConfig.max - the maximum value on the slider.
- * @param  {String} intervalConfig.direction - the direction of the slider.
+ * @param  {String} subTickConfig.direction - the direction of the slider.
  * @param  {Number} subTickConfig.density - the user provided value for the 'density'
  *          setting; this essentially sets the 'preferred' frequency of ticks on the
  *          slider. The number represents the distance as a percent of the whole slider

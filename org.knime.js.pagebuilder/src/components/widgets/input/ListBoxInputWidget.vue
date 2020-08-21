@@ -92,7 +92,7 @@ export default {
             if (!value) {
                 return [];
             }
-            // fix seperator
+            // fix separator
             let sep = this.separator === '\\n' ? '\n' : this.separator;
             // split by each char or by sep
             let valuesArray = value.split(this.separateEachCharacter ? '' : sep);

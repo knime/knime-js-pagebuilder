@@ -14,18 +14,18 @@ export const mutations = {
     showAlert(state, alert) {
         state.activeAlert = alert;
     },
-    
-    closeAlert(state, alert) {
+
+    closeAlert(state) {
         state.activeAlert = null;
     }
 };
 
 export const actions = {
-    
+
     showAlert({ commit }, alert) {
         commit('showAlert', alert);
     },
-    
+
     closeAlert({ commit, state }, remove) {
         if (state.activeAlert.callback) {
             state.activeAlert.callback(remove);

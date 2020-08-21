@@ -179,7 +179,7 @@ export default {
                 },
                 /**
                  * Utility check method to prevent concurrent/unnecessary initialization of the global
-                 * KnimePageBuilderAPI. Vue can create race conditions during create and destory hooks depending on the
+                 * KnimePageBuilderAPI. Vue can create race conditions during create and destroy hooks depending on the
                  * layout of the Page, so global API initialization and destruction should only occur when necessary
                  * (i.e. when a new job is loaded or the pagebuilder is being destroyed).
                  *
@@ -240,7 +240,7 @@ export default {
             // postMessage receiver
             let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
             // iframe resizer content window script
-            let iframeResizer = this.autoHeight ? `<script>${iframeResizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
+            let iframeResizerContent = this.autoHeight ? `<script>${iframeResizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
 
             this.document.write(`<!doctype html>
                 <html lang="en-US">
@@ -251,7 +251,7 @@ export default {
                   ${scriptLoader}
                   ${viewAlertHandler}
                   ${loadingErrorHandler}
-                  ${iframeResizer}
+                  ${iframeResizerContent}
                   <title></title>
                 </head>
                 <body></body>
@@ -274,6 +274,7 @@ export default {
 
             // custom CSS from node configuration
             if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
+                // replace '</style' with CSS-escaped '\00003c/style'
                 styles.push(`<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`);
             }
 
@@ -350,7 +351,7 @@ export default {
                 if (conf.maxHeight) {
                     resizeSettings.maxHeight = conf.maxHeight;
                 }
-               
+
                 iframeResizer(resizeSettings, this.$refs.iframe);
             }
         },
@@ -488,7 +489,7 @@ export default {
                 this.showAlert();
             }
         },
-        
+
         handleInteractivity(event) {
             let interactivityType = event.data.type;
             switch (interactivityType) {
