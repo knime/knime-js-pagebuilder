@@ -576,9 +576,6 @@ export default {
     />
     <AlertLocal
       :active="displayAlert"
-      :alert="alert || {}"
-      :node-id="nodeId"
-      :type="alert && alert.type"
       @showAlert="showAlert"
     />
   </div>
