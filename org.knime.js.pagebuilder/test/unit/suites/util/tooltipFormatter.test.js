@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import formatTooltip from '../../src/util/tooltipFormatter';
+import formatTooltip from '@/util/tooltipFormatter';
 
 describe('numStrFormatter.js', () => {
 
