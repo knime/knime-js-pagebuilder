@@ -43,7 +43,7 @@ module.exports = {
     ],
     testURL: 'http://test.example/',
     testMatch: [
-        '<rootDir>/test/unit/**/*.test.js'
+        '<rootDir>/test/unit/suites/**/*.test.js'
     ],
     watchPlugins: [
         'jest-watch-typeahead/filename',
