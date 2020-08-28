@@ -1,7 +1,7 @@
 <script>
 import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import { getProp } from '../../../util/nestedProperty';
+import { getProp } from '@/util/nestedProperty';
 
 const DEFAULT_VALUE_KEY = 'viewRepresentation.text';
 

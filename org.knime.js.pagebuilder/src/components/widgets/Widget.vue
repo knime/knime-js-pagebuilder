@@ -47,8 +47,6 @@ import InteractiveRangeWidget from './interactive/InteractiveRangeWidget';
  * The type of the child of this component is determined through
  * the computed property type, as all widget class names are
  * mapped in a config file.
- *
- * The application of customCSS is also handled by this component.
  */
 export default {
     components: {

@@ -3,6 +3,5 @@ dist/
 bin/
 node/
 target/
-bin/
 coverage/
 webapps-common/

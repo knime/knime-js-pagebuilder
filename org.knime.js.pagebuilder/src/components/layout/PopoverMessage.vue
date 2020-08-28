@@ -66,7 +66,7 @@ export default {
     },
     computed: {
         /**
-         * @returns {Boolean} - if the message should be expandable or if it's short enough to be pre-exapanded.
+         * @returns {Boolean} - if the message should be expandable or if it's short enough to be pre-expanded.
          */
         expandable() {
             return this.messageBody && this.messageBody.length > MAX_EXPANDED_MESSAGE_LENGTH;
@@ -212,7 +212,7 @@ export default {
     padding: 8px 80px 8px 50px;
 
     & .label >>> label.label-text {
-      color: rgba(255, 255, 255);
+      color: white;
       margin: 6px 0 4px 0;
       line-height: 24px;
       max-width: 100%;
@@ -223,7 +223,7 @@ export default {
 
     & .icon {
       stroke-width: calc(32px / 24);
-      stroke: rgba(255, 255, 255);
+      stroke: white;
 
       &.warn-icon {
         position: absolute;

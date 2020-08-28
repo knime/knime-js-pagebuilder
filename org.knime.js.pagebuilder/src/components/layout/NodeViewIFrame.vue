@@ -51,10 +51,12 @@ export default {
             // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
             return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
         },
+        page() {
+            return this.$store.state.pagebuilder.page;
+        },
         webNode() {
-            let page = this.$store.state.pagebuilder.page;
-            if (page && page.webNodes) {
-                return page.webNodes.filter(node => this.nodeId === node.nodeId)[0];
+            if (this.page && this.page.webNodes) {
+                return this.page.webNodes.filter(node => this.nodeId === node.nodeId)[0];
             }
             return null;
         },
@@ -86,11 +88,14 @@ export default {
             return postMessageOrigin;
         },
         isSingleView() {
-            let page = this.$store.state.pagebuilder.page;
-            return page && page.wizardPageContent && page.wizardPageContent.isSingleView;
+            return this.page && this.page.wizardPageContent && this.page.wizardPageContent.isSingleView;
         },
         displayAlert() {
             return this.alert && this.alert.type === 'error';
+        },
+        currentJobId() {
+            // Expected values include null (no job) or undefined (AP execution).
+            return this.$store.getters['wizardExecution/currentJobId'];
         }
     },
 
@@ -118,7 +123,7 @@ export default {
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
         let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
-        if (!window.KnimePageBuilderAPI) {
+        if (!window.KnimePageBuilderAPI || window.KnimePageBuilderAPI.teardown(this.currentJobId)) {
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
                     return getPublishedDataFunc(id);
@@ -171,7 +176,22 @@ export default {
                     } else {
                         return null;
                     }
-                }
+                },
+                /**
+                 * Utility check method to prevent concurrent/unnecessary initialization of the global
+                 * KnimePageBuilderAPI. Vue can create race conditions during create and destroy hooks depending on the
+                 * layout of the Page, so global API initialization and destruction should only occur when necessary
+                 * (i.e. when a new job is loaded or the pagebuilder is being destroyed).
+                 *
+                 * @param {String} [jobId] - the optional jobId of the current NodeViewIFrame (expected to be null if the
+                 *  NVIF is being destroyed or undefined if the NVIF is running in the AP).
+                 * @returns {Boolean} - if the global API was created with a different JobID and should be either deleted
+                 *      or reinitialized.
+                 */
+                teardown(jobId) {
+                    return jobId !== this.currentJobId;
+                },
+                currentJobId: this.currentJobId
             };
         }
     },
@@ -181,9 +201,9 @@ export default {
         this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValidationErrorSetter', { nodeId: this.nodeId });
-
-        // remove global API
-        delete window.KnimePageBuilderAPI;
+        if (window.KnimePageBuilderAPI && window.KnimePageBuilderAPI.teardown(this.currentJobId)) {
+            delete window.KnimePageBuilderAPI;
+        }
     },
 
     methods: {
@@ -220,7 +240,7 @@ export default {
             // postMessage receiver
             let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
             // iframe resizer content window script
-            let iframeResizer = this.autoHeight ? `<script>${iframeResizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
+            let iframeResizerContent = this.autoHeight ? `<script>${iframeResizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
 
             this.document.write(`<!doctype html>
                 <html lang="en-US">
@@ -231,7 +251,7 @@ export default {
                   ${scriptLoader}
                   ${viewAlertHandler}
                   ${loadingErrorHandler}
-                  ${iframeResizer}
+                  ${iframeResizerContent}
                   <title></title>
                 </head>
                 <body></body>
@@ -254,6 +274,7 @@ export default {
 
             // custom CSS from node configuration
             if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
+                // replace '</style' with CSS-escaped '\00003c/style'
                 styles.push(`<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`);
             }
 
@@ -330,7 +351,7 @@ export default {
                 if (conf.maxHeight) {
                     resizeSettings.maxHeight = conf.maxHeight;
                 }
-               
+
                 iframeResizer(resizeSettings, this.$refs.iframe);
             }
         },
@@ -468,7 +489,7 @@ export default {
                 this.showAlert();
             }
         },
-        
+
         handleInteractivity(event) {
             let interactivityType = event.data.type;
             switch (interactivityType) {
@@ -555,9 +576,6 @@ export default {
     />
     <AlertLocal
       :active="displayAlert"
-      :alert="alert || {}"
-      :node-id="nodeId"
-      :type="alert && alert.type"
       @showAlert="showAlert"
     />
   </div>

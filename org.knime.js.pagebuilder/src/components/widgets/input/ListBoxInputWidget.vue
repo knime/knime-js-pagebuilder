@@ -92,7 +92,7 @@ export default {
             if (!value) {
                 return [];
             }
-            // fix seperator
+            // fix separator
             let sep = this.separator === '\\n' ? '\n' : this.separator;
             // split by each char or by sep
             let valuesArray = value.split(this.separateEachCharacter ? '' : sep);
@@ -164,6 +164,10 @@ export default {
   & >>> textarea {
     width: 100%;
     max-width: 100%;
+  }
+
+  & >>> label {
+    cursor: pointer;
   }
 }
 </style>

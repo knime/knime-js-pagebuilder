@@ -1,4 +1,4 @@
-import { createTicks } from '../../src/util/widgetUtil/slider/tickUtil';
+import { createTicks } from '@/util/widgetUtil/slider/tickUtil';
 
 describe('tickUtil.js', () => {
 

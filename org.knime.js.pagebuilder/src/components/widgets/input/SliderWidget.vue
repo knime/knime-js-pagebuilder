@@ -2,8 +2,8 @@
 import Slider from '../baseElements/input/Slider';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import formatTooltip from '../../../util/tooltipFormatter';
-import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
+import formatTooltip from '@/util/tooltipFormatter';
+import { createTicks } from '@/util/widgetUtil/slider/tickUtil';
 
 const DATA_TYPE = 'double';
 const MINIMUM_SLIDER_STEP = .0000001;
@@ -12,7 +12,7 @@ const VERTICAL_SLIDER_HEIGHT = 533;
 
 /**
  * This is the implementation of the Slider Input Widget and the
- * Interactive Range Slider Filter Definition (TODO: AP-12916). This
+ * Interactive Range Slider Filter Definition. This
  * component uses the Slider Vue component (KNIME implementation) which
  * in turn relies on the vue-slider-component (npm) library. The primary
  * goal of the SliderWidget component is to parse the various settings from
@@ -22,7 +22,7 @@ const VERTICAL_SLIDER_HEIGHT = 533;
  * This widget has two rendering options and two functionality levels. The
  * rendering options are: vertical and horizontal. The functionality levels
  * are: Slider Input Widget and the Interactive Range Slider Filter
- * Definition (TODO: AP-12916).
+ * Definition.
  */
 export default {
     components: {
