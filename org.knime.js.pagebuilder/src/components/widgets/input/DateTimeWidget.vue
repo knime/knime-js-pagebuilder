@@ -93,7 +93,7 @@ export default {
             return this.dateStringAndTimezone[2];
         },
         possibleTimeZones() {
-            return this.viewRep.zones.map(x => ({
+            return (this.viewRep.zones || []).map(x => ({
                 id: x,
                 text: x
             }));
@@ -112,8 +112,10 @@ export default {
         }
     },
     methods: {
-        onChange(valueObj) {
-            let value = `${valueObj.toISOString()}[${this.timezone}]`;
+        onChange(date, timezone) {
+            date = date || this.dateObject;
+            timezone = timezone || this.timezone;
+            let value = `${date.toISOString()}[${timezone}]`;
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
@@ -121,22 +123,25 @@ export default {
             };
             this.$emit('updateWidget', changeEventObj);
         },
+        onTimezoneChange(timezone) {
+            this.onChange(this.dateObject, timezone);
+        },
         nowButtonClicked() {
             this.onChange(new Date(Date.now()));
         },
         validate() {
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required && !this.$refs.form.getValue()) {
+/*            if (this.viewRep.required) {
+                // TOOD: check for value?!
                 isValid = false;
                 errorMessage = 'Input is required.';
-            }
-            // text area doesn't have a validate method
-            if (typeof this.$refs.form.validate === 'function') {
-                let validateEvent = this.$refs.form.validate();
-                isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
-            }
+            }*/
+            // call validate on date input
+            let validateEvent = this.$refs.dateInpu.validate();
+            isValid = Boolean(validateEvent.isValid && isValid);
+            errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
+
             return {
                 isValid,
                 errorMessage: isValid ? null : errorMessage
@@ -155,6 +160,7 @@ export default {
     <div class="date-time">
       <DateInput
         v-if="showDate"
+        ref="dateInput"
         :id="labelForId"
         :value="dateObject"
         class="date-input"
@@ -205,6 +211,7 @@ export default {
         v-if="showZone"
         aria-label="Timezone"
         :value="timezone"
+        @input="onTimezoneChange"
         class="timezone"
         :possible-values="possibleTimeZones"
       />

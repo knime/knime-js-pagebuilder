@@ -1,12 +1,14 @@
 <script>
 import CalendarIcon from 'webapps-common/ui/assets/img/icons/calendar.svg?inline';
+import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 
 /**
  * Date component shows input field with a button and a popover calendar to choose the date. Only date no time.
  */
 export default {
     components: {
-        CalendarIcon
+        CalendarIcon,
+        DatePicker
     },
     props: {
         value: {
@@ -19,7 +21,7 @@ export default {
         },
         format: {
             type: String,
-            default: 'YYY-MM-DD'
+            default: 'YYYY-MM-DD'
         },
         min: {
             default: null,
@@ -37,31 +39,17 @@ export default {
             type: Boolean
         }
     },
-    computed: {
-        formattedValue() {
-            // TODO: use proper formatting lib? e.g. date-fns
-            return [this.value.getFullYear(),
-                String(this.value.getMonth() + 1).padStart(2, '0'),
-                String(this.value.getDate()).padStart(2, '0')].join('-');
-        }
-    },
     methods: {
-        getValue() {
-            let inputValue = this.$refs.input.value;
-            let d = new Date();
-            inputValue.split('-');
-            // TODO: handle input errors?
-            d.setFullYear(Number(inputValue[0]));
-            d.setMonth(Number(inputValue[1]), Number(inputValue[2]));
-            return d;
-        },
-        onInput() {
-            this.$emit('input', this.getValue());
+        onInput(value) {
+            this.$emit('input', value);
         },
         validate(val) {
             let isValid = true;
             let errorMessage;
-            // TODO: impl
+            if (!this.date) {
+                isValid = false;
+                errorMessage = 'Please enter a date';
+            }
             return {
                 isValid,
                 errorMessage
@@ -77,20 +65,27 @@ export default {
       v-if="!isValid"
       class="invalid-marker"
     />
-    <input
-      :id="id"
-      ref="input"
-      type="text"
-      :value="formattedValue"
-      :min="min"
-      :max="max"
+    <DatePicker
+      ref="datePicker"
+      :value="value"
+      :min-date="min"
+      :max-date="max"
+      :popover="{ placement: 'bottom-end', visibility: 'click' }"
+      :masks="{L: format}"
       @input="onInput"
     >
-    <span
-      class="button"
-    >
-      <CalendarIcon />
-    </span>
+      <!--Custom Input Slot-->
+      <div slot-scope="{ inputProps, inputEvents }">
+        <input
+          :id="id"
+          v-bind="inputProps"
+          v-on="inputEvents"
+        >
+        <span class="button">
+          <CalendarIcon />
+        </span>
+      </div>
+    </DatePicker>
   </div>
 </template>
 

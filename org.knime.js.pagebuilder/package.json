@@ -26,6 +26,7 @@
     "consola": "2.10.1",
     "core-js": "3.6.5",
     "iframe-resizer": "4.2.10",
+    "v-calendar": "^1.0.8",
     "vue": "2.6.11",
     "vue-clickaway": "2.2.2",
     "vue-slider-component": "3.1.5",
