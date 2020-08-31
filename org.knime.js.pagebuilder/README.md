@@ -122,7 +122,7 @@ The PageBuilder expects that the embedding app provides the following:
 - global `window.Vue` object
 - global `window.consola` instance for logging
 - CSS variables as defined in the `webapps-common` project.
-  They are not included in the build in order to avoid duplication
+  They are not included in the build in order to avoid duplication.
 - calls the method 'initStore' as described in the next section, before PageBuilder store actions and the component are
   being used
 
@@ -177,7 +177,8 @@ Then the component can be used in templates:
 ```
 
 ### API
-The component provides a store module namespaced as `pagebuilder`. Currently there is only inbound communication, e.g. the embedding app calls store actions of the PageBuilder.
+The component provides a store module namespaced as `pagebuilder`. Currently, there is only inbound communication, e.g.
+the embedding app calls store actions of the PageBuilder.
 
 
 #### Inbound

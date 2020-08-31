@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import { getProp, setProp } from '../../src/util/nestedProperty';
+import { getProp, setProp } from '@/util/nestedProperty';
 
 describe('nestedProperty.js', () => {
     describe('getting nested properties', () => {

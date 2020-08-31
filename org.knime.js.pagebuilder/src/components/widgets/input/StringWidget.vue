@@ -143,6 +143,7 @@ export default {
 
   & >>> textarea,
   & >>> label {
+    cursor: pointer;
     max-width: 100%;
   }
 }

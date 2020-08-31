@@ -1,4 +1,4 @@
-import { setProp } from '../src/util/nestedProperty';
+import { setProp } from '@/util/nestedProperty';
 
 export const namespaced = true;
 
@@ -88,7 +88,7 @@ export const mutations = {
     addValueGetter(state, { nodeId, valueGetter }) {
         state.pageValueGetters[nodeId] = valueGetter;
     },
-    
+
     removeValueGetter(state, nodeId) {
         delete state.pageValueGetters[nodeId];
     },

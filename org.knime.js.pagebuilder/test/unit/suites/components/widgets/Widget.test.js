@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import Widget from '@/components/widgets/Widget';
-import { getProp, setProp } from '../../src/util/nestedProperty';
+import { getProp, setProp } from '@/util/nestedProperty';
 
 import * as storeConfig from '~/store/pagebuilder';
 

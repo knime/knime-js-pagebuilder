@@ -12,7 +12,7 @@ const addInteractivityId = (state, { id, subscriberOnly }) => {
     if (!state[id]) {
         state[id] = { // we don't need reactivity, so no need to use Vue.set()
             subscribers: [] // they will get notified when data changes
-            
+
         };
     }
     if (!subscriberOnly && !state[id].data) {
@@ -72,7 +72,7 @@ const notifySubscribers = (state, { id, data, skipCallback, changedIds }) => {
  */
 const determineChangedIds = (state, { id, data }) => {
     let changedIds = [];
-    
+
     data.elements.forEach((element) => {
         if (typeof element.id !== 'undefined') {
             if (state[id] && state[id].data) {
@@ -88,7 +88,7 @@ const determineChangedIds = (state, { id, data }) => {
             }
         }
     });
-    
+
     return changedIds;
 };
 
@@ -119,10 +119,9 @@ const removeRows = (state, { id, rowsToRemove }) => {
 };
 
 const removePartialRows = (state, { id, rowsToRemove }) => {
-    let removedRows = [];
     let curData = state[id].data;
     let filteredPartial = curData.partial.filter((row) => !rowsToRemove.includes(row));
-    removedRows = rowsToRemove.filter((row) => curData.partial.includes(row));
+    let removedRows = rowsToRemove.filter((row) => curData.partial.includes(row));
     if (filteredPartial.length < 1) {
         // remove element if it contains no more partial rows
         delete curData.partial;
@@ -153,10 +152,9 @@ const addRows = (state, { id, rowsToAdd }) => {
 };
 
 const addPartialRows = (state, { id, rowsToAdd }) => {
-    let addedRows = [];
     let curData = state[id].data;
     let curPartial = curData.partial || [];
-    addedRows = rowsToAdd.filter((row) => !curPartial.includes(row));
+    let addedRows = rowsToAdd.filter((row) => !curPartial.includes(row));
     if (!curData.partial && addedRows.length > 0) {
         curData.partial = [];
     }
@@ -208,7 +206,7 @@ const processChangeset = (state, { id, data }) => {
     let removed = data.changeSet.removed && data.changeSet.removed.length;
     let partialRemoved = data.changeSet.partialRemoved && data.changeSet.partialRemoved.length;
     let curData = state[id].data;
-    
+
     // handle deleted rows
     let allRemovedRows = [];
     if (curData && curData.elements && removed) {
@@ -218,7 +216,7 @@ const processChangeset = (state, { id, data }) => {
     if (curData && curData.partial && partialRemoved) {
         allRemovedPartial = removePartialRows(state, { id, rowsToRemove: data.changeSet.partialRemoved });
     }
-    
+
     // handle added rows
     let allAddedRows = [];
     if (added) {
@@ -280,7 +278,7 @@ const mapSelectionEventSource = function (changeSet, { addedRows, removedRows, m
             changeSet.added = changeSet.added.concat(addedNotExisting);
         }
     });
-    
+
     // determine mapped removed rows
     changeSet.removed = [];
     removedRows.forEach((removedRow) => {
@@ -296,7 +294,7 @@ const mapSelectionEventTarget = function (changeSet,
     { mapping, addedRows, removedRows, curElementSource, curElementTarget }) {
     let curRowsSource = concatenateRowsFromDataElement(curElementSource);
     let curRowsTarget = concatenateRowsFromDataElement(curElementTarget);
-    
+
     let mappedPartial = [];
     changeSet.added = [];
     changeSet.removed = [];
