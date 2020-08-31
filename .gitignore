@@ -4,3 +4,4 @@
 .flattened-pom.xml
 target/
 */dist/
+*.DS_Store

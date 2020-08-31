@@ -1,22 +1,9 @@
 <script>
+import mime from 'mime-types';
+import getFileExtension from '~/src/util/getFileExtension';
 import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import FileLink from 'webapps-common/ui/components/FileLink';
-
-import mime from 'mime-types';
-
-const getExtension = (path) => {
-    // extract file name from full path (supports `\\` and `/` separators)
-    let basename = path.split(/[\\/]/).pop();
-    let pos = basename.lastIndexOf('.');
-
-    if (basename === '' || pos < 1) {
-        return '';
-    }
-
-    // extract extension ignoring `.`
-    return basename.slice(pos + 1);
-};
 
 /**
  * File Download Widget
@@ -68,7 +55,7 @@ export default {
             return mime.lookup(this.viewRep.path) || 'application/octet-stream';
         },
         fileExt() {
-            return getExtension(this.viewRep.path);
+            return getFileExtension(this.viewRep.path);
         },
         link() {
             let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
@@ -81,20 +68,16 @@ export default {
             });
         },
         size() {
-            return -1; // unknown for now
+            /* The API does not provide this information. */
+            return 0;
         }
     },
     methods: {
         validate() {
-            if (this.link === null) {
-                return {
-                    isValid: false,
-                    errorMessage: 'File download only available on server.'
-                };
-            }
+            let isValid = this.link !== null;
             return {
-                isValid: true,
-                errorMessage: null
+                isValid,
+                errorMessage: isValid ? null : 'File download only available on server.'
             };
         }
     }
