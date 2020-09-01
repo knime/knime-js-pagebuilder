@@ -121,7 +121,16 @@ export default {
                 type: DATA_TYPE,
                 value
             };
+            console.log('updateWidget', changeEventObj);
             this.$emit('updateWidget', changeEventObj);
+        },
+        onDateChange(date) {
+            let d = this.dateObject;
+            d.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+            this.onChange(d);
+        },
+        onTimeHourChange(hour) {
+            // TODO: implement
         },
         onTimezoneChange(timezone) {
             this.onChange(this.dateObject, timezone);
@@ -132,11 +141,11 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage;
-/*            if (this.viewRep.required) {
+            /*            if (this.viewRep.required) {
                 // TOOD: check for value?!
                 isValid = false;
                 errorMessage = 'Input is required.';
-            }*/
+            } */
             // call validate on date input
             let validateEvent = this.$refs.dateInpu.validate();
             isValid = Boolean(validateEvent.isValid && isValid);
@@ -160,10 +169,11 @@ export default {
     <div class="date-time">
       <DateInput
         v-if="showDate"
-        ref="dateInput"
         :id="labelForId"
+        ref="dateInput"
         :value="dateObject"
         class="date-input"
+        @input="onDateChange"
       />
       <div
         v-if="showTime"
@@ -211,9 +221,9 @@ export default {
         v-if="showZone"
         aria-label="Timezone"
         :value="timezone"
-        @input="onTimezoneChange"
         class="timezone"
         :possible-values="possibleTimeZones"
+        @input="onTimezoneChange"
       />
       <Button
         v-if="showNowButton"

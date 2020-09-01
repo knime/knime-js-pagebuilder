@@ -4,6 +4,7 @@ import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 
 /**
  * Date component shows input field with a button and a popover calendar to choose the date. Only date no time.
+ * Uses DatePicker (<v-date-picker>) from v-calendar. See: https://vcalendar.io/
  */
 export default {
     components: {
@@ -39,6 +40,32 @@ export default {
             type: Boolean
         }
     },
+    data() {
+        return {
+            theme: {
+                // default: https://github.com/nathanreyes/v-calendar/blob/next/src/utils/defaults/theme.js
+                // define classes for the elements
+                color: 'masala', // this defines vc-color-NUM values
+                container: {
+                    light: 'vc-text-gray-900 vc-bg-white custom-box-shadow'
+                },
+                weekdays: {
+                    light: 'vc-text-sm vc-font-bold custom-normal-text-color'
+                },
+                arrows: {
+                    light:
+                        'vc-text-gray-600 vc-border-2 vc-border-transparent hover:vc-opacity-50 ' +
+                        'hover:vc-bg-gray-300 focus:vc-border-gray-300'
+                },
+                navPopoverContainer: {
+                    light:
+                        'vc-text-sm vc-font-semibold vc-text-white custom-bg-dark vc-border ' +
+                        'vc-border-gray-700 vc-p-1 vc-shadow'
+                }
+            },
+            popoverIsVisible: false
+        };
+    },
     methods: {
         onInput(value) {
             this.$emit('input', value);
@@ -69,9 +96,12 @@ export default {
       ref="datePicker"
       :value="value"
       :min-date="min"
+      :theme="theme"
       :max-date="max"
-      :popover="{ placement: 'bottom-end', visibility: 'click' }"
+      :popover="{ placement: 'bottom', visibility: 'click'}"
       :masks="{L: format}"
+      @popoverWillHide="popoverIsVisible = false"
+      @popoverWillShow="popoverIsVisible = true"
       @input="onInput"
     >
       <!--Custom Input Slot-->
@@ -81,7 +111,7 @@ export default {
           v-bind="inputProps"
           v-on="inputEvents"
         >
-        <span class="button">
+        <span :class="['button', {'active': popoverIsVisible}]">
           <CalendarIcon />
         </span>
       </div>
@@ -93,6 +123,43 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 .wrapper {
+  /* DateInput */
+  --theme-date-input-dark-background-color: var(--knime-masala);
+  --theme-date-input-box-shadow-color: var(--knime-masala-semi);
+
+  /* v-calendar */
+  /* remove caret and space */
+
+  & >>> .vc-popover-content {
+    &.direction-bottom {
+      margin-top: 0 !important;
+    }
+  }
+
+  & >>> .vc-popover-caret {
+    display: none;
+  }
+
+  /* new styles - see theme object in data */
+
+  & >>> .vc-bg-masala-600 {
+    background-color: var(--theme-date-input-dark-background-color);
+  }
+
+  & >>> .custom-normal-text-color {
+    color: var(--theme-text-normal-color);
+  }
+
+  & >>> .custom-box-shadow {
+    box-shadow: 0 1px 4px 0 var(--theme-date-input-box-shadow-color);
+  }
+
+  & >>> .custom-bg-dark {
+    background: var(--theme-date-input-dark-background-color);
+  }
+
+  /* end */
+
   position: relative;
   width: 100%;
   border: 1px solid var(--knime-stone-gray);
@@ -157,7 +224,8 @@ export default {
     }
   }
 
-  & .button:active {
+  & .button:active,
+  & .button.active {
     color: var(--knime-white);
     background-color: var(--knime-masala);
 
