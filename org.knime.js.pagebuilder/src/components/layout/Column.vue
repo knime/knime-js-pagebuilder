@@ -105,7 +105,7 @@ export default {
     :style="styles"
   >
     <template v-for="(item, index) in content">
-      <!-- :key with timestamp to force the IFrame to be re-rendered; TODO probably not needed for widgets -->
+      <!-- :key with timestamp to force the IFrame to be re-rendered; TODO WEBP-538 might slow down widgets -->
       <NodeView
         v-if="item.type === 'view' || item.type === 'JSONLayoutViewContent'"
         :key="index + '-' + Date.now()"
