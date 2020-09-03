@@ -59,7 +59,7 @@ export default {
 
 div {
   color: var(--theme-color-error);
-  border: 2px solid var(--theme-color-porcelain);
+  border: 2px solid var(--knime-porcelain);
   padding: 18px 18px 18px 56px;
   font-size: 16px;
 }
