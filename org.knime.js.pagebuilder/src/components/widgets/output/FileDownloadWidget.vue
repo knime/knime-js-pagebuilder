@@ -63,7 +63,7 @@ export default {
                 return null;
             }
             return getDownloadLinkFunc({
-                resourceId: this.viewRep.path,
+                resourceId: this.viewRep.resourceName,
                 nodeId: this.nodeId
             });
         },
