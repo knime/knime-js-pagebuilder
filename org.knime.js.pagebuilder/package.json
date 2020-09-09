@@ -9,6 +9,7 @@
     "build_lib": "vue-cli-service build --no-clean --target lib --formats umd-min src/components/PageBuilder.vue",
     "build_wrapper": "cross-env NODE_ENV=production vue-cli-service build --no-clean --inline-vue src/main.js",
     "build": "npm run build_credits && npm run build_lib && npm run build_wrapper",
+    "build_lib_dev": "npm run build_lib -- --watch",
     "dev-inte": "concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist/ http-server\" \"npm run build_credits && npm run build_lib -- --watch\"",
     "inspect": "vue-cli-service inspect",
     "lint": "npm run lint:js && npm run lint:css",

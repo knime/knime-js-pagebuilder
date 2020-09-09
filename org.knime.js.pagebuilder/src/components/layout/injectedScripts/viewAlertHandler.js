@@ -1,4 +1,5 @@
 window.alert = (function () {
+    var origin = '%ORIGIN%';
     var nodeId = '%NODEID%';
     return function (msg) {
         var loadingErrRegExp = new this.RegExp(/error/gmi);
@@ -9,13 +10,7 @@ window.alert = (function () {
                 message: message,
                 level: level
             };
-            var messageTarget = window.origin;
-            if (typeof messageTarget === 'undefined') {
-                messageTarget = window.location.origin;
-            } else if (messageTarget === 'null') {
-                messageTarget = window;
-            }
-            parent.postMessage(resp, messageTarget);
+            parent.postMessage(resp, origin);
         };
 
         if (loadingErrRegExp.test(msg)) {

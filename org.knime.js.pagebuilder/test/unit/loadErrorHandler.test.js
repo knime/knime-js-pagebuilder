@@ -43,6 +43,6 @@ describe('load error handler', () => {
             nodeId: '%NODEID%',
             error: 'Required web resources timed out and could not be loaded.',
             type: 'error'
-        }, 'http://test.example');
+        }, '%ORIGIN%');
     });
 });
