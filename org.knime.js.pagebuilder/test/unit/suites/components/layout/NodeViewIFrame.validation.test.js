@@ -8,9 +8,9 @@ import * as alertStoreConfig from '@/../store/alert';
 
 // extra mock to simulate a loaded view script
 jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
-    foo = ['%NODEID%'];`, { virtual: true });
+    foo = ['%ORIGIN%', '%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertHandler.js mock";
-    foo = ['%NODEID%'];`, { virtual: true });
+    foo = ['%ORIGIN%', '%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
     foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
 jest.mock('iframe-resizer/js/iframeResizer');

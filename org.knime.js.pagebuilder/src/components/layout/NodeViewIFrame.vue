@@ -80,10 +80,8 @@ export default {
         },
         origin() { // react to current browser environment
             let postMessageOrigin = window.origin;
-            if (typeof postMessageOrigin === 'undefined') { // possible IE11
+            if (!postMessageOrigin || postMessageOrigin === 'null') {
                 postMessageOrigin = window.location.origin;
-            } else if (postMessageOrigin === 'null') { // possible debug HTML
-                postMessageOrigin = this.$refs.iframe;
             }
             return postMessageOrigin;
         },
@@ -220,25 +218,30 @@ export default {
 
             // runtime/script injection error handling
             let loadingErrorHandler = `<script>${loadingErrorHandlerSrc
+                .replace("'%ORIGIN%'", JSON.stringify(this.origin))
                 .replace("'%NODEID%'", JSON.stringify(this.nodeId))
             }<\/script>`; // eslint-disable-line no-useless-escape
 
             // view alert override
             let viewAlertHandler = `<script>${viewAlertHandlerSrc
+                .replace("'%ORIGIN%'", JSON.stringify(this.origin))
                 .replace("'%NODEID%'", JSON.stringify(this.nodeId))
             }<\/script>`; // eslint-disable-line no-useless-escape
 
             // script loader
             let scriptLoader = `<script>${scriptLoaderSrc
                 .replace("'%RESOURCEBASEURL%'", JSON.stringify(resourceBaseUrl))
-                .replace("'%ORIGIN%'", JSON.stringify(window.origin))
+                .replace("'%ORIGIN%'", JSON.stringify(this.origin))
                 .replace("'%NAMESPACE%'", JSON.stringify(this.nodeConfig.namespace))
                 .replace("'%NODEID%'", JSON.stringify(this.nodeId))
                 .replace("'%LIBCOUNT%'", this.nodeJsLibs.length)
             }<\/script>`; // eslint-disable-line no-useless-escape
 
             // postMessage receiver
-            let messageListener = `<script>${messageListenerSrc}<\/script>`; // eslint-disable-line no-useless-escape
+            let messageListener = `<script>${messageListenerSrc
+                .replace("'%ORIGIN%'", JSON.stringify(this.origin))
+            }<\/script>`; // eslint-disable-line no-useless-escape
+
             // iframe resizer content window script
             let iframeResizerContent = this.autoHeight ? `<script>${iframeResizerContentSrc}<\/script>` : ''; // eslint-disable-line no-useless-escape
 
@@ -358,8 +361,12 @@ export default {
 
         messageFromIframe(event) {
             const data = event.data;
-            let originCheck = window.origin || window.location.origin; // pass check in SWT and debug HTML
-            if (event.origin !== originCheck || !data || !data.type || data.nodeId !== this.nodeId) {
+            let originMatch = event.origin === this.origin;
+            // handle edge cases with local environments (legacy OS, VM, debug, etc.).
+            if (!originMatch && event.origin && event.origin.includes('file:')) {
+                originMatch = event.origin.includes(this.origin);
+            }
+            if (!originMatch || !data || !data.type || data.nodeId !== this.nodeId) {
                 return;
             }
             // Important: allow processing of the message to continue even if there was an error.

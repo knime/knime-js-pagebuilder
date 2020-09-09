@@ -8,7 +8,7 @@ describe('message listener', () => {
         // because of https://github.com/jsdom/jsdom/issues/1260
         const event = new window.MessageEvent('message', {
             data,
-            origin
+            origin: origin || '%ORIGIN%'
         });
         event.initEvent('message', false, false);
         window.dispatchEvent(event);
@@ -16,7 +16,6 @@ describe('message listener', () => {
 
     beforeAll(() => {
         require('@/components/layout/injectedScripts/messageListener');
-        window.origin = window.location.origin;
     });
 
     afterEach(() => {
@@ -36,7 +35,7 @@ describe('message listener', () => {
         let spy = jest.fn();
         window['com.example'] = { initView: spy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(spy).toHaveBeenCalledWith('rep', 'val');
         delete window['com.example'];
@@ -51,26 +50,23 @@ describe('message listener', () => {
             viewValue: {},
             viewRepresentation: {}
         };
-        let lastCalledData;
 
         let errorSpy = jest.fn(() => { throw new Error('test'); });
-        let errorListener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', errorListener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
         window['com.example'] = { init: errorSpy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(errorSpy).toHaveBeenCalledWith({}, {});
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.error).toBe('View initialization failed: Error: test');
-            expect(lastCalledData.isValid).toBe(false);
+            expect(messageSpy).toHaveBeenCalledWith({
+                error: 'View initialization failed: Error: test',
+                isValid: false,
+                nodeId: '0.0.7',
+                type: 'init'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', errorListener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -84,26 +80,24 @@ describe('message listener', () => {
             viewValue: {},
             viewRepresentation: {}
         };
-        let lastCalledData;
 
         let errorSpy = jest.fn();
-        let errorListener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', errorListener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = { init: errorSpy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(errorSpy).not.toHaveBeenCalled();
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.error).toBe('Init method not present in view.');
-            expect(lastCalledData.isValid).toBe(false);
+            expect(messageSpy).toHaveBeenCalledWith({
+                error: 'Init method not present in view.',
+                isValid: false,
+                nodeId: '0.0.7',
+                type: 'init'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', errorListener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -115,27 +109,26 @@ describe('message listener', () => {
             namespace: 'com.example',
             getViewValueMethodName: 'value'
         };
-        let lastCalledData;
 
         let sampleValue = { integer: 42 };
         let spy = jest.fn().mockReturnValue(sampleValue);
-        let listener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', listener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = { value: spy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(spy).toHaveBeenCalled();
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.value).toBe(sampleValue);
-            expect(lastCalledData.error).not.toBeDefined();
+            expect(messageSpy).toHaveBeenCalledWith({
+                nodeId: '0.0.7',
+                type: 'getValue',
+                value: {
+                    integer: 42
+                }
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', listener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -147,26 +140,24 @@ describe('message listener', () => {
             namespace: 'com.example',
             getViewValueMethodName: 'value'
         };
-        let lastCalledData;
 
         let errorSpy = jest.fn(() => { throw new Error(); });
-        let errorListener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', errorListener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = { value: errorSpy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(errorSpy).toHaveBeenCalled();
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.error).toBeDefined();
-            expect(lastCalledData.value).not.toBeDefined();
+            expect(messageSpy).toHaveBeenCalledWith({
+                error: 'Value could not be retrieved from view: Error',
+                isValid: false,
+                nodeId: '0.0.7',
+                type: 'getValue'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', errorListener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -178,26 +169,24 @@ describe('message listener', () => {
             namespace: 'com.example',
             getViewValueMethodName: 'wrongMethodName'
         };
-        let lastCalledData;
 
         let errorSpy = jest.fn();
-        let errorListener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', errorListener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = { value: errorSpy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(errorSpy).not.toHaveBeenCalled();
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.error).toBeDefined();
-            expect(lastCalledData.value).not.toBeDefined();
+            expect(messageSpy).toHaveBeenCalledWith({
+                error: 'Value method not present in view.',
+                isValid: false,
+                nodeId: '0.0.7',
+                type: 'getValue'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', errorListener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -209,26 +198,23 @@ describe('message listener', () => {
             namespace: 'com.example',
             validateMethodName: 'validate'
         };
-        let lastCalledData;
 
         let spy = jest.fn().mockReturnValue(true);
-        let listener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', listener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = { validate: spy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(spy).toHaveBeenCalled();
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.isValid).toBe(true);
-            expect(lastCalledData.error).not.toBeDefined();
+            expect(messageSpy).toHaveBeenCalledWith({
+                isValid: true,
+                nodeId: '0.0.7',
+                type: 'validate'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', listener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -240,26 +226,24 @@ describe('message listener', () => {
             namespace: 'com.example',
             validateMethodName: 'validate'
         };
-        let lastCalledData;
 
         let errorSpy = jest.fn(() => { throw new Error('test'); });
-        let errorListener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', errorListener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = { validate: errorSpy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(errorSpy).toHaveBeenCalled();
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.error).toBe('View could not be validated: Error: test');
-            expect(lastCalledData.isValid).toBe(false);
+            expect(messageSpy).toHaveBeenCalledWith({
+                error: 'View could not be validated: Error: test',
+                isValid: false,
+                nodeId: '0.0.7',
+                type: 'validate'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', errorListener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -271,24 +255,21 @@ describe('message listener', () => {
             namespace: 'com.example',
             validateMethodName: 'validate'
         };
-        let lastCalledData;
 
-        let messageListener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', messageListener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = {};
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.error).not.toBeDefined();
-            expect(lastCalledData.isValid).toBe(true);
+            expect(messageSpy).toHaveBeenCalledWith({
+                isValid: true,
+                nodeId: '0.0.7',
+                type: 'validate'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', messageListener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -305,7 +286,7 @@ describe('message listener', () => {
         let spy = jest.fn();
         window['com.example'] = { setValidationError: spy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(spy).toHaveBeenCalledWith('test');
         delete window['com.example'];
@@ -319,26 +300,24 @@ describe('message listener', () => {
             setValidationErrorMethodName: 'setValidationError',
             errorMessage: 'test'
         };
-        let lastCalledData;
 
         let errorSpy = jest.fn(() => { throw new Error('test'); });
-        let errorListener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', errorListener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = { setValidationError: errorSpy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(errorSpy).toHaveBeenCalledWith('test');
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.error).toBe('View error message could not be set: Error: test');
-            expect(lastCalledData.isValid).toBe(false);
+            expect(messageSpy).toHaveBeenCalledWith({
+                error: 'View error message could not be set: Error: test',
+                isValid: false,
+                nodeId: '0.0.7',
+                type: 'setValidationError'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', errorListener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
@@ -351,26 +330,24 @@ describe('message listener', () => {
             setValidationErrorMethodName: 'DNE',
             errorMessage: 'test'
         };
-        let lastCalledData;
 
         let errorSpy = jest.fn();
-        let errorListener = jest.fn((event) => {
-            lastCalledData = event.data;
-        });
-        parent.addEventListener('message', errorListener);
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
+
         window['com.example'] = { setValidationError: errorSpy };
 
-        postMessage(data, window.origin);
+        postMessage(data);
 
         expect(errorSpy).not.toHaveBeenCalled();
         setTimeout(() => {
-            expect(lastCalledData).toBeDefined();
-            expect(lastCalledData.type).toBe(data.type);
-            expect(lastCalledData.nodeId).toBe(data.nodeId);
-            expect(lastCalledData.error).toBe('View error message could not be set: Method does not exist.');
-            expect(lastCalledData.isValid).toBe(false);
+            expect(messageSpy).toHaveBeenCalledWith({
+                error: 'View error message could not be set: Method does not exist.',
+                isValid: false,
+                nodeId: '0.0.7',
+                type: 'setValidationError'
+            },
+            '%ORIGIN%');
             delete window['com.example'];
-            parent.removeEventListener('message', errorListener);
             done();
         }, 10); // eslint-disable-line no-magic-numbers
     });
