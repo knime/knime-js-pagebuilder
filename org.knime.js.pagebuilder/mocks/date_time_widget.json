@@ -26597,11 +26597,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.input.date.DateNodeValue",
-            "datestring": "2020-05-03T09:54:55+02:00[Europe/Rome]"
+            "datestring": "2020-05-03T09:54:55+02:00[America/Bogota]"
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.input.date.DateNodeValue",
-            "datestring": "2020-05-03T09:54:55+02:00[Europe/Rome]"
+            "datestring": "2020-05-03T09:54:55+02:00[America/Bogota]"
           },
           "shownowbutton": true,
           "granularity": "show_minutes",
@@ -27917,11 +27917,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.input.date.DateNodeValue",
-            "datestring": "2020-05-03T09:54:55+02:00[Europe/Rome]"
+            "datestring": "2020-05-03T09:54:55+06:00[Asia/Bangkok]"
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.input.date.DateNodeValue",
-            "datestring": "2020-05-03T09:54:55+02:00[Europe/Rome]"
+            "datestring": "2020-05-03T09:54:55+06:00[Asia/Bangkok]"
           },
           "shownowbutton": false,
           "granularity": "show_minutes",

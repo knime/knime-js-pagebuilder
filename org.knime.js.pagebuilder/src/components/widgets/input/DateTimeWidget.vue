@@ -6,6 +6,8 @@ import DateInput from '../baseElements/input/DateInput';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 import Button from 'webapps-common/ui/components/Button';
 
+import { format } from 'date-fns-tz';
+
 const DATA_TYPE = 'datestring';
 
 /**
@@ -84,10 +86,12 @@ export default {
         dateStringAndTimezone() {
             let dateString = this.valuePair[DATA_TYPE];
             return dateString.match(/(.+)\[(.+)]/);
-            // TODO: handle errors?
         },
         dateObject() {
-            return new Date(this.dateStringAndTimezone[1]);
+            // display time without offset
+            let dateNoOffset = this.dateStringAndTimezone[1].split('+')[0];
+            return new Date(dateNoOffset);
+
         },
         timezone() {
             return this.dateStringAndTimezone[2];
@@ -113,9 +117,8 @@ export default {
     },
     methods: {
         onChange(date, timezone) {
-            date = date || this.dateObject;
             timezone = timezone || this.timezone;
-            let value = `${date.toISOString()}[${timezone}]`;
+            let value = `${format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", { timeZone: timezone })}[${timezone}]`;
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
@@ -125,29 +128,53 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         onDateChange(date) {
-            let d = this.dateObject;
-            d.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+            let d = new Date(this.dateObject);
+            // datepicker gives null if date is invalid, we just play back the current value
+            if (date) {
+                d.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+            }
             this.onChange(d);
         },
-        onTimeHourChange(hour) {
-            // TODO: implement
+        onTimeHoursChange(hours) {
+            let d = new Date(this.dateObject);
+            if (Number.isSafeInteger(hours)) {
+                d.setHours(hours);
+            }
+            this.onChange(d);
+        },
+        onTimeMinutesChange(minutes) {
+            let d = new Date(this.dateObject);
+            if (Number.isSafeInteger(minutes)) {
+                d.setMinutes(minutes);
+            }
+            this.onChange(d);
+        },
+        onTimeSecondsChange(seconds) {
+            let d = new Date(this.dateObject);
+            if (Number.isSafeInteger(seconds)) {
+                d.setSeconds(seconds);
+            }
+            this.onChange(d);
+        },
+        onTimeMillisecondsChange(milliseconds) {
+            let d = new Date(this.dateObject);
+            if (Number.isSafeInteger(milliseconds)) {
+                d.setMilliseconds(milliseconds);
+            }
+            this.onChange(d);
         },
         onTimezoneChange(timezone) {
             this.onChange(this.dateObject, timezone);
         },
         nowButtonClicked() {
-            this.onChange(new Date(Date.now()));
+            // eslint-disable-next-line new-cap
+            this.onChange(new Date(Date.now()), Intl.DateTimeFormat().resolvedOptions().timeZone);
         },
         validate() {
             let isValid = true;
             let errorMessage;
-            /*            if (this.viewRep.required) {
-                // TOOD: check for value?!
-                isValid = false;
-                errorMessage = 'Input is required.';
-            } */
             // call validate on date input
-            let validateEvent = this.$refs.dateInpu.validate();
+            let validateEvent = this.$refs.dateInput.validate();
             isValid = Boolean(validateEvent.isValid && isValid);
             errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
 
@@ -172,6 +199,7 @@ export default {
         :id="labelForId"
         ref="dateInput"
         :value="dateObject"
+        :required="viewRep.required"
         class="date-input"
         @input="onDateChange"
       />
@@ -184,6 +212,7 @@ export default {
           :min="0"
           :max="23"
           :value="dateTimeHours"
+          @input="onTimeHoursChange"
         />
         <span class="time-colon">:</span>
         <NumberInput
@@ -191,6 +220,7 @@ export default {
           :min="0"
           :max="59"
           :value="dateTimeMinutes"
+          @input="onTimeMinutesChange"
         />
         <span
           v-if="showSeconds"
@@ -202,6 +232,7 @@ export default {
           :min="0"
           :max="59"
           :value="dateTimeSeconds"
+          @input="onTimeSecondsChange"
         />
         <span
           v-if="showMilliseconds"
@@ -213,6 +244,7 @@ export default {
           :min="0"
           :max="999"
           :value="dateTimeMilliseconds"
+          @input="onTimeMillisecondsChange"
         />
       </div>
     </div>

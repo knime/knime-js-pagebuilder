@@ -13,8 +13,8 @@ export default {
     },
     props: {
         value: {
-            default: new Date(0),
-            type: Date
+            type: Date,
+            required: true
         },
         id: {
             type: String,
@@ -37,6 +37,10 @@ export default {
          */
         isValid: {
             default: true,
+            type: Boolean
+        },
+        required: {
+            default: false,
             type: Boolean
         }
     },
@@ -73,9 +77,9 @@ export default {
         validate(val) {
             let isValid = true;
             let errorMessage;
-            if (!this.date) {
+            if (this.required && !this.value) {
                 isValid = false;
-                errorMessage = 'Please enter a date';
+                errorMessage = 'Please enter a valid date';
             }
             return {
                 isValid,
@@ -128,8 +132,8 @@ export default {
   --theme-date-input-box-shadow-color: var(--knime-masala-semi);
 
   /* v-calendar */
-  /* remove caret and space */
 
+  /* remove caret and space */
   & >>> .vc-popover-content {
     &.direction-bottom {
       margin-top: 0 !important;
