@@ -192,7 +192,7 @@ export default {
       box-shadow: none; /* override default browser styling */
     }
 
-    &.hover:not(:focus) { /* not native :hover because of WEBP-297 */
+    &:hover:not(:focus) {
       background-color: var(--knime-silver-sand-semi);
     }
   }

@@ -83,18 +83,15 @@ export default {
         showMilliseconds() {
             return this.viewRep.granularity === 'show_millis';
         },
-        dateStringAndTimezone() {
-            let dateString = this.valuePair[DATA_TYPE];
-            return dateString.match(/(.+)\[(.+)]/);
+        dateValue() {
+            return this.parseDateString(this.valuePair[DATA_TYPE]);
         },
         dateObject() {
             // display time without offset
-            let dateNoOffset = this.dateStringAndTimezone[1].split('+')[0];
-            return new Date(dateNoOffset);
-
+            return this.isoToDateObjectIgnoreTimezone(this.dateValue.isoDate);
         },
         timezone() {
-            return this.dateStringAndTimezone[2];
+            return this.dateValue.timezone;
         },
         possibleTimeZones() {
             return (this.viewRep.zones || []).map(x => ({
@@ -113,9 +110,31 @@ export default {
         },
         dateTimeMilliseconds() {
             return this.dateObject.getMilliseconds();
+        },
+        minDate() {
+            if (this.viewRep.usemin) {
+                return this.isoToDateObjectIgnoreTimezone(this.parseDateString(this.viewRep.min).isoDate);
+            }
+            return null;
+        },
+        maxDate() {
+            if (this.viewRep.usemax) {
+                return this.isoToDateObjectIgnoreTimezone(this.parseDateString(this.viewRep.max).isoDate);
+            }
+            return null;
         }
     },
     methods: {
+        parseDateString(dateString) {
+            let match = dateString.match(/(.+)\[(.+)]/);
+            return {
+                isoDate: match[1],
+                timezone: match[2]
+            };
+        },
+        isoToDateObjectIgnoreTimezone(isoDate) {
+            return new Date(isoDate.split('+')[0]);
+        },
         onChange(date, timezone) {
             timezone = timezone || this.timezone;
             let value = `${format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", { timeZone: timezone })}[${timezone}]`;
@@ -200,6 +219,8 @@ export default {
         ref="dateInput"
         :value="dateObject"
         :required="viewRep.required"
+        :min="minDate"
+        :max="maxDate"
         class="date-input"
         @input="onDateChange"
       />
