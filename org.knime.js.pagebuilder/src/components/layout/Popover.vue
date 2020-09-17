@@ -160,7 +160,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: inset 0 0 6px 5px white;
+  box-shadow: inset 0 0 0 1px var(--knime-white);
   background-color: var(--theme-color-gray-light-semi);
 
   &.local {

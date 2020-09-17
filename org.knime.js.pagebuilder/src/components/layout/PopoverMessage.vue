@@ -123,17 +123,17 @@ export default {
         class="label"
       />
       <Button
-        v-if="type === 'error'"
-        title="Minimize"
-        class="minimize-button"
-        @click="onClose()"
+        v-if="expandable"
+        class="expand-button"
+        title="Show more"
+        @click="expandMessage"
       >
-        <CircleMinus class="icon minimize-icon" />
+        <DropdownIcon class="icon" />
       </Button>
       <Button
         title="Close"
         class="close-button"
-        @click="onClose(true)"
+        @click="onClose()"
       >
         <CloseIcon class="icon" />
       </Button>
@@ -142,37 +142,25 @@ export default {
       v-if="messageBody"
       class="message-body"
     >
-      <div class="expand-controls">
-        <span>{{ subtitle }}</span>
-        <span
-          v-if="expandable"
-          class="expand-text"
-        >
-          (See {{ expanded ? 'less' : 'more' }})
-          <Button
-            class="expand-button"
-            title="Show more"
-            @click="expandMessage"
-          >
-            <DropdownIcon />
-          </Button>
-        </span>
-      </div>
-      <transition name="message-fade">
-        <div
-          v-show="expanded"
-          ref="messageContent"
-          class="scrollable-message"
-        >
-          <slot name="messageBodyHeader" />
-          <span class="message-block">
-            {{ messageBody }}
-          </span>
+      <div>
+        <div class="expand-controls">
+          <span>{{ subtitle }}</span>
         </div>
-      </transition>
+        <transition name="message-fade">
+          <div
+            v-show="expanded"
+            ref="messageContent"
+            class="scrollable-message"
+          >
+            <slot name="messageBodyHeader" />
+            <span class="message-block">
+              {{ messageBody }}
+            </span>
+          </div>
+        </transition>
+      </div>
       <div class="copy-button-container">
         <FunctionButton
-          v-show="expanded"
           :compact="true"
           class="copy-button"
           @click="copyText"
@@ -207,6 +195,19 @@ export default {
   right: 0;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
 
+  & .copy-button-container {
+    display: flex;
+    justify-content: center;
+    max-height: 30px;
+    margin-top: 10px;
+    margin-right: 10px;
+    min-width: fit-content;
+
+    & svg {
+      margin-right: 8px;
+    }
+  }
+
   & header {
     position: relative;
     padding: 8px 80px 8px 50px;
@@ -239,13 +240,14 @@ export default {
       right: 0;
     }
 
-    & .minimize-button {
+    & .expand-button {
       top: 0;
       right: 40px;
+      transition: transform 0.3s ease-in-out;
     }
 
     & .close-button,
-    & .minimize-button {
+    & .expand-button {
       position: absolute;
       margin: 10px;
       z-index: 2;
@@ -270,7 +272,8 @@ export default {
   & .message-body {
     height: calc(100% - 50px);
     position: relative;
-    display: block;
+    display: flex;
+    justify-content: space-between;
     max-height: 75%;
     overflow-y: hidden;
     box-sizing: content-box;
@@ -283,6 +286,7 @@ export default {
       width: calc(100% - 16px);
       height: calc(100% - 85px);
       position: absolute;
+      margin-bottom: 10px;
 
       & .info-header {
         font-weight: bold;
@@ -315,16 +319,6 @@ export default {
         position: relative;
       }
     }
-
-    & .copy-button-container {
-      display: flex;
-      justify-content: center;
-
-      & .copy-button {
-        margin-top: 2.5px;
-        margin-bottom: 2.5px;
-      }
-    }
   }
 
   & .expand-controls {
@@ -336,43 +330,6 @@ export default {
     & .expand-text {
       float: right;
       margin-right: 26px;
-    }
-
-    & .expand-button {
-      position: absolute;
-      margin: 10px;
-      top: 0;
-      right: 0;
-      z-index: 2;
-      padding: 6px;
-      border-radius: 50%;
-      line-height: unset;
-      height: 30px;
-
-      & svg {
-        transition: transform 0.3s ease-in-out;
-        margin: 0;
-        top: 0;
-        vertical-align: baseline;
-      }
-
-      &:hover {
-        color: var(--theme-button-function-foreground-color-hover);
-        background-color: var(--theme-button-function-background-color-hover);
-
-        & >>> svg {
-          stroke: var(--theme-button-function-foreground-color-hover);
-        }
-      }
-
-      &:focus {
-        color: var(--theme-button-function-foreground-color-focus);
-        background-color: var(--theme-button-function-background-color-focus);
-
-        & >>> svg {
-          stroke: var(--theme-button-function-foreground-color-focus);
-        }
-      }
     }
   }
 
@@ -401,7 +358,7 @@ export default {
 
         & .scrollable-message {
           max-height: calc(50vh - 135px);
-          height: calc(100% - 85px);
+          height: calc(100%);
         }
       }
 

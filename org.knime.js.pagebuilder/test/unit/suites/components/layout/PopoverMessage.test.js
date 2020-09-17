@@ -61,30 +61,6 @@ describe('PopoverMessage', () => {
         }, { root: true });
     });
 
-    it('only minimizes error messages',  () => {
-        wrapper = mount(PopoverMessage, {
-            propsData: {
-                type: 'warn',
-                title: 'Test title',
-                subtitle: 'Test subtitle',
-                messageBody: 'Validation timeout exceeded.'
-            }
-        });
-        expect(wrapper.find('.minimize-button').exists()).toBe(false);
-        wrapper = mount(PopoverMessage, {
-            propsData: {
-                type: 'error',
-                title: 'Test title',
-                subtitle: 'Test subtitle',
-                messageBody: 'Validation timeout exceeded.'
-            }
-        });
-        let minimizeButton = wrapper.find('.minimize-button');
-        expect(minimizeButton.exists()).toBe(true);
-        minimizeButton.trigger('click');
-        expect(wrapper.emitted('closeAlert'));
-    });
-
     it('handles non-expandable messages',  () => {
         wrapper = mount(PopoverMessage, {
             propsData: {
@@ -127,7 +103,8 @@ describe('PopoverMessage', () => {
         expect(wrapper.vm.expanded).toBe(false);
         expect(wrapper.classes()).not.toContain('expanded');
         expect(wrapper.find('.scrollable-message').isVisible()).toBe(false);
-        expect(wrapper.find('.copy-button').isVisible()).toBe(false);
+        expect(wrapper.find('.copy-button').isVisible()).toBe(true);
+
 
         wrapper.find('.expand-button').trigger('click');
 
@@ -141,6 +118,5 @@ describe('PopoverMessage', () => {
         expect(wrapper.vm.expanded).toBe(false);
         expect(wrapper.classes()).not.toContain('expanded');
         expect(wrapper.find('.scrollable-message').isVisible()).toBe(false);
-        expect(wrapper.find('.copy-button').isVisible()).toBe(false);
     });
 });

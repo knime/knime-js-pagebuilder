@@ -73,7 +73,7 @@ export default {
     left: calc(50% - 20px);
     bottom: calc(50% - 20px);
     background-color: var(--theme-color-error);
-    box-shadow: 0 0 10px 0 var(--theme-color-stone-gray);
+    box-shadow: 0 0 10px 0 var(--knime-gray-dark-semi);
     cursor: pointer;
 
     & .icon {
