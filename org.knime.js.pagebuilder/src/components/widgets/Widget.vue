@@ -18,6 +18,7 @@ import ValueSelectionWidget from './selection/ValueSelectionWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 import ImageWidget from './output/ImageWidget';
+import FileDownloadWidget from './output/FileDownloadWidget';
 // interactive widgets
 import InteractiveValueWidget from './interactive/InteractiveValueWidget';
 import InteractiveRangeWidget from './interactive/InteractiveRangeWidget';
@@ -69,6 +70,7 @@ export default {
         // output widgets
         TextWidget,
         ImageWidget,
+        FileDownloadWidget,
         // interactive widgets
         InteractiveValueWidget,
         InteractiveRangeWidget
