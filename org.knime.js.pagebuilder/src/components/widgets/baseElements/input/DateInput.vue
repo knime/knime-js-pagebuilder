@@ -1,6 +1,7 @@
 <script>
 import CalendarIcon from 'webapps-common/ui/assets/img/icons/calendar.svg?inline';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
+import { format, parse, isAfter, isBefore } from 'date-fns';
 
 /**
  * Date component shows input field with a button and a popover calendar to choose the date. Only date no time.
@@ -67,19 +68,82 @@ export default {
                         'vc-border-gray-700 vc-p-1 vc-shadow'
                 }
             },
-            popoverIsVisible: false
+            popoverIsVisible: false,
+            isAfterMax: false,
+            isBeforeMin: false,
+            // values
+            invalidValue: null,
+            value_: null
         };
     },
+    computed: {
+        unicodeDateFormat() {
+            // see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+            // this only works for simple patterns
+            return this.format.replaceAll('Y', 'y').replaceAll('D', 'd');
+        }
+    },
+    watch: {
+        value: {
+            // validates against min/max and sets appropriate state
+            handler(newVal, oldVal) {
+                if (this.checkMinMax(newVal)) {
+                    this.invalidValue = newVal;
+                    // no change of value_
+                    this.value_ = this.value_;
+                } else {
+                    this.value_ = newVal;
+                }
+            },
+            immediate: true
+        }
+    },
     methods: {
+        formatDate(date) {
+            return format(date, this.unicodeDateFormat);
+        },
         onInput(value) {
             this.$emit('input', value);
+        },
+        onTextInputChange($event, hidePopoverFunction) {
+            // for manual text inputs we accept anything and validate for min/max in the watcher
+            // parse date
+            let date = parse($event.target.value, this.unicodeDateFormat, new Date());
+            // check for invalid min/max
+            let value = date;
+            if (this.checkMinMax(date)) {
+                this.invalidValue = date;
+                value = this.value_;
+            }
+            // hide popover (if open)
+            hidePopoverFunction();
+            // trigger input event which will set value again and update picker
+            // and trigger validation even if the value did not change
+            this.onInput(value);
+        },
+        checkMinMax(date) {
+            this.isBeforeMin = isBefore(date, this.min);
+            this.isAfterMax = isAfter(date, this.max);
+            console.log('checkMinMax', 'this.isBeforeMin', this.isBeforeMin, date, this.min);
+            console.log('checkMinMax', 'this.isAfterMax', this.isAfterMax, date, this.max);
+            return this.isBeforeMin || this.isAfterMax;
         },
         validate(val) {
             let isValid = true;
             let errorMessage;
             if (this.required && !this.value) {
                 isValid = false;
-                errorMessage = 'Please enter a valid date';
+                errorMessage = 'This field requires the input of a valid date';
+            }
+            if (this.isAfterMax) {
+                isValid = false;
+                // eslint-disable-next-line max-len
+                errorMessage = `${this.formatDate(this.invalidValue)} is after maximum date ${this.formatDate(this.max)}`;
+            }
+            if (this.isBeforeMin) {
+                isValid = false;
+                // eslint-disable-next-line max-len
+                errorMessage = `${this.formatDate(this.invalidValue)} is before minimum date ${this.formatDate(this.min)}`;
             }
             return {
                 isValid,
@@ -98,22 +162,23 @@ export default {
     />
     <DatePicker
       ref="datePicker"
-      :value="value"
-      :min-date="min"
+      :value="value_"
       :theme="theme"
-      :max-date="max"
       :popover="{ placement: 'bottom', visibility: 'click'}"
       :masks="{L: format}"
+      :max-date="max"
+      :min-date="min"
+      :is-required="required"
       @popoverWillHide="popoverIsVisible = false"
       @popoverWillShow="popoverIsVisible = true"
       @input="onInput"
     >
       <!--Custom Input Slot-->
-      <div slot-scope="{ inputProps, inputEvents }">
+      <div slot-scope="{ inputProps, hidePopover }">
         <input
           :id="id"
           v-bind="inputProps"
-          v-on="inputEvents"
+          @change="onTextInputChange($event, hidePopover)"
         >
         <span :class="['button', {'active': popoverIsVisible}]">
           <CalendarIcon />

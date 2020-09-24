@@ -193,9 +193,9 @@ export default {
             let isValid = true;
             let errorMessage;
             // call validate on date input
-            let validateEvent = this.$refs.dateInput.validate();
-            isValid = Boolean(validateEvent.isValid && isValid);
-            errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
+            let validateDateInputCmp = this.$refs.dateInput.validate();
+            isValid = Boolean(validateDateInputCmp.isValid && isValid);
+            errorMessage = validateDateInputCmp.errorMessage || errorMessage || 'Current input is invalid.';
 
             return {
                 isValid,
