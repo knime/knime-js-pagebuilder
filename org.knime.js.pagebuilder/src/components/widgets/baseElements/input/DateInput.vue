@@ -2,7 +2,7 @@
 import CalendarIcon from 'webapps-common/ui/assets/img/icons/calendar.svg?inline';
 import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
-import { format, parse, isAfter, isBefore } from 'date-fns';
+import { format, parse, isAfter, isBefore, isValid } from 'date-fns';
 import updateDate from '@/util/updateDate';
 
 /**
@@ -152,14 +152,14 @@ export default {
             // parse the input
             let date = parse($event.target.value, this.unicodeDateFormat, new Date());
 
-            // use time set in value
-            let datetime = updateDate(this.value_, date);
-
-            // check for invalid min/max use input if ok, current date otherwise
-            let value = this.value_;
-            if (this.checkMinMax(datetime)) {
-                value = datetime;
+            // ignore invalid or unparseable input
+            if (!isValid(date)) {
+                date = this.value_;
             }
+
+            // use time set in value
+            let value = updateDate(this.value_, date);
+
             // hide popover (if open)
             hidePopoverFunction();
 
