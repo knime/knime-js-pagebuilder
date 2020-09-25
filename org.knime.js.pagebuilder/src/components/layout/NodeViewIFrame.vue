@@ -10,7 +10,7 @@ import viewAlertHandlerSrc from 'raw-loader!./injectedScripts/viewAlertHandler.j
 
 const valueGetterTimeout = 10000; // ms
 const validatorTimeout = 5000; // ms
-const setValidationErrorTimeout = 1000; // ms
+const setValidationErrorTimeout = 5000; // ms
 
 // TODO WEBP-227 split into multiple files
 
