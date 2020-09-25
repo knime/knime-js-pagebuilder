@@ -1,5 +1,4 @@
 <script>
-import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import DateInput from '../baseElements/input/DateInput';
@@ -18,7 +17,6 @@ export default {
         Button,
         Dropdown,
         Label,
-        NumberInput,
         DateInput,
         ErrorMessage
     },
@@ -99,18 +97,6 @@ export default {
                 text: x
             }));
         },
-        dateTimeHours() {
-            return this.dateObject.getHours();
-        },
-        dateTimeMinutes() {
-            return this.dateObject.getMinutes();
-        },
-        dateTimeSeconds() {
-            return this.dateObject.getSeconds();
-        },
-        dateTimeMilliseconds() {
-            return this.dateObject.getMilliseconds();
-        },
         minDate() {
             if (this.viewRep.usemin) {
                 return this.isoToDateObjectIgnoreTimezone(this.parseDateString(this.viewRep.min).isoDate);
@@ -135,52 +121,20 @@ export default {
         isoToDateObjectIgnoreTimezone(isoDate) {
             return new Date(isoDate.split('+')[0]);
         },
+        formatDate(date, timezone) {
+            return `${format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", { timeZone: timezone })}[${timezone}]`;
+        },
         onChange(date, timezone) {
-            timezone = timezone || this.timezone;
-            let value = `${format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", { timeZone: timezone })}[${timezone}]`;
+            let value = this.formatDate(date, timezone);
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
                 value
             };
-            console.log('updateWidget', changeEventObj);
             this.$emit('updateWidget', changeEventObj);
         },
         onDateChange(date) {
-            let d = new Date(this.dateObject);
-            // datepicker gives null if date is invalid, we just play back the current value
-            if (date) {
-                d.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
-            }
-            this.onChange(d);
-        },
-        onTimeHoursChange(hours) {
-            let d = new Date(this.dateObject);
-            if (Number.isSafeInteger(hours)) {
-                d.setHours(hours);
-            }
-            this.onChange(d);
-        },
-        onTimeMinutesChange(minutes) {
-            let d = new Date(this.dateObject);
-            if (Number.isSafeInteger(minutes)) {
-                d.setMinutes(minutes);
-            }
-            this.onChange(d);
-        },
-        onTimeSecondsChange(seconds) {
-            let d = new Date(this.dateObject);
-            if (Number.isSafeInteger(seconds)) {
-                d.setSeconds(seconds);
-            }
-            this.onChange(d);
-        },
-        onTimeMillisecondsChange(milliseconds) {
-            let d = new Date(this.dateObject);
-            if (Number.isSafeInteger(milliseconds)) {
-                d.setMilliseconds(milliseconds);
-            }
-            this.onChange(d);
+            this.onChange(date, this.timezone);
         },
         onTimezoneChange(timezone) {
             this.onChange(this.dateObject, timezone);
@@ -195,7 +149,7 @@ export default {
             // call validate on date input
             let validateDateInputCmp = this.$refs.dateInput.validate();
             isValid = Boolean(validateDateInputCmp.isValid && isValid);
-            errorMessage = validateDateInputCmp.errorMessage || errorMessage || 'Current input is invalid.';
+            errorMessage = validateDateInputCmp.errorMessage || 'Current input is invalid.';
 
             return {
                 isValid,
@@ -214,60 +168,19 @@ export default {
   >
     <div class="date-time">
       <DateInput
-        v-if="showDate"
         :id="labelForId"
         ref="dateInput"
         :value="dateObject"
         :required="viewRep.required"
         :min="minDate"
         :max="maxDate"
-        class="date-input"
+        :show-date="showDate"
+        :show-time="showTime"
+        :show-seconds="showSeconds"
+        :show-milliseconds="showMilliseconds"
+        :is-valid="isValid"
         @input="onDateChange"
       />
-      <div
-        v-if="showTime"
-        class="time"
-      >
-        <NumberInput
-          type="integer"
-          :min="0"
-          :max="23"
-          :value="dateTimeHours"
-          @input="onTimeHoursChange"
-        />
-        <span class="time-colon">:</span>
-        <NumberInput
-          type="integer"
-          :min="0"
-          :max="59"
-          :value="dateTimeMinutes"
-          @input="onTimeMinutesChange"
-        />
-        <span
-          v-if="showSeconds"
-          class="time-colon"
-        >:</span>
-        <NumberInput
-          v-if="showSeconds"
-          type="integer"
-          :min="0"
-          :max="59"
-          :value="dateTimeSeconds"
-          @input="onTimeSecondsChange"
-        />
-        <span
-          v-if="showMilliseconds"
-          class="time-colon"
-        >.</span>
-        <NumberInput
-          v-if="showMilliseconds"
-          type="integer"
-          :min="0"
-          :max="999"
-          :value="dateTimeMilliseconds"
-          @input="onTimeMillisecondsChange"
-        />
-      </div>
     </div>
     <div class="zone-wrapper">
       <Dropdown
@@ -294,39 +207,14 @@ export default {
 
 <style lang="postcss" scoped>
 .date-time-label {
-  & .date-input {
-    max-width: 15rem;
-    margin-right: 20px;
-  }
-
   & .date-time {
     display: flex;
     width: auto;
   }
 
-  & .time {
-    display: flex;
-    width: auto;
-    flex-wrap: nowrap;
-
-    & >>> .wrapper {
-      width: 5rem;
-    }
-
-    & .time-colon {
-      padding: 5px;
-    }
-
-    & span {
-      display: flex;
-      width: auto;
-      flex-wrap: nowrap;
-    }
-  }
-
   & .timezone {
     width: 100%;
-    max-width: 15rem;
+    max-width: 15.3rem;
     margin-right: 20px;
   }
 
