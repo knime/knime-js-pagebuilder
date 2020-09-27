@@ -38,6 +38,11 @@ export default {
             type: String
         }
     },
+    data() {
+        return {
+            runningInAPWrapper: Boolean(window.KnimePageLoader)
+        };
+    },
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -58,12 +63,15 @@ export default {
             return getFileExtension(this.viewRep.path);
         },
         link() {
+            if (this.runningInAPWrapper) {
+                return `file://${this.viewRep.path}`;
+            }
             let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
             if (!getDownloadLinkFunc) {
                 return null;
             }
             return getDownloadLinkFunc({
-                resourceId: this.viewRep.path,
+                resourceId: this.viewRep.resourceName,
                 nodeId: this.nodeId
             });
         },
