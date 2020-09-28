@@ -104,4 +104,22 @@ describe('FileDownloadWidget.vue', () => {
         expect(validate.errorMessage).toBe('File download only available on server.');
     });
 
+    it('displays a file link when run locally', () => {
+        downloadResourceLinkMock.mockReturnValue(null);
+        window.KnimePageLoader = {};
+        let wrapper = mount(FileDownloadWidget, {
+            store,
+            localVue,
+            propsData
+        });
+        expect(wrapper.html()).toBeTruthy();
+        expect(wrapper.isVisible()).toBeTruthy();
+        const validate = wrapper.vm.validate();
+        expect(validate.isValid).toBe(true);
+        let fl = wrapper.find(FileLink);
+        expect(fl.exists()).toBeTruthy();
+        expect(fl.props('href')).toBe(`file://${propsData.nodeConfig.viewRepresentation.path}`);
+        delete window.KnimePageLoader;
+    });
+
 });

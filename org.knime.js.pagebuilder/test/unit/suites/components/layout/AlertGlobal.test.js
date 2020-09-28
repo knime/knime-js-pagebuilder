@@ -81,7 +81,7 @@ describe('AlertGlobal', () => {
 
     it('closes alert on event', () => {
         wrapper.vm.onClose(true);
-        expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true, undefined); // eslint-disable-line no-undefined
+        expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true, undefined);
     });
 
     describe('error alerts', () => {
@@ -111,7 +111,7 @@ describe('AlertGlobal', () => {
 
         it('does not close the alert on click away (only minimizes)', () => {
             localWrapper.find(Popover).vm.$emit('clickAway');
-            expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), false, undefined); // eslint-disable-line no-undefined
+            expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), false, undefined);
         });
     });
 
@@ -143,7 +143,7 @@ describe('AlertGlobal', () => {
 
         it('closes the alert on click away', () => {
             localWrapper.find(Popover).vm.$emit('clickAway');
-            expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true, undefined); // eslint-disable-line no-undefined
+            expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true, undefined);
         });
     });
 });

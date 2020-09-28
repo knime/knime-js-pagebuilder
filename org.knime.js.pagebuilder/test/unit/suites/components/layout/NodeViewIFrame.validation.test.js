@@ -157,7 +157,7 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'View validation failed.',
-                nodeInfo: undefined, // eslint-disable-line no-undefined
+                nodeInfo: undefined,
                 type: 'error'
             });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
@@ -171,7 +171,7 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'View is not responding.',
-                nodeInfo: undefined, // eslint-disable-line no-undefined
+                nodeInfo: undefined,
                 type: 'error'
             });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
@@ -228,7 +228,7 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'Error',
-                nodeInfo: undefined, // eslint-disable-line no-undefined
+                nodeInfo: undefined,
                 type: 'error'
             });
             let response = await Promise.resolve(valuePromise);

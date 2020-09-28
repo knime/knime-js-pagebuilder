@@ -169,20 +169,20 @@ describe('NodeViewIframe.vue', () => {
         });
 
         expect(addValidator).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, validator: wrapper.vm.validate }, undefined); // eslint-disable-line no-undefined
+            { nodeId, validator: wrapper.vm.validate }, undefined);
         expect(addValueGetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, valueGetter: wrapper.vm.getValue }, undefined); // eslint-disable-line no-undefined
+            { nodeId, valueGetter: wrapper.vm.getValue }, undefined);
         expect(addValidationErrorSetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, errorSetter: wrapper.vm.setValidationError }, undefined); // eslint-disable-line no-undefined
+            { nodeId, errorSetter: wrapper.vm.setValidationError }, undefined);
 
         wrapper.destroy();
 
         expect(removeValidator).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, undefined); // eslint-disable-line no-undefined
+            { nodeId }, undefined);
         expect(removeValueGetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, undefined); // eslint-disable-line no-undefined
+            { nodeId }, undefined);
         expect(removeValidationErrorSetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, undefined); // eslint-disable-line no-undefined
+            { nodeId }, undefined);
     });
 
 
