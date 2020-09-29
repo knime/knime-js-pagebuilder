@@ -27,6 +27,6 @@ describe('getFileExtension.js', () => {
         expect(getFileExtension(nullFile)).toEqual('');
         expect(getFileExtension(numberFile)).toEqual('');
         expect(getFileExtension(booleanFile)).toEqual('');
-        expect(getFileExtension(undefined)).toEqual(''); // eslint-disable-line no-undefined
+        expect(getFileExtension(undefined)).toEqual('');
     });
 });
