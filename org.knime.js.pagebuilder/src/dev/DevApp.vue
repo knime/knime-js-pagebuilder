@@ -107,7 +107,7 @@ body {
   margin: 10px;
   font-size: 18px;
   line-height: 26px;
-  color: var(--theme-color-masala);
+  color: var(--knime-masala);
 }
 
 .frame {

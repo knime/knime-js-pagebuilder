@@ -338,7 +338,7 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'some error message',
-                nodeInfo: undefined, // eslint-disable-line no-undefined
+                nodeInfo: undefined,
                 type: 'error'
             });
             return expect(valuePromise).rejects.toStrictEqual(new Error(errorMessage));
@@ -431,7 +431,7 @@ describe('NodeViewIframe.vue', () => {
             expect(showAlertMock).toHaveBeenCalledWith(expect.anything(), {
                 ...localWrapper.vm.alert,
                 callback: localWrapper.vm.closeAlert
-            }, undefined); // eslint-disable-line no-undefined
+            }, undefined);
         });
     });
 });

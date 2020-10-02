@@ -69,6 +69,7 @@
             if (window[namespace] && typeof window[namespace][data.setValidationErrorMethodName] === 'function') {
                 try {
                     window[namespace][data.setValidationErrorMethodName](data.errorMessage);
+                    postMessageResponse(data);
                 } catch (err) {
                     postErrorResponse(data.type, errorMessagePrefix + err);
                 }
