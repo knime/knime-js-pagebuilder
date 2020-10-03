@@ -89,6 +89,9 @@ export default {
                 : this.parseKnimeDateString(this.value.datestring);
         },
         dateObject() {
+            if (this.viewRep.usedefaultexectime) {
+                return utcToZonedTime(new Date(), this.timezone);
+            }
             return utcToZonedTime(this.dateValue.datestring, this.timezone);
         },
         timezone() {
@@ -101,8 +104,12 @@ export default {
             }));
         },
         minDate() {
+
             if (this.viewRep.usemin) {
                 const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.min);
+                if (this.viewRep.useminexectime) {
+                    return zonedTimeToUtc(new Date(), zonestring);
+                }
                 return zonedTimeToUtc(datestring, zonestring);
             }
             return null;
@@ -110,6 +117,9 @@ export default {
         maxDate() {
             if (this.viewRep.usemax) {
                 const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.max);
+                if (this.viewRep.usemaxexectime) {
+                    return zonedTimeToUtc(new Date(), zonestring);
+                }
                 return zonedTimeToUtc(datestring, zonestring);
             }
             return null;
