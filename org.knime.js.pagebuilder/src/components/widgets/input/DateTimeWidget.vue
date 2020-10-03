@@ -1,23 +1,22 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import DateInput from '../baseElements/input/DateInput';
+import DateTimeInput from '../baseElements/input/DateTimeInput';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 import Button from 'webapps-common/ui/components/Button';
+import updateTime from '@/util/updateTime';
 
-import { format } from 'date-fns-tz';
-
-const DATA_TYPE = 'datestring';
+import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
 /**
- * DateTimeWidget
+ * DateTimeWidget.
  */
 export default {
     components: {
         Button,
         Dropdown,
         Label,
-        DateInput,
+        DateTimeInput,
         ErrorMessage
     },
     props: {
@@ -41,7 +40,8 @@ export default {
         },
         valuePair: {
             default: () => ({
-                [DATA_TYPE]: ''
+                datestring: '',
+                zonestring: ''
             }),
             type: Object
         },
@@ -61,7 +61,7 @@ export default {
             return this.viewRep.description || null;
         },
         value() {
-            return this.valuePair[DATA_TYPE];
+            return this.valuePair;
         },
         showTime() {
             return String(this.viewRep.type).includes('T');
@@ -82,14 +82,17 @@ export default {
             return this.viewRep.granularity === 'show_millis';
         },
         dateValue() {
-            return this.parseDateString(this.valuePair[DATA_TYPE]);
+            // if the value has a zonestring we assume its already split up
+            // (e.g. if it was created by this widget and not by the backend)
+            return this.value.zonestring
+                ? { datestring: this.value.datestring, zonestring: this.value.zonestring }
+                : this.parseKnimeDateString(this.value.datestring);
         },
         dateObject() {
-            // display time without offset
-            return this.isoToDateObjectIgnoreTimezone(this.dateValue.isoDate);
+            return utcToZonedTime(this.dateValue.datestring, this.timezone);
         },
         timezone() {
-            return this.dateValue.timezone;
+            return this.dateValue.zonestring;
         },
         possibleTimeZones() {
             return (this.viewRep.zones || []).map(x => ({
@@ -99,37 +102,44 @@ export default {
         },
         minDate() {
             if (this.viewRep.usemin) {
-                return this.isoToDateObjectIgnoreTimezone(this.parseDateString(this.viewRep.min).isoDate);
+                const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.min);
+                return zonedTimeToUtc(datestring, zonestring);
             }
             return null;
         },
         maxDate() {
             if (this.viewRep.usemax) {
-                return this.isoToDateObjectIgnoreTimezone(this.parseDateString(this.viewRep.max).isoDate);
+                const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.max);
+                return zonedTimeToUtc(datestring, zonestring);
             }
             return null;
         }
     },
     methods: {
-        parseDateString(dateString) {
-            let match = dateString.match(/(.+)\[(.+)]/);
+        parseKnimeDateString(dateAndZoneString) {
+            let match = dateAndZoneString.match(/(.+)\[(.+)]/);
             return {
-                isoDate: match[1],
-                timezone: match[2]
+                datestring: match[1],
+                zonestring: match[2]
             };
         },
-        isoToDateObjectIgnoreTimezone(isoDate) {
-            return new Date(isoDate.split('+')[0]);
-        },
-        formatDate(date, timezone) {
-            return `${format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", { timeZone: timezone })}[${timezone}]`;
+        formatDate(date) {
+            return format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS");
         },
         onChange(date, timezone) {
-            let value = this.formatDate(date, timezone);
+            console.log('onChange(date, timezone)', date, timezone);
+            let utcDate = zonedTimeToUtc(date, timezone);
+            let value = this.formatDate(utcDate);
+            console.log('onChange utcDate', utcDate);
+            console.log('onChange value', value, timezone);
             const changeEventObj = {
                 nodeId: this.nodeId,
-                type: DATA_TYPE,
-                value
+                update: {
+                    'viewRepresentation.currentValue': {
+                        datestring: value,
+                        zonestring: timezone
+                    }
+                }
             };
             this.$emit('updateWidget', changeEventObj);
         },
@@ -140,8 +150,14 @@ export default {
             this.onChange(this.dateObject, timezone);
         },
         nowButtonClicked() {
-            // eslint-disable-next-line new-cap
-            this.onChange(new Date(Date.now()), Intl.DateTimeFormat().resolvedOptions().timeZone);
+            // update zone to current if visible
+            const zone = this.showZone ? Intl.DateTimeFormat().resolvedOptions().timeZone : this.timezone;
+            let now = new Date(Date.now());
+            // update only time if date picker is not visible
+            if (!this.showDate) {
+                now = updateTime(this.dateObject, now);
+            }
+            this.onChange(now, zone);
         },
         validate() {
             let isValid = true;
@@ -167,7 +183,7 @@ export default {
     :text="label"
   >
     <div class="date-time">
-      <DateInput
+      <DateTimeInput
         :id="labelForId"
         ref="dateInput"
         :value="dateObject"
