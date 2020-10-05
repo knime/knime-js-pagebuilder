@@ -274,7 +274,7 @@ describe('message listener', () => {
         }, 10); // eslint-disable-line no-magic-numbers
     });
 
-    it('handles the "setValidationError" message', () => {
+    it('handles the "setValidationError" message', (done) => {
         let data = {
             type: 'setValidationError',
             nodeId,
@@ -283,13 +283,25 @@ describe('message listener', () => {
             errorMessage: 'test'
         };
 
-        let spy = jest.fn();
-        window['com.example'] = { setValidationError: spy };
+        let setValidationErrorMock = jest.fn();
+        let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
 
+        window['com.example'] = { setValidationError: setValidationErrorMock };
         postMessage(data);
+        expect(setValidationErrorMock).toHaveBeenCalled();
 
-        expect(spy).toHaveBeenCalledWith('test');
-        delete window['com.example'];
+        setTimeout(() => {
+            expect(messageSpy).toHaveBeenCalledWith({
+                errorMessage: 'test',
+                namespace: 'com.example',
+                setValidationErrorMethodName: 'setValidationError',
+                nodeId: '0.0.7',
+                type: 'setValidationError'
+            },
+            '%ORIGIN%');
+            delete window['com.example'];
+            done();
+        }, 10); // eslint-disable-line no-magic-numbers
     });
 
     it('handles errors in the "setValidationError" method', (done) => {
