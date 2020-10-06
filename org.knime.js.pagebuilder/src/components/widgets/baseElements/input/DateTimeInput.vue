@@ -3,7 +3,7 @@ import CalendarIcon from 'webapps-common/ui/assets/img/icons/calendar.svg?inline
 import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 import { parse, isAfter, isBefore, isValid } from 'date-fns';
-import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
+import { format, utcToZonedTime } from 'date-fns-tz';
 import updateDate from '@/util/updateDate';
 
 /**
@@ -29,9 +29,13 @@ export default {
             type: String,
             default: null
         },
-        format: {
+        /**
+         * Date format in unicode, only date not time!
+         * @see https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+         */
+        dateFormat: {
             type: String,
-            default: 'YYYY-MM-DD'
+            default: 'yyyy-MM-dd'
         },
         min: {
             default: null,
@@ -97,6 +101,7 @@ export default {
                 }
             },
             popoverIsVisible: false,
+            isInvalid: false,
             isAfterMax: false,
             isBeforeMin: false,
             // last invalid enterted value (for error message)
@@ -107,10 +112,10 @@ export default {
         };
     },
     computed: {
-        unicodeDateFormat() {
+        legacyDateFormat() {
             // see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
             // this only works for simple patterns
-            return this.format.replaceAll('Y', 'y').replaceAll('D', 'd');
+            return this.dateFormat.toUpperCase();
         },
         dateTimeHours() {
             return this.value_.getHours();
@@ -129,8 +134,8 @@ export default {
         value: {
             // validates against min/max and sets appropriate state
             handler(newVal, oldVal) {
-                // update internal value if min/max bounds are kept
-                if (this.checkMinMax(newVal)) {
+                // update internal value if min/max bounds are kept and value is valid
+                if (this.checkMinMax(newVal) && this.checkIsValid(newVal)) {
                     // convert to zoned time
                     this.value_ = utcToZonedTime(newVal, this.timezone);
                 }
@@ -141,9 +146,9 @@ export default {
     methods: {
         formatDate(date) {
             if (this.showTime) {
-                return format(date, `${this.unicodeDateFormat} HH:mm:SS`);
+                return format(date, `${this.dateFormat} HH:mm:SS`);
             } else {
-                return format(date, this.unicodeDateFormat);
+                return format(date, this.dateFormat);
             }
         },
         emitInput(value) {
@@ -160,10 +165,10 @@ export default {
         },
         onTextInputChange($event, hidePopoverFunction) {
             // parse the input
-            let date = parse($event.target.value, this.unicodeDateFormat, new Date());
+            let date = parse($event.target.value, this.dateFormat, new Date());
 
             // ignore invalid or unparseable input
-            if (!isValid(date)) {
+            if (!this.checkIsValid(date)) {
                 date = this.value_;
             }
 
@@ -176,6 +181,14 @@ export default {
             // trigger input event which will set value again and update picker
             // and trigger validation even if the value did not change
             this.onDatePickerInput(value);
+        },
+        checkIsValid(date) {
+            if (isValid(date)) {
+                return true;
+            }
+            this.isInvalid = true;
+            this.invalidValue = date;
+            return false;
         },
         checkMinMax(date) {
             // skip check if no min and max is set
@@ -221,7 +234,7 @@ export default {
         validate(val) {
             let isValid = true;
             let errorMessage;
-            if (this.required && !this.value) {
+            if (this.required && this.isInvalid) {
                 isValid = false;
                 errorMessage = 'Please input a valid date';
             }
@@ -259,7 +272,7 @@ export default {
         :value="value_"
         :theme="theme"
         :popover="{ placement: 'bottom', visibility: 'click'}"
-        :masks="{L: format}"
+        :masks="{L: legacyDateFormat}"
         :max-date="max"
         :min-date="min"
         @popoverWillHide="popoverIsVisible = false"
@@ -284,6 +297,7 @@ export default {
       class="time"
     >
       <NumberInput
+        ref="hours"
         type="integer"
         :min="0"
         :max="23"
@@ -292,6 +306,7 @@ export default {
       />
       <span class="time-colon">:</span>
       <NumberInput
+        ref="minutes"
         type="integer"
         :min="0"
         :max="59"
@@ -304,6 +319,7 @@ export default {
       >:</span>
       <NumberInput
         v-if="showSeconds"
+        ref="seconds"
         type="integer"
         :min="0"
         :max="59"
@@ -316,6 +332,7 @@ export default {
       >.</span>
       <NumberInput
         v-if="showMilliseconds"
+        ref="milliseconds"
         type="integer"
         :min="0"
         :max="999"
