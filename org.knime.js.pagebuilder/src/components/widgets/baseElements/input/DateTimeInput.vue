@@ -2,7 +2,8 @@
 import CalendarIcon from 'webapps-common/ui/assets/img/icons/calendar.svg?inline';
 import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
-import { format, parse, isAfter, isBefore, isValid } from 'date-fns';
+import { parse, isAfter, isBefore, isValid } from 'date-fns';
+import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 import updateDate from '@/util/updateDate';
 
 /**
@@ -17,6 +18,9 @@ export default {
         NumberInput
     },
     props: {
+        /**
+         * @type Date - date time in UTC
+         */
         value: {
             type: Date,
             required: true
@@ -63,6 +67,10 @@ export default {
         required: {
             default: false,
             type: Boolean
+        },
+        timezone: {
+            type: String,
+            default: Intl.DateTimeFormat().resolvedOptions().timeZone
         }
     },
     data() {
@@ -94,6 +102,7 @@ export default {
             // last invalid enterted value (for error message)
             invalidValue: null,
             // internal value guarded by watcher to prevent invalid values (min/max, null etc.)
+            // time in the given timezone (default: browser local) for correct display
             value_: new Date('')
         };
     },
@@ -122,7 +131,8 @@ export default {
             handler(newVal, oldVal) {
                 // update internal value if min/max bounds are kept
                 if (this.checkMinMax(newVal)) {
-                    this.value_ = newVal;
+                    // convert to zoned time
+                    this.value_ = utcToZonedTime(newVal, this.timezone);
                 }
             },
             immediate: true

@@ -50,6 +50,11 @@ export default {
             default: null
         }
     },
+    data() {
+        return {
+            localTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        };
+    },
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -90,9 +95,9 @@ export default {
         },
         dateObject() {
             if (this.viewRep.usedefaultexectime) {
-                return utcToZonedTime(new Date(), this.timezone);
+                return zonedTimeToUtc(new Date(), this.localTimeZone);
             }
-            return utcToZonedTime(this.dateValue.datestring, this.timezone);
+            return zonedTimeToUtc(this.dateValue.datestring, this.timezone);
         },
         timezone() {
             return this.dateValue.zonestring;
@@ -104,11 +109,10 @@ export default {
             }));
         },
         minDate() {
-
             if (this.viewRep.usemin) {
                 const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.min);
                 if (this.viewRep.useminexectime) {
-                    return zonedTimeToUtc(new Date(), zonestring);
+                    return zonedTimeToUtc(new Date(), this.localTimeZone);
                 }
                 return zonedTimeToUtc(datestring, zonestring);
             }
@@ -118,7 +122,7 @@ export default {
             if (this.viewRep.usemax) {
                 const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.max);
                 if (this.viewRep.usemaxexectime) {
-                    return zonedTimeToUtc(new Date(), zonestring);
+                    return zonedTimeToUtc(new Date(), this.localTimeZone);
                 }
                 return zonedTimeToUtc(datestring, zonestring);
             }
@@ -138,9 +142,9 @@ export default {
         },
         onChange(date, timezone) {
             console.log('onChange(date, timezone)', date, timezone);
-            let utcDate = zonedTimeToUtc(date, timezone);
-            let value = this.formatDate(utcDate);
-            console.log('onChange utcDate', utcDate);
+            let zonedDate = utcToZonedTime(date, timezone);
+            let value = this.formatDate(zonedDate);
+            console.log('onChange utcDate', zonedDate);
             console.log('onChange value', value, timezone);
             const changeEventObj = {
                 nodeId: this.nodeId,
@@ -160,14 +164,12 @@ export default {
             this.onChange(this.dateObject, timezone);
         },
         nowButtonClicked() {
-            // update zone to current if visible
-            const zone = this.showZone ? Intl.DateTimeFormat().resolvedOptions().timeZone : this.timezone;
             let now = new Date(Date.now());
             // update only time if date picker is not visible
             if (!this.showDate) {
                 now = updateTime(this.dateObject, now);
             }
-            this.onChange(now, zone);
+            this.onChange(now, this.localTimeZone);
         },
         validate() {
             let isValid = true;
@@ -205,6 +207,7 @@ export default {
         :show-seconds="showSeconds"
         :show-milliseconds="showMilliseconds"
         :is-valid="isValid"
+        :timezone="showZone ? timezone : localTimeZone"
         @input="onDateChange"
       />
     </div>
