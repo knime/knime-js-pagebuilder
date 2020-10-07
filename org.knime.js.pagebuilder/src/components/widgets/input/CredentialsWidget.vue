@@ -4,7 +4,7 @@ import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import InputField from '~/webapps-common/ui/components/forms/InputField';
 
-const DATA_TYPE = 'Object';
+const SERVER_ERROR_MESSAGE = 'KNIME Server login credentials could not be fetched!';
 
 export default {
     components: {
@@ -41,6 +41,16 @@ export default {
             default: null
         }
     },
+    data() {
+        return {
+            serverUser: {
+                username: null,
+                password: null
+            },
+            serverCredentialsFetchError: false,
+            serverCredentialsErrorMessage: SERVER_ERROR_MESSAGE
+        };
+    },
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -60,42 +70,84 @@ export default {
         useServerLoginCredentials() {
             return this.viewRep.useServerLoginCredentials || false;
         },
+        noDisplay() {
+            return this.viewRep.noDisplay || false;
+        },
         value() {
-            return this.valuePair;
+            return this.useServerLoginCredentials ? this.serverUser || this.valuePair : this.valuePair;
         }
     },
+    async mounted() {
+        await this.getServerUser();
+    },
     methods: {
+        async getServerUser() {
+            if (this.useServerLoginCredentials) {
+                let getUserFunc = await this.$store.getters['api/user'];
+                getUserFunc().then((value) => {
+                    this.serverUser = value;
+                }).catch(() => {
+                    this.serverCredentialsFetchError = true;
+                    if (!this.noDisplay) {
+                        this.serverUser = { ...this.valuePair, username: null, password: null };
+                    }
+                    this.$parent.validate();
+                });
+            }
+        },
         onChange(value) {
             const changeEventObj = {
                 nodeId: this.nodeId,
-                type: DATA_TYPE,
-                value: { ...this.value, ...this.usernameChanged(event) ? { username: value } : { password: value } }
+                // TODO: find better solution
+                // eslint-disable-next-line no-restricted-globals
+                type: event.target.type === 'password' ? 'password' : 'username',
+                value
             };
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required && !this.$refs.from.getValue()) {
-                isValid = false;
-                errorMessage = 'Input is required.';
+
+            if (this.promptUsername
+                ? !this.$refs.usernameForm.getValue() || !this.$refs.passwordForm.getValue()
+                : !this.$refs.passwordForm.getValue()) {
+                this.serverCredentialsErrorMessage = SERVER_ERROR_MESSAGE;
+                if (this.viewRep.required) {
+                    isValid = false;
+                    errorMessage = 'Input required.';
+                }
+            } else {
+                this.serverCredentialsErrorMessage = null;
             }
-            if (typeof this.$refs.form.validate === 'function') {
-                let validateEvent = this.$refs.form.validate();
+
+            if (typeof this.$refs.passwordForm.validate === 'function') {
+                let validateEvent = this.$refs.passwordForm.validate();
+                isValid = Boolean(validateEvent.isValid && isValid);
+                errorMessage = validateEvent.errorMessage;
+            }
+
+            if (this.promptUsername && typeof this.$refs.usernameForm.validate === 'function') {
+                let validateEvent = this.$refs.usernameForm.validate();
                 isValid = Boolean(validateEvent.isValid && isValid);
                 errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
             }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
-        },
-        isUsername(event) {
-            return true;
+
+            this.serverCredentialsErrorMessage = this.serverCredentialsFetchError
+                ? this.serverCredentialsErrorMessage
+                : null;
+
+            return { isValid, errorMessage: isValid ? this.serverCredentialsErrorMessage : errorMessage };
         }
     }
 };
 </script>
 
 <template>
-  <Fieldset :text="label">
+  <Fieldset
+    :class="[{'hide': noDisplay}]"
+    :text="label"
+  >
     <Label
       v-if="promptUsername"
       v-slot="{ labelForId }"
@@ -104,7 +156,7 @@ export default {
     >
       <InputField
         :id="labelForId"
-        ref="form"
+        ref="usernameForm"
         :value="value.username"
         :is-valid="isValid"
         :title="description"
@@ -119,7 +171,7 @@ export default {
     >
       <InputField
         :id="labelForId"
-        ref="form"
+        ref="passwordForm"
         type="password"
         :value="value.password"
         :is-valid="isValid"
@@ -128,10 +180,15 @@ export default {
         @input="onChange"
       />
     </Label>
-    <ErrorMessage :error="errorMessage" />
+    <ErrorMessage
+      class="error-message"
+      :error="errorMessage"
+    />
   </Fieldset>
 </template>
 
 <style lang="postcss" scoped>
-
+.hide >>> *:not(:last-child) {
+  display: none;
+}
 </style>
