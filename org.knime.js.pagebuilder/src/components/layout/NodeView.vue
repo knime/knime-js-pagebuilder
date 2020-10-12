@@ -133,7 +133,7 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 .view {
-  background-color: var(--theme-color-white);
+  background-color: var(--knime-white);
 
   &.aspectRatio16by9,
   &.aspectRatio4by3,

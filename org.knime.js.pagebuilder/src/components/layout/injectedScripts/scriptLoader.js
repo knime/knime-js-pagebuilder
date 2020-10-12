@@ -8,17 +8,11 @@ window.knimeLoader = (function () {
     var knimeLoaderCount = '%LIBCOUNT%';
 
     var postResponse = function (error) {
-        var messageTarget = origin;
-        if (typeof messageTarget === 'undefined') {
-            messageTarget = window.location.origin;
-        } else if (messageTarget === 'null') {
-            messageTarget = window;
-        }
         parent.postMessage({
             nodeId: nodeId,
             type: 'load',
             error: error
-        }, messageTarget);
+        }, origin);
     };
 
     if (knimeLoaderCount === 0) {
