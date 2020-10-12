@@ -74,36 +74,46 @@ export default {
             return this.viewRep.noDisplay || false;
         },
         value() {
-            return this.useServerLoginCredentials ? this.serverUser || this.valuePair : this.valuePair;
+            return this.valuePair || this.viewRep.defaultValue || null;
         }
     },
-    async mounted() {
-        await this.getServerUser();
+    mounted() {
+        this.checkServerCredentials();
     },
     methods: {
-        async getServerUser() {
-            if (this.useServerLoginCredentials) {
-                let getUserFunc = await this.$store.getters['api/user'];
-                getUserFunc().then((value) => {
-                    this.serverUser = value;
-                }).catch(() => {
-                    this.serverCredentialsFetchError = true;
-                    if (!this.noDisplay) {
-                        this.serverUser = { ...this.valuePair, username: null, password: null };
-                    }
-                    this.$parent.validate();
-                });
+        checkServerCredentials() {
+            /* TODO WEBP-563: reevaluate if this case could ever occur or
+                if the error will get caught in earlier stages for sure. */
+            if (this.useServerLoginCredentials && !this.viewRep.defaultValue) {
+                this.serverCredentialsFetchError = true;
             }
         },
-        onChange(value) {
-            const changeEventObj = {
-                nodeId: this.nodeId,
-                // TODO: find better solution
-                // eslint-disable-next-line no-restricted-globals
-                type: event.target.type === 'password' ? 'password' : 'username',
-                value
-            };
-            this.$emit('updateWidget', changeEventObj);
+        /*
+         *  This check makes sure only data gets sent that is different to the defautl value,
+         *  if this is not the case no credentials will be sent and the backend uses the default value instead.
+         */
+        onUsernameChange(value) {
+            if (value !== this.viewRep.defaultValue.username) {
+                const changeEventObj = {
+                    nodeId: this.nodeId,
+                    type: 'username',
+                    value
+                };
+                this.$emit('updateWidget', changeEventObj);
+            }
+        },
+        /*
+         * Same as onUsernameChange: only sends credentials if the input differs from the default values.
+         */
+        onPasswordChange(value) {
+            if (value !== this.viewRep.defaultValue.magicDefaultPassword) {
+                const changeEventObj = {
+                    nodeId: this.nodeId,
+                    type: 'password',
+                    value
+                };
+                this.$emit('updateWidget', changeEventObj);
+            }
         },
         validate() {
             let isValid = true;
@@ -115,7 +125,7 @@ export default {
                 this.serverCredentialsErrorMessage = SERVER_ERROR_MESSAGE;
                 if (this.viewRep.required) {
                     isValid = false;
-                    errorMessage = 'Input required.';
+                    errorMessage = 'Input is required.';
                 }
             } else {
                 this.serverCredentialsErrorMessage = null;
@@ -124,20 +134,23 @@ export default {
             if (typeof this.$refs.passwordForm.validate === 'function') {
                 let validateEvent = this.$refs.passwordForm.validate();
                 isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage;
+                errorMessage = validateEvent.errorMessage || errorMessage;
             }
 
             if (this.promptUsername && typeof this.$refs.usernameForm.validate === 'function') {
                 let validateEvent = this.$refs.usernameForm.validate();
                 isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
+                errorMessage = validateEvent.errorMessage || errorMessage;
             }
 
             this.serverCredentialsErrorMessage = this.serverCredentialsFetchError
                 ? this.serverCredentialsErrorMessage
                 : null;
 
-            return { isValid, errorMessage: isValid ? this.serverCredentialsErrorMessage : errorMessage };
+            return { isValid,
+                errorMessage: isValid
+                    ? this.serverCredentialsErrorMessage
+                    : errorMessage || 'Current input is invalid' };
         }
     }
 };
@@ -161,7 +174,7 @@ export default {
         :is-valid="isValid"
         :title="description"
         :pattern="regex"
-        @input="onChange"
+        @input="onUsernameChange"
       />
     </Label>
     <Label
@@ -173,11 +186,11 @@ export default {
         :id="labelForId"
         ref="passwordForm"
         type="password"
-        :value="value.password"
+        :value="useServerLoginCredentials ? value.magicDefaultPassword : value.password"
         :is-valid="isValid"
         :title="description"
         :pattern="regex"
-        @input="onChange"
+        @input="onPasswordChange"
       />
     </Label>
     <ErrorMessage
@@ -190,5 +203,9 @@ export default {
 <style lang="postcss" scoped>
 .hide >>> *:not(:last-child) {
   display: none;
+}
+
+.error-message {
+  min-height: 21px;
 }
 </style>
