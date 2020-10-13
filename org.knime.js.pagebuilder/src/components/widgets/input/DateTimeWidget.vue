@@ -141,11 +141,8 @@ export default {
             return format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS");
         },
         onChange(date, timezone) {
-            console.log('onChange(date, timezone)', date, timezone);
             let zonedDate = utcToZonedTime(date, timezone);
             let value = this.formatDate(zonedDate);
-            console.log('onChange utcDate', zonedDate);
-            console.log('onChange value', value, timezone);
             const changeEventObj = {
                 nodeId: this.nodeId,
                 update: {
