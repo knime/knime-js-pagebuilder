@@ -208,11 +208,13 @@ export const actions = {
         commit('removeValidationErrorSetter', nodeId);
     },
 
-    setValidationErrors({ commit, state }, { page }) {
+    setValidationErrors({ state }, { page }) {
         const setValidationErrorPromises = [];
         for (const nodeId in page) {
+            // Server responses for WebPortal Component errors may have the error attr.
+            let errorMessage = page[nodeId].error || page[nodeId];
             if (typeof state.pageValidationErrorSetters[nodeId] === 'function') {
-                setValidationErrorPromises.push(state.pageValidationErrorSetters[nodeId](page[nodeId].error));
+                setValidationErrorPromises.push(state.pageValidationErrorSetters[nodeId](errorMessage));
             }
         }
         return Promise.all(setValidationErrorPromises).then(res => true).catch(e => false);

@@ -38,7 +38,7 @@ describe('view alert handler', () => {
             message,
             type: 'alert',
             level: 'error'
-        }, 'http://test.example');
+        }, '%ORIGIN%');
     });
 
     it('handles in view warnings and info alerts', () => {
@@ -54,6 +54,6 @@ describe('view alert handler', () => {
             message,
             type: 'alert',
             level: 'info'
-        }, 'http://test.example');
+        }, '%ORIGIN%');
     });
 });

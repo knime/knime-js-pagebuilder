@@ -24,24 +24,15 @@ export const classToComponentMap = {
     'org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation': 'ColumnSelectionWidget',
     'org.knime.js.base.node.base.filter.value.ValueFilterNodeRepresentation': 'ValueFilterSelectionWidget',
     'org.knime.js.base.node.base.selection.value.ValueSelectionNodeRepresentation': 'ValueSelectionWidget',
-};
 
-/**
- * This object contains a mapping for KNIME Widget Node node names and their corresponding
- * Vue component names. It's intended to be used with the Vue Component "is" functionality.
- * It is also used to verify that a Node View is a Vue Widget and some other view content.
- * This mapping SHOULD be used for KNIME Widget Nodes which share a class name with another
- * non-Widget node. (@example: some QuickForms use the same class and should be added here).
- *
- * TODO: WEBP-327 - revisit when Widget nodes have unique class names.
- */
-export const nodeNameToComponentMap = {
     // output widgets
-    'Text Output Widget': 'TextWidget',
-    'Image Output Widget': 'ImageWidget',
-    'File Download Widget': 'FileDownloadWidget',
+    'org.knime.js.base.node.widget.output.text.TextOutputWidgetRepresentation': 'TextWidget',
+    'org.knime.js.base.node.widget.output.image.ImageOutputWidgetRepresentation': 'ImageWidget',
+    'org.knime.js.base.node.widget.output.filedownload.FileDownloadWidgetRepresentation': 'FileDownloadWidget',
 
-    // interactive widgets
-    'Interactive Value Filter Widget': 'InteractiveValueWidget',
-    'Interactive Range Slider Filter Widget': 'InteractiveRangeWidget'
+    // interactive filter widgets
+    'org.knime.js.base.node.widget.filter.definition.value.ValueFilterDefinitionWidgetRepresentation':
+        'InteractiveValueWidget',
+    'org.knime.js.base.node.widget.filter.definition.rangeslider.RangeSliderFilterWidgetRepresentation':
+        'InteractiveRangeWidget'
 };

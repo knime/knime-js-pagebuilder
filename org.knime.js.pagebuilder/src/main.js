@@ -10,6 +10,8 @@ import Vuex from 'vuex';
 
 const DIV_TARGET = 'knime-pagebuilder';
 const CONST_DEBUG_LOG_LEVEL = 4;
+const SINGLE_NODE_ID = 'SINGLE';
+const SINGLE_VIEW_FRAME_ID = `node-${SINGLE_NODE_ID}`;
 
 if (typeof KnimePageLoader === 'undefined') {
     /**
@@ -146,7 +148,15 @@ if (typeof KnimePageLoader === 'undefined') {
         };
 
         pageBuilder.setValidationError = (errorResponse) => {
-            return pageBuilder.app.$store.dispatch('pagebuilder/setValidationErrors', { page: errorResponse.data });
+            let page = errorResponse;
+            if (pageBuilder.isSingleView) {
+                page = {
+                    [SINGLE_NODE_ID]: {
+                        error: errorResponse
+                    }
+                };
+            }
+            return pageBuilder.app.$store.dispatch('pagebuilder/setValidationErrors', { page });
         };
 
         // environment detection methods
@@ -215,7 +225,9 @@ if (typeof KnimePageLoader === 'undefined') {
         pageBuilder.respondToViewRequest = (responseContainer) => {
             consola.debug('PageBuilder Wrapper: respondToViewRequest');
             let response = pageBuilder.isSingleView ? responseContainer : responseContainer.jsonResponse;
-            let frameID = pageBuilder.isSingleView ? 'node-SINGLE' : buildFrameIDFromNodeId(responseContainer.nodeID);
+            let frameID = pageBuilder.isSingleView
+                ? SINGLE_VIEW_FRAME_ID
+                : buildFrameIDFromNodeId(responseContainer.nodeID);
             for (let i = 0; i < pageBuilder.viewRequests.length; i++) {
                 if (pageBuilder.viewRequests[i].sequence === responseContainer.sequence) {
                     pageBuilder.viewRequests.splice(i, 1);

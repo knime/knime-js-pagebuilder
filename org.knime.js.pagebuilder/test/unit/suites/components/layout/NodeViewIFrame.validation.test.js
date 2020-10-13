@@ -8,9 +8,9 @@ import * as alertStoreConfig from '@/../store/alert';
 
 // extra mock to simulate a loaded view script
 jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
-    foo = ['%NODEID%'];`, { virtual: true });
+    foo = ['%ORIGIN%', '%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertHandler.js mock";
-    foo = ['%NODEID%'];`, { virtual: true });
+    foo = ['%ORIGIN%', '%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
     foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
 jest.mock('iframe-resizer/js/iframeResizer');
@@ -157,7 +157,7 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'View validation failed.',
-                nodeInfo: undefined, // eslint-disable-line no-undefined
+                nodeInfo: undefined,
                 type: 'error'
             });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
@@ -171,7 +171,7 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'View is not responding.',
-                nodeInfo: undefined, // eslint-disable-line no-undefined
+                nodeInfo: undefined,
                 type: 'error'
             });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
@@ -228,7 +228,7 @@ describe('NodeViewIframe.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'Error',
-                nodeInfo: undefined, // eslint-disable-line no-undefined
+                nodeInfo: undefined,
                 type: 'error'
             });
             let response = await Promise.resolve(valuePromise);

@@ -1,19 +1,21 @@
 /* eslint-disable complexity */
 (function () {
     var messageFromParent = function (event) {
+        var origin = '%ORIGIN%';
         var data = event.data;
-        var postOrigin = window.origin || window.location.origin;
-        if (event.origin !== postOrigin || !data) {
-            return;
+        var originMatch = event.origin === origin;
+        // handle edge cases with local environments (legacy OS, VM, debug, etc.).
+        if (!originMatch && event.origin && event.origin.indexOf('file:') >= 0) {
+            originMatch = event.origin.indexOf(origin) >= 0;
         }
-        if (postOrigin === 'null') {
-            postOrigin = window;
+        if (!originMatch || !data) {
+            return;
         }
         var namespace = data.namespace;
         var nodeId = data.nodeId;
         var postMessageResponse = function (resp) {
             resp.nodeId = nodeId;
-            parent.postMessage(resp, postOrigin);
+            parent.postMessage(resp, origin);
         };
         var postErrorResponse = function (type, errMsg) {
             var resp = {
@@ -22,7 +24,7 @@
                 type: type,
                 error: errMsg
             };
-            parent.postMessage(resp, postOrigin);
+            parent.postMessage(resp, origin);
         };
         if (data.type === 'init') {
             if (window[namespace] && typeof window[namespace][data.initMethodName] === 'function') {
@@ -69,6 +71,7 @@
             if (window[namespace] && typeof window[namespace][data.setValidationErrorMethodName] === 'function') {
                 try {
                     window[namespace][data.setValidationErrorMethodName](data.errorMessage);
+                    postMessageResponse(data);
                 } catch (err) {
                     postErrorResponse(data.type, errorMessagePrefix + err);
                 }

@@ -2,7 +2,7 @@
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
 import NotAvailable from './NotAvailable';
-import { classToComponentMap, nodeNameToComponentMap } from '../widgets/widgets.config';
+import { classToComponentMap } from '../widgets/widgets.config';
 
 /**
  * Wrapper for a single node view iframe or widget
@@ -93,11 +93,7 @@ export default {
         // checks the node configuration for a matching Vue Widget Component name and provides that name
         widgetComponentName() {
             // check the node representation class for a matching Vue Component name
-            let classNameMatch = classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
-            // check the node name for a matching Vue Component name (widgets which share code with old quickforms)
-            let nodeNameMatch = nodeNameToComponentMap[this.webNodeConfig.nodeInfo.nodeName];
-            return classNameMatch || nodeNameMatch;
-                
+            return classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
         },
         isWidget() {
             return this.legacyModeDisabled && this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
@@ -137,7 +133,7 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 .view {
-  background-color: var(--theme-color-white);
+  background-color: var(--knime-white);
 
   &.aspectRatio16by9,
   &.aspectRatio4by3,

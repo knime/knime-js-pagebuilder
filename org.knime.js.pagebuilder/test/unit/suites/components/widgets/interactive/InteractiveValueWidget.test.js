@@ -178,7 +178,7 @@ describe('InteractiveValueWidget.vue', () => {
                 ...context,
                 propsData
             });
-            jest.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => undefined); // eslint-disable-line no-undefined
+            jest.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => undefined);
             expect(wrapperBroken.vm.validate().isValid).toBe(false);
         });
     });

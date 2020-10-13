@@ -157,7 +157,7 @@ export default {
   /* rail style */
   & >>> .vue-slider-rail {
     cursor: pointer;
-    background-color: var(--theme-color-stone-gray);
+    background-color: var(--knime-stone-gray);
     border-radius: 0;
   }
 
@@ -217,7 +217,7 @@ export default {
 
   & >>> .vue-slider-mark-step {
     cursor: pointer;
-    background-color: var(--theme-color-silver-sand);
+    background-color: var(--knime-silver-sand);
   }
 
   & >>> .vue-slider-ttb .vue-slider-mark-step,
@@ -239,7 +239,7 @@ export default {
     font-size: 11px;
     line-height: 18px;
     white-space: nowrap;
-    color: var(--theme-color-masala);
+    color: var(--knime-masala);
   }
 
   & >>> .vue-slider-ttb .vue-slider-mark-label,
