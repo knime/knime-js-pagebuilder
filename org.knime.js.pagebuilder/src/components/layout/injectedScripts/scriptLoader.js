@@ -8,11 +8,15 @@ window.knimeLoader = (function () {
     var knimeLoaderCount = '%LIBCOUNT%';
 
     var postResponse = function (error) {
+        var postMessageOrigin = origin;
+        if (!postMessageOrigin || postMessageOrigin.indexOf('file:') > -1) {
+            postMessageOrigin = '*';
+        }
         parent.postMessage({
             nodeId: nodeId,
             type: 'load',
             error: error
-        }, origin);
+        }, postMessageOrigin);
     };
 
     if (knimeLoaderCount === 0) {
