@@ -10,7 +10,11 @@ window.onerror = (function () {
                 isValid: false,
                 error: errMsg
             };
-            parent.postMessage(resp, origin);
+            var postMessageOrigin = origin;
+            if (!postMessageOrigin || postMessageOrigin.indexOf('file:') > -1) {
+                postMessageOrigin = '*';
+            }
+            parent.postMessage(resp, postMessageOrigin);
         };
 
         if (loadingErrRegExp.test(msg)) {

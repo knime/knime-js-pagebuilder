@@ -83,6 +83,9 @@ export default {
             if (!postMessageOrigin || postMessageOrigin === 'null') {
                 postMessageOrigin = window.location.origin;
             }
+            if (postMessageOrigin.includes('file:')) {
+                postMessageOrigin = '*';
+            }
             return postMessageOrigin;
         },
         isSingleView() {
@@ -360,12 +363,11 @@ export default {
         },
 
         messageFromIframe(event) {
-            const data = event.data;
-            let originMatch = event.origin === this.origin;
-            // handle edge cases with local environments (legacy OS, VM, debug, etc.).
-            if (!originMatch && event.origin && event.origin.includes('file:')) {
-                originMatch = event.origin.includes(this.origin);
+            if (!event || !event.origin) {
+                return;
             }
+            const data = event.data;
+            let originMatch = event.origin === this.origin || event.origin === '*' || event.origin.includes('file:');
             if (!originMatch || !data || !data.type || data.nodeId !== this.nodeId) {
                 return;
             }
