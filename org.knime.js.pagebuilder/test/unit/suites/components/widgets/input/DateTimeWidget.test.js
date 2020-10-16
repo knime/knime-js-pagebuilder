@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { mount } from '@vue/test-utils';
 
 import DateTimeWidget from '@/components/widgets/input/DateTimeWidget';
@@ -3447,6 +3448,7 @@ describe('DateTimeWidget.vue', () => {
             const compareDateFormat = 'yyyy-MM-dd';
             expect(format(new Date(eventData.datestring), compareDateFormat))
                 .toBe(format(new Date(), compareDateFormat));
+            // eslint-disable-next-line new-cap
             expect(eventData.zonestring).toStrictEqual(Intl.DateTimeFormat().resolvedOptions().timeZone);
         });
 

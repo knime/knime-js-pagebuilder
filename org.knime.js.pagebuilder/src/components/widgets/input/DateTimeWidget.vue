@@ -51,6 +51,7 @@ export default {
     },
     data() {
         return {
+            // eslint-disable-next-line new-cap
             localTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         };
     },

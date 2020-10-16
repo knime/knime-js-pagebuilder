@@ -51,6 +51,7 @@ describe('DateTimeInput.vue', () => {
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.find({ ref: 'datePicker' }).isVisible()).toBeTruthy();
+            // eslint-disable-next-line no-magic-numbers
             expect(wrapper.findAll(NumberInput).length).toBe(4);
         });
 

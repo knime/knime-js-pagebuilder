@@ -74,6 +74,7 @@ export default {
         },
         timezone: {
             type: String,
+            // eslint-disable-next-line new-cap
             default: Intl.DateTimeFormat().resolvedOptions().timeZone
         }
     },
