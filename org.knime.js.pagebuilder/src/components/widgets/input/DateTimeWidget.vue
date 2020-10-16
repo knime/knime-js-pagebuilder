@@ -40,8 +40,7 @@ export default {
         },
         valuePair: {
             default: () => ({
-                datestring: '',
-                zonestring: ''
+                datestring: ''
             }),
             type: Object
         },
@@ -61,9 +60,6 @@ export default {
         },
         label() {
             return this.viewRep.label;
-        },
-        description() {
-            return this.viewRep.description || null;
         },
         value() {
             return this.valuePair;
@@ -131,7 +127,7 @@ export default {
     },
     methods: {
         parseKnimeDateString(dateAndZoneString) {
-            let match = dateAndZoneString.match(/(.+)\[(.+)]/);
+            let match = dateAndZoneString.match(/(.+)\[(.+)]/) || ['', ''];
             return {
                 datestring: match[1],
                 zonestring: match[2]
@@ -169,12 +165,10 @@ export default {
             this.onChange(now, this.localTimeZone);
         },
         validate() {
-            let isValid = true;
-            let errorMessage;
             // call validate on date input
             let validateDateInputCmp = this.$refs.dateInput.validate();
-            isValid = Boolean(validateDateInputCmp.isValid && isValid);
-            errorMessage = validateDateInputCmp.errorMessage || 'Current input is invalid.';
+            let isValid = Boolean(validateDateInputCmp.isValid);
+            let errorMessage = validateDateInputCmp.errorMessage || 'Current input is invalid.';
 
             return {
                 isValid,
@@ -211,6 +205,7 @@ export default {
     <div class="zone-wrapper">
       <Dropdown
         v-if="showZone"
+        ref="timezone"
         aria-label="Timezone"
         :value="timezone"
         class="timezone"
@@ -219,6 +214,7 @@ export default {
       />
       <Button
         v-if="showNowButton"
+        ref="nowButton"
         primary
         compact
         class="now-button"
