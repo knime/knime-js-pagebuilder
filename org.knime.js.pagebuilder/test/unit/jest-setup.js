@@ -6,3 +6,18 @@ jest.mock('raw-loader!iframe-resizer/js/iframeResizer.contentWindow.js', () => '
     { virtual: true });
 jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => '"loadErrorHandler.js mock";', { virtual: true });
 jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => '"viewAlertHandler.js mock";', { virtual: true });
+
+// matchMedia is required by DatePicker until https://github.com/nathanreyes/v-calendar/issues/338 is fixed
+Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation(query => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(), // deprecated
+        removeListener: jest.fn(), // deprecated
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn()
+    }))
+});

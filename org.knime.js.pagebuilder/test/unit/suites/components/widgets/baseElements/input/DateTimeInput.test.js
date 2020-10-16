@@ -8,23 +8,6 @@ import { getDayOfYear, getHours, getMinutes, getSeconds, getMilliseconds, getDat
 describe('DateTimeInput.vue', () => {
     let context, propsData;
 
-    // matchMedia is required by DatePicker
-    beforeAll(() => {
-        Object.defineProperty(window, 'matchMedia', {
-            writable: true,
-            value: jest.fn().mockImplementation(query => ({
-                matches: false,
-                media: query,
-                onchange: null,
-                addListener: jest.fn(), // deprecated
-                removeListener: jest.fn(), // deprecated
-                addEventListener: jest.fn(),
-                removeEventListener: jest.fn(),
-                dispatchEvent: jest.fn()
-            }))
-        });
-    });
-
     beforeEach(() => {
         propsData = {
             value: new Date('2020-05-03T09:54:55'),
