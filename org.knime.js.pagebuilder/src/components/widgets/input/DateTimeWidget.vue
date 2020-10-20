@@ -51,6 +51,7 @@ export default {
     },
     data() {
         return {
+            // tz database timezones (e.g. Europe/Berlin)
             // eslint-disable-next-line new-cap
             localTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         };
@@ -127,6 +128,11 @@ export default {
         }
     },
     methods: {
+        /**
+         * Parse proprietary date and timezone combination string
+         * @param {string} dateAndZoneString - DATE[TIMEZONE] e.g. "2020-05-03T09:54:55+02:00[Europe/Rome]"
+         * @returns {{zonestring: string, datestring: string}}
+         */
         parseKnimeDateString(dateAndZoneString) {
             let match = dateAndZoneString.match(/(.+)\[(.+)]/) || ['', ''];
             return {
