@@ -25,6 +25,9 @@ export default {
             type: Date,
             required: true
         },
+        /**
+         * @type String - id of the <input> element; can be used with Label component
+         */
         id: {
             type: String,
             default: null
@@ -72,6 +75,10 @@ export default {
             default: false,
             type: Boolean
         },
+        /**
+         * @type String - tz db timezone name
+         * @see https://www.iana.org/time-zones / https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+         */
         timezone: {
             type: String,
             // eslint-disable-next-line new-cap
