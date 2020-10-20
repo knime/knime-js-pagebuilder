@@ -1,6 +1,6 @@
 <script>
-import CalendarIcon from 'webapps-common/ui/assets/img/icons/calendar.svg?inline';
-import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
+import CalendarIcon from '~/webapps-common/ui/assets/img/icons/calendar.svg?inline';
+import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 import { parse, isAfter, isBefore, isValid } from 'date-fns';
 import { format, utcToZonedTime } from 'date-fns-tz';

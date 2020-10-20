@@ -1,9 +1,9 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label';
+import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import DateTimeInput from '../baseElements/input/DateTimeInput';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
-import Button from 'webapps-common/ui/components/Button';
+import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
+import Button from '~/webapps-common/ui/components/Button';
 import updateTime from '@/util/updateTime';
 
 import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
