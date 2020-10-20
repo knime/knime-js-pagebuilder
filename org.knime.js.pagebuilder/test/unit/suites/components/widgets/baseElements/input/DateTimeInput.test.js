@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 
 import DateTimeInput from '@/components/widgets/baseElements/input/DateTimeInput';
-import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
+import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
 
 import { getDayOfYear, getHours, getMinutes, getSeconds, getMilliseconds, getDate, getMonth, getYear } from 'date-fns';
 
@@ -26,6 +26,7 @@ describe('DateTimeInput.vue', () => {
     });
 
     describe('renders', () => {
+
         it('renders with datepicker and time', () => {
             let wrapper = mount(DateTimeInput, {
                 ...context,
@@ -140,7 +141,6 @@ describe('DateTimeInput.vue', () => {
                 ...context,
                 propsData
             });
-
             // <input> is inside of the slot
             wrapper.vm.onTextInputChange({ target: { value: 'asdf' } }, () => '');
 
@@ -157,7 +157,6 @@ describe('DateTimeInput.vue', () => {
                 ...context,
                 propsData
             });
-
             const hours = 11;
             wrapper.find({ ref: 'hours' }).vm.$emit('input', hours);
 
@@ -206,6 +205,7 @@ describe('DateTimeInput.vue', () => {
         });
     });
     describe('validates', () => {
+
         it('invalidates values earlier than min date', () => {
             propsData.value = new Date('2020-05-03T09:54:50');
             propsData.min = new Date('2020-05-03T09:54:54');
