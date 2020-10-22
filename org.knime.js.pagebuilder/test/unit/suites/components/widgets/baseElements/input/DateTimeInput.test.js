@@ -22,7 +22,10 @@ describe('DateTimeInput.vue', () => {
             required: false,
             timezone: 'Europe/Berlin'
         };
-        context = {};
+        context = {
+            // this is required due to the bug: https://github.com/vuejs/vue-test-utils/issues/1130
+            sync: false
+        };
     });
 
     describe('renders', () => {

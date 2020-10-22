@@ -7,9 +7,14 @@ import { format, differenceInCalendarDays } from 'date-fns';
 
 describe('DateTimeWidget.vue', () => {
     let propsDataAll, propsDataNoTimeZone, propsDataNoNowButton,
-        propsUseExecTimes, propsDateNoDate;
+        propsUseExecTimes, propsDateNoDate, context;
 
     beforeEach(() => {
+        context = {
+            // this is required due to the bug: https://github.com/vuejs/vue-test-utils/issues/1130
+            sync: false
+        };
+
         propsDataAll = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
@@ -3350,7 +3355,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('renders with all fields', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll
+                propsData: propsDataAll,
+                ...context
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
@@ -3363,7 +3369,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('renders without timezone', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataNoTimeZone
+                propsData: propsDataNoTimeZone,
+                ...context
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
@@ -3376,7 +3383,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('renders without timezone and now button', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataNoNowButton
+                propsData: propsDataNoNowButton,
+                ...context
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
@@ -3389,7 +3397,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('use exec time as value, min and max', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsUseExecTimes
+                propsData: propsUseExecTimes,
+                ...context
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -3407,7 +3416,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('emits @updateWidget if timezone changes', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll
+                propsData: propsDataAll,
+                ...context
             });
             const input = wrapper.find({ ref: 'timezone' });
             input.vm.$emit('input', 'Asia/Bangkok');
@@ -3420,7 +3430,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('now button sets date, time and timezone to current values and location', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll
+                propsData: propsDataAll,
+                ...context
             });
             const input = wrapper.find({ ref: 'nowButton' });
             input.vm.$emit('click');
@@ -3437,7 +3448,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('now button sets only time if date is hidden', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDateNoDate
+                propsData: propsDateNoDate,
+                ...context
             });
             const input = wrapper.find({ ref: 'nowButton' });
             input.vm.$emit('click');
@@ -3455,7 +3467,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('emits @updateWidget if DateTimeInput emits @input', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll
+                propsData: propsDataAll,
+                ...context
             });
 
             const testValue = '2020-10-14T13:32:45.153';
@@ -3479,7 +3492,8 @@ describe('DateTimeWidget.vue', () => {
 
         it('is valid if valid data is given', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll
+                propsData: propsDataAll,
+                ...context
             });
 
             const val = wrapper.vm.validate();
@@ -3494,7 +3508,8 @@ describe('DateTimeWidget.vue', () => {
             propsDataAll.nodeConfig.viewRepresentation.min = '2020-10-10T13:32:45.153[Europe/Berlin]';
             propsDataAll.nodeConfig.viewRepresentation.usemax = false;
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll
+                propsData: propsDataAll,
+                ...context
             });
 
             expect(wrapper.vm.validate()).toStrictEqual({
@@ -3509,7 +3524,8 @@ describe('DateTimeWidget.vue', () => {
             propsDataAll.nodeConfig.viewRepresentation.max = '2020-04-10T13:32:45.153[Europe/Berlin]';
             propsDataAll.nodeConfig.viewRepresentation.usemin = false;
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll
+                propsData: propsDataAll,
+                ...context
             });
 
             expect(wrapper.vm.validate()).toStrictEqual({
