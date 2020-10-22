@@ -95,7 +95,7 @@ export default {
             invalidValue: null,
             // internal value guarded by watcher to prevent invalid values (min/max, null etc.)
             // time in the given timezone (default: browser local) for correct display
-            value_: new Date('')
+            localValue: new Date('')
         };
     },
     computed: {
@@ -105,16 +105,16 @@ export default {
             return this.dateFormat.toUpperCase();
         },
         dateTimeHours() {
-            return this.value_.getHours();
+            return this.localValue.getHours();
         },
         dateTimeMinutes() {
-            return this.value_.getMinutes();
+            return this.localValue.getMinutes();
         },
         dateTimeSeconds() {
-            return this.value_.getSeconds();
+            return this.localValue.getSeconds();
         },
         dateTimeMilliseconds() {
-            return this.value_.getMilliseconds();
+            return this.localValue.getMilliseconds();
         }
     },
     watch: {
@@ -124,7 +124,7 @@ export default {
                 // update internal value if min/max bounds are kept and value is valid
                 if (this.checkMinMax(newVal) && this.checkIsValid(newVal)) {
                     // convert to zoned time
-                    this.value_ = utcToZonedTime(newVal, this.timezone);
+                    this.localValue = utcToZonedTime(newVal, this.timezone);
                 }
             },
             immediate: true
@@ -144,11 +144,11 @@ export default {
                 this.$emit('input', value);
             } else {
                 // emit the old value again to trigger update of input fields to correct the wrong input
-                this.$emit('input', this.value_);
+                this.$emit('input', this.localValue);
             }
         },
         onDatePickerInput(date) {
-            this.emitInput(updateDate(this.value_, date));
+            this.emitInput(updateDate(this.localValue, date));
         },
         onTextInputChange($event, hidePopoverFunction) {
             // parse the input
@@ -156,11 +156,11 @@ export default {
 
             // ignore invalid or unparseable input
             if (!this.checkIsValid(date)) {
-                date = this.value_;
+                date = this.localValue;
             }
 
             // use time set in value
-            let value = updateDate(this.value_, date);
+            let value = updateDate(this.localValue, date);
 
             // hide popover (if open)
             hidePopoverFunction();
@@ -191,28 +191,28 @@ export default {
             return true;
         },
         onTimeHoursChange(hours) {
-            let d = new Date(this.value_);
+            let d = new Date(this.localValue);
             if (Number.isSafeInteger(hours)) {
                 d.setHours(hours);
             }
             this.emitInput(d);
         },
         onTimeMinutesChange(minutes) {
-            let d = new Date(this.value_);
+            let d = new Date(this.localValue);
             if (Number.isSafeInteger(minutes)) {
                 d.setMinutes(minutes);
             }
             this.emitInput(d);
         },
         onTimeSecondsChange(seconds) {
-            let d = new Date(this.value_);
+            let d = new Date(this.localValue);
             if (Number.isSafeInteger(seconds)) {
                 d.setSeconds(seconds);
             }
             this.emitInput(d);
         },
         onTimeMillisecondsChange(milliseconds) {
-            let d = new Date(this.value_);
+            let d = new Date(this.localValue);
             if (Number.isSafeInteger(milliseconds)) {
                 d.setMilliseconds(milliseconds);
             }
@@ -256,7 +256,7 @@ export default {
       />
       <DatePicker
         ref="datePicker"
-        :value="value_"
+        :value="localValue"
         :is-dark="false"
         color="masala"
         :popover="{ placement: 'bottom', visibility: 'click'}"
