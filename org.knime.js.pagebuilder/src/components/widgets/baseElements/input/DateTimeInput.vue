@@ -273,8 +273,8 @@ export default {
           <div>
             <input
               :id="id"
-              v-on="inputEvents"
               :value="inputValue"
+              v-on="inputEvents"
               @change="onTextInputChange($event, hidePopover)"
             >
             <span :class="['button', {'active': popoverIsVisible}]">
