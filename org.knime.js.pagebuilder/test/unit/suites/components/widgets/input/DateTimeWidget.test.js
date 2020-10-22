@@ -487,6 +487,41 @@ describe('DateTimeWidget.vue', () => {
         });
     });
 
+    describe('methods', () => {
+
+        it('parses knime date and timezone strings', () => {
+            let wrapper = mount(DateTimeWidget, {
+                propsData: propsDataAll,
+                ...context
+            });
+            const res = wrapper.vm.parseKnimeDateString('2020-10-10T13:32:45.153[Europe/Berlin]');
+            expect(res.datestring).toBe('2020-10-10T13:32:45.153');
+            expect(res.zonestring).toBe('Europe/Berlin');
+        });
+
+        it('parses broken knime date and timezone strings', () => {
+            let wrapper = mount(DateTimeWidget, {
+                propsData: propsDataAll,
+                ...context
+            });
+            const res = wrapper.vm.parseKnimeDateString('2020-10-10T13:32:45.153[');
+            expect(res.datestring).toBe('2020-10-10T13:32:45.153');
+            expect(res.zonestring).toBe('');
+        });
+
+
+        it('formats date to expected strings', () => {
+            let wrapper = mount(DateTimeWidget, {
+                propsData: propsDataAll,
+                ...context
+            });
+            const d = new Date('2020-10-10T13:32:45.153');
+            const res = wrapper.vm.formatDate(d);
+            expect(res).toBe('2020-10-10T13:32:45.153');
+        });
+
+    });
+
     describe('validate', () => {
 
         it('is valid if valid data is given', () => {
