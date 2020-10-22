@@ -3396,7 +3396,7 @@ describe('DateTimeWidget.vue', () => {
             expect(wrapper.find({ ref: 'nowButton' }).exists()).toBeFalsy();
         });
 
-        it('use exec time as value, min and max', () => {
+        it('uses exec time as value, min and max', () => {
             let wrapper = mount(DateTimeWidget, {
                 propsData: propsUseExecTimes,
                 ...context
