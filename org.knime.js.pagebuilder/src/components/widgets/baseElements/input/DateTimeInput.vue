@@ -302,6 +302,7 @@ export default {
         type="integer"
         :min="0"
         :max="59"
+        :minDigits="2"
         :value="dateTimeMinutes"
         @input="onTimeMinutesChange"
       />
@@ -315,6 +316,7 @@ export default {
         type="integer"
         :min="0"
         :max="59"
+        :minDigits="2"
         :value="dateTimeSeconds"
         @input="onTimeSecondsChange"
       />
@@ -328,6 +330,7 @@ export default {
         type="integer"
         :min="0"
         :max="999"
+        :minDigits="3"
         :value="dateTimeMilliseconds"
         @input="onTimeMillisecondsChange"
       />
