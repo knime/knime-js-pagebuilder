@@ -505,7 +505,7 @@ describe('DateTimeWidget.vue', () => {
                 ...context
             });
             const res = wrapper.vm.parseKnimeDateString('2020-10-10T13:32:45.153[');
-            expect(res.datestring).toBe('2020-10-10T13:32:45.153');
+            expect(res.datestring).toBe('');
             expect(res.zonestring).toBe('');
         });
 
