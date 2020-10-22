@@ -43,12 +43,8 @@ export default {
     },
     data() {
         return {
-            serverUser: {
-                username: null,
-                password: null
-            },
             serverCredentialsFetchError: false,
-            serverCredentialsErrorMessage: SERVER_ERROR_MESSAGE
+            serverCredentialsErrorMessage: null
         };
     },
     computed: {
@@ -59,10 +55,7 @@ export default {
             return this.viewRep.label;
         },
         description() {
-            return this.viewRep.description || null;
-        },
-        regex() {
-            return this.viewRep.regex || null;
+            return this.viewRep.description;
         },
         promptUsername() {
             return this.viewRep.promptUsername || false;
@@ -74,7 +67,7 @@ export default {
             return this.viewRep.noDisplay || false;
         },
         value() {
-            return this.valuePair || this.viewRep.defaultValue || null;
+            return this.valuePair || this.viewRep.defaultValue;
         }
     },
     mounted() {
@@ -89,7 +82,7 @@ export default {
             }
         },
         /*
-         *  This check makes sure only data gets sent that is different to the defautl value,
+         *  This check makes sure only data gets sent that is different to the default value,
          *  if this is not the case no credentials will be sent and the backend uses the default value instead.
          */
         onUsernameChange(value) {
@@ -117,7 +110,9 @@ export default {
         },
         validate() {
             let isValid = true;
-            let errorMessage;
+            let errorMessage,
+                validateEventUsername,
+                validateEventPassword;
 
             if (this.promptUsername
                 ? !this.$refs.usernameForm.getValue() || !this.$refs.passwordForm.getValue()
@@ -125,32 +120,37 @@ export default {
                 this.serverCredentialsErrorMessage = SERVER_ERROR_MESSAGE;
                 if (this.viewRep.required) {
                     isValid = false;
-                    errorMessage = 'Input is required.';
+                    errorMessage = 'Input is required for both inputs.';
                 }
             } else {
                 this.serverCredentialsErrorMessage = null;
             }
 
             if (typeof this.$refs.passwordForm.validate === 'function') {
-                let validateEvent = this.$refs.passwordForm.validate();
-                isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage || errorMessage;
+                validateEventPassword = this.$refs.passwordForm.validate();
+                isValid = Boolean(validateEventPassword.isValid && isValid);
+                errorMessage = validateEventPassword.errorMessage || errorMessage;
             }
 
             if (this.promptUsername && typeof this.$refs.usernameForm.validate === 'function') {
-                let validateEvent = this.$refs.usernameForm.validate();
-                isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage || errorMessage;
+                validateEventUsername = this.$refs.usernameForm.validate();
+                isValid = Boolean(validateEventUsername.isValid && isValid);
+                errorMessage = validateEventUsername.errorMessage || errorMessage;
             }
+
+            errorMessage = (this.promptUsername ? !validateEventUsername.isValid : true) &&
+            !validateEventPassword.isValid
+                ? `${errorMessage} for both inputs.`
+                : errorMessage;
 
             this.serverCredentialsErrorMessage = this.serverCredentialsFetchError
                 ? this.serverCredentialsErrorMessage
                 : null;
 
-            return { isValid,
-                errorMessage: isValid
-                    ? this.serverCredentialsErrorMessage
-                    : errorMessage || 'Current input is invalid' };
+            return {
+                isValid,
+                errorMessage: isValid ? this.serverCredentialsErrorMessage : errorMessage || 'Current input is invalid'
+            };
         }
     }
 };
@@ -173,7 +173,6 @@ export default {
         :value="value.username"
         :is-valid="isValid"
         :title="description"
-        :pattern="regex"
         @input="onUsernameChange"
       />
     </Label>
@@ -189,7 +188,6 @@ export default {
         :value="useServerLoginCredentials ? value.magicDefaultPassword : value.password"
         :is-valid="isValid"
         :title="description"
-        :pattern="regex"
         @input="onPasswordChange"
       />
     </Label>
@@ -203,9 +201,5 @@ export default {
 <style lang="postcss" scoped>
 .hide >>> *:not(:last-child) {
   display: none;
-}
-
-.error-message {
-  min-height: 21px;
 }
 </style>
