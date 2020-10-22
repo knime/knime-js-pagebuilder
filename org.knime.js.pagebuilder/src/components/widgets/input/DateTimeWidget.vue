@@ -134,7 +134,7 @@ export default {
          * @returns {{zonestring: string, datestring: string}}
          */
         parseKnimeDateString(dateAndZoneString) {
-            let match = dateAndZoneString.match(/(.+)\[(.+)]/) || ['', ''];
+            let match = dateAndZoneString.match(/(.+)\[(.+)]/) || [null, '', ''];
             return {
                 datestring: match[1],
                 zonestring: match[2]
