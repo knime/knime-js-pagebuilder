@@ -4,6 +4,7 @@ import { mount } from '@vue/test-utils';
 import DateTimeWidget from '@/components/widgets/input/DateTimeWidget';
 import DateTimeInput from '@/components/widgets/baseElements/input/DateTimeInput';
 import { format, differenceInCalendarDays } from 'date-fns';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 
 describe('DateTimeWidget.vue', () => {
     let propsDataAll, propsDataNoTimeZone, propsDataNoNowButton,
@@ -3425,7 +3426,6 @@ describe('DateTimeWidget.vue', () => {
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0].update['viewRepresentation.currentValue'].zonestring)
                 .toStrictEqual('Asia/Bangkok');
-
         });
 
         it('now button sets date, time and timezone to current values and location', () => {
@@ -3462,7 +3462,6 @@ describe('DateTimeWidget.vue', () => {
                 .toBe(format(new Date(), compareDateFormat));
             // date it self is not changed
             expect(differenceInCalendarDays(new Date('2020-05-03'), new Date(eventData.datestring))).toBe(0);
-
         });
 
         it('emits @updateWidget if DateTimeInput emits @input', () => {
@@ -3516,7 +3515,6 @@ describe('DateTimeWidget.vue', () => {
                 isValid: false,
                 errorMessage: '2020-05-03 09:54:00 is before minimum date 2020-10-10 13:32:15'
             });
-
         });
 
         it('invalidates if max bound is not kept', () => {
@@ -3532,7 +3530,18 @@ describe('DateTimeWidget.vue', () => {
                 isValid: false,
                 errorMessage: '2020-05-03 09:54:00 is after maximum date 2020-04-10 13:32:15'
             });
+        });
 
+        it('show error message if provided via prop', () => {
+            const testErrorMsg = 'THIS IS A TEST';
+            propsDataAll.errorMessage = testErrorMsg;
+            propsDataAll.isValid = false;
+            let wrapper = mount(DateTimeWidget, {
+                propsData: propsDataAll,
+                ...context
+            });
+
+            expect(wrapper.find(ErrorMessage).text()).toStrictEqual(testErrorMsg);
         });
 
     });
