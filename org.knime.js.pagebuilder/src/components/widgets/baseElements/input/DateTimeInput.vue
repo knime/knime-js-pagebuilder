@@ -87,27 +87,6 @@ export default {
     },
     data() {
         return {
-            theme: {
-                // default: https://github.com/nathanreyes/v-calendar/blob/next/src/utils/defaults/theme.js
-                // define classes for the elements
-                color: 'masala', // this defines vc-color-NUM values
-                container: {
-                    light: 'vc-text-gray-900 vc-bg-white custom-box-shadow'
-                },
-                weekdays: {
-                    light: 'vc-text-sm vc-font-bold custom-normal-text-color'
-                },
-                arrows: {
-                    light:
-                        'vc-text-gray-600 vc-border-2 vc-border-transparent hover:vc-opacity-50 ' +
-                        'hover:vc-bg-gray-300 focus:vc-border-gray-300'
-                },
-                navPopoverContainer: {
-                    light:
-                        'vc-text-sm vc-font-semibold vc-text-white custom-bg-dark vc-border ' +
-                        'vc-border-gray-700 vc-p-1 vc-shadow'
-                }
-            },
             popoverIsVisible: false,
             isInvalid: false,
             isAfterMax: false,
@@ -122,7 +101,7 @@ export default {
     computed: {
         legacyDateFormat() {
             // see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
-            // this only works for simple patterns
+            // this only works for simple patterns and turn the unicode format into the moment.js de-facto standard
             return this.dateFormat.toUpperCase();
         },
         dateTimeHours() {
@@ -278,7 +257,8 @@ export default {
       <DatePicker
         ref="datePicker"
         :value="value_"
-        :theme="theme"
+        :is-dark="false"
+        color="masala"
         :popover="{ placement: 'bottom', visibility: 'click'}"
         :masks="{L: legacyDateFormat}"
         :max-date="max"
@@ -288,16 +268,19 @@ export default {
         @input="onDatePickerInput"
       >
         <!--Custom Input Slot-->
-        <div slot-scope="{ inputProps, hidePopover }">
-          <input
-            :id="id"
-            v-bind="inputProps"
-            @change="onTextInputChange($event, hidePopover)"
-          >
-          <span :class="['button', {'active': popoverIsVisible}]">
-            <CalendarIcon />
-          </span>
-        </div>
+        <template v-slot="{ inputValue, inputEvents, hidePopover }">
+          <div>
+            <input
+              :id="id"
+              v-on="inputEvents"
+              :value="inputValue"
+              @change="onTextInputChange($event, hidePopover)"
+            >
+            <span :class="['button', {'active': popoverIsVisible}]">
+              <CalendarIcon />
+            </span>
+          </div>
+        </template>
       </DatePicker>
     </div>
     <div
@@ -356,8 +339,18 @@ export default {
 
 .date-time-input {
   /* DateInput */
-  --theme-date-input-dark-background-color: var(--knime-masala);
   --theme-date-input-box-shadow-color: var(--knime-masala-semi);
+  --theme-date-input-day-content-background: rgba(192, 196, 198, 0.5);
+
+  --theme-date-input-accent-100: var(--knime-gray-ultra-light);
+  --theme-date-input-accent-200: var(--knime-gray-light-semi);
+  --theme-date-input-accent-300: var(--knime-silver-sand);
+  --theme-date-input-accent-400: var(--knime-stone-gray);
+  --theme-date-input-accent-500: var(--knime-gray-dark);
+  --theme-date-input-accent-600: var(--knime-masala);
+  --theme-date-input-accent-700: var(--knime-masala);
+  --theme-date-input-accent-800: var(--knime-black-semi);
+  --theme-date-input-accent-900: var(--knime-black);
 
   display: flex;
   width: 100%;
@@ -384,45 +377,80 @@ export default {
   }
 
   & .date-picker {
-    /* v-calendar */
+    /* v-calendar theme
+       new 1.1+ theme with css-vars see https://github.com/nathanreyes/v-calendar/blob/master/src/styles/base.css */
 
-    /* remove caret and space */
-
-    & >>> .vc-popover-content {
-      &.direction-bottom {
-        margin-top: 0 !important;
-      }
-    }
-
+    /* remove caret (triangle) */
     & >>> .vc-popover-caret {
       display: none;
     }
 
-    /* new styles - see theme object in data */
-
-    & >>> .vc-bg-masala-600 {
-      background-color: var(--theme-date-input-dark-background-color);
+    /* no space between input and popover */
+    & >>> .vc-popover-content-wrapper {
+      --popover-vertical-content-offset: 0;
+      --popover-horizontal-content-offset: 0;
     }
 
-    & >>> .custom-normal-text-color {
-      color: var(--theme-text-normal-color);
+    & >>> .vc-container {
+      /* remove roundness */
+      --rounded: 0;
+      --rounded-lg: 0;
+
+      /* popover box shadow */
+      --shadow-lg: 0 1px 4px 0 var(--theme-date-input-box-shadow-color);
+
+      /* color prop value (in our case 'masala' see above) and vc-COLOR-PROP-NAME need to be defined */
+      --masala-100: var(--theme-date-input-accent-100);
+      --masala-200: var(--theme-date-input-accent-200);
+      --masala-300: var(--theme-date-input-accent-300);
+      --masala-400: var(--theme-date-input-accent-400);
+      --masala-500: var(--theme-date-input-accent-500);
+      --masala-600: var(--theme-date-input-accent-600);
+      --masala-700: var(--theme-date-input-accent-700);
+      --masala-800: var(--theme-date-input-accent-800);
+      --masala-900: var(--theme-date-input-accent-900);
+
+      &.vc-masala {
+        --accent-100: var(--masala-100);
+        --accent-200: var(--masala-200);
+        --accent-300: var(--masala-300);
+        --accent-400: var(--masala-400);
+        --accent-500: var(--masala-500);
+        --accent-600: var(--masala-600);
+        --accent-700: var(--masala-700);
+        --accent-800: var(--masala-800);
+        --accent-900: var(--masala-900);
+      }
+
+      /* not themed items */
+      & .vc-day-content:hover {
+        background: var(--theme-date-input-day-content-background);
+      }
+
+      /* non "color" prop colors which are used regardless of color prop value */
+      --white: var(--knime-white);
+      --black: var(--knime-black);
+
+      --gray-100: var(--theme-date-input-accent-100);
+      --gray-200: var(--knime-silver-sand-semi); /* arrow hover background color */
+      --gray-300: var(--theme-date-input-accent-300);
+      --gray-400: var(--theme-date-input-accent-400);
+      --gray-500: var(--knime-masala); /* weekday font color */
+      --gray-600: var(--knime-masala); /* color arrow */
+      --gray-700: var(--theme-date-input-accent-700);
+      --gray-800: var(--knime-masala); /* background of month/year popout and font color title */
+      --gray-900: var(--knime-black-semi); /* hover background of month/year in popout */
     }
 
-    & >>> .custom-box-shadow {
-      box-shadow: 0 1px 4px 0 var(--theme-date-input-box-shadow-color);
-    }
+    /* -- end v-calendar 'theme' */
 
-    & >>> .custom-bg-dark {
-      background: var(--theme-date-input-dark-background-color);
-    }
-
-    /* end */
-
+    /* input wrapper style */
     max-width: 9rem;
     min-width: 7.5rem;
     margin-right: 20px;
     position: relative;
     border: 1px solid var(--knime-stone-gray);
+
 
     &:focus-within {
       border-color: var(--knime-masala);
