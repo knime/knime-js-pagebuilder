@@ -5,6 +5,7 @@ import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 import { parse, isAfter, isBefore, isValid } from 'date-fns';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import updateDate from '@/util/updateDate';
+import getLocalTimeZone from '@/util/localTimezone';
 
 /**
  * DateTime component shows input field with a button and a popover calendar to choose the date. Time is represented
@@ -82,7 +83,7 @@ export default {
         timezone: {
             type: String,
             // eslint-disable-next-line new-cap
-            default: Intl.DateTimeFormat().resolvedOptions().timeZone
+            default: getLocalTimeZone()
         }
     },
     data() {

@@ -5,6 +5,7 @@ import DateTimeInput from '../baseElements/input/DateTimeInput';
 import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
 import Button from '~/webapps-common/ui/components/Button';
 import updateTime from '@/util/updateTime';
+import getLocalTimeZone from '@/util/localTimezone';
 
 import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
@@ -52,8 +53,7 @@ export default {
     data() {
         return {
             // tz database timezones (e.g. Europe/Berlin)
-            // eslint-disable-next-line new-cap
-            localTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            localTimeZone: getLocalTimeZone()
         };
     },
     computed: {
