@@ -130,8 +130,8 @@ export default {
     methods: {
         /**
          * Parse proprietary date and timezone combination string
-         * @param {string} dateAndZoneString - DATE[TIMEZONE] e.g. "2020-05-03T09:54:55+02:00[Europe/Rome]"
-         * @returns {{zonestring: string, datestring: string}}
+         * @param {String} dateAndZoneString - DATE[TIMEZONE] e.g. "2020-05-03T09:54:55+02:00[Europe/Rome]"
+         * @returns {{zonestring: String, datestring: String}}
          */
         parseKnimeDateString(dateAndZoneString) {
             let match = dateAndZoneString.match(/(.+)\[(.+)]/) || [null, '', ''];
