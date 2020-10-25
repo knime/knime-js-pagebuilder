@@ -375,9 +375,13 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 .date-time-input {
-  /* DateInput */
+  /* DateInput theme vars */
   --theme-date-input-box-shadow-color: var(--knime-masala-semi);
   --theme-date-input-day-content-background: rgba(192, 196, 198, 0.5);
+  --theme-date-input-border-color: var(--knime-stone-gray);
+  --theme-date-input-border-focus-color: var(--knime-masala);
+  --theme-date-input-input-hover-background: var(--knime-silver-sand-semi);
+  --theme-date-input-button-active-color: var(--knime-masala);
 
   --theme-date-input-accent-100: var(--knime-gray-ultra-light);
   --theme-date-input-accent-200: var(--knime-gray-light-semi);
@@ -388,6 +392,21 @@ export default {
   --theme-date-input-accent-700: var(--knime-masala);
   --theme-date-input-accent-800: var(--knime-black-semi);
   --theme-date-input-accent-900: var(--knime-black);
+
+  --theme-date-input-black: var(--knime-black);
+  --theme-date-input-white: var(--knime-white);
+
+  --theme-date-input-gray-100: var(--theme-date-input-accent-100);
+  --theme-date-input-gray-200: var(--knime-silver-sand-semi); /* arrow hover background color */
+  --theme-date-input-gray-300: var(--theme-date-input-accent-300);
+  --theme-date-input-gray-400: var(--theme-date-input-accent-400);
+  --theme-date-input-gray-500: var(--knime-masala); /* weekday font color */
+  --theme-date-input-gray-600: var(--knime-masala); /* color arrow */
+  --theme-date-input-gray-700: var(--theme-date-input-accent-700);
+  --theme-date-input-gray-800: var(--knime-masala); /* background of month/year popout and font color title */
+  --theme-date-input-gray-900: var(--knime-black-semi); /* hover background of month/year in popout */
+
+  /* end theme vars */
 
   display: flex;
   width: auto;
@@ -470,18 +489,18 @@ export default {
       }
 
       /* non "color" prop colors which are used regardless of color prop value */
-      --white: var(--knime-white);
-      --black: var(--knime-black);
+      --white: var(--theme-date-input-white);
+      --black: var(--theme-date-input-black);
 
-      --gray-100: var(--theme-date-input-accent-100);
-      --gray-200: var(--knime-silver-sand-semi); /* arrow hover background color */
-      --gray-300: var(--theme-date-input-accent-300);
-      --gray-400: var(--theme-date-input-accent-400);
-      --gray-500: var(--knime-masala); /* weekday font color */
-      --gray-600: var(--knime-masala); /* color arrow */
-      --gray-700: var(--theme-date-input-accent-700);
-      --gray-800: var(--knime-masala); /* background of month/year popout and font color title */
-      --gray-900: var(--knime-black-semi); /* hover background of month/year in popout */
+      --gray-100: var(--theme-date-input-gray-100);
+      --gray-200: var(--theme-date-input-gray-200);
+      --gray-300: var(--theme-date-input-gray-300);
+      --gray-400: var(--theme-date-input-gray-400);
+      --gray-500: var(--theme-date-input-gray-500);
+      --gray-600: var(--theme-date-input-gray-600);
+      --gray-700: var(--theme-date-input-gray-700);
+      --gray-800: var(--theme-date-input-gray-800);
+      --gray-900: var(--theme-date-input-gray-900);
     }
 
     /* -- end v-calendar 'theme' */
@@ -491,11 +510,11 @@ export default {
     min-width: 7.5rem;
     margin-right: 20px;
     position: relative;
-    border: 1px solid var(--knime-stone-gray);
+    border: 1px solid var(--theme-date-input-border-color);
 
 
     &:focus-within {
-      border-color: var(--knime-masala);
+      border-color: var(--theme-date-input-border-focus-color);
     }
 
     & input {
@@ -519,7 +538,7 @@ export default {
       }
 
       &:hover:not(:focus) {
-        background-color: var(--knime-silver-sand-semi);
+        background-color: var(--theme-date-input-input-hover-background);
       }
     }
 
@@ -544,7 +563,7 @@ export default {
       cursor: pointer;
 
       &:hover {
-        background-color: var(--knime-silver-sand-semi);
+        background-color: var(--theme-date-input-input-hover-background);
       }
 
       & svg {
@@ -556,11 +575,11 @@ export default {
 
     & .button:active,
     & .button.active {
-      color: var(--knime-white);
-      background-color: var(--knime-masala);
+      color: var(--theme-date-input-white);
+      background-color: var(--theme-date-input-button-active-color);
 
       & svg {
-        stroke: var(--knime-white);
+        stroke: var(--theme-date-input-white);
       }
     }
   }
