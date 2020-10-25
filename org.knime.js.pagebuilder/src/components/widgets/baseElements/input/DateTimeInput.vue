@@ -2,7 +2,7 @@
 import CalendarIcon from '~/webapps-common/ui/assets/img/icons/calendar.svg?inline';
 import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
-import { parse, isAfter, isBefore, isValid } from 'date-fns';
+import { parse, isAfter, isBefore, isValid, setHours, setMinutes, setSeconds, setMilliseconds } from 'date-fns';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import updateDate from '@/util/updateDate';
 import getLocalTimeZone from '@/util/localTimezone';
@@ -191,6 +191,34 @@ export default {
             }
             return true;
         },
+        onTimeHoursBounds(bounds) {
+            if (bounds.type === 'min') {
+                this.emitInput(setHours(new Date(this.localValue), bounds.input));
+            } else if (bounds.type === 'max') {
+                this.emitInput(setHours(new Date(this.localValue), bounds.input));
+            }
+        },
+        onTimeMinutesBounds(bounds) {
+            if (bounds.type === 'min') {
+                this.emitInput(setMinutes(new Date(this.localValue), bounds.input));
+            } else if (bounds.type === 'max') {
+                this.emitInput(setMinutes(new Date(this.localValue), bounds.input));
+            }
+        },
+        onTimeSecondsBounds(bounds) {
+            if (bounds.type === 'min') {
+                this.emitInput(setSeconds(new Date(this.localValue), bounds.input));
+            } else if (bounds.type === 'max') {
+                this.emitInput(setSeconds(new Date(this.localValue), bounds.input));
+            }
+        },
+        onTimeMillisecondsBounds(bounds) {
+            if (bounds.type === 'min') {
+                this.emitInput(setMilliseconds(new Date(this.localValue), bounds.input));
+            } else if (bounds.type === 'max') {
+                this.emitInput(setMilliseconds(new Date(this.localValue), bounds.input));
+            }
+        },
         onTimeHoursChange(hours) {
             let d = new Date(this.localValue);
             if (Number.isSafeInteger(hours)) {
@@ -295,6 +323,7 @@ export default {
         :max="23"
         :min-digits="2"
         :value="dateTimeHours"
+        @bounds="onTimeHoursBounds"
         @input="onTimeHoursChange"
       />
       <span class="time-colon">:</span>
@@ -305,6 +334,7 @@ export default {
         :max="59"
         :min-digits="2"
         :value="dateTimeMinutes"
+        @bounds="onTimeMinutesBounds"
         @input="onTimeMinutesChange"
       />
       <span
@@ -319,6 +349,7 @@ export default {
         :max="59"
         :min-digits="2"
         :value="dateTimeSeconds"
+        @bounds="onTimeSecondsBounds"
         @input="onTimeSecondsChange"
       />
       <span
@@ -333,6 +364,7 @@ export default {
         :max="999"
         :min-digits="3"
         :value="dateTimeMilliseconds"
+        @bounds="onTimeMillisecondsBounds"
         @input="onTimeMillisecondsChange"
       />
     </div>
