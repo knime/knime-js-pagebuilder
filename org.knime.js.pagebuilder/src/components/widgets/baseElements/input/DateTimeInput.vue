@@ -390,13 +390,18 @@ export default {
   --theme-date-input-accent-900: var(--knime-black);
 
   display: flex;
-  width: 100%;
+  width: auto;
+  flex-wrap: wrap;
+
+  & > div {
+    margin-top: 10px;
+  }
 
   /* time */
   & .time {
     display: flex;
     width: auto;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 
     & >>> .wrapper {
       width: 5rem;

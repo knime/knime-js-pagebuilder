@@ -192,23 +192,21 @@ export default {
     class="date-time-label"
     :text="label"
   >
-    <div class="date-time">
-      <DateTimeInput
-        :id="labelForId"
-        ref="dateInput"
-        :value="dateObject"
-        :required="viewRep.required"
-        :min="minDate"
-        :max="maxDate"
-        :show-date="showDate"
-        :show-time="showTime"
-        :show-seconds="showSeconds"
-        :show-milliseconds="showMilliseconds"
-        :is-valid="isValid"
-        :timezone="showZone ? timezone : localTimeZone"
-        @input="onDateChange"
-      />
-    </div>
+    <DateTimeInput
+      :id="labelForId"
+      ref="dateInput"
+      :value="dateObject"
+      :required="viewRep.required"
+      :min="minDate"
+      :max="maxDate"
+      :show-date="showDate"
+      :show-time="showTime"
+      :show-seconds="showSeconds"
+      :show-milliseconds="showMilliseconds"
+      :is-valid="isValid"
+      :timezone="showZone ? timezone : localTimeZone"
+      @input="onDateChange"
+    />
     <div class="zone-wrapper">
       <Dropdown
         v-if="showZone"
@@ -236,9 +234,10 @@ export default {
 
 <style lang="postcss" scoped>
 .date-time-label {
-  & .date-time {
-    display: flex;
-    width: auto;
+  /* remove the 10px label margin - they are provided by DateTimeInput which is required to have working
+  wrapping with margin */
+  & >>> label {
+    margin-bottom: 0;
   }
 
   & .timezone {
