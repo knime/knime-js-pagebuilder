@@ -289,15 +289,19 @@ export default {
         @input="onDatePickerInput"
       >
         <!--Custom Input Slot-->
-        <template v-slot="{ inputValue, inputEvents, hidePopover }">
+        <template v-slot="{ inputValue, inputEvents, hidePopover, togglePopover }">
           <div>
             <input
               :id="id"
               :value="inputValue"
               v-on="inputEvents"
               @change="onTextInputChange($event, hidePopover)"
+              @blur="hidePopover"
             >
-            <span :class="['button', {'active': popoverIsVisible}]">
+            <span
+              :class="['button', {'active': popoverIsVisible}]"
+              @click="togglePopover"
+            >
               <CalendarIcon />
             </span>
           </div>
@@ -442,6 +446,9 @@ export default {
     & >>> .vc-popover-content-wrapper {
       --popover-vertical-content-offset: 0;
       --popover-horizontal-content-offset: 0;
+
+      /* default animation is too slow */
+      --popover-transition-time: 0.1s ease-in-out;
     }
 
     & >>> .vc-container {
