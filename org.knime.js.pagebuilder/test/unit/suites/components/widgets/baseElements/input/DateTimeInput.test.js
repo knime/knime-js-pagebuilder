@@ -87,6 +87,7 @@ describe('DateTimeInput.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.find({ ref: 'datePicker' }).isVisible()).toBeTruthy();
         });
+
     });
 
     describe('updates', () => {
@@ -206,7 +207,86 @@ describe('DateTimeInput.vue', () => {
             expect(getMilliseconds(wrapper.emitted().input[0][0])).toStrictEqual(milliseconds);
             expect(getDayOfYear(wrapper.emitted().input[0][0])).toStrictEqual(getDayOfYear(propsData.value));
         });
+
     });
+
+    describe('over- and underflow of time values', () => {
+
+        it('updates days on overflow of hours', () => {
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            wrapper.find({ ref: 'hours' }).vm.$emit('bounds', { type: 'max', input: 25 });
+            expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-04T01:54:55'));
+        });
+
+        it('updates days on underflow of hours', () => {
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            // the -1 is not a relative value but an absolute one
+            wrapper.find({ ref: 'hours' }).vm.$emit('bounds', { type: 'min', input: -1 });
+            expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-02T23:54:55'));
+        });
+
+        it('updates hours on overflow of minutes', () => {
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            wrapper.find({ ref: 'minutes' }).vm.$emit('bounds', { type: 'min', input: 63 });
+            expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-03T10:03:55'));
+        });
+
+        it('updates hours on underflow of minutes', () => {
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            wrapper.find({ ref: 'minutes' }).vm.$emit('bounds', { type: 'min', input: -1 });
+            expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-03T08:59:55'));
+        });
+
+        it('updates minutes on overflow of seconds', () => {
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            wrapper.find({ ref: 'seconds' }).vm.$emit('bounds', { type: 'max', input: 61 });
+            expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-03T09:55:01'));
+        });
+
+        it('updates minutes on underflow of seconds', () => {
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            wrapper.find({ ref: 'seconds' }).vm.$emit('bounds', { type: 'min', input: -1 });
+            expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-03T09:53:59'));
+        });
+
+        it('updates seconds on overflow of milliseconds', () => {
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            wrapper.find({ ref: 'milliseconds' }).vm.$emit('bounds', { type: 'max', input: 1000 });
+            expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-03T09:54:56'));
+        });
+
+        it('updates seconds on underflow of milliseconds', () => {
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            wrapper.find({ ref: 'milliseconds' }).vm.$emit('bounds', { type: 'min', input: -1 });
+            expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-03T09:54:54.999'));
+        });
+
+    });
+
     describe('validates', () => {
 
         it('invalidates values earlier than min date', () => {

@@ -192,30 +192,22 @@ export default {
             return true;
         },
         onTimeHoursBounds(bounds) {
-            if (bounds.type === 'min') {
-                this.emitInput(setHours(new Date(this.localValue), bounds.input));
-            } else if (bounds.type === 'max') {
+            if (['min', 'max'].includes(bounds.type)) {
                 this.emitInput(setHours(new Date(this.localValue), bounds.input));
             }
         },
         onTimeMinutesBounds(bounds) {
-            if (bounds.type === 'min') {
-                this.emitInput(setMinutes(new Date(this.localValue), bounds.input));
-            } else if (bounds.type === 'max') {
+            if (['min', 'max'].includes(bounds.type)) {
                 this.emitInput(setMinutes(new Date(this.localValue), bounds.input));
             }
         },
         onTimeSecondsBounds(bounds) {
-            if (bounds.type === 'min') {
-                this.emitInput(setSeconds(new Date(this.localValue), bounds.input));
-            } else if (bounds.type === 'max') {
+            if (['min', 'max'].includes(bounds.type)) {
                 this.emitInput(setSeconds(new Date(this.localValue), bounds.input));
             }
         },
         onTimeMillisecondsBounds(bounds) {
-            if (bounds.type === 'min') {
-                this.emitInput(setMilliseconds(new Date(this.localValue), bounds.input));
-            } else if (bounds.type === 'max') {
+            if (['min', 'max'].includes(bounds.type)) {
                 this.emitInput(setMilliseconds(new Date(this.localValue), bounds.input));
             }
         },
