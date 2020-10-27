@@ -20,14 +20,14 @@ export default {
     },
     props: {
         /**
-         * @type Date - date time in UTC
+         * @type Date - date time in UTC.
          */
         value: {
             type: Date,
             required: true
         },
         /**
-         * @type String - id of the <input> element; can be used with Label component
+         * @type String - id of the <input> element; can be used with Label component.
          */
         id: {
             type: String,
@@ -77,12 +77,11 @@ export default {
             type: Boolean
         },
         /**
-         * @type String - tz db timezone name
+         * @type String - tz db timezone name.
          * @see https://www.iana.org/time-zones / https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
          */
         timezone: {
             type: String,
-            // eslint-disable-next-line new-cap
             default: getLocalTimeZone()
         }
     },
@@ -92,7 +91,7 @@ export default {
             isInvalid: false,
             isAfterMax: false,
             isBeforeMin: false,
-            // last invalid enterted value (for error message)
+            // last invalid entered value (for error message)
             invalidValue: null,
             // internal value guarded by watcher to prevent invalid values (min/max, null etc.)
             // time in the given timezone (default: browser local) for correct display

@@ -7,7 +7,7 @@ jest.mock('raw-loader!iframe-resizer/js/iframeResizer.contentWindow.js', () => '
 jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => '"loadErrorHandler.js mock";', { virtual: true });
 jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => '"viewAlertHandler.js mock";', { virtual: true });
 
-// matchMedia is required by DatePicker until https://github.com/nathanreyes/v-calendar/issues/338 is fixed
+// TODO: WEBP-585 remove mock
 Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation(query => ({
