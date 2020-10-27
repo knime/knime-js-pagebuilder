@@ -5,6 +5,7 @@ import ErrorMessage from '../baseElements/text/ErrorMessage';
 import InputField from '~/webapps-common/ui/components/forms/InputField';
 
 const SERVER_ERROR_MESSAGE = 'KNIME Server login credentials could not be fetched!';
+const REQUIRED_ERROR_MESSAGE = 'Input is required';
 
 export default {
     components: {
@@ -110,42 +111,48 @@ export default {
         },
         validate() {
             let isValid = true;
-            let errorMessage,
-                validateEventUsername,
-                validateEventPassword;
+            let errorMessage, validateEventUsername, validateEventPassword;
+            let passwordForm = this.$refs.passwordForm;
+            let usernameForm = this.$refs.usernameForm;
 
-            if (this.promptUsername
-                ? !this.$refs.usernameForm.getValue() || !this.$refs.passwordForm.getValue()
-                : !this.$refs.passwordForm.getValue()) {
+            // Password validation
+            validateEventPassword = passwordForm.validate();
+            isValid = Boolean(validateEventPassword.isValid && isValid);
+            errorMessage = validateEventPassword.errorMessage;
+
+            // Username validation and required check
+            if (this.promptUsername) {
+                if (!usernameForm.getValue() || !passwordForm.getValue()) {
+                    this.serverCredentialsErrorMessage = SERVER_ERROR_MESSAGE;
+
+                    if (this.viewRep.required) {
+                        isValid = false;
+                        errorMessage = `${REQUIRED_ERROR_MESSAGE} for both inputs.`;
+                    }
+                } else {
+                    this.serverCredentialsErrorMessage = null;
+                }
+                validateEventUsername = usernameForm.validate();
+                isValid = Boolean(validateEventUsername.isValid && isValid);
+                errorMessage = validateEventUsername.errorMessage || errorMessage;
+
+                if (!validateEventUsername.isValid && !validateEventPassword.isValid) {
+                    errorMessage = `${errorMessage} for both inputs.`;
+                }
+            // Required check if only password available
+            } else if (passwordForm.getValue()) {
+                this.serverCredentialsErrorMessage = null;
+            } else {
                 this.serverCredentialsErrorMessage = SERVER_ERROR_MESSAGE;
                 if (this.viewRep.required) {
                     isValid = false;
-                    errorMessage = 'Input is required for both inputs.';
+                    errorMessage = REQUIRED_ERROR_MESSAGE;
                 }
-            } else {
+            }
+
+            if (!this.serverCredentialsFetchError) {
                 this.serverCredentialsErrorMessage = null;
             }
-
-            if (typeof this.$refs.passwordForm.validate === 'function') {
-                validateEventPassword = this.$refs.passwordForm.validate();
-                isValid = Boolean(validateEventPassword.isValid && isValid);
-                errorMessage = validateEventPassword.errorMessage || errorMessage;
-            }
-
-            if (this.promptUsername && typeof this.$refs.usernameForm.validate === 'function') {
-                validateEventUsername = this.$refs.usernameForm.validate();
-                isValid = Boolean(validateEventUsername.isValid && isValid);
-                errorMessage = validateEventUsername.errorMessage || errorMessage;
-            }
-
-            errorMessage = (this.promptUsername ? !validateEventUsername.isValid : true) &&
-            !validateEventPassword.isValid
-                ? `${errorMessage} for both inputs.`
-                : errorMessage;
-
-            this.serverCredentialsErrorMessage = this.serverCredentialsFetchError
-                ? this.serverCredentialsErrorMessage
-                : null;
 
             return {
                 isValid,
