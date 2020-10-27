@@ -50,6 +50,8 @@
     "cross-var": "1.1.0",
     "eslint": "5.16.0",
     "eslint-plugin-vue": "5.2.3",
+    "fontsource-roboto": "3.0.3",
+    "fontsource-roboto-mono": "3.0.3",
     "http-server": "0.12.3",
     "jest-junit": "7.0.0",
     "normalize.css": "8.0.1",
@@ -62,8 +64,6 @@
     "stylelint": "13.6.1",
     "stylelint-config-standard": "20.0.0",
     "svgo-loader": "2.2.1",
-    "typeface-roboto": "0.0.75",
-    "typeface-roboto-mono": "0.0.75",
     "vue-svg-loader": "0.11.0",
     "vue-template-compiler": "2.6.11"
   },
