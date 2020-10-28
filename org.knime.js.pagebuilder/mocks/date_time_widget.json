@@ -23970,8 +23970,8 @@
           "useminexectime": true,
           "usemaxexectime": false,
           "usedefaultexectime": true,
-          "min": "2020-05-03T09:54:55+02:00[Europe/Rome]",
-          "max": "2020-05-03T09:54:55+02:00[Europe/Rome]",
+          "min": "2020-05-03T09:54:54+02:00[Europe/Rome]",
+          "max": "2020-05-03T09:54:56+02:00[Europe/Rome]",
           "type": "LDT",
           "zones": [
             "Africa/Abidjan",
