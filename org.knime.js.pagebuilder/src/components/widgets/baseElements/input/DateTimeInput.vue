@@ -1,22 +1,21 @@
 <script>
 import CalendarIcon from '~/webapps-common/ui/assets/img/icons/calendar.svg?inline';
-import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
+import TimePartInput from '@/components/widgets/baseElements/input/TimePartInput';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 import { parse, isAfter, isBefore, isValid, setHours, setMinutes, setSeconds, setMilliseconds } from 'date-fns';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import updateDate from '@/util/updateDate';
 import getLocalTimeZone from '@/util/localTimezone';
-
 /**
  * DateTime component shows input field with a button and a popover calendar to choose the date. Time is represented
- * with multiple NumberInputs for hour, minute etc.
+ * with multiple TimePartInputs for hour, minute etc.
  * Uses DatePicker (<v-date-picker>) from v-calendar. See: https://vcalendar.io/
  */
 export default {
     components: {
         CalendarIcon,
         DatePicker,
-        NumberInput
+        TimePartInput
     },
     props: {
         /**
@@ -122,7 +121,8 @@ export default {
             // validates against min/max and sets appropriate state
             handler(newVal, oldVal) {
                 // update internal value if min/max bounds are kept and value is valid
-                if (this.checkMinMax(newVal) && this.checkIsValid(newVal)) {
+                this.checkMinMax(newVal);
+                if (this.checkIsValid(newVal)) {
                     // convert to zoned time
                     this.localValue = utcToZonedTime(newVal, this.timezone);
                 }
@@ -140,12 +140,8 @@ export default {
         },
         emitInput(value) {
             // check min/max
-            if (this.checkMinMax(value)) {
-                this.$emit('input', value);
-            } else {
-                // emit the old value again to trigger update of input fields to correct the wrong input
-                this.$emit('input', this.localValue);
-            }
+            this.checkMinMax(value);
+            this.$emit('input', value);
         },
         onDatePickerInput(date) {
             this.emitInput(updateDate(this.localValue, date));
@@ -182,8 +178,14 @@ export default {
             if (!this.min && !this.max) {
                 return true;
             }
-            this.isBeforeMin = isBefore(date, this.min);
-            this.isAfterMax = isAfter(date, this.max);
+            if (this.showTime) {
+                this.isBeforeMin = isBefore(date, this.min);
+                this.isAfterMax = isAfter(date, this.max);
+            } else {
+                // ignore time of values
+                this.isBeforeMin = isBefore(updateDate(new Date(), date), updateDate(new Date(), this.min));
+                this.isAfterMax = isAfter(updateDate(new Date(), date), updateDate(new Date(), this.max));
+            }
             if (this.isBeforeMin || this.isAfterMax) {
                 this.invalidValue = date;
                 return false;
@@ -193,21 +195,30 @@ export default {
         onTimeHoursBounds(bounds) {
             if (['min', 'max'].includes(bounds.type)) {
                 this.emitInput(setHours(new Date(this.localValue), bounds.input));
+            } else {
+                this.emitInput(this.localValue);
             }
         },
         onTimeMinutesBounds(bounds) {
             if (['min', 'max'].includes(bounds.type)) {
+                console.log('onTimeMinutesBounds', setMinutes(new Date(this.localValue), bounds.input), this.min);
                 this.emitInput(setMinutes(new Date(this.localValue), bounds.input));
+            } else {
+                this.emitInput(this.localValue);
             }
         },
         onTimeSecondsBounds(bounds) {
             if (['min', 'max'].includes(bounds.type)) {
                 this.emitInput(setSeconds(new Date(this.localValue), bounds.input));
+            } else {
+                this.emitInput(this.localValue);
             }
         },
         onTimeMillisecondsBounds(bounds) {
             if (['min', 'max'].includes(bounds.type)) {
                 this.emitInput(setMilliseconds(new Date(this.localValue), bounds.input));
+            } else {
+                this.emitInput(this.localValue);
             }
         },
         onTimeHoursChange(hours) {
@@ -311,7 +322,7 @@ export default {
       v-if="showTime"
       class="time"
     >
-      <NumberInput
+      <TimePartInput
         ref="hours"
         type="integer"
         :min="0"
@@ -322,7 +333,7 @@ export default {
         @input="onTimeHoursChange"
       />
       <span class="time-colon">:</span>
-      <NumberInput
+      <TimePartInput
         ref="minutes"
         type="integer"
         :min="0"
@@ -336,7 +347,7 @@ export default {
         v-if="showSeconds"
         class="time-colon"
       >:</span>
-      <NumberInput
+      <TimePartInput
         v-if="showSeconds"
         ref="seconds"
         type="integer"
@@ -351,7 +362,7 @@ export default {
         v-if="showMilliseconds"
         class="time-colon"
       >.</span>
-      <NumberInput
+      <TimePartInput
         v-if="showMilliseconds"
         ref="milliseconds"
         type="integer"
