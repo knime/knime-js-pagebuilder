@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 
 import DateTimeInput from '@/components/widgets/baseElements/input/DateTimeInput';
-import NumberInput from '~/webapps-common/ui/components/forms/NumberInput';
+import TimePartInput from '@/components/widgets/baseElements/input/TimePartInput';
 
 import { getDayOfYear, getHours, getMinutes, getSeconds, getMilliseconds, getDate, getMonth, getYear } from 'date-fns';
 
@@ -39,7 +39,7 @@ describe('DateTimeInput.vue', () => {
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.find({ ref: 'datePicker' }).isVisible()).toBeTruthy();
             // eslint-disable-next-line no-magic-numbers
-            expect(wrapper.findAll(NumberInput).length).toBe(4);
+            expect(wrapper.findAll(TimePartInput).length).toBe(4);
         });
 
         it('renders without time', () => {
@@ -51,7 +51,7 @@ describe('DateTimeInput.vue', () => {
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.find({ ref: 'datePicker' }).isVisible()).toBeTruthy();
-            expect(wrapper.findAll(NumberInput).exists()).toBeFalsy();
+            expect(wrapper.findAll(TimePartInput).exists()).toBeFalsy();
         });
 
         it('renders without date', () => {
@@ -63,7 +63,7 @@ describe('DateTimeInput.vue', () => {
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.find({ ref: 'datePicker' }).exists()).toBeFalsy();
-            expect(wrapper.findAll(NumberInput).exists()).toBeTruthy();
+            expect(wrapper.findAll(TimePartInput).exists()).toBeTruthy();
         });
 
         it('renders without milliseconds and seconds', () => {
@@ -73,7 +73,7 @@ describe('DateTimeInput.vue', () => {
                 ...context,
                 propsData
             });
-            expect(wrapper.findAll(NumberInput).length).toBe(2);
+            expect(wrapper.findAll(TimePartInput).length).toBe(2);
         });
 
         it('has default props', () => {

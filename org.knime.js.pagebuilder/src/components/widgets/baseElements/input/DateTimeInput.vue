@@ -183,8 +183,8 @@ export default {
                 this.isAfterMax = isAfter(date, this.max);
             } else {
                 // ignore time of values
-                this.isBeforeMin = isBefore(updateDate(new Date(), date), updateDate(new Date(), this.min));
-                this.isAfterMax = isAfter(updateDate(new Date(), date), updateDate(new Date(), this.max));
+                this.isBeforeMin = isBefore(updateDate(new Date(0), date), updateDate(new Date(0), this.min));
+                this.isAfterMax = isAfter(updateDate(new Date(0), date), updateDate(new Date(0), this.max));
             }
             if (this.isBeforeMin || this.isAfterMax) {
                 this.invalidValue = date;
