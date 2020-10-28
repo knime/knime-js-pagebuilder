@@ -1,5 +1,5 @@
 <script>
-import ArrowIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline'
+import ArrowIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline';
 import numIntegerDigits from '@/util/numIntegerDigits';
 
 const INTERVAL_TIMEOUT_DELAY = 200;
@@ -163,8 +163,9 @@ export default {
             // prevent input of NaN values or values with more digits as the max value
             if (event) {
                 // use parsed value and convert back to string to remove leading zeros etc.
+                // eslint-disable-next-line no-magic-numbers
                 const inputLength = inputNum.toString(10).length;
-                // skip empty values (they become NaN wich is 3 long)
+                // skip empty values (they become NaN which is 3 long)
                 if (rawValue === '') {
                     return; // end here
                 }

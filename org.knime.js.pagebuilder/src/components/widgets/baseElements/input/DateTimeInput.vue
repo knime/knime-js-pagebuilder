@@ -201,7 +201,6 @@ export default {
         },
         onTimeMinutesBounds(bounds) {
             if (['min', 'max'].includes(bounds.type)) {
-                console.log('onTimeMinutesBounds', setMinutes(new Date(this.localValue), bounds.input), this.min);
                 this.emitInput(setMinutes(new Date(this.localValue), bounds.input));
             } else {
                 this.emitInput(this.localValue);

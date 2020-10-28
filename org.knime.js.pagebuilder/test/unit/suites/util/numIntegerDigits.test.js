@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import numIntegerDigits from '@/util/numIntegerDigits';
 
 describe('numIntegerDigits.js', () => {
