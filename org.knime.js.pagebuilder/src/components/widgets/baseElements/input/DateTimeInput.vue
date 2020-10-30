@@ -6,6 +6,7 @@ import { parse, isAfter, isBefore, isValid, setHours, setMinutes, setSeconds, se
 import { format, utcToZonedTime } from 'date-fns-tz';
 import updateDate from '@/util/updateDate';
 import getLocalTimeZone from '@/util/localTimezone';
+
 /**
  * DateTime component shows input field with a button and a popover calendar to choose the date. Time is represented
  * with multiple TimePartInputs for hour, minute etc.
@@ -178,13 +179,25 @@ export default {
             if (!this.min && !this.max) {
                 return true;
             }
-            if (this.showTime) {
-                this.isBeforeMin = isBefore(date, this.min);
-                this.isAfterMax = isAfter(date, this.max);
-            } else {
-                // ignore time of values
-                this.isBeforeMin = isBefore(updateDate(new Date(0), date), updateDate(new Date(0), this.min));
-                this.isAfterMax = isAfter(updateDate(new Date(0), date), updateDate(new Date(0), this.max));
+            // check for min if min is given
+            if (this.min) {
+                if (this.showTime) {
+                    this.isBeforeMin = isBefore(date, this.min);
+                } else {
+                    // use same time as base
+                    const base = new Date(0);
+                    this.isBeforeMin = isBefore(updateDate(base, date), updateDate(base, this.min));
+                }
+            }
+            // check for max if min is given
+            if (this.max) {
+                if (this.showTime) {
+                    this.isAfterMax = isAfter(date, this.max);
+                } else {
+                    // use same time base
+                    const base = new Date(0);
+                    this.isAfterMax = isAfter(updateDate(base, date), updateDate(base, this.max));
+                }
             }
             if (this.isBeforeMin || this.isAfterMax) {
                 this.invalidValue = date;
@@ -540,7 +553,6 @@ export default {
       background-color: transparent;
 
       /* css3 invalid state */
-
       &:invalid {
         box-shadow: none; /* override default browser styling */
       }
