@@ -362,5 +362,33 @@ describe('DateTimeInput.vue', () => {
             expect(validation.isValid).toBeTruthy();
         });
 
+        it('ignores max if none given', () => {
+            propsData.value = new Date('2020-05-03T09:54:55');
+            propsData.min = new Date('2020-05-03T09:54:54');
+            propsData.max = null;
+            propsData.dateFormat = 'yyy-MM-dd';
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+
+            const validation = wrapper.vm.validate();
+            expect(validation.isValid).toBeTruthy();
+        });
+
+        it('ignores min if none given', () => {
+            propsData.value = new Date('2020-05-03T09:54:53');
+            propsData.min = null;
+            propsData.max = new Date('2020-05-03T09:54:54');
+            propsData.dateFormat = 'yyy-MM-dd';
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+
+            const validation = wrapper.vm.validate();
+            expect(validation.isValid).toBeTruthy();
+        });
+
     });
 });
