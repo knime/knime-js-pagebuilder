@@ -45,7 +45,8 @@ export default {
     data() {
         return {
             serverCredentialsFetchError: false,
-            serverCredentialsErrorMessage: null
+            serverCredentialsErrorMessage: null,
+            useMagicPassword: true
         };
     },
     computed: {
@@ -100,6 +101,7 @@ export default {
          * Same as onUsernameChange: only sends credentials if the input differs from the default values.
          */
         onPasswordChange(value) {
+            this.useMagicPassword = false;
             if (value !== this.viewRep.defaultValue.magicDefaultPassword) {
                 const changeEventObj = {
                     nodeId: this.nodeId,
@@ -110,53 +112,31 @@ export default {
             }
         },
         validate() {
-            let isValid = true;
-            let errorMessage, validateEventUsername, validateEventPassword;
             let passwordForm = this.$refs.passwordForm;
             let usernameForm = this.$refs.usernameForm;
-
-            // Password validation
-            validateEventPassword = passwordForm.validate();
-            isValid = Boolean(validateEventPassword.isValid && isValid);
-            errorMessage = validateEventPassword.errorMessage;
-
-            // Username validation and required check
+            let { isValid, errorMessage } = passwordForm.validate();
             if (this.promptUsername) {
-                if (!usernameForm.getValue() || !passwordForm.getValue()) {
-                    this.serverCredentialsErrorMessage = SERVER_ERROR_MESSAGE;
-
-                    if (this.viewRep.required) {
-                        isValid = false;
-                        errorMessage = `${REQUIRED_ERROR_MESSAGE} for both inputs.`;
-                    }
-                } else {
-                    this.serverCredentialsErrorMessage = null;
-                }
-                validateEventUsername = usernameForm.validate();
-                isValid = Boolean(validateEventUsername.isValid && isValid);
-                errorMessage = validateEventUsername.errorMessage || errorMessage;
-
-                if (!validateEventUsername.isValid && !validateEventPassword.isValid) {
-                    errorMessage = `${errorMessage} for both inputs.`;
-                }
-            // Required check if only password available
-            } else if (passwordForm.getValue()) {
-                this.serverCredentialsErrorMessage = null;
-            } else {
-                this.serverCredentialsErrorMessage = SERVER_ERROR_MESSAGE;
-                if (this.viewRep.required) {
+                let { isValid: userIsValid, errorMessage: userMessage } = usernameForm.validate();
+                if (!isValid && !userIsValid) {
+                    errorMessage = `Please correct input for both username and password.`;
+                } else if (this.useServerLoginCredentials && (!passwordForm.getValue() || !usernameForm.getValue())) {
                     isValid = false;
-                    errorMessage = REQUIRED_ERROR_MESSAGE;
+                    errorMessage = this.serverCredentialsFetchError
+                        ? SERVER_ERROR_MESSAGE
+                        : `${REQUIRED_ERROR_MESSAGE} for both inputs.`;
+                } else if (!userIsValid) {
+                    isValid = false;
+                    errorMessage = userMessage;
                 }
+            } else if (this.useServerLoginCredentials && !passwordForm.getValue()) {
+                isValid = false;
+                errorMessage = this.serverCredentialsFetchError
+                    ? SERVER_ERROR_MESSAGE
+                    : `${REQUIRED_ERROR_MESSAGE} for the password.`;
             }
-
-            if (!this.serverCredentialsFetchError) {
-                this.serverCredentialsErrorMessage = null;
-            }
-
             return {
                 isValid,
-                errorMessage: isValid ? this.serverCredentialsErrorMessage : errorMessage || 'Current input is invalid'
+                errorMessage: isValid ? null : errorMessage || 'Current input is invalid'
             };
         }
     }
@@ -192,7 +172,7 @@ export default {
         :id="labelForId"
         ref="passwordForm"
         type="password"
-        :value="useServerLoginCredentials ? value.magicDefaultPassword : value.password"
+        :value="useServerLoginCredentials && useMagicPassword ? value.magicDefaultPassword : value.password"
         :is-valid="isValid"
         :title="description"
         @input="onPasswordChange"

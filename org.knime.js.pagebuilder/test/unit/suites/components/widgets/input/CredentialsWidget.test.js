@@ -282,9 +282,42 @@ describe('CredentialsWidget.vue', () => {
             expect(textComponent.props('isValid')).toBe(false);
         });
 
-        it('will return invalid when values are required but values are missing', () => {
+        it('takes specific error message over child error message', async () => {
             let wrapper = mount(CredentialsWidget, {
                 propsData: propsDataDefault,
+                stubs: {
+                    InputField: {
+                        template: '<div />',
+                        methods: {
+                            getValue: jest.fn().mockReturnValue('test_string'),
+                            validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        }
+                    }
+                }
+            });
+            await Vue.nextTick();
+            expect(wrapper.vm.validate().isValid).toBe(false);
+            expect(wrapper.vm.validate().errorMessage).toBe('Please correct input for both username and password.');
+        });
+
+        it('renders serverCredentials input correctly', () => {
+            const checkServerCredentialsSpy = jest.fn();
+            let wrapper = shallowMount(CredentialsWidget, {
+                propsData: propsDataServer,
+                stubs: { Label, Fieldset },
+                methods: { checkServerCredentials: checkServerCredentialsSpy }
+            });
+            expect(wrapper.find({ ref: 'usernameForm' }).props('value'))
+                .toEqual(propsDataServer.nodeConfig.viewRepresentation.defaultValue.username);
+
+            expect(wrapper.find({ ref: 'passwordForm' }).props('value'))
+                .toEqual(propsDataServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
+            expect(checkServerCredentialsSpy).toHaveBeenCalled();
+        });
+
+        it('displays required error message if server credentials needed', () => {
+            let wrapper = mount(CredentialsWidget, {
+                propsData: propsDataServer,
                 stubs: { Label, Fieldset }
             });
             wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
@@ -303,39 +336,6 @@ describe('CredentialsWidget.vue', () => {
             );
             wrapper.find({ ref: 'usernameForm' }).setProps({ value: 'a' });
             expect(wrapper.vm.validate()).toBeTruthy();
-        });
-
-        it('takes child error message over parent error message', async () => {
-            let wrapper = mount(CredentialsWidget, {
-                propsData: propsDataDefault,
-                stubs: {
-                    InputField: {
-                        template: '<div />',
-                        methods: {
-                            getValue: jest.fn().mockReturnValue('test_string'),
-                            validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
-                        }
-                    }
-                }
-            });
-            await Vue.nextTick();
-            expect(wrapper.vm.validate().isValid).toBe(false);
-            expect(wrapper.vm.validate().errorMessage).toBe('test Error Message for both inputs.');
-        });
-
-        it('renders serverCredentials input correctly', () => {
-            const checkServerCredentialsSpy = jest.fn();
-            let wrapper = shallowMount(CredentialsWidget, {
-                propsData: propsDataServer,
-                stubs: { Label, Fieldset },
-                methods: { checkServerCredentials: checkServerCredentialsSpy }
-            });
-            expect(wrapper.find({ ref: 'usernameForm' }).props('value'))
-                .toEqual(propsDataServer.nodeConfig.viewRepresentation.defaultValue.username);
-
-            expect(wrapper.find({ ref: 'passwordForm' }).props('value'))
-                .toEqual(propsDataServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
-            expect(checkServerCredentialsSpy).toHaveBeenCalled();
         });
 
         it('displays server error in correct hierarchy', () => {
@@ -361,17 +361,13 @@ describe('CredentialsWidget.vue', () => {
             wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
             wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'Input does not match the expected pattern for both inputs.', isValid: false }
+                { errorMessage: 'Please correct input for both username and password.', isValid: false }
             );
 
             wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: null });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'Input does not match the expected pattern', isValid: false }
-            );
-
             wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: null });
             expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: true }
+                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: false }
             );
         });
 
@@ -395,15 +391,40 @@ describe('CredentialsWidget.vue', () => {
             wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
             wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: true }
+                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: false }
             );
             wrapper.find({ ref: 'usernameForm' }).setProps({ value: 'a' });
             expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: true }
+                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: false }
             );
             wrapper.find({ ref: 'passwordForm' }).setProps({ value: 'a' });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: null, isValid: true }
+            );
+        });
+
+        it('renders server credentials error if no username gets prompted', () => {
+            let wrapper = mount(CredentialsWidget, {
+                propsData: {
+                    ...propsDataServer,
+                    nodeConfig: {
+                        ...propsDataServer.nodeConfig,
+                        viewValue: null,
+                        viewRepresentation: {
+                            ...propsDataServer.nodeConfig.viewRepresentation,
+                            defaultValue: null,
+                            currentValue: null,
+                            promptUsername: false
+                        }
+                    }
+                },
+                stubs: { Label, Fieldset }
+            });
+
+            expect(wrapper.find({ ref: 'usernameForm' }).exists()).toBe(false);
+            wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
+            expect(wrapper.vm.validate()).toStrictEqual(
+                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: false }
             );
         });
     });
