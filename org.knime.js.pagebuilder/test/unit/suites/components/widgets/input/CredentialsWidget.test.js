@@ -316,7 +316,7 @@ describe('CredentialsWidget.vue', () => {
             expect(checkServerCredentialsSpy).toHaveBeenCalled();
         });
 
-        it('displays server error in correct hierarchy', async () => {
+        it('displays server error in correct hierarchy', () => {
             let wrapper = mount(CredentialsWidget, {
                 propsData: {
                     ...propsDataServer,
