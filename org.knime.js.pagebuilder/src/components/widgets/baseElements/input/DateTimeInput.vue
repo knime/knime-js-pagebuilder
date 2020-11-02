@@ -3,7 +3,7 @@ import CalendarIcon from '~/webapps-common/ui/assets/img/icons/calendar.svg?inli
 import TimePartInput from '@/components/widgets/baseElements/input/TimePartInput';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
 import { parse, isAfter, isBefore, isValid, setHours, setMinutes, setSeconds, setMilliseconds } from 'date-fns';
-import { format, utcToZonedTime } from 'date-fns-tz';
+import { format, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import updateDate from '@/util/updateDate';
 import getLocalTimeZone from '@/util/localTimezone';
 
@@ -142,7 +142,7 @@ export default {
         emitInput(value) {
             // check min/max
             this.checkMinMax(value);
-            this.$emit('input', value);
+            this.$emit('input', zonedTimeToUtc(value, this.timezone));
         },
         onDatePickerInput(date) {
             this.emitInput(updateDate(this.localValue, date));
@@ -236,28 +236,28 @@ export default {
         onTimeHoursChange(hours) {
             let d = new Date(this.localValue);
             if (Number.isSafeInteger(hours)) {
-                d.setHours(hours);
+                d = setHours(d, hours);
             }
             this.emitInput(d);
         },
         onTimeMinutesChange(minutes) {
             let d = new Date(this.localValue);
             if (Number.isSafeInteger(minutes)) {
-                d.setMinutes(minutes);
+                d = setMinutes(d, minutes);
             }
             this.emitInput(d);
         },
         onTimeSecondsChange(seconds) {
             let d = new Date(this.localValue);
             if (Number.isSafeInteger(seconds)) {
-                d.setSeconds(seconds);
+                d = setSeconds(d, seconds);
             }
             this.emitInput(d);
         },
         onTimeMillisecondsChange(milliseconds) {
             let d = new Date(this.localValue);
             if (Number.isSafeInteger(milliseconds)) {
-                d.setMilliseconds(milliseconds);
+                d = setMilliseconds(d, milliseconds);
             }
             this.emitInput(d);
         },
