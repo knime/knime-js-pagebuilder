@@ -1,21 +1,24 @@
 /* eslint-disable complexity */
 (function () {
     var messageFromParent = function (event) {
+        if (!event || !event.origin) {
+            return;
+        }
         var origin = '%ORIGIN%';
         var data = event.data;
-        var originMatch = event.origin === origin;
-        // handle edge cases with local environments (legacy OS, VM, debug, etc.).
-        if (!originMatch && event.origin && event.origin.indexOf('file:') >= 0) {
-            originMatch = event.origin.indexOf(origin) >= 0;
-        }
+        var originMatch = event.origin === origin || event.origin === '*' || event.origin.indexOf('file:') >= 0;
         if (!originMatch || !data) {
             return;
         }
         var namespace = data.namespace;
         var nodeId = data.nodeId;
+        var postMessageOrigin = origin;
+        if (!postMessageOrigin || postMessageOrigin.indexOf('file:') > -1) {
+            postMessageOrigin = '*';
+        }
         var postMessageResponse = function (resp) {
             resp.nodeId = nodeId;
-            parent.postMessage(resp, origin);
+            parent.postMessage(resp, postMessageOrigin);
         };
         var postErrorResponse = function (type, errMsg) {
             var resp = {
@@ -24,7 +27,7 @@
                 type: type,
                 error: errMsg
             };
-            parent.postMessage(resp, origin);
+            parent.postMessage(resp, postMessageOrigin);
         };
         if (data.type === 'init') {
             if (window[namespace] && typeof window[namespace][data.initMethodName] === 'function') {

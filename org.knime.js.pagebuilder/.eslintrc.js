@@ -3,9 +3,6 @@ module.exports = {
     globals: {
         consola: true
     },
-    parserOptions: {
-        parser: 'babel-eslint'
-    },
     rules: {
         'no-global-assign': ['error', {
             // `require` is needed for the esm module
