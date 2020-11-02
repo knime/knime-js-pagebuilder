@@ -156,12 +156,19 @@ export default {
         getValue() {
             return parseInt(this.$refs.input.value, 10);
         },
+        onBlur(event) {
+            // set display value back to value
+            this.localValue = this.padValue(this.value);
+        },
         onInput(event) {
             // get input as number (this method is also called without a real event)
             const rawValue = event.target.value;
             const inputNum = parseInt(rawValue, 10);
             // prevent input of NaN values or values with more digits as the max value
-            if (event) {
+            if (rawValue === '') {
+                // keep empty input value
+                this.localValue = '';
+            } else {
                 // use parsed value and convert back to string to remove leading zeros etc.
                 // eslint-disable-next-line no-magic-numbers
                 const inputLength = inputNum.toString(10).length;
@@ -314,6 +321,7 @@ export default {
       :step="stepSize"
       :class="inputClassList"
       @input="onInput"
+      @blur="onBlur"
       @mouseenter="toggleHover"
       @mouseleave="toggleHover"
       @wheel.prevent="handleWheel"
