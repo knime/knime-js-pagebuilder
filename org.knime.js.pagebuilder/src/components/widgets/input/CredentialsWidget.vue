@@ -5,7 +5,7 @@ import ErrorMessage from '../baseElements/text/ErrorMessage';
 import InputField from '~/webapps-common/ui/components/forms/InputField';
 
 const SERVER_ERROR_MESSAGE = 'KNIME Server login credentials could not be fetched!';
-const REQUIRED_ERROR_MESSAGE = 'Input is required';
+const DEFAULT_ERROR_MESSAGE = 'Please correct input for ';
 
 export default {
     components: {
@@ -114,30 +114,19 @@ export default {
         validate() {
             let passwordForm = this.$refs.passwordForm;
             let usernameForm = this.$refs.usernameForm;
-            let { isValid, errorMessage } = passwordForm.validate();
+            let { isValid } = passwordForm.validate();
+            let errorMessage = isValid ? '' : `${DEFAULT_ERROR_MESSAGE}password.`;
             if (this.promptUsername) {
-                let { isValid: userIsValid, errorMessage: userMessage } = usernameForm.validate();
-                if (!isValid && !userIsValid) {
-                    errorMessage = `Please correct input for both username and password.`;
-                } else if (this.useServerLoginCredentials && (!passwordForm.getValue() || !usernameForm.getValue())) {
+                let { isValid: userIsValid } = usernameForm.validate();
+                if (!userIsValid) {
                     isValid = false;
-                    errorMessage = this.serverCredentialsFetchError
-                        ? SERVER_ERROR_MESSAGE
-                        : `${REQUIRED_ERROR_MESSAGE} for both inputs.`;
-                } else if (!userIsValid) {
-                    isValid = false;
-                    errorMessage = userMessage;
+                    errorMessage = `${DEFAULT_ERROR_MESSAGE}username${errorMessage ? ' and password' : ''}.`;
                 }
-            } else if (this.useServerLoginCredentials && !passwordForm.getValue()) {
-                isValid = false;
-                errorMessage = this.serverCredentialsFetchError
-                    ? SERVER_ERROR_MESSAGE
-                    : `${REQUIRED_ERROR_MESSAGE} for the password.`;
             }
-            return {
-                isValid,
-                errorMessage: isValid ? null : errorMessage || 'Current input is invalid'
-            };
+            if (this.useServerLoginCredentials && this.serverCredentialsFetchError) {
+                this.serverCredentialsErrorMessage = SERVER_ERROR_MESSAGE;
+            }
+            return { isValid, errorMessage };
         }
     }
 };
@@ -180,7 +169,7 @@ export default {
     </Label>
     <ErrorMessage
       class="error-message"
-      :error="errorMessage"
+      :error="errorMessage || serverCredentialsErrorMessage"
     />
   </Fieldset>
 </template>

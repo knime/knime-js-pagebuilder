@@ -6,6 +6,7 @@ import CredentialsWidget from '@/components/widgets/input/CredentialsWidget';
 import InputField from '~/webapps-common/ui/components/forms/InputField';
 import Label from '~/webapps-common/ui/components/forms/Label';
 import Fieldset from '~/webapps-common/ui/components/forms/Fieldset';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 
 describe('CredentialsWidget.vue', () => {
     let propsDataDefault, propsDataServer;
@@ -297,7 +298,7 @@ describe('CredentialsWidget.vue', () => {
             });
             await Vue.nextTick();
             expect(wrapper.vm.validate().isValid).toBe(false);
-            expect(wrapper.vm.validate().errorMessage).toBe('Please correct input for both username and password.');
+            expect(wrapper.vm.validate().errorMessage).toBe('Please correct input for username and password.');
         });
 
         it('renders serverCredentials input correctly', () => {
@@ -315,30 +316,7 @@ describe('CredentialsWidget.vue', () => {
             expect(checkServerCredentialsSpy).toHaveBeenCalled();
         });
 
-        it('displays required error message if server credentials needed', () => {
-            let wrapper = mount(CredentialsWidget, {
-                propsData: propsDataServer,
-                stubs: { Label, Fieldset }
-            });
-            wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'Input is required for both inputs.', isValid: false }
-            );
-            wrapper.find({ ref: 'usernameForm' }).setProps({ value: 'a' });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'Input is required for both inputs.', isValid: false }
-            );
-            wrapper.find({ ref: 'passwordForm' }).setProps({ value: 'test' });
-            wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'Input is required for both inputs.', isValid: false }
-            );
-            wrapper.find({ ref: 'usernameForm' }).setProps({ value: 'a' });
-            expect(wrapper.vm.validate()).toBeTruthy();
-        });
-
-        it('displays server error in correct hierarchy', () => {
+        it('displays server error in correct hierarchy', async () => {
             let wrapper = mount(CredentialsWidget, {
                 propsData: {
                     ...propsDataServer,
@@ -361,46 +339,27 @@ describe('CredentialsWidget.vue', () => {
             wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
             wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'Please correct input for both username and password.', isValid: false }
+                { errorMessage: 'Please correct input for username and password.', isValid: false }
+            );
+
+            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: null });
+            expect(wrapper.vm.validate()).toStrictEqual(
+                { errorMessage: 'Please correct input for password.', isValid: false }
+            );
+
+            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: 'a+' });
+            wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: null });
+            expect(wrapper.vm.validate()).toStrictEqual(
+                { errorMessage: 'Please correct input for username.', isValid: false }
             );
 
             wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: null });
             wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: null });
             expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: false }
+                { errorMessage: '', isValid: true }
             );
-        });
-
-        it('removes server credentials error message if input of all fields is given', () => {
-            let wrapper = mount(CredentialsWidget, {
-                propsData: {
-                    ...propsDataServer,
-                    nodeConfig: {
-                        ...propsDataServer.nodeConfig,
-                        viewValue: null,
-                        viewRepresentation: {
-                            ...propsDataServer.nodeConfig.viewRepresentation,
-                            defaultValue: null,
-                            currentValue: null
-                        }
-                    }
-                },
-                stubs: { Label, Fieldset }
-            });
-
-            wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: false }
-            );
-            wrapper.find({ ref: 'usernameForm' }).setProps({ value: 'a' });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: false }
-            );
-            wrapper.find({ ref: 'passwordForm' }).setProps({ value: 'a' });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: null, isValid: true }
-            );
+            expect(wrapper.find(ErrorMessage).props('error'))
+                .toEqual('KNIME Server login credentials could not be fetched!');
         });
 
         it('renders server credentials error if no username gets prompted', () => {
@@ -422,10 +381,9 @@ describe('CredentialsWidget.vue', () => {
             });
 
             expect(wrapper.find({ ref: 'usernameForm' }).exists()).toBe(false);
-            wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                { errorMessage: 'KNIME Server login credentials could not be fetched!', isValid: false }
-            );
+            wrapper.vm.validate();
+            expect(wrapper.find(ErrorMessage).props('error'))
+                .toEqual('KNIME Server login credentials could not be fetched!');
         });
     });
 });
