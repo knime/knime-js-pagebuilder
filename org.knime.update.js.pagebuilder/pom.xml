@@ -15,6 +15,10 @@
     <artifactId>org.knime.update.js.pagebuilder</artifactId>
     <packaging>eclipse-repository</packaging>
 
+    <properties>
+        <revision>4.2.3</revision>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
