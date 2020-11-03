@@ -16,6 +16,8 @@ export const classToComponentMap = {
     'org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation': 'IntegerWidget',
     'org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation': 'BooleanWidget',
     'org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation': 'ListBoxInputWidget',
+    'org.knime.js.base.node.base.input.credentials.CredentialsNodeRepresentation': 'CredentialsWidget',
+    'org.knime.js.base.node.widget.input.date.DateWidgetNodeRepresentation': 'DateTimeWidget',
 
     // selection widgets
     'org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation': 'SingleSelectionWidget',
