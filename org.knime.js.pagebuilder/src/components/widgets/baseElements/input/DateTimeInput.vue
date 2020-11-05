@@ -2,9 +2,10 @@
 import CalendarIcon from '~/webapps-common/ui/assets/img/icons/calendar.svg?inline';
 import TimePartInput from '@/components/widgets/baseElements/input/TimePartInput';
 import DatePicker from 'v-calendar/lib/components/date-picker.umd';
-import { parse, isAfter, isBefore, isValid, setHours, setMinutes, setSeconds, setMilliseconds } from 'date-fns';
+import { parse, isValid, setHours, setMinutes, setSeconds, setMilliseconds } from 'date-fns';
 import { format, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import updateDate from '@/util/updateDate';
+import { isBeforeMinDate, isAfterMaxDate } from '@/util/dateMinMaxCheck';
 import getLocalTimeZone from '@/util/localTimezone';
 
 /**
@@ -174,31 +175,16 @@ export default {
             this.invalidValue = date;
             return false;
         },
+
         checkMinMax(date) {
             // skip check if no min and max is set
             if (!this.min && !this.max) {
                 return true;
             }
-            // check for min if min is given
-            if (this.min) {
-                if (this.showTime) {
-                    this.isBeforeMin = isBefore(date, this.min);
-                } else {
-                    // use same time as base
-                    const base = new Date(0);
-                    this.isBeforeMin = isBefore(updateDate(base, date), updateDate(base, this.min));
-                }
-            }
-            // check for max if min is given
-            if (this.max) {
-                if (this.showTime) {
-                    this.isAfterMax = isAfter(date, this.max);
-                } else {
-                    // use same time base
-                    const base = new Date(0);
-                    this.isAfterMax = isAfter(updateDate(base, date), updateDate(base, this.max));
-                }
-            }
+
+            this.isBeforeMin = isBeforeMinDate(date, this.min, this.showDate, this.showTime);
+            this.isAfterMax = isAfterMaxDate(date, this.max, this.showDate, this.showTime);
+
             if (this.isBeforeMin || this.isAfterMax) {
                 this.invalidValue = date;
                 return false;
