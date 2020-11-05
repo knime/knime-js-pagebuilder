@@ -42,6 +42,14 @@ export default {
             type: String,
             default: 'yyyy-MM-dd'
         },
+        /**
+         * Date time format in unicode, only time not date!
+         * @see https://www.unicode.org/reports/tr35/tr35-dates.html#dfst-hour
+         */
+        timeFormat: {
+            type: String,
+            default: 'HH:mm:ss'
+        },
         min: {
             default: null,
             type: Date
@@ -134,11 +142,16 @@ export default {
     },
     methods: {
         formatDate(date) {
-            if (this.showTime) {
-                return format(date, `${this.dateFormat} HH:mm:SS`);
-            } else {
-                return format(date, this.dateFormat);
+            // time and date
+            if (this.showTime && this.showDate) {
+                return format(date, `${this.dateFormat} ${this.timeFormat}`);
             }
+            // only time
+            if (this.showTime) {
+                return format(date, this.timeFormat);
+            }
+            // only date
+            return format(date, this.dateFormat);
         },
         emitInput(value) {
             // check min/max
@@ -192,6 +205,10 @@ export default {
             return true;
         },
         onTimeHoursBounds(bounds) {
+            // skip this handler if date is not shown
+            if (!this.showDate) {
+                return;
+            }
             if (['min', 'max'].includes(bounds.type)) {
                 this.emitInput(setHours(new Date(this.localValue), bounds.input));
             } else {

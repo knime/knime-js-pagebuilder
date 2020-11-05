@@ -14,11 +14,13 @@ export const isBeforeMinDate = (date, min, checkDate, checkTime) => {
     if (min) {
         if (checkTime && checkDate) {
             return isBefore(date, min);
-        } else if (checkTime) {
+        }
+        if (checkTime) {
             // only time is visible so ignore date: use same datre as base
             const base = new Date(0);
             return isBefore(updateTime(base, date), updateTime(base, min));
-        } else if (checkDate) {
+        }
+        if (checkDate) {
             // only date is visible so ignore time: use same time as base
             const base = new Date(0);
             return isBefore(updateDate(base, date), updateDate(base, min));
@@ -39,11 +41,13 @@ export const isAfterMaxDate = (date, max, checkDate, checkTime) => {
     if (max) {
         if (checkTime && checkDate) {
             return isAfter(date, max);
-        } else if (checkTime) {
+        }
+        if (checkTime) {
             // only time is visible so ignore date: use same datre as base
             const base = new Date(0);
             return isAfter(updateTime(base, date), updateTime(base, max));
-        } else if (checkDate) {
+        }
+        if (checkDate) {
             // use same time base
             const base = new Date(0);
             return isAfter(updateDate(base, date), updateDate(base, max));
