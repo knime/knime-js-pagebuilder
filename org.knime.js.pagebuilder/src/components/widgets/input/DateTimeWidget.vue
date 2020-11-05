@@ -87,14 +87,23 @@ export default {
         dateValue() {
             // if the value has a zonestring we assume its already split up
             // (e.g. if it was created by this widget and not by the backend)
-            return this.value.zonestring
-                ? { datestring: this.value.datestring, zonestring: this.value.zonestring }
-                : this.parseKnimeDateString(this.value.datestring);
+            if (this.value.zonestring) {
+                return {
+                    datestring: this.value.datestring,
+                    zonestring: this.value.zonestring
+                };
+            }
+            // use exec time (only once as we have no zonestring given)
+            if (this.viewRep.usedefaultexectime) {
+                return {
+                    datestring: this.formatDate(zonedTimeToUtc(new Date(), this.localTimeZone)),
+                    zonestring: this.localTimeZone
+                };
+            }
+            // still no date, lets parse given string (default value)
+            return this.parseKnimeDateString(this.value.datestring);
         },
         dateObject() {
-            if (this.viewRep.usedefaultexectime) {
-                return zonedTimeToUtc(new Date(), this.localTimeZone);
-            }
             return zonedTimeToUtc(this.dateValue.datestring, this.timezone);
         },
         timezone() {
