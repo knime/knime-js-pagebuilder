@@ -188,7 +188,6 @@ export default {
             this.invalidValue = date;
             return false;
         },
-
         checkMinMax(date) {
             // skip check if no min and max is set
             if (!this.min && !this.max) {
