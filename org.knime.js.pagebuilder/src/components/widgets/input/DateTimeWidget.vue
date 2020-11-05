@@ -9,6 +9,8 @@ import getLocalTimeZone from '@/util/localTimezone';
 
 import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
+const execTime = new Date();
+
 /**
  * DateTimeWidget.
  */
@@ -96,7 +98,7 @@ export default {
             // use exec time (only once as we have no zonestring given)
             if (this.viewRep.usedefaultexectime) {
                 return {
-                    datestring: this.formatDate(zonedTimeToUtc(new Date(), this.localTimeZone)),
+                    datestring: this.formatDate(execTime),
                     zonestring: this.localTimeZone
                 };
             }
@@ -119,7 +121,7 @@ export default {
             if (this.viewRep.usemin) {
                 const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.min);
                 if (this.viewRep.useminexectime) {
-                    return zonedTimeToUtc(new Date(), this.localTimeZone);
+                    return zonedTimeToUtc(execTime, this.localTimeZone);
                 }
                 return zonedTimeToUtc(datestring, zonestring);
             }
@@ -129,7 +131,7 @@ export default {
             if (this.viewRep.usemax) {
                 const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.max);
                 if (this.viewRep.usemaxexectime) {
-                    return zonedTimeToUtc(new Date(), this.localTimeZone);
+                    return zonedTimeToUtc(execTime, this.localTimeZone);
                 }
                 return zonedTimeToUtc(datestring, zonestring);
             }
