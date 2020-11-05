@@ -274,12 +274,12 @@ export default {
             if (this.isAfterMax) {
                 isValid = false;
                 // eslint-disable-next-line max-len
-                errorMessage = `${this.formatDate(this.invalidValue)} is after maximum date ${this.formatDate(this.max)}`;
+                errorMessage = `${this.formatDate(this.invalidValue)} is after maximum ${this.formatDate(this.max)}`;
             }
             if (this.isBeforeMin) {
                 isValid = false;
                 // eslint-disable-next-line max-len
-                errorMessage = `${this.formatDate(this.invalidValue)} is before minimum date ${this.formatDate(this.min)}`;
+                errorMessage = `${this.formatDate(this.invalidValue)} is before minimum ${this.formatDate(this.min)}`;
             }
             return {
                 isValid,

@@ -554,7 +554,7 @@ describe('DateTimeWidget.vue', () => {
 
             expect(wrapper.vm.validate()).toStrictEqual({
                 isValid: false,
-                errorMessage: '2020-05-03 09:54:55 is before minimum date 2020-10-10 13:32:45'
+                errorMessage: '2020-05-03 09:54:55 is before minimum 2020-10-10 13:32:45'
             });
         });
 
@@ -569,7 +569,7 @@ describe('DateTimeWidget.vue', () => {
 
             expect(wrapper.vm.validate()).toStrictEqual({
                 isValid: false,
-                errorMessage: '2020-05-03 09:54:55 is after maximum date 2020-04-10 13:32:45'
+                errorMessage: '2020-05-03 09:54:55 is after maximum 2020-04-10 13:32:45'
             });
         });
 
