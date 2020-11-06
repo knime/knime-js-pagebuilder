@@ -221,6 +221,16 @@ describe('DateTimeInput.vue', () => {
             expect(wrapper.emitted().input[0][0]).toStrictEqual(new Date('2020-05-04T01:54:55'));
         });
 
+        it('keep day on overflow of hours if date is not shown', () => {
+            propsData.showDate = false;
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+            wrapper.find({ ref: 'hours' }).vm.$emit('bounds', { type: 'max', input: 25 });
+            expect(wrapper.emitted().input).toBeUndefined();
+        });
+
         it('updates days on underflow of hours', () => {
             let wrapper = mount(DateTimeInput, {
                 ...context,
@@ -301,7 +311,7 @@ describe('DateTimeInput.vue', () => {
 
             const validation = wrapper.vm.validate();
             expect(validation.isValid).toBeFalsy();
-            expect(validation.errorMessage).toBe('2020-05-03 09:54:00 is before minimum date 2020-05-03 09:54:00');
+            expect(validation.errorMessage).toBe('2020-05-03 09:54:50 is before minimum 2020-05-03 09:54:54');
         });
 
         it('invalidates values later than max date', () => {
@@ -316,7 +326,23 @@ describe('DateTimeInput.vue', () => {
 
             const validation = wrapper.vm.validate();
             expect(validation.isValid).toBeFalsy();
-            expect(validation.errorMessage).toBe('2020-05-03 is after maximum date 2020-05-02');
+            expect(validation.errorMessage).toBe('2020-05-03 is after maximum 2020-05-02');
+        });
+
+        it('invalidates values later than max date (time only)', () => {
+            propsData.value = new Date('2020-05-03T14:54:59');
+            propsData.max = new Date('2020-05-04T14:54:56');
+            propsData.timeFormat = 'HH:mm:ss';
+            propsData.showTime = true;
+            propsData.showDate = false;
+            let wrapper = mount(DateTimeInput, {
+                ...context,
+                propsData
+            });
+
+            const validation = wrapper.vm.validate();
+            expect(validation.isValid).toBeFalsy();
+            expect(validation.errorMessage).toBe('14:54:59 is after maximum 14:54:56');
         });
 
         it('invalidates values later than max date via @input', () => {
@@ -332,7 +358,7 @@ describe('DateTimeInput.vue', () => {
 
             const validation = wrapper.vm.validate();
             expect(validation.isValid).toBeFalsy();
-            expect(validation.errorMessage).toBe('2020-05-06 is after maximum date 2020-05-05');
+            expect(validation.errorMessage).toBe('2020-05-06 is after maximum 2020-05-05');
         });
 
         it('invalidates null value if required', () => {

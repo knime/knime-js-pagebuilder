@@ -405,11 +405,17 @@ describe('DateTimeWidget.vue', () => {
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
 
+            // check for today
+            const today = new Date();
             const compareDateFormat = 'yyyy-MM-dd';
-            expect(format(wrapper.vm.dateObject, compareDateFormat)).toBe(format(new Date(), compareDateFormat));
+            expect(format(wrapper.vm.dateObject, compareDateFormat)).toBe(format(today, compareDateFormat));
+            expect(format(wrapper.vm.minDate, compareDateFormat)).toBe(format(today, compareDateFormat));
+            expect(format(wrapper.vm.maxDate, compareDateFormat)).toBe(format(today, compareDateFormat));
 
-            expect(format(wrapper.vm.minDate, compareDateFormat)).toBe(format(new Date(), compareDateFormat));
-            expect(format(wrapper.vm.maxDate, compareDateFormat)).toBe(format(new Date(), compareDateFormat));
+            // all 3 are exactly the same (this prevents milliseconds validation issues)
+            expect(wrapper.vm.dateObject).toStrictEqual(wrapper.vm.minDate);
+            expect(wrapper.vm.dateObject).toStrictEqual(wrapper.vm.maxDate);
+
         });
 
     });
@@ -548,7 +554,7 @@ describe('DateTimeWidget.vue', () => {
 
             expect(wrapper.vm.validate()).toStrictEqual({
                 isValid: false,
-                errorMessage: '2020-05-03 09:54:00 is before minimum date 2020-10-10 13:32:15'
+                errorMessage: '2020-05-03 09:54:55 is before minimum 2020-10-10 13:32:45'
             });
         });
 
@@ -563,7 +569,7 @@ describe('DateTimeWidget.vue', () => {
 
             expect(wrapper.vm.validate()).toStrictEqual({
                 isValid: false,
-                errorMessage: '2020-05-03 09:54:00 is after maximum date 2020-04-10 13:32:15'
+                errorMessage: '2020-05-03 09:54:55 is after maximum 2020-04-10 13:32:45'
             });
         });
 

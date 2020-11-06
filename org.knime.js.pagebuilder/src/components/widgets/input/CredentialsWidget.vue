@@ -83,6 +83,9 @@ export default {
                 this.serverCredentialsFetchError = true;
             }
         },
+        onChange() {
+            // placeholder method for Widget framework
+        },
         /*
          *  This check makes sure only data gets sent that is different to the default value,
          *  if this is not the case no credentials will be sent and the backend uses the default value instead.
