@@ -170,7 +170,7 @@ export default {
         <div
           class="progress-bar"
           :style="progressStyle"
-        ><span>{{ uploadProgress }}%</span></div>
+        />
       </div>
     </Label>
     <ErrorMessage :error="errorMessage" />
@@ -241,7 +241,7 @@ input {
     background-color: var(--theme-slider-background-color);
     max-width: 100%;
     border-radius: var(--theme-slider-border-radius);
-    transition: width 1s;
+    transition: width 0.5s;
     z-index: 1;
 
     & span {
@@ -251,6 +251,7 @@ input {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
+      text-shadow: 0 0 var(--knime-white);
     }
   }
 }

@@ -118,7 +118,6 @@ describe('FileUploadWidget.vue', () => {
         expect(wrapper.find('.show-bar').exists()).toBe(true);
         expect(wrapper.find('.upload-wrapper p svg').exists()).toBe(false);
         wrapper.vm.setUploadProgress(2);
-        expect(wrapper.find('.progress-bar span').text()).toEqual('2%');
         expect(wrapper.find('.progress-bar').attributes('style')).toBe('width: 2%;');
         wrapper.vm.setUploadProgress(100);
         expect(wrapper.find('.show-bar').exists()).toBe(false);
