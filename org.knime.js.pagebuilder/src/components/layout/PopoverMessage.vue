@@ -126,14 +126,14 @@ export default {
         v-if="expandable"
         class="expand-button"
         title="Show more"
-        @click.stop="expandMessage"
+        @click="expandMessage"
       >
         <DropdownIcon class="icon" />
       </Button>
       <Button
-        title="Discard message"
+        title="Close"
         class="close-button"
-        @click.stop="onClose(true)"
+        @click="onClose()"
       >
         <CloseIcon class="icon" />
       </Button>
@@ -358,7 +358,7 @@ export default {
 
         & .scrollable-message {
           max-height: calc(50vh - 135px);
-          height: 100%;
+          height: calc(100%);
         }
       }
 
