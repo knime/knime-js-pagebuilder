@@ -243,16 +243,6 @@ input {
     border-radius: var(--theme-slider-border-radius);
     transition: width 0.5s;
     z-index: 1;
-
-    & span {
-      font-size: 13px;
-      line-height: 18px;
-      top: -3px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      text-shadow: 0 0 var(--knime-white);
-    }
   }
 }
 
