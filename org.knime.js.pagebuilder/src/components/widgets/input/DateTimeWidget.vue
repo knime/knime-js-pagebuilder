@@ -1,11 +1,11 @@
 <script>
 import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
-import DateTimeInput from '../baseElements/input/DateTimeInput';
+import DateTimeInput from '~/webapps-common/ui/components/forms/DateTimeInput';
 import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
 import Button from '~/webapps-common/ui/components/Button';
-import updateTime from '@/util/updateTime';
-import getLocalTimeZone from '@/util/localTimezone';
+import updateTime from '~/webapps-common/util/updateTime';
+import getLocalTimeZone from '~/webapps-common/util/localTimezone';
 
 import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
