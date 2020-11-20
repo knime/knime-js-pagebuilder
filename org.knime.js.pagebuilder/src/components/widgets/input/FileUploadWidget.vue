@@ -1,4 +1,5 @@
 <script>
+import filesize from 'filesize';
 import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import Button from '~/webapps-common/ui/components/Button';
@@ -58,11 +59,13 @@ export default {
     },
     data() {
         return {
+            uploadAPI: null,
             uploadProgress: 0,
-            selectedFile: null,
             uploading: false,
             uploadErrorMessage: null,
-            initialized: false
+            initialized: false,
+            localFileName: null,
+            localFileSize: null
         };
     },
     computed: {
@@ -81,17 +84,31 @@ export default {
         disabled() {
             return false; // option not needed right now, for later use
         },
-        value() {
-            return this.valuePair[DATA_TYPE];
+        path() {
+            return this.valuePair?.path;
+        },
+        fileName() {
+            return this.valuePair?.fileName || this.localFileName || 'No file selected.';
+        },
+        fileSize() {
+            if (!this.localFileSize) {
+                return null;
+            }
+            let parsedSize = filesize.partial({
+                output: 'object'
+            })(this.localFileSize);
+            return parsedSize;
         },
         progressStyle() {
             return isNaN(this.uploadProgress) ? `width:0%;` : `width:${this.uploadProgress}%;`;
         }
     },
+    mounted() {
+        this.uploadAPI = this.$store.getters['api/uploadResource'];
+    },
     methods: {
         async onChange(e) {
-            let uploadResource = this.$store.getters['api/uploadResource'];
-            if (!uploadResource) {
+            if (!this.uploadAPI) {
                 return null;
             }
             let file = e.target.files[0];
@@ -100,23 +117,31 @@ export default {
             }
             this.uploading = true;
             this.uploadErrorMessage = null;
-            this.selectedFile = file.name;
-            let { response, errorResponse } = await uploadResource({
+            this.localFileName = file.name;
+            this.localFileSize = file.size;
+            let { response, errorResponse } = await this.uploadAPI({
                 nodeId: this.nodeId,
                 resource: file,
-                progressCallback: this.setUploadProgress
+                progressCallback: this.setUploadProgress,
+                context: this
             });
-            console.log(response);
+            this.uploading = false;
             if (errorResponse) {
-                this.selectedFile = '';
-                this.uploading = false;
-                this.uploadErrorMessage = 'Uploading the file failed.';
+                this.uploadErrorMessage = errorResponse.cancelled ? 'Upload cancelled.' : 'Upload failed.';
+                this.localFileName = null;
+                this.localFileSize = null;
                 return null;
             }
             return this.$emit('updateWidget', {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
-                value: response.location
+                value: response.location,
+                update: {
+                    'viewRepresentation.currentValue': {
+                        path: response.location,
+                        fileName: this.localFileName
+                    }
+                }
             });
         },
         setUploadProgress(progress) {
@@ -128,23 +153,28 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage = null;
-              
-            if (this.fileTypes.length && this.value) {
-                isValid = this.fileTypes.includes(`.${getFileExtension(this.value)}`);
-                errorMessage =
-                  `The type of the selected file does not match the allowed file types (${this.fileTypes.join(', ')})`;
+            if (!this.uploadAPI) {
+                return { isValid };
             }
-
+            if (this.fileTypes?.length && this.path) {
+                isValid = this.fileTypes.includes(`.${getFileExtension(this.path)}`);
+                if (!isValid) {
+                    errorMessage = `The type of the selected file does not match the allowed file ` +
+                        `types (${this.fileTypes.join(', ')}).`;
+                }
+            }
             if (!this.initialized) {
+                // include default file type validation in initial response
                 this.initialized = true;
                 return { isValid, errorMessage };
             }
-
-            if (!this.valuePair.path) {
+            if (this.uploading) {
                 isValid = false;
-                errorMessage = 'Input is required';
+                errorMessage = 'Upload still in progress.';
+            } else if (!this.path) {
+                isValid = false;
+                errorMessage = 'Input is required.';
             }
-
             return {
                 isValid,
                 errorMessage: isValid ? null : errorMessage
@@ -153,14 +183,8 @@ export default {
         triggerInput() {
             this.$refs.input.click();
         },
-        async abortUpload() {
-            console.log(this.$store.getters);
-            let uploadResource = this.$store.getters['api/uploadResource'];
-            let cancelFunction = await uploadResource({
-                cancel: true
-            });
-            console.log(cancelFunction);
-            this.uploadErrorMessage = 'The upload was canceled';
+        abortUpload() {
+            this.$store.getters['api/cancelUploadResource']({ nodeId: this.nodeId });
         }
     }
 };
@@ -172,46 +196,52 @@ export default {
     :title="description"
   >
     <Label :text="label">
-      <div class="upload-wrapper">
-        <Button
-          v-if="!uploading"
-          primary
-          compact
-          :disabled="disabled"
-          @click="triggerInput"
-        >
-          Select file
-        </Button>
-        <Button
-          v-else
-          primary
-          compact
-          @click="abortUpload"
-        >
-          Cancel
-        </Button>
-        <p :class="{'disabled': disabled}">{{ selectedFile || 'No selected file' }}
-          <CircleCheckIcon v-if="uploadProgress === 100" />
-        </p>
-      </div>
-      <input
-        ref="input"
-        type="file"
-        :accept="fileTypes.join(',')"
-        @input="onChange"
-      >
-      <div
-        :class="['progress-bar-wrapper', {'show-bar': uploading}]"
-      >
-        <div
-          class="progress-bar"
-          :style="progressStyle"
-        >
-          <span>
-            {{ uploadProgress }}%
-          </span>
+      <template v-if="uploadAPI">
+        <div class="upload-wrapper">
+          <Button
+            v-if="!uploading"
+            primary
+            compact
+            :disabled="disabled"
+            @click="triggerInput"
+          >
+            Select file
+          </Button>
+          <Button
+            v-else
+            primary
+            compact
+            @click="abortUpload"
+          >
+            Cancel
+          </Button>
+          <p :class="{'disabled': disabled}">{{ fileName || 'No file selected.' }}<!--
+          -->{{ fileSize ? ` (${fileSize.value} ${fileSize.symbol})` : '' }}
+            <CircleCheckIcon v-if="uploadProgress === 100" />
+          </p>
         </div>
-      </div>
+        <input
+          ref="input"
+          type="file"
+          :accept="fileTypes.join(',')"
+          @input="onChange"
+        >
+        <div
+          :class="['progress-bar-wrapper', {'show-bar': uploading}]"
+        >
+          <div
+            class="progress-bar"
+            :style="progressStyle"
+          >
+            <span>
+              {{ uploadProgress }}%
+            </span>
+          </div>
+        </div>
+      </template>
+      <p v-else>
+        File upload only available on server.
+      </p>
     </Label>
     <ErrorMessage :error="uploadErrorMessage || errorMessage" />
   </div>
