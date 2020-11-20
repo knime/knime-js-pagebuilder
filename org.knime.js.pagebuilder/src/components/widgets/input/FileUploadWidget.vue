@@ -60,7 +60,9 @@ export default {
         return {
             uploadProgress: 0,
             selectedFile: null,
-            showBar: false
+            uploading: false,
+            uploadErrorMessage: null,
+            initialized: false
         };
     },
     computed: {
@@ -96,33 +98,51 @@ export default {
             if (!file) {
                 return null;
             }
-            this.showBar = true;
+            this.uploading = true;
+            this.uploadErrorMessage = null;
             this.selectedFile = file.name;
-            let responseObject = await uploadResource({
+            let { response, errorResponse } = await uploadResource({
                 nodeId: this.nodeId,
                 resource: file,
                 progressCallback: this.setUploadProgress
             });
+            console.log(response);
+            if (errorResponse) {
+                this.selectedFile = '';
+                this.uploading = false;
+                this.uploadErrorMessage = 'Uploading the file failed.';
+                return null;
+            }
             return this.$emit('updateWidget', {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
-                value: responseObject.response.location
+                value: response.location
             });
         },
         setUploadProgress(progress) {
             this.uploadProgress = progress;
             if (progress === 100) {
-                this.showBar = false;
+                this.uploading = false;
             }
         },
         validate() {
             let isValid = true;
             let errorMessage = null;
-
+              
             if (this.fileTypes.length && this.value) {
-                isValid = this.fileTypes.includes(getFileExtension(this.value));
+                isValid = this.fileTypes.includes(`.${getFileExtension(this.value)}`);
                 errorMessage =
-                `The type of the selected file does not match the allowed file types (${this.fileTypes.join(', ')})`;
+                  `The type of the selected file does not match the allowed file types (${this.fileTypes.join(', ')})`;
+            }
+
+            if (!this.initialized) {
+                this.initialized = true;
+                return { isValid, errorMessage };
+            }
+
+            if (!this.valuePair.path) {
+                isValid = false;
+                errorMessage = 'Input is required';
             }
 
             return {
@@ -132,6 +152,15 @@ export default {
         },
         triggerInput() {
             this.$refs.input.click();
+        },
+        async abortUpload() {
+            console.log(this.$store.getters);
+            let uploadResource = this.$store.getters['api/uploadResource'];
+            let cancelFunction = await uploadResource({
+                cancel: true
+            });
+            console.log(cancelFunction);
+            this.uploadErrorMessage = 'The upload was canceled';
         }
     }
 };
@@ -142,17 +171,24 @@ export default {
     :class="alignment"
     :title="description"
   >
-    <Label
-      :text="label"
-    >
+    <Label :text="label">
       <div class="upload-wrapper">
         <Button
+          v-if="!uploading"
           primary
           compact
           :disabled="disabled"
           @click="triggerInput"
         >
           Select file
+        </Button>
+        <Button
+          v-else
+          primary
+          compact
+          @click="abortUpload"
+        >
+          Cancel
         </Button>
         <p :class="{'disabled': disabled}">{{ selectedFile || 'No selected file' }}
           <CircleCheckIcon v-if="uploadProgress === 100" />
@@ -165,15 +201,19 @@ export default {
         @input="onChange"
       >
       <div
-        :class="['progress-bar-wrapper', {'show-bar': showBar}]"
+        :class="['progress-bar-wrapper', {'show-bar': uploading}]"
       >
         <div
           class="progress-bar"
           :style="progressStyle"
-        />
+        >
+          <span>
+            {{ uploadProgress }}%
+          </span>
+        </div>
       </div>
     </Label>
-    <ErrorMessage :error="errorMessage" />
+    <ErrorMessage :error="uploadErrorMessage || errorMessage" />
   </div>
 </template>
 
@@ -217,7 +257,6 @@ input {
   margin-top: 10px;
   height: 10px;
   border-radius: var(--theme-slider-border-radius);
-  background-color: var(--knime-gray-ultra-light);
   position: relative;
   transition: opacity linear 0.3s 0.3s;
 
@@ -243,6 +282,16 @@ input {
     border-radius: var(--theme-slider-border-radius);
     transition: width 0.5s;
     z-index: 1;
+
+    & span {
+      font-size: 13px;
+      line-height: 18px;
+      top: -3px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-shadow: 0 0 var(--knime-white);
+    }
   }
 }
 

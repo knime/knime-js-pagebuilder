@@ -118,6 +118,7 @@ describe('FileUploadWidget.vue', () => {
         expect(wrapper.find('.show-bar').exists()).toBe(true);
         expect(wrapper.find('.upload-wrapper p svg').exists()).toBe(false);
         wrapper.vm.setUploadProgress(2);
+        expect(wrapper.find('.progress-bar span').text()).toBe('2%');
         expect(wrapper.find('.progress-bar').attributes('style')).toBe('width: 2%;');
         wrapper.vm.setUploadProgress(100);
         expect(wrapper.find('.show-bar').exists()).toBe(false);
@@ -143,6 +144,10 @@ describe('FileUploadWidget.vue', () => {
         expect(wrapper.vm.$data.selectedFile).toEqual('avatar.png');
         wrapper.vm.onChange({});
         expect(wrapper.vm.$data.selectedFile).toEqual('avatar.png');
+    });
+
+    it('invalidates if no input is given', () => {
+        // TODO
     });
 
     it('checks for wrong file extension', () => {
@@ -172,5 +177,9 @@ describe('FileUploadWidget.vue', () => {
             errorMessage: 'The type of the selected file does not match the allowed file types (.pdf)',
             isValid: false
         });
+    });
+
+    it('cancels upload correctly', () => {
+        // TODO
     });
 });
