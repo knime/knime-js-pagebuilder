@@ -108,7 +108,7 @@ export default {
     },
     methods: {
         async onChange(e) {
-            if (!this.uploadAPI) {
+            if (!this.uploadAPI || !e.target) {
                 return null;
             }
             let file = e.target.files[0];
