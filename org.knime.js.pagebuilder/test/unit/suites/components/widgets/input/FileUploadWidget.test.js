@@ -1,13 +1,23 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import FileUploadWidget from '@/components/widgets/input/FileUploadWidget.vue';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 import Vuex from 'vuex';
+import Vue from 'vue';
 
-const uploadResourceMock = jest.fn().mockReturnValue(() => {});
+const uploadResourceMock = jest.fn().mockReturnValue(() => ({ errorResponse: {}, response: {} }));
+const cancelUploadResourceMock = jest.fn().mockReturnValue(() => {});
+const file = { size: 1000, type: 'image/png', name: 'avatar.png' };
+const event = {
+    target: {
+        files: [file]
+    }
+};
 
 let storeConfig = {
     getters: {
-        'api/uploadResource': uploadResourceMock
+        'api/uploadResource': uploadResourceMock,
+        'api/cancelUploadResource': cancelUploadResourceMock
     }
 };
 
@@ -99,55 +109,78 @@ describe('FileUploadWidget.vue', () => {
     });
 
     it('uploads file correctly', () => {
-        const file = { size: 1000, type: 'image/png', name: 'avatar.png' };
-        const event = {
-            target: {
-                files: [file]
-            }
-        };
-
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
             propsData
         });
 
-        expect(wrapper.vm.$data.selectedFile).toEqual(null);
+        expect(wrapper.vm.$data.localFileName).toEqual(null);
         wrapper.vm.onChange(event);
-        expect(wrapper.vm.$data.selectedFile).toEqual('avatar.png');
+        expect(wrapper.vm.$data.localFileName).toEqual('avatar.png');
         expect(wrapper.find('.show-bar').exists()).toBe(true);
         expect(wrapper.find('.upload-wrapper p svg').exists()).toBe(false);
         wrapper.vm.setUploadProgress(2);
+        expect(wrapper.find('.upload-wrapper button').text()).toEqual('Cancel');
         expect(wrapper.find('.progress-bar span').text()).toBe('2%');
         expect(wrapper.find('.progress-bar').attributes('style')).toBe('width: 2%;');
         wrapper.vm.setUploadProgress(100);
         expect(wrapper.find('.show-bar').exists()).toBe(false);
         expect(wrapper.find('.upload-wrapper p svg').exists()).toBe(true);
+        expect(wrapper.find('.upload-wrapper button').text()).toEqual('Select file');
     });
 
     it('keeps current file in case upload gets canceled', () => {
-        const file = { size: 1000, type: 'image/png', name: 'avatar.png' };
-        const event = {
-            target: {
-                files: [file]
-            }
-        };
-
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
             propsData
         });
 
-        expect(wrapper.vm.$data.selectedFile).toEqual(null);
+        expect(wrapper.vm.$data.localFileName).toEqual(null);
         wrapper.vm.onChange(event);
-        expect(wrapper.vm.$data.selectedFile).toEqual('avatar.png');
+        expect(wrapper.vm.$data.localFileName).toEqual('avatar.png');
         wrapper.vm.onChange({});
-        expect(wrapper.vm.$data.selectedFile).toEqual('avatar.png');
+        expect(wrapper.vm.$data.localFileName).toEqual('avatar.png');
     });
 
-    it('invalidates if no input is given', () => {
-        // TODO
+    it('invalidates if no input is given on second validate', () => {
+        let wrapper = mount(FileUploadWidget, {
+            store,
+            localVue,
+            propsData: {
+                ...propsData,
+                nodeConfig: {
+                    ...propsData.nodeConfig,
+                    viewRepresentation: {
+                        ...propsData.nodeConfig.viewRepresentation,
+                        path: ''
+                    }
+                }
+            }
+        });
+        expect(wrapper.vm.validate()).toEqual({
+            errorMessage: null,
+            isValid: true
+        });
+        expect(wrapper.vm.validate()).toEqual({
+            errorMessage: 'Input is required.',
+            isValid: false
+        });
+    });
+
+    it('checks if still uploading', () => {
+        let wrapper = mount(FileUploadWidget, {
+            store,
+            localVue,
+            propsData
+        });
+        wrapper.setData({ initialized: true });
+        wrapper.vm.onChange(event);
+        expect(wrapper.vm.validate()).toEqual({
+            errorMessage: 'Upload still in progress.',
+            isValid: false
+        });
     });
 
     it('checks for wrong file extension', () => {
@@ -174,12 +207,59 @@ describe('FileUploadWidget.vue', () => {
             }
         });
         expect(wrapper.vm.validate()).toEqual({
-            errorMessage: 'The type of the selected file does not match the allowed file types (.pdf)',
+            errorMessage: 'The type of the selected file does not match the allowed file types (.pdf).',
             isValid: false
         });
     });
 
-    it('cancels upload correctly', () => {
-        // TODO
+    it('displays upload error message', async () => {
+        let uploadErrorResourceMock = jest.fn().mockReturnValue({
+            errorResponse: {
+                cancelled: false
+            }
+        });
+        
+        let wrapper = mount(FileUploadWidget, {
+            store,
+            localVue,
+            propsData
+        });
+        wrapper.setData({ uploadAPI: uploadErrorResourceMock });
+        wrapper.vm.onChange(event);
+        await Vue.nextTick();
+        expect(wrapper.find(ErrorMessage).props('error')).toEqual('Upload failed.');
+    });
+
+    it('cancels upload correctly', async () => {
+        let uploadErrorResourceMock = jest.fn().mockReturnValue({
+            errorResponse: {
+                cancelled: true
+            }
+        });
+        
+        let wrapper = mount(FileUploadWidget, {
+            store,
+            localVue,
+            propsData
+        });
+        wrapper.setData({ uploadAPI: uploadErrorResourceMock });
+
+        wrapper.vm.onChange(event);
+        expect(wrapper.find('.upload-wrapper button').text()).toEqual('Cancel');
+        wrapper.find('.upload-wrapper button').trigger('click');
+        await Vue.nextTick();
+        expect(cancelUploadResourceMock).toHaveBeenCalled();
+        expect(wrapper.find(ErrorMessage).props('error')).toEqual('Upload cancelled.');
+    });
+
+    it('displays messag if on AP', () => {
+        let wrapper = mount(FileUploadWidget, {
+            store,
+            localVue,
+            propsData
+        });
+        wrapper.setData({ uploadAPI: null });
+
+        expect(wrapper.find('p').text()).toEqual('File upload only available on server.');
     });
 });

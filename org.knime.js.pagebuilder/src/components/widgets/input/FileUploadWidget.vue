@@ -257,6 +257,7 @@ p {
   margin-top: 10px;
   display: flex;
   align-items: center;
+  word-break: break-word;
 
   &.disabled {
     opacity: 0.5;
@@ -268,6 +269,7 @@ p {
     stroke-width: calc(32px / 16);
     stroke: var(--theme-color-success);
     margin-left: 5px;
+    flex-shrink: 0;
   }
 }
 
