@@ -127,10 +127,8 @@ export default {
                         nodeId: this.nodeId,
                         type: DATA_TYPE,
                         update: {
-                            'viewRepresentation.currentValue': {
-                                path: res.target.result,
-                                fileName: this.localFileName
-                            }
+                            'viewRepresentation.currentValue.path': res.target.result,
+                            'viewRepresentation.currentValue.fileName': this.localFileName
                         }
                     });
                     this.uploading = false;
@@ -154,12 +152,9 @@ export default {
             this.$emit('updateWidget', {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
-                value: response.location,
                 update: {
-                    'viewRepresentation.currentValue': {
-                        path: response.location,
-                        fileName: this.localFileName
-                    }
+                    'viewRepresentation.currentValue.path': response.location,
+                    'viewRepresentation.currentValue.fileName': this.localFileName
                 }
             });
             return null;

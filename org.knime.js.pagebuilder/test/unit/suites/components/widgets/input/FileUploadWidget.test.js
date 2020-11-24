@@ -274,9 +274,8 @@ describe('FileUploadWidget.vue', () => {
                 nodeId: '5:0:22',
                 type: 'path',
                 update: {
-                    'viewRepresentation.currentValue': {
-                        fileName: 'test', path: 'data:;base64,dGVzdGluZw=='
-                    }
+                    'viewRepresentation.currentValue.fileName': 'test',
+                    'viewRepresentation.currentValue.path': 'data:;base64,dGVzdGluZw=='
                 }
             });
             done();
