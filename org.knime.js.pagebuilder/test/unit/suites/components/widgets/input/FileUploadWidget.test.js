@@ -92,6 +92,7 @@ describe('FileUploadWidget.vue', () => {
         expect(uploadResourceMock).toBeCalled();
         expect(wrapper.find('.show-bar').exists()).toBe(false);
         expect(wrapper.find('.vertical').exists()).toBe(false);
+        expect(wrapper.find('p').text()).toEqual('No file selected.');
     });
 
     it('triggers input on click', () => {
@@ -252,14 +253,34 @@ describe('FileUploadWidget.vue', () => {
         expect(wrapper.find(ErrorMessage).props('error')).toEqual('Upload cancelled.');
     });
 
-    it('displays messag if on AP', () => {
+    it('uploads files on the AP', (done) => {
+        let uploadResourceMock = jest.fn();
+        window.KnimePageLoader = { /* empty mock simulates AP wrapper API */ };
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
             propsData
         });
-        wrapper.setData({ uploadAPI: null });
-
-        expect(wrapper.find('p').text()).toEqual('File upload only available on server.');
+        wrapper.setData({ uploadAPI: uploadResourceMock });
+        wrapper.vm.onChange({
+            target: {
+                files: [new File([new Blob(['testing'], { type: 'application/pdf' })], 'test')]
+            }
+        });
+        // File operations needs non-zero time to complete (more than a tick).
+        setTimeout(() => {
+            expect(uploadResourceMock).not.toHaveBeenCalled();
+            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+                nodeId: '5:0:22',
+                type: 'path',
+                update: {
+                    'viewRepresentation.currentValue': {
+                        fileName: 'test', path: 'data:;base64,dGVzdGluZw=='
+                    }
+                }
+            });
+            done();
+        // eslint-disable-next-line no-magic-numbers
+        }, 10);
     });
 });

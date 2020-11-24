@@ -108,7 +108,7 @@ export default {
     },
     methods: {
         async onChange(e) {
-            if (!this.uploadAPI || !e.target) {
+            if (!e.target) {
                 return null;
             }
             let file = e.target.files[0];
@@ -119,6 +119,25 @@ export default {
             this.uploadErrorMessage = null;
             this.localFileName = file.name;
             this.localFileSize = file.size;
+            if (window?.KnimePageLoader) {
+                let reader = new FileReader();
+                reader.onload = (res) => {
+                    this.setUploadProgress(100);
+                    this.$emit('updateWidget', {
+                        nodeId: this.nodeId,
+                        type: DATA_TYPE,
+                        update: {
+                            'viewRepresentation.currentValue': {
+                                path: res.target.result,
+                                fileName: this.localFileName
+                            }
+                        }
+                    });
+                    this.uploading = false;
+                };
+                reader.readAsDataURL(file);
+                return null;
+            }
             let { response, errorResponse } = await this.uploadAPI({
                 nodeId: this.nodeId,
                 resource: file,
@@ -132,7 +151,7 @@ export default {
                 this.localFileSize = null;
                 return null;
             }
-            return this.$emit('updateWidget', {
+            this.$emit('updateWidget', {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
                 value: response.location,
@@ -143,6 +162,7 @@ export default {
                     }
                 }
             });
+            return null;
         },
         setUploadProgress(progress) {
             this.uploadProgress = progress;
@@ -196,7 +216,7 @@ export default {
     :title="description"
   >
     <Label :text="label">
-      <template v-if="uploadAPI">
+      <template>
         <div class="upload-wrapper">
           <Button
             v-if="!uploading"
@@ -239,9 +259,6 @@ export default {
           </div>
         </div>
       </template>
-      <p v-else>
-        File upload only available on server.
-      </p>
     </Label>
     <ErrorMessage :error="uploadErrorMessage || errorMessage" />
   </div>
