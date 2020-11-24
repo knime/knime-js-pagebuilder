@@ -293,7 +293,7 @@ input {
   transition: opacity linear 0.3s 0.3s;
 
   &.show-bar {
-    opacity: 100%;
+    opacity: 1;
   }
 
   &::after {
