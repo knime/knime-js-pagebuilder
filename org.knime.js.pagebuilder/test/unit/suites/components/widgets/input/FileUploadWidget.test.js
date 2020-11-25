@@ -196,8 +196,30 @@ describe('FileUploadWidget.vue', () => {
                         ...propsData.nodeConfig.viewRepresentation,
                         fileTypes: ['.pdf']
                     }
+                },
+                valuePair: {
+                    '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
+                    fileName: '',
+                    pathValid: false,
+                    path: '/Users/testUser/avatar.pdf'
                 }
             }
+        });
+        expect(wrapper.vm.validate()).toEqual({
+            errorMessage: null,
+            isValid: true
+        });
+        wrapper.setProps({
+            valuePair: {
+                '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
+                fileName: '',
+                pathValid: false,
+                path: '/Users/testUser/avatar.PDF'
+            }
+        });
+        expect(wrapper.vm.validate()).toEqual({
+            errorMessage: null,
+            isValid: true
         });
         wrapper.setProps({
             valuePair: {
@@ -209,6 +231,37 @@ describe('FileUploadWidget.vue', () => {
         });
         expect(wrapper.vm.validate()).toEqual({
             errorMessage: 'The type of the selected file does not match the allowed file types (.pdf).',
+            isValid: false
+        });
+        wrapper.setProps({
+            nodeConfig: {
+                ...propsData.nodeConfig,
+                viewRepresentation: {
+                    ...propsData.nodeConfig.viewRepresentation,
+                    fileTypes: ['.PDF']
+                }
+            },
+            valuePair: {
+                '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
+                fileName: '',
+                pathValid: false,
+                path: '/Users/testUser/avatar.pdf'
+            }
+        });
+        expect(wrapper.vm.validate()).toEqual({
+            errorMessage: null,
+            isValid: true
+        });
+        wrapper.setProps({
+            valuePair: {
+                '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
+                fileName: '',
+                pathValid: false,
+                path: '/Users/testUser/avatar.png'
+            }
+        });
+        expect(wrapper.vm.validate()).toEqual({
+            errorMessage: 'The type of the selected file does not match the allowed file types (.PDF).',
             isValid: false
         });
     });
