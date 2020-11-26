@@ -225,7 +225,7 @@ describe('CredentialsWidget.vue', () => {
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
                 nodeId: propsDataDefault.nodeId,
-                type: 'password',
+                type: 'magicDefaultPassword',
                 value: testValue
             });
         });
@@ -246,7 +246,7 @@ describe('CredentialsWidget.vue', () => {
 
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
                 nodeId: propsDataServer.nodeId,
-                type: 'password',
+                type: 'magicDefaultPassword',
                 value: testValue
             });
         });
