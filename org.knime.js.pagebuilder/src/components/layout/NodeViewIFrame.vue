@@ -215,9 +215,10 @@ export default {
          */
         injectContent() {
             const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
+            const accessToken = this.$store.state.settings?.['knime:access_token'];
 
-            let styles = this.computeStyles(resourceBaseUrl);
-            let scripts = this.computeScripts(resourceBaseUrl);
+            let styles = this.computeStyles(resourceBaseUrl, accessToken);
+            let scripts = this.computeScripts(resourceBaseUrl, accessToken);
 
             // runtime/script injection error handling
             let loadingErrorHandler = `<script>${loadingErrorHandlerSrc
@@ -270,12 +271,19 @@ export default {
         /**
          * Helper method that computes the required `<style>` elements that should be injected into the iframe
          * @param {String} resourceBaseUrl Base URL from store
+         * @param {String} [accessToken] An optional JWT access token used to authenticate resource requests
          * @returns {String}
          */
-        computeStyles(resourceBaseUrl) {
+        computeStyles(resourceBaseUrl, accessToken) {
             // stylesheets from the node view itself
             let styles = this.nodeStylesheets.map(
-                style => `<link type="text/css" rel="stylesheet" href="${resourceBaseUrl}${encodeURI(style)}">`
+                style => {
+                    let href = `${resourceBaseUrl}${encodeURI(style)}`;
+                    if (accessToken) {
+                        href += `?knime:access_token=${accessToken}`;
+                    }
+                    return `<link type="text/css" rel="stylesheet" href="${href}">`;
+                }
             );
 
             // custom CSS from node configuration
@@ -290,16 +298,22 @@ export default {
         /**
          * Helper method that computes the required `<script>` elements that should be injected into the iframe
          * @param {String} resourceBaseUrl Base URL from store
+         * @param {String} [accessToken] An optional JWT access token used to authenticate resource requests
          * @returns {String}
          */
-        computeScripts(resourceBaseUrl) {
+        computeScripts(resourceBaseUrl, accessToken) {
             // scripts from the node itself
             let scripts = this.nodeJsLibs.map(
-                lib => `<script
-                    src="${resourceBaseUrl}${lib}"
-                    onload="knimeLoader(true)"
-                    onerror="knimeLoader(false)">
-                <\/script>` // eslint-disable-line no-useless-escape
+                lib => {
+                    let src = `${resourceBaseUrl}${lib}`;
+                    if (accessToken) {
+                        src += `?knime:access_token=${accessToken}`;
+                    }
+                    return `<script src="${src}" 
+                        onload="knimeLoader(true)" 
+                        onerror="knimeLoader(false)">
+                        <\/script>`; // eslint-disable-line no-useless-escape
+                }
             );
 
             // inject resource base URL so that it can be read by dynamic JS nodes and generic JS view
