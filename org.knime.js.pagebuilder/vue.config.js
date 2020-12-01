@@ -1,5 +1,6 @@
 const path = require('path');
 const svgConfig = require('webapps-common/webpack/webpack.svg.config');
+const LimitChunkCountPlugin = require('webpack/lib/optimize/LimitChunkCountPlugin');
 
 module.exports = {
     css: {
@@ -33,6 +34,9 @@ module.exports = {
                 }
             }
         }));
+
+        // prevent multiple chunks
+        config.plugin('LimitChunkCountPlugin').use(LimitChunkCountPlugin, [{ maxChunks: 1 }]);
     },
     // allow relative paths for serving font files in the AP
     publicPath: ''

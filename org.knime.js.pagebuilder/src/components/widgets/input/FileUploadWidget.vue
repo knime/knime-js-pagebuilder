@@ -172,7 +172,8 @@ export default {
                 return { isValid };
             }
             if (this.fileTypes?.length && this.path) {
-                isValid = this.fileTypes.includes(`.${getFileExtension(this.path)}`);
+                isValid = this.fileTypes?.map(type => type?.toLowerCase())
+                    .includes(`.${getFileExtension(this.path)?.toLowerCase()}`);
                 if (!isValid) {
                     errorMessage = `The type of the selected file does not match the allowed file ` +
                         `types (${this.fileTypes.join(', ')}).`;

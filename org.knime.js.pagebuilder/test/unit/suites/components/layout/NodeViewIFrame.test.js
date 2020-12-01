@@ -64,7 +64,19 @@ describe('NodeViewIframe.vue', () => {
         };
         settingsConfig = {
             namespaced: true,
-            state: () => ({ defaultMountId: 'MOUNTIE' }),
+            state: () => ({
+                defaultMountId: 'MOUNTIE',
+                'knime:access_token': ''
+            }),
+            mutations: {
+                setSettings(state, { settings }) {
+                    Object.keys(state).forEach(key => {
+                        if (settings.hasOwnProperty(key)) {
+                            state[key] = settings[key];
+                        }
+                    });
+                }
+            },
             getters: {
                 getCustomSketcherPath: jest.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
@@ -153,6 +165,48 @@ describe('NodeViewIframe.vue', () => {
             wrapper = shallowMount(NodeViewIFrame, iframeConfig);
             html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('iframeResizer.js mock');
+        });
+
+        it('injects scripts and styles with access token', () => {
+            let token = 'Shaken and not stirred';
+            let changedSettings = {
+                'knime:access_token': token
+            };
+            store.commit('settings/setSettings', { settings: changedSettings });
+            expect(store.state.settings?.['knime:access_token']).toBe(token);
+            let iframeConfig = {
+                attachToDocument: true,
+                ...context,
+                propsData: {
+                    viewConfig: {
+                        nodeID: '0:0:7'
+                    },
+                    nodeConfig: {
+                        namespace: 'knimespace',
+                        javascriptLibraries: ['foo/bar.js', 'qux/baz.js'],
+                        stylesheets: ['bla.css', 'narf.css'],
+                        customCSS: 'body { background: red; }'
+                    }
+                }
+            };
+            let wrapper = shallowMount(NodeViewIFrame, iframeConfig);
+
+            let html = wrapper.vm.document.documentElement.innerHTML;
+            expect(html).toMatch('messageListener.js mock');
+            expect(html).toMatch('scriptLoader.js mock');
+            expect(html).toMatch('loadErrorHandler.js mock');
+            expect(html).toMatch('viewAlertHandler.js mock');
+            expect(html).toMatch(`["http://baseurl.test.example/", "${window.origin}", "knimespace", "0:0:7", 2]`);
+            expect(html).toMatch(`<script src="http://baseurl.test.example/foo/bar.js?knime:access_token=${token}" ` +
+                'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
+            expect(html).toMatch(`<script src="http://baseurl.test.example/qux/baz.js?knime:access_token=${token}" ` +
+                'onload="knimeLoader(true)" onerror="knimeLoader(false)"');
+            expect(html).toMatch(`knimeService.resourceBaseUrl = 'http://baseurl.test.example/';`);
+            expect(html).toMatch('<link type="text/css" rel="stylesheet" href="http://baseurl.test.example/bla.css' +
+                `?knime:access_token=${token}">`);
+            expect(html).toMatch('<link type="text/css" rel="stylesheet" href="http://baseurl.test.example/narf.css' +
+                `?knime:access_token=${token}">`);
+            expect(html).toMatch('<style>body { background: red; }</style>');
         });
 
         it('handles resource loading', () => {
