@@ -428,6 +428,9 @@ describe('DateTimeWidget.vue', () => {
             expect(wrapper.vm.dateObject).toStrictEqual(wrapper.vm.minDate);
             expect(wrapper.vm.dateObject).toStrictEqual(wrapper.vm.maxDate);
 
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0].update['viewRepresentation.currentValue'].zonestring)
+                .toStrictEqual('Europe/Berlin');
         });
 
     });
