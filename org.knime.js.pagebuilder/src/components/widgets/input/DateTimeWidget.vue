@@ -138,6 +138,11 @@ export default {
             return null;
         }
     },
+    beforeMount() {
+        if (this.viewRep.usedefaultexectime) {
+            this.publishUpdate(this.formatDate(execTime), this.localTimeZone);
+        }
+    },
     methods: {
         /**
          * Parse proprietary date and timezone combination string.
@@ -157,16 +162,18 @@ export default {
         onChange(date, timezone) {
             let zonedDate = utcToZonedTime(date, timezone);
             let value = this.formatDate(zonedDate);
-            const changeEventObj = {
+            this.publishUpdate(value, timezone);
+        },
+        publishUpdate(datestring, zonestring) {
+            this.$emit('updateWidget', {
                 nodeId: this.nodeId,
                 update: {
                     'viewRepresentation.currentValue': {
-                        datestring: value,
-                        zonestring: timezone
+                        datestring,
+                        zonestring
                     }
                 }
-            };
-            this.$emit('updateWidget', changeEventObj);
+            });
         },
         onDateChange(date) {
             this.onChange(date, this.timezone);
