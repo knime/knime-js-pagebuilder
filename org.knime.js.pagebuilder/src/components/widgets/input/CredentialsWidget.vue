@@ -108,7 +108,7 @@ export default {
             if (value !== this.viewRep.defaultValue.magicDefaultPassword) {
                 const changeEventObj = {
                     nodeId: this.nodeId,
-                    type: 'password',
+                    type: 'magicDefaultPassword',
                     value
                 };
                 this.$emit('updateWidget', changeEventObj);
@@ -164,7 +164,7 @@ export default {
         :id="labelForId"
         ref="passwordForm"
         type="password"
-        :value="useServerLoginCredentials && useMagicPassword ? value.magicDefaultPassword : value.password"
+        :value="value.magicDefaultPassword"
         :is-valid="isValid"
         :title="description"
         @input="onPasswordChange"

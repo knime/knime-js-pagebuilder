@@ -16,7 +16,7 @@
     <packaging>eclipse-repository</packaging>
   
     <properties>
-        <revision>4.3.0</revision>
+        <revision>4.4.0</revision>
     </properties>
 
     <build>
