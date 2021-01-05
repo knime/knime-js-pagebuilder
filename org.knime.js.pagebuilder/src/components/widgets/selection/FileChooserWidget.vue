@@ -104,7 +104,7 @@ export default {
         /**
          * Generate a items value from the treeData.
          * @param {Array} subtree - call with tree data.
-         * @param {Array} [paths] - communicate paths to recurring call.
+         * @param {Array} [paths=[]] - communicate paths to recurring call.
          * @returns {ItemsDataType[]} array with `path` and `type` objects.
          */
         buildSelectedPaths(subtree, paths) {
@@ -156,7 +156,6 @@ export default {
         :id="labelForId"
         ref="form"
         class="tree"
-        :value="value"
         :aria-label="label"
         :data="treeData"
         :multiple="multipleSelection"
@@ -178,5 +177,10 @@ export default {
   background: var(--knime-white);
   border: 1px solid var(--knime-stone-gray);
   overflow-y: auto;
+
+  &:focus {
+    outline: none;
+    border-color: var(--knime-masala);
+  }
 }
 </style>
