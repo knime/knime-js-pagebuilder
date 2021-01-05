@@ -38,17 +38,13 @@ export default {
             type: Boolean,
             default: false
         },
-        showCheckbox: {
-            type: Boolean,
-            default: false
-        },
         allowTransition: {
             type: Boolean,
             default: true
         },
         height: {
             type: Number,
-            default: 24
+            default: 18
         },
         parentItem: {
             type: Array,
@@ -272,11 +268,6 @@ export default {
       :class="anchorClasses"
       v-on="events"
     >
-      <i
-        v-if="showCheckbox && !model.loading"
-        class="tree-icon tree-checkbox"
-        role="presentation"
-      />
       <slot
         :vm="this"
         :model="model"
@@ -289,7 +280,7 @@ export default {
             :is="isFolder ? 'folderIcon' : 'fileIcon'"
           />
         </i>
-        <span>{{ model[textFieldName] }}</span>
+        <span :title="model[textFieldName]">{{ model[textFieldName] }}</span>
       </slot>
     </div>
     <ul
@@ -308,7 +299,6 @@ export default {
         :children-field-name="childrenFieldName"
         :item-events="itemEvents"
         :whole-row="wholeRow"
-        :show-checkbox="showCheckbox"
         :allow-transition="allowTransition"
         :height="height"
         :parent-item="model[childrenFieldName]"
@@ -324,3 +314,219 @@ export default {
     </ul>
   </li>
 </template>
+<style lang="postcss" scoped>
+@import "webapps-common/ui/css/variables";
+
+/* TreeSelectItem */
+
+.tree-node,
+.tree-children,
+.tree-container-ul {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.tree-children {
+  overflow: hidden;
+}
+
+.tree-node {
+  white-space: nowrap;
+}
+
+.tree-anchor {
+  display: inline-block;
+  color: black;
+  white-space: nowrap;
+  padding: 0 4px 0 1px;
+  margin: 0;
+  vertical-align: top;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tree-anchor:focus {
+  outline: 0;
+}
+
+.tree-anchor,
+.tree-anchor:link,
+.tree-anchor:visited,
+.tree-anchor:hover,
+.tree-anchor:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.tree-icon {
+  display: inline-block;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  text-align: center;
+}
+
+.tree-icon:empty {
+  display: inline-block;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  text-align: center;
+}
+
+.tree-ocl {
+  cursor: pointer;
+}
+
+.tree-leaf > .tree-ocl {
+  cursor: default;
+}
+
+.tree-anchor > .tree-themeicon {
+  margin-right: 2px;
+}
+
+.tree-no-icons .tree-themeicon,
+.tree-anchor > .tree-themeicon-hidden {
+  display: none;
+}
+
+.tree-hidden,
+.tree-node.tree-hidden {
+  display: none;
+}
+
+
+/* theme */
+
+.tree-anchor,
+.tree-animated,
+.tree-wholerow {
+  transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+.tree-hovered {
+  background: #eee;
+  border: 0;
+  box-shadow: none;
+}
+
+.tree-context {
+  background: #eee;
+  border: 0;
+  box-shadow: none;
+}
+
+.tree-selected {
+  background: #e1e1e1;
+  border: 0;
+  box-shadow: none;
+}
+
+.tree-no-icons .tree-anchor > .tree-themeicon {
+  display: none;
+}
+
+.tree-disabled {
+  background: transparent;
+  color: #666666;
+}
+
+.tree-disabled.tree-hovered {
+  background: transparent;
+  box-shadow: none;
+}
+
+.tree-disabled.tree-selected {
+  background: #efefef;
+}
+
+.tree-disabled > .tree-icon {
+  opacity: 0.8;
+  filter: gray;
+}
+
+.tree-search {
+  font-style: italic;
+  color: #8b0000;
+  font-weight: bold;
+}
+
+.tree-no-checkboxes .tree-checkbox {
+  display: none !important;
+}
+
+.tree-hovered,
+.tree-selected {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.tree-wholerow-hovered {
+  background: #eee;
+}
+
+.tree-wholerow-clicked {
+  background: #e1e1e1;
+}
+
+.tree-node {
+  min-height: 18px;
+  line-height: 18px;
+  margin-left: 25px;
+  min-width: 18px;
+}
+
+.tree-anchor {
+  line-height: 18px;
+  height: 18px;
+}
+
+.tree-icon {
+  width: 14px;
+  height: 14px;
+  line-height: 18px;
+  padding-top: 2px;
+}
+
+.tree-icon:empty {
+  width: 14px;
+  height: 14px;
+  line-height: 18px;
+}
+
+.tree-wholerow {
+  height: 18px;
+}
+
+.tree-last {
+  background: transparent;
+}
+
+.tree-disabled {
+  background: transparent;
+}
+
+.tree-disabled.tree-hovered {
+  background: transparent;
+}
+
+.tree-disabled.tree-selected {
+  background: #efefef;
+}
+
+
+
+.tree-anchor {
+  width: calc(100% - 29px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+</style>

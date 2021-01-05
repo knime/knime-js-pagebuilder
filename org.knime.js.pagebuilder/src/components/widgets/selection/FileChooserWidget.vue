@@ -124,8 +124,9 @@ export default {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
                 /** @type ItemsDataType[] */
-                value: this.buildSelectedPaths(this.treeData)
+                value: JSON.parse(JSON.stringify(this.buildSelectedPaths(this.treeData)))
             };
+            console.log('onInput', JSON.parse(JSON.stringify(changeEventObj)));
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
@@ -160,6 +161,7 @@ export default {
         :data="treeData"
         :multiple="multipleSelection"
         :is-valid="isValid"
+        :allow-batch="false"
         :title="description"
         @item-click="onInput"
       />

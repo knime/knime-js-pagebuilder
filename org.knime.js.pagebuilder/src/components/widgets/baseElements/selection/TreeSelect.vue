@@ -3,7 +3,7 @@ import TreeSelectItem from './TreeSelectItem';
 
 let ITEM_ID = 0;
 // eslint-disable-next-line no-magic-numbers
-let ITEM_HEIGHT_DEFAULT = 22;
+let ITEM_HEIGHT_DEFAULT = 18;
 
 /*
  * TreeSelect component.
@@ -18,20 +18,7 @@ export default {
             type: Array,
             required: true
         },
-        size: {
-            type: String,
-            default: null,
-            validator: value => ['large', 'small'].indexOf(value) > -1
-        },
-        showCheckbox: {
-            type: Boolean,
-            default: false
-        },
         wholeRow: {
-            type: Boolean,
-            default: true
-        },
-        noDots: {
             type: Boolean,
             default: true
         },
@@ -69,11 +56,6 @@ export default {
                 return {};
             }
         },
-        async: { type: Function },
-        loadingText: {
-            type: String,
-            default: 'Loading...'
-        },
         draggable: {
             type: Boolean,
             default: false
@@ -97,8 +79,6 @@ export default {
         classes() {
             return [
                 { tree: true },
-                { 'tree-default': !this.size },
-                { 'tree-checkbox-selection': Boolean(this.showCheckbox) },
                 { [this.klass]: Boolean(this.klass) }
             ];
         },
@@ -106,8 +86,7 @@ export default {
             return [
                 { 'tree-container-ul': true },
                 { 'tree-children': true },
-                { 'tree-wholerow-ul': Boolean(this.wholeRow) },
-                { 'tree-no-dots': Boolean(this.noDots) }
+                { 'tree-wholerow-ul': Boolean(this.wholeRow) }
             ];
         },
         sizeHeight() {
@@ -116,12 +95,6 @@ export default {
     },
     created() {
         this.initializeData(this.data);
-    },
-    mounted() {
-        if (this.async) {
-            this.$set(this.data, 0, this.initializeLoading());
-            this.handleAsyncLoad(this.data, this);
-        }
     },
     methods: {
         initializeData(items) {
@@ -183,13 +156,6 @@ export default {
             };
             return node;
         },
-        initializeLoading() {
-            let item = {};
-            item[this.textFieldName] = this.loadingText;
-            item.disabled = true;
-            item.loading = true;
-            return this.initializeDataItem(item);
-        },
         handleRecursionNodeChilds(node, func) {
             if (func(node) !== false) {
                 if (node.$children && node.$children.length > 0) {
@@ -237,32 +203,7 @@ export default {
             });
         },
         onItemToggle(oriNode, oriItem, e) {
-            if (oriNode.model.opened) {
-                this.handleAsyncLoad(oriNode.model[this.childrenFieldName], oriNode, oriItem);
-            }
             this.$emit('item-toggle', oriNode, oriItem, e);
-        },
-        handleAsyncLoad(oriParent, oriNode, oriItem) {
-            let self = this;
-            if (this.async) {
-                if (oriParent[0].loading) {
-                    this.async(oriNode, (data) => {
-                        if (data.length > 0) {
-                            for (let i = 0; i < data.length; i++) {
-                                if (!data[i].isLeaf) {
-                                    if (typeof data[i][self.childrenFieldName] !== 'object') {
-                                        data[i][self.childrenFieldName] = [self.initializeLoading()];
-                                    }
-                                }
-                                let dataItem = self.initializeDataItem(data[i]);
-                                self.$set(oriParent, i, dataItem);
-                            }
-                        } else {
-                            oriNode.model[self.childrenFieldName] = [];
-                        }
-                    });
-                }
-            }
         },
         onItemDragStart(e, oriNode, oriItem) {
             if (!this.draggable || oriItem.dragDisabled) {
@@ -333,7 +274,6 @@ export default {
         :children-field-name="childrenFieldName"
         :item-events="itemEvents"
         :whole-row="wholeRow"
-        :show-checkbox="showCheckbox"
         :allow-transition="allowTransition"
         :height="sizeHeight"
         :parent-item="data"
@@ -345,16 +285,7 @@ export default {
         :on-item-drag-end="onItemDragEnd"
         :on-item-drop="onItemDrop"
         :klass="index === data.length-1?'tree-last':''"
-      >
-        <template slot-scope="_">
-          <slot
-            :vm="_.vm"
-            :model="_.model"
-          >
-            <span>{{ _.model[textFieldName] }}</span>
-          </slot>
-        </template>
-      </TreeSelectItem>
+      />
     </ul>
   </div>
 </template>
@@ -362,272 +293,36 @@ export default {
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
+.tree-container-ul {
+  padding: 0;
+  margin: 0 0 0 -25px;
+  list-style-type: none;
+
+  /* for ellipsis */
+  max-width: calc(100% + 25px);
+}
+
 .tree-wholerow-ul {
   position: relative;
   display: inline-block;
   min-width: 100%;
+
+  & >>> .tree-leaf > .tree-ocl {
+    cursor: pointer;
+  }
+
+  & >>> .tree-anchor,
+  & >>> .tree-icon {
+    position: relative;
+  }
+
+  & >>> .tree-wholerow {
+    width: 100%;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    user-select: none;
+  }
 }
-
-.tree-wholerow-ul .tree-leaf > .tree-ocl {
-  cursor: pointer;
-}
-
-.tree-wholerow-ul .tree-anchor,
-.tree-wholerow-ul .tree-icon {
-  position: relative;
-}
-
-.tree-wholerow-ul .tree-wholerow {
-  width: 100%;
-  cursor: pointer;
-  z-index: -1;
-  position: absolute;
-  left: 0;
-  user-select: none;
-}
-
-
-/* TreeSelectItem */
-
-.tree-node,
-.tree-children,
-.tree-container-ul {
-  display: block;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  list-style-image: none;
-}
-
-.tree-children {
-  overflow: hidden;
-}
-
-.tree-node {
-  white-space: nowrap;
-}
-
-.tree-anchor {
-  display: inline-block;
-  color: black;
-  white-space: nowrap;
-  padding: 0 4px 0 1px;
-  margin: 0;
-  vertical-align: top;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.tree-anchor:focus {
-  outline: 0;
-}
-
-.tree-anchor,
-.tree-anchor:link,
-.tree-anchor:visited,
-.tree-anchor:hover,
-.tree-anchor:active {
-  text-decoration: none;
-  color: inherit;
-}
-
-.tree-icon {
-  display: inline-block;
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-  vertical-align: top;
-  text-align: center;
-}
-
-.tree-icon:empty {
-  display: inline-block;
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-  vertical-align: top;
-  text-align: center;
-}
-
-.tree-ocl {
-  cursor: pointer;
-}
-
-.tree-leaf > .tree-ocl {
-  cursor: default;
-}
-
-.tree-anchor > .tree-themeicon {
-  margin-right: 2px;
-}
-
-.tree-no-icons .tree-themeicon,
-.tree-anchor > .tree-themeicon-hidden {
-  display: none;
-}
-
-.tree-hidden,
-.tree-node.tree-hidden {
-  display: none;
-}
-
-
-/* theme */
-
-.tree-anchor,
-.tree-animated,
-.tree-wholerow {
-  transition: background-color 0.15s, box-shadow 0.15s;
-}
-
-.tree-hovered {
-  background: #eee;
-  border: 0;
-  box-shadow: none;
-}
-
-.tree-context {
-  background: #eee;
-  border: 0;
-  box-shadow: none;
-}
-
-.tree-selected {
-  background: #e1e1e1;
-  border: 0;
-  box-shadow: none;
-}
-
-.tree-no-icons .tree-anchor > .tree-themeicon {
-  display: none;
-}
-
-.tree-disabled {
-  background: transparent;
-  color: #666666;
-}
-
-.tree-disabled.tree-hovered {
-  background: transparent;
-  box-shadow: none;
-}
-
-.tree-disabled.tree-selected {
-  background: #efefef;
-}
-
-.tree-disabled > .tree-icon {
-  opacity: 0.8;
-  filter: gray;
-}
-
-.tree-search {
-  font-style: italic;
-  color: #8b0000;
-  font-weight: bold;
-}
-
-.tree-no-checkboxes .tree-checkbox {
-  display: none !important;
-}
-
-.tree-default.tree-checkbox-no-clicked .tree-selected {
-  background: transparent;
-  box-shadow: none;
-}
-
-.tree-default.tree-checkbox-no-clicked .tree-selected.tree-hovered {
-  background: #eee;
-}
-
-.tree-default.tree-checkbox-no-clicked > .tree-wholerow-ul .tree-wholerow-clicked {
-  background: transparent;
-}
-
-.tree-default.tree-checkbox-no-clicked > .tree-wholerow-ul .tree-wholerow-clicked.tree-wholerow-hovered {
-  background: #eee;
-}
-
-> .tree-striped {
-  min-width: 100%;
-  display: inline-block;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAkCAMAAAB/qqA+AAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMNAMM9s3UAAAAXSURBVHjajcEBAQAAAIKg/H/aCQZ70AUBjAATb6YPDgAAAABJRU5ErkJggg==") left top repeat;
-}
-
-> .tree-wholerow-ul .tree-hovered,
-> .tree-wholerow-ul .tree-selected {
-  background: transparent;
-  box-shadow: none;
-  border-radius: 0;
-}
-
-.tree-wholerow-hovered {
-  background: #eee;
-}
-
-.tree-wholerow-clicked {
-  background: #e1e1e1;
-}
-
-.tree-node {
-  min-height: 22px;
-  line-height: 22px;
-  margin-left: 30px;
-  min-width: 22px;
-}
-
-.tree-anchor {
-  line-height: 22px;
-  height: 22px;
-}
-
-.tree-icon {
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-}
-
-.tree-icon:empty {
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-}
-
-
-.tree-wholerow {
-  height: 22px;
-}
-
-.tree-last {
-  background: transparent;
-}
-
-.tree-disabled {
-  background: transparent;
-}
-
-.tree-disabled.tree-hovered {
-  background: transparent;
-}
-
-.tree-disabled.tree-selected {
-  background: #efefef;
-}
-
-.tree-ellipsis {
-  overflow: hidden;
-}
-
-.tree-ellipsis .tree-anchor {
-  width: calc(100% - 29px);
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.tree-ellipsis.tree-no-icons .tree-anchor {
-  width: calc(100% - 5px);
-}
-
-
 
 </style>
