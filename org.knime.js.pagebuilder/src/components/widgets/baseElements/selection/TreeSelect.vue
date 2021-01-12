@@ -2,9 +2,6 @@
 import TreeSelectItem from './TreeSelectItem';
 
 let ITEM_ID = 0;
-// eslint-disable-next-line no-magic-numbers
-let ITEM_HEIGHT_DEFAULT = 18;
-
 /*
  * TreeSelect component.
  * Tree with single. and multi-selection.
@@ -56,6 +53,10 @@ export default {
                 return {};
             }
         },
+        itemHeight: {
+            type: Number,
+            default: 18
+        },
         draggable: {
             type: Boolean,
             default: false
@@ -88,9 +89,6 @@ export default {
                 { 'tree-children': true },
                 { 'tree-wholerow-ul': Boolean(this.wholeRow) }
             ];
-        },
-        sizeHeight() {
-            return ITEM_HEIGHT_DEFAULT;
         }
     },
     created() {
@@ -275,7 +273,7 @@ export default {
         :item-events="itemEvents"
         :whole-row="wholeRow"
         :allow-transition="allowTransition"
-        :height="sizeHeight"
+        :height="itemHeight"
         :parent-item="data"
         :draggable="draggable"
         :drag-over-background-color="dragOverBackgroundColor"

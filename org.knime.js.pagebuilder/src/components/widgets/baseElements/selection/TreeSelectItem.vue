@@ -122,6 +122,12 @@ export default {
                 { 'tree-wholerow-hovered': this.isHover }
             ];
         },
+        cssVars() {
+            // css variables for js -> css
+            return {
+                '--height': `${this.height}px`
+            };
+        },
         isWholeRow() {
             if (this.wholeRow) {
                 // eslint-disable-next-line no-undefined
@@ -239,6 +245,7 @@ export default {
   <li
     :class="classes"
     :draggable="draggable"
+    :style="cssVars"
     role="treeitem"
     @dragstart.stop="onItemDragStart($event, _self, _self.model)"
     @dragend.stop.prevent="onItemDragEnd($event, _self, _self.model)"
@@ -477,32 +484,32 @@ export default {
 }
 
 .tree-node {
-  min-height: 18px;
-  line-height: 18px;
+  min-height: var(--height);
+  line-height: var(--height, 18px);
   margin-left: 25px;
-  min-width: 18px;
+  min-width: var(--height, 18px);
 }
 
 .tree-anchor {
-  line-height: 18px;
-  height: 18px;
+  line-height: var(--height, 18px);
+  height: var(--height, 18px);
 }
 
 .tree-icon {
   width: 14px;
   height: 14px;
-  line-height: 18px;
+  line-height: var(--height, 18px);
   padding-top: 2px;
 }
 
 .tree-icon:empty {
   width: 14px;
   height: 14px;
-  line-height: 18px;
+  line-height: var(--height, 18px);
 }
 
 .tree-wholerow {
-  height: 18px;
+  height: var(--height, 18px);
 }
 
 .tree-last {
@@ -520,8 +527,6 @@ export default {
 .tree-disabled.tree-selected {
   background: #efefef;
 }
-
-
 
 .tree-anchor {
   width: calc(100% - 29px);
