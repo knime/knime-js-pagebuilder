@@ -23,10 +23,6 @@ export default {
             type: Boolean,
             default: false
         },
-        allowBatch: {
-            type: Boolean,
-            default: false
-        },
         allowTransition: {
             type: Boolean,
             default: true
@@ -150,11 +146,12 @@ export default {
             }
         },
         onItemClick(oriNode, oriItem, e) {
-            if (this.multiple) {
-                if (this.allowBatch) {
-                    this.handleBatchSelectItems(oriNode, oriItem);
-                }
-            } else {
+            if (e.shiftKey) {
+                // TODO: implement shift key - first check behaviour of old impl
+                console.log('TreeSelect: shift key press while click', oriNode);
+            }
+            // TODO: mac (metaKey) might require debouncing
+            if (!(this.multiple && (e.ctrlKey || e.metaKey))) {
                 this.handleSingleSelectItems(oriNode, oriItem);
             }
             this.$emit('item-click', oriNode, oriItem, e);
@@ -166,14 +163,6 @@ export default {
                 }
             });
             oriNode.model.selected = true;
-        },
-        handleBatchSelectItems(oriNode, oriItem) {
-            this.handleRecursionNodeChilds(oriNode, node => {
-                if (node.model.disabled) {
-                    return;
-                }
-                node.model.selected = oriNode.model.selected;
-            });
         },
         onItemToggle(oriNode, oriItem, e) {
             this.$emit('item-toggle', oriNode, oriItem, e);
