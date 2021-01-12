@@ -18,18 +18,6 @@ export default {
             type: Object,
             required: true
         },
-        textFieldName: {
-            type: String,
-            required: true
-        },
-        valueFieldName: {
-            type: String,
-            required: true
-        },
-        childrenFieldName: {
-            type: String,
-            required: true
-        },
         itemEvents: {
             type: Object,
             required: true
@@ -73,7 +61,7 @@ export default {
     },
     computed: {
         isFolder() {
-            return this.model[this.childrenFieldName] && this.model[this.childrenFieldName].length;
+            return this.model.children && this.model.children.length;
         },
         classes() {
             return [
@@ -122,7 +110,7 @@ export default {
                 'max-height': this.allowTransition ? `${this.maxHeight}px` : '',
                 // eslint-disable-next-line no-magic-numbers
                 'transition-duration': this.allowTransition
-                    ? `${Math.ceil(this.model[this.childrenFieldName].length / 100) * 300}ms`
+                    ? `${Math.ceil(this.model.children.length / 100) * 300}ms`
                     : '',
                 'transition-property': this.allowTransition ? 'max-height' : '',
                 display: this.allowTransition ? 'block' : this.model.opened ? 'block' : 'none'
@@ -246,7 +234,7 @@ export default {
             :is="isFolder ? 'folderIcon' : 'fileIcon'"
           />
         </i>
-        <span :title="model[textFieldName]">{{ model[textFieldName] }}</span>
+        <span :title="model.text">{{ model.text }}</span>
       </slot>
     </div>
     <ul
@@ -257,20 +245,17 @@ export default {
       :style="groupStyle"
     >
       <TreeSelectItem
-        v-for="(child, index) in model[childrenFieldName]"
+        v-for="(child, index) in model.children"
         :key="index"
         :data="child"
-        :text-field-name="textFieldName"
-        :value-field-name="valueFieldName"
-        :children-field-name="childrenFieldName"
         :item-events="itemEvents"
         :whole-row="wholeRow"
         :allow-transition="allowTransition"
         :height="height"
-        :parent-item="model[childrenFieldName]"
+        :parent-item="model.children"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
-        :klass="index === model[childrenFieldName].length-1?'tree-last':''"
+        :klass="index === model.children.length-1?'tree-last':''"
       />
     </ul>
   </li>

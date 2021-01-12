@@ -19,10 +19,6 @@ export default {
             type: Boolean,
             default: true
         },
-        collapse: {
-            type: Boolean,
-            default: false
-        },
         multiple: {
             type: Boolean,
             default: false
@@ -34,18 +30,6 @@ export default {
         allowTransition: {
             type: Boolean,
             default: true
-        },
-        textFieldName: {
-            type: String,
-            default: 'text'
-        },
-        valueFieldName: {
-            type: String,
-            default: 'value'
-        },
-        childrenFieldName: {
-            type: String,
-            default: 'children'
         },
         itemEvents: {
             type: Object,
@@ -91,28 +75,28 @@ export default {
             if (items && items.length > 0) {
                 for (let i = 0; i < items.length; i++) {
                     items[i] = this.initializeDataItem(items[i]);
-                    this.initializeData(items[i][this.childrenFieldName]);
+                    this.initializeData(items[i].children);
                 }
             }
         },
         initializeDataItem(item) {
 
             class Model {
-                constructor(item, textFieldName, valueFieldName, childrenFieldName, collapse) {
+                constructor(item) {
                     this.id = item.id || ITEM_ID++;
-                    this[textFieldName] = item[textFieldName] || '';
-                    this[valueFieldName] = item[valueFieldName] || item[textFieldName];
+                    this.text = item.text || '';
+                    this.value = item.value || item.text;
                     this.icon = item.icon || '';
-                    this.opened = item.opened || collapse;
+                    this.opened = item.opened;
                     this.selected = item.selected || false;
                     this.disabled = item.disabled || false;
                     if (item.userData) { this.userData = item.userData; }
-                    this[childrenFieldName] = item[childrenFieldName] || [];
+                    this.children = item.children || [];
                 }
             }
 
             let node = Object.assign(
-                new Model(item, this.textFieldName, this.valueFieldName, this.childrenFieldName, this.collapse),
+                new Model(item),
                 item
             );
             let self = this;
@@ -129,7 +113,7 @@ export default {
             node.addChild = data => {
                 let newItem = self.initializeDataItem(data);
                 node.opened = true;
-                node[self.childrenFieldName].push(newItem);
+                node.children.push(newItem);
             };
             node.openChildren = () => {
                 node.opened = true;
@@ -158,8 +142,8 @@ export default {
         },
         handleRecursionNodeChildren(node, func) {
             if (func(node) !== false) {
-                if (node[this.childrenFieldName] && node[this.childrenFieldName].length > 0) {
-                    for (let childNode of node[this.childrenFieldName]) {
+                if (node.children && node.children.length > 0) {
+                    for (let childNode of node.children) {
                         this.handleRecursionNodeChildren(childNode, func);
                     }
                 }
@@ -211,9 +195,6 @@ export default {
         v-for="(child, index) in data"
         :key="index"
         :data="child"
-        :text-field-name="textFieldName"
-        :value-field-name="valueFieldName"
-        :children-field-name="childrenFieldName"
         :item-events="itemEvents"
         :whole-row="wholeRow"
         :allow-transition="allowTransition"
