@@ -57,14 +57,6 @@ export default {
             type: Number,
             default: 18
         },
-        draggable: {
-            type: Boolean,
-            default: false
-        },
-        dragOverBackgroundColor: {
-            type: String,
-            default: '#C9FDC9'
-        },
         klass: {
             type: String,
             default: ''
@@ -114,7 +106,6 @@ export default {
                     this.opened = item.opened || collapse;
                     this.selected = item.selected || false;
                     this.disabled = item.disabled || false;
-                    this.loading = item.loading || false;
                     if (item.userData) { this.userData = item.userData; }
                     this[childrenFieldName] = item[childrenFieldName] || [];
                 }
@@ -202,53 +193,6 @@ export default {
         },
         onItemToggle(oriNode, oriItem, e) {
             this.$emit('item-toggle', oriNode, oriItem, e);
-        },
-        onItemDragStart(e, oriNode, oriItem) {
-            if (!this.draggable || oriItem.dragDisabled) {
-                return false;
-            }
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text', null);
-            this.draggedElm = e.target;
-            this.draggedItem = {
-                item: oriItem,
-                parentItem: oriNode.parentItem,
-                index: oriNode.parentItem.findIndex(t => t.id === oriItem.id)
-            };
-
-            this.$emit('item-drag-start', oriNode, oriItem, e);
-        },
-        onItemDragEnd(e, oriNode, oriItem) {
-            this.draggedItem = null;
-            this.draggedElm = null;
-            this.$emit('item-drag-end', oriNode, oriItem, e);
-        },
-        onItemDrop(e, oriNode, oriItem) {
-            if (!this.draggable || Boolean(oriItem.dropDisabled)) {
-                return false;
-            }
-            this.$emit('item-drop-before', oriNode, oriItem, !this.draggedItem ? null : this.draggedItem.item, e);
-            if (!this.draggedElm || this.draggedElm === e.target || this.draggedElm.contains(e.target)) {
-                return;
-            }
-            if (this.draggedItem) {
-                if (this.draggedItem.parentItem === oriItem[this.childrenFieldName] ||
-                    this.draggedItem.item === oriItem ||
-                    (oriItem[this.childrenFieldName] && oriItem[this.childrenFieldName].findIndex(t => t.id === this.draggedItem.item.id) !== -1)) {
-                    return;
-                }
-                if (oriItem[this.childrenFieldName]) {
-                    oriItem[this.childrenFieldName].push(this.draggedItem.item);
-                } else {
-                    oriItem[this.childrenFieldName] = [this.draggedItem.item];
-                }
-                oriItem.opened = true;
-                let draggedItem = this.draggedItem;
-                this.$nextTick(() => {
-                    draggedItem.parentItem.splice(draggedItem.index, 1);
-                });
-                this.$emit('item-drop', oriNode, oriItem, draggedItem.item, e);
-            }
         }
     }
 };
@@ -275,13 +219,8 @@ export default {
         :allow-transition="allowTransition"
         :height="itemHeight"
         :parent-item="data"
-        :draggable="draggable"
-        :drag-over-background-color="dragOverBackgroundColor"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
-        :on-item-drag-start="onItemDragStart"
-        :on-item-drag-end="onItemDragEnd"
-        :on-item-drop="onItemDrop"
         :klass="index === data.length-1?'tree-last':''"
       />
     </ul>

@@ -50,31 +50,11 @@ export default {
             type: Array,
             required: true
         },
-        draggable: {
-            type: Boolean,
-            default: false
-        },
-        dragOverBackgroundColor: {
-            type: String,
-            required: true
-        },
         onItemClick: {
             type: Function,
             default: () => false
         },
         onItemToggle: {
-            type: Function,
-            default: () => false
-        },
-        onItemDragStart: {
-            type: Function,
-            default: () => false
-        },
-        onItemDragEnd: {
-            type: Function,
-            default: () => false
-        },
-        onItemDrop: {
             type: Function,
             default: () => false
         },
@@ -86,7 +66,6 @@ export default {
     data() {
         return {
             isHover: false,
-            isDragEnter: false,
             model: this.data,
             maxHeight: 0,
             events: {}
@@ -102,8 +81,6 @@ export default {
                 { 'tree-open': this.model.opened },
                 { 'tree-closed': !this.model.opened },
                 { 'tree-leaf': !this.isFolder },
-                { 'tree-loading': Boolean(this.model.loading) },
-                { 'tree-drag-enter': this.isDragEnter },
                 { [this.klass]: Boolean(this.klass) }
             ];
         },
@@ -153,13 +130,6 @@ export default {
         }
     },
     watch: {
-        isDragEnter(newValue) {
-            if (newValue) {
-                this.$el.style.backgroundColor = this.dragOverBackgroundColor;
-            } else {
-                this.$el.style.backgroundColor = 'inherit';
-            }
-        },
         data(newValue) {
             this.model = newValue;
         },
@@ -232,10 +202,6 @@ export default {
         },
         handleItemMouseOut() {
             this.isHover = false;
-        },
-        handleItemDrop(e, oriNode, oriItem) {
-            this.$el.style.backgroundColor = 'inherit';
-            this.onItemDrop(e, oriNode, oriItem);
         }
     }
 };
@@ -244,15 +210,8 @@ export default {
 <template>
   <li
     :class="classes"
-    :draggable="draggable"
     :style="cssVars"
     role="treeitem"
-    @dragstart.stop="onItemDragStart($event, _self, _self.model)"
-    @dragend.stop.prevent="onItemDragEnd($event, _self, _self.model)"
-    @dragover.stop.prevent="isDragEnter = true"
-    @dragenter.stop.prevent="isDragEnter = true"
-    @dragleave.stop.prevent="isDragEnter = false"
-    @drop.stop.prevent="handleItemDrop($event, _self, _self.model)"
   >
     <div
       v-if="isWholeRow"
@@ -309,13 +268,8 @@ export default {
         :allow-transition="allowTransition"
         :height="height"
         :parent-item="model[childrenFieldName]"
-        :draggable="draggable"
-        :drag-over-background-color="dragOverBackgroundColor"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
-        :on-item-drag-start="onItemDragStart"
-        :on-item-drag-end="onItemDragEnd"
-        :on-item-drop="onItemDrop"
         :klass="index === model[childrenFieldName].length-1?'tree-last':''"
       />
     </ul>
