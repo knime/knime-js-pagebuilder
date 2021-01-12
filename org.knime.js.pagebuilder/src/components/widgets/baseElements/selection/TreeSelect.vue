@@ -27,12 +27,6 @@ export default {
             type: Boolean,
             default: true
         },
-        itemEvents: {
-            type: Object,
-            default() {
-                return {};
-            }
-        },
         itemHeight: {
             type: Number,
             default: 18
@@ -184,7 +178,6 @@ export default {
         v-for="(child, index) in data"
         :key="index"
         :data="child"
-        :item-events="itemEvents"
         :whole-row="wholeRow"
         :allow-transition="allowTransition"
         :height="itemHeight"

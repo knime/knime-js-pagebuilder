@@ -18,10 +18,6 @@ export default {
             type: Object,
             required: true
         },
-        itemEvents: {
-            type: Object,
-            required: true
-        },
         wholeRow: {
             type: Boolean,
             default: false
@@ -56,7 +52,6 @@ export default {
             isHover: false,
             model: this.data,
             maxHeight: 0,
-            events: {}
         };
     },
     computed: {
@@ -129,29 +124,6 @@ export default {
             deep: true
         }
     },
-    created() {
-        const self = this;
-        const events = {
-            click: this.handleItemClick,
-            mouseover: this.handleItemMouseOver,
-            mouseout: this.handleItemMouseOut
-        };
-        for (let itemEvent in this.itemEvents) {
-            let itemEventCallback = this.itemEvents[itemEvent];
-            if (events.hasOwnProperty(itemEvent)) {
-                let eventCallback = events[itemEvent];
-                events[itemEvent] = function (event) {
-                    eventCallback(self, self.model, event);
-                    itemEventCallback(self, self.model, event);
-                };
-            } else {
-                events[itemEvent] = function (event) {
-                    itemEventCallback(self, self.model, event);
-                };
-            }
-        }
-        this.events = events;
-    },
     mounted() {
         this.handleGroupMaxHeight();
     },
@@ -184,12 +156,6 @@ export default {
             }
             this.model.selected = !this.model.selected;
             this.onItemClick(this, this.model, e);
-        },
-        handleItemMouseOver() {
-            this.isHover = true;
-        },
-        handleItemMouseOut() {
-            this.isHover = false;
         }
     }
 };
@@ -220,7 +186,9 @@ export default {
     </i>
     <div
       :class="anchorClasses"
-      v-on="events"
+      @click="handleItemClick"
+      @mouseover="isHover = true"
+      @mouseout="isHover = false"
     >
       <slot
         :vm="this"
@@ -248,7 +216,6 @@ export default {
         v-for="(child, index) in model.children"
         :key="index"
         :data="child"
-        :item-events="itemEvents"
         :whole-row="wholeRow"
         :allow-transition="allowTransition"
         :height="height"
