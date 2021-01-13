@@ -420,6 +420,7 @@ describe('DateTimeWidget.vue', () => {
             // check for today
             const today = new Date();
             const compareDateFormat = 'yyyy-MM-dd';
+            expect(format(wrapper.vm.execTime, compareDateFormat)).toBe(format(today, compareDateFormat));
             expect(format(wrapper.vm.dateObject, compareDateFormat)).toBe(format(today, compareDateFormat));
             expect(format(wrapper.vm.minDate, compareDateFormat)).toBe(format(today, compareDateFormat));
             expect(format(wrapper.vm.maxDate, compareDateFormat)).toBe(format(today, compareDateFormat));

@@ -9,8 +9,6 @@ import getLocalTimeZone from '~/webapps-common/util/localTimezone';
 
 import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
-const execTime = new Date();
-
 /**
  * DateTimeWidget.
  */
@@ -55,7 +53,8 @@ export default {
     data() {
         return {
             // tz database timezones (e.g. Europe/Berlin)
-            localTimeZone: getLocalTimeZone()
+            localTimeZone: getLocalTimeZone(),
+            execTime: new Date()
         };
     },
     computed: {
@@ -98,7 +97,7 @@ export default {
             // use exec time (only once as we have no zonestring given)
             if (this.viewRep.usedefaultexectime) {
                 return {
-                    datestring: this.formatDate(execTime),
+                    datestring: this.formatDate(this.execTime),
                     zonestring: this.localTimeZone
                 };
             }
@@ -121,7 +120,7 @@ export default {
             if (this.viewRep.usemin) {
                 const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.min);
                 if (this.viewRep.useminexectime) {
-                    return zonedTimeToUtc(execTime, this.localTimeZone);
+                    return zonedTimeToUtc(this.execTime, this.localTimeZone);
                 }
                 return zonedTimeToUtc(datestring, zonestring);
             }
@@ -131,7 +130,7 @@ export default {
             if (this.viewRep.usemax) {
                 const { datestring, zonestring } = this.parseKnimeDateString(this.viewRep.max);
                 if (this.viewRep.usemaxexectime) {
-                    return zonedTimeToUtc(execTime, this.localTimeZone);
+                    return zonedTimeToUtc(this.execTime, this.localTimeZone);
                 }
                 return zonedTimeToUtc(datestring, zonestring);
             }
@@ -140,7 +139,7 @@ export default {
     },
     beforeMount() {
         if (this.viewRep.usedefaultexectime) {
-            this.publishUpdate(this.formatDate(execTime), this.localTimeZone);
+            this.publishUpdate(this.formatDate(this.execTime), this.localTimeZone);
         }
     },
     methods: {
