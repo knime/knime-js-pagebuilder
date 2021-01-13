@@ -193,6 +193,7 @@ export default {
     position: absolute;
     left: 0;
     user-select: none;
+    margin-left: 25px;
   }
 }
 
