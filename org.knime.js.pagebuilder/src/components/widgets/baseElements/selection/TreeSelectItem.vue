@@ -41,10 +41,6 @@ export default {
         onItemToggle: {
             type: Function,
             default: () => false
-        },
-        klass: {
-            type: String,
-            default: null
         }
     },
     data() {
@@ -63,8 +59,7 @@ export default {
                 { 'tree-node': true },
                 { 'tree-open': this.model.opened },
                 { 'tree-closed': !this.model.opened },
-                { 'tree-leaf': !this.isFolder },
-                { [this.klass]: Boolean(this.klass) }
+                { 'tree-leaf': !this.isFolder }
             ];
         },
         anchorClasses() {
@@ -145,7 +140,7 @@ export default {
                     }
                 }
                 this.maxHeight = length * this.height + childHeight;
-                if (this.$parent.$options._componentTag === 'tree-item') {
+                if (this.$parent.$options.name === 'TreeSelectItem') {
                     this.$parent.handleGroupMaxHeight();
                 }
             }
@@ -222,7 +217,6 @@ export default {
         :parent-item="model.children"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
-        :klass="index === model.children.length-1?'tree-last':''"
       />
     </ul>
   </li>
@@ -360,7 +354,7 @@ export default {
 }
 
 .tree-disabled > .tree-icon {
-  opacity: 0.8;
+  opacity: 0.5;
   filter: gray;
 }
 

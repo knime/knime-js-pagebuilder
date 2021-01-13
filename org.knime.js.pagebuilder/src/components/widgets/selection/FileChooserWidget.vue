@@ -161,7 +161,7 @@ export default {
         :data="treeData"
         :multiple="multipleSelection"
         :is-valid="isValid"
-        :allow-batch="false"
+        :allow-transition="true"
         :title="description"
         @item-click="onInput"
       />

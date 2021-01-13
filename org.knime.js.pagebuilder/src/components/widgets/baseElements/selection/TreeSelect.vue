@@ -48,10 +48,6 @@ export default {
         itemHeight: {
             type: Number,
             default: 18
-        },
-        klass: {
-            type: String,
-            default: ''
         }
     },
     data() {
@@ -61,12 +57,6 @@ export default {
         };
     },
     computed: {
-        classes() {
-            return [
-                { tree: true },
-                { [this.klass]: Boolean(this.klass) }
-            ];
-        },
         containerClasses() {
             return [
                 { 'tree-container-ul': true },
@@ -82,13 +72,10 @@ export default {
         initializeData(items) {
             if (items && items.length > 0) {
                 for (let i = 0; i < items.length; i++) {
-                    items[i] = this.initializeDataItem(items[i]);
+                    items[i] = new Model(items[i]);
                     this.initializeData(items[i].children);
                 }
             }
-        },
-        initializeDataItem(item) {
-            return new Model(item);
         },
         handleRecursionNodeChilds(node, func) {
             if (func(node) !== false) {
@@ -97,15 +84,6 @@ export default {
                         if (!childNode.disabled) {
                             this.handleRecursionNodeChilds(childNode, func);
                         }
-                    }
-                }
-            }
-        },
-        handleRecursionNodeChildren(node, func) {
-            if (func(node) !== false) {
-                if (node.children && node.children.length > 0) {
-                    for (let childNode of node.children) {
-                        this.handleRecursionNodeChildren(childNode, func);
                     }
                 }
             }
@@ -138,7 +116,7 @@ export default {
 
 <template>
   <div
-    :class="classes"
+    class="tree"
     role="tree"
   >
     <ul
@@ -155,7 +133,6 @@ export default {
         :parent-item="data"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
-        :klass="index === data.length-1?'tree-last':''"
       />
     </ul>
   </div>
