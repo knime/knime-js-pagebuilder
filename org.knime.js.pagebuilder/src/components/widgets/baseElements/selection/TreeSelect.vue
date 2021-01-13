@@ -141,6 +141,10 @@ export default {
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
+.tree {
+  user-select: none;
+}
+
 .tree-container-ul {
   padding: 0;
   margin: 0 0 0 -25px;

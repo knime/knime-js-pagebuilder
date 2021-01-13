@@ -72,7 +72,7 @@ export default {
         },
         wholeRowClasses() {
             return [
-                { 'tree-wholerow': true },
+                { 'tree-wholerow': this.isWholeRow },
                 { 'tree-wholerow-clicked': this.model.selected },
                 { 'tree-wholerow-hovered': this.isHover }
             ];
@@ -190,7 +190,7 @@ export default {
         :model="model"
       >
         <i
-          class="tree-icon tree-themeicon"
+          class="tree-icon"
           role="presentation"
         >
           <Component
@@ -224,8 +224,19 @@ export default {
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
-/* TreeSelectItem */
+/* Tree (FileChooser) */
+*.tree-node {
+  --theme-tree-background-color: transparent;
+  --theme-tree-background-color-focus: var(--knime-silver-sand-semi);
+  --theme-tree-background-color-hover: var(--knime-silver-sand-semi);
+  --theme-tree-background-color-selected: var(--knime-masala);
+  --theme-tree-foreground-color: var(--knime-masala);
+  --theme-tree-foreground-color-focus: var(--knime-masala);
+  --theme-tree-foreground-color-hover: var(--knime-masala);
+  --theme-tree-foreground-color-selected: var(--knime-white);
+}
 
+/* TreeSelectItem */
 .tree-node,
 .tree-children,
 .tree-container-ul {
@@ -241,49 +252,57 @@ export default {
 }
 
 .tree-node {
+  min-height: var(--height);
+  line-height: var(--height, 18px);
+  margin-left: 25px;
+  min-width: var(--height, 18px);
   white-space: nowrap;
 }
 
 .tree-anchor {
   display: inline-block;
-  color: black;
+  color: var(--theme-tree-foreground-color);
   white-space: nowrap;
   padding: 0 4px 0 1px;
   margin: 0;
   vertical-align: top;
   font-size: 14px;
   cursor: pointer;
+  line-height: var(--height, 18px);
+  height: var(--height, 18px);
+  width: calc(100% - 29px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .tree-anchor:focus {
   outline: 0;
 }
 
-.tree-anchor,
-.tree-anchor:link,
-.tree-anchor:visited,
-.tree-anchor:hover,
-.tree-anchor:active {
-  text-decoration: none;
-  color: inherit;
-}
-
 .tree-icon {
   display: inline-block;
   text-decoration: none;
-  margin: 0;
-  padding: 0;
   vertical-align: top;
   text-align: center;
-}
+  width: 14px;
+  height: 14px;
+  line-height: var(--height, 18px);
+  padding: 0;
+  margin: 0 2px 0 0;
 
-.tree-icon:empty {
-  display: inline-block;
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-  vertical-align: top;
-  text-align: center;
+  & > svg {
+    vertical-align: middle;
+    stroke: var(--theme-tree-foreground-color);
+    stroke-width: calc(32px / 14);
+  }
 }
 
 .tree-ocl {
@@ -294,144 +313,48 @@ export default {
   cursor: default;
 }
 
-.tree-anchor > .tree-themeicon {
-  margin-right: 2px;
-}
-
-.tree-no-icons .tree-themeicon,
-.tree-anchor > .tree-themeicon-hidden {
-  display: none;
-}
-
-.tree-hidden,
-.tree-node.tree-hidden {
-  display: none;
-}
-
-
-/* theme */
-
-.tree-anchor,
-.tree-animated,
 .tree-wholerow {
-  transition: background-color 0.15s, box-shadow 0.15s;
+  height: var(--height, 18px);
 }
 
-.tree-hovered {
-  background: #eee;
-  border: 0;
-  box-shadow: none;
-}
+.tree-anchor.tree-hovered {
+  background: var(--theme-tree-background-color-hover);
+  color: var(--theme-tree-foreground-color-hover);
 
-.tree-context {
-  background: #eee;
-  border: 0;
-  box-shadow: none;
-}
-
-.tree-selected {
-  background: #e1e1e1;
-  border: 0;
-  box-shadow: none;
-}
-
-.tree-no-icons .tree-anchor > .tree-themeicon {
-  display: none;
-}
-
-.tree-disabled {
-  background: transparent;
-  color: #666666;
-}
-
-.tree-disabled.tree-hovered {
-  background: transparent;
-  box-shadow: none;
-}
-
-.tree-disabled.tree-selected {
-  background: #efefef;
-}
-
-.tree-disabled > .tree-icon {
-  opacity: 0.5;
-  filter: gray;
-}
-
-.tree-search {
-  font-style: italic;
-  color: #8b0000;
-  font-weight: bold;
-}
-
-.tree-no-checkboxes .tree-checkbox {
-  display: none !important;
-}
-
-.tree-hovered,
-.tree-selected {
-  background: transparent;
-  box-shadow: none;
-  border-radius: 0;
+  & .tree-icon > svg {
+    stroke: var(--theme-tree-foreground-color-hover);
+  }
 }
 
 .tree-wholerow-hovered {
-  background: #eee;
+  background: var(--theme-tree-background-color-hover);
+  color: var(--theme-tree-foreground-color-hover);
+}
+
+.tree-anchor.tree-selected {
+  background: var(--theme-tree-background-color-selected);
+  color: var(--theme-tree-foreground-color-selected);
+
+  & .tree-icon > svg {
+    stroke: var(--theme-tree-foreground-color-selected);
+  }
 }
 
 .tree-wholerow-clicked {
-  background: #e1e1e1;
-}
-
-.tree-node {
-  min-height: var(--height);
-  line-height: var(--height, 18px);
-  margin-left: 25px;
-  min-width: var(--height, 18px);
-}
-
-.tree-anchor {
-  line-height: var(--height, 18px);
-  height: var(--height, 18px);
-}
-
-.tree-icon {
-  width: 14px;
-  height: 14px;
-  line-height: var(--height, 18px);
-  padding-top: 2px;
-}
-
-.tree-icon:empty {
-  width: 14px;
-  height: 14px;
-  line-height: var(--height, 18px);
-}
-
-.tree-wholerow {
-  height: var(--height, 18px);
-}
-
-.tree-last {
-  background: transparent;
+  background: var(--theme-tree-background-color-selected);
+  color: var(--theme-tree-foreground-color-selected);
 }
 
 .tree-disabled {
   background: transparent;
-}
+  color: var(--theme-tree-foreground-color);
+  cursor: default;
+  opacity: 0.5;
+  pointer-events: none;
 
-.tree-disabled.tree-hovered {
-  background: transparent;
-}
-
-.tree-disabled.tree-selected {
-  background: #efefef;
-}
-
-.tree-anchor {
-  width: calc(100% - 29px);
-  text-overflow: ellipsis;
-  overflow: hidden;
+  &.tree-hovered {
+    background: transparent;
+  }
 }
 
 </style>
