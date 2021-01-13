@@ -51,7 +51,7 @@ export default {
         return {
             isHover: false,
             model: this.data,
-            maxHeight: 0,
+            maxHeight: 0
         };
     },
     computed: {

@@ -2,6 +2,24 @@
 import TreeSelectItem from './TreeSelectItem';
 
 let ITEM_ID = 0;
+
+/**
+ * Model Class
+ */
+class Model {
+    constructor(item) {
+        this.id = item.id || ITEM_ID++;
+        this.text = item.text || '';
+        this.value = item.value || item.text;
+        this.icon = item.icon || '';
+        this.opened = item.opened;
+        this.selected = item.selected || false;
+        this.disabled = item.disabled || false;
+        if (item.userData) { this.userData = item.userData; }
+        this.children = item.children || [];
+    }
+}
+
 /*
  * TreeSelect component.
  * Tree with single. and multi-selection.
@@ -70,54 +88,7 @@ export default {
             }
         },
         initializeDataItem(item) {
-
-            class Model {
-                constructor(item) {
-                    this.id = item.id || ITEM_ID++;
-                    this.text = item.text || '';
-                    this.value = item.value || item.text;
-                    this.icon = item.icon || '';
-                    this.opened = item.opened;
-                    this.selected = item.selected || false;
-                    this.disabled = item.disabled || false;
-                    if (item.userData) { this.userData = item.userData; }
-                    this.children = item.children || [];
-                }
-            }
-
-            let node = Object.assign(
-                new Model(item),
-                item
-            );
-            let self = this;
-            node.addBefore = (data, selectedNode) => {
-                let newItem = self.initializeDataItem(data);
-                let index = selectedNode.parentItem.findIndex(t => t.id === node.id);
-                selectedNode.parentItem.splice(index, 0, newItem);
-            };
-            node.addAfter = (data, selectedNode) => {
-                let newItem = self.initializeDataItem(data);
-                let index = selectedNode.parentItem.findIndex(t => t.id === node.id) + 1;
-                selectedNode.parentItem.splice(index, 0, newItem);
-            };
-            node.addChild = data => {
-                let newItem = self.initializeDataItem(data);
-                node.opened = true;
-                node.children.push(newItem);
-            };
-            node.openChildren = () => {
-                node.opened = true;
-                self.handleRecursionNodeChildren(node, node => {
-                    node.opened = true;
-                });
-            };
-            node.closeChildren = () => {
-                node.opened = false;
-                self.handleRecursionNodeChildren(node, node => {
-                    node.opened = false;
-                });
-            };
-            return node;
+            return new Model(item);
         },
         handleRecursionNodeChilds(node, func) {
             if (func(node) !== false) {
