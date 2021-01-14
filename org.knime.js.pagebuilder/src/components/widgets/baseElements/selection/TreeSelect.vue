@@ -44,6 +44,10 @@ export default {
         itemHeight: {
             type: Number,
             default: 22
+        },
+        ariaLabel: {
+            type: String,
+            required: true
         }
     },
     data() {
@@ -107,6 +111,7 @@ export default {
     role="tree"
   >
     <ul
+      :aria-label="ariaLabel"
       class="tree-container-ul tree-children tree-wholerow-ul"
       role="group"
     >
