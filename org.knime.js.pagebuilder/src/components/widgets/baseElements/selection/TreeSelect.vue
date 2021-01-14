@@ -47,7 +47,7 @@ export default {
         },
         itemHeight: {
             type: Number,
-            default: 18
+            default: 22
         }
     },
     data() {
@@ -158,10 +158,6 @@ export default {
   position: relative;
   display: inline-block;
   min-width: 100%;
-
-  & >>> .tree-leaf > .tree-ocl {
-    cursor: pointer;
-  }
 
   & >>> .tree-anchor,
   & >>> .tree-icon {

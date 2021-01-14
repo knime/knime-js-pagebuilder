@@ -28,7 +28,7 @@ export default {
         },
         height: {
             type: Number,
-            default: 18
+            default: 22
         },
         parentItem: {
             type: Array,
@@ -75,6 +75,14 @@ export default {
                 { 'tree-wholerow': this.isWholeRow },
                 { 'tree-wholerow-clicked': this.model.selected },
                 { 'tree-wholerow-hovered': this.isHover }
+            ];
+        },
+        treeOclClasses() {
+            return [
+                'tree-icon',
+                'tree-ocl',
+                { 'tree-ocl-selected': this.model.selected },
+                { 'tree-ocl-hovered': this.isHover }
             ];
         },
         cssVars() {
@@ -170,7 +178,7 @@ export default {
       &nbsp;
     </div>
     <i
-      class="tree-icon tree-ocl"
+      :class="treeOclClasses"
       role="presentation"
       @click="handleItemToggle"
     >
@@ -253,9 +261,9 @@ export default {
 
 .tree-node {
   min-height: var(--height);
-  line-height: var(--height, 18px);
+  line-height: var(--height, 22px);
   margin-left: 25px;
-  min-width: var(--height, 18px);
+  min-width: var(--height, 22px);
   white-space: nowrap;
 }
 
@@ -268,8 +276,8 @@ export default {
   vertical-align: top;
   font-size: 14px;
   cursor: pointer;
-  line-height: var(--height, 18px);
-  height: var(--height, 18px);
+  line-height: var(--height, 22px);
+  height: var(--height, 22px);
   width: calc(100% - 29px);
   text-overflow: ellipsis;
   overflow: hidden;
@@ -294,9 +302,14 @@ export default {
   text-align: center;
   width: 14px;
   height: 14px;
-  line-height: var(--height, 18px);
+  line-height: var(--height, 22px);
   padding: 0;
   margin: 0 2px 0 0;
+
+  &.tree-ocl {
+    width: 10px;
+    height: 10px;
+  }
 
   & > svg {
     vertical-align: middle;
@@ -314,35 +327,41 @@ export default {
 }
 
 .tree-wholerow {
-  height: var(--height, 18px);
+  height: var(--height, 22px);
 }
 
-.tree-anchor.tree-hovered {
-  background: var(--theme-tree-background-color-hover);
-  color: var(--theme-tree-foreground-color-hover);
-
-  & .tree-icon > svg {
-    stroke: var(--theme-tree-foreground-color-hover);
-  }
-}
-
-.tree-wholerow-hovered {
-  background: var(--theme-tree-background-color-hover);
-  color: var(--theme-tree-foreground-color-hover);
-}
-
-.tree-anchor.tree-selected {
-  background: var(--theme-tree-background-color-selected);
-  color: var(--theme-tree-foreground-color-selected);
-
-  & .tree-icon > svg {
+/* arrow (open/close) selected */
+.tree-ocl-selected.tree-icon,
+/* file or folder icon selected */
+.tree-anchor.tree-selected .tree-icon {
+  & > svg {
     stroke: var(--theme-tree-foreground-color-selected);
   }
 }
 
+/* arrow (open/close) hover */
+.tree-ocl-hovered.tree-icon:not(.tree-ocl-selected),
+/* file or folder icon hover */
+.tree-anchor.tree-hovered:not(.tree-selected) .tree-icon {
+  & > svg {
+    stroke: var(--theme-tree-foreground-color-hover);
+  }
+}
+
+.tree-anchor.tree-hovered {
+  color: var(--theme-tree-foreground-color-hover);
+}
+
+.tree-anchor.tree-selected {
+  color: var(--theme-tree-foreground-color-selected);
+}
+
+.tree-wholerow-hovered {
+  background: var(--theme-tree-background-color-hover);
+}
+
 .tree-wholerow-clicked {
   background: var(--theme-tree-background-color-selected);
-  color: var(--theme-tree-foreground-color-selected);
 }
 
 .tree-disabled {
