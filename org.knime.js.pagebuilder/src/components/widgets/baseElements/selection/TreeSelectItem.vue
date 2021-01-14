@@ -150,7 +150,7 @@ export default {
             if (this.model.disabled) {
                 return;
             }
-            this.model.selected = !this.model.selected;
+            //this.model.selected = !this.model.selected;
             this.onItemClick(this, this.model, e);
         }
     }
@@ -212,7 +212,6 @@ export default {
         v-for="(child, index) in model.children"
         :key="index"
         :data="child"
-        :whole-row="wholeRow"
         :allow-transition="allowTransition"
         :height="height"
         :parent-item="model.children"

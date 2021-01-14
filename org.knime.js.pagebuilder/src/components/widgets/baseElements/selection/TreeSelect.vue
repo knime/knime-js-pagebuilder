@@ -52,8 +52,7 @@ export default {
     },
     data() {
         return {
-            draggedItem: null,
-            draggedElm: null
+            lastClickedNode: null
         };
     },
     created() {
@@ -79,13 +78,34 @@ export default {
                 }
             }
         },
+        runInSection(array, firstIndex, secondIndex, func) {
+            let start = firstIndex > secondIndex ? secondIndex : firstIndex;
+            let end = firstIndex > secondIndex ? firstIndex : secondIndex;
+            array.slice(start, end + 1).forEach(func);
+        },
         onItemClick(oriNode, oriItem, e) {
-            if (e.shiftKey) {
-                // TODO: implement shift key - first check behaviour of old impl
-                console.log('TreeSelect: shift key press while click', oriNode);
-            }
-            // TODO: mac (metaKey) might require debouncing
-            if (!(this.multiple && (e.ctrlKey || e.metaKey))) {
+            if (this.multiple) {
+                if (e.shiftKey) {
+                    if (oriNode.$parent === this.lastClickedNode.$parent) {
+                        let currentLevel = oriNode.$parent.$children;
+                        let firstIndex = currentLevel.findIndex(v => v === this.lastClickedNode);
+                        let secondIndex = currentLevel.findIndex(v => v === oriNode);
+                        this.runInSection(currentLevel, firstIndex, secondIndex, node => {
+                            node.model.selected = true;
+                        });
+                    } else {
+                        // deselect all and just select the current clicked node if parents are not the same
+                        this.handleSingleSelectItems(oriNode, oriItem);
+                    }
+                } else if (e.ctrlKey || e.metaKey) {
+                    // TODO: mac (metaKey) might require debouncing
+                    oriNode.model.selected = !oriNode.model.selected;
+                } else {
+                    this.handleSingleSelectItems(oriNode, oriItem);
+                }
+                // remember node for shift actions
+                this.lastClickedNode = oriNode;
+            } else {
                 this.handleSingleSelectItems(oriNode, oriItem);
             }
             this.$emit('item-click', oriNode, oriItem, e);
