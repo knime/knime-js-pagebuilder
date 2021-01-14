@@ -262,7 +262,7 @@ export default {
 .tree-node {
   min-height: var(--height);
   line-height: var(--height, 22px);
-  margin-left: 25px;
+  margin-left: 15px; /* indent per level */
   min-width: var(--height, 22px);
   white-space: nowrap;
 }

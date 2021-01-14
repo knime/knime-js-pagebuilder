@@ -147,11 +147,11 @@ export default {
 
 .tree-container-ul {
   padding: 0;
-  margin: 0 0 0 -25px;
+  margin: 0 0 0 -5px;
   list-style-type: none;
 
   /* for ellipsis */
-  max-width: calc(100% + 25px);
+  max-width: calc(100% + 5px);
 }
 
 .tree-wholerow-ul {
@@ -170,7 +170,7 @@ export default {
     position: absolute;
     left: 0;
     user-select: none;
-    margin-left: 25px;
+    margin-left: 5px;
   }
 }
 
