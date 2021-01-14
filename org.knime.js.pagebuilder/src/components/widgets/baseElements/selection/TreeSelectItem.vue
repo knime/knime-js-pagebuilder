@@ -18,10 +18,6 @@ export default {
             type: Object,
             required: true
         },
-        wholeRow: {
-            type: Boolean,
-            default: false
-        },
         allowTransition: {
             type: Boolean,
             default: true
@@ -92,15 +88,12 @@ export default {
             };
         },
         isWholeRow() {
-            if (this.wholeRow) {
-                // eslint-disable-next-line no-undefined
-                if (this.$parent.model === undefined) {
-                    return true;
-                } else {
-                    return this.$parent.model.opened === true;
-                }
+            // eslint-disable-next-line no-undefined
+            if (this.$parent.model === undefined) {
+                return true;
+            } else {
+                return this.$parent.model.opened === true;
             }
-            return false;
         },
         groupStyle() {
             return {
@@ -111,7 +104,7 @@ export default {
                     ? `${Math.ceil(this.model.children.length / 100) * 300}ms`
                     : '',
                 'transition-property': this.allowTransition ? 'max-height' : '',
-                display: (this.allowTransition || this.model.opened) ? 'block' : 'none'
+                display: this.allowTransition || this.model.opened ? 'block' : 'none'
             };
         }
     },

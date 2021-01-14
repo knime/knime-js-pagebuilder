@@ -33,10 +33,6 @@ export default {
             type: Array,
             required: true
         },
-        wholeRow: {
-            type: Boolean,
-            default: true
-        },
         multiple: {
             type: Boolean,
             default: false
@@ -55,15 +51,6 @@ export default {
             draggedItem: null,
             draggedElm: null
         };
-    },
-    computed: {
-        containerClasses() {
-            return [
-                'tree-container-ul',
-                'tree-children',
-                { 'tree-wholerow-ul': Boolean(this.wholeRow) }
-            ];
-        }
     },
     created() {
         this.initializeData(this.data);
@@ -120,14 +107,13 @@ export default {
     role="tree"
   >
     <ul
-      :class="containerClasses"
+      class="tree-container-ul tree-children tree-wholerow-ul"
       role="group"
     >
       <TreeSelectItem
         v-for="(child, index) in data"
         :key="index"
         :data="child"
-        :whole-row="wholeRow"
         :allow-transition="allowTransition"
         :height="itemHeight"
         :parent-item="data"
