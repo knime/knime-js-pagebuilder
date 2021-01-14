@@ -59,8 +59,8 @@ export default {
     computed: {
         containerClasses() {
             return [
-                { 'tree-container-ul': true },
-                { 'tree-children': true },
+                'tree-container-ul',
+                'tree-children',
                 { 'tree-wholerow-ul': Boolean(this.wholeRow) }
             ];
         }

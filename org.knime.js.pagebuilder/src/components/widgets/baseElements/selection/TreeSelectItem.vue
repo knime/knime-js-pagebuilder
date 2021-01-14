@@ -56,7 +56,7 @@ export default {
         },
         classes() {
             return [
-                { 'tree-node': true },
+                'tree-node',
                 { 'tree-open': this.model.opened },
                 { 'tree-closed': !this.model.opened },
                 { 'tree-leaf': !this.isFolder }
@@ -64,7 +64,7 @@ export default {
         },
         anchorClasses() {
             return [
-                { 'tree-anchor': true },
+                'tree-anchor',
                 { 'tree-disabled': this.model.disabled },
                 { 'tree-selected': this.model.selected },
                 { 'tree-hovered': this.isHover }
@@ -103,7 +103,7 @@ export default {
                     ? `${Math.ceil(this.model.children.length / 100) * 300}ms`
                     : '',
                 'transition-property': this.allowTransition ? 'max-height' : '',
-                display: this.allowTransition ? 'block' : this.model.opened ? 'block' : 'none'
+                display: (this.allowTransition || this.model.opened) ? 'block' : 'none'
             };
         }
     },
