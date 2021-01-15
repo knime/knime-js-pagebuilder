@@ -272,7 +272,7 @@ describe('FileUploadWidget.vue', () => {
                 cancelled: false
             }
         });
-        
+
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
@@ -290,7 +290,7 @@ describe('FileUploadWidget.vue', () => {
                 cancelled: true
             }
         });
-        
+
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
@@ -333,6 +333,6 @@ describe('FileUploadWidget.vue', () => {
             });
             done();
         // eslint-disable-next-line no-magic-numbers
-        }, 10);
+        }, 50);
     });
 });
