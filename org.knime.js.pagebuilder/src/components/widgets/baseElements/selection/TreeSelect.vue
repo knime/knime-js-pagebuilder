@@ -22,7 +22,7 @@ class Model {
 
 /*
  * TreeSelect component.
- * Tree with single. and multi-selection.
+ * Tree with single and multi-selection, keyboard navigation. Suitable for a file system tree view.
  */
 export default {
     components: {

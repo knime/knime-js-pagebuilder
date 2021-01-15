@@ -4,6 +4,10 @@ import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 import arrowDownIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline';
 import arrowLeftIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
 
+/**
+ * This TreeSelectItem component is closely coupled with the TreeSelect component and should not be used in another
+ * context. It provides the recursive rendering
+ */
 export default {
     // name is required for recursion
     name: 'TreeSelectItem',
@@ -224,7 +228,7 @@ export default {
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
 
-/* Tree (FileChooser) */
+/* THEME TreeSelect and TreeSelectItem (used by FileChooser) */
 *.tree-node {
   --theme-tree-background-color: transparent;
   --theme-tree-background-color-focus: var(--knime-silver-sand-semi);
