@@ -73,7 +73,7 @@ export default {
         wholeRowClasses() {
             return [
                 { 'tree-wholerow': this.isWholeRow },
-                { 'tree-wholerow-clicked': this.model.selected },
+                { 'tree-wholerow-selected': this.model.selected },
                 { 'tree-wholerow-hovered': this.isHover }
             ];
         },
@@ -356,7 +356,7 @@ export default {
   background: var(--theme-tree-background-color-hover);
 }
 
-.tree-wholerow-clicked {
+.tree-wholerow-selected {
   background: var(--theme-tree-background-color-selected);
 }
 
