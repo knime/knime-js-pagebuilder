@@ -177,10 +177,8 @@ export default {
 
   & >>> .tree-wholerow {
     width: 100%;
-    cursor: pointer;
     position: absolute;
     left: 0;
-    user-select: none;
     margin-left: 5px;
   }
 }
