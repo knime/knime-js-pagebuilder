@@ -287,10 +287,6 @@ export default {
   }
 }
 
-.tree-anchor:focus {
-  outline: 0;
-}
-
 .tree-icon {
   display: inline-block;
   text-decoration: none;

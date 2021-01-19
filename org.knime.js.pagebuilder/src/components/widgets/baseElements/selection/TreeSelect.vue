@@ -52,7 +52,8 @@ export default {
     },
     data() {
         return {
-            lastClickedNode: null
+            lastClickedNode: null,
+            currentKeyboardNavNode: null
         };
     },
     created() {
@@ -95,22 +96,23 @@ export default {
                         });
                     } else {
                         // deselect all and just select the current clicked node if parents are not the same
-                        this.handleSingleSelectItems(oriNode, oriItem);
+                        this.handleSingleSelectItems(oriNode);
                     }
                 } else if (e.ctrlKey || e.metaKey) {
                     // TODO: mac (metaKey) might require debouncing
                     oriNode.model.selected = !oriNode.model.selected;
                 } else {
-                    this.handleSingleSelectItems(oriNode, oriItem);
+                    this.handleSingleSelectItems(oriNode);
                 }
                 // remember node for shift actions
                 this.lastClickedNode = oriNode;
             } else {
-                this.handleSingleSelectItems(oriNode, oriItem);
+                this.handleSingleSelectItems(oriNode);
             }
+            this.currentKeyboardNavNode = oriNode;
             this.$emit('item-click', oriNode, oriItem, e);
         },
-        handleSingleSelectItems(oriNode, oriItem) {
+        handleSingleSelectItems(oriNode) {
             this.handleRecursionNodeChilds(this, node => {
                 if (node.model) {
                     node.model.selected = false;
@@ -120,6 +122,87 @@ export default {
         },
         onItemToggle(oriNode, oriItem, e) {
             this.$emit('item-toggle', oriNode, oriItem, e);
+        },
+        nextNode(startNode, delta) {
+            let siblings = startNode.$parent.$children;
+            let currentIndex = siblings.findIndex(v => v === startNode);
+            let nextIndex = currentIndex + delta;
+            // next item is either the parent (if index underflow)
+            return nextIndex in siblings ? siblings[nextIndex] : null;
+        },
+        resetIsHover() {
+            this.handleRecursionNodeChilds(this, node => {
+                if (node.isHover) {
+                    node.isHover = false;
+                }
+            });
+        },
+        moveKeyBoardFocus(delta) {
+            let up = delta < 0;
+            let down = !up;
+            if (this.currentKeyboardNavNode === null) {
+                if (this.$children.length === 0) {
+                    return; // end here - nothing to navigate
+                }
+                // just use first item as nav item
+                this.currentKeyboardNavNode = this.$children[0];
+            }
+            this.resetIsHover();
+            let nextKeyboardNavNode = null;
+            // handle open node (go one level deeper)
+            if (this.currentKeyboardNavNode.model.children.length > 0 &&
+                this.currentKeyboardNavNode.model.opened && down) {
+                // use first item of childs (we go down)
+                nextKeyboardNavNode = this.currentKeyboardNavNode.$children[0];
+            } else {
+                // next node (on current level)
+                nextKeyboardNavNode = this.nextNode(this.currentKeyboardNavNode, delta);
+            }
+            // handle out of bounds of $children
+            let childArrayOutOfBounds = nextKeyboardNavNode === null;
+            if (childArrayOutOfBounds) {
+                if (!this.currentKeyboardNavNode.$parent.model) {
+                    return; // no parent - end here
+                }
+                if (up) { // we go up
+                    // go to parent if there is one
+                    nextKeyboardNavNode = this.currentKeyboardNavNode.$parent;
+                } else { // we go down
+                    nextKeyboardNavNode = this.nextNode(this.currentKeyboardNavNode.$parent, delta);
+                    if (nextKeyboardNavNode === null) {
+                        return; // parent has no sibling
+                    }
+                }
+            }
+
+            // we go up to an open node (so go the last child of that node) if we did not change level
+            if (nextKeyboardNavNode.model.opened && up && !childArrayOutOfBounds) {
+                // use last item of childs (we go up)
+                nextKeyboardNavNode = nextKeyboardNavNode.$children[nextKeyboardNavNode.$children.length - 1];
+            }
+
+            // set/reset hover state
+            this.currentKeyboardNavNode.$data.isHover = false;
+            nextKeyboardNavNode.$data.isHover = true;
+            // update current nod ein data
+            this.currentKeyboardNavNode = nextKeyboardNavNode;
+        },
+        onArrowUp() {
+            this.moveKeyBoardFocus(-1);
+        },
+        onArrowDown() {
+            this.moveKeyBoardFocus(1);
+        },
+        onEnterKey(e) {
+            if (this.currentKeyboardNavNode.model.disabled) {
+                return;
+            }
+            if (this.multiple && (e.ctrlKey || e.metaKey)) {
+                // TODO: mac (metaKey) might require debouncing
+                this.currentKeyboardNavNode.model.selected = !this.currentKeyboardNavNode.model.selected;
+            } else {
+                this.handleSingleSelectItems(this.currentKeyboardNavNode);
+            }
         }
     }
 };
@@ -134,6 +217,10 @@ export default {
       :aria-label="ariaLabel"
       class="tree-container-ul tree-children tree-wholerow-ul"
       role="group"
+      tabindex="0"
+      @keydown.up.prevent.exact="onArrowUp"
+      @keydown.enter.prevent="onEnterKey"
+      @keydown.down.prevent.exact="onArrowDown"
     >
       <TreeSelectItem
         v-for="(child, index) in data"
