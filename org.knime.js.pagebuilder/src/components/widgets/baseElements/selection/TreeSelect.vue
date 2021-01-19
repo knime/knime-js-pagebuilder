@@ -193,6 +193,16 @@ export default {
         onArrowDown() {
             this.moveKeyBoardFocus(1);
         },
+        onArrowLeft(e) {
+            if (this.currentKeyboardNavNode.model.opened) {
+                this.currentKeyboardNavNode.handleItemToggle(e);
+            }
+        },
+        onArrowRight(e) {
+            if (!this.currentKeyboardNavNode.model.opened) {
+                this.currentKeyboardNavNode.handleItemToggle(e);
+            }
+        },
         onEnterKey(e) {
             if (this.currentKeyboardNavNode.model.disabled) {
                 return;
@@ -219,8 +229,10 @@ export default {
       role="group"
       tabindex="0"
       @keydown.up.prevent.exact="onArrowUp"
-      @keydown.enter.prevent="onEnterKey"
       @keydown.down.prevent.exact="onArrowDown"
+      @keydown.enter.prevent="onEnterKey"
+      @keydown.left.prevent.exact="onArrowLeft"
+      @keydown.right.prevent.exact="onArrowRight"
     >
       <TreeSelectItem
         v-for="(child, index) in data"
