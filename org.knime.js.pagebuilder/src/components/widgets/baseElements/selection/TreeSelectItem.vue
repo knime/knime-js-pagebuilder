@@ -1,8 +1,7 @@
 <script>
 import fileIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg?inline';
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
-import arrowDownIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline';
-import arrowLeftIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
+import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
 
 /**
  * This TreeSelectItem component is closely coupled with the TreeSelect component and should not be used in another
@@ -14,8 +13,7 @@ export default {
     components: {
         fileIcon,
         folderIcon,
-        arrowDownIcon,
-        arrowLeftIcon
+        arrowNextIcon
     },
     props: {
         data: {
@@ -154,7 +152,6 @@ export default {
             if (this.model.disabled) {
                 return;
             }
-            //this.model.selected = !this.model.selected;
             this.onItemClick(this, this.model, e);
         }
     }
@@ -179,10 +176,7 @@ export default {
       role="presentation"
       @click="handleItemToggle"
     >
-      <Component
-        :is="model.opened ? 'arrowDownIcon' : 'arrowLeftIcon'"
-        v-if="isFolder"
-      />
+      <arrowNextIcon v-if="isFolder" />
     </i>
     <div
       :class="anchorClasses"
@@ -298,20 +292,28 @@ export default {
   padding: 0;
   margin: 0 2px 0 0;
 
-  &.tree-ocl {
-    width: 10px;
-    height: 10px;
-  }
-
   & > svg {
     vertical-align: middle;
     stroke: var(--theme-tree-foreground-color);
     stroke-width: calc(32px / 14);
   }
+
+  /* open/close icon */
+  &.tree-ocl {
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+
+    & > svg {
+      transition: transform 0.2s ease-in-out;
+    }
+  }
 }
 
-.tree-ocl {
-  cursor: pointer;
+.tree-open > .tree-icon.tree-ocl {
+  & > svg {
+    transform: rotate(90deg);
+  }
 }
 
 .tree-leaf > .tree-ocl {
