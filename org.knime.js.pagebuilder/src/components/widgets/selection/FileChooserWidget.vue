@@ -169,20 +169,3 @@ export default {
     </template>
   </Label>
 </template>
-
-
-<style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
-.tree {
-  height: 250px;
-  background: var(--knime-white);
-  border: 1px solid var(--knime-stone-gray);
-  overflow-y: auto;
-
-  &:focus {
-    outline: none;
-    border-color: var(--knime-masala);
-  }
-}
-</style>

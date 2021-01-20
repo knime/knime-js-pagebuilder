@@ -189,9 +189,11 @@ export default {
         },
         onArrowUp() {
             this.moveKeyBoardFocus(-1);
+            this.scrollToCurrent();
         },
         onArrowDown() {
             this.moveKeyBoardFocus(1);
+            this.scrollToCurrent();
         },
         onArrowLeft(e) {
             if (this.currentKeyboardNavNode.model.opened) {
@@ -213,6 +215,22 @@ export default {
             } else {
                 this.handleSingleSelectItems(this.currentKeyboardNavNode);
             }
+        },
+        scrollToCurrent() {
+            return this.scrollToElement(this.$refs.wrapper,
+                this.currentKeyboardNavNode.$el.querySelector('.tree-wholerow'));
+        },
+        // TODO: move to webapps-common as util - refactor MultiSelectListBox and ListBox (scrollToCurrent)
+        scrollToElement(scrollArea, element) {
+            if (scrollArea.scrollHeight > scrollArea.clientHeight) {
+                let scrollBottom = scrollArea.clientHeight + scrollArea.scrollTop;
+                let elementBottom = element.offsetTop + element.offsetHeight;
+                if (elementBottom > scrollBottom) {
+                    scrollArea.scrollTop = elementBottom - scrollArea.clientHeight;
+                } else if (element.offsetTop < scrollArea.scrollTop) {
+                    scrollArea.scrollTop = element.offsetTop;
+                }
+            }
         }
     }
 };
@@ -222,6 +240,7 @@ export default {
   <div
     class="tree"
     role="tree"
+    ref="wrapper"
   >
     <ul
       :aria-label="ariaLabel"
@@ -252,7 +271,16 @@ export default {
 @import "webapps-common/ui/css/variables";
 
 .tree {
+  height: 250px;
+  background: var(--knime-white);
+  border: 1px solid var(--knime-stone-gray);
+  overflow-y: auto;
   user-select: none;
+
+  &:focus {
+    outline: none;
+    border-color: var(--knime-masala);
+  }
 }
 
 .tree-container-ul {
