@@ -123,6 +123,12 @@ export default {
         onItemToggle(oriNode, oriItem, e) {
             this.$emit('item-toggle', oriNode, oriItem, e);
         },
+        onMouseMove() {
+            // reset current keyboard hover state if user moves mouse
+            if (this.currentKeyboardNavNode !== null) {
+                this.currentKeyboardNavNode.$data.isHover = false;
+            }
+        },
         nextNode(startNode, delta) {
             let siblings = startNode.$parent.$children;
             let currentIndex = siblings.findIndex(v => v === startNode);
@@ -177,7 +183,7 @@ export default {
 
             // we go up to an open node (so go the last child of that node) if we did not change level
             if (nextKeyboardNavNode.model.opened && up && !childArrayOutOfBounds) {
-                // use last item of childs (we go up)
+                // use last item of children (we go up)
                 nextKeyboardNavNode = nextKeyboardNavNode.$children[nextKeyboardNavNode.$children.length - 1];
             }
 
@@ -206,7 +212,7 @@ export default {
             }
         },
         onEnterKey(e) {
-            if (this.currentKeyboardNavNode.model.disabled) {
+            if (this.currentKeyboardNavNode.model.disabled || this.currentKeyboardNavNode.$data.isHover === false) {
                 return;
             }
             if (this.multiple && (e.ctrlKey || e.metaKey)) {
@@ -241,6 +247,7 @@ export default {
     class="tree"
     role="tree"
     ref="wrapper"
+    @mousemove="onMouseMove"
   >
     <ul
       :aria-label="ariaLabel"
