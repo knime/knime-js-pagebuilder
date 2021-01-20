@@ -44,6 +44,7 @@ export default {
     data() {
         return {
             isHover: false,
+            isKeyNav: false,
             model: this.data,
             maxHeight: 0
         };
@@ -65,14 +66,14 @@ export default {
                 'tree-anchor',
                 { 'tree-disabled': this.model.disabled },
                 { 'tree-selected': this.model.selected },
-                { 'tree-hovered': this.isHover }
+                { 'tree-hovered': this.isHover || this.isKeyNav }
             ];
         },
         wholeRowClasses() {
             return [
                 { 'tree-wholerow': this.isWholeRow },
                 { 'tree-wholerow-selected': this.model.selected },
-                { 'tree-wholerow-hovered': this.isHover }
+                { 'tree-wholerow-hovered': this.isHover || this.isKeyNav }
             ];
         },
         treeOclClasses() {
@@ -80,7 +81,7 @@ export default {
                 'tree-icon',
                 'tree-ocl',
                 { 'tree-ocl-selected': this.model.selected },
-                { 'tree-ocl-hovered': this.isHover }
+                { 'tree-ocl-hovered': this.isHover || this.isKeyNav }
             ];
         },
         cssVars() {

@@ -124,9 +124,9 @@ export default {
             this.$emit('item-toggle', oriNode, oriItem, e);
         },
         onMouseMove() {
-            // reset current keyboard hover state if user moves mouse
+            // reset current keyboard state if user moves mouse
             if (this.currentKeyboardNavNode !== null) {
-                this.currentKeyboardNavNode.$data.isHover = false;
+                this.currentKeyboardNavNode.$data.isKeyNav = false;
             }
         },
         nextNode(startNode, delta) {
@@ -153,7 +153,6 @@ export default {
                 // just use first item as nav item
                 this.currentKeyboardNavNode = this.$children[0];
             }
-            this.resetIsHover();
             let nextKeyboardNavNode = null;
             // handle open node (go one level deeper)
             if (this.currentKeyboardNavNode.model.children.length > 0 &&
@@ -187,10 +186,14 @@ export default {
                 nextKeyboardNavNode = nextKeyboardNavNode.$children[nextKeyboardNavNode.$children.length - 1];
             }
 
+            // reset hover state (mouse)
+            this.resetIsHover();
+
             // set/reset hover state
-            this.currentKeyboardNavNode.$data.isHover = false;
-            nextKeyboardNavNode.$data.isHover = true;
-            // update current nod ein data
+            this.currentKeyboardNavNode.$data.isKeyNav = false;
+            nextKeyboardNavNode.$data.isKeyNav = true;
+
+            // update current node in $data
             this.currentKeyboardNavNode = nextKeyboardNavNode;
         },
         onArrowUp() {
@@ -212,7 +215,7 @@ export default {
             }
         },
         onEnterKey(e) {
-            if (this.currentKeyboardNavNode.model.disabled || this.currentKeyboardNavNode.$data.isHover === false) {
+            if (this.currentKeyboardNavNode.model.disabled || this.currentKeyboardNavNode.$data.isKeyNav === false) {
                 return;
             }
             if (this.multiple && (e.ctrlKey || e.metaKey)) {
