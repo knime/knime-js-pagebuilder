@@ -36,6 +36,10 @@ export default {
             type: Function,
             default: () => false
         },
+        onHoverItem: {
+            type: Function,
+            default: () => false
+        },
         onItemToggle: {
             type: Function,
             default: () => false
@@ -154,6 +158,13 @@ export default {
                 return;
             }
             this.onItemClick(this, this.model, e);
+        },
+        handleMouseOver(e) {
+            this.isHover = true;
+            this.onHoverItem(this, this.model, e);
+        },
+        handleMouseOut() {
+            this.isHover = false;
         }
     }
 };
@@ -182,8 +193,8 @@ export default {
     <div
       :class="anchorClasses"
       @click="handleItemClick"
-      @mouseover="isHover = true"
-      @mouseout="isHover = false"
+      @mouseover="handleMouseOver"
+      @mouseout="handleMouseOut"
     >
       <slot
         :vm="this"
@@ -216,6 +227,7 @@ export default {
         :parent-item="model.children"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
+        :on-hover-item="onHoverItem"
       />
     </ul>
   </li>

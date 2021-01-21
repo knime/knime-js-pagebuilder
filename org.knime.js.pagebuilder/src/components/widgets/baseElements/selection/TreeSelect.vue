@@ -123,8 +123,8 @@ export default {
         onItemToggle(oriNode, oriItem, e) {
             this.$emit('item-toggle', oriNode, oriItem, e);
         },
-        onMouseMove() {
-            // reset current keyboard state if user moves mouse
+        onHoverItem() {
+            // reset current keyboard state if any other item is hovered (mouse)
             if (this.currentKeyboardNavNode !== null) {
                 this.currentKeyboardNavNode.$data.isKeyNav = false;
             }
@@ -250,7 +250,6 @@ export default {
     class="tree"
     role="tree"
     ref="wrapper"
-    @mousemove="onMouseMove"
   >
     <ul
       :aria-label="ariaLabel"
@@ -272,6 +271,7 @@ export default {
         :parent-item="data"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
+        :on-hover-item="onHoverItem"
       />
     </ul>
   </div>
