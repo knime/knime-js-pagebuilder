@@ -420,6 +420,7 @@ describe('DateTimeWidget.vue', () => {
             // check for today
             const today = new Date();
             const compareDateFormat = 'yyyy-MM-dd';
+            expect(format(wrapper.vm.execTime, compareDateFormat)).toBe(format(today, compareDateFormat));
             expect(format(wrapper.vm.dateObject, compareDateFormat)).toBe(format(today, compareDateFormat));
             expect(format(wrapper.vm.minDate, compareDateFormat)).toBe(format(today, compareDateFormat));
             expect(format(wrapper.vm.maxDate, compareDateFormat)).toBe(format(today, compareDateFormat));
@@ -428,6 +429,9 @@ describe('DateTimeWidget.vue', () => {
             expect(wrapper.vm.dateObject).toStrictEqual(wrapper.vm.minDate);
             expect(wrapper.vm.dateObject).toStrictEqual(wrapper.vm.maxDate);
 
+            expect(wrapper.emitted().updateWidget).toBeTruthy();
+            expect(wrapper.emitted().updateWidget[0][0].update['viewRepresentation.currentValue'].zonestring)
+                .toStrictEqual('Europe/Berlin');
         });
 
     });
