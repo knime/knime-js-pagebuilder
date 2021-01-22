@@ -132,7 +132,7 @@ export default {
         validate() {
             let isValid = true;
             let errorMessage;
-            if (this.viewRep.required && !this.buildSelectedPaths(this.treeData).length > 0) {
+            if (this.viewRep.required && this.buildSelectedPaths(this.treeData).length === 0) {
                 isValid = false;
                 errorMessage = 'Selection is required.';
             }
