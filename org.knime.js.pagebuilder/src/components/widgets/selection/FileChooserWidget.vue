@@ -155,7 +155,6 @@ export default {
       <TreeSelect
         :id="labelForId"
         ref="form"
-        class="tree"
         :aria-label="label"
         :data="treeData"
         :multiple="multipleSelection"

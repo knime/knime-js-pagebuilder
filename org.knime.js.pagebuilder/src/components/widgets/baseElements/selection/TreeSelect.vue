@@ -48,6 +48,10 @@ export default {
         ariaLabel: {
             type: String,
             required: true
+        },
+        isValid: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -226,7 +230,7 @@ export default {
             }
         },
         scrollToCurrent() {
-            return this.scrollToElement(this.$refs.wrapper,
+            return this.scrollToElement(this.$refs.treeDiv,
                 this.currentKeyboardNavNode.$el.querySelector('.tree-wholerow'));
         },
         // TODO: move to webapps-common as util - refactor MultiSelectListBox and ListBox (scrollToCurrent)
@@ -246,39 +250,62 @@ export default {
 </script>
 
 <template>
-  <div
-    class="tree"
-    role="tree"
-    ref="wrapper"
-  >
-    <ul
-      :aria-label="ariaLabel"
-      class="tree-container-ul tree-children tree-wholerow-ul"
-      role="group"
-      tabindex="0"
-      @keydown.up.prevent.exact="onArrowUp"
-      @keydown.down.prevent.exact="onArrowDown"
-      @keydown.enter.prevent="onEnterKey"
-      @keydown.left.prevent.exact="onArrowLeft"
-      @keydown.right.prevent.exact="onArrowRight"
+  <div :class="['tree-wrapper', { invalid: !isValid } ]">
+    <div
+      ref="treeDiv"
+      class="tree"
+      role="tree"
     >
-      <TreeSelectItem
-        v-for="(child, index) in data"
-        :key="index"
-        :data="child"
-        :allow-transition="allowTransition"
-        :height="itemHeight"
-        :parent-item="data"
-        :on-item-click="onItemClick"
-        :on-item-toggle="onItemToggle"
-        :on-hover-item="onHoverItem"
+      <ul
+        :aria-label="ariaLabel"
+        class="tree-container-ul tree-children tree-wholerow-ul"
+        role="group"
+        tabindex="0"
+        @keydown.up.prevent.exact="onArrowUp"
+        @keydown.down.prevent.exact="onArrowDown"
+        @keydown.enter.prevent="onEnterKey"
+        @keydown.left.prevent.exact="onArrowLeft"
+        @keydown.right.prevent.exact="onArrowRight"
+      >
+        <TreeSelectItem
+          v-for="(child, index) in data"
+          :key="index"
+          :data="child"
+          :allow-transition="allowTransition"
+          :height="itemHeight"
+          :parent-item="data"
+          :on-item-click="onItemClick"
+          :on-item-toggle="onItemToggle"
+          :on-hover-item="onHoverItem"
+        />
+      </ul>
+      <span
+        v-if="!isValid"
+        class="invalid-marker"
       />
-    </ul>
+    </div>
   </div>
 </template>
 
 <style lang="postcss" scoped>
 @import "webapps-common/ui/css/variables";
+
+.tree-wrapper {
+  position: relative;
+  overflow: hidden;
+  border: none;
+
+  &.invalid::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    left: 0;
+    margin: 0;
+    top: 0;
+    bottom: 0;
+    background-color: var(--theme-color-error);
+  }
+}
 
 .tree {
   height: 250px;
