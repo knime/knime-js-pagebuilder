@@ -205,7 +205,7 @@ export default {
           role="presentation"
         >
           <Component
-            :is="isFolder ? 'folderIcon' : 'fileIcon'"
+            :is="model.icon || isFolder ? 'folderIcon' : 'fileIcon'"
           />
         </i>
         <span :title="model.text">{{ model.text }}</span>

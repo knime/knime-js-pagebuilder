@@ -89,7 +89,6 @@ export default {
             return {
                 text: item.text,
                 value: item.text,
-                icon: item.children && item.children.length > 0 ? '' : 'file',
                 opened: Boolean(state.opened),
                 selected: Boolean(state.selected),
                 disabled: Boolean(state.disabled),
