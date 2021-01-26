@@ -163,6 +163,7 @@ export default {
         :title="description"
         @item-click="onInput"
       />
+      <ErrorMessage v-if="treeData.length === 0" error="No items found for selection." />
       <ErrorMessage :error="errorMessage" />
     </template>
   </Label>
