@@ -196,20 +196,15 @@ export default {
       @mouseover="handleMouseOver"
       @mouseout="handleMouseOut"
     >
-      <slot
-        :vm="this"
-        :model="model"
+      <i
+        class="tree-icon"
+        role="presentation"
       >
-        <i
-          class="tree-icon"
-          role="presentation"
-        >
-          <Component
-            :is="model.icon || isFolder ? 'folderIcon' : 'fileIcon'"
-          />
-        </i>
-        <span :title="model.text">{{ model.text }}</span>
-      </slot>
+        <Component
+          :is="model.icon || isFolder ? 'folderIcon' : 'fileIcon'"
+        />
+      </i>
+      <span :title="model.text">{{ model.text }}</span>
     </div>
     <ul
       v-if="isFolder"
