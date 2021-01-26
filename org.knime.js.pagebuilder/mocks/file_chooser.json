@@ -13515,7 +13515,7 @@
             }
           ],
           "prefix": "knime://Testserver-master",
-          "runningOnServer": true
+          "runningOnServer": false
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.input.filechooser.FileChooserNodeValue",

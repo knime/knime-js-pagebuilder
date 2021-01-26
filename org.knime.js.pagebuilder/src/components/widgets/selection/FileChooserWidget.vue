@@ -65,8 +65,13 @@ export default {
         description() {
             return this.viewRep.description || null;
         },
-        value() {
-            return this.valuePair[DATA_TYPE];
+        infoMessage() {
+            if (this.viewRep.runningOnServer === false) {
+                return 'No items found for selection. View selection only possible on server.';
+            } else if (this.treeData.length === 0) {
+                return 'No items found for selection.';
+            }
+            return null;
         },
         multipleSelection() {
             return this.viewRep.multipleSelection || false;
@@ -129,6 +134,12 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
+            if (this.infoMessage) {
+                return {
+                    isValid: true,
+                    errorMessage: ''
+                };
+            }
             let isValid = true;
             let errorMessage;
             if (this.viewRep.required && this.buildSelectedPaths(this.treeData).length === 0) {
@@ -152,7 +163,11 @@ export default {
 <template>
   <Label :text="label">
     <template #default="{ labelForId }">
+      <div v-if="infoMessage" class="info">
+        {{ infoMessage }}
+      </div>
       <TreeSelect
+        v-else
         :id="labelForId"
         ref="form"
         :aria-label="label"
@@ -163,8 +178,24 @@ export default {
         :title="description"
         @item-click="onInput"
       />
-      <ErrorMessage v-if="treeData.length === 0" error="No items found for selection." />
       <ErrorMessage :error="errorMessage" />
     </template>
   </Label>
 </template>
+
+<style lang="postcss" scoped>
+@import "webapps-common/ui/css/variables";
+
+.info {
+  padding: 0.7em;
+  background: var(--knime-white);
+  border: 1px solid var(--knime-stone-gray);
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+    border-color: var(--knime-masala);
+  }
+}
+
+</style>
