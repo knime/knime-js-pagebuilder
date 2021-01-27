@@ -87,7 +87,7 @@ export default {
     },
     mounted() {
         // Call update widget to update the currentValue object with the correct paths (prefix etc.)
-        this.onInput();
+        this.onChange();
     },
     methods: {
         transformTree(tree) {
@@ -130,7 +130,7 @@ export default {
             }
             return paths;
         },
-        onInput(node, item, e) {
+        onChange(node, item, e) {
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,
@@ -185,7 +185,7 @@ export default {
         :is-valid="isValid"
         :allow-transition="true"
         :title="description"
-        @item-click="onInput"
+        @item-click="onChange"
       />
       <ErrorMessage :error="errorMessage" />
     </template>
