@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils';
 
 import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect';
-//import TreeSelectItem from '@/components/widgets/baseElements/selection/TreeSelectItem';
 
 describe('TreeSelect.vue', () => {
     let context, propsData;

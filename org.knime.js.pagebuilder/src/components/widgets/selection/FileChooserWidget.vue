@@ -137,7 +137,6 @@ export default {
                 /** @type ItemsDataType[] */
                 value: JSON.parse(JSON.stringify(this.buildSelectedPaths(this.treeData)))
             };
-            console.log('onInput', JSON.parse(JSON.stringify(changeEventObj)));
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
@@ -170,7 +169,10 @@ export default {
 <template>
   <Label :text="label">
     <template #default="{ labelForId }">
-      <div v-if="infoMessage" class="info">
+      <div
+        v-if="infoMessage"
+        class="info"
+      >
         {{ infoMessage }}
       </div>
       <TreeSelect

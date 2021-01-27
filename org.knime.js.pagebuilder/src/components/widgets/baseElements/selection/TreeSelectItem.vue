@@ -106,8 +106,8 @@ export default {
             return {
                 position: this.model.opened ? '' : 'relative',
                 'max-height': this.allowTransition ? `${this.maxHeight}px` : '',
-                // eslint-disable-next-line no-magic-numbers
                 'transition-duration': this.allowTransition
+                    // eslint-disable-next-line no-magic-numbers
                     ? `${Math.ceil(this.model.children.length / 100) * 300}ms`
                     : '',
                 'transition-property': this.allowTransition ? 'max-height' : '',
@@ -318,6 +318,15 @@ export default {
   }
 }
 
+/* arrow (open/close) selected */
+.tree-ocl-selected.tree-icon,
+  /* file or folder icon selected */
+.tree-anchor.tree-selected .tree-icon {
+  & > svg {
+    stroke: var(--theme-tree-foreground-color-selected);
+  }
+}
+
 .tree-open > .tree-icon.tree-ocl {
   & > svg {
     transform: rotate(90deg);
@@ -330,15 +339,6 @@ export default {
 
 .tree-wholerow {
   height: var(--height, 22px);
-}
-
-/* arrow (open/close) selected */
-.tree-ocl-selected.tree-icon,
-/* file or folder icon selected */
-.tree-anchor.tree-selected .tree-icon {
-  & > svg {
-    stroke: var(--theme-tree-foreground-color-selected);
-  }
 }
 
 /* arrow (open/close) hover */
