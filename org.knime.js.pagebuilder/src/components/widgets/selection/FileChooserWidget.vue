@@ -85,6 +85,10 @@ export default {
             this.treeData = this.transformTree(newValue);
         }
     },
+    mounted() {
+        // Call update widget to update the currentValue object with the correct paths (prefix etc.)
+        this.onInput();
+    },
     methods: {
         transformTree(tree) {
             return tree.map(item => this.transformTreeItem(item));
@@ -115,7 +119,10 @@ export default {
             paths = paths || [];
             for (const item of subtree) {
                 if (item.selected) {
-                    paths.push(item.userData);
+                    paths.push({
+                        path: `${this.nodeConfig.viewRepresentation.prefix || ''}${item.userData.path}`,
+                        type: item.userData.type
+                    });
                 }
                 if (item.children && item.children.length > 0) {
                     paths.concat(this.buildSelectedPaths(item.children, paths));
