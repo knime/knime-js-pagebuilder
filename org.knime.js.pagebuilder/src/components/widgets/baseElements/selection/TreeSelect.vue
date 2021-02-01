@@ -314,8 +314,7 @@ export default {
   overflow-y: auto;
   user-select: none;
 
-  &:focus {
-    outline: none;
+  &:focus-within {
     border-color: var(--knime-masala);
   }
 }
@@ -327,6 +326,11 @@ export default {
 
   /* for ellipsis */
   max-width: calc(100% + 5px);
+
+  /* remove default focus style */
+  &:focus {
+    outline: none;
+  }
 }
 
 .tree-wholerow-ul {
