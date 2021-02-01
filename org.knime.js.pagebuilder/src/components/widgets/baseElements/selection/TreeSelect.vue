@@ -12,6 +12,7 @@ class Model {
         this.text = item.text || '';
         this.value = item.value || item.text;
         this.icon = item.icon || '';
+        this.selectedIcon = item.selectedIcon || '';
         this.opened = item.opened;
         this.selected = item.selected || false;
         this.disabled = item.disabled || false;

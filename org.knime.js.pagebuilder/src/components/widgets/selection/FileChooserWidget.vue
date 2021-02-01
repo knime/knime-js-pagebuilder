@@ -4,6 +4,7 @@ import ErrorMessage from '../baseElements/text/ErrorMessage';
 import TreeSelect from '../baseElements/selection/TreeSelect';
 
 import fileIcon from '~/webapps-common/ui/assets/img/icons/file-text.svg?inline';
+import cogIcon from '~/webapps-common/ui/assets/img/icons/cog.svg?inline';
 import workflowIcon from '~/webapps-common/ui/assets/img/icons/workflow.svg?inline';
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 
@@ -116,6 +117,7 @@ export default {
                 selected: Boolean(state.selected),
                 disabled: Boolean(state.disabled),
                 icon: this.iconForItem(item),
+                selectedIcon: item.children ? '' : cogIcon,
                 userData: {
                     path: item.id,
                     type: item.type

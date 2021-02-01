@@ -114,6 +114,17 @@ export default {
                 'transition-property': this.allowTransition ? 'max-height' : '',
                 display: this.allowTransition || this.model.opened ? 'block' : 'none'
             };
+        },
+        icon() {
+            if (this.model.icon) {
+                if (this.model.selected && this.model.selectedIcon) {
+                    return this.model.selectedIcon;
+                }
+                return this.model.icon;
+            } else {
+                // default icons
+                return this.isFolder ? folderIcon : itemIcon;
+            }
         }
     },
     watch: {
@@ -202,9 +213,7 @@ export default {
         class="tree-icon"
         role="presentation"
       >
-        <Component
-          :is="model.icon || (isFolder ? 'folderIcon' : 'itemIcon')"
-        />
+        <Component :is="icon" />
       </i>
       <span :title="model.text">{{ model.text }}</span>
     </div>
