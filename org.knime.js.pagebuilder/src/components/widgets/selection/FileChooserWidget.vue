@@ -67,7 +67,7 @@ export default {
         },
         infoMessage() {
             if (this.viewRep.runningOnServer === false) {
-                return 'No items found for selection. View selection only possible on server.';
+                return 'File selection only possible on server.';
             } else if (this.treeData.length === 0) {
                 return 'No items found for selection.';
             }
