@@ -1,5 +1,5 @@
 <script>
-import fileIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg?inline';
+import itemIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg?inline';
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
 
@@ -12,7 +12,7 @@ export default {
     // name is required for recursion
     name: 'TreeSelectItem',
     components: {
-        fileIcon,
+        itemIcon,
         folderIcon,
         arrowNextIcon
     },
@@ -203,7 +203,7 @@ export default {
         role="presentation"
       >
         <Component
-          :is="model.icon || isFolder ? 'folderIcon' : 'fileIcon'"
+          :is="model.icon || (isFolder ? 'folderIcon' : 'itemIcon')"
         />
       </i>
       <span :title="model.text">{{ model.text }}</span>

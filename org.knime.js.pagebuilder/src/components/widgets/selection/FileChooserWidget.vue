@@ -3,6 +3,10 @@ import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import TreeSelect from '../baseElements/selection/TreeSelect';
 
+import fileIcon from '~/webapps-common/ui/assets/img/icons/file-text.svg?inline';
+import workflowIcon from '~/webapps-common/ui/assets/img/icons/workflow.svg?inline';
+import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
+
 const DATA_TYPE = 'items';
 /**
  * @typedef ItemsDataType
@@ -93,6 +97,16 @@ export default {
         transformTree(tree) {
             return tree.map(item => this.transformTreeItem(item));
         },
+        iconForItem(item) {
+            switch (item.type) {
+            case 'WORKFLOW':
+                return workflowIcon;
+            case 'DIRECTORY':
+                return folderIcon;
+            default:
+                return fileIcon;
+            }
+        },
         transformTreeItem(item) {
             const state = item.state || {};
             return {
@@ -101,7 +115,7 @@ export default {
                 opened: Boolean(state.opened),
                 selected: Boolean(state.selected),
                 disabled: Boolean(state.disabled),
-                loading: false,
+                icon: this.iconForItem(item),
                 userData: {
                     path: item.id,
                     type: item.type
