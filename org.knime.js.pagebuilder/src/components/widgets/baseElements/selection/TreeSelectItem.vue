@@ -3,6 +3,7 @@ import fileIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg?inl
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
 
+
 /**
  * This TreeSelectItem component is closely coupled with the TreeSelect component and should not be used in another
  * context. It provides the recursive rendering
@@ -293,16 +294,16 @@ export default {
 .tree-icon {
   display: inline-block;
   text-decoration: none;
-  vertical-align: top;
+  vertical-align: middle;
   text-align: center;
   width: 14px;
   height: 14px;
   line-height: var(--height, 22px);
   padding: 0;
-  margin: 0 2px 0 0;
+  margin: 0 2px 3px 0;
 
   & > svg {
-    vertical-align: middle;
+    vertical-align: top;
     stroke: var(--theme-tree-foreground-color);
     stroke-width: calc(32px / 14);
   }
