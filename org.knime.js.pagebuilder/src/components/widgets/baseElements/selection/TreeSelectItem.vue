@@ -193,6 +193,7 @@ export default {
     <div
       :class="anchorClasses"
       @click="handleItemClick"
+      @dblclick="handleItemToggle"
       @mouseover="handleMouseOver"
       @mouseout="handleMouseOut"
     >
