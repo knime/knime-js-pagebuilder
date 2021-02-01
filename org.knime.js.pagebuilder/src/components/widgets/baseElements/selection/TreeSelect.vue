@@ -320,7 +320,7 @@ export default {
 }
 
 .tree-container-ul {
-  padding: 0;
+  padding: 15px 0;
   margin: 0 0 0 -5px;
   list-style-type: none;
 
