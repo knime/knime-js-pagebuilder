@@ -5959,7 +5959,7 @@
               "state": {
                 "opened": false,
                 "selected": false,
-                "disabled": false
+                "disabled": true
               },
               "text": "Capture-0_7_0_15_12",
               "type": "WORKFLOW",

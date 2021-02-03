@@ -380,13 +380,10 @@ export default {
 .tree-disabled {
   background: transparent;
   color: var(--theme-tree-foreground-color);
-  cursor: default;
   opacity: 0.5;
-  pointer-events: none;
-
-  &.tree-hovered {
-    background: transparent;
-  }
 }
 
+.tree-leaf > .tree-disabled {
+  cursor: default;
+}
 </style>
