@@ -104,7 +104,6 @@ export default {
                         this.handleSingleSelectItems(oriNode);
                     }
                 } else if (e.ctrlKey || e.metaKey) {
-                    // TODO: mac (metaKey) might require debouncing
                     oriNode.model.selected = !oriNode.model.selected;
                 } else {
                     this.handleSingleSelectItems(oriNode);
@@ -224,7 +223,6 @@ export default {
                 return;
             }
             if (this.multiple && (e.ctrlKey || e.metaKey)) {
-                // TODO: mac (metaKey) might require debouncing
                 this.currentKeyboardNavNode.model.selected = !this.currentKeyboardNavNode.model.selected;
             } else {
                 this.handleSingleSelectItems(this.currentKeyboardNavNode);
@@ -234,7 +232,8 @@ export default {
             return this.scrollToElement(this.$refs.treeDiv,
                 this.currentKeyboardNavNode.$el.querySelector('.tree-wholerow'));
         },
-        // TODO: move to webapps-common as util - refactor MultiSelectListBox and ListBox (scrollToCurrent)
+        // NOTE: this method can be moved to webapps-common as util - and  is identical to the method
+        //       scrollToCurrent of MultiSelectListBox and ListBox
         scrollToElement(scrollArea, element) {
             if (scrollArea.scrollHeight > scrollArea.clientHeight) {
                 let scrollBottom = scrollArea.clientHeight + scrollArea.scrollTop;
