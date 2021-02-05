@@ -13,7 +13,7 @@ class Model {
         this.value = item.value || item.text;
         this.icon = item.icon || '';
         this.selectedIcon = item.selectedIcon || '';
-        this.opened = item.opened;
+        this.opened = Boolean(item.opened);
         this.selected = item.selected || false;
         this.disabled = item.disabled || false;
         if (item.userData) { this.userData = item.userData; }
@@ -134,7 +134,7 @@ export default {
             }
         },
         nextNode(startNode, delta) {
-            let siblings = startNode.$parent.$children;
+            let siblings = this.filterForTreeSelectItems(startNode.$parent.$children);
             let currentIndex = siblings.findIndex(v => v === startNode);
             let nextIndex = currentIndex + delta;
             // next item is either the parent (if index underflow)
@@ -147,22 +147,32 @@ export default {
                 }
             });
         },
+        /**
+         * Remove all non TreeSelectItems from $children array, not recursive
+         *
+         * @param {Array} $children
+         * @returns {Array}
+         */
+        filterForTreeSelectItems($children) {
+            return $children.filter(x => x.$options.name === 'TreeSelectItem');
+        },
         moveKeyBoardFocus(delta) {
             let up = delta < 0;
             let down = !up;
             if (this.currentKeyboardNavNode === null) {
-                if (this.$children.length === 0) {
+                const directTreeItems = this.filterForTreeSelectItems(this.$children);
+                if (directTreeItems.length === 0) {
                     return; // end here - nothing to navigate
                 }
                 // just use first item as nav item
-                this.currentKeyboardNavNode = this.$children[0];
+                this.currentKeyboardNavNode = directTreeItems[0];
             }
             let nextKeyboardNavNode = null;
             // handle open node (go one level deeper)
             if (this.currentKeyboardNavNode.model.children.length > 0 &&
                 this.currentKeyboardNavNode.model.opened && down) {
-                // use first item of childs (we go down)
-                nextKeyboardNavNode = this.currentKeyboardNavNode.$children[0];
+                // use first item of children (we go down)
+                nextKeyboardNavNode = this.filterForTreeSelectItems(this.currentKeyboardNavNode.$children)[0];
             } else {
                 // next node (on current level)
                 nextKeyboardNavNode = this.nextNode(this.currentKeyboardNavNode, delta);
@@ -187,7 +197,8 @@ export default {
             // we go up to an open node (so go the last child of that node) if we did not change level
             if (nextKeyboardNavNode.model.opened && up && !childArrayOutOfBounds) {
                 // use last item of children (we go up)
-                nextKeyboardNavNode = nextKeyboardNavNode.$children[nextKeyboardNavNode.$children.length - 1];
+                const nextTreeItems = this.filterForTreeSelectItems(nextKeyboardNavNode.$children);
+                nextKeyboardNavNode = nextTreeItems[nextTreeItems.length - 1];
             }
 
             // reset hover state (mouse)

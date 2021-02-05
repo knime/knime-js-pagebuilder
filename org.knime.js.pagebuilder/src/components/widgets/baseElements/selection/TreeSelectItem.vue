@@ -255,8 +255,7 @@ export default {
 
 /* TreeSelectItem */
 .tree-node,
-.tree-children,
-.tree-container-ul {
+.tree-children {
   display: block;
   margin: 0;
   padding: 0;
