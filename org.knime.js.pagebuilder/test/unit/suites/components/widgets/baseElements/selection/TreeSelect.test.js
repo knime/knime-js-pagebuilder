@@ -258,6 +258,27 @@ describe('TreeSelect.vue', () => {
             expect(item.vm.$data.isHover).toBeFalsy();
         });
 
+        it('removes keyboard navigation state on hover', () => {
+            propsData.data[0].opened = true;
+            let wrapper = mount(TreeSelect, {
+                ...context,
+                propsData
+            });
+
+            const anchors = wrapper.findAll('.tree-anchor');
+
+            // use keynav to have a currentKeyBoardNavNode
+            anchors.at(4).trigger('click', {});
+            const container = wrapper.find('.tree-container-ul');
+            container.trigger('keydown.up');
+
+            // move mouse over different item
+            anchors.at(0).trigger('mouseover', {});
+
+            expect(wrapper.vm.currentKeyboardNavNode.$data.isKeyNav).toBe(false);
+            expect(wrapper.findAll(TreeSelectItem).at(0).vm.$data.isHover).toStrictEqual(true);
+        });
+
     });
 
     describe('keyboard interaction', () => {
@@ -273,7 +294,40 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.up');
 
-            expect(wrapper.vm.currentKeyboardNavNode.id).toBe(anchors.at(5).id);
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item3');
+        });
+
+        it('navigates across levels using up key', () => {
+            propsData.data[0].opened = true;
+            let wrapper = mount(TreeSelect, {
+                ...context,
+                propsData
+            });
+
+            const anchors = wrapper.findAll('.tree-anchor');
+            anchors.at(2).trigger('click', {});
+            const container = wrapper.find('.tree-container-ul');
+            container.trigger('keydown.up');
+
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child1');
+        });
+
+        it('does not navigate down using up key if we reached the top', () => {
+            let wrapper = mount(TreeSelect, {
+                ...context,
+                propsData
+            });
+            const items = wrapper.findAll(TreeSelectItem);
+
+            wrapper.setData({
+                currentKeyboardNavNode: items.at(0).vm
+            });
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item1');
+
+            const container = wrapper.find('.tree-container-ul');
+            container.trigger('keydown.up');
+
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item1');
         });
 
         it('navigates down using down key', () => {
@@ -288,7 +342,49 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.id).toBe(anchors.at(6).id);
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
+        });
+
+        it('does not navigate down using down key if we reached the end', () => {
+            propsData.data[3].children = [{
+                value: 'lastChild',
+                text: 'Last Child'
+            }];
+            let wrapper = mount(TreeSelect, {
+                ...context,
+                propsData
+            });
+            const items = wrapper.findAll(TreeSelectItem);
+
+            wrapper.setData({
+                currentKeyboardNavNode: items.at(7).vm // the lastChild
+            });
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('lastChild');
+
+            const container = wrapper.find('.tree-container-ul');
+            container.trigger('keydown.down');
+
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('lastChild');
+        });
+
+        it('navigates across levels using down key', () => {
+            propsData.data[0].opened = true;
+            let wrapper = mount(TreeSelect, {
+                ...context,
+                propsData
+            });
+
+            const items = wrapper.findAll(TreeSelectItem);
+
+            wrapper.setData({
+                currentKeyboardNavNode: items.at(3).vm
+            });
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child2');
+
+            const container = wrapper.find('.tree-container-ul');
+            container.trigger('keydown.down');
+
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item2');
         });
 
         it('navigates into open tree using down key', () => {
@@ -298,11 +394,10 @@ describe('TreeSelect.vue', () => {
                 propsData
             });
 
-            const anchors = wrapper.findAll('.tree-anchor');
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.id).toBe(anchors.at(1).id);
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child1');
         });
 
         it('navigates into open tree using up key', () => {
@@ -318,10 +413,9 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.up');
 
-            expect(wrapper.vm.currentKeyboardNavNode.id).toBe(anchors.at(3).id);
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child2');
             expect(wrapper.findAll(TreeSelectItem).at(4).vm.$data.isHover).toStrictEqual(false);
         });
-
 
         it('selects item on enter key', () => {
             let wrapper = mount(TreeSelect, {
@@ -335,14 +429,60 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.id).toBe(anchors.at(6).id);
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
 
             container.trigger('keydown.enter');
 
             expect(propsData.data[3].selected).toStrictEqual(true);
 
-            // default selection should be removed
-            expect(propsData.data[0].children[0].selected).toStrictEqual(false);
+            // last selection (click) should be removed
+            expect(propsData.data[2].selected).toStrictEqual(false);
+        });
+
+        it('does not select disabled item on enter key', () => {
+            propsData.data[3].disabled = true;
+            let wrapper = mount(TreeSelect, {
+                ...context,
+                propsData
+            });
+
+            const anchors = wrapper.findAll('.tree-anchor');
+            // last clicked one is starting point
+            anchors.at(5).trigger('click', {});
+            const container = wrapper.find('.tree-container-ul');
+            container.trigger('keydown.down');
+
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
+
+            container.trigger('keydown.enter');
+
+            expect(propsData.data[3].selected).toStrictEqual(false);
+
+            // last selection (click) still active
+            expect(propsData.data[2].selected).toStrictEqual(true);
+        });
+
+        it('adds item to selected on enter + ctrl', () => {
+            propsData.multiple = true;
+            let wrapper = mount(TreeSelect, {
+                ...context,
+                propsData
+            });
+
+            const anchors = wrapper.findAll('.tree-anchor');
+            // last clicked one is starting point
+            anchors.at(5).trigger('click', {});
+            const container = wrapper.find('.tree-container-ul');
+            container.trigger('keydown.down');
+
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
+
+            container.trigger('keydown.enter', { ctrlKey: true });
+
+            expect(propsData.data[3].selected).toStrictEqual(true);
+
+            // last selection (click) should be removed
+            expect(propsData.data[2].selected).toStrictEqual(true);
         });
 
         it('opens children on right arrow key', () => {
@@ -374,6 +514,21 @@ describe('TreeSelect.vue', () => {
             container.trigger('keydown.left');
 
             expect(propsData.data[0].opened).toBe(false);
+        });
+
+        it('does not break on empty tree', () => {
+            propsData.data = [];
+            let wrapper = mount(TreeSelect, {
+                ...context,
+                propsData
+            });
+
+            const container = wrapper.find('.tree-container-ul');
+            container.trigger('keydown.up');
+            container.trigger('keydown.down');
+            container.trigger('keydown.left');
+            container.trigger('keydown.right');
+            container.trigger('keydown.enter');
         });
 
     });

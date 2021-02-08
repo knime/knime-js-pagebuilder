@@ -220,16 +220,25 @@ export default {
             this.scrollToCurrent();
         },
         onArrowLeft(e) {
+            if (!this.currentKeyboardNavNode) {
+                return;
+            }
             if (this.currentKeyboardNavNode.model.opened) {
                 this.currentKeyboardNavNode.handleItemToggle(e);
             }
         },
         onArrowRight(e) {
+            if (!this.currentKeyboardNavNode) {
+                return;
+            }
             if (!this.currentKeyboardNavNode.model.opened) {
                 this.currentKeyboardNavNode.handleItemToggle(e);
             }
         },
         onEnterKey(e) {
+            if (!this.currentKeyboardNavNode) {
+                return;
+            }
             if (this.currentKeyboardNavNode.model.disabled || this.currentKeyboardNavNode.$data.isKeyNav === false) {
                 return;
             }
@@ -240,10 +249,13 @@ export default {
             }
         },
         scrollToCurrent() {
+            if (!this.currentKeyboardNavNode) {
+                return;
+            }
             return this.scrollToElement(this.$refs.treeDiv,
                 this.currentKeyboardNavNode.$el.querySelector('.tree-wholerow'));
         },
-        // NOTE: this method can be moved to webapps-common as util - and  is identical to the method
+        // NOTE: this method can be moved to webapps-common as util - and can be used instead of the method
         //       scrollToCurrent of MultiSelectListBox and ListBox
         scrollToElement(scrollArea, element) {
             if (scrollArea.scrollHeight > scrollArea.clientHeight) {
