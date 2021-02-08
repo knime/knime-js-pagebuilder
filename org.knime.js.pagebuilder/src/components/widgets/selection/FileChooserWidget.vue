@@ -168,11 +168,6 @@ export default {
                 isValid = false;
                 errorMessage = 'Selection is required.';
             }
-            if (typeof this.$refs.form.validate === 'function') {
-                let validateEvent = this.$refs.form.validate();
-                isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid.';
-            }
             return {
                 isValid,
                 errorMessage: isValid ? null : errorMessage

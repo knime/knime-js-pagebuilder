@@ -57,7 +57,7 @@ describe('FileChooserWidget.vue', () => {
                                     icon: './VAADIN/themes/knime/img/workflow.png',
                                     state: {
                                         opened: false,
-                                        selected: false,
+                                        selected: true,
                                         disabled: false
                                     },
                                     text: 'Change Workflow Owners',
@@ -73,7 +73,7 @@ describe('FileChooserWidget.vue', () => {
                                         disabled: false
                                     },
                                     text: 'Configure Default Usernames Roles and Passwords',
-                                    type: 'WORKFLOW',
+                                    type: 'SOME-TYPE-WILL-BE-FILE',
                                     children: null,
                                     id: '/Admin/Configure Default Usernames Roles and Passwords'
                                 },
@@ -550,7 +550,7 @@ describe('FileChooserWidget.vue', () => {
                                             icon: './VAADIN/themes/knime/img/workflow.png',
                                             state: {
                                                 opened: false,
-                                                selected: true,
+                                                selected: false,
                                                 disabled: false
                                             },
                                             text: 'Simple Interaction',
@@ -3819,6 +3819,15 @@ describe('FileChooserWidget.vue', () => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
+    it('updates tree on change of viewRepresentation', () => {
+        let wrapper = shallowMount(FileChooserWidget, {
+            propsData
+        });
+        propsData.nodeConfig.viewRepresentation.tree = [];
+        wrapper.setProps(JSON.parse(JSON.stringify(propsData)));
+        expect(wrapper.vm.treeData).toStrictEqual([]);
+    });
+
     it('sends @updateWidget if TreeSelect emits @item-click event', () => {
         let wrapper = mount(FileChooserWidget, {
             propsData
@@ -3835,11 +3844,53 @@ describe('FileChooserWidget.vue', () => {
             type: 'items',
             value: [
                 {
-                    path: 'knime://Testserver-master/Test Workflows/Demo/Simple Interaction',
+                    path: 'knime://Testserver-master/Admin/Change Workflow Owners',
                     type: 'WORKFLOW'
                 }
             ]
         });
     });
+
+    it('shows info message if tree is empty', () => {
+        propsData.nodeConfig.viewRepresentation.tree = [];
+        let wrapper = mount(FileChooserWidget, {
+            propsData
+        });
+        expect(wrapper.vm.infoMessage).toStrictEqual('No items found for selection.');
+        expect(wrapper.text()).toContain('No items found for selection.');
+    });
+
+    it('shows info message if runningOnServer is false', () => {
+        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        let wrapper = mount(FileChooserWidget, {
+            propsData
+        });
+        expect(wrapper.vm.infoMessage).toStrictEqual('File selection only possible on server.');
+        expect(wrapper.text()).toContain('File selection only possible on server.');
+    });
+
+    it('reports as valid if info message is shown', () => {
+        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        let wrapper = mount(FileChooserWidget, {
+            propsData
+        });
+        expect(wrapper.vm.validate()).toStrictEqual({
+            isValid: true,
+            errorMessage: ''
+        });
+    });
+
+    it('fails validation if nothing is selected but selection is required', () => {
+        propsData.nodeConfig.viewRepresentation.required = true;
+        propsData.nodeConfig.viewRepresentation.tree[0].children[0].state.selected = false;
+        let wrapper = mount(FileChooserWidget, {
+            propsData
+        });
+        expect(wrapper.vm.validate()).toStrictEqual({
+            isValid: false,
+            errorMessage: 'Selection is required.'
+        });
+    });
+
 
 });
