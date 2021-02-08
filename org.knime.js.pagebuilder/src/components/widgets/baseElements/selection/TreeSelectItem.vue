@@ -6,7 +6,7 @@ import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?i
 
 /**
  * This TreeSelectItem component is closely coupled with the TreeSelect component and should not be used in another
- * context. It provides the recursive rendering
+ * context. It provides the recursive rendering.
  */
 export default {
     // name is required for recursion

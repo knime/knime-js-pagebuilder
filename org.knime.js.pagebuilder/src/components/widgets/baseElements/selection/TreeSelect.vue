@@ -14,8 +14,8 @@ class Model {
         this.icon = item.icon || '';
         this.selectedIcon = item.selectedIcon || '';
         this.opened = Boolean(item.opened);
-        this.selected = item.selected || false;
-        this.disabled = item.disabled || false;
+        this.selected = Boolean(item.selected);
+        this.disabled = Boolean(item.disabled);
         if (item.userData) { this.userData = item.userData; }
         this.children = item.children || [];
     }
