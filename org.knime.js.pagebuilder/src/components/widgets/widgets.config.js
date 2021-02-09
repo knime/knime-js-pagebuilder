@@ -37,5 +37,8 @@ export const classToComponentMap = {
     'org.knime.js.base.node.widget.filter.definition.value.ValueFilterDefinitionWidgetRepresentation':
         'InteractiveValueWidget',
     'org.knime.js.base.node.widget.filter.definition.rangeslider.RangeSliderFilterWidgetRepresentation':
-        'InteractiveRangeWidget'
+        'InteractiveRangeWidget',
+
+    // reactive widgets
+    'org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewRepresentation': 'RefreshButtonWidget'
 };

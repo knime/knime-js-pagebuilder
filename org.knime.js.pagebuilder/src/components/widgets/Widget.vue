@@ -24,6 +24,8 @@ import FileDownloadWidget from './output/FileDownloadWidget';
 // interactive widgets
 import InteractiveValueWidget from './interactive/InteractiveValueWidget';
 import InteractiveRangeWidget from './interactive/InteractiveRangeWidget';
+// reactive widgets
+import RefreshButtonWidget from './reactive/RefreshButtonWidget';
 
 /**
  * A Widget node view. This top level component sits at
@@ -77,7 +79,9 @@ export default {
         FileDownloadWidget,
         // interactive widgets
         InteractiveValueWidget,
-        InteractiveRangeWidget
+        InteractiveRangeWidget,
+        // reactive widgets
+        RefreshButtonWidget
     },
     props: {
         /**
