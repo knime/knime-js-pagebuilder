@@ -187,6 +187,7 @@ export default {
     :class="classes"
     :style="cssVars"
     role="treeitem"
+    :aria-expanded="isFolder && model.opened"
   >
     <div
       v-if="isWholeRow"
