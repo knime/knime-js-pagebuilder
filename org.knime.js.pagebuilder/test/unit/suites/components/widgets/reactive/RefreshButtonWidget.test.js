@@ -24,7 +24,8 @@ describe('RefreshButtonWidget.vue', () => {
                 initMethodName: 'init',
                 validateMethodName: 'validate',
                 setValidationErrorMethodName: 'setValidationErrorMessage',
-                javascriptLibraries: ['js-lib/knime/service/knime_service_1_0_0.js', 'org/knime/js/base/node/widget/reactive/refresh/refreshButtonWidget.js'],
+                javascriptLibraries: ['js-lib/knime/service/knime_service_1_0_0.js',
+                    'org/knime/js/base/node/widget/reactive/refresh/refreshButtonWidget.js'],
                 getViewValueMethodName: 'value',
                 nodeInfo: {
                     '@class': 'org.knime.js.core.JSONWebNodeInfo',
@@ -68,5 +69,11 @@ describe('RefreshButtonWidget.vue', () => {
             }
         });
         expect(wrapper.find(ErrorMessage).text()).toBe(errorMessage);
+    });
+
+    it('emits an updateWidget event on click', () => {
+        let wrapper = mount(RefreshButtonWidget, { propsData });
+        wrapper.find(Button).trigger('click');
+        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({ nodeId: '13:0:12' });
     });
 });

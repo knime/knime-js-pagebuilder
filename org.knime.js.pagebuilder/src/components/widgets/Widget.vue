@@ -154,6 +154,9 @@ export default {
         },
         isInteractiveWidget() {
             return typeof this.valuePair === 'undefined' && typeof this.$refs.widget.getValue === 'function';
+        },
+        isReactive() {
+            return this.nodeConfig.viewRepresentation['@class'].includes('.reactive.');
         }
     },
     async mounted() {
@@ -196,17 +199,23 @@ export default {
     },
     methods: {
         async publishUpdate(changeObj) {
-            if (!changeObj.update) {
+            if (!this.isReactive && !changeObj.update) {
                 changeObj.update = {
                     [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
                 };
             }
-            await this.updateWebNode(changeObj);
-            if (this.hasValidator) {
+            if (changeObj.update) {
+                await this.updateWebNode(changeObj);
+            }
+            if (changeObj.update && this.hasValidator) {
                 await this.validate();
             }
             if (typeof changeObj.callback === 'function') {
                 changeObj.callback();
+            }
+            if (this.isReactive && this.isValid) {
+                const idSegments = this.nodeId.split(':');
+                this.triggerReExecution({ nodeId: idSegments[idSegments.length - 1] });
             }
         },
         getValue() {
@@ -247,7 +256,8 @@ export default {
             });
         },
         ...mapActions({
-            updateWebNode: 'pagebuilder/updateWebNode'
+            updateWebNode: 'pagebuilder/updateWebNode',
+            triggerReExecution: 'pagebuilder/triggerReExecution'
         })
     }
 };

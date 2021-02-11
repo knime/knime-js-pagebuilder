@@ -10,35 +10,35 @@ import * as storeConfig from '~/store/pagebuilder';
 describe('NodeView.vue', () => {
     let store, localVue, context;
 
+    const getWizardPageContent = () => ({
+        webNodes: {
+            id1: {
+                foo: 'bar',
+                viewRepresentation: {
+                    '@class': 'testing.notWidget'
+                },
+                nodeInfo: {
+                    displayPossible: true
+                }
+            },
+            id2: {
+                baz: 'qux',
+                viewRepresentation: {
+                    '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                },
+                nodeInfo: {
+                    displayPossible: true
+                }
+            }
+        }
+    });
+
     beforeAll(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
 
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        store.commit('pagebuilder/setPage', {
-            wizardPageContent: {
-                webNodes: {
-                    id1: {
-                        foo: 'bar',
-                        viewRepresentation: {
-                            '@class': 'testing.notWidget'
-                        },
-                        nodeInfo: {
-                            displayPossible: true
-                        }
-                    },
-                    id2: {
-                        baz: 'qux',
-                        viewRepresentation: {
-                            '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
-                        },
-                        nodeInfo: {
-                            displayPossible: true
-                        }
-                    }
-                }
-            }
-        });
+        store.commit('pagebuilder/setPage', { wizardPageContent: getWizardPageContent() });
 
         context = {
             store,
@@ -53,6 +53,26 @@ describe('NodeView.vue', () => {
     it('renders', () => {
         let wrapper = shallowMount(NodeView, context);
         expect(wrapper.html()).toBeTruthy();
+    });
+
+    it('increments iframe key when nodeConfig updates', () => {
+        let wrapper = shallowMount(NodeView, {
+            ...context,
+            propsData: {
+                viewConfig: {
+                    nodeID: 'id1',
+                    resizeMethod: 'aspectRatio1by1'
+                }
+            }
+        });
+        expect(wrapper.vm.nodeViewIFrameKey).toBe(0);
+        wrapper.setProps({
+            viewConfig: {
+                nodeID: 'id1',
+                resizeMethod: 'aspectRatio1by1'
+            }
+        });
+        expect(wrapper.vm.nodeViewIFrameKey).toBe(1);
     });
 
     it('respects resize classes', () => {

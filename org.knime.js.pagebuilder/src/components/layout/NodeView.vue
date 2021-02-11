@@ -2,6 +2,7 @@
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
 import NotAvailable from './NotAvailable';
+import ExecutingOverlay from './ExecutingOverlay';
 import { classToComponentMap } from '../widgets/widgets.config';
 
 /**
@@ -11,7 +12,8 @@ export default {
     components: {
         NodeViewIFrame,
         Widget,
-        NotAvailable
+        NotAvailable,
+        ExecutingOverlay
     },
     props: {
         /**
@@ -30,6 +32,11 @@ export default {
                 return true;
             }
         }
+    },
+    data() {
+        return {
+            nodeViewIFrameKey: 0
+        };
     },
     computed: {
         webNodeConfig() {
@@ -99,6 +106,11 @@ export default {
             return this.legacyModeDisabled && this.webNodeConfig && this.webNodeConfig.viewRepresentation &&
                 this.widgetComponentName;
         }
+    },
+    watch: {
+        webNodeConfig() {
+            this.nodeViewIFrameKey += 1;
+        }
     }
 };
 </script>
@@ -122,9 +134,11 @@ export default {
       />
       <NodeViewIFrame
         v-else
+        :key="nodeViewIFrameKey"
         :view-config="viewConfig"
         :node-config="webNodeConfig"
       />
+      <ExecutingOverlay :node-id="viewConfig.nodeID" />
     </template>
   </div>
 </template>

@@ -59,6 +59,20 @@ describe('PageBuilder store', () => {
         expect(store.state.page).toEqual(page);
     });
 
+    it('sets re-executing nodes', () => {
+        let nodesReExecuting = ['1', '2'];
+        expect(store.state.nodesReExecuting).toEqual([]);
+        store.commit('setNodesReExecuting', nodesReExecuting);
+        expect(store.state.nodesReExecuting).toEqual(nodesReExecuting);
+    });
+
+    it('allows setting page via action', () => {
+        let nodesReExecuting = ['1', '2'];
+        expect(store.state.nodesReExecuting).toEqual([]);
+        store.dispatch('setNodesReExecuting', nodesReExecuting);
+        expect(store.state.nodesReExecuting).toEqual(nodesReExecuting);
+    });
+
     it('clears interactivity when setting a page', () => {
         expect(interactivityStoreConfig.actions.clear).not.toHaveBeenCalled();
         store.dispatch('setPage', { });
@@ -79,6 +93,25 @@ describe('PageBuilder store', () => {
         expect(interactivityStoreConfig.actions.registerSelectionTranslator).toHaveBeenCalledWith(
             expect.anything(), { translator: dummyTranslator, translatorId: 0 }, undefined
         );
+    });
+
+    it('dispatches reactivity events', () => {
+        let nodeId = '0.0.7';
+        let triggerReExecution = jest.fn();
+        let apiStoreConfig = {
+            namespaced: true,
+            actions: {
+                triggerReExecution
+            }
+        };
+        let localStore = new Vuex.Store(storeConfig);
+        localStore.registerModule('api', apiStoreConfig);
+        localStore.dispatch('triggerReExecution', { nodeId });
+        expect(triggerReExecution).toHaveBeenCalledWith(expect.anything(), { nodeId }, expect.undefined);
+    });
+
+    it('silently handles missing api store for reactive actions', () => {
+        expect(() => store.dispatch('triggerReExecution', { nodeId: '0.0.7' })).not.toThrow();
     });
 
     it('allows setting resourceBaseUrl', () => {
@@ -181,6 +214,53 @@ describe('PageBuilder store', () => {
 
             store.commit('updateWebNode', update);
             expect(node).toEqual({ foo: 'bar' });
+        });
+
+        it('replaces web node configurations', () => {
+            let node = store.state.page.wizardPageContent.webNodes.id1;
+
+            expect(node.foo).toEqual('bar');
+
+            let update = {
+                nodeId: 'id1',
+                config: {
+                    nodeId: 'id2',
+                    some: 'text'
+                }
+            };
+
+            store.commit('updateWebNode', update);
+            expect(store.state.page.wizardPageContent.webNodes.id1).not.toEqual({ foo: 'bar' });
+            expect(store.state.page.wizardPageContent.webNodes.id1).toEqual(update.config);
+        });
+
+        it('adds web node configurations', () => {
+            expect(store.state.page.wizardPageContent.webNodes.id3).not.toBeDefined();
+
+            let update = {
+                nodeId: 'id3',
+                config: {
+                    nodeId: 'id3',
+                    some: 'text'
+                }
+            };
+
+            store.commit('updateWebNode', update);
+            expect(store.state.page.wizardPageContent.webNodes.id3).toEqual(update.config);
+        });
+
+        it('removes web node configurations', () => {
+            let node = store.state.page.wizardPageContent.webNodes.id1;
+
+            expect(node.foo).toEqual('bar');
+
+            let update = {
+                nodeId: 'id1',
+                config: undefined
+            };
+
+            store.commit('updateWebNode', update);
+            expect(store.state.page.wizardPageContent.webNodes.id1).not.toBeDefined();
         });
     });
 

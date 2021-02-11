@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { setProp } from '@/util/nestedProperty';
 
 export const namespaced = true;
@@ -8,8 +9,13 @@ export const state = () => ({
     webNodesLoading: [],
     pageValueGetters: {},
     pageValidators: {},
-    pageValidationErrorSetters: {}
+    pageValidationErrorSetters: {},
+    nodesReExecuting: []
 });
+
+export const getters = {
+    nodesReExecuting: state => state.nodesReExecuting
+};
 
 export const mutations = {
     /**
@@ -62,16 +68,23 @@ export const mutations = {
      * @return {undefined}
      */
     updateWebNode(state, newWebNode) {
-        let currentWebNode = state.page.wizardPageContent.webNodes[newWebNode.nodeId];
-        for (let [key, value] of Object.entries(newWebNode.update)) {
-            try {
-                setProp(currentWebNode, key, value);
-            } catch (e) {
-                // catch deep Object modification errors
-                consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated ` +
-                `because the provided key was invalid. Key:`, key);
+        // Update viewValues and other nested properties.
+        if (newWebNode?.update) {
+            let currentWebNode = state.page.wizardPageContent.webNodes[newWebNode.nodeId];
+            for (let [key, value] of Object.entries(newWebNode.update)) {
+                try {
+                    setProp(currentWebNode, key, value);
+                } catch (e) {
+                    // catch deep Object modification errors
+                    consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated ` +
+                    `because the provided key was invalid. Key:`, key);
+                }
             }
+            return;
         }
+        // Otherwise, replace webNodes entirely (reactivity).
+        consola.debug('pagebuilder/updateWebNode replacing web node content.');
+        Vue.set(state.page.wizardPageContent.webNodes, newWebNode.nodeId, newWebNode.config);
     },
 
     setWebNodeLoading(state, { nodeId, loading }) {
@@ -107,6 +120,10 @@ export const mutations = {
 
     removeValidationErrorSetter(state, nodeId) {
         delete state.pageValidationErrorSetters[nodeId];
+    },
+    
+    setNodesReExecuting(state, nodesReExecuting) {
+        state.nodesReExecuting = nodesReExecuting;
     }
 };
 
@@ -127,6 +144,13 @@ export const actions = {
                 });
             }
         }
+    },
+
+    updatePage({ commit }, { page, nodeIds }) {
+        consola.trace('PageBuilder: Set page via action: ', page);
+        nodeIds.forEach(nodeId => {
+            commit('updateWebNode', { nodeId, config: page?.wizardPageContent?.webNodes?.[nodeId] });
+        });
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {
@@ -218,5 +242,18 @@ export const actions = {
             }
         }
         return Promise.all(setValidationErrorPromises).then(res => true).catch(e => false);
+    },
+
+    triggerReExecution({ dispatch }, { nodeId }) {
+        try {
+            consola.debug(`Pagebuilder: re-execution triggered by node ${nodeId}`);
+            dispatch('api/triggerReExecution', { nodeId }, { root: true });
+        } catch (e) {
+            consola.debug(`Pagebuilder: re-execution failed.`);
+        }
+    },
+
+    setNodesReExecuting({ commit }, nodesReExecuting) {
+        commit('setNodesReExecuting', nodesReExecuting);
     }
 };

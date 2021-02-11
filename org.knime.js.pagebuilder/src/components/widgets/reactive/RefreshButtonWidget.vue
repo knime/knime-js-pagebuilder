@@ -6,7 +6,7 @@ import Button from '~/webapps-common/ui/components/Button';
 /**
  * Refresh button widget.
  *
- * TODO: WEBP-678 - document reactive event API.
+ * @emits updateWidget event to trigger a partial re-execution of the component.
  */
 export default {
     components: {
@@ -41,10 +41,9 @@ export default {
     },
     methods: {
         onClick() {
-            // TODO: WEBP-678 - emit reactive events
-            // this.$emit('reactiveEvent', {
-            //     nodeId: this.nodeId
-            // });
+            this.$emit('updateWidget', {
+                nodeId: this.nodeId
+            });
         }
     }
 };
@@ -67,12 +66,3 @@ export default {
     <ErrorMessage :error="errorMessage" />
   </Label>
 </template>
-
-<style lang="postcss" scoped>
-
-.now-button {
-  height: 30px;
-  align-self: center;
-}
-
-</style>
