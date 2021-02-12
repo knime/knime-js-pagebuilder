@@ -3,24 +3,6 @@ import TreeSelectItem from './TreeSelectItem';
 
 let ITEM_ID = 0;
 
-/**
- * Model Class
- */
-class Model {
-    constructor(item) {
-        this.id = item.id || ITEM_ID++;
-        this.text = item.text || '';
-        this.value = item.value || item.text;
-        this.icon = item.icon || '';
-        this.selectedIcon = item.selectedIcon || '';
-        this.opened = Boolean(item.opened);
-        this.selected = Boolean(item.selected);
-        this.disabled = Boolean(item.disabled);
-        if (item.userData) { this.userData = item.userData; }
-        this.children = item.children || [];
-    }
-}
-
 /*
  * TreeSelect component.
  * Tree with single and multi-selection, keyboard navigation. Suitable for a file system tree view.
@@ -65,10 +47,27 @@ export default {
         this.initializeData(this.data);
     },
     methods: {
+        createModelObject(item) {
+            let model = {
+                id: item.id || ITEM_ID++,
+                text: item.text || '',
+                value: item.value || item.text,
+                icon: item.icon || '',
+                selectedIcon: item.selectedIcon || '',
+                opened: Boolean(item.opened),
+                selected: Boolean(item.selected),
+                disabled: Boolean(item.disabled),
+                children: item.children || []
+            };
+            if (item.userData) {
+                model.userData = item.userData;
+            }
+            return model;
+        },
         initializeData(items) {
             if (items && items.length > 0) {
                 for (let i = 0; i < items.length; i++) {
-                    items[i] = new Model(items[i]);
+                    items[i] = this.createModelObject(items[i]);
                     this.initializeData(items[i].children);
                 }
             }
