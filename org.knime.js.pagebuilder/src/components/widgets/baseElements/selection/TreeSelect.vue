@@ -72,12 +72,12 @@ export default {
                 }
             }
         },
-        handleRecursionNodeChilds(node, func) {
+        handleRecursionNodeChildren(node, func) {
             if (func(node) !== false) {
                 if (node.$children && node.$children.length > 0) {
                     for (let childNode of node.$children) {
                         if (!childNode.disabled) {
-                            this.handleRecursionNodeChilds(childNode, func);
+                            this.handleRecursionNodeChildren(childNode, func);
                         }
                     }
                 }
@@ -116,7 +116,7 @@ export default {
             this.$emit('item-click', oriNode, oriItem, e);
         },
         handleSingleSelectItems(oriNode) {
-            this.handleRecursionNodeChilds(this, node => {
+            this.handleRecursionNodeChildren(this, node => {
                 if (node.model) {
                     node.model.selected = false;
                 }
@@ -140,14 +140,14 @@ export default {
             return nextIndex in siblings ? siblings[nextIndex] : null;
         },
         resetIsHover() {
-            this.handleRecursionNodeChilds(this, node => {
+            this.handleRecursionNodeChildren(this, node => {
                 if (node.isHover) {
                     node.isHover = false;
                 }
             });
         },
         /**
-         * Remove all non TreeSelectItems from $children array, not recursive
+         * Remove all non TreeSelectItems from $children array; not recursive
          *
          * @param {Array} $children
          * @returns {Array}
@@ -251,8 +251,7 @@ export default {
             if (!this.currentKeyboardNavNode) {
                 return;
             }
-            return this.scrollToElement(this.$refs.treeDiv,
-                this.currentKeyboardNavNode.$el.querySelector('.tree-wholerow'));
+            this.scrollToElement(this.$refs.treeDiv, this.currentKeyboardNavNode.$el.querySelector('.tree-wholerow'));
         },
         // NOTE: this method can be moved to webapps-common as util - and can be used instead of the method
         //       scrollToCurrent of MultiSelectListBox and ListBox
