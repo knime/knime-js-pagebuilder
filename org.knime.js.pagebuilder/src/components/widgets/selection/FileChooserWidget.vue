@@ -9,12 +9,6 @@ import workflowIcon from '~/webapps-common/ui/assets/img/icons/workflow.svg?inli
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 
 const DATA_TYPE = 'items';
-/**
- * @typedef ItemsDataType
- * @type {object}
- * @property {string} path - file path.
- * @property {string} type - either 'DATA', 'WORKFLOW' or 'DIRECTORY'.
- */
 
 /**
  * File Chooser Widget
@@ -175,6 +169,12 @@ export default {
         }
     }
 };
+/**
+ * @typedef ItemsDataType
+ * @type {object}
+ * @property {string} path - file path.
+ * @property {string} type - either 'DATA', 'WORKFLOW' or 'DIRECTORY'.
+ */
 </script>
 
 <template>
