@@ -146,7 +146,7 @@ export default {
             }
             return paths;
         },
-        onChange(node, item, e) {
+        onChange() {
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE,

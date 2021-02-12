@@ -132,7 +132,7 @@ export default {
             this.model = newValue;
         },
         'model.opened': {
-            handler(val, oldVal) {
+            handler() {
                 this.onItemToggle(this, this.model);
                 this.handleGroupMaxHeight();
             },
@@ -143,7 +143,7 @@ export default {
         this.handleGroupMaxHeight();
     },
     methods: {
-        handleItemToggle(e) {
+        handleItemToggle() {
             if (this.isFolder) {
                 this.model.opened = !this.model.opened;
                 this.onItemToggle(this, this.model);
