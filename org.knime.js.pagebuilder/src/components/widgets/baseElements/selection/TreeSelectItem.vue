@@ -3,6 +3,7 @@ import itemIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg?inl
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
 
+const TREE_OPEN_TRANSITION_TIME = 300; // ms
 
 /**
  * This TreeSelectItem component is closely coupled with the TreeSelect component and should not be used in another
@@ -96,8 +97,7 @@ export default {
             };
         },
         isWholeRow() {
-            // eslint-disable-next-line no-undefined
-            if (this.$parent.model === undefined) {
+            if (typeof this.$parent.model === 'undefined') {
                 return true;
             } else {
                 return this.$parent.model.opened === true;
@@ -109,7 +109,7 @@ export default {
                 'max-height': this.allowTransition ? `${this.maxHeight}px` : '',
                 'transition-duration': this.allowTransition
                     // eslint-disable-next-line no-magic-numbers
-                    ? `${Math.ceil(this.model.children.length / 100) * 300}ms`
+                    ? `${Math.ceil(this.model.children.length / 100) * TREE_OPEN_TRANSITION_TIME}ms`
                     : '',
                 'transition-property': this.allowTransition ? 'max-height' : '',
                 display: this.allowTransition || this.model.opened ? 'block' : 'none'
