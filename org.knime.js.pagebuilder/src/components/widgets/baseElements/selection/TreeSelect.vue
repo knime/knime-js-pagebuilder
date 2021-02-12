@@ -88,43 +88,43 @@ export default {
             let end = firstIndex > secondIndex ? firstIndex : secondIndex;
             array.slice(start, end + 1).forEach(func);
         },
-        onItemClick(oriNode, oriItem, e) {
+        onItemClick(oNode, oItem, e) {
             if (this.multiple) {
                 if (e.shiftKey) {
-                    if (oriNode.$parent === this.lastClickedNode.$parent) {
-                        let currentLevel = oriNode.$parent.$children;
+                    if (oNode.$parent === this.lastClickedNode.$parent) {
+                        let currentLevel = oNode.$parent.$children;
                         let firstIndex = currentLevel.findIndex(v => v === this.lastClickedNode);
-                        let secondIndex = currentLevel.findIndex(v => v === oriNode);
+                        let secondIndex = currentLevel.findIndex(v => v === oNode);
                         this.runInSection(currentLevel, firstIndex, secondIndex, node => {
                             node.model.selected = true;
                         });
                     } else {
                         // deselect all and just select the current clicked node if parents are not the same
-                        this.handleSingleSelectItems(oriNode);
+                        this.handleSingleSelectItems(oNode);
                     }
                 } else if (e.ctrlKey || e.metaKey) {
-                    oriNode.model.selected = !oriNode.model.selected;
+                    oNode.model.selected = !oNode.model.selected;
                 } else {
-                    this.handleSingleSelectItems(oriNode);
+                    this.handleSingleSelectItems(oNode);
                 }
                 // remember node for shift actions
-                this.lastClickedNode = oriNode;
+                this.lastClickedNode = oNode;
             } else {
-                this.handleSingleSelectItems(oriNode);
+                this.handleSingleSelectItems(oNode);
             }
-            this.currentKeyboardNavNode = oriNode;
-            this.$emit('item-click', oriNode, oriItem, e);
+            this.currentKeyboardNavNode = oNode;
+            this.$emit('item-click', oNode, oItem, e);
         },
-        handleSingleSelectItems(oriNode) {
+        handleSingleSelectItems(oNode) {
             this.handleRecursionNodeChildren(this, node => {
                 if (node.model) {
                     node.model.selected = false;
                 }
             });
-            oriNode.model.selected = true;
+            oNode.model.selected = true;
         },
-        onItemToggle(oriNode, oriItem, e) {
-            this.$emit('item-toggle', oriNode, oriItem, e);
+        onItemToggle(oNode, oItem, e) {
+            this.$emit('item-toggle', oNode, oItem, e);
         },
         onHoverItem() {
             // reset current keyboard state if any other item is hovered (mouse)
