@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import { mount } from '@vue/test-utils';
+import { mount, shallowMount } from '@vue/test-utils';
 
 import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect';
 import TreeSelectItem from '@/components/widgets/baseElements/selection/TreeSelectItem';
@@ -531,6 +531,45 @@ describe('TreeSelect.vue', () => {
             container.trigger('keydown.enter');
         });
 
+    });
+
+    it('scrolls to element correctly', () => {
+        propsData.data = [];
+        let wrapper = shallowMount(TreeSelect, {
+            ...context,
+            propsData
+        });
+        const scrollToElement = wrapper.vm.scrollToElement;
+
+        let area = {
+            clientHeight: 0,
+            scrollTop: 0,
+            scrollHeight: 0
+        };
+        let el = {
+            offsetTop: 120,
+            offsetHeight: 150
+        };
+
+        // nothing happens if all is visible without scrollbar (scrollHeight is not bigger then clientHeight)
+        scrollToElement(area, el);
+        expect(area.scrollTop).toBe(0);
+
+        // scroll to element at bottom (of area)
+        area.scrollHeight = 300;
+        area.clientHeight = 200;
+        area.scrollTop = 50;
+        scrollToElement(area, el);
+        expect(area.scrollTop).toBe(70); // 120 + 150 - 200
+
+        // scroll to element at top (of area)
+        area.scrollHeight = 300;
+        area.clientHeight = 100;
+        area.scrollTop = 50;
+        el.offsetTop = 40;
+        el.offsetHeight = 70;
+        scrollToElement(area, el);
+        expect(area.scrollTop).toBe(40); // just offsetTop
     });
 
 });
