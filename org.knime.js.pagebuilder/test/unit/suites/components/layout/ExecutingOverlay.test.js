@@ -18,12 +18,7 @@ describe('ExecutingOverlay.vue', () => {
     });
 
     it('renders nothing by default', () => {
-        let store = new Vuex.Store({ modules: { pagebuilder: {
-            ...storeConfig,
-            getters: {
-                nodesReExecuting: jest.fn()
-            }
-        } } });
+        let store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
 
         let wrapper = shallowMount(ExecutingOverlay, {
             store,
@@ -36,13 +31,8 @@ describe('ExecutingOverlay.vue', () => {
     });
 
     it('renders loading svg when nodeId re-executing', () => {
-        let store = new Vuex.Store({ modules: { pagebuilder: {
-            ...storeConfig,
-            getters: {
-                nodesReExecuting: () => ['007']
-            }
-        } } });
-
+        let store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        store.commit('pagebuilder/setNodesReExecuting', ['007']);
         let wrapper = shallowMount(ExecutingOverlay, {
             store,
             localVue,

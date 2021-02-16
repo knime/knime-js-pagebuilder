@@ -1,5 +1,5 @@
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 import ReloadIcon from '~/webapps-common/ui/assets/img/icons/reload.svg?inline';
 import svgWithTitle from 'webapps-common/ui/util/svgWithTitle';
@@ -27,8 +27,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
-            nodesReExecuting: 'pagebuilder/nodesReExecuting'
+        ...mapState({
+            nodesReExecuting: state => state.pagebuilder.nodesReExecuting
         }),
         isExecuting() {
             return this.nodesReExecuting?.includes(this.nodeId);

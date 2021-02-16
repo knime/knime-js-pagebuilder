@@ -13,10 +13,6 @@ export const state = () => ({
     nodesReExecuting: []
 });
 
-export const getters = {
-    nodesReExecuting: state => state.nodesReExecuting
-};
-
 export const mutations = {
     /**
      * Set page.
