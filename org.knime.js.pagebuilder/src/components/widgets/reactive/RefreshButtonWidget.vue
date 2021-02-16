@@ -55,7 +55,6 @@ export default {
     :title="viewRep.description"
   >
     <Button
-      ref="refreshButton"
       primary
       compact
       class="refresh-button"

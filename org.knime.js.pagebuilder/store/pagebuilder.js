@@ -45,26 +45,33 @@ export const mutations = {
     },
 
     /**
-     * When a webNode updates its value,
-     * it triggers a mutation via the
-     * 'pagebuilder/updateWebNode' action.
+     * @typedef UpdateValuePath - the period-separated, stringified key path to the value in the page configuration
+     *      for which an Update should be applied.
+     * @type {String}
      *
-     * The expected newWebNode object should
-     * have keys/values for:
-     *      nodeId: (String) the nodeID from the workflow
-     *              which is used to serialize the node
-     *              in the store.
-     *      update: (Object) with computed properties *key*
-     *              that are the direct access index of the
-     *              value to be modified in the original
-     *              webNodeConfiguration as provided by the
-     *              page and a new *value* (the update).
-     *              All keys and values will be mapped into
-     *              the corresponding webNode stored in
-     *              state.page.
+     *      @example: 'path.to.value' refers to the 'value' property of the following object, 'page':
+     *      let page = {
+     *          path: {
+     *              to: {
+     *                  value: ...
+     *              }
+     *          }
+     *      };
+     */
+    /**
+     * An update event dispatched by an individual {@see NodeView }. The update event can either provide a new value
+     * (i.e. the resulting updated state of a form component from user interaction) or indicated a request for a forced
+     * update (i.e. from a reactive event).
      *
-     * @param {*} state
-     * @param {*} newWebNode
+     * @param {*} state - Vuex state.
+     * @param {Object} newWebNode - update event object.
+     * @param {String} newWebNode.nodeId - the nodeID from the workflow which is used to serialize the node
+     *      in the store.
+     * @type {UpdateValuePath}
+     * @param {Object.<UpdateValuePath, Object>} [newWebNode.update] - the optional update to apply to the page state.
+     *      The property referenced by the provided {@type UpdateValuePath} will be set to the provided value
+     *      {@type Object}. If no update is provided, the event is considered reactive and the existing configuration
+     *      will used to force a Vuex reactive update(via {@method Vue.set}).
      * @return {undefined}
      */
     updateWebNode(state, newWebNode) {
