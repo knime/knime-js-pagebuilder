@@ -24,7 +24,10 @@ describe('RefreshButtonWidget.vue', () => {
                 initMethodName: 'init',
                 validateMethodName: 'validate',
                 setValidationErrorMethodName: 'setValidationErrorMessage',
-                javascriptLibraries: ['js-lib/knime/service/knime_service_1_0_0.js', 'org/knime/js/base/node/widget/reactive/refresh/refreshButtonWidget.js'],
+                javascriptLibraries: [
+                    'js-lib/knime/service/knime_service_1_0_0.js',
+                    'org/knime/js/base/node/widget/reactive/refresh/refreshButtonWidget.js'
+                ],
                 getViewValueMethodName: 'value',
                 nodeInfo: {
                     '@class': 'org.knime.js.core.JSONWebNodeInfo',
