@@ -17,6 +17,7 @@ import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget
 import ColumnSelectionWidget from './selection/ColumnSelectionWidget';
 import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
 import ValueSelectionWidget from './selection/ValueSelectionWidget';
+import FileChooserWidget from './selection/FileChooserWidget';
 // output widgets
 import TextWidget from './output/TextWidget';
 import ImageWidget from './output/ImageWidget';
@@ -73,6 +74,7 @@ export default {
         ColumnSelectionWidget,
         ValueFilterSelectionWidget,
         ValueSelectionWidget,
+        FileChooserWidget,
         // output widgets
         TextWidget,
         ImageWidget,
