@@ -125,6 +125,16 @@ describe('FileChooserWidget.vue', () => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
+    it('renders with null tree', () => {
+        let wrapper = shallowMount(FileChooserWidget, {
+            propsData
+        });
+        propsData.nodeConfig.viewRepresentation.tree = null;
+        wrapper.setProps(JSON.parse(JSON.stringify(propsData)));
+        expect(wrapper.html()).toBeTruthy();
+        expect(wrapper.isVisible()).toBeTruthy();
+    });
+
     it('updates tree on change of viewRepresentation', () => {
         let wrapper = shallowMount(FileChooserWidget, {
             propsData
