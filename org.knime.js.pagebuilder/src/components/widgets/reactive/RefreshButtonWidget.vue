@@ -60,7 +60,7 @@ export default {
       class="refresh-button"
       @click="onClick"
     >
-      {{ viewRep.text }}
+      {{ viewRep.buttonText }}
     </Button>
     <ErrorMessage :error="errorMessage" />
   </Label>

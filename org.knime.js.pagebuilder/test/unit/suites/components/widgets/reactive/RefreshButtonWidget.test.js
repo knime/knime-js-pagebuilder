@@ -15,7 +15,7 @@ describe('RefreshButtonWidget.vue', () => {
                 stylesheets: ['js-lib/font-awesome/4_7_0/css/font-awesome.min.css', 'js-lib/knime/service/knime.css'],
                 viewRepresentation: {
                     '@class': 'org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewRepresentation',
-                    text: 'Imma button!',
+                    buttonText: 'Imma button!',
                     description: 'Imma description!',
                     label: 'Imma label!'
                 },
