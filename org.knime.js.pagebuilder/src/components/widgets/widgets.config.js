@@ -38,8 +38,13 @@ export const classToComponentMap = {
     'org.knime.js.base.node.widget.filter.definition.value.ValueFilterDefinitionWidgetRepresentation':
         'InteractiveValueWidget',
     'org.knime.js.base.node.widget.filter.definition.rangeslider.RangeSliderFilterWidgetRepresentation':
-        'InteractiveRangeWidget',
+        'InteractiveRangeWidget'
+};
 
+/**
+ * Any widgets or views which are not developed with a legacy view should be added to this map.
+ */
+export const legacyExclusions = {
     // reactive widgets
     'org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewRepresentation': 'RefreshButtonWidget'
 };
