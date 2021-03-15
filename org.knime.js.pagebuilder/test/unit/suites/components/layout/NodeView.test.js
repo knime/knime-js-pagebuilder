@@ -195,6 +195,7 @@ describe('NodeView.vue', () => {
 
     it('can detect legacy flags', () => {
         let viewConfig = {
+            nodeID: 'id2',
             useLegacyMode: true
         };
         let wrapper = shallowMount(NodeView, {
@@ -205,6 +206,37 @@ describe('NodeView.vue', () => {
         });
 
         expect(wrapper.vm.isWidget).toBeFalsy();
+    });
+
+    it('renders widgets in non-legacy mode when they are excluded from legacy rendering', () => {
+        let viewConfig = {
+            nodeID: 'id2',
+            useLegacyMode: true
+        };
+        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        localStore.commit('pagebuilder/setPage', {
+            wizardPageContent: { webNodes: { id2: {
+                viewRepresentation: {
+                    '@class': 'org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewRepresentation'
+                },
+                nodeInfo: {
+                    displayPossible: true,
+                    nodeName: 'Refresh Button Widget'
+                }
+            } } }
+        });
+
+        let wrapper = shallowMount(NodeView, {
+            store: localStore,
+            localVue,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.widgetComponentName).not.toBeDefined();
+        expect(wrapper.vm.legacyModeDisabled).toBeFalsy();
+        expect(wrapper.vm.isWidget).toBeTruthy();
     });
 
     it('does not render iframe if webNode config is missing', () => {
