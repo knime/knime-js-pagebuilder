@@ -234,7 +234,7 @@ describe('NodeView.vue', () => {
             }
         });
 
-        expect(wrapper.vm.widgetComponentName).not.toBeDefined();
+        expect(wrapper.vm.widgetComponentName).toBeTruthy();
         expect(wrapper.vm.legacyModeDisabled).toBeFalsy();
         expect(wrapper.vm.isWidget).toBeTruthy();
     });

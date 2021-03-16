@@ -100,7 +100,7 @@ export default {
         // checks the node configuration for a matching Vue Widget Component name and provides that name
         widgetComponentName() {
             // check the node representation class for a matching Vue Component name
-            return classToComponentMap[this.webNodeConfig.viewRepresentation['@class']];
+            return { ...classToComponentMap, ...legacyExclusions }[this.webNodeConfig.viewRepresentation['@class']];
         },
         isWidget() {
             return legacyExclusions[this.webNodeConfig.viewRepresentation['@class']]  ||
