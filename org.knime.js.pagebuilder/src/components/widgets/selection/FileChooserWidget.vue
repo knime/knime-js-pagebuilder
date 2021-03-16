@@ -24,7 +24,7 @@ export default {
             required: true,
             type: Object,
             validator(obj) {
-                return obj.nodeInfo && obj.viewRepresentation && obj.viewRepresentation.tree;
+                return obj.nodeInfo && obj.viewRepresentation;
             }
         },
         nodeId: {
@@ -90,7 +90,7 @@ export default {
     },
     methods: {
         transformTree(tree) {
-            return tree.map(item => this.transformTreeItem(item));
+            return tree ? tree.map(item => this.transformTreeItem(item)) : [];
         },
         iconForItem(item) {
             switch (item.type) {
