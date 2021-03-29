@@ -1,12 +1,13 @@
-/* eslint-disable no-undef, arrow-body-style */
+/* eslint-disable no-undef, arrow-body-style, consistent-return  */
 // Standalone build for the KNIME AP Integration
 // IE11 SWT Support
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import Vue from 'vue';
+import Vuex from 'vuex';
 import consola from 'consola';
 import APWrapper from './components/APWrapper.vue';
-import Vuex from 'vuex';
+import * as wrapperApiStore from '../store/wrapperApi';
 
 const DIV_TARGET = 'knime-pagebuilder';
 const CONST_DEBUG_LOG_LEVEL = 4;
@@ -22,6 +23,8 @@ if (typeof KnimePageLoader === 'undefined') {
      * - getPublishedData: handled by pagebuilder/interactivity store
      * - autoResize: **"stubbed" not removed; handled by NodeViewIFrame*
      *
+     * Added in 4.4:
+     * - single page re-execution
      */
     window.KnimePageLoader = (function () {
 
@@ -82,6 +85,7 @@ if (typeof KnimePageLoader === 'undefined') {
             pageBuilder.isDebug = debug;
             pageBuilder.isDebugHTML = typeof debugHTML !== 'undefined';
             pageBuilder.isSingleView = page.wizardPageContent.isSingleView;
+            pageBuilder.pageId = page.pageNodeID;
             // create element
             pageBuilder.el = document.createElement('div');
             pageBuilder.el.setAttribute('id', DIV_TARGET);
@@ -99,7 +103,11 @@ if (typeof KnimePageLoader === 'undefined') {
                     this.$mount(`#${DIV_TARGET}`);
                 },
                 render: h => h(APWrapper),
-                store: new Vuex.Store({})
+                store: new Vuex.Store({
+                    modules: {
+                        api: wrapperApiStore
+                    }
+                })
             });
             window.isPushSupported = () => true;
         };
@@ -171,9 +179,8 @@ if (typeof KnimePageLoader === 'undefined') {
             consola.debug('PageBuilder Wrapper: autoResize');
         };
 
-        // Lazy Loading "private" fields (TODO: remove with WEBP-157)
         let requestSequence = 0;
-        // Lazy Loading utility functions (TODO: remove with WEBP-157)
+
         let getNextRequestSequence = (sequence) => {
             let mod = typeof Number.MAX_SAFE_INTEGER === 'undefined' ? Number.MAX_VALUE : Number.MAX_SAFE_INTEGER;
             return ++sequence % mod;
@@ -185,7 +192,50 @@ if (typeof KnimePageLoader === 'undefined') {
         let getNodeIdFromFrameID = frameID => frameID.substring('node'.length).replace(/-/g, ':');
         let buildFrameIDFromNodeId = nodeId => `node${nodeId.replace(/:/g, '-')}`;
 
-        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
+        pageBuilder.reexecutePage = async (nodeId) => {
+            let isValid = await pageBuilder.validate();
+            if (!isValid) {
+                consola.debug('Cannot re-execute page as errors exist.');
+                return;
+            }
+            let pageValues = await pageBuilder.getPageValues();
+
+            let requestContainer = {
+                '@class': 'CompositeRequest',
+                sequence: getAndSetNextRequestSequence(),
+                nodeID: nodeId,
+                isSinglePageRequest: true,
+                jsonRequest: JSON.stringify(Object.keys(pageValues).reduce((obj, nId) => {
+                    obj[nId] = pageValues[nId];
+                    return obj;
+                }, {}))
+            };
+            let resolvable = {
+                sequence: requestContainer.sequence,
+                nodeID: requestContainer.nodeID,
+                requestSequence
+            };
+            if (pageBuilder.isSingleView) {
+                throw Error();
+            } else {
+                requestContainer = JSON.stringify(requestContainer);
+            }
+            pageBuilder.viewRequests.push(resolvable);
+            let monitor;
+            if (typeof knimeViewRequest === 'function') {
+                monitor = knimeViewRequest(requestContainer);
+            }
+            if (!monitor) {
+                monitor = {};
+            }
+            if (typeof monitor === 'string') {
+                monitor = JSON.parse(monitor);
+            }
+            monitor.requestSequence = requestSequence;
+            resolvable.monitor = monitor;
+            return monitor;
+        };
+
         pageBuilder.requestViewUpdate = (frameID, request, requestSequence) => {
             consola.debug('PageBuilder Wrapper: requestViewUpdate');
             let nodeID = getNodeIdFromFrameID(frameID);
@@ -221,8 +271,10 @@ if (typeof KnimePageLoader === 'undefined') {
             return monitor;
         };
 
-        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         pageBuilder.respondToViewRequest = (responseContainer) => {
+            if (pageBuilder.responseIsSinglePage(responseContainer)) {
+                return pageBuilder.handleCompositeUpdate({ response: responseContainer });
+            }
             consola.debug('PageBuilder Wrapper: respondToViewRequest');
             let response = pageBuilder.isSingleView ? responseContainer : responseContainer.jsonResponse;
             let frameID = pageBuilder.isSingleView
@@ -235,12 +287,11 @@ if (typeof KnimePageLoader === 'undefined') {
                 }
             }
             let frame = document.getElementById(frameID);
-            if (typeof frame !== 'undefined') {
+            if (typeof frame !== 'undefined' && frame !== null) {
                 frame.contentWindow.KnimeInteractivity.respondToViewRequest(response);
             }
         };
 
-        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         // eslint-disable-next-line consistent-return
         pageBuilder.updateRequestStatus = (frameID, monitorID) => {
             let resolvable;
@@ -274,11 +325,13 @@ if (typeof KnimePageLoader === 'undefined') {
             }
         };
 
-        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         pageBuilder.updateResponseMonitor = (monitor) => {
             consola.debug('PageBuilder Wrapper: updateResponseMonitor');
             if (typeof monitor === 'string') {
                 monitor = JSON.parse(monitor);
+            }
+            if (pageBuilder.responseIsSinglePage(monitor.response)) {
+                return pageBuilder.handleCompositeUpdate(monitor);
             }
             let resolvable, index;
             for (let i = 0; i < pageBuilder.viewRequests.length; i++) {
@@ -308,7 +361,6 @@ if (typeof KnimePageLoader === 'undefined') {
             }
         };
 
-        // AP/seleniumKnimeBridge Lazy Loading API (TODO: remove with WEBP-157)
         pageBuilder.cancelViewRequest = (frameID, monitorID, invokeCatch) => {
             consola.debug('PageBuilder Wrapper: cancelViewRequest');
             let nodeID = getNodeIdFromFrameID(frameID);
@@ -337,11 +389,37 @@ if (typeof KnimePageLoader === 'undefined') {
             }
         };
 
+        pageBuilder.handleCompositeUpdate = ({ response } = {}) => {
+            consola.log('handleCompositeUpdate', response);
+            if (response.jsonResponse?.['@class']?.includes('JSONWebNodePage')) {
+                let page = {
+                    wizardPageContent: response.jsonResponse
+                };
+                let nodeIds = Object.keys(page.wizardPageContent.webNodes);
+                pageBuilder.app.$store.dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
+                return pageBuilder.app.$store.dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });
+            }
+            if (response.jsonResponse === null && response.resetNodes?.length) {
+                return pageBuilder.app.$store.dispatch(
+                    'pagebuilder/setNodesReExecuting',
+                    response.resetNodes,
+                    { root: true }
+                );
+            }
+        };
+
+        pageBuilder.responseIsSinglePage = response => {
+            if (!response) {
+                consola.error('Handle single page composite update event received an empty monitor.');
+                return false;
+            }
+            return Boolean(response.resetNodes || response.jsonResponse?.['@class']?.includes('JSONWebNodePage'));
+        };
+
         return pageBuilder;
     })();
 }
 
-// TODO: remove with WEBP-157
 if (typeof KnimeInteractivity === 'undefined') {
     window.KnimeInteractivity = {
         respondToViewRequest(response) {
