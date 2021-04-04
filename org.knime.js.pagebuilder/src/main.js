@@ -192,50 +192,6 @@ if (typeof KnimePageLoader === 'undefined') {
         let getNodeIdFromFrameID = frameID => frameID.substring('node'.length).replace(/-/g, ':');
         let buildFrameIDFromNodeId = nodeId => `node${nodeId.replace(/:/g, '-')}`;
 
-        pageBuilder.reexecutePage = async (nodeId) => {
-            let isValid = await pageBuilder.validate();
-            if (!isValid) {
-                consola.debug('Cannot re-execute page as errors exist.');
-                return;
-            }
-            let pageValues = await pageBuilder.getPageValues();
-
-            let requestContainer = {
-                '@class': 'CompositeRequest',
-                sequence: getAndSetNextRequestSequence(),
-                nodeID: nodeId,
-                isSinglePageRequest: true,
-                jsonRequest: JSON.stringify(Object.keys(pageValues).reduce((obj, nId) => {
-                    obj[nId] = pageValues[nId];
-                    return obj;
-                }, {}))
-            };
-            let resolvable = {
-                sequence: requestContainer.sequence,
-                nodeID: requestContainer.nodeID,
-                requestSequence
-            };
-            if (pageBuilder.isSingleView) {
-                throw Error();
-            } else {
-                requestContainer = JSON.stringify(requestContainer);
-            }
-            pageBuilder.viewRequests.push(resolvable);
-            let monitor;
-            if (typeof knimeViewRequest === 'function') {
-                monitor = knimeViewRequest(requestContainer);
-            }
-            if (!monitor) {
-                monitor = {};
-            }
-            if (typeof monitor === 'string') {
-                monitor = JSON.parse(monitor);
-            }
-            monitor.requestSequence = requestSequence;
-            resolvable.monitor = monitor;
-            return monitor;
-        };
-
         pageBuilder.requestViewUpdate = (frameID, request, requestSequence) => {
             consola.debug('PageBuilder Wrapper: requestViewUpdate');
             let nodeID = getNodeIdFromFrameID(frameID);
@@ -272,9 +228,6 @@ if (typeof KnimePageLoader === 'undefined') {
         };
 
         pageBuilder.respondToViewRequest = (responseContainer) => {
-            if (pageBuilder.responseIsSinglePage(responseContainer)) {
-                return pageBuilder.handleCompositeUpdate({ response: responseContainer });
-            }
             consola.debug('PageBuilder Wrapper: respondToViewRequest');
             let response = pageBuilder.isSingleView ? responseContainer : responseContainer.jsonResponse;
             let frameID = pageBuilder.isSingleView
@@ -330,9 +283,6 @@ if (typeof KnimePageLoader === 'undefined') {
             if (typeof monitor === 'string') {
                 monitor = JSON.parse(monitor);
             }
-            if (pageBuilder.responseIsSinglePage(monitor.response)) {
-                return pageBuilder.handleCompositeUpdate(monitor);
-            }
             let resolvable, index;
             for (let i = 0; i < pageBuilder.viewRequests.length; i++) {
                 let res = pageBuilder.viewRequests[i];
@@ -387,33 +337,6 @@ if (typeof KnimePageLoader === 'undefined') {
             } catch (err) {
                 consola.error(`Could not cancel view request: ${err}`);
             }
-        };
-
-        pageBuilder.handleCompositeUpdate = ({ response } = {}) => {
-            consola.log('handleCompositeUpdate', response);
-            if (response.jsonResponse?.['@class']?.includes('JSONWebNodePage')) {
-                let page = {
-                    wizardPageContent: response.jsonResponse
-                };
-                let nodeIds = Object.keys(page.wizardPageContent.webNodes);
-                pageBuilder.app.$store.dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
-                return pageBuilder.app.$store.dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });
-            }
-            if (response.jsonResponse === null && response.resetNodes?.length) {
-                return pageBuilder.app.$store.dispatch(
-                    'pagebuilder/setNodesReExecuting',
-                    response.resetNodes,
-                    { root: true }
-                );
-            }
-        };
-
-        pageBuilder.responseIsSinglePage = response => {
-            if (!response) {
-                consola.error('Handle single page composite update event received an empty monitor.');
-                return false;
-            }
-            return Boolean(response.resetNodes || response.jsonResponse?.['@class']?.includes('JSONWebNodePage'));
         };
 
         return pageBuilder;
