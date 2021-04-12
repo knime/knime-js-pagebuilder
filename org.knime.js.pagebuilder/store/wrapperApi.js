@@ -15,7 +15,10 @@ const POLLING_INTERVAL = 2000; // ms
 // TODO: Remove fire-bug console
 
 export const actions = {
-    async triggerReExecution({ commit, dispatch }, { nodeId }) {
+
+    /* RE-EXECUTION ACTIONS */
+
+    async triggerReExecution({ dispatch }, { nodeId }) {
         consola.debug('WrapperAPI store: trigger re-execution');
         /* CLIENT (View/Widget) VALIDATION */
         let validPage = await dispatch('pagebuilder/getValidity', null, { root: true })
@@ -35,82 +38,104 @@ export const actions = {
         if (!validPage) {
             // in AP/Wrapper, views handle validation styles as there is no global message.
             consola.error('Client side validation failed.');
-            return {};
+            return;
         }
 
         /* VALUE AND PAGE RETRIEVAL */
         let viewValues = await dispatch('pagebuilder/getViewValues', null, { root: true }).catch(e => false);
         if (!viewValues) {
             consola.error('Retrieving viewValues failed.');
-            return {};
+            return;
         }
 
-        let rpcConfig = {
-            jsonrpc: '2.0',
-            method: 'reexecutePage',
-            params: [
-                nodeId,
-                Object.keys(viewValues).reduce((obj, nId) => {
-                    obj[nId] = JSON.stringify(viewValues[nId]);
-                    return obj;
-                }, {})
-            ]
-        };
-        let response;
-        if (typeof rpc === 'function') {
-            response = rpc(JSON.stringify(rpcConfig));
-        }
-
-        console.log('Re-execute page response: ', response);
-        consola.debug('Initializing re-execution polling');
-        pollingTimeout = setTimeout(() => {
-            dispatch('pollReexecution');
-        }, POLLING_INTERVAL);
+        dispatch('handleReExecutionAction', {
+            caller: 'triggerReExecution',
+            rpcConfig: {
+                jsonrpc: '2.0',
+                id: 0,
+                method: 'reexecutePage',
+                params: [
+                    nodeId,
+                    Object.keys(viewValues).reduce((obj, nId) => {
+                        obj[nId] = JSON.stringify(viewValues[nId]);
+                        return obj;
+                    }, {})
+                ]
+            }
+        });
     },
 
-    pollReexecution({ dispatch }) {
-        consola.trace('Polling rpc re-execution');
-        let rpcConfig = {
-            jsonrpc: '2.0',
-            method: 'getPage',
-            params: []
-        };
-        let response;
-        if (typeof rpc === 'function') {
-            response = rpc(JSON.stringify(rpcConfig));
-        }
-        console.log('Polling response: ', response);
+    pollReExecution({ dispatch }) {
+        consola.debug('WrapperAPI store: Polling re-execution');
+        dispatch('handleReExecutionAction', {
+            caller: 'pollReExecution',
+            rpcConfig: {
+                jsonrpc: '2.0',
+                id: 0,
+                method: 'getPage',
+                params: []
+            }
+        });
+    },
 
-        if (response.error) {
-            // TODO cancel
+    /* UTILITY ACTIONS */
+
+    async handleReExecutionAction({ dispatch }, { caller, rpcConfig }) {
+        let { result, error } = await dispatch('dispatchRPC', rpcConfig);
+
+        if (!result || error) {
+            dispatch('handleError', { caller, error });
+            return;
         }
-        if (response.page) {
-            dispatch('updatePage', response);
-        } else {
+        let shouldPoll = await dispatch('updateReExecutedPage', result);
+        if (shouldPoll) {
             clearTimeout(pollingTimeout);
             pollingTimeout = setTimeout(() => {
-                dispatch('pollReexecution');
+                dispatch('pollReExecution');
             }, POLLING_INTERVAL);
         }
     },
 
-    updatePage({ dispatch }) {
-        // TODO
-        // consola.log('handleCompositeUpdate', response);
-        // if (response.jsonResponse?.['@class']?.includes('JSONWebNodePage')) {
-        //     let page = {
-        //         wizardPageContent: response.jsonResponse
-        //     };
-        //     let nodeIds = Object.keys(page.wizardPageContent.webNodes);
-        //     pageBuilder.app.$store.dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
-        //     return pageBuilder.app.$store.dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });
-        // }
-        // if (response.jsonResponse === null && response.resetNodes?.length) {
-        //     return pageBuilder.app.$store.dispatch(
-        //         'pagebuilder/setNodesReExecuting',
-        //         response.resetNodes,
-        //         { root: true }
-        //     );
-        // }
+    handleError({ dispatch }, { caller, error }) {
+        consola.error(`WrapperAPI store ${caller} exception`, error);
+        // dispatch('pagebuilder/alert/showAlert', {
+        //     type: 'error',
+        // TODO: finish
+        // });
+    },
+
+    updateReExecutedPage({ dispatch }, { page, resetNodes } = {}) {
+        let shouldPoll = false;
+        try {
+            if (page) {
+                page = JSON.parse(page);
+                console.log('WrapperAPI store: update page', page);
+                let nodeIds = Object.keys(page.webNodes);
+                dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
+                dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });
+            } else if (resetNodes?.length) {
+                console.log('WrapperAPI store: set re-executed nodes', resetNodes);
+                dispatch('pagebuilder/setNodesReExecuting', resetNodes, { root: true });
+                shouldPoll = true;
+            }
+        } catch (error) {
+            return dispatch('handleError', { caller: 'updateReExecutedPage', error });
+        }
+        return shouldPoll;
+    },
+
+    dispatchRPC(_, rpcConfig) {
+        let result, error;
+        if (typeof rpc === 'function') {
+            try {
+                ({ result, error } = JSON.parse(rpc(JSON.stringify(rpcConfig))));
+            } catch (e) {
+                consola.error('WrapperAPI store: RPC exception ', e);
+                error = e;
+            }
+        } else {
+            error = 'Global RPC not available';
+        }
+        return { result, error };
     }
 };

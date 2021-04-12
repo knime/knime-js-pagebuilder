@@ -126,7 +126,12 @@ export const mutations = {
     },
     
     setNodesReExecuting(state, nodesReExecuting) {
-        state.nodesReExecuting = nodesReExecuting;
+        let lenInEq = nodesReExecuting.length !== state.nodesReExecuting.length;
+        let contentInEq = nodesReExecuting.some(nodeId => state.nodesReExecuting.indexOf(nodeId) < 0);
+        // Prevent unnecessary updates
+        if (lenInEq || contentInEq) {
+            state.nodesReExecuting = nodesReExecuting;
+        }
     }
 };
 
@@ -149,10 +154,11 @@ export const actions = {
         }
     },
 
-    updatePage({ commit }, { page, nodeIds }) {
+    updatePage({ commit }, { page = {}, nodeIds }) {
         consola.trace('PageBuilder: Set page via action: ', page);
+        let { webNodes } = page?.wizardPageContent || page;
         nodeIds.forEach(nodeId => {
-            commit('updateWebNode', { nodeId, config: page?.wizardPageContent?.webNodes?.[nodeId] });
+            commit('updateWebNode', { nodeId, config: webNodes?.[nodeId] });
         });
     },
 
