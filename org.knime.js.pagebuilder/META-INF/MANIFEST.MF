@@ -4,6 +4,7 @@ Bundle-Name: PageBuilder for KNIME Analytics Platform
 Bundle-SymbolicName: org.knime.js.pagebuilder;singleton:=true
 Bundle-Version: 4.4.0.qualifier
 Bundle-Vendor: KNIME AG, Zurich, Switzerland
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
+Automatic-Module-Name: org.knime.js.pagebuilder
