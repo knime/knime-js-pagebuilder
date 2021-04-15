@@ -6,7 +6,7 @@ const POLLING_INTERVAL = 2000; // ms between polling actions
 
 /**
  * This store is a standing layer for Wizard Execution functionality in the AP. Together with the main.js APWrapper
- * serve as the communication layer between the "new" PageBuilder (added in@version 4.2) and the KAP API.
+ * this serves as the communication layer between the "new" PageBuilder (added in @version 4.2) and the KAP API.
  *
  * @author ben.laney
  * @since 4.4.0
@@ -42,7 +42,7 @@ export const actions = {
         if (!validPage) {
             dispatch('handleError', {
                 caller: 'triggerReExecution',
-                error: 'Client side validation failed. Please check the page for errors.'
+                error: 'Client-side validation failed. Please check the page for errors.'
             });
             return;
         }
@@ -52,7 +52,7 @@ export const actions = {
         if (!viewValues) {
             dispatch('handleError', {
                 caller: 'triggerReExecution',
-                error: 'Retrieving viewValues failed. Please check the page for errors.'
+                error: 'Retrieving page values failed. Please check the page for errors.'
             });
             return;
         }
@@ -124,7 +124,7 @@ export const actions = {
         let shouldPoll = false;
         try {
             if (page) {
-                page = JSON.parse(page);
+                if (typeof page === 'string') { page = JSON.parse(page); }
                 let nodeIds = Object.keys(page.webNodes);
                 dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
                 dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });

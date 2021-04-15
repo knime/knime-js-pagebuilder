@@ -34,7 +34,8 @@ module.exports = {
         '!**/*.config.js',
         '!.eslintrc*.js',
         '!**/.eslintrc*.js',
-        '!.stylelintrc.js'
+        '!.stylelintrc.js',
+        '!<rootDir>/test/unit/test-util'
     ],
     coveragePathIgnorePatterns: [
         '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|src/dev)/',

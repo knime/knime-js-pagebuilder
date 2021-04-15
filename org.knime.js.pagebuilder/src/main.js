@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, arrow-body-style, consistent-return  */
+/* eslint-disable no-undef, arrow-body-style */
 // Standalone build for the KNIME AP Integration
 // IE11 SWT Support
 import 'core-js/stable';
@@ -24,7 +24,7 @@ if (typeof KnimePageLoader === 'undefined') {
      * - autoResize: **"stubbed" not removed; handled by NodeViewIFrame*
      *
      * Added in 4.4:
-     * - single page re-execution
+     * - wrapper API store
      */
     window.KnimePageLoader = (function () {
 
