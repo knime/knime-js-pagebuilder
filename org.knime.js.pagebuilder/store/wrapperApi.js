@@ -120,18 +120,34 @@ export const actions = {
      *      continued.
      */
     setPage({ dispatch }, { page, resetNodes = [] } = {}) {
-        consola.debug('WrapperAPI store: setPage', page);
+        consola.debug('WrapperAPI store: setPage', page, resetNodes);
         let shouldPoll = false;
         try {
-            if (page) {
-                if (typeof page === 'string') { page = JSON.parse(page); }
+            let shouldUpdate = page && page.webNodes;
+            let nodeIds;
+            // initial check on finished nodes (can be replaced/removed late if reset nodes always returns something)
+            if (shouldUpdate) {
+                nodeIds = Object.keys(page.webNodes);
+                shouldUpdate = nodeIds.every(id => {
+                    let nodeInfo = page.webNodes?.[id]?.nodeInfo;
+                    let finished = false;
+                    if (nodeInfo) {
+                        finished = nodeInfo.nodeState !== 'executing';
+                    }
+                    if (!finished) {
+                        shouldPoll = true;
+                    }
+                    return finished;
+                });
+            }
+            if (shouldUpdate) {
                 let nodeIds = Object.keys(page.webNodes);
                 dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
                 dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });
             } else if (resetNodes?.length) {
                 dispatch('pagebuilder/setNodesReExecuting', resetNodes, { root: true });
                 shouldPoll = true;
-            } else {
+            } else if (!shouldPoll) {
                 throw new Error('No updates were provided for the page');
             }
         } catch (error) {
@@ -165,8 +181,6 @@ export const actions = {
             try {
                 consola.debug(`WrapperAPI store: dispatch RPC node: ${nodeId}`, rpcConfig);
                 ({ result, error } = JSON.parse(rpc(JSON.stringify(rpcConfig))));
-                // TODO: When RPC accepts a nodeId, delete ^ and uncomment v.
-                // ({ result, error } = JSON.parse(rpc(nodeId, JSON.stringify(rpcConfig))));
             } catch (err) {
                 error = err;
             }
