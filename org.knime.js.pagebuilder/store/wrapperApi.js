@@ -120,11 +120,10 @@ export const actions = {
      *      continued.
      */
     setPage({ dispatch }, { page, resetNodes = [] } = {}) {
-        consola.debug('WrapperAPI store: setPage', page);
+        consola.debug('WrapperAPI store: setPage', page, resetNodes);
         let shouldPoll = false;
         try {
             if (page) {
-                if (typeof page === 'string') { page = JSON.parse(page); }
                 let nodeIds = Object.keys(page.webNodes);
                 dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
                 dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });
@@ -165,8 +164,6 @@ export const actions = {
             try {
                 consola.debug(`WrapperAPI store: dispatch RPC node: ${nodeId}`, rpcConfig);
                 ({ result, error } = JSON.parse(rpc(JSON.stringify(rpcConfig))));
-                // TODO: When RPC accepts a nodeId, delete ^ and uncomment v.
-                // ({ result, error } = JSON.parse(rpc(nodeId, JSON.stringify(rpcConfig))));
             } catch (err) {
                 error = err;
             }
