@@ -163,20 +163,21 @@ describe('wrapper API store', () => {
                 pagebuilderMocks: { setNodesReExecuting, updatePage },
                 alertMocks: { showAlert }
             });
-            let page = {
-                webNodes: {
-                    foo: {
-                        nodeInfo: {
-                            nodeState: 'executed'
-                        }
-                    }
-                },
-                resetNodes: null
-            };
 
-            let shouldPoll = await store.dispatch('setPage', { page });
+            let shouldPoll = await store.dispatch('setPage', { page: {
+                webNodes: {
+                    foo: {}
+                },
+                resetNodes: ['foo']
+            } });
             expect(shouldPoll).toBe(false);
-            expect(updatePage).toHaveBeenCalledWith(expect.anything(), { nodeIds: ['foo'], page }, EMPTY);
+            expect(updatePage).toHaveBeenCalledWith(expect.anything(), {
+                nodeIds: ['foo'],
+                page: {
+                    resetNodes: ['foo'],
+                    webNodes: { foo: {} }
+                }
+            }, EMPTY);
             expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), [], EMPTY);
             expect(showAlert).not.toHaveBeenCalled();
         });
