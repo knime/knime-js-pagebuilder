@@ -4,6 +4,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import NodeView from '@/components/layout/NodeView';
 import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
 import NotAvailable from '@/components/layout/NotAvailable';
+import ExecutingOverlay from '@/components/layout/ExecutingOverlay';
 
 import * as storeConfig from '~/store/pagebuilder';
 
@@ -342,4 +343,79 @@ describe('NodeView.vue', () => {
 
     });
 
+    it('detects if the node is currently (re)executing via node state', () => {
+        let viewConfig = { nodeID: 'id2' };
+        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        localStore.commit('pagebuilder/setPage', {
+            wizardPageContent: {
+                webNodes: {
+                    id2: {
+                        baz: 'qux',
+                        viewRepresentation: {
+                            '@class': 'not a defined widget class'
+                        },
+                        nodeInfo: {
+                            displayPossible: true,
+                            nodeName: 'Interactive Value Filter Widget',
+                            nodeState: 'executing'
+                        }
+                    }
+                }
+            }
+        });
+
+        let wrapper = shallowMount(NodeView, {
+            store: localStore,
+            localVue,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.showExecutionOverlay).toBe(true);
+        expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+    });
+
+    it('detects if the node is currently (re)executing via re-executing node ids', () => {
+        let viewConfig = { nodeID: 'id2' };
+        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        localStore.commit('pagebuilder/setPage', { wizardPageContent: getWizardPageContent() });
+        localStore.commit('pagebuilder/setNodesReExecuting', [viewConfig.nodeID]);
+
+        let wrapper = shallowMount(NodeView, {
+            store: localStore,
+            localVue,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.showExecutionOverlay).toBe(true);
+        expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+    });
+
+    it('decides when to show a spinner on executing content via updateCount', () => {
+        let viewConfig = { nodeID: 'id2' };
+        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        localStore.commit('pagebuilder/setPage', { wizardPageContent: getWizardPageContent() });
+        localStore.commit('pagebuilder/setNodesReExecuting', [viewConfig.nodeID]);
+
+        let wrapper = shallowMount(NodeView, {
+            store: localStore,
+            localVue,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.showExecutionOverlay).toBe(true);
+        expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+        expect(wrapper.vm.showSpinner).toBe(false);
+
+        localStore.commit('pagebuilder/setNodesReExecuting', [viewConfig.nodeID]);
+
+        expect(wrapper.vm.showExecutionOverlay).toBe(true);
+        expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+        expect(wrapper.vm.showSpinner).toBe(true);
+    });
 });

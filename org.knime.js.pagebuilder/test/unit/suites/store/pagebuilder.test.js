@@ -114,6 +114,19 @@ describe('PageBuilder store', () => {
         expect(() => store.dispatch('triggerReExecution', { nodeId: '0.0.7' })).not.toThrow();
     });
 
+    it('updates re-execution count when executing node ids are updated', () => {
+        expect(store.getters.nodesReExecuting).toStrictEqual([]);
+        expect(store.getters.reExecutionUpdates).toBe(0);
+        let nodesReExecuting =  ['node1'];
+        store.dispatch('setNodesReExecuting', nodesReExecuting);
+        expect(store.getters.nodesReExecuting).toStrictEqual(nodesReExecuting);
+        expect(store.getters.reExecutionUpdates).toBe(1);
+        nodesReExecuting.push('node2');
+        store.dispatch('setNodesReExecuting', nodesReExecuting);
+        expect(store.getters.nodesReExecuting).toStrictEqual(nodesReExecuting);
+        expect(store.getters.reExecutionUpdates).toBe(2);
+    });
+
     it('allows setting resourceBaseUrl', () => {
         let resourceBaseUrl = 'https://test-url.com/path';
         store.commit('setResourceBaseUrl', resourceBaseUrl);

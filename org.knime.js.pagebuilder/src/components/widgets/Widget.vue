@@ -161,7 +161,7 @@ export default {
         the configuration API are expanded, this method should be updated to recognize widgets which are configured
         to be reactive. */
         isReactive() {
-            return this.nodeConfig.viewRepresentation['@class'].includes('.reactive.');
+            return this.nodeConfig?.viewRepresentation?.['@class']?.includes('.reactive.');
         }
     },
     async mounted() {
