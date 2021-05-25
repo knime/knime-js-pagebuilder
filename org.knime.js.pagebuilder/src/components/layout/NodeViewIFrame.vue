@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 <script>
 import AlertLocal from './AlertLocal';
 import iframeResizer from 'iframe-resizer/js/iframeResizer';

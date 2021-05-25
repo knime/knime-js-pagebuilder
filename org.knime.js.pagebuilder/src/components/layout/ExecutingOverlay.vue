@@ -27,12 +27,10 @@ export default {
             return this.showSpinner ? this.getOverlayWidth() : 0;
         },
         svgStyle() {
-            return [
-                `height:${this.spinnerHeight}px`,
-                `width:${this.spinnerHeight}px`,
-                `top:${this.spinnerHeight / 2}px`,
-                `left:${this.svgLeft - (this.spinnerHeight / 2)}px;`
-            ].join(';').replace(/;;/g, ';');
+            return `height:${this.spinnerHeight}px;` +
+                `width:${this.spinnerHeight}px;` +
+                `top:${this.spinnerHeight / 2}px;` +
+                `left:${this.svgLeft - (this.spinnerHeight / 2)}px;`;
         },
         spinnerStyle() {
             return `transform-origin: ${this.circleRadius + SVG_STROKE_PIXEL_OFFSET}px` +

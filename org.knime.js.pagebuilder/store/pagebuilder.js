@@ -14,6 +14,7 @@ export const state = () => ({
     reExecutionUpdates: 0
 });
 
+// TODO: WEBP-791 remove single-property getters
 export const getters = {
     nodesReExecuting: state => state.nodesReExecuting,
     reExecutionUpdates: state => state.reExecutionUpdates
