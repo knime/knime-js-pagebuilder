@@ -329,7 +329,6 @@ export default {
 }
 
 .tree {
-  height: 250px;
   background: var(--knime-white);
   border: 1px solid var(--knime-stone-gray);
   overflow-y: auto;
@@ -344,9 +343,6 @@ export default {
   padding: 15px 0;
   margin: 0 0 0 -5px;
   list-style-type: none;
-
-  /* for ellipsis */
-  max-width: calc(100% + 5px);
 
   /* remove default focus style */
   &:focus {

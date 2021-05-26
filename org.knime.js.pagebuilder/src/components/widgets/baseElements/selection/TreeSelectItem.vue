@@ -361,6 +361,14 @@ export default {
   }
 }
 
+.tree-wholerow-selected.tree-wholerow-hovered::before {
+  content: "";
+  background: var(--theme-tree-background-color-hover);
+  width: 5px;
+  height: var(--height, 22px);
+  display: inline-block;
+}
+
 .tree-anchor.tree-hovered {
   color: var(--theme-tree-foreground-color-hover);
 }
@@ -377,10 +385,10 @@ export default {
   background: var(--theme-tree-background-color-selected);
 }
 
-.tree-disabled {
+.tree-disabled > i {
   background: transparent;
   color: var(--theme-tree-foreground-color);
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .tree-leaf > .tree-disabled {
