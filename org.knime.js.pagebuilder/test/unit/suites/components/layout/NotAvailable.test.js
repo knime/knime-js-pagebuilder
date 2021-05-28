@@ -46,5 +46,11 @@ describe('NotAvailable.vue', () => {
         });
         expect(wrapper.find(Label).props('text')).toEqual('testName - test_annotation (10.0.2) can’t be displayed');
     });
+
+    it('hides content via prop from parent', () => {
+        wrapper.setProps({ showError: false });
+        expect(wrapper.find(Label).exists()).toBe(false);
+        expect(wrapper.find('span').exists()).toBe(false);
+    });
 });
 

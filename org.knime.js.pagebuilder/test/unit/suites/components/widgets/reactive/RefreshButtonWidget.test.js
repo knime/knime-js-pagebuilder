@@ -1,12 +1,27 @@
-import { mount } from '@vue/test-utils';
+import Vuex from 'vuex';
+import { createLocalVue, mount } from '@vue/test-utils';
 
 import RefreshButtonWidget from '@/components/widgets/reactive/RefreshButtonWidget.vue';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 import Label from '~/webapps-common/ui/components/forms/Label';
 import Button from '~/webapps-common/ui/components/Button';
 
+import * as storeConfig from '~/store/pagebuilder';
+
 describe('RefreshButtonWidget.vue', () => {
-    let propsData;
+    let propsData, store, localVue, context;
+
+    beforeAll(() => {
+        localVue = createLocalVue();
+        localVue.use(Vuex);
+
+        store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+
+        context = {
+            store,
+            localVue
+        };
+    });
 
     beforeEach(() => {
         propsData = {
@@ -46,6 +61,7 @@ describe('RefreshButtonWidget.vue', () => {
 
     it('renders', () => {
         let wrapper = mount(RefreshButtonWidget, {
+            ...context,
             propsData
         });
         expect(wrapper.html()).toBeTruthy();
@@ -57,6 +73,7 @@ describe('RefreshButtonWidget.vue', () => {
 
     it('has no error message when valid', () => {
         let wrapper = mount(RefreshButtonWidget, {
+            ...context,
             propsData
         });
         expect(wrapper.find(ErrorMessage).text()).toBe('');
@@ -65,6 +82,7 @@ describe('RefreshButtonWidget.vue', () => {
     it('has default error message', () => {
         const errorMessage = 'Something went wrong.';
         let wrapper = mount(RefreshButtonWidget, {
+            ...context,
             propsData: {
                 ...propsData,
                 errorMessage
@@ -74,8 +92,15 @@ describe('RefreshButtonWidget.vue', () => {
     });
 
     it('emits an updateWidget event on click', () => {
-        let wrapper = mount(RefreshButtonWidget, { propsData });
+        let wrapper = mount(RefreshButtonWidget, { ...context, propsData });
         wrapper.find(Button).trigger('click');
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({ nodeId: '13:0:12' });
+    });
+
+    it('disables the button when nodes are re-executing', () => {
+        let wrapper = mount(RefreshButtonWidget, { ...context, propsData });
+        wrapper.vm.$store.dispatch('pagebuilder/setNodesReExecuting', ['13:0:12']);
+        expect(wrapper.vm.isExecuting).toBeTruthy();
+        expect(wrapper.find(Button).attributes().disabled).toBeTruthy();
     });
 });

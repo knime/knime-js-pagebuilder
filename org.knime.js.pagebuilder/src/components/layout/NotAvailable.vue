@@ -15,6 +15,10 @@ export default {
         nodeId: {
             type: String,
             default: ''
+        },
+        showError: {
+            type: Boolean,
+            default: true
         }
     },
     computed: {
@@ -40,17 +44,19 @@ export default {
 
 <template>
   <div>
-    <SignWarningIcon class="icon" />
-    <Label :text="text" />
-    <span v-if="hasErrorMessage">
-      Error message on node: {{ nodeInfo.nodeErrorMessage }}
-    </span>
-    <span v-else-if="hasWarnMessages">
-      Warn message on node: {{ nodeInfo.nodeWarnMessage }}
-    </span>
-    <span v-else>
-      No further information available. Please check the configuration of the workflow.
-    </span>
+    <template v-if="showError">
+      <SignWarningIcon class="icon" />
+      <Label :text="text" />
+      <span v-if="hasErrorMessage">
+        Error message on node: {{ nodeInfo.nodeErrorMessage }}
+      </span>
+      <span v-else-if="hasWarnMessages">
+        Warn message on node: {{ nodeInfo.nodeWarnMessage }}
+      </span>
+      <span v-else>
+        No further information available. Please check the configuration of the workflow.
+      </span>
+    </template>
   </div>
 </template>
 

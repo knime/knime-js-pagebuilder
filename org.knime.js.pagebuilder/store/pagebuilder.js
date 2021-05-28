@@ -10,8 +10,15 @@ export const state = () => ({
     pageValueGetters: {},
     pageValidators: {},
     pageValidationErrorSetters: {},
-    nodesReExecuting: []
+    nodesReExecuting: [],
+    reExecutionUpdates: 0
 });
+
+// TODO: WEBP-791 remove single-property getters
+export const getters = {
+    nodesReExecuting: state => state.nodesReExecuting,
+    reExecutionUpdates: state => state.reExecutionUpdates
+};
 
 export const mutations = {
     /**
@@ -132,6 +139,7 @@ export const mutations = {
         if (lenInEq || contentInEq) {
             state.nodesReExecuting = nodesReExecuting;
         }
+        state.reExecutionUpdates = nodesReExecuting?.length ? state.reExecutionUpdates + 1 : 0;
     }
 };
 
@@ -263,6 +271,7 @@ export const actions = {
     },
 
     setNodesReExecuting({ commit }, nodesReExecuting) {
+        consola.debug('PageBuilder: setting re-executing nodes via action: ', nodesReExecuting);
         commit('setNodesReExecuting', nodesReExecuting);
     }
 };

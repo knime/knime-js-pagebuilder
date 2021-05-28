@@ -1,4 +1,6 @@
 <script>
+import { mapState } from 'vuex';
+
 import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import Button from '~/webapps-common/ui/components/Button';
@@ -37,7 +39,13 @@ export default {
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
-        }
+        },
+        isExecuting() {
+            return this.nodesReExecuting?.length || null;
+        },
+        ...mapState({
+            nodesReExecuting: state => state.pagebuilder.nodesReExecuting
+        })
     },
     methods: {
         onClick() {
@@ -58,6 +66,7 @@ export default {
       primary
       compact
       class="refresh-button"
+      :disabled="isExecuting"
       @click="onClick"
     >
       {{ viewRep.buttonText }}

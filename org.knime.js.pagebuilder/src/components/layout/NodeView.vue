@@ -1,4 +1,6 @@
 <script>
+import { mapGetters } from 'vuex';
+
 import NodeViewIFrame from './NodeViewIFrame';
 import Widget from '../widgets/Widget';
 import NotAvailable from './NotAvailable';
@@ -39,10 +41,15 @@ export default {
         };
     },
     computed: {
+        ...mapGetters({
+            nodesReExecuting: 'pagebuilder/nodesReExecuting',
+            updateCount: 'pagebuilder/reExecutionUpdates'
+        }),
+        nodeId() {
+            return this.viewConfig.nodeID;
+        },
         webNodeConfig() {
-            let nodeConfigs = this.$store.state.pagebuilder.page.wizardPageContent.webNodes;
-            let { nodeID } = this.viewConfig;
-            return nodeConfigs[nodeID];
+            return this.$store.state.pagebuilder.page.wizardPageContent.webNodes[this.nodeId];
         },
         webNodeAvailable() {
             // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
@@ -52,7 +59,10 @@ export default {
         webNodeDisplayable() {
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
-            return this.webNodeConfig.nodeInfo.displayPossible;
+            return this.webNodeConfig?.nodeInfo?.displayPossible;
+        },
+        nodeState() {
+            return this.webNodeConfig?.nodeInfo?.nodeState;
         },
         resizeMethod() {
             return this.viewConfig.resizeMethod || '';
@@ -100,11 +110,19 @@ export default {
         // checks the node configuration for a matching Vue Widget Component name and provides that name
         widgetComponentName() {
             // check the node representation class for a matching Vue Component name
-            return { ...classToComponentMap, ...legacyExclusions }[this.webNodeConfig.viewRepresentation['@class']];
+            return { ...classToComponentMap, ...legacyExclusions }[this.webNodeConfig?.viewRepresentation?.['@class']];
         },
         isWidget() {
-            return legacyExclusions[this.webNodeConfig.viewRepresentation['@class']]  ||
+            return legacyExclusions[this.webNodeConfig?.viewRepresentation?.['@class']]  ||
                 (this.legacyModeDisabled && this.widgetComponentName);
+        },
+        showExecutionOverlay() {
+            /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this
+               time, detect execution before polling starts to prevent jumping */
+            return this.nodesReExecuting?.includes(this.nodeId) || this.nodeState === 'executing';
+        },
+        showSpinner() {
+            return this.updateCount >= 2;
         }
     },
     watch: {
@@ -124,13 +142,14 @@ export default {
       <NotAvailable
         v-if="!webNodeDisplayable"
         :node-info="webNodeConfig.nodeInfo"
-        :node-id="viewConfig.nodeID"
+        :node-id="nodeId"
+        :show-error="!showExecutionOverlay"
       />
       <Widget
         v-else-if="isWidget"
         :type="widgetComponentName"
         :node-config="webNodeConfig"
-        :node-id="viewConfig.nodeID"
+        :node-id="nodeId"
       />
       <NodeViewIFrame
         v-else
@@ -138,7 +157,10 @@ export default {
         :view-config="viewConfig"
         :node-config="webNodeConfig"
       />
-      <ExecutingOverlay :node-id="viewConfig.nodeID" />
+      <ExecutingOverlay
+        :show="showExecutionOverlay"
+        :show-spinner="showSpinner"
+      />
     </template>
   </div>
 </template>
