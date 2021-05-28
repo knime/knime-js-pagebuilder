@@ -1,172 +1,146 @@
 import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Vue from 'vue';
+import csvIcon from '~/webapps-common/ui/assets/img/icons/file-csv.svg?inline';
+import docxIcon from '~/webapps-common/ui/assets/img/icons/file-docx.svg?inline';
+import htmlIcon from '~/webapps-common/ui/assets/img/icons/file-html.svg?inline';
+import mdIcon from '~/webapps-common/ui/assets/img/icons/file-md.svg?inline';
+import odpIcon from '~/webapps-common/ui/assets/img/icons/file-odp.svg?inline';
+import odsIcon from '~/webapps-common/ui/assets/img/icons/file-ods.svg?inline';
+import odtIcon from '~/webapps-common/ui/assets/img/icons/file-odt.svg?inline';
+import pdfIcon from '~/webapps-common/ui/assets/img/icons/file-pdf.svg?inline';
+import pptxIcon from '~/webapps-common/ui/assets/img/icons/file-pptx.svg?inline';
+import psIcon from '~/webapps-common/ui/assets/img/icons/file-ps.svg?inline';
+import xlsIcon from '~/webapps-common/ui/assets/img/icons/file-xls.svg?inline';
+import xlsxIcon from '~/webapps-common/ui/assets/img/icons/file-xlsx.svg?inline';
+import xmlIcon from '~/webapps-common/ui/assets/img/icons/file-xml.svg?inline';
+import zipIcon from '~/webapps-common/ui/assets/img/icons/file-zip.svg?inline';
+import exeIcon from '~/webapps-common/ui/assets/img/icons/file-zip-exe.svg?inline';
 
 import FileChooserWidget from '@/components/widgets/selection/FileChooserWidget';
 import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect';
 
-describe('FileChooserWidget.vue', () => {
-    let propsData, store, localVue, mocks;
+
+const propsDataTemplate = {
+    nodeConfig: {
+        '@class': 'org.knime.js.core.JSONWebNode',
+        viewRepresentation: {
+            '@class': 'org.knime.js.base.node.base.input.filechooser.FileChooserNodeRepresentation',
+            label: 'Label',
+            description: 'Enter Description',
+            required: true,
+            defaultValue: {
+                '@class': 'org.knime.js.base.node.base.input.filechooser.FileChooserNodeValue',
+                items: [
+                    {
+                        path: 'knime://Devserver/Test%20Workflows/Demo/Simple%20Interaction',
+                        type: 'WORKFLOW'
+                    }
+                ]
+            },
+            currentValue: {
+                '@class': 'org.knime.js.base.node.base.input.filechooser.FileChooserNodeValue',
+                items: [
+                    {
+                        path: 'knime://Devserver/file_chooser_verification/directory_folder/a/customers.csv',
+                        type: 'WORKFLOW'
+                    }
+                ]
+            },
+            selectWorkflows: true,
+            selectDirectories: false,
+            selectDataFiles: true,
+            useDefaultMountId: true,
+            customMountId: '',
+            rootDir: '/',
+            fileTypes: ['.csv'],
+            multipleSelection: true,
+            errorMessage: '',
+            tree: [
+                {
+                    icon: './VAADIN/themes/knime/img/workflowgroup.png',
+                    state: {
+                        opened: false,
+                        selected: false,
+                        disabled: true
+                    },
+                    text: 'Admin',
+                    type: 'DIRECTORY',
+                    children: [
+                        {
+                            icon: './VAADIN/themes/knime/img/workflow.png',
+                            state: {
+                                opened: false,
+                                selected: true,
+                                disabled: false
+                            },
+                            text: 'Change Workflow Owners',
+                            type: 'WORKFLOW',
+                            children: null,
+                            id: '/Admin/Change Workflow Owners'
+                        }
+                    ],
+                    id: '/Admin'
+                }
+            ],
+            prefix: 'knime://Testserver-master',
+            runningOnServer: true
+        },
+        viewValue: {
+            '@class': 'org.knime.js.base.node.base.input.filechooser.FileChooserNodeValue',
+            items: [
+                {
+                    path: 'knime://Devserver/Test%20Workflows/Demo/Simple%20Interaction',
+                    type: 'WORKFLOW'
+                }
+            ]
+        },
+        initMethodName: 'init',
+        validateMethodName: 'validate',
+        setValidationErrorMethodName: 'setValidationErrorMessage',
+        customCSS: '',
+        nodeInfo: {
+            '@class': 'org.knime.js.core.JSONWebNodeInfo',
+            nodeName: 'File Chooser Widget',
+            nodeErrorMessage: null,
+            nodeWarnMessage: null,
+            displayPossible: true,
+            nodeAnnotation: '',
+            nodeState: 'executed'
+        },
+        stylesheets: [
+            '/js-lib/font-awesome/4_7_0/css/font-awesome.min.css',
+            '/js-lib/knime/service/knime.css',
+            '/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css',
+            '/org/knime/js/base/util/quickform/quickformStyles.css',
+            '/js-lib/jsTree/min/themes/default/style.min.css'
+        ],
+        javascriptLibraries: [
+            '/js-lib/knime/service/knime_service_1_0_0.js',
+            '/js-lib/jQuery/jquery-1.11.0.min.js',
+            '/js-lib/jQueryUI/min/ui/jquery-ui.min.js',
+            '/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js',
+            '/js-lib/jsTree/min/jstree.min.js',
+            '/org/knime/js/base/node/widget/input/filechooser/fileChooserWidget.js'
+        ],
+        getViewValueMethodName: 'value',
+        namespace: 'knimeFileChooserWidget'
+    },
+    nodeId: '9:0:4',
+    isValid: false
+};
+describe('FileChooserWidget.vue old WebPortal and AP', () => {
+    let propsData;
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
         window.KnimePageLoader = {};
     });
 
     beforeEach(() => {
-        store = new Vuex.Store({
-            modules: {
-                api: {
-                    getters: {
-                        repository: () => () => new Promise((resolve) => {
-                            resolve(mocks.repoData);
-                        })
-                    },
-                    namespaced: true
-                },
-                pagebuilder: {
-                    state: {
-                        resourceBaseUrl: '/'
-                    }
-                }
-            }
-        });
-        mocks = {};
-        mocks.$store = store;
-        mocks.repoData = {
-            children: [
-                {
-                    _class:
-                        'com.knime.enterprise.server.rest.api.v4.repository.ent.WorkflowGroup',
-                    path: '/file_chooser_verification/directory_folder/a',
-                    type: 'WorkflowGroup',
-                    children: [
-                        {
-                            _class:
-                                'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
-                            path:
-                                '/file_chooser_verification/directory_folder/a/customers.csv',
-                            type: 'Data',
-                            size: 340735,
-                            owner: 'knimeadmin'
-                        }
-                    ],
-                    owner: 'knimeadmin'
-                }
-            ]
-        };
-        // mocks the pageloade to simulate execution in new webportal
-        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValue(false);
+        propsData = JSON.parse(JSON.stringify(propsDataTemplate));
+        propsData.nodeConfig.viewRepresentation.runningOnServer = true;
 
-        propsData = {
-            nodeConfig: {
-                '@class': 'org.knime.js.core.JSONWebNode',
-                viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.base.input.filechooser.FileChooserNodeRepresentation',
-                    label: 'Label',
-                    description: 'Enter Description',
-                    required: true,
-                    defaultValue: {
-                        '@class': 'org.knime.js.base.node.base.input.filechooser.FileChooserNodeValue',
-                        items: [
-                            {
-                                path: 'knime://Devserver/Test%20Workflows/Demo/Simple%20Interaction',
-                                type: 'WORKFLOW'
-                            }
-                        ]
-                    },
-                    currentValue: {
-                        '@class': 'org.knime.js.base.node.base.input.filechooser.FileChooserNodeValue',
-                        items: [
-                            {
-                                path: 'knime://Devserver/Test%20Workflows/Demo/Simple%20Interaction',
-                                type: 'WORKFLOW'
-                            }
-                        ]
-                    },
-                    selectWorkflows: true,
-                    selectDirectories: false,
-                    selectDataFiles: false,
-                    useDefaultMountId: true,
-                    customMountId: '',
-                    rootDir: '/',
-                    fileTypes: [],
-                    multipleSelection: true,
-                    errorMessage: '',
-                    tree: [
-                        {
-                            icon: './VAADIN/themes/knime/img/workflowgroup.png',
-                            state: {
-                                opened: false,
-                                selected: false,
-                                disabled: true
-                            },
-                            text: 'Admin',
-                            type: 'DIRECTORY',
-                            children: [
-                                {
-                                    icon: './VAADIN/themes/knime/img/workflow.png',
-                                    state: {
-                                        opened: false,
-                                        selected: true,
-                                        disabled: false
-                                    },
-                                    text: 'Change Workflow Owners',
-                                    type: 'WORKFLOW',
-                                    children: null,
-                                    id: '/Admin/Change Workflow Owners'
-                                }
-                            ],
-                            id: '/Admin'
-                        }
-                    ],
-                    prefix: 'knime://Testserver-master',
-                    runningOnServer: true
-                },
-                viewValue: {
-                    '@class': 'org.knime.js.base.node.base.input.filechooser.FileChooserNodeValue',
-                    items: [
-                        {
-                            path: 'knime://Devserver/Test%20Workflows/Demo/Simple%20Interaction',
-                            type: 'WORKFLOW'
-                        }
-                    ]
-                },
-                initMethodName: 'init',
-                validateMethodName: 'validate',
-                setValidationErrorMethodName: 'setValidationErrorMessage',
-                customCSS: '',
-                nodeInfo: {
-                    '@class': 'org.knime.js.core.JSONWebNodeInfo',
-                    nodeName: 'File Chooser Widget',
-                    nodeErrorMessage: null,
-                    nodeWarnMessage: null,
-                    displayPossible: true,
-                    nodeAnnotation: '',
-                    nodeState: 'executed'
-                },
-                stylesheets: [
-                    '/js-lib/font-awesome/4_7_0/css/font-awesome.min.css',
-                    '/js-lib/knime/service/knime.css',
-                    '/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css',
-                    '/org/knime/js/base/util/quickform/quickformStyles.css',
-                    '/js-lib/jsTree/min/themes/default/style.min.css'
-                ],
-                javascriptLibraries: [
-                    '/js-lib/knime/service/knime_service_1_0_0.js',
-                    '/js-lib/jQuery/jquery-1.11.0.min.js',
-                    '/js-lib/jQueryUI/min/ui/jquery-ui.min.js',
-                    '/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js',
-                    '/js-lib/jsTree/min/jstree.min.js',
-                    '/org/knime/js/base/node/widget/input/filechooser/fileChooserWidget.js'
-                ],
-                getViewValueMethodName: 'value',
-                namespace: 'knimeFileChooserWidget'
-            },
-            nodeId: '9:0:4',
-            isValid: false
-        };
+        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValue(false);
     });
 
     it('renders', () => {
@@ -196,6 +170,7 @@ describe('FileChooserWidget.vue', () => {
         await Vue.nextTick();
         expect(wrapper.vm.treeData).toStrictEqual([]);
     });
+
 
     it('sends @updateWidget if TreeSelect emits @item-click event', () => {
         let wrapper = mount(FileChooserWidget, {
@@ -229,19 +204,167 @@ describe('FileChooserWidget.vue', () => {
         expect(wrapper.text()).toContain('No items found for selection.');
     });
 
-    it('shows no info message if is running on new webportal and tree is present', () => {
-        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValueOnce(true);
+    it('shows info message if it is not running on the server', () => {
+        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        let wrapper = mount(FileChooserWidget, {
+            propsData
+        });
+        expect(wrapper.vm.infoMessage).toStrictEqual('File selection only possible on server.');
+    });
+
+    it('reports as valid if info message is shown', () => {
+        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        let wrapper = mount(FileChooserWidget, {
+            propsData
+        });
+        expect(wrapper.vm.validate()).toStrictEqual({
+            isValid: true,
+            errorMessage: ''
+        });
+    });
+});
+
+describe('FileChooserWidget.vue new WebPortal', () => {
+    let propsData, store, localVue, mocks;
+
+    beforeAll(() => {
+        localVue = createLocalVue();
+        localVue.use(Vuex);
+        window.KnimePageLoader = {};
+    });
+
+    beforeEach(() => {
+        propsData = JSON.parse(JSON.stringify(propsDataTemplate));
+        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+
+        store = new Vuex.Store({
+            modules: {
+                api: {
+                    getters: {
+                        repository: () => () => new Promise((resolve) => {
+                            resolve({ response: mocks.repoData });
+                        })
+                    },
+                    namespaced: true
+                },
+                pagebuilder: {
+                    state: {
+                        resourceBaseUrl: '/'
+                    }
+                },
+                wizardExecution: {
+                    getters: {
+                        workflowPath: jest.fn().mockReturnValue('/../test/../')
+                    },
+                    namespaced: true
+                }
+            }
+        });
+        mocks = {};
+        mocks.$store = store;
+        mocks.repoData = {
+            children: [
+                {
+                    _class:
+                        'com.knime.enterprise.server.rest.api.v4.repository.ent.WorkflowGroup',
+                    path: '/file_chooser_verification/directory_folder/a',
+                    type: 'WorkflowGroup',
+                    children: [
+                        {
+                            _class:
+                                'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+                            path:
+                                '/file_chooser_verification/directory_folder/a/customers.csv',
+                            type: 'WorkflowGroup',
+                            size: 340735,
+                            owner: 'knimeadmin'
+                        },
+                        {
+                            _class:
+                                'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+                            path:
+                                '/file_chooser_verification/directory_folder/a/customers.csv',
+                            type: 'Data',
+                            size: 340735,
+                            owner: 'knimeadmin'
+                        },
+                        {
+                            _class:
+                                'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+                            path:
+                                '/file_chooser_verification/directory_folder/a/customers.csv',
+                            type: 'Foo',
+                            size: 340735,
+                            owner: 'knimeadmin'
+                        },
+                        {
+                            _class:
+                                'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+                            path:
+                                '/file_chooser_verification/directory_folder/a/customers.zip',
+                            type: 'Data',
+                            size: 340735,
+                            owner: 'knimeadmin'
+                        }
+                    ],
+                    owner: 'knimeadmin'
+                }
+            ]
+        };
+        // mocks the pageloade to simulate execution in new webportal
+        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValue(true);
+    });
+
+    it('updates tree on change of viewRepresentation on new WebPortal', async () => {
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
         });
+        await Vue.nextTick();
+        propsData.nodeConfig.viewRepresentation.tree = [];
+        wrapper.setProps(JSON.parse(JSON.stringify(propsData)));
+        expect(wrapper.vm.treeData).toStrictEqual([]);
+    });
+
+    it.each([
+        ['.csv', csvIcon],
+        ['.docx', docxIcon],
+        ['.html', htmlIcon],
+        ['.md', mdIcon],
+        ['.odp', odpIcon],
+        ['.ods', odsIcon],
+        ['.odt', odtIcon],
+        ['.pdf', pdfIcon],
+        ['.pptx', pptxIcon],
+        ['.ps', psIcon],
+        ['.xls', xlsIcon],
+        ['.xlsx', xlsxIcon],
+        ['.xml', xmlIcon],
+        ['.zip', zipIcon],
+        ['.exe', exeIcon]
+    ])('renders an icon for the file ending "%s"', async (fileEnding, icon) => {
+        mocks.repoData.children[0].children[0].path = `test${fileEnding}`;
+        let wrapper = mount(FileChooserWidget, {
+            propsData,
+            mocks
+        });
+        await Vue.nextTick();
+        expect(wrapper.vm.getIcon(fileEnding)).toStrictEqual(icon);
+    });
+
+    it('shows no info message if is running on new webportal and tree is present', async () => {
+        let wrapper = mount(FileChooserWidget, {
+            propsData,
+            mocks
+        });
+        await Vue.nextTick();
         expect(wrapper.vm.infoMessage).toStrictEqual(null);
         const treeSelect = wrapper.find(TreeSelect);
         expect(treeSelect.exists()).toBe(true);
     });
 
-    it('shows info message if runningOnServer is false', () => {
-        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+    it('shows info message if it is not running on the server', () => {
+        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValueOnce(false);
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
@@ -250,7 +373,7 @@ describe('FileChooserWidget.vue', () => {
     });
 
     it('reports as valid if info message is shown', () => {
-        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValueOnce(false);
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
@@ -262,14 +385,128 @@ describe('FileChooserWidget.vue', () => {
     });
 
     it('fails validation if nothing is selected but selection is required', () => {
-        propsData.nodeConfig.viewRepresentation.required = true;
         propsData.nodeConfig.viewRepresentation.tree[0].children[0].state.selected = false;
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            propsData,
+            mocks
         });
         expect(wrapper.vm.validate()).toStrictEqual({
             isValid: false,
             errorMessage: 'Selection is required.'
+        });
+    });
+
+    it('creates a test where nothing is selected, but selection is required and possible', async () => {
+        propsData.nodeConfig.viewRepresentation.selectDataFiles = false;
+        propsData.nodeConfig.viewRepresentation.selectWorkflows = false;
+        propsData.nodeConfig.viewRepresentation.required = true;
+        mocks.repoData.children[0].children = [{
+            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+            path: '/file_chooser_verification/directory_folder/a/customers.csv',
+            type: 'Data',
+            size: 340735,
+            owner: 'knimeadmin'
+        }, {
+            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+            path: '/file_chooser_verification/directory_folder/test/customers.csv',
+            type: 'Test',
+            size: 340735,
+            owner: 'knimeadmin'
+        }, {
+            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+            path: '/file_chooser_verification/directory_folder/test/customers.csv',
+            type: 'Workflow',
+            size: 340735,
+            owner: 'knimeadmin'
+        }];
+        let wrapper = mount(FileChooserWidget, {
+            propsData,
+            mocks
+        });
+        await Vue.nextTick();
+        expect(wrapper.vm.validate()).toStrictEqual({
+            isValid: false,
+            errorMessage: 'Selection is required.'
+        });
+    });
+
+    it('creates a damaged tree', async () => {
+        propsData.nodeConfig.viewRepresentation.required = true;
+        propsData.nodeConfig.viewRepresentation.tree = [];
+        mocks.repoData.children[0].children = [{
+            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+            type: 'Data',
+            size: 340735,
+            owner: 'knimeadmin'
+        }];
+        let wrapper = mount(FileChooserWidget, {
+            propsData,
+            mocks
+        });
+        await Vue.nextTick();
+        expect(wrapper.vm.infoMessage).toStrictEqual('No items found for selection.');
+        expect(wrapper.text()).toContain('No items found for selection.');
+    });
+
+    it('tests workflow relative paths', async () => {
+        propsData.nodeConfig.viewRepresentation.required = true;
+        propsData.nodeConfig.viewRepresentation.rootDir = 'knime://test/../test/../test.csv';
+        mocks.repoData.children[0].children = [{
+            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+            type: 'Data',
+            size: 340735,
+            owner: 'knimeadmin'
+        }];
+        let wrapper = mount(FileChooserWidget, {
+            propsData,
+            mocks
+        });
+        await Vue.nextTick();
+        expect(wrapper.vm.validate()).toStrictEqual({
+            isValid: true,
+            errorMessage: null
+        });
+    });
+
+    it('tests workflow relative paths with knime.workflow', async () => {
+        propsData.nodeConfig.viewRepresentation.required = true;
+        propsData.nodeConfig.viewRepresentation.rootDir = 'knime://knime.workflow/test/blabla';
+        mocks.repoData.children[0].children = [{
+            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+            type: 'Data',
+            size: 340735,
+            owner: 'knimeadmin'
+        }];
+        let wrapper = mount(FileChooserWidget, {
+            propsData,
+            mocks
+        });
+        await Vue.nextTick();
+        expect(wrapper.vm.validate()).toStrictEqual({
+            isValid: true,
+            errorMessage: null
+        });
+    });
+
+    it('tests custom mountIDs', async () => {
+        propsData.nodeConfig.viewRepresentation.required = true;
+        propsData.nodeConfig.viewRepresentation.rootDir = 'knime://knime.workflow/test/blabla';
+        propsData.nodeConfig.viewRepresentation.useDefaultMountId = false;
+        propsData.nodeConfig.viewRepresentation.customMountId = 'test://';
+        mocks.repoData.children[0].children = [{
+            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
+            type: 'Data',
+            size: 340735,
+            owner: 'knimeadmin'
+        }];
+        let wrapper = mount(FileChooserWidget, {
+            propsData,
+            mocks
+        });
+        await Vue.nextTick();
+        expect(wrapper.vm.validate()).toStrictEqual({
+            isValid: true,
+            errorMessage: null
         });
     });
 

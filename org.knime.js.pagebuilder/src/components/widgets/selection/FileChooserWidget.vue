@@ -195,7 +195,7 @@ export default {
     methods: {
         resolveWorkflowRelativePath(path) {
             let relativePath = path;
-            let workflowPath = parent.KnimePageBuilderAPI.getWorkflow();
+            let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
             if (workflowPath) {
                 if (workflowPath.endsWith('/')) {
                     workflowPath = workflowPath.substring(0, workflowPath.length - 1);
@@ -210,19 +210,6 @@ export default {
                 normalizedPath = `/${normalizedPath}`;
             }
             return normalizedPath;
-        },
-        checkMountId() {
-            // determine path prefix from mountId
-            let mountId = this.viewRep.customMountId;
-            if (this.viewRep.useDefaultMountId) {
-                mountId = this.$store.state.settings.defaultMountId;
-            }
-            if (mountId) {
-                this.changePrefix(SCHEME_PART + mountId);
-            }
-        },
-        changePrefix(prefix) {
-            this.prefix = prefix;
         },
         normalizeArray(parts, allowAboveRoot) {
             let res = [];
@@ -275,17 +262,13 @@ export default {
             };
             
             // set type and icons
-            let baseUrl = `${this.$store.state.pagebuilder.resourceBaseUrl
-            }/org/knime/js/base/node/widget/input/filechooser/img/`;
             if (repositoryItem.type === SERVER_ITEM_TYPE.WORKFLOW) {
                 if (!this.viewRep.selectWorkflows) {
                     return null;
                 }
                 treeItem.type = WIDGET_ITEM_TYPE.WORKFLOW;
-                treeItem.icon = `${baseUrl}workflow.png`;
             } else if (repositoryItem.type === SERVER_ITEM_TYPE.WORKFLOW_GROUP) {
                 treeItem.type = WIDGET_ITEM_TYPE.DIR;
-                treeItem.icon = `${baseUrl}workflowgroup.png`;
                 if (!this.viewRep.selectDirectories) {
                     treeItem.state.disabled = true;
                 }
@@ -319,7 +302,7 @@ export default {
                 defaultPaths.forEach((defaultPath) => {
                     if (defaultPath && defaultPath.startsWith(treeItem.id)) {
                         treeItem.state.opened = true;
-                        if (defaultPath === treeItem.id) {
+                        if (defaultPath === treeItem.id && !treeItem.state.disabled) {
                             treeItem.state.opened = false;
                             treeItem.state.selected = true;
                         }
@@ -368,32 +351,32 @@ export default {
                 case '.html':
                     icon = htmlIcon;
                     break;
-                case 'mdIcon':
+                case '.md':
                     icon = mdIcon;
                     break;
-                case 'odpIcon':
+                case '.odp':
                     icon = odpIcon;
                     break;
-                case 'odsIcon':
+                case '.ods':
                     icon = odsIcon;
                     break;
-                case 'odtIcon':
+                case '.odt':
                     icon = odtIcon;
                     break;
-                case 'pdfIcon':
+                case '.pdf':
                     icon = pdfIcon;
                     break;
-                case 'pptx':
+                case '.pptx':
                     icon = pptxIcon;
                     break;
-                case 'ps':
+                case '.ps':
                     icon = psIcon;
                     break;
-                case 'zipIcon':
+                case '.zip':
                     icon = zipIcon;
                     break;
-                default:
-                    icon = fileIcon;
+                case '.exe':
+                    icon = exeIcon;
                     break;
                 }
             }
@@ -413,7 +396,7 @@ export default {
             case 'DIRECTORY':
                 return folderIcon;
             default:
-                return item.icon;
+                return fileIcon;
             }
         },
         transformTree(tree) {
@@ -471,6 +454,16 @@ export default {
                 value: JSON.parse(JSON.stringify(this.buildSelectedPaths(this.treeData)))
             };
             this.$emit('updateWidget', changeEventObj);
+        },
+        checkMountId() {
+            // determine path prefix from mountId
+            let mountId = this.viewRep.customMountId;
+            if (this.viewRep.useDefaultMountId) {
+                mountId = this.$store.state.settings.defaultMountId;
+            }
+            if (mountId) {
+                this.prefix = SCHEME_PART + mountId;
+            }
         },
         validate() {
             if (this.infoMessage) {
