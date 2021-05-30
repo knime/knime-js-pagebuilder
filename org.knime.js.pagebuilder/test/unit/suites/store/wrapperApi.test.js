@@ -229,7 +229,12 @@ describe('wrapper API store', () => {
             let store = getMockStore();
 
             let res = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
-            expect(res).toStrictEqual({ error: 'Global RPC not available', result: EMPTY });
+            expect(res).toStrictEqual({
+                error: 'This functionality is not supported with the current browser. Please ensure the correct ' +
+                    'browser is selected by going to ‘Preferences → KNIME → JavaScript Views’ and selecting the ' +
+                    'option ‘Chromium Embedded Framework (CEF) Browser’.',
+                result: EMPTY
+            });
         });
 
         it('invokes a single RPC via action', async () => {

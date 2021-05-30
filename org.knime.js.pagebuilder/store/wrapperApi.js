@@ -168,7 +168,9 @@ export const actions = {
                 error = err;
             }
         } else {
-            error = 'Global RPC not available';
+            error = 'This functionality is not supported with the current browser. Please ensure the correct ' +
+                'browser is selected by going to ‘Preferences → KNIME → JavaScript Views’ and selecting the ' +
+                'option ‘Chromium Embedded Framework (CEF) Browser’.';
         }
         return { result, error };
     },
