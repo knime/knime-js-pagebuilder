@@ -28,18 +28,17 @@ timeout(time: 15, unit: 'MINUTES') {
                         '''
                     }
 
-                    // Temporary disable security audit until issues can be addressed
-                    /* stage('Security Audit') {
+                     stage('Security Audit') {
                         env.lastStage = 'Security Audit'
 
                         catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                             retry(3) { // because npm registry sometimes break
                                 sh '''
-                                    npm audit --production
+                                    npm run audit
                                 '''
                             }
                         }
-                    } */
+                    }
 
                     stage('Static Code Analysis') {
                         env.lastStage = 'Lint'
