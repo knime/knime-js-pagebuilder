@@ -218,7 +218,7 @@ describe('NodeView.vue', () => {
         localStore.commit('pagebuilder/setPage', {
             wizardPageContent: { webNodes: { id2: {
                 viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewRepresentation'
+                    '@class': 'org.knime.js.base.node.widget.reexecution.refresh.RefreshButtonWidgetViewRepresentation'
                 },
                 nodeInfo: {
                     displayPossible: true,
