@@ -39,5 +39,7 @@ module.exports = {
         config.plugin('LimitChunkCountPlugin').use(LimitChunkCountPlugin, [{ maxChunks: 1 }]);
     },
     // allow relative paths for serving font files in the AP
-    publicPath: ''
+    publicPath: '',
+    // required to override non-IE11 compliant package build settings
+    transpileDependencies: ['v-calendar']
 };
