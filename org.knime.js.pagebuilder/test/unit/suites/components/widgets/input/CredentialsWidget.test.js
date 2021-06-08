@@ -330,31 +330,43 @@ describe('CredentialsWidget.vue', () => {
                         }
                     }
                 },
-                stubs: { Label, Fieldset, InputField }
+                stubs: {
+                    Label,
+                    Fieldset,
+                    InputField: {
+                        template: '<div />',
+                        methods: {
+                            getValue: jest.fn().mockReturnValue(null),
+                            validate: jest.fn()
+                                // username and password  invalid
+                                .mockReturnValueOnce({ isValid: false, errorMessage: null })
+                                .mockReturnValueOnce({ isValid: false, errorMessage: null })
+                                // username valid, password invalid
+                                .mockReturnValueOnce({ isValid: false, errorMessage: null })
+                                .mockReturnValueOnce({ isValid: true, errorMessage: null })
+                                // username invalid, password valid
+                                .mockReturnValueOnce({ isValid: true, errorMessage: null })
+                                .mockReturnValueOnce({ isValid: false, errorMessage: null })
+                                // username and password valid
+                                .mockReturnValueOnce({ isValid: true, errorMessage: null })
+                                .mockReturnValueOnce({ isValid: true, errorMessage: null })
+                        }
+                    }
+                }
             });
 
-            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: 'a+' });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: 'a+' });
-
-            wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for username and password.', isValid: false }
             );
 
-            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for password.', isValid: false }
             );
 
-            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: 'a+' });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for username.', isValid: false }
             );
 
-            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: null });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: '', isValid: true }
             );
