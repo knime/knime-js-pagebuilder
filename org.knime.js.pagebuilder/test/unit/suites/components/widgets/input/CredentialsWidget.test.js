@@ -317,6 +317,7 @@ describe('CredentialsWidget.vue', () => {
         });
 
         it('displays server error in correct hierarchy', () => {
+            let validate = jest.fn();
             let wrapper = mount(CredentialsWidget, {
                 propsData: {
                     ...propsDataServer,
@@ -337,36 +338,36 @@ describe('CredentialsWidget.vue', () => {
                         template: '<div />',
                         methods: {
                             getValue: jest.fn().mockReturnValue(null),
-                            validate: jest.fn()
-                                // username and password  invalid
-                                .mockReturnValueOnce({ isValid: false, errorMessage: null })
-                                .mockReturnValueOnce({ isValid: false, errorMessage: null })
-                                // username valid, password invalid
-                                .mockReturnValueOnce({ isValid: false, errorMessage: null })
-                                .mockReturnValueOnce({ isValid: true, errorMessage: null })
-                                // username invalid, password valid
-                                .mockReturnValueOnce({ isValid: true, errorMessage: null })
-                                .mockReturnValueOnce({ isValid: false, errorMessage: null })
-                                // username and password valid
-                                .mockReturnValueOnce({ isValid: true, errorMessage: null })
-                                .mockReturnValueOnce({ isValid: true, errorMessage: null })
+                            validate
                         }
                     }
                 }
             });
 
+            // username and password invalid
+            validate.mockReturnValueOnce({ isValid: false, errorMessage: null });
+            validate.mockReturnValueOnce({ isValid: false, errorMessage: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for username and password.', isValid: false }
             );
 
+            // username valid, password invalid
+            validate.mockReturnValueOnce({ isValid: false, errorMessage: null });
+            validate.mockReturnValueOnce({ isValid: true, errorMessage: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for password.', isValid: false }
             );
 
+            // username invalid, password valid
+            validate.mockReturnValueOnce({ isValid: true, errorMessage: null });
+            validate.mockReturnValueOnce({ isValid: false, errorMessage: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for username.', isValid: false }
             );
 
+            // username and password valid
+            validate.mockReturnValueOnce({ isValid: true, errorMessage: null });
+            validate.mockReturnValueOnce({ isValid: true, errorMessage: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: '', isValid: true }
             );
