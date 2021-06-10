@@ -157,11 +157,11 @@ export default {
         isInteractiveWidget() {
             return typeof this.valuePair === 'undefined' && typeof this.$refs.widget.getValue === 'function';
         },
-        /* Naive method to recognize reactive widgets as members of the reactive widget extension. As reactivity and
-        the configuration API are expanded, this method should be updated to recognize widgets which are configured
-        to be reactive. */
+        /* Naive method to recognize re-execution widgets as members of the re-execution widget extension. As the
+        re-execution API is expanded, this method should be updated to recognize widgets which are configured to be
+        reactive. */
         isReactive() {
-            return this.nodeConfig?.viewRepresentation?.['@class']?.includes('.reactive.');
+            return this.nodeConfig?.viewRepresentation?.['@class']?.includes('.reexecution.');
         }
     },
     async mounted() {
