@@ -15,9 +15,9 @@ const WIDGET_ITEM_TYPE = {
     UNKNOWN: 'UNKNOWN'
 };
 
-export default (repositoryItem, defaultPaths, viewRep) => {
-    return createTreeItemRecursively(repositoryItem, defaultPaths, viewRep);
-};
+export default (repositoryItem, defaultPaths, viewRep) => createTreeItemRecursively(
+    repositoryItem, defaultPaths, viewRep
+);
 
 export {
     checkDefaultPaths,
