@@ -91,7 +91,7 @@ export default {
         onItemClick(oNode, oItem, e) {
             if (this.multiple) {
                 if (e.shiftKey) {
-                    if (oNode.$parent === this.lastClickedNode.$parent) {
+                    if (oNode.$parent === this.lastClickedNode?.$parent) {
                         let currentLevel = oNode.$parent.$children;
                         let firstIndex = currentLevel.findIndex(v => v === this.lastClickedNode);
                         let secondIndex = currentLevel.findIndex(v => v === oNode);

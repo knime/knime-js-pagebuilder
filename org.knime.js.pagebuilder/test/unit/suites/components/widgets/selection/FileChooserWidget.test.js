@@ -1,21 +1,6 @@
 import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Vue from 'vue';
-import csvIcon from '~/webapps-common/ui/assets/img/icons/file-csv.svg?inline';
-import docxIcon from '~/webapps-common/ui/assets/img/icons/file-docx.svg?inline';
-import htmlIcon from '~/webapps-common/ui/assets/img/icons/file-html.svg?inline';
-import mdIcon from '~/webapps-common/ui/assets/img/icons/file-md.svg?inline';
-import odpIcon from '~/webapps-common/ui/assets/img/icons/file-odp.svg?inline';
-import odsIcon from '~/webapps-common/ui/assets/img/icons/file-ods.svg?inline';
-import odtIcon from '~/webapps-common/ui/assets/img/icons/file-odt.svg?inline';
-import pdfIcon from '~/webapps-common/ui/assets/img/icons/file-pdf.svg?inline';
-import pptxIcon from '~/webapps-common/ui/assets/img/icons/file-pptx.svg?inline';
-import psIcon from '~/webapps-common/ui/assets/img/icons/file-ps.svg?inline';
-import xlsIcon from '~/webapps-common/ui/assets/img/icons/file-xls.svg?inline';
-import xlsxIcon from '~/webapps-common/ui/assets/img/icons/file-xlsx.svg?inline';
-import xmlIcon from '~/webapps-common/ui/assets/img/icons/file-xml.svg?inline';
-import zipIcon from '~/webapps-common/ui/assets/img/icons/file-zip.svg?inline';
-import exeIcon from '~/webapps-common/ui/assets/img/icons/file-zip-exe.svg?inline';
 
 import FileChooserWidget from '@/components/widgets/selection/FileChooserWidget';
 import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect';
@@ -58,7 +43,7 @@ const propsDataTemplate = {
             errorMessage: '',
             tree: [
                 {
-                    icon: './VAADIN/themes/knime/img/workflowgroup.png',
+                    icon: '',
                     state: {
                         opened: false,
                         selected: false,
@@ -68,7 +53,7 @@ const propsDataTemplate = {
                     type: 'DIRECTORY',
                     children: [
                         {
-                            icon: './VAADIN/themes/knime/img/workflow.png',
+                            icon: '',
                             state: {
                                 opened: false,
                                 selected: true,
@@ -129,7 +114,7 @@ const propsDataTemplate = {
     nodeId: '9:0:4',
     isValid: false
 };
-describe('FileChooserWidget.vue old WebPortal and AP', () => {
+describe('FileChooserWidget.vue AP', () => {
     let propsData;
 
     beforeAll(() => {
@@ -324,32 +309,6 @@ describe('FileChooserWidget.vue new WebPortal', () => {
         propsData.nodeConfig.viewRepresentation.tree = [];
         wrapper.setProps(JSON.parse(JSON.stringify(propsData)));
         expect(wrapper.vm.treeData).toStrictEqual([]);
-    });
-
-    it.each([
-        ['.csv', csvIcon],
-        ['.docx', docxIcon],
-        ['.html', htmlIcon],
-        ['.md', mdIcon],
-        ['.odp', odpIcon],
-        ['.ods', odsIcon],
-        ['.odt', odtIcon],
-        ['.pdf', pdfIcon],
-        ['.pptx', pptxIcon],
-        ['.ps', psIcon],
-        ['.xls', xlsIcon],
-        ['.xlsx', xlsxIcon],
-        ['.xml', xmlIcon],
-        ['.zip', zipIcon],
-        ['.exe', exeIcon]
-    ])('renders an icon for the file ending "%s"', async (fileEnding, icon) => {
-        mocks.repoData.children[0].children[0].path = `test${fileEnding}`;
-        let wrapper = mount(FileChooserWidget, {
-            propsData,
-            mocks
-        });
-        await Vue.nextTick();
-        expect(wrapper.vm.getIcon(fileEnding)).toStrictEqual(icon);
     });
 
     it('shows no info message if is running on new webportal and tree is present', async () => {

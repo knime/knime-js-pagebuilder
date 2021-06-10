@@ -2,6 +2,9 @@
 import itemIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg?inline';
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
+import fileIcon from '~/webapps-common/ui/assets/img/icons/file-text.svg?inline';
+
+import * as icons from '~/webapps-common/ui/util/fileTypeIcons';
 
 const TREE_OPEN_TRANSITION_TIME = 300; // ms
 
@@ -15,7 +18,9 @@ export default {
     components: {
         itemIcon,
         folderIcon,
-        arrowNextIcon
+        fileIcon,
+        arrowNextIcon,
+        ...icons.default
     },
     props: {
         data: {

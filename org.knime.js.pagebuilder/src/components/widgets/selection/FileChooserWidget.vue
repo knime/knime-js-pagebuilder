@@ -8,38 +8,12 @@ import cogIcon from '~/webapps-common/ui/assets/img/icons/cog.svg?inline';
 import workflowIcon from '~/webapps-common/ui/assets/img/icons/workflow.svg?inline';
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 
-import csvIcon from '~/webapps-common/ui/assets/img/icons/file-csv.svg?inline';
-import docxIcon from '~/webapps-common/ui/assets/img/icons/file-docx.svg?inline';
-import htmlIcon from '~/webapps-common/ui/assets/img/icons/file-html.svg?inline';
-import mdIcon from '~/webapps-common/ui/assets/img/icons/file-md.svg?inline';
-import odpIcon from '~/webapps-common/ui/assets/img/icons/file-odp.svg?inline';
-import odsIcon from '~/webapps-common/ui/assets/img/icons/file-ods.svg?inline';
-import odtIcon from '~/webapps-common/ui/assets/img/icons/file-odt.svg?inline';
-import pdfIcon from '~/webapps-common/ui/assets/img/icons/file-pdf.svg?inline';
-import pptxIcon from '~/webapps-common/ui/assets/img/icons/file-pptx.svg?inline';
-import psIcon from '~/webapps-common/ui/assets/img/icons/file-ps.svg?inline';
-import xlsIcon from '~/webapps-common/ui/assets/img/icons/file-xls.svg?inline';
-import xlsxIcon from '~/webapps-common/ui/assets/img/icons/file-xlsx.svg?inline';
-import xmlIcon from '~/webapps-common/ui/assets/img/icons/file-xml.svg?inline';
-import zipIcon from '~/webapps-common/ui/assets/img/icons/file-zip.svg?inline';
-import exeIcon from '~/webapps-common/ui/assets/img/icons/file-zip-exe.svg?inline';
+import { trimSchema as utilTrimSchema, getRootPath as utilGetRootPath } from '~/src/util/fileUtils';
+import { default as utilCreateTreeItem } from '~/src/util/createTreeItem';
 
 const DATA_TYPE = 'items';
-const SCHEME = 'knime';
-const SCHEME_PART = `${SCHEME}://`;
-const WORKFLOW_RELATIVE = 'knime.workflow';
-const MOUNTPOINT_RELATIVE = 'knime.mountpoint';
-const SERVER_ITEM_TYPE = {
-    WORKFLOW: 'Workflow',
-    WORKFLOW_GROUP: 'WorkflowGroup',
-    DATA: 'Data'
-};
-const WIDGET_ITEM_TYPE = {
-    WORKFLOW: 'WORKFLOW',
-    DIR: 'DIRECTORY',
-    DATA: 'DATA',
-    UNKNOWN: 'UNKNOWN'
-};
+const SCHEMA = 'knime';
+const SCHEMA_PART = `${SCHEMA}://`;
 
 /**
  * File Chooser Widget
@@ -48,24 +22,7 @@ export default {
     components: {
         TreeSelect,
         Label,
-        ErrorMessage,
-        /* eslint-disable vue/no-unused-components */
-        csvIcon,
-        docxIcon,
-        htmlIcon,
-        mdIcon,
-        odpIcon,
-        odsIcon,
-        odtIcon,
-        pdfIcon,
-        pptxIcon,
-        psIcon,
-        xlsIcon,
-        xlsxIcon,
-        xmlIcon,
-        zipIcon,
-        exeIcon
-        /* eslint-enable vue/no-unused-components */
+        ErrorMessage
     },
     props: {
         nodeConfig: {
@@ -99,6 +56,7 @@ export default {
     },
     data() {
         return {
+            repositoryAPI: null,
             treeData: this.transformTree(this.nodeConfig.viewRepresentation.tree),
             dataReady: false,
             prefix: ''
@@ -115,7 +73,7 @@ export default {
             return this.viewRep.description || null;
         },
         infoMessage() {
-            if (this.viewRep.runningOnServer !== true && !this.runningInNewWebPortal) {
+            if (!this.viewRep.runningOnServer && !this.runningInNewWebPortal) {
                 return 'File selection only possible on server.';
             } else if (this.treeData.length === 0) {
                 return 'No items found for selection.';
@@ -128,35 +86,20 @@ export default {
         rawTree() {
             return this.viewRep.tree;
         },
-        defaultPahts() {
-            let defaultPaths = [];
-            let pathArray = this.viewRep.currentValue.items;
-            pathArray.forEach((defaultPath) => {
-                let pathWithoutScheme = defaultPath.path.replace(SCHEME_PART, '');
-                let path = pathWithoutScheme.substring(pathWithoutScheme.indexOf('/'));
-                if (path.length > 0 && path.substring(path.length - 1) === '/') {
-                    path = path.substring(0, path.length - 1);
-                }
-                defaultPaths.push(decodeURIComponent(path));
-            });
-            return defaultPaths;
+        // returns an array of paths, where the schema part and the mountpoint is split and no trailing '/' is present
+        defaultPaths() {
+            return this.viewRep.currentValue.items?.reduce((prevValue, currentValue) => {
+                let trimmedPath = utilTrimSchema(currentValue.path, SCHEMA_PART);
+                prevValue.push(decodeURIComponent(trimmedPath));
+                return prevValue;
+            }, []);
         },
         rootPath() {
-            let rootPath = decodeURIComponent(this.viewRep.rootDir || '/');
-            // resolve workflow and mountpoint relative root paths
-            if (rootPath.toLowerCase().startsWith(SCHEME_PART)) {
-                let pathWithoutScheme = rootPath.replace(SCHEME_PART, '');
-                let schemeIndex = pathWithoutScheme.indexOf('/') + 1;
-                rootPath = pathWithoutScheme.substring(schemeIndex - 1);
-                let host = pathWithoutScheme.substring(0, schemeIndex - 1);
+            let rootDir = decodeURIComponent(this.viewRep.rootDir || '/');
+            let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
+            let rootPath = utilGetRootPath(rootDir, SCHEMA_PART, SCHEMA, workflowPath);
 
-                if (host === WORKFLOW_RELATIVE) {
-                    rootPath = this.resolveWorkflowRelativePath(rootPath);
-                } else if (host === MOUNTPOINT_RELATIVE || !host.startsWith(SCHEME)) {
-                    rootPath = this.normalizePath(rootPath);
-                }
-            }
-            return rootPath;
+            return rootPath ? rootPath : rootDir;
         },
         // Checks if the current execution environment is the new WebPortal.
         runningInNewWebPortal() {
@@ -177,60 +120,29 @@ export default {
     mounted() {
         // Creates the tree if it is running on the new WebPortal
         if (this.runningInNewWebPortal) {
-            const rootPath = this.rootPath;
-            const defaultPaths = this.defaultPahts;
-            let request = this.$store.getters['api/repository']({ path: rootPath, filter: null });
-            if (request) {
-                request.then((repo) => {
-                    this.setRepository(repo.response, defaultPaths);
-                    this.dataReady = true;
-                    this.onChange();
-                });
-            }
+            this.repositoryAPI = this.$store.getters['api/repository'];
+            this.requestRepository(this.rootPath);
         } else {
             // Call update widget to update the currentValue object with the correct paths (prefix etc.)
             this.onChange();
         }
     },
     methods: {
-        resolveWorkflowRelativePath(path) {
-            let relativePath = path;
-            let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
-            if (workflowPath) {
-                if (workflowPath.endsWith('/')) {
-                    workflowPath = workflowPath.substring(0, workflowPath.length - 1);
-                }
-                relativePath = this.normalizePath(workflowPath + path);
+        async requestRepository(rootPath) {
+            let { response, errorResponse } = await this.repositoryAPI({
+                path: rootPath,
+                filter: null
+            });
+            const defaultPaths = this.defaultPaths;
+            if (errorResponse) {
+                return null;
             }
-            return relativePath;
-        },
-        normalizePath(path) {
-            let normalizedPath = this.normalizeArray(path.split('/'), true).join('/');
-            if (!normalizedPath.startsWith('/')) {
-                normalizedPath = `/${normalizedPath}`;
+            if (response) {
+                this.setRepository(response, defaultPaths);
+                this.dataReady = true;
+                this.onChange();
             }
-            return normalizedPath;
-        },
-        normalizeArray(parts, allowAboveRoot) {
-            let res = [];
-            for (let i = 0; i < parts.length; i++) {
-                let p = parts[i];
-
-                // ignore empty parts
-                if (!p || p === '.') {
-                    continue;
-                }
-                if (p === '..') {
-                    if (res.length && res[res.length - 1] !== '..') {
-                        res.pop();
-                    } else if (allowAboveRoot) {
-                        res.push('..');
-                    }
-                } else {
-                    res.push(p);
-                }
-            }
-            return res;
+            return null;
         },
         setRepository(repository, defaultPaths) {
             if (repository && repository.children && repository.children.length > 0) {
@@ -250,144 +162,7 @@ export default {
             if (!repositoryItem || !repositoryItem.path) {
                 return null;
             }
-            let treeItem = {
-                id: repositoryItem.path,
-                text: this.getNameFromPath(repositoryItem.path),
-                state: {
-                    opened: false,
-                    disabled: false,
-                    selected: false
-                },
-                children: []
-            };
-            
-            // set type and icons
-            if (repositoryItem.type === SERVER_ITEM_TYPE.WORKFLOW) {
-                if (!this.viewRep.selectWorkflows) {
-                    return null;
-                }
-                treeItem.type = WIDGET_ITEM_TYPE.WORKFLOW;
-            } else if (repositoryItem.type === SERVER_ITEM_TYPE.WORKFLOW_GROUP) {
-                treeItem.type = WIDGET_ITEM_TYPE.DIR;
-                if (!this.viewRep.selectDirectories) {
-                    treeItem.state.disabled = true;
-                }
-            } else if (repositoryItem.type === SERVER_ITEM_TYPE.DATA) {
-                if (!this.viewRep.selectDataFiles) {
-                    return null;
-                }
-                let endIndex = treeItem.text.lastIndexOf('.');
-                let fileEnding = treeItem.text;
-                if (endIndex > 0 && endIndex < treeItem.text.length - 1) {
-                    fileEnding = treeItem.text.substring(endIndex);
-                }
-                // check if file type is allowed
-                if (this.viewRep.fileTypes && this.viewRep.fileTypes.length > 0) {
-                    let allowedFileEnding = this.viewRep.fileTypes.some(
-                        (fileType) => fileType.toLowerCase() === fileEnding.toLowerCase()
-                    );
-                    if (!allowedFileEnding) {
-                        return null;
-                    }
-                }
-                
-                treeItem.type = WIDGET_ITEM_TYPE.DATA;
-
-                // set custom icon if possible
-                treeItem.icon = this.getIcon(fileEnding);
-            }
-            
-            // set selection if default paths match
-            if (defaultPaths && defaultPaths.length > 0) {
-                defaultPaths.forEach((defaultPath) => {
-                    if (defaultPath && defaultPath.startsWith(treeItem.id)) {
-                        treeItem.state.opened = true;
-                        if (defaultPath === treeItem.id && !treeItem.state.disabled) {
-                            treeItem.state.opened = false;
-                            treeItem.state.selected = true;
-                        }
-                    }
-                });
-            }
-            
-            // resolve children
-            if (treeItem.type === WIDGET_ITEM_TYPE.DIR) {
-                if (repositoryItem.children) {
-                    repositoryItem.children.forEach((child) => {
-                        let childItem = this.createTreeItemRecursively(child, defaultPaths);
-                        if (childItem) {
-                            treeItem.children.push(childItem);
-                        }
-                    });
-                }
-                
-                // remove empty directories if directories can't be selected
-                if (treeItem.children.length < 1 && !this.viewRep.selectDirectories) {
-                    return null;
-                }
-            }
-            
-            return treeItem;
-        },
-        getIcon(fileEnding) {
-            let icon = fileIcon;
-            if (fileEnding) {
-                switch (fileEnding) {
-                case '.csv':
-                    icon = csvIcon;
-                    break;
-                case '.xls':
-                    icon = xlsIcon;
-                    break;
-                case '.xlsx':
-                    icon = xlsxIcon;
-                    break;
-                case '.xml':
-                    icon = xmlIcon;
-                    break;
-                case '.docx':
-                    icon = docxIcon;
-                    break;
-                case '.html':
-                    icon = htmlIcon;
-                    break;
-                case '.md':
-                    icon = mdIcon;
-                    break;
-                case '.odp':
-                    icon = odpIcon;
-                    break;
-                case '.ods':
-                    icon = odsIcon;
-                    break;
-                case '.odt':
-                    icon = odtIcon;
-                    break;
-                case '.pdf':
-                    icon = pdfIcon;
-                    break;
-                case '.pptx':
-                    icon = pptxIcon;
-                    break;
-                case '.ps':
-                    icon = psIcon;
-                    break;
-                case '.zip':
-                    icon = zipIcon;
-                    break;
-                case '.exe':
-                    icon = exeIcon;
-                    break;
-                }
-            }
-            return icon;
-        },
-        getNameFromPath(path) {
-            let index = path.lastIndexOf('/');
-            if (index + 1 >= path.length) {
-                index = -1;
-            }
-            return index < 0 ? path : path.substring(index + 1);
+            return utilCreateTreeItem(repositoryItem, defaultPaths, this.viewRep);
         },
         iconForItem(item) {
             switch (item.type) {
@@ -400,7 +175,7 @@ export default {
             }
         },
         transformTree(tree) {
-            return tree ? tree.map(item => this.transformTreeItem(item)) : [];
+            return tree?.map(item => this.transformTreeItem(item)) || [];
         },
         transformTreeItem(item) {
             const state = item.state || {};
@@ -410,13 +185,13 @@ export default {
                 opened: Boolean(state.opened),
                 selected: Boolean(state.selected),
                 disabled: Boolean(state.disabled),
-                icon: this.iconForItem(item),
+                icon: item.icon ? item.icon : this.iconForItem(item),
                 selectedIcon: item.children ? '' : cogIcon,
                 userData: {
                     path: item.id,
                     type: item.type
                 },
-                children: item.children ? item.children.map(child => this.transformTreeItem(child)) : []
+                children: item.children?.map(child => this.transformTreeItem(child)) || []
             };
         },
         /**
@@ -437,7 +212,7 @@ export default {
                         type: item.userData.type
                     });
                 }
-                if (item.children && item.children.length > 0) {
+                if (item.children?.length) {
                     paths.concat(this.buildSelectedPaths(item.children, paths));
                 }
             }
@@ -462,7 +237,7 @@ export default {
                 mountId = this.$store.state.settings.defaultMountId;
             }
             if (mountId) {
-                this.prefix = SCHEME_PART + mountId;
+                this.prefix = SCHEMA_PART + mountId;
             }
         },
         validate() {

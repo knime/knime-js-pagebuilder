@@ -1,6 +1,6 @@
 <script>
 import mime from 'mime-types';
-import getFileExtension from '~/src/util/getFileExtension';
+import { getFileExtension } from '~/src/util/fileUtils';
 import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import FileLink from 'webapps-common/ui/components/FileLink';

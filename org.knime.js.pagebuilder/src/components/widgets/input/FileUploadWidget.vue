@@ -3,7 +3,7 @@ import filesize from 'filesize';
 import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import Button from '~/webapps-common/ui/components/Button';
-import getFileExtension from '~/src/util/getFileExtension';
+import { getFileExtension } from '~/src/util/fileUtils';
 import CircleCheckIcon from '~/webapps-common/ui/assets/img/icons/circle-check.svg?inline';
 
 const DATA_TYPE = 'path';
