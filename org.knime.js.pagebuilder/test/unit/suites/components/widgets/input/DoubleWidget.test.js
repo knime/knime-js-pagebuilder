@@ -80,5 +80,4 @@ describe('DoubleWidget.vue', () => {
             expect(onChange).toBeCalled();
         });
     });
-
 });

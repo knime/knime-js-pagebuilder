@@ -274,5 +274,4 @@ describe('NodeViewIframe.vue', () => {
             });
         });
     });
-
 });

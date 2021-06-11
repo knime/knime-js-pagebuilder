@@ -5,7 +5,6 @@ import APWrapper from '@/components/APWrapper';
 import PageBuilder from '@/components/PageBuilder';
 
 describe('APWrapper.vue', () => {
-
     it('renders empty wrapper', () => {
         let wrapper = shallowMount(APWrapper);
 

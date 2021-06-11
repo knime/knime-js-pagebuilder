@@ -40,7 +40,7 @@ export default {
     :class="['node-popover', { active }]"
     :type="'error'"
   >
-    <template v-slot:popoverContent>
+    <template #popoverContent>
       <div
         class="error-wrapper"
         title="Click to see more details."

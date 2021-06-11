@@ -4,7 +4,6 @@ import Vuex from 'vuex';
 import * as storeConfig from '~/store/alert';
 
 describe('alert store', () => {
-
     let store, localVue;
 
     beforeAll(() => {

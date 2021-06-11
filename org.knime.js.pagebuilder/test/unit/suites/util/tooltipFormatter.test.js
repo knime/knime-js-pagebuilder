@@ -2,7 +2,6 @@
 import formatTooltip from '@/util/tooltipFormatter';
 
 describe('numStrFormatter.js', () => {
-
     it('handles numbers', () => {
         const configObj = {};
         const intTest = 10;

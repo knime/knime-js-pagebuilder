@@ -16,7 +16,6 @@ const stubs = {
 };
 
 describe('Column.vue', () => {
-
     it('renders without classes and styles', () => {
         let wrapper = shallowMount(Column, {
             stubs,
@@ -257,5 +256,4 @@ describe('Column.vue', () => {
 
         expect(view1).not.toBe(view2);
     });
-
 });

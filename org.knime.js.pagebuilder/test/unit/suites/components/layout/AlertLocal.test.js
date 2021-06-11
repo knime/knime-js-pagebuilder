@@ -4,7 +4,6 @@ import AlertLocal from '@/components/layout/AlertLocal';
 import Popover from '@/components/layout/Popover';
 
 describe('AlertLocal', () => {
-
     it('renders default inactive', () => {
         let wrapper = mount(AlertLocal);
         expect(wrapper.find(AlertLocal).exists()).toBe(true);

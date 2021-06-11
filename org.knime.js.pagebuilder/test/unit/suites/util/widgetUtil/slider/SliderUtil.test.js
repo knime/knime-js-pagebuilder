@@ -1,7 +1,6 @@
 import { createTicks } from '@/util/widgetUtil/slider/tickUtil';
 
 describe('tickUtil.js', () => {
-
     it('handles missing config', () => {
         const tickConfig = {
             min: 1,

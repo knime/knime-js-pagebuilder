@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils';
 import Popover from '@/components/layout/Popover';
 
 describe('Popover', () => {
-
     it('renders default inactive', () => {
         let wrapper = mount(Popover);
         expect(wrapper.vm.level).toBe('local');

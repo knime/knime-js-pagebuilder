@@ -307,7 +307,6 @@ describe('MultipleSelectionWidget.vue', () => {
             nodeId: '5:0:9',
             isValid: false
         };
-
     });
 
     it('renders all different types', () => {

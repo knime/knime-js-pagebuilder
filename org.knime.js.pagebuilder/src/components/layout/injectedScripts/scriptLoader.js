@@ -40,5 +40,4 @@ window.knimeLoader = (function () {
             postResponse();
         }
     };
-
 })();

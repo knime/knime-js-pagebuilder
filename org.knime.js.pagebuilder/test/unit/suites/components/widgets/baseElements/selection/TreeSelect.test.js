@@ -107,7 +107,6 @@ describe('TreeSelect.vue', () => {
     });
 
     describe('mouse interaction', () => {
-
         it('selects item on click', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
@@ -278,11 +277,9 @@ describe('TreeSelect.vue', () => {
             expect(wrapper.vm.currentKeyboardNavNode.$data.isKeyNav).toBe(false);
             expect(wrapper.findAll(TreeSelectItem).at(0).vm.$data.isHover).toStrictEqual(true);
         });
-
     });
 
     describe('keyboard interaction', () => {
-
         it('navigates up using up key', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
@@ -530,7 +527,6 @@ describe('TreeSelect.vue', () => {
             container.trigger('keydown.right');
             container.trigger('keydown.enter');
         });
-
     });
 
     it('scrolls to element correctly', () => {
@@ -571,5 +567,4 @@ describe('TreeSelect.vue', () => {
         scrollToElement(area, el);
         expect(area.scrollTop).toBe(40); // just offsetTop
     });
-
 });

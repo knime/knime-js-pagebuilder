@@ -3,7 +3,6 @@ import { getFileExtension, trimSchema, normalizeArray,
     normalizePath, resolveWorkflowRelativePath, getRootPath, getNameFromPath } from '@/util/fileUtils';
 
 describe('getFileExtension function', () => {
-
     it('extracts file extensions', () => {
         const file = 'file.txt';
         const path = '/Path/to/file.txt';
@@ -62,7 +61,7 @@ describe('trimSchema function', () => {
 
 describe('getRootPath functionality', () => {
     const SCHEMA = 'knime';
-    const SCHEMA_PART =  `${SCHEMA}://`;
+    const SCHEMA_PART = `${SCHEMA}://`;
     const WORKFLOW_RELATIVE = 'knime.workflow';
     const WORKFLOW_PATH = `/testWorkflow`;
     const MOUNTPOINT_RELATIVE = 'knime.mountpoint';

@@ -29,7 +29,7 @@ export const actions = {
         consola.debug('WrapperAPI store: trigger re-execution');
         /* CLIENT (View/Widget) VALIDATION */
         let validPage = await dispatch('pagebuilder/getValidity', null, { root: true })
-            .then((res, err) =>  {
+            .then((res, err) => {
                 let isValid = false;
                 let viewValidities = Object.values(res);
                 if (viewValidities || viewValidities.length > 0) {

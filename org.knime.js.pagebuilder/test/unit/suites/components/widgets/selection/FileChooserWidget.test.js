@@ -114,6 +114,7 @@ const propsDataTemplate = {
     nodeId: '9:0:4',
     isValid: false
 };
+
 describe('FileChooserWidget.vue AP', () => {
     let propsData;
 
@@ -468,5 +469,4 @@ describe('FileChooserWidget.vue new WebPortal', () => {
             errorMessage: null
         });
     });
-
 });

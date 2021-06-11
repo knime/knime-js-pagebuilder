@@ -9,7 +9,6 @@ import propsDataListImport from '~/test/unit/assets/propsDataList';
 import ValueSelectionWidget from '@/components/widgets/selection/ValueSelectionWidget';
 
 describe('ValueSelectionWidget.vue', () => {
-
     let propsDataColumnLockedList, propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
 
     beforeEach(() => {

@@ -254,5 +254,4 @@ describe('ImageWidget.vue', () => {
 
         expect(wrapper.vm.validate().errorMessage).toBe('Unsupported image format: XXXXXXXX');
     });
-
 });

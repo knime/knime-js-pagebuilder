@@ -1,7 +1,6 @@
 import { default as createTreeItemRecursively, checkDefaultPaths, getIcon } from '@/util/createTreeItem';
 
 describe('Tests the createTreeItem functionality', () => {
-
     it('tests the creation of a empty tree object', () => {
         const flatRepositoryItem = {};
         const defaultPaths = [];

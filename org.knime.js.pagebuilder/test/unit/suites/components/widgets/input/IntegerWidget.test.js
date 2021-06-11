@@ -80,5 +80,4 @@ describe('IntegerWidget.vue', () => {
             expect(onChange).toBeCalled();
         });
     });
-
 });

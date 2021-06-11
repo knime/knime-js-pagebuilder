@@ -79,6 +79,7 @@ describe('Interactivity store', () => {
             store.dispatch('unsubscribe', payload);
             expect(store.state[payload.id]).not.toBeDefined();
         });
+
         it('allows removing non-existing subscriber', () => {
             store.dispatch('unsubscribe', payload);
             expect(store.state[payload.id]).not.toBeDefined();
