@@ -103,13 +103,12 @@ export default {
         },
         // Checks if the current execution environment is the new WebPortal.
         runningInNewWebPortal() {
-            return !this.viewRep.runningOnServer &&
-                (!window.KnimePageLoader || window.KnimePageLoader?.isRunningInWebportal());
+            return !window.KnimePageLoader || window.KnimePageLoader?.isRunningInWebportal();
         },
         // Determines if the widget should be shown. This is the case if its running in the new WebPortal and the data is ready,
         // or if it's running in the old WebPortal
         showWidget() {
-            return Boolean((this.runningInNewWebPortal && this.dataReady) || !this.runningInNewWebPortal);
+            return (this.runningInNewWebPortal && this.dataReady) || !this.runningInNewWebPortal;
         }
     },
     watch: {
