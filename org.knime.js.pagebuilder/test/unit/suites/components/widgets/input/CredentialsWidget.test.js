@@ -317,6 +317,7 @@ describe('CredentialsWidget.vue', () => {
         });
 
         it('displays server error in correct hierarchy', () => {
+            let validate = jest.fn();
             let wrapper = mount(CredentialsWidget, {
                 propsData: {
                     ...propsDataServer,
@@ -330,31 +331,43 @@ describe('CredentialsWidget.vue', () => {
                         }
                     }
                 },
-                stubs: { Label, Fieldset, InputField }
+                stubs: {
+                    Label,
+                    Fieldset,
+                    InputField: {
+                        template: '<div />',
+                        methods: {
+                            getValue: jest.fn().mockReturnValue(null),
+                            validate
+                        }
+                    }
+                }
             });
 
-            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: 'a+' });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: 'a+' });
-
-            wrapper.find({ ref: 'usernameForm' }).setProps({ value: '' });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ value: '' });
+            // username and password invalid
+            validate.mockReturnValueOnce({ isValid: false, errorMessage: null });
+            validate.mockReturnValueOnce({ isValid: false, errorMessage: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for username and password.', isValid: false }
             );
 
-            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: null });
+            // username valid, password invalid
+            validate.mockReturnValueOnce({ isValid: false, errorMessage: null });
+            validate.mockReturnValueOnce({ isValid: true, errorMessage: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for password.', isValid: false }
             );
 
-            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: 'a+' });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: null });
+            // username invalid, password valid
+            validate.mockReturnValueOnce({ isValid: true, errorMessage: null });
+            validate.mockReturnValueOnce({ isValid: false, errorMessage: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Please correct input for username.', isValid: false }
             );
 
-            wrapper.find({ ref: 'usernameForm' }).setProps({ pattern: null });
-            wrapper.find({ ref: 'passwordForm' }).setProps({ pattern: null });
+            // username and password valid
+            validate.mockReturnValueOnce({ isValid: true, errorMessage: null });
+            validate.mockReturnValueOnce({ isValid: true, errorMessage: null });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: '', isValid: true }
             );

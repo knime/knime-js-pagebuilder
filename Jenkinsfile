@@ -28,13 +28,13 @@ timeout(time: 15, unit: 'MINUTES') {
                         '''
                     }
 
-                    stage('Security Audit') {
+                     stage('Security Audit') {
                         env.lastStage = 'Security Audit'
 
                         catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                             retry(3) { // because npm registry sometimes break
                                 sh '''
-                                    npm audit --production
+                                    npm run audit
                                 '''
                             }
                         }

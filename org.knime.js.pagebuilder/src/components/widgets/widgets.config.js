@@ -46,5 +46,5 @@ export const classToComponentMap = {
  */
 export const legacyExclusions = {
     // reactive widgets
-    'org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewRepresentation': 'RefreshButtonWidget'
+    'org.knime.js.base.node.widget.reexecution.refresh.RefreshButtonWidgetViewRepresentation': 'RefreshButtonWidget'
 };

@@ -1,7 +1,5 @@
 <script>
 
-const SVG_STROKE_PIXEL_OFFSET = 3; // px
-
 /**
  * Animation overlay for individual nodes or widgets while they are re-executing.
  */
@@ -16,12 +14,17 @@ export default {
             default: false
         }
     },
+    data() {
+        return {
+            SVG_STROKE_PIXEL_OFFSET: 3 // px
+        };
+    },
     computed: {
         spinnerHeight() {
             return this.showSpinner ? this.getSpinnerHeight() : 0;
         },
         circleRadius() {
-            return Math.max((this.spinnerHeight / 2) - SVG_STROKE_PIXEL_OFFSET, 0);
+            return Math.max((this.spinnerHeight / 2) - this.SVG_STROKE_PIXEL_OFFSET, 0);
         },
         svgLeft() {
             return this.showSpinner ? this.getOverlayWidth() : 0;
@@ -33,8 +36,8 @@ export default {
                 `left:${this.svgLeft - (this.spinnerHeight / 2)}px;`;
         },
         spinnerStyle() {
-            return `transform-origin: ${this.circleRadius + SVG_STROKE_PIXEL_OFFSET}px` +
-                ` ${this.circleRadius + SVG_STROKE_PIXEL_OFFSET}px 0;`;
+            return `transform-origin: ${this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET}px` +
+                ` ${this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET}px 0;`;
         }
     },
     methods: {
