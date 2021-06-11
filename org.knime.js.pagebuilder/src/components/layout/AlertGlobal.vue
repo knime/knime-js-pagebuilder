@@ -74,7 +74,7 @@ export default {
     :level="'global'"
     @clickAway="onClose(!isError)"
   >
-    <template v-slot:popoverContent>
+    <template #popoverContent>
       <PopoverMessage
         :type="type"
         :title="title"
@@ -82,7 +82,7 @@ export default {
         :message-body="messageText"
         @closeAlert="remove => onClose(remove)"
       >
-        <template v-slot:messageBodyHeader>
+        <template #messageBodyHeader>
           <span v-if="isError">
             <!-- This "header" is shown inside the expandable message body above the main content of the message. -->
             <span class="info-header">Node:</span>

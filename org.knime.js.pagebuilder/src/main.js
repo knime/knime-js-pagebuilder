@@ -27,7 +27,6 @@ if (typeof KnimePageLoader === 'undefined') {
      * - wrapper API store
      */
     window.KnimePageLoader = (function () {
-
         // PageBuilder Library loading
         let loadPageBuilderLibrary = async () => {
             // initialize VueX

@@ -165,7 +165,6 @@ describe('Multiselect.vue', () => {
             expect(wrapper.emitted().input).toBeTruthy();
             expect(wrapper.emitted().input[0][0]).toStrictEqual(testValue);
         });
-
     });
 
     describe('listbox', () => {
@@ -238,5 +237,4 @@ describe('Multiselect.vue', () => {
             expect(wrapper.emitted().input[0][0]).toStrictEqual(testValue);
         });
     });
-
 });

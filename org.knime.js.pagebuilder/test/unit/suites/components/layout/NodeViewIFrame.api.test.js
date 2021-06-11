@@ -383,6 +383,5 @@ describe('NodeViewIframe.vue', () => {
             let path = window.KnimePageBuilderAPI.getCustomSketcherPath();
             expect(path).toEqual('sample/sketcher/path/sketcher.html');
         });
-
     });
 });

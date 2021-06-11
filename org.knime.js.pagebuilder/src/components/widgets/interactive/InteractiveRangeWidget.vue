@@ -100,7 +100,7 @@ export default {
                 update[UPDATE_KEY_MIN] = value.value[0];
                 update[UPDATE_KEY_MAX] = value.value[1];
             } else {
-                let key =  this.valueMinimum === false ? [UPDATE_KEY_MAX] : [UPDATE_KEY_MIN];
+                let key = this.valueMinimum === false ? [UPDATE_KEY_MAX] : [UPDATE_KEY_MIN];
                 update[key] = value.value;
             }
             this.$emit('updateWidget', {

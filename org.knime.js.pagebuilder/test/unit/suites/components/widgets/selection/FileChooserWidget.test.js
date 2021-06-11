@@ -207,5 +207,4 @@ describe('FileChooserWidget.vue', () => {
             errorMessage: 'Selection is required.'
         });
     });
-
 });

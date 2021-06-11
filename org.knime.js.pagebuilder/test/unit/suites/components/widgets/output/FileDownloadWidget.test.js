@@ -121,5 +121,4 @@ describe('FileDownloadWidget.vue', () => {
         expect(fl.props('href')).toBe(`file://${propsData.nodeConfig.viewRepresentation.path}`);
         delete window.KnimePageLoader;
     });
-
 });

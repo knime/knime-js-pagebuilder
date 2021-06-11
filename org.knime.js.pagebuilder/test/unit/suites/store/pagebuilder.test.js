@@ -117,7 +117,7 @@ describe('PageBuilder store', () => {
     it('updates re-execution count when executing node ids are updated', () => {
         expect(store.getters.nodesReExecuting).toStrictEqual([]);
         expect(store.getters.reExecutionUpdates).toBe(0);
-        let nodesReExecuting =  ['node1'];
+        let nodesReExecuting = ['node1'];
         store.dispatch('setNodesReExecuting', nodesReExecuting);
         expect(store.getters.nodesReExecuting).toStrictEqual(nodesReExecuting);
         expect(store.getters.reExecutionUpdates).toBe(1);
@@ -321,5 +321,4 @@ describe('PageBuilder store', () => {
             await expect(store.dispatch('getValidity')).resolves.toStrictEqual({});
         });
     });
-
 });

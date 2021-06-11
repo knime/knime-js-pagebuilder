@@ -1,5 +1,4 @@
 describe('message listener', () => {
-
     const nodeId = '0.0.7';
 
     const postMessage = (data, origin) => {

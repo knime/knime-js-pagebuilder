@@ -340,7 +340,6 @@ describe('NodeView.vue', () => {
         expect(wrapper.find(NotAvailable).exists()).toBe(true);
         expect(wrapper.find(NotAvailable).props('nodeInfo')).toEqual(expectedNodeInfo);
         expect(wrapper.find(NotAvailable).props('nodeId')).toEqual('id1');
-
     });
 
     it('detects if the node is currently (re)executing via node state', () => {

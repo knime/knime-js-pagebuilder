@@ -4,7 +4,6 @@ import Row from '@/components/layout/Row';
 import Column from '@/components/layout/Column';
 
 describe('Row.vue', () => {
-
     it('renders without classes and styles', () => {
         let wrapper = shallowMount(Row, {
             propsData: {
@@ -59,5 +58,4 @@ describe('Row.vue', () => {
             expect(columnComponent.props('columnConfig')).toEqual(columns[i]);
         });
     });
-
 });

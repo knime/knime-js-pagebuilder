@@ -188,7 +188,6 @@ describe('ValueFilterSelectionWidget.vue', () => {
         });
         expect(wrapperLocked.html()).toBeTruthy();
         expect(wrapperLocked.isVisible()).toBeTruthy();
-
     });
 
     it('sends @updateWidget if Multiselect emits @input', () => {

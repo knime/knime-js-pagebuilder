@@ -4,6 +4,7 @@ import Label from '~/webapps-common/ui/components/forms/Label';
 
 describe('NotAvailable.vue', () => {
     let wrapper;
+
     beforeAll(() => {
         wrapper = shallowMount(NotAvailable);
     });

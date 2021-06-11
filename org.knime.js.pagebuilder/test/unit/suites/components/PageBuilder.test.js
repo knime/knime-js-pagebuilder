@@ -6,7 +6,6 @@ import Page from '@/components/layout/Page';
 import AlertGlobal from '@/components/layout/AlertGlobal';
 
 describe('PageBuilder.vue', () => {
-
     let store, localVue, context;
 
     beforeEach(() => {
@@ -47,5 +46,4 @@ describe('PageBuilder.vue', () => {
 
         expect(wrapper.find(Page).exists()).toBeFalsy();
     });
-
 });

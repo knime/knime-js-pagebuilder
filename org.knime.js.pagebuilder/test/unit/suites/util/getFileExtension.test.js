@@ -2,7 +2,6 @@
 import getFileExtension from '@/util/getFileExtension';
 
 describe('getFileExtension.js', () => {
-
     it('extracts file extensions', () => {
         const file = 'file.txt';
         const path = '/Path/to/file.txt';

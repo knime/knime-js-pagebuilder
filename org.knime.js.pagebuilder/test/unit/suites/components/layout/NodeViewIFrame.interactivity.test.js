@@ -175,6 +175,5 @@ describe('NodeViewIframe.vue', () => {
                 payload
             }, window.origin);
         });
-
     });
 });

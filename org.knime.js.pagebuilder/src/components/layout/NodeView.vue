@@ -113,7 +113,7 @@ export default {
             return { ...classToComponentMap, ...legacyExclusions }[this.webNodeConfig?.viewRepresentation?.['@class']];
         },
         isWidget() {
-            return legacyExclusions[this.webNodeConfig?.viewRepresentation?.['@class']]  ||
+            return legacyExclusions[this.webNodeConfig?.viewRepresentation?.['@class']] ||
                 (this.legacyModeDisabled && this.widgetComponentName);
         },
         showExecutionOverlay() {

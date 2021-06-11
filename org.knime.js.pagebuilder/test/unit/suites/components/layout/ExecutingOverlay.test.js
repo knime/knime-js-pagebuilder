@@ -3,7 +3,6 @@ import { shallowMount } from '@vue/test-utils';
 import ExecutingOverlay from '@/components/layout/ExecutingOverlay';
 
 describe('ExecutingOverlay.vue', () => {
-
     it('renders nothing by default', () => {
         let wrapper = shallowMount(ExecutingOverlay, {
             propsData: {

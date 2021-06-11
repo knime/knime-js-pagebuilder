@@ -8,7 +8,6 @@ import * as pagebuilderConfig from '~/store/pagebuilder';
 import * as alertConfig from '~/store/alert';
 
 describe('wrapper API store', () => {
-
     let localVue;
 
     const EMPTY = expect().not.toBeDefined();
@@ -44,7 +43,6 @@ describe('wrapper API store', () => {
     };
 
     describe('re-execution', () => {
-
         it('successfully dispatches re-execute action', async () => {
             let validResponse = Promise.resolve({ foo: true });
             let valueResponse = Promise.resolve({ foo: 1 });
@@ -132,7 +130,6 @@ describe('wrapper API store', () => {
     });
 
     describe('wizard actions', () => {
-
         it('updates page', async () => {
             let pollRPC = jest.fn();
             let store = getMockStore({
@@ -218,7 +215,6 @@ describe('wrapper API store', () => {
     });
 
     describe('RPC', () => {
-
         it('returns error if no global RPC exists', async () => {
             let rpcConfig = {
                 id: 0,
@@ -394,7 +390,6 @@ describe('wrapper API store', () => {
     });
 
     describe('error handling', () => {
-
         it('shows pagebuilder alert messages', () => {
             let caller = 'testFn';
             let error = 'testError';

@@ -15,7 +15,6 @@ const localWrapView = item => ({
 });
 
 describe('wrapViewContent util', () => {
-
     it('handles empty content', () => {
         expect(wrapViewContent([])).toStrictEqual([]);
     });

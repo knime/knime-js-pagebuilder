@@ -353,7 +353,6 @@ describe('DateTimeWidget.vue', () => {
     });
 
     describe('renders', () => {
-
         it('renders with all fields', () => {
             let wrapper = mount(DateTimeWidget, {
                 propsData: propsDataAll,
@@ -433,10 +432,9 @@ describe('DateTimeWidget.vue', () => {
             expect(wrapper.emitted().updateWidget[0][0].update['viewRepresentation.currentValue'].zonestring)
                 .toStrictEqual('Europe/Berlin');
         });
-
     });
-    describe('events and actions', () => {
 
+    describe('events and actions', () => {
         it('emits @updateWidget if timezone changes', () => {
             let wrapper = mount(DateTimeWidget, {
                 propsData: propsDataAll,
@@ -522,7 +520,6 @@ describe('DateTimeWidget.vue', () => {
     });
 
     describe('methods', () => {
-
         it('parses knime date and timezone strings', () => {
             let wrapper = mount(DateTimeWidget, {
                 propsData: propsDataAll,
@@ -562,11 +559,9 @@ describe('DateTimeWidget.vue', () => {
             const res = wrapper.vm.formatDate(d);
             expect(res).toBe('2020-10-10T13:32:45.153');
         });
-
     });
 
     describe('validate', () => {
-
         it('is valid if valid data is given', () => {
             let wrapper = mount(DateTimeWidget, {
                 propsData: propsDataAll,
@@ -633,7 +628,5 @@ describe('DateTimeWidget.vue', () => {
 
             expect(wrapper.find(ErrorMessage).text()).toStrictEqual(testErrorMsg);
         });
-
     });
-
 });

@@ -7,7 +7,6 @@ describe('ListBoxInputWidget.vue', () => {
     let propsDataEmailRegexLineSplit, propsDataCharSplit, propsDataCSVSplit;
 
     beforeEach(() => {
-
         propsDataEmailRegexLineSplit = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',

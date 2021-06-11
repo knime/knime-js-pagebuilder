@@ -4,7 +4,6 @@ import Layout from '@/components/layout/Layout';
 import Row from '@/components/layout/Row';
 
 describe('Layout.vue', () => {
-
     it('renders', () => {
         let wrapper = shallowMount(Layout);
 
@@ -26,5 +25,4 @@ describe('Layout.vue', () => {
         expect(rows.at(0).props().rowConfig).toEqual({ dummy: 'dummy' });
         expect(rows.at(1).props().rowConfig).toEqual({ foo: 'foo' });
     });
-
 });

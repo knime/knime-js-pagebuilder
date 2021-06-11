@@ -8,6 +8,7 @@ jest.mock('~/webapps-common/util/copyText');
 
 describe('PopoverMessage', () => {
     let wrapper;
+
     beforeAll(() => {
         wrapper = shallowMount(PopoverMessage, {
             propsData: {
@@ -61,7 +62,7 @@ describe('PopoverMessage', () => {
         }, { root: true });
     });
 
-    it('only minimizes error messages',  () => {
+    it('only minimizes error messages', () => {
         wrapper = mount(PopoverMessage, {
             propsData: {
                 type: 'warn',
@@ -85,7 +86,7 @@ describe('PopoverMessage', () => {
         expect(wrapper.emitted('closeAlert'));
     });
 
-    it('handles non-expandable messages',  () => {
+    it('handles non-expandable messages', () => {
         wrapper = mount(PopoverMessage, {
             propsData: {
                 type: 'error',
@@ -103,7 +104,7 @@ describe('PopoverMessage', () => {
         expect(wrapper.find('.copy-button').isVisible()).toBe(true);
     });
 
-    it('handles expandable messages',  () => {
+    it('handles expandable messages', () => {
         wrapper = mount(PopoverMessage, {
             propsData: {
                 type: 'error',
