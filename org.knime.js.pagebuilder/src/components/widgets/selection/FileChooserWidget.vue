@@ -73,7 +73,7 @@ export default {
             return this.viewRep.description || null;
         },
         infoMessage() {
-            if (!this.viewRep.runningOnServer && !this.runningInNewWebPortal) {
+            if (!this.viewRep.runningOnServer && !this.runningInWebPortal) {
                 return 'File selection only possible on server.';
             } else if (this.treeData.length === 0) {
                 return 'No items found for selection.';
@@ -99,16 +99,16 @@ export default {
             let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
             let rootPath = utilGetRootPath(rootDir, SCHEMA_PART, SCHEMA, workflowPath);
 
-            return rootPath ? rootPath : rootDir;
+            return rootPath || rootDir;
         },
         // Checks if the current execution environment is the new WebPortal.
-        runningInNewWebPortal() {
+        runningInWebPortal() {
             return !window.KnimePageLoader || window.KnimePageLoader?.isRunningInWebportal();
         },
         // Determines if the widget should be shown. This is the case if its running in the new WebPortal and the data is ready,
         // or if it's running in the old WebPortal
         showWidget() {
-            return (this.runningInNewWebPortal && this.dataReady) || !this.runningInNewWebPortal;
+            return (this.runningInWebPortal && this.dataReady) || !this.runningInWebPortal;
         }
     },
     watch: {
@@ -118,7 +118,7 @@ export default {
     },
     mounted() {
         // Creates the tree if it is running on the new WebPortal
-        if (this.runningInNewWebPortal) {
+        if (this.runningInWebPortal) {
             this.repositoryAPI = this.$store.getters['api/repository'];
             this.requestRepository(this.rootPath);
         } else {
@@ -144,7 +144,7 @@ export default {
             return null;
         },
         setRepository(repository, defaultPaths) {
-            if (repository && repository.children && repository.children.length > 0) {
+            if (repository?.children && repository?.children.length > 0) {
                 let tree = [];
                 repository.children.forEach((child) => {
                     let childItem = this.createTreeItemRecursively(child, defaultPaths);
@@ -158,7 +158,7 @@ export default {
             }
         },
         createTreeItemRecursively(repositoryItem, defaultPaths) {
-            if (!repositoryItem || !repositoryItem.path) {
+            if (!repositoryItem?.path) {
                 return null;
             }
             return utilCreateTreeItem(repositoryItem, defaultPaths, this.viewRep);
@@ -184,7 +184,7 @@ export default {
                 opened: Boolean(state.opened),
                 selected: Boolean(state.selected),
                 disabled: Boolean(state.disabled),
-                icon: item.icon ? item.icon : this.iconForItem(item),
+                icon: item.icon || this.iconForItem(item),
                 selectedIcon: item.children ? '' : cogIcon,
                 userData: {
                     path: item.id,
@@ -218,7 +218,7 @@ export default {
             return paths;
         },
         onChange() {
-            if (this.runningInNewWebPortal) {
+            if (this.runningInWebPortal) {
                 this.checkMountId();
             }
             const changeEventObj = {

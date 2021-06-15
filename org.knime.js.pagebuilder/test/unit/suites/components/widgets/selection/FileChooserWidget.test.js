@@ -210,7 +210,7 @@ describe('FileChooserWidget.vue AP', () => {
     });
 });
 
-describe('FileChooserWidget.vue new WebPortal', () => {
+describe('FileChooserWidget.vue WebPortal', () => {
     let propsData, store, localVue, mocks;
 
     beforeAll(() => {
