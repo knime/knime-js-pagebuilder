@@ -105,10 +105,10 @@ export default {
         runningInWebPortal() {
             return !window.KnimePageLoader || window.KnimePageLoader?.isRunningInWebportal();
         },
-        // Determines if the widget should be shown. This is the case if its running in the new WebPortal and the data is ready,
-        // or if it's running in the old WebPortal
+        // Determines if the widget should be shown. This is the case if its running in the WebPortal and the data is ready,
+        // or if it's running in the AP.
         showWidget() {
-            return (this.runningInWebPortal && this.dataReady) || !this.runningInWebPortal;
+            return !this.runningInWebPortal || this.dataReady;
         }
     },
     watch: {
@@ -144,7 +144,7 @@ export default {
             return null;
         },
         setRepository(repository, defaultPaths) {
-            if (repository?.children && repository?.children.length > 0) {
+            if (repository?.children?.length) {
                 let tree = [];
                 repository.children.forEach((child) => {
                     let childItem = this.createTreeItemRecursively(child, defaultPaths);
