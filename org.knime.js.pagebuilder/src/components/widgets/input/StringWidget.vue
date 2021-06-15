@@ -76,6 +76,10 @@ export default {
         },
         regex() {
             return this.viewRep.regex || null;
+        },
+        // The custom error message set in the config dialog with the placeholder character replaced by the input.
+        customErrorMessage() {
+            return this.viewRep.errorMessage?.split('?').join(this.value);
         }
     },
     methods: {
@@ -98,7 +102,10 @@ export default {
             if (typeof this.$refs.form.validate === 'function') {
                 let validateEvent = this.$refs.form.validate();
                 isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current input is invalid.';
+                errorMessage = this.customErrorMessage ||
+                                validateEvent.errorMessage ||
+                                errorMessage ||
+                                'Current input is invalid.';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
         }

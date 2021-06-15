@@ -162,6 +162,8 @@ describe('StringWidget.vue', () => {
         });
 
         it('will return invalid when the value is required but missing', () => {
+            // will only apply if no custom message is provided
+            propsDataInput.nodeConfig.viewRepresentation.errorMessage = '';
             let wrapper = mount(StringWidget, {
                 propsData: propsDataInput
             });
@@ -262,6 +264,7 @@ describe('StringWidget.vue', () => {
     });
 
     it('takes child error message over parent error message', async () => {
+        propsDataInput.nodeConfig.viewRepresentation.errorMessage = '';
         let wrapper = mount(StringWidget, {
             propsData: propsDataInput,
             stubs: {
@@ -277,6 +280,25 @@ describe('StringWidget.vue', () => {
         await Vue.nextTick();
         expect(wrapper.vm.validate().isValid).toBe(false);
         expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
+    });
+
+    it('shows custom error Message over other messages if one is set', async () => {
+        propsDataInput.nodeConfig.viewRepresentation.errorMessage = 'custom message';
+        let wrapper = mount(StringWidget, {
+            propsData: propsDataInput,
+            stubs: {
+                InputField: {
+                    template: '<div />',
+                    methods: {
+                        getValue: jest.fn().mockReturnValue('test_string'),
+                        validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                    }
+                }
+            }
+        });
+        await Vue.nextTick();
+        expect(wrapper.vm.validate().isValid).toBe(false);
+        expect(wrapper.vm.validate().errorMessage).toBe('custom message');
     });
 
     it('has no error message when valid', async () => {
