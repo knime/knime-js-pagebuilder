@@ -133,12 +133,12 @@ export default {
                 filter: null
             });
             const defaultPaths = this.defaultPaths;
+            this.dataReady = true;
             if (errorResponse) {
                 return null;
             }
             if (response) {
                 this.setRepository(response, defaultPaths);
-                this.dataReady = true;
                 this.onChange();
             }
             return null;
