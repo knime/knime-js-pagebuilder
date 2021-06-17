@@ -165,13 +165,15 @@ describe('wrapper API store', () => {
                 webNodes: {
                     foo: {}
                 },
-                resetNodes: ['foo']
+                resetNodes: ['foo'],
+                executedNodes: []
             } });
             expect(shouldPoll).toBe(false);
             expect(updatePage).toHaveBeenCalledWith(expect.anything(), {
                 nodeIds: ['foo'],
                 page: {
                     resetNodes: ['foo'],
+                    executedNodes: [],
                     webNodes: { foo: {} }
                 }
             }, EMPTY);
@@ -188,7 +190,29 @@ describe('wrapper API store', () => {
                 alertMocks: { showAlert }
             });
 
-            let shouldPoll = await store.dispatch('setPage', { resetNodes: ['foo'] });
+            let shouldPoll = await store.dispatch('setPage', {
+                resetNodes: ['foo'],
+                executedNodes: []
+            });
+            expect(shouldPoll).toBe(true);
+            expect(updatePage).not.toHaveBeenCalled();
+            expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), ['foo'], EMPTY);
+            expect(showAlert).not.toHaveBeenCalled();
+        });
+
+        it('updates reset nodes excluding finished nodes if no page', async () => {
+            let setNodesReExecuting = jest.fn();
+            let updatePage = jest.fn();
+            let showAlert = jest.fn();
+            let store = getMockStore({
+                pagebuilderMocks: { setNodesReExecuting, updatePage },
+                alertMocks: { showAlert }
+            });
+
+            let shouldPoll = await store.dispatch('setPage', {
+                resetNodes: ['foo', 'bar'],
+                executedNodes: ['bar']
+            });
             expect(shouldPoll).toBe(true);
             expect(updatePage).not.toHaveBeenCalled();
             expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), ['foo'], EMPTY);

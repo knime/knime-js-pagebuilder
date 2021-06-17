@@ -67,26 +67,26 @@ export const mutations = {
      * update (i.e. from a reactive event).
      *
      * @param {*} state - Vuex state.
-     * @param {Object} newWebNode - update event object.
-     * @param {String} newWebNode.nodeId - the nodeID from the workflow which is used to serialize the node
+     * @param {Object} param - update event object.
+     * @param {String} param.nodeId - the nodeID from the workflow which is used to serialize the node
      *      in the store.
      * @type {UpdateValuePath}
-     * @param {Object.<UpdateValuePath, Object>} [newWebNode.update] - the optional update to apply to the page state.
+     * @param {Object.<UpdateValuePath, Object>} [param.update] - the optional update to apply to the page state.
      *      The property referenced by the provided {@type UpdateValuePath} will be set to the provided value
      *      {@type Object}. If no update is provided, the event is considered reactive and the existing configuration
      *      will used to force a Vuex reactive update(via {@method Vue.set}).
      * @return {undefined}
      */
-    updateWebNode(state, newWebNode) {
+    updateWebNode(state, { nodeId, update, config, type } = {}) {
         // Update viewValues and other nested properties.
-        if (newWebNode?.update) {
-            let currentWebNode = state.page.wizardPageContent.webNodes[newWebNode.nodeId];
-            for (let [key, value] of Object.entries(newWebNode.update)) {
+        if (update) {
+            let currentWebNode = state.page.wizardPageContent.webNodes[nodeId];
+            for (let [key, value] of Object.entries(update)) {
                 try {
                     setProp(currentWebNode, key, value);
                 } catch (e) {
                     // catch deep Object modification errors
-                    consola.error(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Value not updated ` +
+                    consola.error(`WebNode[type: ${type}, id: ${nodeId}]: Value not updated ` +
                     `because the provided key was invalid. Key:`, key);
                 }
             }
@@ -94,7 +94,7 @@ export const mutations = {
         }
         // Otherwise, replace webNodes entirely (reactivity).
         consola.debug('pagebuilder/updateWebNode replacing web node content.');
-        Vue.set(state.page.wizardPageContent.webNodes, newWebNode.nodeId, newWebNode.config);
+        Vue.set(state.page.wizardPageContent.webNodes, nodeId, config);
     },
 
     setWebNodeLoading(state, { nodeId, loading }) {
