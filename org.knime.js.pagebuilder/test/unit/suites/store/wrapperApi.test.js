@@ -166,14 +166,14 @@ describe('wrapper API store', () => {
                     foo: {}
                 },
                 resetNodes: ['foo'],
-                executedNodes: []
+                reexecutedNodes: []
             } });
             expect(shouldPoll).toBe(false);
             expect(updatePage).toHaveBeenCalledWith(expect.anything(), {
                 nodeIds: ['foo'],
                 page: {
                     resetNodes: ['foo'],
-                    executedNodes: [],
+                    reexecutedNodes: [],
                     webNodes: { foo: {} }
                 }
             }, EMPTY);
@@ -192,7 +192,7 @@ describe('wrapper API store', () => {
 
             let shouldPoll = await store.dispatch('setPage', {
                 resetNodes: ['foo'],
-                executedNodes: []
+                reexecutedNodes: []
             });
             expect(shouldPoll).toBe(true);
             expect(updatePage).not.toHaveBeenCalled();
@@ -211,7 +211,7 @@ describe('wrapper API store', () => {
 
             let shouldPoll = await store.dispatch('setPage', {
                 resetNodes: ['foo', 'bar'],
-                executedNodes: ['bar']
+                reexecutedNodes: ['bar']
             });
             expect(shouldPoll).toBe(true);
             expect(updatePage).not.toHaveBeenCalled();

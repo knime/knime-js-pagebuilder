@@ -116,22 +116,24 @@ export const actions = {
      * @param {Object} [param.page] - the optional page for the current component returned by the RPC server if
      *      execution has finished.
      * @param {Array} [param.resetNodes] - the optional array of all nodeIds which were reset for re-execution.
-     * @param {Array} param.executedNodes - a subset of the resetNodes nodeIds which are no longer executing.
+     * @param {Array} param.reexecutedNodes - a subset of the resetNodes nodeIds which are no longer executing.
      * @returns {boolean} - false if the page was successfully updated else true if polling/updates should be
      *      continued.
      */
-    setPage({ dispatch }, { page, resetNodes = [], executedNodes = [] } = {}) {
-        consola.debug('WrapperAPI store: setPage (page, resetNodes, executedNodes)', page, resetNodes, executedNodes);
+    setPage({ dispatch }, { page, resetNodes = [], reexecutedNodes: reExecutedNodes = [] } = {}) {
+        consola.debug(
+            'WrapperAPI store: setPage (page, resetNodes, reexecutedNodes)', page, resetNodes, reExecutedNodes
+        );
         let shouldPoll = false;
         try {
             if (page) {
-                let nodeIds = executedNodes?.length ? executedNodes : Object.keys(page.webNodes);
+                let nodeIds = reExecutedNodes?.length ? reExecutedNodes : Object.keys(page.webNodes);
                 dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
                 dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });
             } else if (resetNodes?.length) {
                 dispatch(
                     'pagebuilder/setNodesReExecuting',
-                    resetNodes.filter(id => !executedNodes.includes(id)),
+                    resetNodes.filter(id => !reExecutedNodes.includes(id)),
                     { root: true }
                 );
                 shouldPoll = true;
