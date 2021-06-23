@@ -222,6 +222,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
     beforeEach(() => {
         propsData = JSON.parse(JSON.stringify(propsDataTemplate));
         propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        propsData.nodeConfig.viewRepresentation.tree = [];
 
         store = new Vuex.Store({
             modules: {
@@ -278,7 +279,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
                             _class:
                                 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
                             path:
-                                '/file_chooser_verification/directory_folder/a/customers.csv',
+                                '/file_chooser_verification/directory_folder/a/customers1.csv',
                             type: 'Foo',
                             size: 340735,
                             owner: 'knimeadmin'
@@ -344,12 +345,13 @@ describe('FileChooserWidget.vue WebPortal', () => {
         });
     });
 
-    it('fails validation if nothing is selected but selection is required', () => {
-        propsData.nodeConfig.viewRepresentation.tree[0].children[0].state.selected = false;
+    it('fails validation if nothing is selected but selection is required', async () => {
+        mocks.repoData.children[0].children[1].path = '/file_chooser_verification/directory_folder/a/customers1.csv';
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
         });
+        await Vue.nextTick();
         expect(wrapper.vm.validate()).toStrictEqual({
             isValid: false,
             errorMessage: 'Selection is required.'
@@ -411,12 +413,6 @@ describe('FileChooserWidget.vue WebPortal', () => {
     it('tests workflow relative paths', async () => {
         propsData.nodeConfig.viewRepresentation.required = true;
         propsData.nodeConfig.viewRepresentation.rootDir = 'knime://test/../test/../test.csv';
-        mocks.repoData.children[0].children = [{
-            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
-            type: 'Data',
-            size: 340735,
-            owner: 'knimeadmin'
-        }];
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
@@ -431,12 +427,6 @@ describe('FileChooserWidget.vue WebPortal', () => {
     it('tests workflow relative paths with knime.workflow', async () => {
         propsData.nodeConfig.viewRepresentation.required = true;
         propsData.nodeConfig.viewRepresentation.rootDir = 'knime://knime.workflow/test/blabla';
-        mocks.repoData.children[0].children = [{
-            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
-            type: 'Data',
-            size: 340735,
-            owner: 'knimeadmin'
-        }];
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
@@ -453,12 +443,6 @@ describe('FileChooserWidget.vue WebPortal', () => {
         propsData.nodeConfig.viewRepresentation.rootDir = 'knime://knime.workflow/test/blabla';
         propsData.nodeConfig.viewRepresentation.useDefaultMountId = false;
         propsData.nodeConfig.viewRepresentation.customMountId = 'test://';
-        mocks.repoData.children[0].children = [{
-            _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
-            type: 'Data',
-            size: 340735,
-            owner: 'knimeadmin'
-        }];
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
@@ -468,5 +452,38 @@ describe('FileChooserWidget.vue WebPortal', () => {
             isValid: true,
             errorMessage: null
         });
+    });
+
+    it('shows a info message if the repo cannot be resolved', async () => {
+        mocks.$store = new Vuex.Store({
+            modules: {
+                api: {
+                    getters: {
+                        repository: () => () => new Promise((resolve) => {
+                            resolve({ errorResponse: 'Error' });
+                        })
+                    },
+                    namespaced: true
+                },
+                pagebuilder: {
+                    state: {
+                        resourceBaseUrl: '/'
+                    }
+                },
+                wizardExecution: {
+                    getters: {
+                        workflowPath: jest.fn().mockReturnValue('/../test/../')
+                    },
+                    namespaced: true
+                }
+            }
+        });
+        let wrapper = mount(FileChooserWidget, {
+            propsData,
+            mocks
+        });
+        await Vue.nextTick();
+        expect(wrapper.vm.infoMessage).toStrictEqual('No items found for selection.');
+        expect(wrapper.text()).toContain('No items found for selection.');
     });
 });

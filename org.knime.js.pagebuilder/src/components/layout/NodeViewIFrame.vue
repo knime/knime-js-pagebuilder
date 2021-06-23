@@ -8,7 +8,7 @@ import iframeResizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.
 import loadingErrorHandlerSrc from 'raw-loader!./injectedScripts/loadErrorHandler.js';
 import viewAlertHandlerSrc from 'raw-loader!./injectedScripts/viewAlertHandler.js';
 
-const valueGetterTimeout = 10000; // ms
+const valueGetterTimeout = 30000; // ms
 const validatorTimeout = 5000; // ms
 const setValidationErrorTimeout = 5000; // ms
 
