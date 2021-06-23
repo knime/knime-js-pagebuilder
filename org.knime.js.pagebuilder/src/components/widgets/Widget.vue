@@ -219,8 +219,9 @@ export default {
                 changeObj.callback();
             }
             if (this.isReactive && this.isValid) {
+                // omit the first two elements of the node id because they denote the wizard page itself
                 const idSegments = this.nodeId.split(':');
-                this.triggerReExecution({ nodeId: idSegments[idSegments.length - 1] });
+                this.triggerReExecution({ nodeId: idSegments.slice(2, idSegments.length).join(':') });
             }
         },
         getValue() {
@@ -284,10 +285,10 @@ export default {
 
 <style lang="postcss" scoped>
 .widget {
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  border: none;
-  padding-top: 10px; /* provides default spacing between page content */
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border: none;
+    padding-top: 10px; /* provides default spacing between page content */
 }
 </style>
