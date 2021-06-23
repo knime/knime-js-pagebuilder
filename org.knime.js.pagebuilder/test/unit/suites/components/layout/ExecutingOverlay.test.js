@@ -34,4 +34,26 @@ describe('ExecutingOverlay.vue', () => {
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.find('svg').exists()).toBeTruthy();
     });
+
+    it('respects a maximum calculated height for spinner', () => {
+        let wrapper = shallowMount(ExecutingOverlay, {
+            propsData: {
+                nodeId: '007',
+                show: true,
+                showSpinner: true
+            }
+        });
+        const overlayHeight1 = 20;
+        const expectedSpinnerHeight1 = 10;
+        const overlayHeight2 = 100;
+        const expectedSpinnerHeight2 = 40;
+        Object.defineProperty(wrapper.vm.$refs.overlay, 'offsetHeight', {
+            get: jest.fn()
+                .mockImplementationOnce(() => overlayHeight1)
+                .mockImplementationOnce(() => overlayHeight2)
+        });
+        expect(wrapper.vm.getSpinnerHeight()).toBe(expectedSpinnerHeight1);
+        // without maximum, we would expect height of 50
+        expect(wrapper.vm.getSpinnerHeight()).toBe(expectedSpinnerHeight2);
+    });
 });

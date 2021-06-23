@@ -1,5 +1,6 @@
 <script>
 
+const MAX_SPINNER_HEIGHT = 40; // px
 /**
  * Animation overlay for individual nodes or widgets while they are re-executing.
  */
@@ -43,7 +44,7 @@ export default {
     methods: {
         getSpinnerHeight() {
             let el = this.$refs?.overlay?.offsetHeight;
-            return el ? el / 2 : 0;
+            return el ? Math.min(el / 2, MAX_SPINNER_HEIGHT) : 0;
         },
         getOverlayWidth() {
             let el = this.$refs?.overlay?.offsetWidth;
