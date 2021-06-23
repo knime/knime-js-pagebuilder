@@ -246,6 +246,7 @@ export default {
             } else {
                 this.handleSingleSelectItems(this.currentKeyboardNavNode);
             }
+            this.$emit('item-click', this.currentKeyboardNavNode, this.currentKeyboardNavNode.model, e);
         },
         scrollToCurrent() {
             if (!this.currentKeyboardNavNode) {
