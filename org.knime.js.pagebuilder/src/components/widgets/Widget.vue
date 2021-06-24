@@ -285,10 +285,10 @@ export default {
 
 <style lang="postcss" scoped>
 .widget {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    border: none;
-    padding-top: 10px; /* provides default spacing between page content */
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border: none;
+  padding-top: 10px; /* provides default spacing between page content */
 }
 </style>
