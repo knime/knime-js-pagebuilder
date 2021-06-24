@@ -219,8 +219,9 @@ export default {
                 changeObj.callback();
             }
             if (this.isReactive && this.isValid) {
+                // omit the first two elements of the node id because they denote the wizard page itself
                 const idSegments = this.nodeId.split(':');
-                this.triggerReExecution({ nodeId: idSegments[idSegments.length - 1] });
+                this.triggerReExecution({ nodeId: idSegments.slice(2, idSegments.length).join(':') });
             }
         },
         getValue() {
