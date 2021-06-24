@@ -25,7 +25,6 @@
   "license": "UNLICENSED",
   "author": "KNIME AG, Zurich, Switzerland",
   "dependencies": {
-    "@babel/polyfill": "7.8.7",
     "@popperjs/core": "2.5.3",
     "consola": "2.10.1",
     "core-js": "3.6.5",
