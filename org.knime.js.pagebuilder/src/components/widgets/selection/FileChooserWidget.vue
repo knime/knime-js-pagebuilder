@@ -121,9 +121,6 @@ export default {
         if (this.runningInWebPortal) {
             this.repositoryAPI = this.$store.getters['api/repository'];
             this.requestRepository(this.rootPath);
-        } else {
-            // Call update widget to update the currentValue object with the correct paths (prefix etc.)
-            this.onChange();
         }
     },
     methods: {
