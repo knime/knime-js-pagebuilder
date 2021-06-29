@@ -198,6 +198,24 @@ describe('FileChooserWidget.vue AP', () => {
         expect(wrapper.vm.infoMessage).toStrictEqual('File selection only possible on server.');
     });
 
+    it('checks, that the default item is returned when run in the AP', async () => {
+        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        propsData.nodeConfig.viewRepresentation.tree = undefined;
+        let wrapper = mount(FileChooserWidget, {
+            propsData
+        });
+        await Vue.nextTick();
+
+        expect(wrapper.vm.viewRep.currentValue.items).toStrictEqual(
+            [
+                {
+                    path: 'knime://Devserver/file_chooser_verification/directory_folder/a/customers.csv',
+                    type: 'WORKFLOW'
+                }
+            ]
+        );
+    });
+
     it('reports as valid if info message is shown', () => {
         propsData.nodeConfig.viewRepresentation.runningOnServer = false;
         let wrapper = mount(FileChooserWidget, {
