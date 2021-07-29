@@ -45,7 +45,10 @@ export default {
 
     computed: {
         nodeId() {
-            return this.viewConfig && this.viewConfig.nodeID;
+            let pageId = this.$store.state.pagebuilder.page?.wizardPageContent?.webNodePageConfiguration?.pageID;
+            return pageId
+                ? [...pageId.split(':').slice(1), ...this.viewConfig.nodeID.split(':').slice(1)].join(':')
+                : this.viewConfig.nodeID;
         },
         iframeId() {
             // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
@@ -53,12 +56,6 @@ export default {
         },
         page() {
             return this.$store.state.pagebuilder.page;
-        },
-        webNode() {
-            if (this.page && this.page.webNodes) {
-                return this.page.webNodes.filter(node => this.nodeId === node.nodeId)[0];
-            }
-            return null;
         },
         nodeJsLibs() {
             return this.nodeConfig.javascriptLibraries || [];

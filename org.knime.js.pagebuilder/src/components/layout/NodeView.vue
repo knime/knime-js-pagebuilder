@@ -46,7 +46,10 @@ export default {
             updateCount: 'pagebuilder/reExecutionUpdates'
         }),
         nodeId() {
-            return this.viewConfig.nodeID;
+            let pageId = this.$store.state.pagebuilder.page?.wizardPageContent?.webNodePageConfiguration?.pageID;
+            return pageId
+                ? [...pageId.split(':').slice(1), ...this.viewConfig.nodeID.split(':').slice(1)].join(':')
+                : this.viewConfig.nodeID;
         },
         webNodeConfig() {
             return this.$store.state.pagebuilder.page.wizardPageContent.webNodes[this.nodeId];
