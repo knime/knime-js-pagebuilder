@@ -126,6 +126,10 @@ export default {
         };
     },
     computed: {
+        pageIdPrefix() {
+            return this.$store.state.pagebuilder.page?.wizardPageContent?.webNodePageConfiguration
+                ?.projectRelativePageIDSuffix;
+        },
         /**
          * Check for a validator. Some widgets (like output widgets) are static so they don't need to be validated.
          *

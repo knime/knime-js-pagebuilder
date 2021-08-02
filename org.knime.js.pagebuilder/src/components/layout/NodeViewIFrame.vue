@@ -35,6 +35,17 @@ export default {
         nodeConfig: {
             default: () => ({}),
             type: Object
+        },
+        /**
+         * The unique string node ID as it exists
+         * in the store webNodes
+         */
+        nodeId: {
+            required: true,
+            type: String,
+            validator(nodeId) {
+                return nodeId !== '';
+            }
         }
     },
     data() {
@@ -44,12 +55,6 @@ export default {
     },
 
     computed: {
-        nodeId() {
-            let pageId = this.$store.state.pagebuilder.page?.wizardPageContent?.webNodePageConfiguration?.pageID;
-            return pageId
-                ? [...pageId.split(':').slice(1), ...this.viewConfig.nodeID.split(':').slice(1)].join(':')
-                : this.viewConfig.nodeID;
-        },
         iframeId() {
             // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
             return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
