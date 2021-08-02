@@ -45,11 +45,12 @@ export default {
             nodesReExecuting: 'pagebuilder/nodesReExecuting',
             updateCount: 'pagebuilder/reExecutionUpdates'
         }),
+        pageIdPrefix() {
+            return this.$store.state.pagebuilder.page?.wizardPageContent?.webNodePageConfiguration
+                ?.projectRelativePageIDSuffix;
+        },
         nodeId() {
-            let pageId = this.$store.state.pagebuilder.page?.wizardPageContent?.webNodePageConfiguration?.pageID;
-            return pageId
-                ? [...pageId.split(':').slice(1), ...this.viewConfig.nodeID.split(':').slice(1)].join(':')
-                : this.viewConfig.nodeID;
+            return this.pageIdPrefix ? `${this.pageIdPrefix}:${this.viewConfig.nodeID}` : this.viewConfig.nodeID;
         },
         webNodeConfig() {
             return this.$store.state.pagebuilder.page.wizardPageContent.webNodes[this.nodeId];
@@ -159,6 +160,7 @@ export default {
         :key="nodeViewIFrameKey"
         :view-config="viewConfig"
         :node-config="webNodeConfig"
+        :node-id="nodeId"
       />
       <ExecutingOverlay
         :show="showExecutionOverlay"
