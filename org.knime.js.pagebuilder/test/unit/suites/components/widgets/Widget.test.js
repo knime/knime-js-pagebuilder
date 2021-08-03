@@ -119,7 +119,8 @@ describe('Widget.vue', () => {
             store,
             localVue,
             propsData: {
-                nodeConfig
+                nodeConfig,
+                nodeId
             },
             stubs: {
                 SliderWidget: {

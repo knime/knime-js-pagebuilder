@@ -82,16 +82,19 @@ describe('NodeViewIframe.vue', () => {
         store.commit('pagebuilder/setPage', {
             wizardPageContent: {
                 webNodes: {
-                    '0:0:7': {
+                    '1:0:1:0:0:7': {
                         namespace: 'foo',
                         javascriptLibraries: [],
                         stylesheets: []
                     },
-                    '0:0:9': {
+                    '1:0:1:0:0:9': {
                         namespace: 'bar',
                         javascriptLibraries: [],
                         stylesheets: []
                     }
+                },
+                webNodePageConfiguration: {
+                    projectRelativePageIDSuffix: '1:0:1'
                 }
             }
         });
@@ -125,7 +128,8 @@ describe('NodeViewIframe.vue', () => {
                         viewRepresentation: {},
                         viewValue: {},
                         nodeInfo: {}
-                    }
+                    },
+                    nodeId
                 }
             });
 

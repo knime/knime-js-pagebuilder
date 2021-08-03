@@ -13,7 +13,7 @@ describe('NodeView.vue', () => {
 
     const getWizardPageContent = () => ({
         webNodes: {
-            id1: {
+            '1:0:1:0:0:7': {
                 foo: 'bar',
                 viewRepresentation: {
                     '@class': 'testing.notWidget'
@@ -22,7 +22,7 @@ describe('NodeView.vue', () => {
                     displayPossible: true
                 }
             },
-            id2: {
+            '1:0:1:0:0:9': {
                 baz: 'qux',
                 viewRepresentation: {
                     '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
@@ -31,6 +31,9 @@ describe('NodeView.vue', () => {
                     displayPossible: true
                 }
             }
+        },
+        webNodePageConfiguration: {
+            projectRelativePageIDSuffix: '1:0:1'
         }
     });
 
@@ -61,7 +64,7 @@ describe('NodeView.vue', () => {
             ...context,
             propsData: {
                 viewConfig: {
-                    nodeID: 'id1',
+                    nodeID: '0:0:7',
                     resizeMethod: 'aspectRatio1by1'
                 }
             }
@@ -69,7 +72,7 @@ describe('NodeView.vue', () => {
         expect(wrapper.vm.nodeViewIFrameKey).toBe(0);
         wrapper.setProps({
             viewConfig: {
-                nodeID: 'id1',
+                nodeID: '0:0:7',
                 resizeMethod: 'aspectRatio1by1'
             }
         });
@@ -78,7 +81,7 @@ describe('NodeView.vue', () => {
 
     it('respects resize classes', () => {
         let viewConfig = {
-            nodeID: 'id1',
+            nodeID: '0:0:7',
             resizeMethod: 'aspectRatio1by1'
         };
         let wrapper = shallowMount(NodeView, {
@@ -106,9 +109,48 @@ describe('NodeView.vue', () => {
         expect(wrapper.find('div').attributes('class')).toEqual('view');
     });
 
-    it('passes the webNode config to the iframe', () => {
+    it('composes nodeIds conditionally based on the projectRelativePageIDSuffix', () => {
         let viewConfig = {
-            nodeID: 'id1'
+            nodeID: '0:0:9'
+        };
+        let wizardPageContent = {
+            webNodes: {},
+            webNodePageConfiguration: {
+                projectRelativePageIDSuffix: ''
+            }
+        };
+        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        localStore.commit('pagebuilder/setPage', { wizardPageContent });
+
+        let wrapper = shallowMount(NodeView, {
+            store: localStore,
+            localVue,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.nodeId).toEqual(viewConfig.nodeID);
+
+        // check the presence of a projectRelativePageIDSuffix
+        wizardPageContent.webNodePageConfiguration.projectRelativePageIDSuffix = '1:0:1';
+        
+        localStore.commit('pagebuilder/setPage', { wizardPageContent });
+
+        wrapper = shallowMount(NodeView, {
+            store: localStore,
+            localVue,
+            propsData: {
+                viewConfig
+            }
+        });
+
+        expect(wrapper.vm.nodeId).toEqual('1:0:1:0:0:9');
+    });
+
+    it('passes correct props to the iframe', () => {
+        let viewConfig = {
+            nodeID: '0:0:7'
         };
         let wrapper = shallowMount(NodeView, {
             ...context,
@@ -128,11 +170,12 @@ describe('NodeView.vue', () => {
 
         expect(wrapper.find(NodeViewIFrame).props('nodeConfig')).toEqual(expectedNodeConfig);
         expect(wrapper.find(NodeViewIFrame).props('viewConfig')).toEqual(viewConfig);
+        expect(wrapper.find(NodeViewIFrame).props('nodeId')).toEqual('1:0:1:0:0:7');
     });
 
     it('can detect widgets using the representation class', () => {
         let viewConfig = {
-            nodeID: 'id2',
+            nodeID: '0:0:9',
             useLegacyMode: false
         };
         let wrapper = shallowMount(NodeView, {
@@ -147,14 +190,14 @@ describe('NodeView.vue', () => {
 
     it('does not detect widgets using the nodeName', () => {
         let viewConfig = {
-            nodeID: 'id2',
+            nodeID: '0:0:9',
             useLegacyMode: false
         };
         let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         localStore.commit('pagebuilder/setPage', {
             wizardPageContent: {
                 webNodes: {
-                    id2: {
+                    '1:0:1:0:0:9': {
                         baz: 'qux',
                         viewRepresentation: {
                             '@class': 'not a defined widget class'
@@ -165,6 +208,9 @@ describe('NodeView.vue', () => {
                         }
                     }
                 }
+            },
+            webNodePageConfiguration: {
+                projectRelativePageIDSuffix: '1:0:1'
             }
         });
 
@@ -182,7 +228,7 @@ describe('NodeView.vue', () => {
 
     it('can detect non-widgets or widgets without a legacy mode flag set', () => {
         let viewConfig = {
-            nodeID: 'id1'
+            nodeID: '0:0:7'
         };
         let wrapper = shallowMount(NodeView, {
             ...context,
@@ -196,7 +242,7 @@ describe('NodeView.vue', () => {
 
     it('can detect legacy flags', () => {
         let viewConfig = {
-            nodeID: 'id2',
+            nodeID: '0:0:9',
             useLegacyMode: true
         };
         let wrapper = shallowMount(NodeView, {
@@ -211,20 +257,27 @@ describe('NodeView.vue', () => {
 
     it('renders widgets in non-legacy mode when they are excluded from legacy rendering', () => {
         let viewConfig = {
-            nodeID: 'id2',
+            nodeID: '0:0:9',
             useLegacyMode: true
         };
         let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         localStore.commit('pagebuilder/setPage', {
-            wizardPageContent: { webNodes: { id2: {
-                viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.widget.reexecution.refresh.RefreshButtonWidgetViewRepresentation'
+            wizardPageContent: {
+                webNodes: {
+                    '1:0:1:0:0:9': {
+                        viewRepresentation: {
+                            '@class': 'org.knime.js.base.node.widget.reexecution.refresh.RefreshButtonWidgetViewRepresentation'
+                        },
+                        nodeInfo: {
+                            displayPossible: true,
+                            nodeName: 'Refresh Button Widget'
+                        }
+                    }
                 },
-                nodeInfo: {
-                    displayPossible: true,
-                    nodeName: 'Refresh Button Widget'
+                webNodePageConfiguration: {
+                    projectRelativePageIDSuffix: '1:0:1'
                 }
-            } } }
+            }
         });
 
         let wrapper = shallowMount(NodeView, {
@@ -259,7 +312,7 @@ describe('NodeView.vue', () => {
             ...context,
             propsData: {
                 viewConfig: {
-                    nodeID: 'id1',
+                    nodeID: '0:0:7',
                     resizeMethod: 'aspectRatio1by1',
                     additionalClasses: ['class1', 'class2'],
                     additionalStyles: ['color: red;', 'border: 1px solid green;']
@@ -275,7 +328,7 @@ describe('NodeView.vue', () => {
             ...context,
             propsData: {
                 viewConfig: {
-                    nodeID: 'id2',
+                    nodeID: '0:0:9',
                     useLegacyMode: false,
                     resizeMethod: 'viewLowestElement',
                     additionalClasses: ['class1', 'class2'],
@@ -312,7 +365,7 @@ describe('NodeView.vue', () => {
             ...context,
             propsData: {
                 viewConfig: {
-                    nodeID: 'id1',
+                    nodeID: '0:0:7',
                     resizeMethod: 'viewLowestElement',
                     autoResize: true
                 }
@@ -321,7 +374,7 @@ describe('NodeView.vue', () => {
         store.commit('pagebuilder/setPage', {
             wizardPageContent: {
                 webNodes: {
-                    id1: {
+                    '1:0:1:0:0:7': {
                         foo: 'bar',
                         viewRepresentation: {
                             '@class': 'testing.notWidget'
@@ -330,6 +383,9 @@ describe('NodeView.vue', () => {
                             displayPossible: false
                         }
                     }
+                },
+                webNodePageConfiguration: {
+                    projectRelativePageIDSuffix: '1:0:1'
                 }
             }
         });
@@ -339,16 +395,16 @@ describe('NodeView.vue', () => {
 
         expect(wrapper.find(NotAvailable).exists()).toBe(true);
         expect(wrapper.find(NotAvailable).props('nodeInfo')).toEqual(expectedNodeInfo);
-        expect(wrapper.find(NotAvailable).props('nodeId')).toEqual('id1');
+        expect(wrapper.find(NotAvailable).props('nodeId')).toEqual('1:0:1:0:0:7');
     });
 
     it('detects if the node is currently (re)executing via node state', () => {
-        let viewConfig = { nodeID: 'id2' };
+        let viewConfig = { nodeID: '0:0:9' };
         let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         localStore.commit('pagebuilder/setPage', {
             wizardPageContent: {
                 webNodes: {
-                    id2: {
+                    '1:0:1:0:0:9': {
                         baz: 'qux',
                         viewRepresentation: {
                             '@class': 'not a defined widget class'
@@ -359,6 +415,9 @@ describe('NodeView.vue', () => {
                             nodeState: 'executing'
                         }
                     }
+                },
+                webNodePageConfiguration: {
+                    projectRelativePageIDSuffix: '1:0:1'
                 }
             }
         });
@@ -376,10 +435,10 @@ describe('NodeView.vue', () => {
     });
 
     it('detects if the node is currently (re)executing via re-executing node ids', () => {
-        let viewConfig = { nodeID: 'id2' };
+        let viewConfig = { nodeID: '0:0:9' };
         let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         localStore.commit('pagebuilder/setPage', { wizardPageContent: getWizardPageContent() });
-        localStore.commit('pagebuilder/setNodesReExecuting', [viewConfig.nodeID]);
+        localStore.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:9']);
 
         let wrapper = shallowMount(NodeView, {
             store: localStore,
@@ -394,10 +453,10 @@ describe('NodeView.vue', () => {
     });
 
     it('decides when to show a spinner on executing content via updateCount', () => {
-        let viewConfig = { nodeID: 'id2' };
+        let viewConfig = { nodeID: '0:0:9' };
         let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
         localStore.commit('pagebuilder/setPage', { wizardPageContent: getWizardPageContent() });
-        localStore.commit('pagebuilder/setNodesReExecuting', [viewConfig.nodeID]);
+        localStore.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:9']);
 
         let wrapper = shallowMount(NodeView, {
             store: localStore,
@@ -411,7 +470,7 @@ describe('NodeView.vue', () => {
         expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
         expect(wrapper.vm.showSpinner).toBe(false);
 
-        localStore.commit('pagebuilder/setNodesReExecuting', [viewConfig.nodeID]);
+        localStore.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:9']);
 
         expect(wrapper.vm.showExecutionOverlay).toBe(true);
         expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);

@@ -93,16 +93,19 @@ describe('NodeViewIframe.vue', () => {
         store.commit('pagebuilder/setPage', {
             wizardPageContent: {
                 webNodes: {
-                    '0:0:7': {
+                    '1:0:1:0:0:7': {
                         namespace: 'foo',
                         javascriptLibraries: [],
                         stylesheets: []
                     },
-                    '0:0:9': {
+                    '1:0:1:0:0:9': {
                         namespace: 'bar',
                         javascriptLibraries: [],
                         stylesheets: []
                     }
+                },
+                webNodePageConfiguration: {
+                    projectRelativePageIDSuffix: '1:0:1'
                 }
             }
         });
@@ -121,6 +124,9 @@ describe('NodeViewIframe.vue', () => {
     it('renders', () => {
         let wrapper = shallowMount(NodeViewIFrame, {
             ...context,
+            propsData: {
+                nodeId: '0:0:7'
+            },
             attachToDocument: true
         });
         expect(wrapper.html()).toBeTruthy();
@@ -140,7 +146,8 @@ describe('NodeViewIframe.vue', () => {
                         javascriptLibraries: ['foo/bar.js', 'qux/baz.js'],
                         stylesheets: ['bla.css', 'narf.css'],
                         customCSS: 'body { background: red; }'
-                    }
+                    },
+                    nodeId: '0:0:7'
                 }
             };
             let wrapper = shallowMount(NodeViewIFrame, iframeConfig);
@@ -186,7 +193,8 @@ describe('NodeViewIframe.vue', () => {
                         javascriptLibraries: ['foo/bar.js', 'qux/baz.js'],
                         stylesheets: ['bla.css', 'narf.css'],
                         customCSS: 'body { background: red; }'
-                    }
+                    },
+                    nodeId: '0:0:7'
                 }
             };
             let wrapper = shallowMount(NodeViewIFrame, iframeConfig);
@@ -222,7 +230,8 @@ describe('NodeViewIframe.vue', () => {
                         initMethodName: 'initMe',
                         viewRepresentation: { dummyRepresentation: true },
                         viewValue: { dummyValue: true }
-                    }
+                    },
+                    nodeId: '0:0:7'
                 }
             });
 
@@ -258,7 +267,8 @@ describe('NodeViewIframe.vue', () => {
                         initMethodName: 'initMe',
                         viewRepresentation: { dummyRepresentation: true },
                         viewValue: { dummyValue: true }
-                    }
+                    },
+                    nodeId: '0:0:7'
                 }
             });
             // before resource loading
@@ -299,7 +309,8 @@ describe('NodeViewIframe.vue', () => {
                 viewConfig,
                 nodeConfig: {
                     namespace: 'knimespace'
-                }
+                },
+                nodeId: '0:0:7'
             }
         });
         expect(iframeResizerMock).toHaveBeenCalledWith(expect.objectContaining({
@@ -327,7 +338,8 @@ describe('NodeViewIframe.vue', () => {
                     nodeConfig: {
                         namespace: 'knimespace',
                         getViewValueMethodName: 'value'
-                    }
+                    },
+                    nodeId: '0:0:7'
                 }
             });
             jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
@@ -351,7 +363,8 @@ describe('NodeViewIframe.vue', () => {
                     nodeConfig: {
                         namespace: 'knimespace',
                         getViewValueMethodName: 'value'
-                    }
+                    },
+                    nodeId: '0:0:7'
                 }
             });
             let valuePromise = wrapper.vm.getValue();
@@ -377,7 +390,8 @@ describe('NodeViewIframe.vue', () => {
                     nodeConfig: {
                         namespace: 'knimespace',
                         getViewValueMethodName: 'value'
-                    }
+                    },
+                    nodeId: '0:0:7'
                 }
             });
             let valuePromise = wrapper.vm.getValue();
@@ -415,7 +429,8 @@ describe('NodeViewIframe.vue', () => {
                         viewRepresentation: {},
                         viewValue: {},
                         nodeInfo: {}
-                    }
+                    },
+                    nodeId
                 }
             });
             let alertData = {
@@ -466,7 +481,8 @@ describe('NodeViewIframe.vue', () => {
                         viewRepresentation: {},
                         viewValue: {},
                         nodeInfo: {}
-                    }
+                    },
+                    nodeId
                 }
             });
 
