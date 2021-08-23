@@ -48,21 +48,30 @@ const getRelevantElements = (state, { id, filterIds, changedIds }) => {
 // notifying subscribers with respect to only inform about changed and relevant elements of published data
 const notifySubscribers = (state, { id, data, skipCallback, changedIds }) => {
     if (state[id]) {
-        state[id].subscribers.forEach((subscriber) => {
-            if (!skipCallback || subscriber.callback !== skipCallback) {
-                let payload = data;
-                if (changedIds) {
-                    payload = getRelevantElements(state, {
-                        id,
-                        filterIds: subscriber.filterIds,
-                        changedIds
-                    });
+        let outdatedSubscriptions = [];
+        state[id].subscribers.forEach((subscriber, subInd) => {
+            try {
+                if (!skipCallback || subscriber.callback !== skipCallback) {
+                    let payload = data;
+                    if (changedIds) {
+                        payload = getRelevantElements(state, {
+                            id,
+                            filterIds: subscriber.filterIds,
+                            changedIds
+                        });
+                    }
+                    if (payload) {
+                        subscriber.callback(id, payload);
+                    }
                 }
-                if (payload) {
-                    subscriber.callback(id, payload);
-                }
+            } catch (e) {
+                /* subscriber references a de-register view (such as after partial re-execution or
+                re-render + iframe teardown) */
+                outdatedSubscriptions.push(subInd);
             }
         });
+        // remove invalid subscriptions
+        outdatedSubscriptions.reverse().forEach(subInd => state[id].subscribers.splice(subInd, 1));
     }
 };
 

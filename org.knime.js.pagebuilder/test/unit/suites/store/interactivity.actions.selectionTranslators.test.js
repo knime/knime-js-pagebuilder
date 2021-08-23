@@ -116,7 +116,7 @@ describe('Interactivity store', () => {
             let dummyMapping = {};
             let translator = { sourceID, targetIDs, mapping: dummyMapping };
             store.dispatch('registerSelectionTranslator', { translatorId, translator });
-            let payload = { elements: [{ id: 'foo', wibble: 'wobble' }] };
+            let payload = {};
             expect(() => store.dispatch('publish', { id: prefix + sourceID, data: payload })).toThrow();
         });
 
