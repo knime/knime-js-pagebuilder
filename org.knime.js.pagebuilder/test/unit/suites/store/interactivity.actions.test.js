@@ -204,6 +204,15 @@ describe('Interactivity store', () => {
                 store.dispatch('publish', payload);
                 expect(skipCallback).not.toHaveBeenCalled();
             });
+
+            it('removes outdated subscriber', () => {
+                let invalidPayload = { id: publishId, callback: () => { throw new Error('No iframe found.'); } };
+                store.commit('addSubscriber', invalidPayload);
+                expect(store.state[publishId].subscribers.length).toBe(3);
+                let payload = { id: publishId, data: minimalData };
+                store.dispatch('publish', payload);
+                expect(store.state[publishId].subscribers.length).toBe(2);
+            });
         });
 
         describe('handles changesets', () => {
