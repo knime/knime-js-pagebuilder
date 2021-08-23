@@ -50,24 +50,24 @@ const notifySubscribers = (state, { id, data, skipCallback, changedIds }) => {
     if (state[id]) {
         let outdatedSubscriptions = [];
         state[id].subscribers.forEach((subscriber, subInd) => {
-            try {
-                if (!skipCallback || subscriber.callback !== skipCallback) {
-                    let payload = data;
-                    if (changedIds) {
-                        payload = getRelevantElements(state, {
-                            id,
-                            filterIds: subscriber.filterIds,
-                            changedIds
-                        });
-                    }
-                    if (payload) {
+            if (!skipCallback || subscriber.callback !== skipCallback) {
+                let payload = data;
+                if (changedIds) {
+                    payload = getRelevantElements(state, {
+                        id,
+                        filterIds: subscriber.filterIds,
+                        changedIds
+                    });
+                }
+                if (payload) {
+                    try {
                         subscriber.callback(id, payload);
+                    } catch (e) {
+                        /* subscriber references a de-register view (such as after partial re-execution or
+                        re-render + iframe teardown) */
+                        outdatedSubscriptions.push(subInd);
                     }
                 }
-            } catch (e) {
-                /* subscriber references a de-register view (such as after partial re-execution or
-                re-render + iframe teardown) */
-                outdatedSubscriptions.push(subInd);
             }
         });
         // remove invalid subscriptions
