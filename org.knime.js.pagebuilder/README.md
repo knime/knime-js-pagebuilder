@@ -1,13 +1,13 @@
-# PageBuilder for KNIME® Analytics Platform & WebPortal
+# ![Image](https://www.knime.com/files/knime_logo_github_40x40_4layers.png) KNIME® Analytics Platform & WebPortal PageBuilder
 
-This repository contains the frontend components of the PageBuilder based on the [Vue] JavaScript framework.
-The PageBuilder is built as an [Vue library] and used in KNIME Analytics Platform and KNIME WebPortal web apps.
+This repository contains the frontend components of the PageBuilder based on the [Vue] JavaScript framework and is used for rendering KNIME's JavaScript-based visualizations.
+It is built as an [Vue library] and used in KNIME Analytics Platform and KNIME WebPortal web apps.
 
 ## Development
 
 ### Prerequisites
 
-* Install [Node.js **Version 12**][node].
+* Install [Node.js **Version 14**][node].
 * Only for test coverage uploads to SonarQube: you also need [Java]™ 8 or 11.
 
 Newer versions may also work, but have not been tested.
@@ -245,6 +245,9 @@ none
 ```js
 let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
 ```
+
+# Join the Community!
+* [KNIME Forum](https://forum.knime.com/)
 
 
 [Vue]: https://vuejs.org/
