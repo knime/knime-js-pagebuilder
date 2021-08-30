@@ -126,4 +126,24 @@ describe("TextWidget.vue", () => {
 
     expect(wrapper.vm.errorMessage).toBe("Testing error message");
   });
+
+  it("shows collapser", () => {
+    props.nodeConfig.viewRepresentation.collapsible = true;
+    let wrapper = mount(TextWidget, {
+      props,
+    });
+    expect(wrapper.find(".collapser").exists()).toBe(true);
+  });
+
+  it("shows collapser title", () => {
+    const TITLE = "TestTitle";
+    props.nodeConfig.viewRepresentation.collapsible = true;
+    props.nodeConfig.viewRepresentation.collapsibleTitle = TITLE;
+    let wrapper = mount(TextWidget, {
+      props,
+    });
+    let collapser = wrapper.element.getElementsByClassName("collapser")[0];
+    let collapserTitle = collapser.getElementsByTagName("h5")[0].textContent;
+    expect(collapserTitle).toBe(TITLE);
+  });
 });

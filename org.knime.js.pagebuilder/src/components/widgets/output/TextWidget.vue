@@ -1,7 +1,8 @@
 <script>
-import Label from "webapps-common/ui/components/forms/Label.vue";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import { getProp } from "../../../util/nestedProperty";
+import Label from "~/webapps-common/ui/components/forms/Label";
+import Collapser from "~/webapps-common/ui/components/Collapser.vue";
+import ErrorMessage from "../baseElements/text/ErrorMessage";
+import { getProp } from "@/util/nestedProperty";
 
 const DEFAULT_VALUE_KEY = "viewRepresentation.text";
 
@@ -14,6 +15,7 @@ export default {
   components: {
     Label,
     ErrorMessage,
+    Collapser,
   },
   props: {
     /**
@@ -84,6 +86,12 @@ export default {
     value() {
       return getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
     },
+    collapsible() {
+      return this.viewRep.collapsible;
+    },
+    collapserTitle() {
+      return this.viewRep.collapsibleTitle;
+    },
     /**
      * This property determines the type of element to be rendered in the component
      * based on the settings from the nodeConfig. There are three possible rendering
@@ -112,15 +120,30 @@ export default {
   <div :title="description">
     <Label :text="label" large />
     <!-- eslint-disable vue/no-v-text-v-html-on-component -->
+    <Collapser v-if="collapsible" :title="collapserTitle" class="collapser">
+      <template #title>
+        <h5 class="collapser">{{ collapserTitle }}</h5>
+      </template>
+
+      <Component
+        :is="elementType"
+        v-if="elementType"
+        class="multiline"
+        v-text="value"
+      />
+      <!-- v-html needed to enable all existing behavior -->
+      <!-- eslint-disable vue/no-v-html -->
+      <div v-if="!elementType" class="multiline" v-html="value" />
+    </Collapser>
     <Component
       :is="elementType"
-      v-if="elementType"
+      v-if="elementType && !collapsible"
       class="multiline"
       v-text="value"
     />
     <!-- v-html needed to enable all existing behavior -->
     <!-- eslint-disable vue/no-v-html -->
-    <div v-else class="multiline" v-html="value" />
+    <div v-if="!elementType && !collapsible" class="multiline" v-html="value" />
     <ErrorMessage :error="errorMessage" />
   </div>
 </template>
@@ -130,5 +153,12 @@ export default {
   line-height: 18px;
   font-size: 13px;
   text-overflow: ellipsis;
+}
+
+.collapser {
+  font-size: 13px;
+  line-height: 18px;
+  padding-left: 5px;
+  background-color: var(--knime-porcelain);
 }
 </style>
