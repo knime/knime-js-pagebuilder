@@ -246,8 +246,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 /* THEME TreeSelect and TreeSelectItem (used by FileChooser) */
 *.tree-node {
   --theme-tree-background-color: transparent;

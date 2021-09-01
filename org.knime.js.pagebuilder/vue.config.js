@@ -19,7 +19,6 @@ module.exports = {
 
         // needed to create static AP wrapper; already disabled for lib build
         config.optimization.delete('splitChunks');
-        config.devtool('source-map'); // needed for IE11
 
         // rename Vue application
         config.output.set('filename', 'knime-pagebuilder2-ap.js');
@@ -39,7 +38,5 @@ module.exports = {
         config.plugin('LimitChunkCountPlugin').use(LimitChunkCountPlugin, [{ maxChunks: 1 }]);
     },
     // allow relative paths for serving font files in the AP
-    publicPath: '',
-    // required to override non-IE11 compliant package build settings
-    transpileDependencies: ['v-calendar']
+    publicPath: ''
 };

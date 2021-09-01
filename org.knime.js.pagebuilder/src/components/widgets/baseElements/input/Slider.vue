@@ -137,8 +137,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 .slider-container {
   & >>> .slider-focusable:focus {
     outline: none;

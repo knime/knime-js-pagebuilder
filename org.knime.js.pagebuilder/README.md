@@ -7,7 +7,7 @@ The PageBuilder is built as an [Vue library] and used in KNIME Analytics Platfor
 
 ### Prerequisites
 
-* Install [Node.js **Version 12**][node].
+* Install [Node.js][node], see version in [.nvmrc](.nvmrc).
 * Only for test coverage uploads to SonarQube: you also need [Java]™ 8 or 11.
 
 Newer versions may also work, but have not been tested.

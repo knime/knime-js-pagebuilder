@@ -1,8 +1,7 @@
 /* eslint-disable no-undef, arrow-body-style */
 // Standalone build for the KNIME AP Integration
-// IE11 SWT Support
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+import 'core-js';
+
 import Vue from 'vue';
 import Vuex from 'vuex';
 import consola from 'consola';
@@ -68,9 +67,6 @@ if (typeof KnimePageLoader === 'undefined') {
         pageBuilder.init = async (arg1, arg2, arg3, debug) => {
             // set the global consola object to allow debugging and successful headless image generation
             let logLevel = debug && !window.headless ? CONST_DEBUG_LOG_LEVEL : -1;
-            if (navigator.userAgent.indexOf('MSIE') > -1 || navigator.appVersion.indexOf('Trident/') > -1) {
-                logLevel = -1; // IE11 workaround
-            }
             window.consola = consola.create({
                 level: logLevel
             });

@@ -607,8 +607,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 div.frame-container {
   width: 100%;
   padding-top: 10px; /* provides default spacing between page content */

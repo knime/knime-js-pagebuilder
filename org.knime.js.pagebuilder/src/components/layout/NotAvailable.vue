@@ -61,8 +61,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 div {
   color: var(--theme-color-error);
   border: 2px solid var(--knime-porcelain);

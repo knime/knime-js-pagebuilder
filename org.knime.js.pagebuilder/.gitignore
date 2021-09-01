@@ -106,5 +106,3 @@ typings/
 
 /node/
 target/
-
-dist/index.html

@@ -57,9 +57,8 @@
     "fontsource-roboto-mono": "3.0.3",
     "http-server": "0.12.3",
     "jest-junit": "7.0.0",
-    "normalize.css": "8.0.1",
+    "modern-normalize": "1.1.0",
     "npm-audit-resolver": "2.3.1",
-    "postcss-css-variables": "0.13.0",
     "postcss-import": "12.0.1",
     "postcss-preset-env": "6.7.0",
     "postcss-url": "8.0.0",
@@ -68,7 +67,7 @@
     "stylelint": "13.13.1",
     "stylelint-config-standard": "20.0.0",
     "svgo-loader": "2.2.1",
-    "vue-svg-loader": "0.11.0",
+    "vue-svg-loader": "0.16.0",
     "vue-template-compiler": "2.6.11"
   },
   "engines": {

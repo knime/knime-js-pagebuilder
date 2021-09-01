@@ -294,8 +294,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 .info {
   padding: 0.7em;
   background: var(--knime-white);
@@ -307,5 +305,4 @@ export default {
     border-color: var(--knime-masala);
   }
 }
-
 </style>

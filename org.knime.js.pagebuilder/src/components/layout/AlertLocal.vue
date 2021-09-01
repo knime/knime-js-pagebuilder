@@ -53,8 +53,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 .node-popover {
   pointer-events: none;
 

@@ -310,8 +310,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 .tree-wrapper {
   position: relative;
   overflow: hidden;

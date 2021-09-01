@@ -80,8 +80,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 .message-fade-enter-active,
 .fade-enter-active {
   transition: opacity 0.1s ease-out;
