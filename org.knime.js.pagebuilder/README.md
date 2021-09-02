@@ -40,7 +40,7 @@ When developing the [Web Portal], a web server with the built version of the lib
 this via the command:
 
 ```sh
-npm run dev-inte
+npm run dev:integration
 ```
 
 This does not create an app on its own, only the library for usage in [Web Portal] dev mode. It starts a web server,

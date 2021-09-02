@@ -52,7 +52,7 @@ timeout(time: 15, unit: 'MINUTES') {
                         catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                         // trows exception on failing test
                             sh '''
-                                npm run build_credits
+                                npm run build:credits
                                 npm run coverage -- --ci
                             '''
                         }
