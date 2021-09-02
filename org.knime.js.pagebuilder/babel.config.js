@@ -6,5 +6,6 @@ module.exports = {
                 useBuiltIns: 'entry'
             }]
     ],
+    plugins: ['@babel/plugin-proposal-optional-chaining'],
     exclude: ['**/src/**/injectedScripts']
 };

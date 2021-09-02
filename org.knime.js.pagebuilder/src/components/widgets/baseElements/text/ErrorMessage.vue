@@ -13,17 +13,10 @@ export default {
 </script>
 
 <template>
-  <span :class="{ invisible: error === null }">{{ error || '' }}</span>
+  <span>{{ error || '' }}</span>
 </template>
 
 <style lang="postcss" scoped>
-/**
- * NOTE: The visibility was added to fix bugs in Edge classic with missing updates of empty strings
- */
-.invisible {
-  visibility: hidden;
-}
-
 span {
   font-weight: 300;
   font-size: 13px;
