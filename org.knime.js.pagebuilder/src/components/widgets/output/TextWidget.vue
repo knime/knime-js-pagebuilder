@@ -1,6 +1,6 @@
 <script>
 import Label from '~/webapps-common/ui/components/forms/Label';
-import Collapser from '~/webapps-common/ui/components/Collapser.vue';
+import Collapser from '~/webapps-common/ui/components/Collapser';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
 import { getProp } from '@/util/nestedProperty';
 
@@ -84,12 +84,6 @@ export default {
         value() {
             return getProp(this.nodeConfig, DEFAULT_VALUE_KEY);
         },
-        collapsible() {
-            return this.viewRep.collapsible;
-        },
-        collapserTitle() {
-            return this.viewRep.collapsibleTitle;
-        },
         /**
          * This property determines the type of element to be rendered in the component
          * based on the settings from the nodeConfig. There are three possible rendering
@@ -120,12 +114,12 @@ export default {
       :text="label"
     />
     <Collapser
-      v-if="collapsible"
-      :title="collapserTitle"
+      v-if="viewRep.collapsible"
+      :title="viewRep.collapsibleTitle"
       class="collapser"
     >
       <template #title>
-        <h5 class="collapser">{{ collapserTitle }}</h5>
+        <h5>{{ viewRep.collapsibleTitle }}</h5>
       </template>
       
       <Component
@@ -137,21 +131,21 @@ export default {
       <!-- v-html needed to enable all existing behavior -->
       <!-- eslint-disable vue/no-v-html -->
       <div
-        v-if="!elementType"
+        v-else
         class="multiline"
         v-html="value"
       />
     </Collapser>
     <Component
       :is="elementType"
-      v-if="elementType && !collapsible"
+      v-else-if="elementType"
       class="multiline"
       v-text="value"
     />
     <!-- v-html needed to enable all existing behavior -->
     <!-- eslint-disable vue/no-v-html -->
     <div
-      v-if="!elementType && !collapsible"
+      v-else
       class="multiline"
       v-html="value"
     />
@@ -171,5 +165,10 @@ export default {
   line-height: 18px;
   padding-left: 5px;
   background-color: var(--knime-porcelain);
+}
+
+.collapser h5 {
+  font-size: 13px;
+  line-height: 18px;
 }
 </style>
