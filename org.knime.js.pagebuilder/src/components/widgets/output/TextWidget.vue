@@ -115,7 +115,6 @@ export default {
     />
     <Collapser
       v-if="viewRep.collapsible"
-      :title="viewRep.collapsibleTitle"
       class="collapser"
     >
       <template #title>
@@ -125,14 +124,14 @@ export default {
       <Component
         :is="elementType"
         v-if="elementType"
-        class="multiline"
+        class="multiline collapser--content"
         v-text="value"
       />
       <!-- v-html needed to enable all existing behavior -->
       <!-- eslint-disable vue/no-v-html -->
       <div
         v-else
-        class="multiline"
+        class="multiline collapser--content"
         v-html="value"
       />
     </Collapser>
@@ -161,14 +160,15 @@ export default {
 }
 
 .collapser {
-  font-size: 13px;
-  line-height: 18px;
-  padding-left: 5px;
   background-color: var(--knime-porcelain);
 }
 
 .collapser h5 {
-  font-size: 13px;
-  line-height: 18px;
+  margin: 0;
+  padding: 15px 30px;
+}
+
+.collapser--content {
+  padding: 0 30px;
 }
 </style>

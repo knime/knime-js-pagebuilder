@@ -123,12 +123,12 @@ describe('TextWidget.vue', () => {
         expect(wrapper.vm.errorMessage).toBe('Testing error message');
     });
 
-    it('collapses text', () => {
+    it('shows collapser', () => {
         propsData.nodeConfig.viewRepresentation.collapsible = true;
         let wrapper = mount(TextWidget, {
             propsData
         });
-        expect(wrapper.element.getElementsByClassName('panel')[0].getAttribute('display')).toBe(null);
+        expect(wrapper.find('.collapser').exists()).toBe(true);
     });
 
     it('shows collapser title', () => {
