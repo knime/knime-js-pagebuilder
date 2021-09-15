@@ -1,6 +1,5 @@
 /* eslint-disable no-undef, arrow-body-style */
 // Standalone build for the KNIME AP Integration
-import 'core-js';
 
 import Vue from 'vue';
 import Vuex from 'vuex';

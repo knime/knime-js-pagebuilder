@@ -351,7 +351,7 @@ export default {
                 // populate settings object
                 let resizeSettings = {
                     log: false,
-                    checkOrigin: [window.origin || window.location.origin], // IE 11 support
+                    checkOrigin: [window.origin],
                     resizeFrom: 'child',
                     warningTimeout: 0, // suppress warning
 
