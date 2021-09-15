@@ -1,7 +1,7 @@
-# PageBuilder for KNIME® Analytics Platform & WebPortal
+# ![Image](https://www.knime.com/files/knime_logo_github_40x40_4layers.png) PageBuilder for KNIME Analytics Platform & KNIME WebPortal
 
-This repository contains the frontend components of the PageBuilder based on the [Vue] JavaScript framework.
-The PageBuilder is built as an [Vue library] and used in KNIME Analytics Platform and KNIME WebPortal web apps.
+This repository contains the frontend components of the PageBuilder based on the [Vue] JavaScript framework and is used for layouting and rendering KNIME's JavaScript-based visualizations.
+It is built as an [Vue library] and used in KNIME Analytics Platform and KNIME WebPortal.
 
 ## Development
 
@@ -34,9 +34,9 @@ Includes hot-reloading, so code changes will be visible in the browser immediate
 npm run dev
 ```
 
-### Launch development server for integration with Web Portal
+### Launch development server for integration with WebPortal
 
-When developing the [Web Portal], a web server with the built version of the library is required. This project provides
+When developing the [WebPortal], a web server with the built version of the library is required. This project provides
 this via the command:
 
 ```sh
@@ -246,6 +246,9 @@ none
 let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
 ```
 
+# Join the Community!
+* [KNIME Forum](https://forum.knime.com/)
+
 
 [Vue]: https://vuejs.org/
 [node]: https://knime-com.atlassian.net/wiki/spaces/SPECS/pages/905281540/Node.js+Installation
@@ -256,4 +259,4 @@ let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
 [jest]: https://jestjs.io/en
 [LCOV]: https://github.com/linux-test-project/lcov
 [Clover]: http://openclover.org/
-[Web Portal]: https://bitbucket.org/KNIME/knime-webportal
+[WebPortal]: https://bitbucket.org/KNIME/knime-webportal
