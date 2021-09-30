@@ -1,4 +1,5 @@
 <script>
+import { mapActions } from 'vuex';
 import Label from 'webapps-common/ui/components/forms/Label';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
@@ -92,7 +93,15 @@ export default {
                 errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid.';
             }
             return { isValid, errorMessage: isValid ? null : errorMessage };
-        }
+        },
+        handleReExecution() {
+            if (this.viewRep.reExecuteDownstreamNodes) {
+                this.triggerReExecution({ nodeId: this.nodeId });
+            }
+        },
+        ...mapActions({
+            triggerReExecution: 'pagebuilder/triggerReExecution'
+        })
     }
 };
 </script>

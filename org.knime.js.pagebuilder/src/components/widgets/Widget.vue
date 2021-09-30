@@ -157,11 +157,14 @@ export default {
         isInteractiveWidget() {
             return typeof this.valuePair === 'undefined' && typeof this.$refs.widget.getValue === 'function';
         },
-        /* Naive method to recognize re-execution widgets as members of the re-execution widget extension. As the
-        re-execution API is expanded, this method should be updated to recognize widgets which are configured to be
+        /* Method to recognize all re-execution widgets as widgets which are configured to be
         reactive. */
         isReactive() {
-            return this.nodeConfig?.viewRepresentation?.['@class']?.includes('.reexecution.');
+            return typeof this.$refs.widget.handleReExecution === 'function';
+        },
+        /* Naive method to recognize re-execution widgets (that do not require a web node update) as members of the re-execution widget extension. */
+        requiresWebNodeUpdate() {
+            return !this.nodeConfig?.viewRepresentation?.['@class']?.includes('.reexecution.');
         }
     },
     async mounted() {
@@ -204,7 +207,7 @@ export default {
     },
     methods: {
         async publishUpdate(changeObj) {
-            if (!this.isReactive && !changeObj.update) {
+            if (this.requiresWebNodeUpdate && !changeObj.update) {
                 changeObj.update = {
                     [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
                 };
@@ -219,7 +222,7 @@ export default {
                 changeObj.callback();
             }
             if (this.isReactive && this.isValid) {
-                this.triggerReExecution({ nodeId: this.nodeId });
+                this.$refs.widget.handleReExecution();
             }
         },
         getValue() {
@@ -260,8 +263,7 @@ export default {
             });
         },
         ...mapActions({
-            updateWebNode: 'pagebuilder/updateWebNode',
-            triggerReExecution: 'pagebuilder/triggerReExecution'
+            updateWebNode: 'pagebuilder/updateWebNode'
         })
     }
 };

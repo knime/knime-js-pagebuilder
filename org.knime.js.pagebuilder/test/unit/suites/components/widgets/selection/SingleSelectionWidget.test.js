@@ -67,7 +67,8 @@ describe('SingleSelectionWidget.vue', () => {
                     ],
                     type: 'Radio buttons (horizontal)',
                     limitNumberVisOptions: false,
-                    numberVisOptions: 10
+                    numberVisOptions: 10,
+                    reExecuteDownstreamNodes: false
                 },
                 viewValue: null,
                 customCSS: ''
@@ -442,5 +443,13 @@ describe('SingleSelectionWidget.vue', () => {
             expect(wrapper.vm.validate())
                 .toStrictEqual({ isValid: false, errorMessage: 'Current selection is invalid.' });
         });
+    });
+
+    it('triggers re-execution if reExecuteDownstreamNodes is enabled', () => {
+        propsDataList.nodeConfig.viewRepresentation.reExecuteDownstreamNodes = true;
+        let wrapper = mount(SingleSelectionWidget, { propsData: propsDataList });
+        wrapper.vm.triggerReExecution = jest.fn();
+        wrapper.vm.handleReExecution();
+        expect(wrapper.vm.triggerReExecution).toHaveBeenCalled();
     });
 });

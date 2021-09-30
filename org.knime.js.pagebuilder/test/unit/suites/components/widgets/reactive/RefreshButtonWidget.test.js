@@ -103,4 +103,11 @@ describe('RefreshButtonWidget.vue', () => {
         expect(wrapper.vm.isExecuting).toBeTruthy();
         expect(wrapper.find(Button).attributes().disabled).toBeTruthy();
     });
+
+    it('triggers re-execution if handleReExecution is called', () => {
+        let wrapper = mount(RefreshButtonWidget, { ...context, propsData });
+        wrapper.vm.triggerReExecution = jest.fn();
+        wrapper.vm.handleReExecution();
+        expect(wrapper.vm.triggerReExecution).toHaveBeenCalled();
+    });
 });
