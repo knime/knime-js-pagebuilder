@@ -5,7 +5,7 @@ describe('script loader', () => {
 
     beforeAll(() => {
         const instrumenter = require('istanbul-lib-instrument').createInstrumenter();
-        const filename = require.resolve('@/components/layout/injectedScripts/scriptLoader');
+        const filename = require.resolve('@/components/views/injectedScripts/scriptLoader');
         // trick taken from https://jasonstitt.com/istanbul-cover-eval to allow coverage in evaluated src
         knimeLoaderSrc = instrumenter.instrumentSync(fs.readFileSync(filename, 'utf-8'), filename);
 

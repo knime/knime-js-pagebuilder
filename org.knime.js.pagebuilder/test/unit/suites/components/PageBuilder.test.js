@@ -3,7 +3,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import PageBuilder from '@/components/PageBuilder';
 import Page from '@/components/layout/Page';
-import AlertGlobal from '@/components/layout/AlertGlobal';
+import AlertGlobal from '@/components/ui/AlertGlobal';
 
 describe('PageBuilder.vue', () => {
     let store, localVue, context;

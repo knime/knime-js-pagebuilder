@@ -1,5 +1,6 @@
 module.exports = {
     moduleFileExtensions: [
+        'ts',
         'js',
         'jsx',
         'json',
@@ -14,6 +15,10 @@ module.exports = {
     },
     transformIgnorePatterns: [
         '/node_modules/'
+    ],
+    modulePathIgnorePatterns: [
+        // Needed for local typescript module (see https://github.com/facebook/jest/issues/9021).
+        '<rootDir>/knime-ui-extension-service/dist'
     ],
     moduleNameMapper: {
         '\\.(jpg|png)\\?(jpg|webp)': '<rootDir>/test/unit/assets/stub.$2',
@@ -38,11 +43,11 @@ module.exports = {
         '!<rootDir>/test/unit/test-util'
     ],
     coveragePathIgnorePatterns: [
-        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|src/dev)/',
+        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|knime-ui-extension-service|src/dev)/',
         '^<rootDir>/src/(main.js|dev.js)'
     ],
     watchPathIgnorePatterns: [
-        '^<rootDir>/(coverage|dist|target|node_modules|bin|webapps-common)/'
+        '^<rootDir>/(coverage|dist|target|node_modules|bin|webapps-common|knime-ui-extension-service)/'
     ],
     testURL: 'http://test.example/',
     testMatch: [

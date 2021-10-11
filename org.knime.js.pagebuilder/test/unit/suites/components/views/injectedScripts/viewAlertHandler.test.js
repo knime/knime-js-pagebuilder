@@ -5,7 +5,7 @@ describe('view alert handler', () => {
 
     beforeAll(() => {
         const instrumenter = require('istanbul-lib-instrument').createInstrumenter();
-        const filename = require.resolve('@/components/layout/injectedScripts/viewAlertHandler');
+        const filename = require.resolve('@/components/views/injectedScripts/viewAlertHandler');
         // trick taken from https://jasonstitt.com/istanbul-cover-eval to allow coverage in evaluated src
         viewAlertHandlerSrc = instrumenter.instrumentSync(fs.readFileSync(filename, 'utf-8'), filename);
 

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 
-import AlertLocal from '@/components/layout/AlertLocal';
-import Popover from '@/components/layout/Popover';
+import AlertLocal from '@/components/ui/AlertLocal';
+import Popover from '@/components/ui/Popover';
 
 describe('AlertLocal', () => {
     it('renders default inactive', () => {

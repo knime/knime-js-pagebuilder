@@ -2,17 +2,21 @@ import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import NodeView from '@/components/layout/NodeView';
-import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
-import NotAvailable from '@/components/layout/NotAvailable';
-import ExecutingOverlay from '@/components/layout/ExecutingOverlay';
+import WebNode from '@/components/views/WebNode';
+import UIExtension from '@/components/views/UIExtension';
+import NotDisplayable from '@/components/views/NotDisplayable';
+import ExecutingOverlay from '@/components/ui/ExecutingOverlay';
 
 import * as storeConfig from '~/store/pagebuilder';
 
 describe('NodeView.vue', () => {
-    let store, localVue, context;
+    let localVue, context;
 
-    const getWizardPageContent = () => ({
-        webNodes: {
+    const getWebNodeProps = () => ({ viewConfig: { nodeID: '0:0:7' } });
+    const getUIExtProps = () => ({ viewConfig: { nodeID: '0:0:9' } });
+
+    const getWizardPageContent = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => ({
+        webNodes: webNodes || {
             '1:0:1:0:0:7': {
                 foo: 'bar',
                 viewRepresentation: {
@@ -21,33 +25,41 @@ describe('NodeView.vue', () => {
                 nodeInfo: {
                     displayPossible: true
                 }
-            },
+            }
+        },
+        nodeViews: nodeViews || {
             '1:0:1:0:0:9': {
                 baz: 'qux',
                 viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation'
+                    '@class': 'testing.notWidget'
                 },
                 nodeInfo: {
                     displayPossible: true
                 }
             }
         },
-        webNodePageConfiguration: {
+        webNodePageConfiguration: webNodePageConfiguration || {
             projectRelativePageIDSuffix: '1:0:1'
         }
     });
+
+    const createContext = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => {
+        let store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        store.commit('pagebuilder/setPage', {
+            wizardPageContent: getWizardPageContent({ webNodes, nodeViews, webNodePageConfiguration })
+        });
+
+        return {
+            store,
+            localVue
+        };
+    };
 
     beforeAll(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
 
-        store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        store.commit('pagebuilder/setPage', { wizardPageContent: getWizardPageContent() });
-
-        context = {
-            store,
-            localVue
-        };
+        context = createContext();
     });
 
     afterEach(() => {
@@ -59,421 +71,148 @@ describe('NodeView.vue', () => {
         expect(wrapper.html()).toBeTruthy();
     });
 
-    it('increments iframe key when nodeConfig updates', () => {
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: '0:0:7',
-                    resizeMethod: 'aspectRatio1by1'
-                }
-            }
-        });
-        expect(wrapper.vm.nodeViewIFrameKey).toBe(0);
-        wrapper.setProps({
-            viewConfig: {
-                nodeID: '0:0:7',
-                resizeMethod: 'aspectRatio1by1'
-            }
-        });
-        expect(wrapper.vm.nodeViewIFrameKey).toBe(1);
-    });
-
-    it('respects resize classes', () => {
-        let viewConfig = {
-            nodeID: '0:0:7',
-            resizeMethod: 'aspectRatio1by1'
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        expect(wrapper.find('div').attributes('class')).toEqual('view aspectRatio1by1');
-    });
-
-    it('ignores resize classes when webnode missing', () => {
-        let viewConfig = {
-            nodeID: '123',
-            resizeMethod: 'aspectRatio1by1'
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        expect(wrapper.find('div').attributes('class')).toEqual('view');
-    });
-
     it('composes nodeIds conditionally based on the projectRelativePageIDSuffix', () => {
-        let viewConfig = {
-            nodeID: '0:0:9'
-        };
-        let wizardPageContent = {
-            webNodes: {},
-            webNodePageConfiguration: {
-                projectRelativePageIDSuffix: ''
-            }
-        };
-        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        localStore.commit('pagebuilder/setPage', { wizardPageContent });
+        let { viewConfig } = getWebNodeProps();
+        let localContext = createContext({ webNodePageConfiguration: {} });
 
         let wrapper = shallowMount(NodeView, {
-            store: localStore,
-            localVue,
-            propsData: {
-                viewConfig
-            }
+            ...localContext,
+            propsData: getWebNodeProps()
         });
 
         expect(wrapper.vm.nodeId).toEqual(viewConfig.nodeID);
 
-        // check the presence of a projectRelativePageIDSuffix
-        wizardPageContent.webNodePageConfiguration.projectRelativePageIDSuffix = '1:0:1';
-        
-        localStore.commit('pagebuilder/setPage', { wizardPageContent });
+        localContext = createContext();
 
         wrapper = shallowMount(NodeView, {
-            store: localStore,
-            localVue,
+            ...localContext,
             propsData: {
                 viewConfig
             }
         });
 
-        expect(wrapper.vm.nodeId).toEqual('1:0:1:0:0:9');
+        expect(wrapper.vm.nodeId).toEqual('1:0:1:0:0:7');
     });
 
-    it('passes correct props to the iframe', () => {
-        let viewConfig = {
-            nodeID: '0:0:7'
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
-        });
-        let expectedNodeConfig = {
-            foo: 'bar',
-            viewRepresentation: {
-                '@class': 'testing.notWidget'
-            },
-            nodeInfo: {
-                displayPossible: true
-            }
-        };
-
-        expect(wrapper.find(NodeViewIFrame).props('nodeConfig')).toEqual(expectedNodeConfig);
-        expect(wrapper.find(NodeViewIFrame).props('viewConfig')).toEqual(viewConfig);
-        expect(wrapper.find(NodeViewIFrame).props('nodeId')).toEqual('1:0:1:0:0:7');
-    });
-
-    it('can detect widgets using the representation class', () => {
-        let viewConfig = {
-            nodeID: '0:0:9',
-            useLegacyMode: false
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
+    describe('conditional rendering', () => {
+        it('renders views as WebNodes', () => {
+            let wrapper = shallowMount(NodeView, { ...context, propsData: getWebNodeProps() });
+            expect(wrapper.find(WebNode).exists()).toBeTruthy();
+            expect(wrapper.find(UIExtension).exists()).toBeFalsy();
+            expect(wrapper.find(NotDisplayable).exists()).toBeFalsy();
         });
 
-        expect(wrapper.vm.isWidget).toBeTruthy();
-    });
-
-    it('does not detect widgets using the nodeName', () => {
-        let viewConfig = {
-            nodeID: '0:0:9',
-            useLegacyMode: false
-        };
-        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        localStore.commit('pagebuilder/setPage', {
-            wizardPageContent: {
-                webNodes: {
-                    '1:0:1:0:0:9': {
-                        baz: 'qux',
-                        viewRepresentation: {
-                            '@class': 'not a defined widget class'
-                        },
-                        nodeInfo: {
-                            displayPossible: true,
-                            nodeName: 'Interactive Value Filter Widget'
-                        }
-                    }
-                }
-            },
-            webNodePageConfiguration: {
-                projectRelativePageIDSuffix: '1:0:1'
-            }
+        it('renders views as UI extension', () => {
+            let wrapper = shallowMount(NodeView, { ...context, propsData: getUIExtProps() });
+            expect(wrapper.find(UIExtension).exists()).toBeTruthy();
+            expect(wrapper.find(WebNode).exists()).toBeFalsy();
+            expect(wrapper.find(NotDisplayable).exists()).toBeFalsy();
         });
 
-        let wrapper = shallowMount(NodeView, {
-            store: localStore,
-            localVue,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        expect(wrapper.vm.widgetComponentName).not.toBeDefined();
-        expect(wrapper.vm.isWidget).toBeFalsy();
-    });
-
-    it('can detect non-widgets or widgets without a legacy mode flag set', () => {
-        let viewConfig = {
-            nodeID: '0:0:7'
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        expect(wrapper.vm.isWidget).toBeFalsy();
-    });
-
-    it('can detect legacy flags', () => {
-        let viewConfig = {
-            nodeID: '0:0:9',
-            useLegacyMode: true
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        expect(wrapper.vm.isWidget).toBeFalsy();
-    });
-
-    it('renders widgets in non-legacy mode when they are excluded from legacy rendering', () => {
-        let viewConfig = {
-            nodeID: '0:0:9',
-            useLegacyMode: true
-        };
-        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        localStore.commit('pagebuilder/setPage', {
-            wizardPageContent: {
-                webNodes: {
-                    '1:0:1:0:0:9': {
-                        viewRepresentation: {
-                            '@class': 'org.knime.js.base.node.widget.reexecution.refresh.RefreshButtonWidgetViewRepresentation'
-                        },
-                        nodeInfo: {
-                            displayPossible: true,
-                            nodeName: 'Refresh Button Widget'
-                        }
-                    }
-                },
-                webNodePageConfiguration: {
-                    projectRelativePageIDSuffix: '1:0:1'
-                }
-            }
-        });
-
-        let wrapper = shallowMount(NodeView, {
-            store: localStore,
-            localVue,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        expect(wrapper.vm.widgetComponentName).toBeTruthy();
-        expect(wrapper.vm.legacyModeDisabled).toBeFalsy();
-        expect(wrapper.vm.isWidget).toBeTruthy();
-    });
-
-    it('does not render iframe if webNode config is missing', () => {
-        let viewConfig = {
-            nodeID: '123'
-        };
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        expect(wrapper.contains(NodeViewIFrame)).toBe(false);
-    });
-
-    it('renders with classes and styles', () => {
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: '0:0:7',
-                    resizeMethod: 'aspectRatio1by1',
-                    additionalClasses: ['class1', 'class2'],
-                    additionalStyles: ['color: red;', 'border: 1px solid green;']
-                }
-            }
-        });
-        expect(wrapper.attributes('class')).toEqual('view aspectRatio1by1 class1 class2');
-        expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
-    });
-
-    it('adds classes for min/max height & width', () => {
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: '0:0:9',
-                    useLegacyMode: false,
-                    resizeMethod: 'viewLowestElement',
-                    additionalClasses: ['class1', 'class2'],
-                    additionalStyles: ['color: red;', 'border: 1px solid green;'],
-                    minHeight: 100,
-                    maxHeight: 200,
-                    minWidth: 100,
-                    maxWidth: 200
-                }
-            }
-        });
-        expect(wrapper.attributes('class')).toEqual('view class1 class2');
-        expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green; max-height: 200px;' +
-            ' max-width: 200px; min-height: 200px; min-width: 200px;');
-    });
-
-    it('ignores classes and styles when webnode missing', () => {
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    resizeMethod: 'aspectRatio1by1',
-                    additionalClasses: ['class1', 'class2'],
-                    additionalStyles: ['color: red;', 'border: 1px solid green;']
-                }
-            }
-        });
-        expect(wrapper.attributes('class')).toEqual('view');
-        expect(wrapper.attributes('style')).not.toBeDefined();
-    });
-
-    it('renders not displayable nodes', () => {
-        let wrapper = shallowMount(NodeView, {
-            ...context,
-            propsData: {
-                viewConfig: {
-                    nodeID: '0:0:7',
-                    resizeMethod: 'viewLowestElement',
-                    autoResize: true
-                }
-            }
-        });
-        store.commit('pagebuilder/setPage', {
-            wizardPageContent: {
+        it('renders not displayable web nodes', () => {
+            let expectedNodeInfo = {
+                displayPossible: false
+            };
+            let localContext = createContext({
                 webNodes: {
                     '1:0:1:0:0:7': {
                         foo: 'bar',
                         viewRepresentation: {
                             '@class': 'testing.notWidget'
                         },
-                        nodeInfo: {
-                            displayPossible: false
+                        nodeInfo: expectedNodeInfo
+                    }
+                }
+            });
+            let wrapper = shallowMount(NodeView, {
+                ...localContext,
+                propsData: {
+                    viewConfig: {
+                        nodeID: '0:0:7',
+                        resizeMethod: 'viewLowestElement',
+                        autoResize: true
+                    }
+                }
+            });
+
+            expect(wrapper.find(NotDisplayable).exists()).toBe(true);
+            expect(wrapper.find(NotDisplayable).props('nodeInfo')).toEqual(expectedNodeInfo);
+            expect(wrapper.find(NotDisplayable).props('nodeId')).toEqual('1:0:1:0:0:7');
+        });
+
+        xit('renders not displayable ui extensions', () => {
+            // TODO: NXT-734 Handle displayability of UIExtensions
+        });
+
+        it('renders nothing if no view available', () => {
+            let wrapper = shallowMount(NodeView, {
+                ...createContext({
+                    webNodes: {},
+                    nodeViews: {}
+                }),
+                propsData: getWebNodeProps()
+            });
+            expect(wrapper.find(UIExtension).exists()).toBeFalsy();
+            expect(wrapper.find(WebNode).exists()).toBeFalsy();
+            expect(wrapper.find(NotDisplayable).exists()).toBeFalsy();
+        });
+    });
+
+    describe('re-execution handling', () => {
+        it('detects if the node is currently (re)executing via node state', () => {
+            let wrapper = shallowMount(NodeView, {
+                ...createContext({
+                    webNodes: {
+                        '1:0:1:0:0:7': {
+                            baz: 'qux',
+                            viewRepresentation: {
+                                '@class': 'not a defined widget class'
+                            },
+                            nodeInfo: {
+                                displayPossible: true,
+                                nodeState: 'executing'
+                            }
                         }
                     }
-                },
-                webNodePageConfiguration: {
-                    projectRelativePageIDSuffix: '1:0:1'
-                }
-            }
-        });
-        let expectedNodeInfo = {
-            displayPossible: false
-        };
+                }),
+                propsData: getWebNodeProps()
+            });
 
-        expect(wrapper.find(NotAvailable).exists()).toBe(true);
-        expect(wrapper.find(NotAvailable).props('nodeInfo')).toEqual(expectedNodeInfo);
-        expect(wrapper.find(NotAvailable).props('nodeId')).toEqual('1:0:1:0:0:7');
-    });
-
-    it('detects if the node is currently (re)executing via node state', () => {
-        let viewConfig = { nodeID: '0:0:9' };
-        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        localStore.commit('pagebuilder/setPage', {
-            wizardPageContent: {
-                webNodes: {
-                    '1:0:1:0:0:9': {
-                        baz: 'qux',
-                        viewRepresentation: {
-                            '@class': 'not a defined widget class'
-                        },
-                        nodeInfo: {
-                            displayPossible: true,
-                            nodeName: 'Interactive Value Filter Widget',
-                            nodeState: 'executing'
-                        }
-                    }
-                },
-                webNodePageConfiguration: {
-                    projectRelativePageIDSuffix: '1:0:1'
-                }
-            }
+            expect(wrapper.vm.showExecutionOverlay).toBe(true);
+            expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
         });
 
-        let wrapper = shallowMount(NodeView, {
-            store: localStore,
-            localVue,
-            propsData: {
-                viewConfig
-            }
+        it('detects if the node is currently (re)executing via re-executing node ids', () => {
+            let localContext = createContext();
+            localContext.store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
+
+            let wrapper = shallowMount(NodeView, {
+                ...localContext,
+                propsData: getWebNodeProps()
+            });
+
+            expect(wrapper.vm.showExecutionOverlay).toBe(true);
+            expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
         });
 
-        expect(wrapper.vm.showExecutionOverlay).toBe(true);
-        expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
-    });
+        it('decides when to show a spinner on executing content via updateCount', () => {
+            let localContext = createContext();
+            localContext.store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
 
-    it('detects if the node is currently (re)executing via re-executing node ids', () => {
-        let viewConfig = { nodeID: '0:0:9' };
-        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        localStore.commit('pagebuilder/setPage', { wizardPageContent: getWizardPageContent() });
-        localStore.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:9']);
+            let wrapper = shallowMount(NodeView, {
+                ...localContext,
+                propsData: getWebNodeProps()
+            });
 
-        let wrapper = shallowMount(NodeView, {
-            store: localStore,
-            localVue,
-            propsData: {
-                viewConfig
-            }
+            expect(wrapper.vm.showExecutionOverlay).toBe(true);
+            expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+            expect(wrapper.vm.showSpinner).toBe(false);
+
+            localContext.store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
+
+            expect(wrapper.vm.showExecutionOverlay).toBe(true);
+            expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+            expect(wrapper.vm.showSpinner).toBe(true);
         });
-
-        expect(wrapper.vm.showExecutionOverlay).toBe(true);
-        expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
-    });
-
-    it('decides when to show a spinner on executing content via updateCount', () => {
-        let viewConfig = { nodeID: '0:0:9' };
-        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
-        localStore.commit('pagebuilder/setPage', { wizardPageContent: getWizardPageContent() });
-        localStore.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:9']);
-
-        let wrapper = shallowMount(NodeView, {
-            store: localStore,
-            localVue,
-            propsData: {
-                viewConfig
-            }
-        });
-
-        expect(wrapper.vm.showExecutionOverlay).toBe(true);
-        expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
-        expect(wrapper.vm.showSpinner).toBe(false);
-
-        localStore.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:9']);
-
-        expect(wrapper.vm.showExecutionOverlay).toBe(true);
-        expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
-        expect(wrapper.vm.showSpinner).toBe(true);
     });
 });

@@ -1,12 +1,12 @@
-import NotAvailable from '~/src/components/layout/NotAvailable';
+import NotDisplayable from '~/src/components/views/NotDisplayable';
 import { shallowMount } from '@vue/test-utils';
 import Label from '~/webapps-common/ui/components/forms/Label';
 
-describe('NotAvailable.vue', () => {
+describe('NotDisplayable.vue', () => {
     let wrapper;
 
     beforeAll(() => {
-        wrapper = shallowMount(NotAvailable);
+        wrapper = shallowMount(NotDisplayable);
     });
 
     it('renders default', () => {
@@ -15,7 +15,7 @@ describe('NotAvailable.vue', () => {
     });
 
     it('renders error message', () => {
-        wrapper = shallowMount(NotAvailable, {
+        wrapper = shallowMount(NotDisplayable, {
             propsData: { nodeInfo: {
                 nodeName: 'testName',
                 nodeErrorMessage: 'test_error'
@@ -25,7 +25,7 @@ describe('NotAvailable.vue', () => {
     });
 
     it('renders warn message', () => {
-        wrapper = shallowMount(NotAvailable, {
+        wrapper = shallowMount(NotDisplayable, {
             propsData: { nodeInfo: {
                 nodeName: 'testName',
                 nodeWarnMessage: 'test_warning'
@@ -35,7 +35,7 @@ describe('NotAvailable.vue', () => {
     });
 
     it('renders annotation', () => {
-        wrapper = shallowMount(NotAvailable, {
+        wrapper = shallowMount(NotDisplayable, {
             propsData: {
                 nodeInfo: {
                     nodeName: 'testName',

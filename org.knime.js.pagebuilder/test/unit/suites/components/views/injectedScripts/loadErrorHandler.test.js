@@ -5,7 +5,7 @@ describe('load error handler', () => {
 
     beforeAll(() => {
         const instrumenter = require('istanbul-lib-instrument').createInstrumenter();
-        const filename = require.resolve('@/components/layout/injectedScripts/loadErrorHandler');
+        const filename = require.resolve('@/components/views/injectedScripts/loadErrorHandler');
         // trick taken from https://jasonstitt.com/istanbul-cover-eval to allow coverage in evaluated src
         loadErrorHandlerSrc = instrumenter.instrumentSync(fs.readFileSync(filename, 'utf-8'), filename);
 

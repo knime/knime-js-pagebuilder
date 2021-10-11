@@ -1,5 +1,5 @@
 <script>
-import AlertLocal from './AlertLocal';
+import AlertLocal from '~/src/components/ui/AlertLocal';
 import iframeResizer from 'iframe-resizer/js/iframeResizer';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
@@ -53,7 +53,6 @@ export default {
             alert: null
         };
     },
-
     computed: {
         iframeId() {
             // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name

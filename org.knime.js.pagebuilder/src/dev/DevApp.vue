@@ -1,5 +1,5 @@
 <script>
-import PageBuilder from '../components/PageBuilder.vue';
+import PageBuilder from '../components/PageBuilder';
 
 export default {
     components: {
