@@ -215,7 +215,6 @@
     "webNodes": { },
     "nodeViews": {
       "1:0:1": {
-        "@class": "org.knime.js.core.JSONWebNode",
         "name": "MockUIExtComponent",
         "uicomponent": "MockUIExtComponent",
         "url": "<unused mock url because component pre-loaded>/MockUIExtComponent.umd.min.js",
@@ -225,7 +224,6 @@
         "initData": "Pre-loaded Vue Component"
       },
       "1:0:2": {
-        "@class": "org.knime.js.core.JSONWebNode",
         "name": "mock-component2",
         "uicomponent": "MockUIExtComponent2",
         "url": "http://localhost:4000/mock-component2.umd.min.js",
@@ -234,18 +232,7 @@
         "nodeId": "1:0:2",
         "initData": "Unregistered vue component"
       },
-      "1:0:3": {
-        "@class": "org.knime.js.core.JSONWebNode",
-        "name": "mock-webcomponent",
-        "uicomponent": "mock-webcomponent",
-        "url": "http://localhost:4000/mock-webcomponent.min.js",
-        "projectId": "2",
-        "workflowId": "3",
-        "nodeId": "1:0:3",
-        "initData": "Sample web-component"
-      },
       "1:0:4": {
-        "@class": "org.knime.js.core.JSONWebNode",
         "name": "mock-ui-iframe.html",
         "url": "http://localhost:4000/mock-ui-iframe.html",
         "projectId": "2",
@@ -254,7 +241,6 @@
         "initData": "Sample i-frame w/ html provided by source"
       },
       "1:0:5": {
-        "@class": "org.knime.js.core.JSONWebNode",
         "name": "Nested Component View",
         "url": "http://localhost:8080/index.html",
         "projectId": "2",

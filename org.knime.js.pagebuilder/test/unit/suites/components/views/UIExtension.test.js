@@ -3,8 +3,6 @@ import { shallowMount } from '@vue/test-utils';
 import UIExtension from '@/components/views/UIExtension';
 import UIExtComponent from '@/components/views/UIExtComponent';
 import UIExtIFrame from '@/components/views/UIExtIFrame';
-import DebugButton from '@/components/ui/DebugButton';
-import RefreshButton from '@/components/ui/RefreshButton';
 
 describe('UIExtension.vue', () => {
     const getMockIFrameProps = () => {
@@ -39,26 +37,6 @@ describe('UIExtension.vue', () => {
         });
         expect(wrapper.find(UIExtIFrame).exists()).toBeTruthy();
         expect(wrapper.find(UIExtComponent).exists()).toBeFalsy();
-    });
-
-    it('renders debug button when port present', () => {
-        let defaultProps = getMockIFrameProps();
-        defaultProps.nodeInfo.remoteDebugPort = '4000';
-        let wrapper = shallowMount(UIExtension, {
-            propsData: defaultProps
-        });
-        expect(wrapper.find(DebugButton).exists()).toBeTruthy();
-        expect(wrapper.find(RefreshButton).exists()).toBeFalsy();
-    });
-
-    it('renders refresh button if debug port and Vue component', () => {
-        let defaultProps = getMockComponentProps();
-        defaultProps.nodeInfo.remoteDebugPort = '4000';
-        let wrapper = shallowMount(UIExtension, {
-            propsData: defaultProps
-        });
-        expect(wrapper.find(DebugButton).exists()).toBeTruthy();
-        expect(wrapper.find(RefreshButton).exists()).toBeTruthy();
     });
 
     it('increments key when node info updates', () => {

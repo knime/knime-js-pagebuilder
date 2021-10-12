@@ -1,8 +1,6 @@
 <script>
 import UIExtComponent from '~/src/components/views/UIExtComponent';
 import UIExtIFrame from '~/src/components/views/UIExtIFrame';
-import DebugButton from '~/src/components/ui/DebugButton';
-import RefreshButton from '~/src/components/ui/RefreshButton';
 
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-
@@ -12,9 +10,7 @@ import RefreshButton from '~/src/components/ui/RefreshButton';
 export default {
     components: {
         UIExtComponent,
-        UIExtIFrame,
-        RefreshButton,
-        DebugButton
+        UIExtIFrame
     },
     props: {
         nodeInfo: {
@@ -61,16 +57,5 @@ export default {
       :workflow-id="nodeInfo.workflowId"
       :init-data="nodeInfo.initData"
     />
-    <template v-if="nodeInfo.remoteDebugPort">
-      <DebugButton :debug-port="nodeInfo.remoteDebugPort" />
-      <RefreshButton v-if="nodeInfo.uicomponent" />
-    </template>
   </div>
 </template>
-
-<style lang="postcss">
-@import "modern-normalize/modern-normalize.css";
-@import "webapps-common/ui/css/variables";
-@import "webapps-common/ui/css/basics";
-@import "webapps-common/ui/css/fonts";
-</style>

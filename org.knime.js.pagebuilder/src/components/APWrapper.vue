@@ -1,9 +1,15 @@
 <script>
 import Vue from 'vue';
+// TODO: NXT-729 enable debug button when port added
+// import DebugButton from '~/src/components/ui/DebugButton';
+// import RefreshButton from '~/src/components/ui/RefreshButton';
 
 export default {
     components: {
-        // PageBuilder
+        // PageBuilder,
+        // TODO: NXT-729 enable debug button when port added
+        // RefreshButton,
+        // DebugButton
     },
     computed: {
         /* Checks if pageBuilderLoader middleware was successful */
@@ -16,6 +22,11 @@ export default {
 
 <template>
   <PageBuilder v-if="pageBuilderLoaded" />
+  <!-- TODO: NXT-729 enable debug button when port added -->
+  <!-- <template v-if="<insert logic, i.e. page.remoteDebugPort>">
+      <DebugButton :debug-port="<insert logic, i.e. page.remoteDebugPort>" />
+      <RefreshButton />
+    </template> -->
 </template>
 
 <style lang="postcss">

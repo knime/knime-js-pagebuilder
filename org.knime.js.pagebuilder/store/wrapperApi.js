@@ -1,4 +1,4 @@
-/* global rpc */
+/* global jsonrpc */
 export const namespaced = true;
 
 let pollingTimeout; // global target for assigning setTimeout ids
@@ -65,7 +65,7 @@ export const actions = {
                 rpcConfig: {
                     jsonrpc: '2.0',
                     id: 0,
-                    method: 'reexecutePage',
+                    method: 'ReexecutionService.reexecutePage',
                     params: [
                         nodeId,
                         Object.keys(viewValues).reduce((obj, nId) => {
@@ -100,7 +100,7 @@ export const actions = {
                 rpcConfig: {
                     jsonrpc: '2.0',
                     id: 0,
-                    method: 'getPage',
+                    method: 'ReexecutionService.getPage',
                     params: []
                 }
             }
@@ -149,7 +149,7 @@ export const actions = {
     /* RPC ACTIONS */
 
     /**
-     * Calls a single RPC call via the global RPC function. If no global function exists, return value will have the
+     * Calls a single RPC call via the global RPC function (jsonrpc). If no global function exists, return value will have the
      * error property set.
      *
      * @param {Object} _ - Vuex context (unused).
@@ -159,7 +159,7 @@ export const actions = {
      *          E.g.: {
      *              jsonrpc: '2.0', (always 2.0)
      *              id: 0, (can be unique)
-     *              method: 'getPage', (name of RPC method)
+     *              method: 'ReexecutionService.getPage', (name of RPC service + method)
      *              params: [...] (RPC params, else empty array)
      *          }
      * @returns {Object} - the results of the RPC call; either with the result property (if the call was successful) or
@@ -167,10 +167,10 @@ export const actions = {
      */
     singleRPC(_, { nodeId, rpcConfig }) {
         let result, error;
-        if (typeof rpc === 'function') {
+        if (typeof jsonrpc === 'function') {
             try {
                 consola.debug(`WrapperAPI store: dispatch RPC node: ${nodeId}`, rpcConfig);
-                ({ result, error } = JSON.parse(rpc(JSON.stringify(rpcConfig))));
+                ({ result, error } = JSON.parse(jsonrpc(JSON.stringify(rpcConfig))));
             } catch (err) {
                 error = err;
             }
@@ -206,7 +206,7 @@ export const actions = {
      *          E.g.: {
      *              jsonrpc: '2.0', (always 2.0)
      *              id: 0, (can be unique)
-     *              method: 'getPage', (name of RPC method)
+     *              method: 'ReexecutionService.getPage', (name of RPC service + method)
      *              params: [...] (RPC params, else empty array)
      *          }
      * @returns {undefined}

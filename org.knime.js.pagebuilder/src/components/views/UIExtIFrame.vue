@@ -32,22 +32,23 @@ export default {
     },
     methods: {
         onMessageFromIFrame(message) {
-            let { contentWindow } = this.$refs.iframe;
-            if (message.source !== contentWindow) {
-                return;
-            }
+            // TODO: AP-17633 Implement I-Frame support (with KnimeService)
+            // let { contentWindow } = this.$refs.iframe;
+            // if (message.source !== contentWindow) {
+            //     return;
+            // }
 
-            if (message.data.type === 'knime-ready') {
-                contentWindow.postMessage({
-                    type: 'knime-init',
-                    data: {
-                        projectId: this.projectId,
-                        workflowId: this.workflowId,
-                        nodeId: this.nodeId,
-                        initData: this.initData
-                    }
-                }, '*');
-            }
+            // if (message.data.type === 'knime-ready') {
+            //     contentWindow.postMessage({
+            //         type: 'knime-init',
+            //         data: {
+            //             projectId: this.projectId,
+            //             workflowId: this.workflowId,
+            //             nodeId: this.nodeId,
+            //             initData: this.initData
+            //         }
+            //     }, '*');
+            // }
         }
     }
 };
