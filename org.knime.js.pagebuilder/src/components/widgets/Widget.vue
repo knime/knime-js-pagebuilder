@@ -160,11 +160,7 @@ export default {
         /* Method to recognize all re-execution widgets as widgets which are configured to be
         reactive. */
         isReactive() {
-            return typeof this.$refs.widget.handleReExecution === 'function';
-        },
-        /* Naive method to recognize re-execution widgets (that do not require a web node update) as members of the re-execution widget extension. */
-        requiresWebNodeUpdate() {
-            return !this.nodeConfig?.viewRepresentation?.['@class']?.includes('.reexecution.');
+            return this.nodeConfig.viewRepresentation.triggerReExecution;
         }
     },
     async mounted() {
@@ -207,7 +203,7 @@ export default {
     },
     methods: {
         async publishUpdate(changeObj) {
-            if (this.requiresWebNodeUpdate && !changeObj.update) {
+            if (this.hasValueGetter && !changeObj.update) {
                 changeObj.update = {
                     [`viewRepresentation.currentValue.${changeObj.type}`]: changeObj.value
                 };
@@ -222,7 +218,7 @@ export default {
                 changeObj.callback();
             }
             if (this.isReactive && this.isValid) {
-                this.$refs.widget.handleReExecution();
+                this.triggerReExecution({ nodeId: this.nodeId });
             }
         },
         getValue() {
@@ -263,7 +259,8 @@ export default {
             });
         },
         ...mapActions({
-            updateWebNode: 'pagebuilder/updateWebNode'
+            updateWebNode: 'pagebuilder/updateWebNode',
+            triggerReExecution: 'pagebuilder/triggerReExecution'
         })
     }
 };

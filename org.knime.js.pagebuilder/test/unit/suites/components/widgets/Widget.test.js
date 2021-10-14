@@ -341,4 +341,95 @@ describe('Widget.vue', () => {
         expect(wrapper.vm.$store.state.pagebuilder.pageValidators[nodeId])
             .toBe(wrapper.vm.validate);
     });
+
+    it('updates values for reactive widgets without valueGetter (no onChange)', async () => {
+        let localWrapper = shallowMount(Widget, {
+            ...context,
+            stubs: {
+                RefreshButton: {
+                    name: 'refresh',
+                    template: '<div />',
+                    ref: 'widget',
+                    methods: {
+                        validate: jest.fn().mockReturnValue(Promise.resolve(true))
+                    }
+                }
+            },
+            propsData: {
+                nodeConfig: {
+                    ...nodeConfig,
+                    viewRepresentation: {
+                        ...nodeConfig.viewRepresentation,
+                        triggerReExecution: true
+                    }
+                },
+                nodeId: 'id1',
+                type: 'SliderWidget'
+            }
+        });
+
+        let updateSpy = jest.spyOn(localWrapper.vm, 'updateWebNode').mockResolvedValueOnce(true);
+        await localWrapper.vm.$refs['widget'].$emit('updateWidget', { type: 'any', value: 'some' });
+
+        expect(updateSpy).not.toHaveBeenCalled();
+    });
+
+    it('updates values for reactive widgets with valueGetter (onChange)', async () => {
+        let localWrapper = shallowMount(Widget, {
+            ...context,
+            propsData: {
+                nodeConfig: {
+                    ...nodeConfig,
+                    viewRepresentation: {
+                        ...nodeConfig.viewRepresentation,
+                        triggerReExecution: true
+                    }
+                },
+                nodeId: 'id1',
+                type: 'SliderWidget'
+            }
+        });
+        let updateSpy = jest.spyOn(localWrapper.vm, 'updateWebNode').mockReturnValueOnce(true);
+        await localWrapper.vm.$refs['widget'].$emit('updateWidget', { type: 'any', value: 'some' });
+
+        expect(updateSpy).toHaveBeenCalledWith({
+            type: 'any',
+            update: {
+                'viewRepresentation.currentValue.any': 'some'
+            },
+            value: 'some'
+        });
+    });
+
+    it('triggers re-execution if widget is reactive', async () => {
+        let localWrapper = shallowMount(Widget, {
+            ...context,
+            stubs: {
+                RefreshButton: {
+                    name: 'refresh',
+                    template: '<div />',
+                    ref: 'widget',
+                    methods: {
+                        validate: jest.fn().mockReturnValue(Promise.resolve(true))
+                    }
+                }
+            },
+            propsData: {
+                nodeConfig: {
+                    ...nodeConfig,
+                    viewRepresentation: {
+                        ...nodeConfig.viewRepresentation,
+                        triggerReExecution: true
+                    }
+                },
+                nodeId: 'id1',
+                type: 'SliderWidget'
+            }
+        });
+
+        let triggerSpy = jest.spyOn(localWrapper.vm, 'triggerReExecution').mockReturnValueOnce(true);
+        await localWrapper.vm.$refs['widget'].$emit('updateWidget', { type: 'any', value: 'some' });
+
+        expect(triggerSpy).toHaveBeenCalled();
+    });
 });

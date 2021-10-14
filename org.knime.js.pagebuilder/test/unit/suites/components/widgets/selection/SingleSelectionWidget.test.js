@@ -444,12 +444,4 @@ describe('SingleSelectionWidget.vue', () => {
                 .toStrictEqual({ isValid: false, errorMessage: 'Current selection is invalid.' });
         });
     });
-
-    it('triggers re-execution if reExecuteDownstreamNodes is enabled', () => {
-        propsDataList.nodeConfig.viewRepresentation.reExecuteDownstreamNodes = true;
-        let wrapper = mount(SingleSelectionWidget, { propsData: propsDataList });
-        wrapper.vm.triggerReExecution = jest.fn();
-        wrapper.vm.handleReExecution();
-        expect(wrapper.vm.triggerReExecution).toHaveBeenCalled();
-    });
 });

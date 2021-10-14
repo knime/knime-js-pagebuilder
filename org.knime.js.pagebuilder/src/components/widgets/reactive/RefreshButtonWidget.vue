@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 import Label from '~/webapps-common/ui/components/forms/Label';
 import ErrorMessage from '../baseElements/text/ErrorMessage';
@@ -52,13 +52,7 @@ export default {
             this.$emit('updateWidget', {
                 nodeId: this.nodeId
             });
-        },
-        handleReExecution() {
-            this.triggerReExecution({ nodeId: this.nodeId });
-        },
-        ...mapActions({
-            triggerReExecution: 'pagebuilder/triggerReExecution'
-        })
+        }
     }
 };
 </script>
