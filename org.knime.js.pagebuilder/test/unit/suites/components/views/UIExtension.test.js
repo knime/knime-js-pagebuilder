@@ -6,20 +6,30 @@ import UIExtIFrame from '@/components/views/UIExtIFrame';
 
 describe('UIExtension.vue', () => {
     const getMockIFrameProps = () => {
-        let nodeId = '0:0:7';
-        let nodeInfo = {
-            projectId: '1985',
-            workflowId: '01.04',
-            initData: '{}',
-            url: 'local',
-            remoteDebugPort: null
+        let extensionConfig = {
+            nodeId: '0:0:7',
+            projectId: 'knime workflow',
+            workflowId: 'root:10',
+            resourceInfo: {
+                id: 'org.knime.base.views.scatterplot.ScatterPlotNodeFactory',
+                type: 'HTML',
+                path: null,
+                url: 'localhost'
+            },
+            nodeInfo: {
+                nodeAnnotation: '',
+                nodeState: 'executed',
+                nodeErrorMessage: null,
+                nodeWarnMessage: null,
+                nodeName: 'Scatter Plot'
+            }
         };
-        return { nodeId, nodeInfo };
+        return { extensionConfig };
     };
 
     const getMockComponentProps = () => {
         let baseProps = getMockIFrameProps();
-        baseProps.nodeInfo.uicomponent = 'SomeVueComponent';
+        baseProps.extensionConfig.resourceInfo.type = 'VUE_COMPONENT_LIB';
         return baseProps;
     };
 
@@ -43,10 +53,10 @@ describe('UIExtension.vue', () => {
         let wrapper = shallowMount(UIExtension, {
             propsData: getMockIFrameProps()
         });
-        expect(wrapper.vm.nodeInfoKey).toBe(0);
-        let { nodeInfo } = getMockIFrameProps();
-        nodeInfo.url = 'remote';
-        wrapper.setProps({ nodeInfo });
-        expect(wrapper.vm.nodeInfoKey).toBe(1);
+        expect(wrapper.vm.configKey).toBe(0);
+        let { extensionConfig } = getMockIFrameProps();
+        extensionConfig.resourceInfo.url = 'remote';
+        wrapper.setProps({ extensionConfig });
+        expect(wrapper.vm.configKey).toBe(1);
     });
 });

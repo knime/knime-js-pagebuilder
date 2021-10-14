@@ -23,17 +23,6 @@ export default {
                 const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
                 return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
             }
-        },
-        /**
-         * The unique string node ID as it exists
-         * in the store webNodes
-         */
-        nodeId: {
-            required: true,
-            type: String,
-            validator(nodeId) {
-                return nodeId !== '';
-            }
         }
     },
     data() {
@@ -44,12 +33,6 @@ export default {
     computed: {
         isUIExtComponent() {
             return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
-        },
-        workflowRelativeConfig() {
-            return {
-                ...this.extensionConfig,
-                nodeId: this.nodeId
-            };
         }
     },
     watch: {
@@ -64,12 +47,12 @@ export default {
   <div>
     <UIExtComponent
       v-if="isUIExtComponent"
-      :extension-config="workflowRelativeConfig"
+      :extension-config="extensionConfig"
     />
     <UIExtIFrame
       v-else
       :key="configKey"
-      :extension-config="workflowRelativeConfig"
+      :extension-config="extensionConfig"
     />
   </div>
 </template>
