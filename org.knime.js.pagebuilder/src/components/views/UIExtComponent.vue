@@ -7,10 +7,16 @@ export default {
         // UIExtension
     },
     props: {
-        extInfo: {
+        extensionConfig: {
+            default: () => ({}),
             type: Object,
-            required: false,
-            default: null
+            validate(extensionConfig) {
+                if (typeof extensionConfig !== 'object') {
+                    return false;
+                }
+                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
+                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
+            }
         }
     },
     data() {
@@ -20,29 +26,33 @@ export default {
         };
     },
     computed: {
-        url() {
-            return this.extInfo?.url;
+        resourceInfo() {
+            return this.extensionConfig?.resourceInfo;
         },
-        name() {
-            return this.extInfo?.name;
+        resourceLocation() {
+            // TODO: NXT-732 handle relative paths for webportal
+            return this.resourceInfo?.url;
         },
-        isComponentLibrary() {
-            return this.url?.includes('.umd.min.js');
+        /**
+         * A unique identifier based on the factory class of a node. Will be shared with other node instances of the
+         * same type across an installation, but is guaranteed to be unique against other node-types (regardless of
+         * naming conflicts; i.e. two scatter plots with the node name "Scatter Plot").
+         *
+         * @returns {string} - unique id for the resource registered to this node.
+         */
+        componentId() {
+            return this.resourceInfo?.id;
         }
     },
     async mounted() {
-        this.knimeService = new KnimeService(this.extInfo);
-        this.componentLoaded = Boolean(
-            Vue.component(this.extInfo.name) || window.customElements?.get(this.extInfo.name)
-        );
+        this.knimeService = new KnimeService(this.extensionConfig);
+        this.componentLoaded = Boolean(Vue.component(this.componentId));
         if (!this.componentLoaded) {
             await this.loadComponentLibrary();
         }
     },
     methods: {
         async loadComponentLibrary() {
-            let { url, name } = this.extInfo;
-                        
             // set dehydrated component lib dependencies globally
             window.Vue = Vue;
             // Load and mount component library
@@ -53,20 +63,21 @@ export default {
                     resolve(script);
                 });
                 script.addEventListener('error', () => {
-                    reject(new Error(`Script loading of "${url}" failed`));
+                    reject(new Error(`Script loading of "${this.resourceLocation}" failed`));
                     document.head.removeChild(script);
                 });
-                script.src = url;
+                script.src = this.resourceLocation;
                 document.head.appendChild(script);
             });
 
-            // lib build mounts component globally under package (.json) name
-            let Component = window[name];
-            if (this.isComponentLibrary && !Component) {
+            // Lib build defines component on `window` using the name defined during build.
+            // This name should match the componentId (this.extensionConfig.resourceInfo.id).
+            let Component = window[this.componentId];
+            if (!Component) {
                 throw new Error(`Component loading failed. Script invalid.`);
             }
-            delete window[name];
-            this.$options.components[name] = Component;
+            delete window[this.componentId];
+            this.$options.components[this.componentId] = Component;
             this.componentLoaded = true;
         }
     }
@@ -75,10 +86,9 @@ export default {
 
 <template>
   <component
-    :is="extInfo.name"
+    :is="componentId"
     v-if="componentLoaded"
-    :init-data="extInfo.initData"
-    :name="extInfo.name"
+    :init-data="extensionConfig.initData"
     :knime-service="knimeService"
   />
 </template>

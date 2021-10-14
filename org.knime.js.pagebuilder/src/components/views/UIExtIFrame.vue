@@ -1,28 +1,23 @@
 <script>
 export default {
     props: {
-        projectId: {
-            type: String,
-            required: true
-        },
-        workflowId: {
-            type: String,
-            required: true
-        },
-        nodeId: {
-            type: String,
-            required: true
-        },
-        iframeSrc: {
-            type: String,
-            required: true
-        },
-        initData: {
-            type: String,
-            required: false,
-            default: ''
+        extensionConfig: {
+            default: () => ({}),
+            type: Object,
+            validate(extensionConfig) {
+                if (typeof extensionConfig !== 'object') {
+                    return false;
+                }
+                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
+                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
+            }
         }
-
+    },
+    computed: {
+        resourceLocation() {
+            // TODO: NXT-732 handle relative paths for webportal
+            return this.extensionConfig?.resourceInfo?.url;
+        }
     },
     mounted() {
         window.addEventListener('message', this.onMessageFromIFrame);
@@ -58,7 +53,7 @@ export default {
   <div>
     <iframe
       ref="iframe"
-      :src="iframeSrc"
+      :src="resourceLocation"
     />
   </div>
 </template>

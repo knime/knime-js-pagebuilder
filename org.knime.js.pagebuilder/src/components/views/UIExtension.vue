@@ -13,9 +13,16 @@ export default {
         UIExtIFrame
     },
     props: {
-        nodeInfo: {
+        extensionConfig: {
             default: () => ({}),
-            type: Object
+            type: Object,
+            validate(extensionConfig) {
+                if (typeof extensionConfig !== 'object') {
+                    return false;
+                }
+                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
+                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
+            }
         },
         /**
          * The unique string node ID as it exists
@@ -31,12 +38,23 @@ export default {
     },
     data() {
         return {
-            nodeInfoKey: 0
+            configKey: 0
         };
     },
+    computed: {
+        isUIExtComponent() {
+            return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
+        },
+        workflowRelativeConfig() {
+            return {
+                ...this.extensionConfig,
+                nodeId: this.nodeId
+            };
+        }
+    },
     watch: {
-        nodeInfo() {
-            this.nodeInfoKey += 1;
+        extensionConfig() {
+            this.configKey += 1;
         }
     }
 };
@@ -45,17 +63,13 @@ export default {
 <template>
   <div>
     <UIExtComponent
-      v-if="nodeInfo.uicomponent"
-      :ext-info="nodeInfo"
+      v-if="isUIExtComponent"
+      :extension-config="workflowRelativeConfig"
     />
     <UIExtIFrame
       v-else
-      :key="nodeInfoKey"
-      :node-id="nodeId"
-      :iframe-src="nodeInfo.url"
-      :project-id="nodeInfo.projectId"
-      :workflow-id="nodeInfo.workflowId"
-      :init-data="nodeInfo.initData"
+      :key="configKey"
+      :extension-config="workflowRelativeConfig"
     />
   </div>
 </template>

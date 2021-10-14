@@ -56,25 +56,28 @@ export default {
         webNodeConfig() {
             return this.$store.state.pagebuilder.page.wizardPageContent?.webNodes?.[this.nodeId];
         },
-        uiExtNodeInfo() {
+        uiExtensionConfig() {
             return this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews?.[this.nodeId];
         },
         isWebNodeView() {
             return Boolean(this.webNodeConfig);
         },
-        isUIExtNodeView() {
-            return Boolean(this.uiExtNodeInfo);
+        isUIExtension() {
+            return Boolean(this.uiExtensionConfig);
         },
         viewAvailable() {
             // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
             // update the layout configuration, so we get a phantom item
-            return this.isWebNodeView || this.isUIExtNodeView;
+            return this.isWebNodeView || this.isUIExtension;
         },
         viewDisplayable() {
+            // TODO: NXT-734 Handle displayability of UIExtensions
+            if (this.isUIExtension) {
+                return true;
+            }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
-            // TODO: NXT-734 Handle displayability of UIExtensions
-            return this.isUIExtNodeView || this.webNodeConfig?.nodeInfo?.displayPossible;
+            return this.webNodeConfig?.nodeInfo?.displayPossible;
         },
         showExecutionOverlay() {
             /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this
@@ -109,8 +112,8 @@ export default {
         :node-id="nodeId"
       />
       <UIExtension
-        v-else-if="isUIExtNodeView"
-        :node-info="uiExtNodeInfo"
+        v-else-if="isUIExtension"
+        :extension-config="uiExtensionConfig"
         :node-id="nodeId"
       />
       <ExecutingOverlay
