@@ -15,7 +15,8 @@ Vue.use(Vuex);
 
 new Vue({
     created() {
-        Vue.component('MockUIExtComponent', MockUIExtComponent);
+        // eslint-disable-next-line vue/component-definition-name-casing
+        Vue.component('org.knime.base.views.MockUIExtComponent.MockUIExtComponent', MockUIExtComponent);
     },
     render: h => h(DevApp),
     store: new Vuex.Store({})

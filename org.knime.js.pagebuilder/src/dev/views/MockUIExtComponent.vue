@@ -17,7 +17,7 @@ export default {
       Pre-registered vue component.
     </h5>
     <pre>
-      knime-service: {{ knimeService.extInfo }}
+      knime-service: {{ knimeService.extensionConfig }}
     </pre>
   </div>
 </template>

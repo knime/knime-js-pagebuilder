@@ -1,5 +1,4 @@
 <script>
-import Vue from 'vue';
 import { KnimeService } from 'knime-ui-extension-service';
 
 export default {
@@ -46,15 +45,13 @@ export default {
     },
     async mounted() {
         this.knimeService = new KnimeService(this.extensionConfig);
-        this.componentLoaded = Boolean(Vue.component(this.componentId));
+        this.componentLoaded = Boolean(window.Vue.component(this.componentId));
         if (!this.componentLoaded) {
             await this.loadComponentLibrary();
         }
     },
     methods: {
         async loadComponentLibrary() {
-            // set dehydrated component lib dependencies globally
-            window.Vue = Vue;
             // Load and mount component library
             await new Promise((resolve, reject) => {
                 const script = document.createElement('script');

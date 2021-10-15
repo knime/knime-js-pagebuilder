@@ -15,7 +15,7 @@ export default {
   <div>
     Dynamically registered Vue component.
     <pre>
-      knime-service: {{ knimeService.extInfo }}
+      knime-service: {{ knimeService.extensionConfig }}
     </pre>
   </div>
 </template>

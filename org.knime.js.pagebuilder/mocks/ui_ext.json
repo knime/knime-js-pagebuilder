@@ -115,96 +115,6 @@
                 "additionalStyles": []
               }
             ]
-          },
-          {
-            "type": "row",
-            "additionalClasses": [],
-            "additionalStyles": [],
-            "columns": [
-              {
-                "widthXS": 12,
-                "widthSM": null,
-                "widthMD": null,
-                "widthLG": null,
-                "widthXL": null,
-                "content": [
-                  {
-                    "type": "view",
-                    "useLegacyMode": false,
-                    "resizeMethod": "viewLowestElement",
-                    "maxHeight": null,
-                    "maxWidth": null,
-                    "minHeight": null,
-                    "minWidth": null,
-                    "resizeInterval": null,
-                    "resizeTolerance": 5,
-                    "autoResize": true,
-                    "scrolling": false,
-                    "sizeHeight": true,
-                    "sizeWidth": false,
-                    "nodeID": "1:0:4",
-                    "additionalClasses": [],
-                    "additionalStyles": []
-                  }
-                ],
-                "additionalClasses": [],
-                "additionalStyles": []
-              }
-            ]
-          },
-          {
-            "type": "row",
-            "additionalClasses": [],
-            "additionalStyles": [],
-            "columns": [
-              {
-                "widthXS": 12,
-                "widthSM": null,
-                "widthMD": null,
-                "widthLG": null,
-                "widthXL": null,
-                "content": [
-                  {
-                    "type": "row",
-                    "additionalClasses": [],
-                    "additionalStyles": [],
-                    "columns": [
-                      {
-                        "widthXS": 12,
-                        "widthSM": null,
-                        "widthMD": null,
-                        "widthLG": null,
-                        "widthXL": null,
-                        "content": [
-                          {
-                            "type": "view",
-                            "useLegacyMode": false,
-                            "resizeMethod": "viewLowestElement",
-                            "maxHeight": null,
-                            "maxWidth": null,
-                            "minHeight": null,
-                            "minWidth": null,
-                            "resizeInterval": null,
-                            "resizeTolerance": 5,
-                            "autoResize": true,
-                            "scrolling": false,
-                            "sizeHeight": true,
-                            "sizeWidth": false,
-                            "nodeID": "1:0:5",
-                            "additionalClasses": [],
-                            "additionalStyles": []
-                          }
-                        ],
-                        "additionalClasses": [],
-                        "additionalStyles": []
-                      }
-                    ]
-                  }
-                ],
-                "additionalClasses": [],
-                "additionalStyles": []
-              }
-            ]
           }
         ]
       },
@@ -215,38 +125,61 @@
     "webNodes": { },
     "nodeViews": {
       "1:0:1": {
-        "name": "MockUIExtComponent",
-        "uicomponent": "MockUIExtComponent",
-        "url": "<unused mock url because component pre-loaded>/MockUIExtComponent.umd.min.js",
-        "projectId": "2",
-        "workflowId": "3",
         "nodeId": "1:0:1",
-        "initData": "Pre-loaded Vue Component"
+        "projectId": "knime workflow",
+        "workflowId": "root:10",
+        "resourceInfo": {
+            "id": "org.knime.base.views.MockUIExtComponent.MockUIExtComponent",
+            "type": "VUE_COMPONENT_LIB",
+            "path": null,
+            "url": "http://localhost:4000/MockUIExtComponent.umd.js"
+        },
+        "nodeInfo": {
+            "nodeAnnotation": "",
+            "nodeState": "executed",
+            "nodeErrorMessage": null,
+            "nodeWarnMessage": null,
+            "nodeName": "MockUIExtComponent"
+        },
+        "initData": "Previously loaded Vue Component"
       },
       "1:0:2": {
-        "name": "mock-component2",
-        "uicomponent": "MockUIExtComponent2",
-        "url": "http://localhost:4000/mock-component2.umd.min.js",
-        "projectId": "2",
-        "workflowId": "3",
         "nodeId": "1:0:2",
+        "projectId": "knime workflow",
+        "workflowId": "root:10",
+        "resourceInfo": {
+            "id": "org.knime.base.views.MockUIExtComponent2.MockUIExtComponent2",
+            "type": "VUE_COMPONENT_LIB",
+            "path": null,
+            "url": "http://localhost:4000/MockUIExtComponent2.umd.min.js"
+        },
+        "nodeInfo": {
+            "nodeAnnotation": "",
+            "nodeState": "executed",
+            "nodeErrorMessage": null,
+            "nodeWarnMessage": null,
+            "nodeName": "MockUIExtComponent2"
+        },
         "initData": "Unregistered vue component"
       },
-      "1:0:4": {
-        "name": "mock-ui-iframe.html",
-        "url": "http://localhost:4000/mock-ui-iframe.html",
-        "projectId": "2",
-        "workflowId": "3",
-        "nodeId": "1:0:4",
+      "1:0:3": {
+        "nodeId": "1:0:3",
+        "projectId": "knime workflow",
+        "workflowId": "root:10",
+        "resourceInfo": {
+            "id": "org.knime.base.views.some_html_based_view.some_html_based_view",
+            "type": "HTML",
+            "path": null,
+            "url": "http://localhost:4000/mock-ui-iframe.html"
+        },
+        "nodeInfo": {
+            "nodeAnnotation": "",
+            "nodeState": "executed",
+            "nodeErrorMessage": null,
+            "nodeWarnMessage": null,
+            "nodeName": "Sample I-Frame"
+        },
         "initData": "Sample i-frame w/ html provided by source"
-      },
-      "1:0:5": {
-        "name": "Nested Component View",
-        "url": "http://localhost:8080/index.html",
-        "projectId": "2",
-        "workflowId": "3",
-        "nodeId": "1:0:5",
-        "initData": "Nested Component View"
       }
     },
     "version": "4.5.0-nightly"
