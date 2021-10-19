@@ -14,7 +14,7 @@ describe('UIExtension.vue', () => {
                 id: 'org.knime.base.views.scatterplot.ScatterPlotNodeFactory',
                 type: 'HTML',
                 path: null,
-                url: 'localhost'
+                url: 'http://localhost:8080/my_widget.html'
             },
             nodeInfo: {
                 nodeAnnotation: '',
@@ -55,7 +55,7 @@ describe('UIExtension.vue', () => {
         });
         expect(wrapper.vm.configKey).toBe(0);
         let { extensionConfig } = getMockIFrameProps();
-        extensionConfig.resourceInfo.url = 'remote';
+        extensionConfig.resourceInfo.url = 'http://localhost:8080/your_widget.html';
         wrapper.setProps({ extensionConfig });
         expect(wrapper.vm.configKey).toBe(1);
     });
