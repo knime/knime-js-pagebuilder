@@ -38,7 +38,7 @@ npm run dev
 When developing PageBuilder for Analytics Platform run the following command
 
 ```sh
-npm run build:lib:dev
+npm run build && npm run build:lib:dev
 ```
 
 and follow these steps:
