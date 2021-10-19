@@ -45,10 +45,14 @@ export default {
     },
     async mounted() {
         this.knimeService = new KnimeService(this.extensionConfig);
-        this.componentLoaded = Boolean(window.Vue.component(this.componentId));
-        if (!this.componentLoaded) {
+        
+        // check if component library needs to be loaded or if it was already loaded before
+        if (!window[this.componentId]) {
             await this.loadComponentLibrary();
         }
+        // register the component locally
+        this.$options.components[this.componentId] = window[this.componentId];
+        this.componentLoaded = true;
     },
     methods: {
         async loadComponentLibrary() {
@@ -73,9 +77,6 @@ export default {
             if (!Component) {
                 throw new Error(`Component loading failed. Script invalid.`);
             }
-            delete window[this.componentId];
-            this.$options.components[this.componentId] = Component;
-            this.componentLoaded = true;
         }
     }
 };
@@ -85,7 +86,6 @@ export default {
   <component
     :is="componentId"
     v-if="componentLoaded"
-    :init-data="extensionConfig.initData"
     :knime-service="knimeService"
   />
 </template>

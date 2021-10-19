@@ -13,9 +13,7 @@ export default {
 
 <template>
   <div>
-    <h5>
-      Pre-registered vue component.
-    </h5>
+    Lazy loaded Vue component.
     <pre>
       knime-service: {{ knimeService.extensionConfig }}
     </pre>
@@ -24,8 +22,8 @@ export default {
 
 <style lang="postcss" scoped>
 div {
-  border: 1px red solid;
-  margin: 20px;
+  border: 2px green solid;
+  margin: 5px;
   font-weight: bold;
 }
 </style>

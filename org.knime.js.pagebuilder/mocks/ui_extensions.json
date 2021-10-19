@@ -34,42 +34,6 @@
                     "scrolling": false,
                     "sizeHeight": true,
                     "sizeWidth": false,
-                    "nodeID": "1:0:1",
-                    "additionalClasses": [],
-                    "additionalStyles": []
-                  }
-                ],
-                "additionalClasses": [],
-                "additionalStyles": []
-              }
-            ]
-          },
-          {
-            "type": "row",
-            "additionalClasses": [],
-            "additionalStyles": [],
-            "columns": [
-              {
-                "widthXS": 12,
-                "widthSM": null,
-                "widthMD": null,
-                "widthLG": null,
-                "widthXL": null,
-                "content": [
-                  {
-                    "type": "view",
-                    "useLegacyMode": false,
-                    "resizeMethod": "viewLowestElement",
-                    "maxHeight": null,
-                    "maxWidth": null,
-                    "minHeight": null,
-                    "minWidth": null,
-                    "resizeInterval": null,
-                    "resizeTolerance": 5,
-                    "autoResize": true,
-                    "scrolling": false,
-                    "sizeHeight": true,
-                    "sizeWidth": false,
                     "nodeID": "1:0:2",
                     "additionalClasses": [],
                     "additionalStyles": []
@@ -124,15 +88,15 @@
     },
     "webNodes": { },
     "nodeViews": {
-      "1:0:1": {
-        "nodeId": "1:0:1",
+      "1:0:2": {
+        "nodeId": "1:0:2",
         "projectId": "knime workflow",
         "workflowId": "root:10",
         "resourceInfo": {
             "id": "org.knime.base.views.MockUIExtComponent.MockUIExtComponent",
             "type": "VUE_COMPONENT_LIB",
             "path": null,
-            "url": "http://localhost:4000/MockUIExtComponent.umd.js"
+            "url": "http://localhost:4000/MockUIExtComponent.umd.min.js"
         },
         "nodeInfo": {
             "nodeAnnotation": "",
@@ -141,26 +105,7 @@
             "nodeWarnMessage": null,
             "nodeName": "MockUIExtComponent"
         },
-        "initData": "Previously loaded Vue Component"
-      },
-      "1:0:2": {
-        "nodeId": "1:0:2",
-        "projectId": "knime workflow",
-        "workflowId": "root:10",
-        "resourceInfo": {
-            "id": "org.knime.base.views.MockUIExtComponent2.MockUIExtComponent2",
-            "type": "VUE_COMPONENT_LIB",
-            "path": null,
-            "url": "http://localhost:4000/MockUIExtComponent2.umd.min.js"
-        },
-        "nodeInfo": {
-            "nodeAnnotation": "",
-            "nodeState": "executed",
-            "nodeErrorMessage": null,
-            "nodeWarnMessage": null,
-            "nodeName": "MockUIExtComponent2"
-        },
-        "initData": "Unregistered vue component"
+        "initData": "Lazy loaded Vue component"
       },
       "1:0:3": {
         "nodeId": "1:0:3",
@@ -170,16 +115,16 @@
             "id": "org.knime.base.views.some_html_based_view.some_html_based_view",
             "type": "HTML",
             "path": null,
-            "url": "http://localhost:4000/mock-ui-iframe.html"
+            "url": "http://localhost:4000/MockUIIFrame.html"
         },
         "nodeInfo": {
             "nodeAnnotation": "",
             "nodeState": "executed",
             "nodeErrorMessage": null,
             "nodeWarnMessage": null,
-            "nodeName": "Sample I-Frame"
+            "nodeName": "Sample IFrame"
         },
-        "initData": "Sample i-frame w/ html provided by source"
+        "initData": "Sample IFrame with HTML provided by source"
       }
     },
     "version": "4.5.0-nightly"
