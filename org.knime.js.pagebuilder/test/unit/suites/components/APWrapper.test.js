@@ -19,10 +19,42 @@ describe('APWrapper.vue', () => {
         expect(wrapper.find(PageBuilder).exists()).toBeTruthy();
     });
 
-    // TODO: NXT-729 enable debug button when port added
-    xit('renders debug and refresh button when port present', () => {
-        let wrapper;
-        expect(wrapper.find(DebugButton).exists()).toBeTruthy();
-        expect(wrapper.find(RefreshButton).exists()).toBeTruthy();
+    describe('debug info and tooling', () => {
+        it('hides debug/refresh buttons by default (without debug info)', () => {
+            expect(window.getDebugInfo).not.toBeDefined();
+            let wrapper = shallowMount(APWrapper);
+            expect(wrapper.vm.debugInfo).toBe(null);
+            expect(wrapper.find(DebugButton).exists()).toBeFalsy();
+            expect(wrapper.find(RefreshButton).exists()).toBeFalsy();
+        });
+
+        it('conditionally shows debug button', () => {
+            let debugInfo = { remoteDebuggingPort: 8888 };
+            let debugMock = jest.fn(() => JSON.stringify(debugInfo));
+            window.getDebugInfo = debugMock;
+            let wrapper = shallowMount(APWrapper);
+            expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
+            expect(wrapper.find(DebugButton).exists()).toBeTruthy();
+            delete window.getDebugInfo;
+        });
+
+        it('conditionally shows refresh button', () => {
+            let debugInfo = { refreshRequired: true };
+            let debugMock = jest.fn(() => JSON.stringify(debugInfo));
+            window.getDebugInfo = debugMock;
+            let wrapper = shallowMount(APWrapper);
+            expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
+            expect(wrapper.find(RefreshButton).exists()).toBeTruthy();
+            delete window.getDebugInfo;
+        });
+
+        it('handles non-critical errors loading debug info', () => {
+            let debugMock = jest.fn(() => { throw Error('Something went wrong getting info'); });
+            window.getDebugInfo = debugMock;
+            let wrapper;
+            expect(() => { wrapper = shallowMount(APWrapper); }).not.toThrow();
+            expect(wrapper.vm.debugInfo).toBe(null);
+            delete window.getDebugInfo;
+        });
     });
 });

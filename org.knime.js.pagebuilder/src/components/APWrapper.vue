@@ -15,13 +15,15 @@ export default {
             return Boolean(Vue.component('PageBuilder'));
         },
         debugInfo() {
+            let debugInfo = null;
             if (window.getDebugInfo) {
-                let debugInfo = JSON.parse(window.getDebugInfo());
-                if (debugInfo.remoteDebuggingPort) {
-                    return debugInfo;
+                try {
+                    debugInfo = JSON.parse(window.getDebugInfo());
+                } catch (err) {
+                    consola.debug('Debug information present but unable to load.');
                 }
             }
-            return null;
+            return debugInfo;
         }
 
     }
