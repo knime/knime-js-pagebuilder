@@ -67,8 +67,7 @@ describe('SingleSelectionWidget.vue', () => {
                     ],
                     type: 'Radio buttons (horizontal)',
                     limitNumberVisOptions: false,
-                    numberVisOptions: 10,
-                    reExecuteDownstreamNodes: false
+                    numberVisOptions: 10
                 },
                 viewValue: null,
                 customCSS: ''
