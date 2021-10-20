@@ -261,8 +261,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 p {
   font-size: 13px;
   line-height: 18px;

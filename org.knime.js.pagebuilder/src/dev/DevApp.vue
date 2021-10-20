@@ -1,5 +1,5 @@
 <script>
-import PageBuilder from '../components/PageBuilder.vue';
+import PageBuilder from '../components/PageBuilder';
 
 export default {
     components: {
@@ -69,7 +69,7 @@ export default {
       file changes.
     </p>
     <p>
-      Use <code>npm run dev-inte</code> to integrate with the dev mode of the <code>knime-webportal</code>
+      Use <code>npm run dev:integration</code> to integrate with the dev mode of the <code>knime-webportal</code>
       project.
     </p>
     <p>

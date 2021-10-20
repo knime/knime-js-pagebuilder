@@ -6,7 +6,7 @@
       <webResourceBundle
             debug="false"
             exports="KnimePageLoader"
-            name="KNIME Page Builder WebPortal Resources"
+            name="KNIME PageBuilder Resources"
             usesDefine="false"
             version="2.0.0"
             webResourceBundleID="knimePageBuilder_2.0.0">
@@ -22,7 +22,7 @@
       <webResourceBundle
             debug="false"
             exports="KnimePageLoader"
-            name="KNIME Page Builder WebPortal AP Wrapper"
+            name="KNIME PageBuilder AP Wrapper"
             usesDefine="false"
             version="2.0.0"
             webResourceBundleID="knimePageBuilder_2.0.0_AP">
@@ -38,7 +38,7 @@
       <webResourceBundle
             debug="true"
             exports="KnimePageLoader"
-            name="KNIME Page Builder AP Wrapper Debug"
+            name="KNIME PageBuilder AP Wrapper Debug"
             usesDefine="false"
             version="2.0.0"
             webResourceBundleID="knimePageBuilder_2.0.0_AP_DEBUG">

@@ -30,7 +30,7 @@ export const mutations = {
      */
     setPage(state, page) {
         state.page = page;
-        let webNodes = page && page.wizardPageContent && page.wizardPageContent.webNodes;
+        let webNodes = page?.wizardPageContent?.webNodes;
         if (webNodes && typeof webNodes === 'object') {
             state.pageValidators = {};
             state.pageValueGetters = {};
@@ -75,12 +75,13 @@ export const mutations = {
      *      The property referenced by the provided {@type UpdateValuePath} will be set to the provided value
      *      {@type Object}. If no update is provided, the event is considered reactive and the existing configuration
      *      will used to force a Vuex reactive update(via {@method Vue.set}).
+     * @param {String} param.viewType - 'webNodes' for wizardNodeViews (default) or 'nodeViews' for ui-extensions.
      * @return {undefined}
      */
-    updateWebNode(state, { nodeId, update, config, type } = {}) {
+    updateViewConfig(state, { nodeId, update, config, type, viewType = 'webNodes' } = {}) {
         // Update viewValues and other nested properties.
         if (update) {
-            let currentWebNode = state.page.wizardPageContent.webNodes[nodeId];
+            let currentWebNode = state.page.wizardPageContent[viewType][nodeId];
             for (let [key, value] of Object.entries(update)) {
                 try {
                     setProp(currentWebNode, key, value);
@@ -94,7 +95,7 @@ export const mutations = {
         }
         // Otherwise, replace webNodes entirely (reactivity).
         consola.debug('pagebuilder/updateWebNode replacing web node content.');
-        Vue.set(state.page.wizardPageContent.webNodes, nodeId, config);
+        Vue.set(state.page.wizardPageContent[viewType], nodeId, config);
     },
 
     setWebNodeLoading(state, { nodeId, loading }) {
@@ -164,9 +165,16 @@ export const actions = {
 
     updatePage({ commit }, { page = {}, nodeIds }) {
         consola.trace('PageBuilder: Set page via action: ', page);
-        let { webNodes } = page?.wizardPageContent || page;
+        let { webNodes, nodeViews } = page?.wizardPageContent || page;
         nodeIds.forEach(nodeId => {
-            commit('updateWebNode', { nodeId, config: webNodes?.[nodeId] });
+            // default webNode update
+            let updateConfig = { nodeId, config: webNodes?.[nodeId] };
+            // modify update if nodeId references nodeView
+            if (nodeViews?.[nodeId]) {
+                updateConfig.config = nodeViews[nodeId];
+                updateConfig.viewType = 'nodeViews';
+            }
+            commit('updateViewConfig', updateConfig);
         });
     },
 
@@ -178,7 +186,7 @@ export const actions = {
     updateWebNode({ commit }, newWebNode) {
         consola.trace(`WebNode[type: ${newWebNode.type}, id: ${newWebNode.nodeId}]: Updated value via action:`,
             newWebNode);
-        commit('updateWebNode', newWebNode);
+        commit('updateViewConfig', newWebNode);
     },
 
     setWebNodeLoading({ commit }, { nodeId, loading }) {

@@ -186,8 +186,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
 .message-fade-enter,
 .message-fade-leave-to {
   opacity: 0;

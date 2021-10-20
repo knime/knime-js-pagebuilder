@@ -1,21 +1,21 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
+import WebNodeIFrame from '@/components/views/WebNodeIFrame';
 
 import * as storeConfig from '@/../store/pagebuilder';
 import * as alertStoreConfig from '@/../store/alert';
 
 // extra mock to simulate a loaded view script
 jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
-    foo = ['%ORIGIN%', '%NODEID%'];`, { virtual: true });
+    foo = ['%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertHandler.js mock";
-    foo = ['%ORIGIN%', '%NODEID%'];`, { virtual: true });
+    foo = ['%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
     foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
 jest.mock('iframe-resizer/js/iframeResizer');
 
-describe('NodeViewIframe.vue', () => {
+describe('WebNodeIFrame.vue', () => {
     let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
         mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
@@ -110,136 +110,74 @@ describe('NodeViewIframe.vue', () => {
         jest.restoreAllMocks();
     });
 
-    describe('view validation', () => {
+    describe('Interactivity', () => {
         let wrapper;
 
         beforeEach(() => {
-            wrapper = shallowMount(NodeViewIFrame, {
+            wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },
-                    nodeConfig: {
-                        namespace: 'knimespace',
-                        validateMethodName: 'validate'
-                    },
                     nodeId: '0:0:7'
                 }
             });
         });
 
-        it('handles validation', () => {
-            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
-            wrapper.vm.validate();
-            expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
-                nodeId: '0:0:7',
-                namespace: 'knimespace',
-                validateMethodName: 'validate',
-                type: 'validate'
-            }, window.origin);
-        });
-
-        it('resolves validate promise', () => {
-            let validatePromise = wrapper.vm.validate();
-            // fake validation returned
+        it('subscribe calls interactivity store', () => {
+            // mock postMessage call
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0:0:7', type: 'validate', isValid: true }
+                data: { nodeId: '0:0:7', type: 'interactivitySubscribe', id: '123' }
             });
-            return expect(validatePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: true });
+            expect(interactivityConfig.actions.subscribe).toHaveBeenCalled();
         });
 
-        it('returns invalid for errors with webnodes', () => {
-            let valuePromise = wrapper.vm.validate();
-            // fake error
+        it('unsubscribe calls interactivity store', () => {
+            // mock postMessage call
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
-                data: { nodeId: '0:0:7', type: 'validate', error: 'Error', isValid: false }
+                data: { nodeId: '0:0:7', type: 'interactivityUnsubscribe', id: '123' }
             });
-            expect(wrapper.vm.alert).toStrictEqual({
-                level: 'error',
-                message: 'View validation failed.',
-                nodeInfo: undefined,
-                type: 'error'
-            });
-            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
+            expect(interactivityConfig.actions.unsubscribe).toHaveBeenCalled();
         });
 
-        it('returns invalid when views timeout', () => {
-            jest.useFakeTimers();
-            let valuePromise = wrapper.vm.validate();
-            // don't provide a message queue response
-            jest.runAllTimers();
-            expect(wrapper.vm.alert).toStrictEqual({
-                level: 'error',
-                message: 'View is not responding.',
-                nodeInfo: undefined,
-                type: 'error'
+        it('publish calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: { nodeId: '0:0:7', type: 'interactivityPublish', id: '123', payload: 'dummy' }
             });
-            return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
+            expect(interactivityConfig.actions.publish).toHaveBeenCalled();
         });
-    });
 
-
-    describe('setting validation error', () => {
-        let wrapper;
-
-        beforeEach(() => {
-            wrapper = shallowMount(NodeViewIFrame, {
-                ...context,
-                attachToDocument: true,
-                propsData: {
-                    viewConfig: { nodeID: '0:0:7' },
-                    nodeConfig: {
-                        namespace: 'knimespace',
-                        setValidationErrorMethodName: 'setValidationError'
-                    },
-                    nodeId: '0:0:7'
+        it('registerSelectionTranslator calls interactivity store', () => {
+            // mock postMessage call
+            wrapper.vm.messageFromIframe({
+                origin: window.origin,
+                data: {
+                    nodeId: '0:0:7',
+                    type: 'interactivityRegisterSelectionTranslator',
+                    id: '123',
+                    translator: 'dummy'
                 }
             });
+            expect(interactivityConfig.actions.registerSelectionTranslator).toHaveBeenCalled();
         });
 
-        it('handles validation', () => {
-            const testMsg = 'test value';
+        it('informs iframe of interactivity events', () => {
             jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
-            wrapper.vm.setValidationError(testMsg);
+            let id = '123';
+            let payload = 'dummyData';
+            wrapper.vm.interactivityInformIframe(id, payload);
             expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
                 nodeId: '0:0:7',
-                namespace: 'knimespace',
-                setValidationErrorMethodName: 'setValidationError',
-                type: 'setValidationError',
-                errorMessage: testMsg
+                type: 'interactivityEvent',
+                id,
+                payload
             }, window.origin);
-        });
-
-        it('resolves validate promise', () => {
-            let validatePromise = wrapper.vm.setValidationError('test');
-            // fake validation returned
-            wrapper.vm.messageFromIframe({
-                origin: window.origin,
-                data: { nodeId: '0:0:7', type: 'setValidationError', isValid: false }
-            });
-            return expect(validatePromise).resolves.toStrictEqual(true);
-        });
-
-        it('catches errors from within view thrown while setting message', async (done) => {
-            let valuePromise = wrapper.vm.setValidationError('test').catch(e => e);
-            wrapper.vm.messageFromIframe({
-                origin: window.origin,
-                data: { nodeId: '0:0:7', type: 'setValidationError', error: 'Error', isValid: false }
-            });
-            expect(wrapper.vm.alert).toStrictEqual({
-                level: 'error',
-                message: 'Error',
-                nodeInfo: undefined,
-                type: 'error'
-            });
-            let response = await Promise.resolve(valuePromise);
-            expect(response instanceof Error).toBe(true);
-            expect(response.message).toBe('Error');
-            done();
         });
     });
 });

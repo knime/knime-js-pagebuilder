@@ -1,8 +1,8 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import NodeViewIFrame from '@/components/layout/NodeViewIFrame';
-import AlertLocal from '@/components/layout/AlertLocal';
+import WebNodeIFrame from '@/components/views/WebNodeIFrame';
+import AlertLocal from '@/components/ui/AlertLocal';
 
 import * as storeConfig from '@/../store/pagebuilder';
 import * as alertStoreConfig from '@/../store/alert';
@@ -16,7 +16,7 @@ jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.j
     foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
 jest.mock('iframe-resizer/js/iframeResizer');
 
-describe('NodeViewIframe.vue', () => {
+describe('WebNodeIFrame.vue', () => {
     let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
         mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
@@ -122,7 +122,7 @@ describe('NodeViewIframe.vue', () => {
     });
 
     it('renders', () => {
-        let wrapper = shallowMount(NodeViewIFrame, {
+        let wrapper = shallowMount(WebNodeIFrame, {
             ...context,
             propsData: {
                 nodeId: '0:0:7'
@@ -150,7 +150,7 @@ describe('NodeViewIframe.vue', () => {
                     nodeId: '0:0:7'
                 }
             };
-            let wrapper = shallowMount(NodeViewIFrame, iframeConfig);
+            let wrapper = shallowMount(WebNodeIFrame, iframeConfig);
 
             let html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('messageListener.js mock');
@@ -169,7 +169,7 @@ describe('NodeViewIframe.vue', () => {
 
             // check if iframe resizer was also injected
             iframeConfig.propsData.viewConfig.resizeMethod = 'viewLowestElement';
-            wrapper = shallowMount(NodeViewIFrame, iframeConfig);
+            wrapper = shallowMount(WebNodeIFrame, iframeConfig);
             html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('iframeResizer.js mock');
         });
@@ -197,7 +197,7 @@ describe('NodeViewIframe.vue', () => {
                     nodeId: '0:0:7'
                 }
             };
-            let wrapper = shallowMount(NodeViewIFrame, iframeConfig);
+            let wrapper = shallowMount(WebNodeIFrame, iframeConfig);
 
             let html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('messageListener.js mock');
@@ -218,7 +218,7 @@ describe('NodeViewIframe.vue', () => {
         });
 
         it('handles resource loading', () => {
-            let wrapper = shallowMount(NodeViewIFrame, {
+            let wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -255,7 +255,7 @@ describe('NodeViewIframe.vue', () => {
         });
 
         it('sets view loading on store', () => {
-            let wrapper = shallowMount(NodeViewIFrame, {
+            let wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -302,7 +302,7 @@ describe('NodeViewIframe.vue', () => {
             minHeight: 5,
             maxHeight: 50
         };
-        shallowMount(NodeViewIFrame, {
+        shallowMount(WebNodeIFrame, {
             ...context,
             attachToDocument: true,
             propsData: {
@@ -328,7 +328,7 @@ describe('NodeViewIframe.vue', () => {
 
     describe('view value retrieval', () => {
         it('handles getValue call', () => {
-            let wrapper = shallowMount(NodeViewIFrame, {
+            let wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -353,7 +353,7 @@ describe('NodeViewIframe.vue', () => {
         });
 
         it('resolves getValue promise', () => {
-            let wrapper = shallowMount(NodeViewIFrame, {
+            let wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -380,7 +380,7 @@ describe('NodeViewIframe.vue', () => {
         });
 
         it('rejects getValue promise on error', () => {
-            let wrapper = shallowMount(NodeViewIFrame, {
+            let wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -413,11 +413,11 @@ describe('NodeViewIframe.vue', () => {
         });
     });
 
-    describe('NodeViewIFrame alerts', () => {
+    describe('WebNodeIFrame alerts', () => {
         let nodeId = '0:0:7';
 
         it('manages its own alert state', () => {
-            let localWrapper = shallowMount(NodeViewIFrame, {
+            let localWrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -455,7 +455,7 @@ describe('NodeViewIframe.vue', () => {
 
         it('handles show alert events', () => {
             let showAlertMock = jest.fn();
-            let localWrapper = shallowMount(NodeViewIFrame, {
+            let localWrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 store: new Vuex.Store({ modules: {
                     pagebuilder: storeConfig,

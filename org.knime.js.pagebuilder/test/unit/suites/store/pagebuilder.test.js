@@ -225,7 +225,7 @@ describe('PageBuilder store', () => {
                 }
             };
 
-            store.commit('updateWebNode', update);
+            store.commit('updateViewConfig', update);
             expect(node).toEqual({ foo: 'bar' });
         });
 
@@ -242,7 +242,7 @@ describe('PageBuilder store', () => {
                 }
             };
 
-            store.commit('updateWebNode', update);
+            store.commit('updateViewConfig', update);
             expect(store.state.page.wizardPageContent.webNodes.id1).not.toEqual({ foo: 'bar' });
             expect(store.state.page.wizardPageContent.webNodes.id1).toEqual(update.config);
         });
@@ -258,7 +258,7 @@ describe('PageBuilder store', () => {
                 }
             };
 
-            store.commit('updateWebNode', update);
+            store.commit('updateViewConfig', update);
             expect(store.state.page.wizardPageContent.webNodes.id3).toEqual(update.config);
         });
 
@@ -272,8 +272,109 @@ describe('PageBuilder store', () => {
                 config: undefined
             };
 
-            store.commit('updateWebNode', update);
+            store.commit('updateViewConfig', update);
             expect(store.state.page.wizardPageContent.webNodes.id1).not.toBeDefined();
+        });
+
+        // as used in re-execution
+        describe('multi-node updates', () => {
+            const getPage = () => ({
+                wizardPageContent: {
+                    webNodes: {
+                        id1: {
+                            foo: 'bar'
+                        },
+                        id2: {
+                            foo: 'baz'
+                        }
+                    },
+                    nodeViews: {
+                        id3: {
+                            foo: 'qux'
+                        },
+                        id4: {
+                            foo: 'grault'
+                        }
+                    }
+                }
+            });
+
+            const checkPage = (page, webNodeValues, nodeViewValues) => {
+                let webNodeIds = Object.keys(page.wizardPageContent.webNodes);
+                webNodeValues.forEach((checkValue, nodeIdInd) => {
+                    expect(page.wizardPageContent.webNodes[webNodeIds[nodeIdInd]].foo).toEqual(checkValue);
+                });
+                let nodeViewIds = Object.keys(page.wizardPageContent.nodeViews);
+                nodeViewValues.forEach((checkValue, nodeIdInd) => {
+                    expect(page.wizardPageContent.nodeViews[nodeViewIds[nodeIdInd]].foo).toEqual(checkValue);
+                });
+            };
+
+            beforeEach(() => {
+                store.commit('setPage', getPage());
+            });
+
+            it('updates single webNode', () => {
+                let newPage = getPage();
+                newPage.wizardPageContent.webNodes.id1.foo = 'qux';
+                newPage.wizardPageContent.webNodes.id2.foo = 'bar';
+                checkPage(store.state.page, ['bar', 'baz'], ['qux', 'grault']);
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id1']
+                });
+                checkPage(store.state.page, ['qux', 'baz'], ['qux', 'grault']);
+            });
+
+            it('updates multiple webNodes', () => {
+                let newPage = getPage();
+                newPage.wizardPageContent.webNodes.id1.foo = 'qux';
+                newPage.wizardPageContent.webNodes.id2.foo = 'grault';
+                checkPage(store.state.page, ['bar', 'baz'], ['qux', 'grault']);
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id1', 'id2']
+                });
+                checkPage(store.state.page, ['qux', 'grault'], ['qux', 'grault']);
+            });
+
+            it('updates single nodeView', () => {
+                let newPage = getPage();
+                newPage.wizardPageContent.nodeViews.id3.foo = 'bar';
+                newPage.wizardPageContent.nodeViews.id4.foo = 'baz';
+                checkPage(store.state.page, ['bar', 'baz'], ['qux', 'grault']);
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id3']
+                });
+                checkPage(store.state.page, ['bar', 'baz'], ['bar', 'grault']);
+            });
+
+            it('updates multiple nodeViews', () => {
+                let newPage = getPage();
+                newPage.wizardPageContent.nodeViews.id3.foo = 'bar';
+                newPage.wizardPageContent.nodeViews.id4.foo = 'baz';
+                checkPage(store.state.page, ['bar', 'baz'], ['qux', 'grault']);
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id3', 'id4']
+                });
+                checkPage(store.state.page, ['bar', 'baz'], ['bar', 'baz']);
+            });
+
+            it('updates a combination of webNodes and nodeViews', () => {
+                let newPage = getPage();
+                newPage.wizardPageContent.webNodes.id1.foo = 'qux';
+                newPage.wizardPageContent.webNodes.id2.foo = 'grault';
+                newPage.wizardPageContent.nodeViews.id3.foo = 'bar';
+                newPage.wizardPageContent.nodeViews.id4.foo = 'baz';
+                checkPage(store.state.page, ['bar', 'baz'], ['qux', 'grault']);
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id1', 'id3']
+                });
+                checkPage(store.state.page, ['qux', 'baz'], ['bar', 'grault']);
+            });
         });
     });
 

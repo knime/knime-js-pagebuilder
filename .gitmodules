@@ -1,3 +1,7 @@
 [submodule "webapps-common"]
 	path = org.knime.js.pagebuilder/webapps-common
 	url = ../webapps-common
+[submodule "knime-ui-extension-service"]
+	path = org.knime.js.pagebuilder/knime-ui-extension-service
+	url = ../knime-ui-extension-service
+

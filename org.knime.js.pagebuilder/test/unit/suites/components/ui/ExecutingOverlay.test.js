@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 
-import ExecutingOverlay from '@/components/layout/ExecutingOverlay';
+import ExecutingOverlay from '@/components/ui/ExecutingOverlay';
 
 describe('ExecutingOverlay.vue', () => {
     it('renders nothing by default', () => {

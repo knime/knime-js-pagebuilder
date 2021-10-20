@@ -19,7 +19,7 @@ describe('wrapper API store', () => {
 
     afterAll(() => {
         jest.clearAllMocks();
-        delete window.rpc;
+        delete window.jsonrpc;
     });
 
     let getMockStore = ({
@@ -66,7 +66,7 @@ describe('wrapper API store', () => {
                     rpcConfig: {
                         id: 0,
                         jsonrpc: '2.0',
-                        method: 'reexecutePage',
+                        method: 'ReexecutionService.reexecutePage',
                         params: [
                             'foo',
                             { foo: '1' }
@@ -144,7 +144,7 @@ describe('wrapper API store', () => {
                     rpcConfig: {
                         id: 0,
                         jsonrpc: '2.0',
-                        method: 'getPage',
+                        method: 'ReexecutionService.getPage',
                         params: []
                     }
                 },
@@ -243,7 +243,7 @@ describe('wrapper API store', () => {
             let rpcConfig = {
                 id: 0,
                 jsonrpc: '2.0',
-                method: 'getPage',
+                method: 'ReexecutionService.getPage',
                 params: []
             };
             let store = getMockStore();
@@ -261,12 +261,12 @@ describe('wrapper API store', () => {
             let rpcConfig = {
                 id: 0,
                 jsonrpc: '2.0',
-                method: 'getPage',
+                method: 'ReexecutionService.getPage',
                 params: []
             };
             let expected = { result: { foo: 2 } };
             let rpcMock = jest.fn().mockReturnValue(JSON.stringify(expected));
-            window.rpc = rpcMock;
+            window.jsonrpc = rpcMock;
             let store = getMockStore();
 
             let res = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
@@ -278,14 +278,14 @@ describe('wrapper API store', () => {
             let rpcConfig = {
                 id: 0,
                 jsonrpc: '2.0',
-                method: 'getPage',
+                method: 'ReexecutionService.getPage',
                 params: []
             };
             let expectedError = 'Test error';
             let rpcMock = jest.fn().mockImplementation(() => {
                 throw new Error(expectedError);
             });
-            window.rpc = rpcMock;
+            window.jsonrpc = rpcMock;
             let store = getMockStore();
 
             let res = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
@@ -303,7 +303,7 @@ describe('wrapper API store', () => {
                     rpcConfig: {
                         id: 0,
                         jsonrpc: '2.0',
-                        method: 'getPage',
+                        method: 'ReexecutionService.getPage',
                         params: []
                     }
                 }
@@ -333,7 +333,7 @@ describe('wrapper API store', () => {
                 rpcConfig: {
                     id: 0,
                     jsonrpc: '2.0',
-                    method: 'getPage',
+                    method: 'ReexecutionService.getPage',
                     params: []
                 }
             };
@@ -384,7 +384,7 @@ describe('wrapper API store', () => {
                     rpcConfig: {
                         id: 0,
                         jsonrpc: '2.0',
-                        method: 'getPage',
+                        method: 'ReexecutionService.getPage',
                         params: []
                     }
                 }
@@ -407,7 +407,7 @@ describe('wrapper API store', () => {
             expect(showAlert).toHaveBeenCalledWith(expect.anything(), {
                 message: 'Something went wrong',
                 nodeInfo: {
-                    nodeName: 'getPage'
+                    nodeName: 'ReexecutionService.getPage'
                 }
             }, EMPTY);
         });

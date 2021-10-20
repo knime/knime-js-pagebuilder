@@ -3,7 +3,7 @@ import * as pagebuilderStoreConfig from '~/store/pagebuilder';
 import * as interactivityStoreConfig from '~/store/interactivity';
 import * as alertStoreConfig from '~/store/alert';
 import Page from '~/src/components/layout/Page';
-import AlertGlobal from '~/src/components/layout/AlertGlobal';
+import AlertGlobal from '~/src/components/ui/AlertGlobal';
 
 export default {
     components: {

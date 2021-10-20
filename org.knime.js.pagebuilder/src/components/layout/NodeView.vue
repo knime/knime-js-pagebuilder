@@ -1,20 +1,26 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import NodeViewIFrame from './NodeViewIFrame';
-import Widget from '../widgets/Widget';
-import NotAvailable from './NotAvailable';
-import ExecutingOverlay from './ExecutingOverlay';
-import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config';
+import WebNode from '~/src/components/views/WebNode';
+import UIExtension from '~/src/components/views/UIExtension';
+import NotDisplayable from '~/src/components/views/NotDisplayable';
+import ExecutingOverlay from '~/src/components/ui/ExecutingOverlay';
 
 /**
- * Wrapper for a single node view iframe or widget
+ * A node-level member of the layout tree, this component is responsible for shared functionality
+ * associated with being an instance of a KNIME visualization. This includes:
+ *
+ *  - retrieving the view configuration from the global store
+ *  - displaying defaults when a configuration/node is missing/non-displayable
+ *  - displaying styles/animations during (re)execution
+ *  - determining which child component to use based on the configuration
+ *
  */
 export default {
     components: {
-        NodeViewIFrame,
-        Widget,
-        NotAvailable,
+        WebNode,
+        UIExtension,
+        NotDisplayable,
         ExecutingOverlay
     },
     props: {
@@ -35,11 +41,6 @@ export default {
             }
         }
     },
-    data() {
-        return {
-            nodeViewIFrameKey: 0
-        };
-    },
     computed: {
         ...mapGetters({
             nodesReExecuting: 'pagebuilder/nodesReExecuting',
@@ -53,113 +54,66 @@ export default {
             return this.pageIdPrefix ? `${this.pageIdPrefix}:${this.viewConfig.nodeID}` : this.viewConfig.nodeID;
         },
         webNodeConfig() {
-            return this.$store.state.pagebuilder.page.wizardPageContent.webNodes[this.nodeId];
+            return this.$store.state.pagebuilder.page.wizardPageContent?.webNodes?.[this.nodeId];
         },
-        webNodeAvailable() {
+        uiExtensionConfig() {
+            return this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews?.[this.nodeId];
+        },
+        isWebNodeView() {
+            return Boolean(this.webNodeConfig);
+        },
+        isUIExtension() {
+            return Boolean(this.uiExtensionConfig);
+        },
+        viewAvailable() {
             // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
             // update the layout configuration, so we get a phantom item
-            return typeof this.webNodeConfig !== 'undefined';
+            return this.isWebNodeView || this.isUIExtension;
         },
-        webNodeDisplayable() {
+        viewDisplayable() {
+            // TODO: NXT-734 Handle displayability of UIExtensions
+            if (this.isUIExtension) {
+                return true;
+            }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
             return this.webNodeConfig?.nodeInfo?.displayPossible;
         },
-        nodeState() {
-            return this.webNodeConfig?.nodeInfo?.nodeState;
-        },
-        resizeMethod() {
-            return this.viewConfig.resizeMethod || '';
-        },
-        classes() {
-            let classes = ['view'];
-            if (this.webNodeAvailable) {
-                // add aspect ratio sizing classes; other resize methods are handled by NodeViewIFrame itself
-                if (this.resizeMethod.startsWith('aspectRatio')) {
-                    classes.push(this.resizeMethod);
-                }
-                if (Array.isArray(this.viewConfig.additionalClasses)) {
-                    classes = classes.concat(this.viewConfig.additionalClasses);
-                }
-            }
-            return classes;
-        },
-        style() {
-            let style = [];
-            if (this.webNodeAvailable && this.viewConfig.additionalStyles) {
-                style = style.concat(this.viewConfig.additionalStyles);
-            }
-            if (this.resizeMethod.startsWith('viewLowestElement') && this.isWidget) {
-                let { maxHeight = null, maxWidth = null, minHeight = null, minWidth = null } = this.viewConfig;
-                if (maxHeight !== null) {
-                    style.push(`max-height:${maxHeight}px`);
-                }
-                if (maxWidth !== null) {
-                    style.push(`max-width:${maxHeight}px`);
-                }
-                if (minHeight !== null) {
-                    style.push(`min-height:${maxHeight}px`);
-                }
-                if (minWidth !== null) {
-                    style.push(`min-width:${maxHeight}px`);
-                }
-            }
-            return style.join(';').replace(/;;/g, ';');
-        },
-        legacyModeDisabled() {
-            // only return true if legacy flag *explicitly* set to false; default workflows with unset legacy flag to
-            // use legacy mode
-            return this.viewConfig.useLegacyMode === false;
-        },
-        // checks the node configuration for a matching Vue Widget Component name and provides that name
-        widgetComponentName() {
-            // check the node representation class for a matching Vue Component name
-            return { ...classToComponentMap, ...legacyExclusions }[this.webNodeConfig?.viewRepresentation?.['@class']];
-        },
-        isWidget() {
-            return legacyExclusions[this.webNodeConfig?.viewRepresentation?.['@class']] ||
-                (this.legacyModeDisabled && this.widgetComponentName);
-        },
         showExecutionOverlay() {
             /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this
                time, detect execution before polling starts to prevent jumping */
-            return this.nodesReExecuting?.includes(this.nodeId) || this.nodeState === 'executing';
+            let isReExecuting = this.nodesReExecuting?.includes(this.nodeId);
+            if (this.isWebNodeView && !isReExecuting) {
+                // only the original "webNodes" have node state
+                isReExecuting = this.webNodeConfig?.nodeInfo?.nodeState === 'executing';
+            }
+            return isReExecuting;
         },
         showSpinner() {
             return this.updateCount >= 2;
-        }
-    },
-    watch: {
-        webNodeConfig() {
-            this.nodeViewIFrameKey += 1;
         }
     }
 };
 </script>
 
 <template>
-  <div
-    :class="classes"
-    :style="style"
-  >
-    <template v-if="webNodeAvailable">
-      <NotAvailable
-        v-if="!webNodeDisplayable"
+  <div class="node-view">
+    <template v-if="viewAvailable">
+      <NotDisplayable
+        v-if="!viewDisplayable"
         :node-info="webNodeConfig.nodeInfo"
         :node-id="nodeId"
         :show-error="!showExecutionOverlay"
       />
-      <Widget
-        v-else-if="isWidget"
-        :type="widgetComponentName"
+      <WebNode
+        v-else-if="isWebNodeView"
+        :view-config="viewConfig"
         :node-config="webNodeConfig"
         :node-id="nodeId"
       />
-      <NodeViewIFrame
-        v-else
-        :key="nodeViewIFrameKey"
-        :view-config="viewConfig"
-        :node-config="webNodeConfig"
+      <UIExtension
+        v-else-if="isUIExtension"
+        :extension-config="uiExtensionConfig"
         :node-id="nodeId"
       />
       <ExecutingOverlay
@@ -171,37 +125,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import "webapps-common/ui/css/variables";
-
-.view {
+.node-view {
   background-color: var(--knime-white);
-
-  &.aspectRatio16by9,
-  &.aspectRatio4by3,
-  &.aspectRatio1by1 {
-    position: relative;
-    width: 100%;
-    height: 0;
-
-    & > :first-child {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-    }
-  }
-
-  &.aspectRatio16by9 {
-    padding-bottom: calc(100% / (16 / 9));
-  }
-
-  &.aspectRatio4by3 {
-    padding-bottom: calc(100% / (4 / 3));
-  }
-
-  &.aspectRatio1by1 {
-    padding-bottom: 100%;
-  }
 }
 </style>

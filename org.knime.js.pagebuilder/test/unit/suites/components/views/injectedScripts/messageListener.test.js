@@ -14,7 +14,7 @@ describe('message listener', () => {
     };
 
     beforeAll(() => {
-        require('@/components/layout/injectedScripts/messageListener');
+        require('@/components/views/injectedScripts/messageListener');
     });
 
     afterEach(() => {

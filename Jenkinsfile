@@ -3,7 +3,7 @@
 // Now that the KNIME AP build is moved to the new build system:
 // - investigate the role of the maven build vs the nodeJS build and see if they can be combined
 
-def BN = BRANCH_NAME == "master" || BRANCH_NAME.startsWith("releases/") ? BRANCH_NAME : "master"
+def BN = (BRANCH_NAME == 'master' || BRANCH_NAME.startsWith('releases/')) ? BRANCH_NAME : 'releases/2021-12'
 
 library "knime-pipeline@$BN"
 
@@ -52,7 +52,7 @@ timeout(time: 15, unit: 'MINUTES') {
                         catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                         // trows exception on failing test
                             sh '''
-                                npm run build_credits
+                                npm run build:credits
                                 npm run coverage -- --ci
                             '''
                         }

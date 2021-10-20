@@ -1,9 +1,9 @@
 import Vuex from 'vuex';
 import { createLocalVue, mount } from '@vue/test-utils';
 
-import AlertGlobal from '@/components/layout/AlertGlobal';
-import Popover from '@/components/layout/Popover';
-import PopoverMessage from '@/components/layout/PopoverMessage';
+import AlertGlobal from '@/components/ui/AlertGlobal';
+import Popover from '@/components/ui/Popover';
+import PopoverMessage from '@/components/ui/PopoverMessage';
 
 import * as storeConfig from '@/../store/alert';
 

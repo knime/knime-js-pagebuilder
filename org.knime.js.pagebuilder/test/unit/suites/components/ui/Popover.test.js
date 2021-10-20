@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 
-import Popover from '@/components/layout/Popover';
+import Popover from '@/components/ui/Popover';
 
 describe('Popover', () => {
     it('renders default inactive', () => {

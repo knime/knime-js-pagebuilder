@@ -1,6 +1,6 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
-import PopoverMessage from '~/src/components/layout/PopoverMessage';
+import PopoverMessage from '~/src/components/ui/PopoverMessage';
 import Label from '~/webapps-common/ui/components/forms/Label';
 import Button from '~/webapps-common/ui/components/Button';
 
