@@ -26,41 +26,41 @@ export default {
         window.removeEventListener('message', this.onMessageFromIFrame);
     },
     methods: {
-        onMessageFromIFrame(message) {
-            // TODO: AP-17633 Implement I-Frame support (with KnimeService)
-            // let { contentWindow } = this.$refs.iframe;
-            // if (message.source !== contentWindow) {
-            //     return;
-            // }
+        onMessageFromIFrame(event) {
+            let { contentWindow } = this.$refs.iframe;
+            if (event.source !== contentWindow) {
+                return;
+            }
 
-            // if (message.data.type === 'knime-ready') {
-            //     contentWindow.postMessage({
-            //         type: 'knime-init',
-            //         data: {
-            //             projectId: this.projectId,
-            //             workflowId: this.workflowId,
-            //             nodeId: this.nodeId,
-            //             initData: this.initData
-            //         }
-            //     }, '*');
-            // }
+            if (event.data.type === 'knimeUIExtension:ready') {
+                contentWindow.postMessage({
+                    type: 'knimeUIExtension:init',
+                    extensionConfig: this.extensionConfig
+                }, '*'); // TODO security
+            } else if (event.data.type === 'knimeUIExtension:jsonrpcRequest') {
+                const { request } = event.data;
+                const response = window.jsonrpc(request); // TODO this won't work in WebPortal
+                contentWindow.postMessage({
+                    type: 'knimeUIExtension:jsonrpcResponse',
+                    response
+                }, '*'); // TODO security
+            }
         }
     }
 };
 </script>
 
 <template>
-  <div>
-    <iframe
-      ref="iframe"
-      :src="resourceLocation"
-    />
-  </div>
+  <iframe
+    ref="iframe"
+    :src="resourceLocation"
+  />
 </template>
 
 <style lang="postcss" scoped>
 iframe {
   width: 100%;
   height: 100%;
+  min-height: 400px; /* TODO NXT-750 remove this when sizing by layout is supported */
 }
 </style>
