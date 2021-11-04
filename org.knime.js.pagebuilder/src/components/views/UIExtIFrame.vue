@@ -54,6 +54,7 @@ export default {
   <iframe
     ref="iframe"
     :src="resourceLocation"
+    sandbox="allow-downloads allow-forms allow-scripts"
   />
 </template>
 
