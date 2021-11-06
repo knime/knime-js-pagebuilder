@@ -1,5 +1,5 @@
 <script>
-import { KnimeIFrameAdapter } from 'knime-ui-extension-service';
+import { IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
 
 export default {
     props: {
@@ -22,7 +22,7 @@ export default {
         }
     },
     mounted() {
-        this.iframeAdapter = new KnimeIFrameAdapter({
+        this.iframeAdapter = new IFrameKnimeServiceAdapter({
             childIframe: this.$refs.iframe.contentWindow,
             extensionConfig: this.extensionConfig
         });
