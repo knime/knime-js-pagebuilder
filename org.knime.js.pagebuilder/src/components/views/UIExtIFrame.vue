@@ -23,7 +23,7 @@ export default {
     },
     mounted() {
         this.iframeAdapter = new IFrameKnimeServiceAdapter({
-            childIframe: this.$refs.iframe.contentWindow,
+            iFrameWindow: this.$refs.iframe.contentWindow,
             extensionConfig: this.extensionConfig
         });
     },
