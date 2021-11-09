@@ -29,12 +29,22 @@ describe('APWrapper.vue', () => {
         });
 
         it('conditionally shows debug button', () => {
-            let debugInfo = { remoteDebuggingPort: 8888 };
+            let debugInfo = { remoteDebuggingPort: '8888' };
             let debugMock = jest.fn(() => JSON.stringify(debugInfo));
             window.getDebugInfo = debugMock;
             let wrapper = shallowMount(APWrapper);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
             expect(wrapper.find(DebugButton).exists()).toBeTruthy();
+            delete window.getDebugInfo;
+        });
+
+        it('do not show debug button if no remoteDebuggingPort is set', () => {
+            let debugInfo = { refreshRequired: true };
+            let debugMock = jest.fn(() => JSON.stringify(debugInfo));
+            window.getDebugInfo = debugMock;
+            let wrapper = shallowMount(APWrapper);
+            expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
+            expect(wrapper.find(DebugButton).exists()).toBeFalsy();
             delete window.getDebugInfo;
         });
 
