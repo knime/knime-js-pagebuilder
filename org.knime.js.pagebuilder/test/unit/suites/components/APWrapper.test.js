@@ -49,12 +49,23 @@ describe('APWrapper.vue', () => {
         });
 
         it('conditionally shows refresh button', () => {
-            let debugInfo = { refreshRequired: true };
+            let debugInfo = { refreshRequired: true, remoteDebuggingPort: '8888' };
             let debugMock = jest.fn(() => JSON.stringify(debugInfo));
             window.getDebugInfo = debugMock;
             let wrapper = shallowMount(APWrapper);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
             expect(wrapper.find(RefreshButton).exists()).toBeTruthy();
+            delete window.getDebugInfo;
+        });
+
+
+        it('do not show refresh button if no remoteDebuggingPort is set', () => {
+            let debugInfo = { refreshRequired: true };
+            let debugMock = jest.fn(() => JSON.stringify(debugInfo));
+            window.getDebugInfo = debugMock;
+            let wrapper = shallowMount(APWrapper);
+            expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
+            expect(wrapper.find(DebugButton).exists()).toBeFalsy();
             delete window.getDebugInfo;
         });
 
