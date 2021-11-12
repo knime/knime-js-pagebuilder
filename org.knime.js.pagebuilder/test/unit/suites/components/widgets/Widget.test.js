@@ -92,10 +92,13 @@ describe('Widget.vue', () => {
             testValue: 10
         }
     };
+
     let nodeId = 'id1';
 
+    const getNodeConfig = () => JSON.parse(JSON.stringify(nodeConfigBlueprint));
+
     beforeEach(() => {
-        nodeConfig = JSON.parse(JSON.stringify(nodeConfigBlueprint));
+        nodeConfig = getNodeConfig();
         localVue = createLocalVue();
         localVue.use(Vuex);
 
@@ -147,7 +150,7 @@ describe('Widget.vue', () => {
     it('renders and updates the required field in the viewRepresentation', () => {
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        // TODO WEBP-182 File Upload Vue Widget should be required; WEBP-327 Remove if dialog option added.
+        // TODO WEBP-327 Remove if dialog option added.
         expect(wrapper.vm.nodeConfig.viewRepresentation.required).toBe(false);
     });
 
@@ -200,7 +203,7 @@ describe('Widget.vue', () => {
     });
 
     it('calls callback after change event if provided', async () => {
-        let localNodeConfig = JSON.parse(JSON.stringify(nodeConfigBlueprint));
+        let localNodeConfig = getNodeConfig();
         let localVue1 = createLocalVue();
         localVue1.use(Vuex);
 

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { setProp } from '@/util/nestedProperty';
+import overrideRequired from '@/util/overrideRequired';
 
 export const namespaced = true;
 
@@ -30,8 +31,7 @@ export const mutations = {
      */
     setPage(state, page) {
         state.page = page;
-        let webNodes = page && page.wizardPageContent && page.wizardPageContent.webNodes;
-        if (webNodes && typeof webNodes === 'object') {
+        if (typeof page?.wizardPageContent?.webNodes === 'object') {
             state.pageValidators = {};
             state.pageValueGetters = {};
         }
@@ -94,7 +94,8 @@ export const mutations = {
         }
         // Otherwise, replace webNodes entirely (reactivity).
         consola.debug('pagebuilder/updateWebNode replacing web node content.');
-        Vue.set(state.page.wizardPageContent.webNodes, nodeId, config);
+        // TODO WEBP-327 Remove `overrideRequired` if dialog option added.
+        Vue.set(state.page.wizardPageContent.webNodes, nodeId, overrideRequired(config));
     },
 
     setWebNodeLoading(state, { nodeId, loading }) {

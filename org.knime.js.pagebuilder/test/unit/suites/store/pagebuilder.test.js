@@ -275,6 +275,21 @@ describe('PageBuilder store', () => {
             store.commit('updateWebNode', update);
             expect(store.state.page.wizardPageContent.webNodes.id1).not.toBeDefined();
         });
+
+        // TODO WEBP-327 Remove if dialog option added.
+        it('overrides required when present in web node configurations', () => {
+            let update = {
+                nodeId: 'id1',
+                config: {
+                    viewRepresentation: {
+                        required: true
+                    }
+                }
+            };
+
+            store.commit('updateWebNode', update);
+            expect(store.state.page.wizardPageContent.webNodes.id1.viewRepresentation.required).toBe(false);
+        });
     });
 
     describe('node validators', () => {
