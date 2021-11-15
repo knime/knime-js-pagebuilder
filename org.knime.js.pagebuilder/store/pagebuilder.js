@@ -164,7 +164,7 @@ export const actions = {
         }
     },
 
-    updatePage({ commit }, { page = {}, nodeIds }) {
+    updatePage({ commit, dispatch }, { page = {}, nodeIds }) {
         consola.trace('PageBuilder: Set page via action: ', page);
         let { webNodes, nodeViews } = page?.wizardPageContent || page;
         nodeIds.forEach(nodeId => {
@@ -174,6 +174,8 @@ export const actions = {
             if (nodeViews?.[nodeId]) {
                 updateConfig.config = nodeViews[nodeId];
                 updateConfig.viewType = 'nodeViews';
+            } else {
+                dispatch('alert/showAlert', { type: 'warn', message: 'Currently, nodes are missing from the layout. That could interfere with reactive nodes.' });
             }
             commit('updateViewConfig', updateConfig);
         });
