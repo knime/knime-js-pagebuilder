@@ -212,49 +212,47 @@ export default {
     :title="description"
   >
     <Label :text="label">
-      <template>
-        <div class="upload-wrapper">
-          <Button
-            v-if="!uploading"
-            primary
-            compact
-            :disabled="disabled"
-            @click="triggerInput"
-          >
-            Select file
-          </Button>
-          <Button
-            v-else
-            primary
-            compact
-            @click="abortUpload"
-          >
-            Cancel
-          </Button>
-          <p :class="{'disabled': disabled}">{{ fileName || 'No file selected.' }}<!--
+      <div class="upload-wrapper">
+        <Button
+          v-if="!uploading"
+          primary
+          compact
+          :disabled="disabled"
+          @click="triggerInput"
+        >
+          Select file
+        </Button>
+        <Button
+          v-else
+          primary
+          compact
+          @click="abortUpload"
+        >
+          Cancel
+        </Button>
+        <p :class="{'disabled': disabled}">{{ fileName || 'No file selected.' }}<!--
           -->{{ fileSize ? ` (${fileSize.value} ${fileSize.symbol})` : '' }}
-            <CircleCheckIcon v-if="uploadProgress === 100" />
-          </p>
-        </div>
-        <input
-          ref="input"
-          type="file"
-          :accept="fileTypes.join(',')"
-          @input="onChange"
-        >
+          <CircleCheckIcon v-if="uploadProgress === 100" />
+        </p>
+      </div>
+      <input
+        ref="input"
+        type="file"
+        :accept="fileTypes.join(',')"
+        @input="onChange"
+      >
+      <div
+        :class="['progress-bar-wrapper', {'show-bar': uploading}]"
+      >
         <div
-          :class="['progress-bar-wrapper', {'show-bar': uploading}]"
+          class="progress-bar"
+          :style="progressStyle"
         >
-          <div
-            class="progress-bar"
-            :style="progressStyle"
-          >
-            <span>
-              {{ uploadProgress }}%
-            </span>
-          </div>
+          <span>
+            {{ uploadProgress }}%
+          </span>
         </div>
-      </template>
+      </div>
     </Label>
     <ErrorMessage :error="uploadErrorMessage || errorMessage" />
   </div>

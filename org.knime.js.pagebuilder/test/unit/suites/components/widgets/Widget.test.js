@@ -369,7 +369,7 @@ describe('Widget.vue', () => {
         });
 
         let updateSpy = jest.spyOn(localWrapper.vm, 'updateWebNode').mockResolvedValueOnce(true);
-        await localWrapper.vm.$refs['widget'].$emit('updateWidget', { type: 'any', value: 'some' });
+        await localWrapper.vm.$refs.widget.$emit('updateWidget', { type: 'any', value: 'some' });
 
         expect(updateSpy).not.toHaveBeenCalled();
     });
@@ -390,7 +390,7 @@ describe('Widget.vue', () => {
             }
         });
         let updateSpy = jest.spyOn(localWrapper.vm, 'updateWebNode').mockReturnValueOnce(true);
-        await localWrapper.vm.$refs['widget'].$emit('updateWidget', { type: 'any', value: 'some' });
+        await localWrapper.vm.$refs.widget.$emit('updateWidget', { type: 'any', value: 'some' });
 
         expect(updateSpy).toHaveBeenCalledWith({
             type: 'any',
@@ -428,7 +428,7 @@ describe('Widget.vue', () => {
         });
 
         let triggerSpy = jest.spyOn(localWrapper.vm, 'triggerReExecution').mockReturnValueOnce(true);
-        await localWrapper.vm.$refs['widget'].$emit('updateWidget', { type: 'any', value: 'some' });
+        await localWrapper.vm.$refs.widget.$emit('updateWidget', { type: 'any', value: 'some' });
 
         expect(triggerSpy).toHaveBeenCalled();
     });

@@ -162,12 +162,12 @@ export default {
         },
         iconForItem(item) {
             switch (item.type) {
-            case 'WORKFLOW':
-                return workflowIcon;
-            case 'DIRECTORY':
-                return folderIcon;
-            default:
-                return fileIcon;
+                case 'WORKFLOW':
+                    return workflowIcon;
+                case 'DIRECTORY':
+                    return folderIcon;
+                default:
+                    return fileIcon;
             }
         },
         transformTree(tree) {
