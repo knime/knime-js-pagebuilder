@@ -24,6 +24,10 @@ export default {
                 }
             }
             return debugInfo;
+        },
+        /* For now debugging is assumed to be enabled if a remote debugging port is set */
+        debugEnabled() {
+            return this.debugInfo?.remoteDebuggingPort;
         }
 
     }
@@ -33,7 +37,7 @@ export default {
 <template>
   <div>
     <PageBuilder v-if="pageBuilderLoaded" />
-    <template v-if="debugInfo">
+    <template v-if="debugEnabled">
       <DebugButton :debug-port="debugInfo.remoteDebuggingPort" />
       <RefreshButton v-if="debugInfo.refreshRequired" />
     </template>
