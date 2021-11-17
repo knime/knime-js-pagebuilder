@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * This object contains a mapping for KNIME Widget Node class names and their corresponding
  * Vue component names. It's intended to be used with the Vue Component "is" functionality.
