@@ -15,6 +15,7 @@ export const classToComponentMap = {
     'org.knime.js.base.node.base.input.dbl.DoubleNodeRepresentation': 'DoubleWidget',
     'org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation': 'IntegerWidget',
     'org.knime.js.base.node.base.input.bool.BooleanNodeRepresentation': 'BooleanWidget',
+    'org.knime.js.base.node.widget.input.bool.ReExecutableBooleanNodeRepresentation': 'BooleanWidget',
     'org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation': 'ListBoxInputWidget',
     'org.knime.js.base.node.base.input.credentials.CredentialsNodeRepresentation': 'CredentialsWidget',
     'org.knime.js.base.node.widget.input.date.DateWidgetNodeRepresentation': 'DateTimeWidget',
@@ -24,9 +25,13 @@ export const classToComponentMap = {
     'org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation': 'SingleSelectionWidget',
     'org.knime.js.base.node.widget.selection.multiple.MultipleSelectionWidgetRepresentation': 'MultipleSelectionWidget',
     'org.knime.js.base.node.base.filter.column.ColumnFilterNodeRepresentation': 'ColumnFilterSelectionWidget',
+    'org.knime.js.base.node.widget.filter.column.ReExecutableColumnFilterNodeRepresentation': 'ColumnFilterSelectionWidget',
     'org.knime.js.base.node.base.selection.column.ColumnSelectionNodeRepresentation': 'ColumnSelectionWidget',
+    'org.knime.js.base.node.widget.selection.column.ReExecutableColumnSelectionNodeRepresentation': 'ColumnSelectionWidget',
     'org.knime.js.base.node.base.filter.value.ValueFilterNodeRepresentation': 'ValueFilterSelectionWidget',
+    'org.knime.js.base.node.widget.filter.value.ReExecutableValueFilterNodeRepresentation': 'ValueFilterSelectionWidget',
     'org.knime.js.base.node.base.selection.value.ValueSelectionNodeRepresentation': 'ValueSelectionWidget',
+    'org.knime.js.base.node.widget.selection.value.ReExecutableValueSelectionNodeRepresentation': 'ValueSelectionWidget',
     'org.knime.js.base.node.base.input.filechooser.FileChooserNodeRepresentation': 'FileChooserWidget',
 
     // output widgets
