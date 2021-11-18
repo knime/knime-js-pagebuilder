@@ -276,6 +276,25 @@ describe('PageBuilder store', () => {
             expect(store.state.page.wizardPageContent.webNodes.id1).not.toBeDefined();
         });
 
+        // TODO WEBP-327 Remove if dialog option added.
+        it('overrides required when present in web node configurations', () => {
+            let node = store.state.page.wizardPageContent.webNodes.id1;
+
+            expect(node.foo).toEqual('bar');
+
+            let update = {
+                nodeId: 'id1',
+                config: {
+                    viewRepresentation: {
+                        required: true
+                    }
+                }
+            };
+
+            store.commit('updateViewConfig', update);
+            expect(store.state.page.wizardPageContent.webNodes.id1.viewRepresentation.required).toBe(false);
+        });
+
         // as used in re-execution
         describe('multi-node updates', () => {
             const getPage = () => ({
