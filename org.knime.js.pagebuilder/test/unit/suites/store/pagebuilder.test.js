@@ -345,6 +345,33 @@ describe('PageBuilder store', () => {
                 checkPage(store.state.page, ['qux', 'baz'], ['qux', 'grault']);
             });
 
+            it('dispatches alert when layout nodes differ from nodeIDs of updatePage', () => {
+                let alertStoreConfig = {
+                    namespaced: true,
+                    actions: {
+                        showAlert: jest.fn()
+                    }
+                };
+                store.registerModule('alert', alertStoreConfig);
+                
+                let newPage = getPage();
+                newPage.wizardPageContent = {
+                    version: '2.0',
+                    webNodePageConfiguration: {
+                        layout: {
+                            rows: []
+                        }
+                    },
+                    webNodes: {}
+                };
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id1']
+                }).then(() => {
+                    expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
+                });
+            });
+
             it('updates multiple webNodes', () => {
                 let newPage = getPage();
                 newPage.wizardPageContent.webNodes.id1.foo = 'qux';

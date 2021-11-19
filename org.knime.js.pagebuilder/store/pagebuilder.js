@@ -177,7 +177,7 @@ export const actions = {
             }
             commit('updateViewConfig', updateConfig);
         });
-        dispatch('getLayoutNodeIds').then((layoutNodeIds) => {
+        dispatch('getLayoutNodeIds', page).then((layoutNodeIds) => {
             if (layoutNodeIds.length !== nodeIds.length) {
                 dispatch('alert/showAlert', { type: 'warn',
                     message: 'Currently, nodes are missing from the layout. That could interfere with reactive nodes.' });
@@ -185,8 +185,8 @@ export const actions = {
         });
     },
 
-    getLayoutNodeIds({ state }) {
-        let { webNodePageConfiguration } = state.page?.wizardPageContent || state.page;
+    getLayoutNodeIds(_, page) {
+        let { webNodePageConfiguration } = page?.wizardPageContent || page;
         let layoutRows = webNodePageConfiguration.layout.rows;
         let layoutNodeIds = [];
         layoutRows.forEach((row) => {
