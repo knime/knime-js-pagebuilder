@@ -14,6 +14,13 @@ describe('PageBuilder store', () => {
         }
     };
 
+    let alertStoreConfig = {
+        namespaced: true,
+        actions: {
+            showAlert: jest.fn()
+        }
+    };
+
     beforeAll(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
@@ -22,6 +29,7 @@ describe('PageBuilder store', () => {
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
         store.registerModule('interactivity', interactivityStoreConfig);
+        store.registerModule('alert', alertStoreConfig);
         jest.resetAllMocks();
     });
 
@@ -314,6 +322,11 @@ describe('PageBuilder store', () => {
                         id4: {
                             foo: 'grault'
                         }
+                    },
+                    webNodePageConfiguration: {
+                        layout: {
+                            rows: []
+                        }
                     }
                 }
             });
@@ -346,14 +359,6 @@ describe('PageBuilder store', () => {
             });
 
             it('dispatches alert when layout nodes differ from nodeIDs of updatePage', () => {
-                let alertStoreConfig = {
-                    namespaced: true,
-                    actions: {
-                        showAlert: jest.fn()
-                    }
-                };
-                store.registerModule('alert', alertStoreConfig);
-                
                 let newPage = getPage();
                 newPage.wizardPageContent = {
                     version: '2.0',

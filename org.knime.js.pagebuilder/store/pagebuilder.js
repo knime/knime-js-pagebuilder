@@ -179,8 +179,10 @@ export const actions = {
         });
         dispatch('getLayoutNodeIds', page).then((layoutNodeIds) => {
             if (layoutNodeIds.length !== nodeIds.length) {
-                dispatch('alert/showAlert', { type: 'warn',
-                    message: 'Currently, nodes are missing from the layout. That could interfere with reactive nodes.' });
+                dispatch('alert/showAlert',
+                    { type: 'warn',
+                        message: `Currently, nodes are missing from the layout.
+                        That could interfere with reactive nodes.` });
             }
         });
     },
