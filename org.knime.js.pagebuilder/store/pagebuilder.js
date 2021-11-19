@@ -174,11 +174,30 @@ export const actions = {
             if (nodeViews?.[nodeId]) {
                 updateConfig.config = nodeViews[nodeId];
                 updateConfig.viewType = 'nodeViews';
-            } else {
-                dispatch('alert/showAlert', { type: 'warn', message: 'Currently, nodes are missing from the layout. That could interfere with reactive nodes.' });
             }
             commit('updateViewConfig', updateConfig);
         });
+        dispatch('getLayoutNodeIds').then((layoutNodeIds) => {
+            if (layoutNodeIds.length !== nodeIds.length) {
+                dispatch('alert/showAlert', { type: 'warn',
+                    message: 'Currently, nodes are missing from the layout. That could interfere with reactive nodes.' });
+            }
+        });
+    },
+
+    getLayoutNodeIds({ state }) {
+        let { webNodePageConfiguration } = state.page?.wizardPageContent || state.page;
+        let layoutRows = webNodePageConfiguration.layout.rows;
+        let layoutNodeIds = [];
+        layoutRows.forEach((row) => {
+            let cols = row.columns;
+            cols.forEach((col) => {
+                col.content.forEach((elem) => {
+                    layoutNodeIds.push(elem.nodeID);
+                });
+            });
+        });
+        return layoutNodeIds;
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {
