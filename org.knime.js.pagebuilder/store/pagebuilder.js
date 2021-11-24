@@ -182,7 +182,7 @@ export const actions = {
                 if (newLayoutNodeIds.some((nodeId) => !layoutNodeIds.includes(nodeId))) {
                     dispatch('alert/showAlert',
                         { type: 'warn',
-                            message: `Currently, nodes are missing from the layout.
+                            message: `Currently, nodes are missing from the composite view layout.
                             That could interfere with reactive nodes.` });
                 }
             });
