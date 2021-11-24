@@ -10,6 +10,7 @@ describe('PageBuilder store', () => {
         namespaced: true,
         actions: {
             registerSelectionTranslator: jest.fn(),
+            updateSelectionTranslator: jest.fn(),
             clear: jest.fn()
         }
     };
@@ -91,7 +92,7 @@ describe('PageBuilder store', () => {
         };
         store.dispatch('setPage', { page });
         expect(interactivityStoreConfig.actions.registerSelectionTranslator).toHaveBeenCalledWith(
-            expect.anything(), { translator: dummyTranslator, translatorId: 0 }, undefined
+            expect.anything(), { translator: dummyTranslator }, expect.undefined
         );
     });
 
@@ -393,6 +394,19 @@ describe('PageBuilder store', () => {
                     nodeIds: ['id1', 'id3']
                 });
                 checkPage(store.state.page, ['qux', 'baz'], ['bar', 'grault']);
+            });
+
+            it('updates selection translators if present in updated page', () => {
+                expect(interactivityStoreConfig.actions.updateSelectionTranslator).not.toHaveBeenCalled();
+                let newPage = getPage();
+                let translator = { sourceID: 'foo', targetIDs: ['bar'], forward: true };
+                newPage.wizardPageContent.webNodePageConfiguration = {
+                    selectionTranslators: [translator]
+                };
+                store.dispatch('updatePage', { page: newPage, nodeIds: [] });
+                expect(interactivityStoreConfig.actions.updateSelectionTranslator).toHaveBeenCalledWith(
+                    expect.anything(), { translator }, expect.undefined
+                );
             });
         });
     });

@@ -500,14 +500,16 @@ export const mutations = {
         state[id].subscribers.push({ callback, filterIds: elementFilter, isTranslator });
     },
     updateSubscriber(state, { id, callback, elementFilter, isTranslator }) {
-        state[id].subscribers = [
-            // keep non-translated subscribers to maintain channel with non-updated elements
-            ...state[id].subscribers.filter(subscriber => !subscriber.isTranslator),
-            { callback, filterIds: elementFilter, isTranslator }
-        ]
-        state[id].data = {
-            elements: []
-        };
+        if (state[id]) {
+            state[id].subscribers = [
+                // keep non-translated subscribers to maintain channel with non-updated elements
+                ...state[id].subscribers.filter(subscriber => !subscriber.isTranslator),
+                { callback, filterIds: elementFilter, isTranslator }
+            ];
+            state[id].data = {
+                elements: []
+            };
+        }
     },
     removeSubscriber(state, { id, callback }) {
         if (state[id]) {
@@ -535,7 +537,7 @@ export const mutations = {
 export const actions = {
     subscribe({ commit, state }, { id, callback, elementFilter, isTranslator }) {
         // add subscriber to store
-        commit('addSubscriber', { callback, elementFilter, isTranslator });
+        commit('addSubscriber', { id, callback, elementFilter, isTranslator });
         // inform subscriber about current state of channel
         if (state[id].data) {
             let relevantElements = getRelevantElements(state, { id, filterIds: elementFilter });
@@ -622,7 +624,8 @@ export const actions = {
     updateSelectionTranslator({ dispatch, commit, getters, state }, { translator }) {
         // handle new selection translator from newly activated branches of the workflow
         if (typeof state[`selection-${translator.sourceID}`] === 'undefined') {
-            return dispatch('registerSelectionTranslator', { translator });
+            dispatch('registerSelectionTranslator', { translator });
+            return;
         }
         updateSourceTranslator({ dispatch, commit, getters }, { translator });
         translator.targetIDs.forEach((targetId) => {

@@ -164,7 +164,7 @@ export const actions = {
         }
     },
 
-    updatePage({ commit, dispatch }, { page = { webNodePageConfiguration: { selectionTranslators: [] } }, nodeIds }) {
+    updatePage({ commit, dispatch }, { page = {}, nodeIds }) {
         consola.trace('PageBuilder: Update page via action: ', page);
         let { webNodes, nodeViews, webNodePageConfiguration } = page?.wizardPageContent || page;
         nodeIds.forEach(nodeId => {
@@ -178,7 +178,7 @@ export const actions = {
             commit('updateViewConfig', updateConfig);
         });
         // update translators with the interactivity store
-        webNodePageConfiguration.selectionTranslators.forEach(translator => {
+        webNodePageConfiguration?.selectionTranslators?.forEach(translator => {
             dispatch('interactivity/updateSelectionTranslator', { translator });
         });
     },
