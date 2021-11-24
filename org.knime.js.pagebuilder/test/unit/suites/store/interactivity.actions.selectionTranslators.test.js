@@ -108,7 +108,7 @@ describe('Interactivity store', () => {
             expect(cb).not.toEqual(store.state[prefix + sourceID].subscribers[0].callback);
         });
 
-        it('updates ignores targetIDs during update which are not registered', () => {
+        it('ignores targetIDs during update which are not registered', () => {
             let translator = { sourceID, targetIDs, forward: true };
             store.dispatch('registerSelectionTranslator', { translator });
             expect(store.state[prefix + sourceID].subscribers).toHaveLength(1);
@@ -134,7 +134,7 @@ describe('Interactivity store', () => {
             });
         });
 
-        it('removed outdated translator references during update', () => {
+        it('removes outdated translator references during update', () => {
             let translator1 = { sourceID, targetIDs, forward: true };
             store.dispatch('registerSelectionTranslator', { translator: translator1 });
             let translator2 = { sourceID: '7:0:0', targetIDs, forward: true };
