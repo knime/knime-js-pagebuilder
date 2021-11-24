@@ -164,7 +164,7 @@ export const actions = {
         }
     },
 
-    updatePage({ commit, dispatch }, { page = {}, nodeIds }) {
+    updatePage({ commit, dispatch, state }, { page = {}, nodeIds }) {
         consola.trace('PageBuilder: Set page via action: ', page);
         let { webNodes, nodeViews } = page?.wizardPageContent || page;
         nodeIds.forEach(nodeId => {
@@ -177,13 +177,15 @@ export const actions = {
             }
             commit('updateViewConfig', updateConfig);
         });
-        dispatch('getLayoutNodeIds', page).then((layoutNodeIds) => {
-            if (layoutNodeIds.length !== nodeIds.length) {
-                dispatch('alert/showAlert',
-                    { type: 'warn',
-                        message: `Currently, nodes are missing from the layout.
-                        That could interfere with reactive nodes.` });
-            }
+        dispatch('getLayoutNodeIds', page).then((newLayoutNodeIds) => {
+            dispatch('getLayoutNodeIds', state.page).then((layoutNodeIds) => {
+                if (newLayoutNodeIds.some((nodeId) => !layoutNodeIds.includes(nodeId))) {
+                    dispatch('alert/showAlert',
+                        { type: 'warn',
+                            message: `Currently, nodes are missing from the layout.
+                            That could interfere with reactive nodes.` });
+                }
+            });
         });
     },
 

@@ -358,23 +358,29 @@ describe('PageBuilder store', () => {
                 checkPage(store.state.page, ['qux', 'baz'], ['qux', 'grault']);
             });
 
-            it('dispatches alert when layout nodes differ from nodeIDs of updatePage', () => {
+            it('dispatches alert when new layout contains nodes which the original layout does not contain', (done) => {
                 let newPage = getPage();
-                newPage.wizardPageContent = {
-                    version: '2.0',
-                    webNodePageConfiguration: {
-                        layout: {
-                            rows: []
-                        }
-                    },
-                    webNodes: {}
-                };
+                newPage.wizardPageContent.webNodePageConfiguration.layout.rows = [
+                    {
+                        columns: [
+                            {
+                                content: [
+                                    {
+                                        nodeID: 'id2'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ];
                 store.dispatch('updatePage', {
                     page: newPage,
                     nodeIds: ['id1']
-                }).then(() => {
+                }).then(async () => {
+                    await storeConfig.actions.getLayoutNodeIds;
                     expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
-                });
+                    done();
+                }).catch(() => {});
             });
 
             it('updates multiple webNodes', () => {
