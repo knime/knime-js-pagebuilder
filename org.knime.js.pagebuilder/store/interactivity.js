@@ -413,6 +413,7 @@ const handleSelectionTranslatorEvent = function ({ dispatch, getters },
     dispatch('publish', { id, data: mappedData, skipCallback });
 };
 
+// Callback method for the source side of a selection translator, forwards selection events to all targets
 const getTranslatorSourceCallback = function ({ dispatch, getters }, { translator }) {
     let translatorCallback = (id, data) => {
         if (!data || data.mappedEvent === translator.sourceID) {
@@ -431,6 +432,7 @@ const getTranslatorSourceCallback = function ({ dispatch, getters }, { translato
     return translatorCallback;
 };
 
+// Callback method for one target of a selection translator. Forwards selection events to the source.
 const getTranslatorTargetCallback = function ({ dispatch, getters }, { translator, handlerId }) {
     let translatorCallback = (id, data) => {
         if (!data || data.mappedEvent === translator.sourceID) {
@@ -447,7 +449,6 @@ const getTranslatorTargetCallback = function ({ dispatch, getters }, { translato
     return translatorCallback;
 };
 
-// Callback method for the source side of a selection translator, forwards selection events to all targets
 const subscribeSourceTranslator = function ({ dispatch, getters }, { translator }) {
     dispatch('subscribe', {
         id: `selection-${translator.sourceID}`,
@@ -456,7 +457,6 @@ const subscribeSourceTranslator = function ({ dispatch, getters }, { translator 
     });
 };
 
-// Callback method for one target of a selection translator. Forwards selection events to the source.
 const subscribeTargetTranslator = function ({ dispatch, getters }, { translator, handlerId }) {
     dispatch('subscribe', {
         id: `selection-${handlerId}`,
@@ -465,7 +465,6 @@ const subscribeTargetTranslator = function ({ dispatch, getters }, { translator,
     });
 };
 
-// Callback method for the source side of a selection translator, forwards selection events to all targets
 const updateSourceTranslator = function ({ dispatch, commit, getters }, { translator }) {
     commit('updateSubscriber', {
         id: `selection-${translator.sourceID}`,
@@ -474,7 +473,6 @@ const updateSourceTranslator = function ({ dispatch, commit, getters }, { transl
     });
 };
 
-// Callback method for one target of a selection translator. Forwards selection events to the source.
 const updateTargetTranslator = function ({ dispatch, commit, getters }, { translator, handlerId }) {
     commit('updateSubscriber', {
         id: `selection-${handlerId}`,
