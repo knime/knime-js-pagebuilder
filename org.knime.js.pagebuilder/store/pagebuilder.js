@@ -157,16 +157,16 @@ export const actions = {
         if (page && page.wizardPageContent) {
             let pageConfig = page.wizardPageContent.webNodePageConfiguration;
             if (pageConfig && pageConfig.selectionTranslators && pageConfig.selectionTranslators.length > 0) {
-                pageConfig.selectionTranslators.forEach((translator, i) => {
-                    dispatch('interactivity/registerSelectionTranslator', { translatorId: i, translator });
+                pageConfig.selectionTranslators.forEach(translator => {
+                    dispatch('interactivity/registerSelectionTranslator', { translator });
                 });
             }
         }
     },
 
-    updatePage({ commit }, { page = {}, nodeIds }) {
-        consola.trace('PageBuilder: Set page via action: ', page);
-        let { webNodes, nodeViews } = page?.wizardPageContent || page;
+    updatePage({ commit, dispatch }, { page = { webNodePageConfiguration: { selectionTranslators: [] } }, nodeIds }) {
+        consola.trace('PageBuilder: Update page via action: ', page);
+        let { webNodes, nodeViews, webNodePageConfiguration } = page?.wizardPageContent || page;
         nodeIds.forEach(nodeId => {
             // default webNode update
             let updateConfig = { nodeId, config: webNodes?.[nodeId] };
@@ -176,6 +176,10 @@ export const actions = {
                 updateConfig.viewType = 'nodeViews';
             }
             commit('updateViewConfig', updateConfig);
+        });
+        // update translators with the interactivity store
+        webNodePageConfiguration.selectionTranslators.forEach(translator => {
+            dispatch('interactivity/updateSelectionTranslator', { translator });
         });
     },
 

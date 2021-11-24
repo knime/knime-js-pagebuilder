@@ -397,7 +397,7 @@ const mapSelectionEvent = function (data, { mapping, sourceToTarget, curElementS
  * publishes those changes to the other side of the translator.
  */
 const handleSelectionTranslatorEvent = function ({ dispatch, getters },
-    { translatorId, data, translator, targetId, sourceToTarget, skipCallback }) {
+    { data, translator, targetId, sourceToTarget, skipCallback }) {
     let mappedData = data;
     if (!translator.forward && translator.mapping) {
         let curElementSource = getters.getPublishedData(`selection-${translator.sourceID}`);
@@ -408,20 +408,18 @@ const handleSelectionTranslatorEvent = function ({ dispatch, getters },
             return;
         }
     }
-    mappedData.mappedEvent = translatorId;
+    mappedData.mappedEvent = translator.sourceID;
     let id = sourceToTarget ? `selection-${targetId}` : `selection-${translator.sourceID}`;
     dispatch('publish', { id, data: mappedData, skipCallback });
 };
 
-// Callback method for the source side of a selection translator, forwards selection events to all targets
-const subscribeSelectionSourceTranslator = function ({ dispatch, getters }, { translatorId, translator }) {
+const getTranslatorSourceCallback = function ({ dispatch, getters }, { translator }) {
     let translatorCallback = (id, data) => {
-        if (!data || data.mappedEvent === translatorId) {
+        if (!data || data.mappedEvent === translator.sourceID) {
             return;
         }
         translator.targetIDs.forEach((targetId) => {
             handleSelectionTranslatorEvent({ dispatch, getters }, {
-                translatorId,
                 data,
                 translator,
                 targetId,
@@ -430,17 +428,15 @@ const subscribeSelectionSourceTranslator = function ({ dispatch, getters }, { tr
             });
         });
     };
-    dispatch('subscribe', { id: `selection-${translator.sourceID}`, callback: translatorCallback });
+    return translatorCallback;
 };
 
-// Callback method for one target of a selection translator. Forwards selection events to the source.
-const subscribeSelectionTargetTranslator = function ({ dispatch, getters }, { translator, translatorId, handlerId }) {
+const getTranslatorTargetCallback = function ({ dispatch, getters }, { translator, handlerId }) {
     let translatorCallback = (id, data) => {
-        if (!data || data.mappedEvent === translatorId) {
+        if (!data || data.mappedEvent === translator.sourceID) {
             return;
         }
         handleSelectionTranslatorEvent({ dispatch, getters }, {
-            translatorId,
             data,
             translator,
             targetId: handlerId,
@@ -448,8 +444,45 @@ const subscribeSelectionTargetTranslator = function ({ dispatch, getters }, { tr
             skipCallback: translatorCallback
         });
     };
-    dispatch('subscribe', { id: `selection-${handlerId}`, callback: translatorCallback });
+    return translatorCallback;
 };
+
+// Callback method for the source side of a selection translator, forwards selection events to all targets
+const subscribeSourceTranslator = function ({ dispatch, getters }, { translator }) {
+    dispatch('subscribe', {
+        id: `selection-${translator.sourceID}`,
+        callback: getTranslatorSourceCallback({ dispatch, getters }, { translator }),
+        isTranslator: true
+    });
+};
+
+// Callback method for one target of a selection translator. Forwards selection events to the source.
+const subscribeTargetTranslator = function ({ dispatch, getters }, { translator, handlerId }) {
+    dispatch('subscribe', {
+        id: `selection-${handlerId}`,
+        callback: getTranslatorTargetCallback({ dispatch, getters }, { translator, handlerId }),
+        isTranslator: true
+    });
+};
+
+// Callback method for the source side of a selection translator, forwards selection events to all targets
+const updateSourceTranslator = function ({ dispatch, commit, getters }, { translator }) {
+    commit('updateSubscriber', {
+        id: `selection-${translator.sourceID}`,
+        callback: getTranslatorSourceCallback({ dispatch, getters }, { translator }),
+        isTranslator: true
+    });
+};
+
+// Callback method for one target of a selection translator. Forwards selection events to the source.
+const updateTargetTranslator = function ({ dispatch, commit, getters }, { translator, handlerId }) {
+    commit('updateSubscriber', {
+        id: `selection-${handlerId}`,
+        callback: getTranslatorTargetCallback({ dispatch, getters }, { translator, handlerId }),
+        isTranslator: true
+    });
+};
+
 /*
  * END selection translation handling section
  */
@@ -462,9 +495,19 @@ export const state = () => ({
 });
 
 export const mutations = {
-    addSubscriber(state, { id, callback, elementFilter }) {
+    addSubscriber(state, { id, callback, elementFilter, isTranslator }) {
         addInteractivityId(state, { id, subscriberOnly: true });
-        state[id].subscribers.push({ callback, filterIds: elementFilter });
+        state[id].subscribers.push({ callback, filterIds: elementFilter, isTranslator });
+    },
+    updateSubscriber(state, { id, callback, elementFilter, isTranslator }) {
+        state[id].subscribers = [
+            // keep non-translated subscribers to maintain channel with non-updated elements
+            ...state[id].subscribers.filter(subscriber => !subscriber.isTranslator),
+            { callback, filterIds: elementFilter, isTranslator }
+        ]
+        state[id].data = {
+            elements: []
+        };
     },
     removeSubscriber(state, { id, callback }) {
         if (state[id]) {
@@ -490,9 +533,9 @@ export const mutations = {
 };
 
 export const actions = {
-    subscribe({ commit, state }, { id, callback, elementFilter }) {
+    subscribe({ commit, state }, { id, callback, elementFilter, isTranslator }) {
         // add subscriber to store
-        commit('addSubscriber', { id, callback, elementFilter });
+        commit('addSubscriber', { callback, elementFilter, isTranslator });
         // inform subscriber about current state of channel
         if (state[id].data) {
             let relevantElements = getRelevantElements(state, { id, filterIds: elementFilter });
@@ -561,7 +604,7 @@ export const actions = {
         }
         dispatch('publish', { id, data: { elements }, callback });
     },
-    registerSelectionTranslator({ dispatch, commit, getters }, { translatorId, translator }) {
+    registerSelectionTranslator({ dispatch, getters }, { translator }) {
         // check non-existing IDs
         if (!translator.sourceID || !translator.targetIDs) {
             return;
@@ -571,10 +614,19 @@ export const actions = {
             return;
         }
         // subscribe translators in both directions
-        subscribeSelectionSourceTranslator({ dispatch, getters }, { translatorId, translator });
+        subscribeSourceTranslator({ dispatch, getters }, { translator });
         translator.targetIDs.forEach((targetId) => {
-            subscribeSelectionTargetTranslator({ dispatch, getters },
-                { translator, translatorId, handlerId: targetId });
+            subscribeTargetTranslator({ dispatch, getters }, { translator, handlerId: targetId });
+        });
+    },
+    updateSelectionTranslator({ dispatch, commit, getters, state }, { translator }) {
+        // handle new selection translator from newly activated branches of the workflow
+        if (typeof state[`selection-${translator.sourceID}`] === 'undefined') {
+            return dispatch('registerSelectionTranslator', { translator });
+        }
+        updateSourceTranslator({ dispatch, commit, getters }, { translator });
+        translator.targetIDs.forEach((targetId) => {
+            updateTargetTranslator({ dispatch, commit, getters }, { translator, handlerId: targetId });
         });
     },
     clear({ commit }) {
