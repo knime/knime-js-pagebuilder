@@ -517,38 +517,38 @@ export default {
         handleInteractivity(event) {
             let interactivityType = event.data.type;
             switch (interactivityType) {
-            case 'interactivitySubscribe':
-                consola.trace(`subscribe to event`, this.nodeId, event.data);
-                this.$store.dispatch('pagebuilder/interactivity/subscribe', {
-                    id: event.data.id,
-                    callback: this.interactivityInformIframe,
-                    elementFilter: event.data.elementFilter
-                });
-                break;
-            case 'interactivityUnsubscribe':
-                consola.trace(`unsubscribe from event`, this.nodeId, event.data);
-                this.$store.dispatch('pagebuilder/interactivity/unsubscribe', {
-                    id: event.data.id,
-                    callback: this.interactivityInformIframe
-                });
-                break;
-            case 'interactivityPublish':
-                consola.trace(`publish event called`, this.nodeId, event.data);
-                this.$store.dispatch('pagebuilder/interactivity/publish', {
-                    id: event.data.id,
-                    data: event.data.payload,
-                    skipCallback: this.interactivityInformIframe
-                });
-                break;
-            case 'interactivityRegisterSelectionTranslator':
-                consola.trace(`interactivityRegisterSelectionTranslator`);
-                this.$store.dispatch('pagebuilder/interactivity/registerSelectionTranslator', {
-                    translatorId: event.data.id,
-                    translator: event.data.translator
-                });
-                break;
-            default:
-                break;
+                case 'interactivitySubscribe':
+                    consola.trace(`subscribe to event`, this.nodeId, event.data);
+                    this.$store.dispatch('pagebuilder/interactivity/subscribe', {
+                        id: event.data.id,
+                        callback: this.interactivityInformIframe,
+                        elementFilter: event.data.elementFilter
+                    });
+                    break;
+                case 'interactivityUnsubscribe':
+                    consola.trace(`unsubscribe from event`, this.nodeId, event.data);
+                    this.$store.dispatch('pagebuilder/interactivity/unsubscribe', {
+                        id: event.data.id,
+                        callback: this.interactivityInformIframe
+                    });
+                    break;
+                case 'interactivityPublish':
+                    consola.trace(`publish event called`, this.nodeId, event.data);
+                    this.$store.dispatch('pagebuilder/interactivity/publish', {
+                        id: event.data.id,
+                        data: event.data.payload,
+                        skipCallback: this.interactivityInformIframe
+                    });
+                    break;
+                case 'interactivityRegisterSelectionTranslator':
+                    consola.trace(`interactivityRegisterSelectionTranslator`);
+                    this.$store.dispatch('pagebuilder/interactivity/registerSelectionTranslator', {
+                        translatorId: event.data.id,
+                        translator: event.data.translator
+                    });
+                    break;
+                default:
+                    break;
             }
         },
 

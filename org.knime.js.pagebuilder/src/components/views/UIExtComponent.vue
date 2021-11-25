@@ -1,5 +1,5 @@
 <script>
-import { KnimeService } from 'knime-ui-extension-service';
+import { ComponentKnimeService } from 'knime-ui-extension-service';
 
 export default {
     components: {
@@ -44,8 +44,8 @@ export default {
         }
     },
     async mounted() {
-        this.knimeService = new KnimeService(this.extensionConfig);
-        
+        this.knimeService = new ComponentKnimeService(this.extensionConfig);
+
         // check if component library needs to be loaded or if it was already loaded before
         if (!window[this.componentId]) {
             await this.loadComponentLibrary();

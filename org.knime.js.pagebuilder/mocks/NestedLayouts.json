@@ -1888,7 +1888,7 @@
             "title": "Parallel Coordinates Plot",
             "subscribeSelection": true,
             "publishSelection": true,
-            "mValues": "Skip rows with missing values",
+            "mValues": "Skip rows with missing values",
             "lType": "Curved"
           }
         },

@@ -2,542 +2,484 @@
   "hasPreviousPage": true,
   "nodeMessages": {},
   "wizardExecutionState": "INTERACTION_REQUIRED",
-  "wizardPageContent":{
-    "@class":"org.knime.js.core.JSONWebNodePage",
-    "webNodePageConfiguration":{
-      "@class":"org.knime.js.core.JSONWebNodePageConfiguration",
-      "layout":{
-        "parentLayoutLegacyMode":false,
-        "rows":[
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "parentLayoutLegacyMode": false,
+        "rows": [
           {
-            "type":"row",
-            "additionalClasses":[
-              
-            ],
-            "additionalStyles":[
-              
-            ],
-            "columns":[
+            "type": "row",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
               {
-                "widthXS":6,
-                "widthSM":null,
-                "widthMD":null,
-                "widthLG":null,
-                "widthXL":null,
-                "content":[
+                "widthXS": 6,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
                   {
-                    "type":"view",
-                    "scrolling":false,
-                    "maxWidth":null,
-                    "minWidth":null,
-                    "useLegacyMode":false,
-                    "minHeight":null,
-                    "resizeMethod":"viewLowestElement",
-                    "maxHeight":null,
-                    "sizeHeight":true,
-                    "sizeWidth":false,
-                    "resizeInterval":null,
-                    "resizeTolerance":5,
-                    "autoResize":true,
-                    "nodeID":"5:0:1",
-                    "additionalClasses":[
-                      
-                    ],
-                    "additionalStyles":[
-                      
-                    ]
+                    "type": "view",
+                    "scrolling": false,
+                    "maxWidth": null,
+                    "minWidth": null,
+                    "useLegacyMode": false,
+                    "minHeight": null,
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "nodeID": "5:0:1",
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   }
                 ],
-                "additionalClasses":[
-                  
-                ],
-                "additionalStyles":[
-                  
-                ]
+                "additionalClasses": [],
+                "additionalStyles": []
               },
               {
-                "widthXS":6,
-                "widthSM":null,
-                "widthMD":null,
-                "widthLG":null,
-                "widthXL":null,
-                "content":[
+                "widthXS": 6,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
                   {
-                    "type":"view",
-                    "scrolling":false,
-                    "maxWidth":null,
-                    "minWidth":null,
-                    "useLegacyMode":false,
-                    "minHeight":null,
-                    "resizeMethod":"viewLowestElement",
-                    "maxHeight":null,
-                    "sizeHeight":true,
-                    "sizeWidth":false,
-                    "resizeInterval":null,
-                    "resizeTolerance":5,
-                    "autoResize":true,
-                    "nodeID":"5:0:4",
-                    "additionalClasses":[
-                      
-                    ],
-                    "additionalStyles":[
-                      
-                    ]
+                    "type": "view",
+                    "scrolling": false,
+                    "maxWidth": null,
+                    "minWidth": null,
+                    "useLegacyMode": false,
+                    "minHeight": null,
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "nodeID": "5:0:4",
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   }
                 ],
-                "additionalClasses":[
-                  
-                ],
-                "additionalStyles":[
-                  
-                ]
+                "additionalClasses": [],
+                "additionalStyles": []
               }
             ]
           },
           {
-            "type":"row",
-            "additionalClasses":[
-              
-            ],
-            "additionalStyles":[
-              
-            ],
-            "columns":[
+            "type": "row",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
               {
-                "widthXS":6,
-                "widthSM":null,
-                "widthMD":null,
-                "widthLG":null,
-                "widthXL":null,
-                "content":[
+                "widthXS": 6,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
                   {
-                    "type":"view",
-                    "scrolling":false,
-                    "maxWidth":null,
-                    "minWidth":null,
-                    "useLegacyMode":false,
-                    "minHeight":null,
-                    "resizeMethod":"viewLowestElement",
-                    "maxHeight":null,
-                    "sizeHeight":true,
-                    "sizeWidth":false,
-                    "resizeInterval":null,
-                    "resizeTolerance":5,
-                    "autoResize":true,
-                    "nodeID":"5:0:5",
-                    "additionalClasses":[
-                      
-                    ],
-                    "additionalStyles":[
-                      
-                    ]
+                    "type": "view",
+                    "scrolling": false,
+                    "maxWidth": null,
+                    "minWidth": null,
+                    "useLegacyMode": false,
+                    "minHeight": null,
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "nodeID": "5:0:5",
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   }
                 ],
-                "additionalClasses":[
-                  
-                ],
-                "additionalStyles":[
-                  
-                ]
+                "additionalClasses": [],
+                "additionalStyles": []
               },
               {
-                "widthXS":6,
-                "widthSM":null,
-                "widthMD":null,
-                "widthLG":null,
-                "widthXL":null,
-                "content":[
+                "widthXS": 6,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
                   {
-                    "type":"view",
-                    "scrolling":false,
-                    "maxWidth":null,
-                    "minWidth":null,
-                    "useLegacyMode":false,
-                    "minHeight":null,
-                    "resizeMethod":"viewLowestElement",
-                    "maxHeight":null,
-                    "sizeHeight":true,
-                    "sizeWidth":false,
-                    "resizeInterval":null,
-                    "resizeTolerance":5,
-                    "autoResize":true,
-                    "nodeID":"5:0:6",
-                    "additionalClasses":[
-                      
-                    ],
-                    "additionalStyles":[
-                      
-                    ]
+                    "type": "view",
+                    "scrolling": false,
+                    "maxWidth": null,
+                    "minWidth": null,
+                    "useLegacyMode": false,
+                    "minHeight": null,
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "nodeID": "5:0:6",
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   }
                 ],
-                "additionalClasses":[
-                  
-                ],
-                "additionalStyles":[
-                  
-                ]
+                "additionalClasses": [],
+                "additionalStyles": []
               }
             ]
           },
           {
-            "type":"row",
-            "additionalClasses":[
-              
-            ],
-            "additionalStyles":[
-              
-            ],
-            "columns":[
+            "type": "row",
+            "additionalClasses": [],
+            "additionalStyles": [],
+            "columns": [
               {
-                "widthXS":12,
-                "widthSM":null,
-                "widthMD":null,
-                "widthLG":null,
-                "widthXL":null,
-                "content":[
+                "widthXS": 12,
+                "widthSM": null,
+                "widthMD": null,
+                "widthLG": null,
+                "widthXL": null,
+                "content": [
                   {
-                    "type":"view",
-                    "scrolling":false,
-                    "maxWidth":null,
-                    "minWidth":null,
-                    "useLegacyMode":false,
-                    "minHeight":null,
-                    "resizeMethod":"viewLowestElement",
-                    "maxHeight":null,
-                    "sizeHeight":true,
-                    "sizeWidth":false,
-                    "resizeInterval":null,
-                    "resizeTolerance":5,
-                    "autoResize":true,
-                    "nodeID":"5:0:7",
-                    "additionalClasses":[
-                      
-                    ],
-                    "additionalStyles":[
-                      
-                    ]
+                    "type": "view",
+                    "scrolling": false,
+                    "maxWidth": null,
+                    "minWidth": null,
+                    "useLegacyMode": false,
+                    "minHeight": null,
+                    "resizeMethod": "viewLowestElement",
+                    "maxHeight": null,
+                    "sizeHeight": true,
+                    "sizeWidth": false,
+                    "resizeInterval": null,
+                    "resizeTolerance": 5,
+                    "autoResize": true,
+                    "nodeID": "5:0:7",
+                    "additionalClasses": [],
+                    "additionalStyles": []
                   }
                 ],
-                "additionalClasses":[
-                  
-                ],
-                "additionalStyles":[
-                  
-                ]
+                "additionalClasses": [],
+                "additionalStyles": []
               }
             ]
           }
         ]
       },
-      "blackBoard":null,
-      "selectionTranslators":null,
-      "version":"4.3.0.v202011141736"
+      "blackBoard": null,
+      "selectionTranslators": null,
+      "version": "4.3.0.v202011141736"
     },
-    "webNodes":{
-      "5:0:4":{
-        "@class":"org.knime.js.core.JSONWebNode",
-        "customCSS":"",
-        "viewRepresentation":{
-          "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation",
-          "label":"Upload without default file",
-          "description":"",
-          "required":true,
-          "defaultValue":{
-            "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":""
+    "webNodes": {
+      "5:0:4": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "customCSS": "",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation",
+          "label": "Upload without default file",
+          "description": "",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": ""
           },
-          "currentValue":{
-            "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":""
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": ""
           },
-          "fileTypes":[
-            
-          ],
-          "errorMessage":"",
-          "disableOutput":true
+          "fileTypes": [],
+          "errorMessage": "",
+          "disableOutput": true
         },
-        "viewValue":{
-          "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-          "fileName":"",
-          "pathValid":false,
-          "path":""
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+          "fileName": "",
+          "pathValid": false,
+          "path": ""
         },
-        "initMethodName":"init",
-        "validateMethodName":"validate",
-        "setValidationErrorMethodName":"setValidationErrorMessage",
-        "nodeInfo":{
-          "@class":"org.knime.js.core.JSONWebNodeInfo",
-          "nodeAnnotation":"",
-          "nodeState":"executed",
-          "nodeName":"File Upload Widget",
-          "displayPossible":true,
-          "nodeErrorMessage":null,
-          "nodeWarnMessage":"No file or URL provided"
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "File Upload Widget",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "No file or URL provided"
         },
-        "getViewValueMethodName":"value",
-        "javascriptLibraries":[
+        "getViewValueMethodName": "value",
+        "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
           "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/widget/input/fileupload/fileUploadWidget.js"
         ],
-        "stylesheets":[
+        "stylesheets": [
           "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
           "/js-lib/knime/service/knime.css",
           "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
           "/org/knime/js/base/util/quickform/quickformStyles.css"
         ],
-        "namespace":"knimeFileUploadWidget"
+        "namespace": "knimeFileUploadWidget"
       },
-      "5:0:6":{
-        "@class":"org.knime.js.core.JSONWebNode",
-        "customCSS":"",
-        "viewRepresentation":{
-          "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation",
-          "label":"Upload restricted to csv, docx and xlsx",
-          "description":"",
-          "required":true,
-          "defaultValue":{
-            "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":""
+      "5:0:6": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "customCSS": "",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation",
+          "label": "Upload restricted to csv, docx and xlsx",
+          "description": "",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": ""
           },
-          "currentValue":{
-            "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":""
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": ""
           },
-          "fileTypes":[
+          "fileTypes": [
             ".csv|.docx|.xlsx",
             ".csv",
             ".docx",
             ".xlsx"
           ],
-          "errorMessage":"",
-          "disableOutput":true
+          "errorMessage": "",
+          "disableOutput": true
         },
-        "viewValue":{
-          "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-          "fileName":"",
-          "pathValid":false,
-          "path":""
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+          "fileName": "",
+          "pathValid": false,
+          "path": ""
         },
-        "initMethodName":"init",
-        "validateMethodName":"validate",
-        "setValidationErrorMethodName":"setValidationErrorMessage",
-        "nodeInfo":{
-          "@class":"org.knime.js.core.JSONWebNodeInfo",
-          "nodeAnnotation":"",
-          "nodeState":"executed",
-          "nodeName":"File Upload Widget",
-          "displayPossible":true,
-          "nodeErrorMessage":null,
-          "nodeWarnMessage":"File with no extension is not valid"
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "File Upload Widget",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "File with no extension is not valid"
         },
-        "getViewValueMethodName":"value",
-        "javascriptLibraries":[
+        "getViewValueMethodName": "value",
+        "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
           "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/widget/input/fileupload/fileUploadWidget.js"
         ],
-        "stylesheets":[
+        "stylesheets": [
           "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
           "/js-lib/knime/service/knime.css",
           "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
           "/org/knime/js/base/util/quickform/quickformStyles.css"
         ],
-        "namespace":"knimeFileUploadWidget"
+        "namespace": "knimeFileUploadWidget"
       },
-      "5:0:5":{
-        "@class":"org.knime.js.core.JSONWebNode",
-        "customCSS":"",
-        "viewRepresentation":{
-          "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation",
-          "label":"Upload restricted to pdf",
-          "description":"",
-          "required":true,
-          "defaultValue":{
-            "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":""
+      "5:0:5": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "customCSS": "",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation",
+          "label": "Upload restricted to pdf",
+          "description": "",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": ""
           },
-          "currentValue":{
-            "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":""
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": ""
           },
-          "fileTypes":[
+          "fileTypes": [
             ".pdf"
           ],
-          "errorMessage":"",
-          "disableOutput":true
+          "errorMessage": "",
+          "disableOutput": true
         },
-        "viewValue":{
-          "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-          "fileName":"",
-          "pathValid":false,
-          "path":""
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+          "fileName": "",
+          "pathValid": false,
+          "path": ""
         },
-        "initMethodName":"init",
-        "validateMethodName":"validate",
-        "setValidationErrorMethodName":"setValidationErrorMessage",
-        "nodeInfo":{
-          "@class":"org.knime.js.core.JSONWebNodeInfo",
-          "nodeAnnotation":"",
-          "nodeState":"executed",
-          "nodeName":"File Upload Widget",
-          "displayPossible":true,
-          "nodeErrorMessage":null,
-          "nodeWarnMessage":"File with no extension is not valid"
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "File Upload Widget",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "File with no extension is not valid"
         },
-        "getViewValueMethodName":"value",
-        "javascriptLibraries":[
+        "getViewValueMethodName": "value",
+        "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
           "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/widget/input/fileupload/fileUploadWidget.js"
         ],
-        "stylesheets":[
+        "stylesheets": [
           "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
           "/js-lib/knime/service/knime.css",
           "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
           "/org/knime/js/base/util/quickform/quickformStyles.css"
         ],
-        "namespace":"knimeFileUploadWidget"
+        "namespace": "knimeFileUploadWidget"
       },
-      "5:0:1":{
-        "@class":"org.knime.js.core.JSONWebNode",
-        "customCSS":"",
-        "viewRepresentation":{
-          "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation",
-          "label":"Regular Upload with default",
-          "description":"",
-          "required":true,
-          "defaultValue":{
-            "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":"/Users/albrecht/Downloads/sample_with_underscores.txt"
+      "5:0:1": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "customCSS": "",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation",
+          "label": "Regular Upload with default",
+          "description": "",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": "/Users/albrecht/Downloads/sample_with_underscores.txt"
           },
-          "currentValue":{
-            "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":"/Users/albrecht/Downloads/sample_with_underscores.txt"
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": "/Users/albrecht/Downloads/sample_with_underscores.txt"
           },
-          "fileTypes":[
-            
-          ],
-          "errorMessage":"",
-          "disableOutput":true
+          "fileTypes": [],
+          "errorMessage": "",
+          "disableOutput": true
         },
-        "viewValue":{
-          "@class":"org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
-          "fileName":"",
-          "pathValid":false,
-          "path":"/Users/albrecht/Downloads/sample_with_underscores.txt"
+        "viewValue": {
+          "@class": "org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue",
+          "fileName": "",
+          "pathValid": false,
+          "path": "/Users/albrecht/Downloads/sample_with_underscores.txt"
         },
-        "initMethodName":"init",
-        "validateMethodName":"validate",
-        "setValidationErrorMethodName":"setValidationErrorMessage",
-        "nodeInfo":{
-          "@class":"org.knime.js.core.JSONWebNodeInfo",
-          "nodeAnnotation":"",
-          "nodeState":"executed",
-          "nodeName":"File Upload Widget",
-          "displayPossible":true,
-          "nodeErrorMessage":null,
-          "nodeWarnMessage":"No such file: \"/Users/albrecht/Downloads/sample_with_underscores.txt\""
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "File Upload Widget",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "No such file: \"/Users/albrecht/Downloads/sample_with_underscores.txt\""
         },
-        "getViewValueMethodName":"value",
-        "javascriptLibraries":[
+        "getViewValueMethodName": "value",
+        "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
           "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/widget/input/fileupload/fileUploadWidget.js"
         ],
-        "stylesheets":[
+        "stylesheets": [
           "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
           "/js-lib/knime/service/knime.css",
           "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
           "/org/knime/js/base/util/quickform/quickformStyles.css"
         ],
-        "namespace":"knimeFileUploadWidget"
+        "namespace": "knimeFileUploadWidget"
       },
-      "5:0:7":{
-        "@class":"org.knime.js.core.JSONWebNode",
-        "customCSS":"",
-        "viewRepresentation":{
-          "@class":"org.knime.js.base.node.quickform.input.fileupload.FileUploadQuickFormRepresentation",
-          "label":"Legacy Quickform",
-          "description":"Enter Description",
-          "required":true,
-          "defaultValue":{
-            "@class":"org.knime.js.base.node.quickform.input.fileupload.FileUploadQuickFormValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":""
+      "5:0:7": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "customCSS": "",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.quickform.input.fileupload.FileUploadQuickFormRepresentation",
+          "label": "Legacy Quickform",
+          "description": "Enter Description",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.quickform.input.fileupload.FileUploadQuickFormValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": ""
           },
-          "currentValue":{
-            "@class":"org.knime.js.base.node.quickform.input.fileupload.FileUploadQuickFormValue",
-            "fileName":"",
-            "pathValid":false,
-            "path":""
+          "currentValue": {
+            "@class": "org.knime.js.base.node.quickform.input.fileupload.FileUploadQuickFormValue",
+            "fileName": "",
+            "pathValid": false,
+            "path": ""
           },
-          "fileTypes":[
-            
-          ],
-          "disableoutput":true,
-          "errormessage":""
+          "fileTypes": [],
+          "disableoutput": true,
+          "errormessage": ""
         },
-        "viewValue":{
-          "@class":"org.knime.js.base.node.quickform.input.fileupload.FileUploadQuickFormValue",
-          "fileName":"",
-          "pathValid":false,
-          "path":""
+        "viewValue": {
+          "@class": "org.knime.js.base.node.quickform.input.fileupload.FileUploadQuickFormValue",
+          "fileName": "",
+          "pathValid": false,
+          "path": ""
         },
-        "initMethodName":"init",
-        "validateMethodName":"validate",
-        "setValidationErrorMethodName":"setValidationErrorMessage",
-        "nodeInfo":{
-          "@class":"org.knime.js.core.JSONWebNodeInfo",
-          "nodeAnnotation":"",
-          "nodeState":"executed",
-          "nodeName":"File Upload",
-          "displayPossible":true,
-          "nodeErrorMessage":null,
-          "nodeWarnMessage":"No file or URL provided"
+        "initMethodName": "init",
+        "validateMethodName": "validate",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeAnnotation": "",
+          "nodeState": "executed",
+          "nodeName": "File Upload",
+          "displayPossible": true,
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": "No file or URL provided"
         },
-        "getViewValueMethodName":"value",
-        "javascriptLibraries":[
+        "getViewValueMethodName": "value",
+        "javascriptLibraries": [
           "/js-lib/knime/service/knime_service_1_0_0.js",
           "/js-lib/jQuery/jquery-1.11.0.min.js",
           "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
           "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
           "/org/knime/js/base/node/quickform/input/fileupload/FileUpload.js"
         ],
-        "stylesheets":[
+        "stylesheets": [
           "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
           "/js-lib/knime/service/knime.css",
           "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
           "/org/knime/js/base/util/quickform/quickformStyles.css"
         ],
-        "namespace":"org_knime_js_base_node_quickform_input_fileupload"
+        "namespace": "org_knime_js_base_node_quickform_input_fileupload"
       }
     },
-    "version":"4.3.0.v202011141736"
+    "version": "4.3.0.v202011141736"
   }
 }

@@ -45,16 +45,16 @@ const newTick = (length, direction) => {
  */
 const getTickSize = (ind, numTick) => {
     switch (true) {
-    case ind === 0:
-    case ind === numTick:
-    case numTick % 2 === 0:
-        return DEFAULT_KNIME_TICK_LENGTH;
-    case Math.ceil(numTick / 2) === ind:
-        return DEFAULT_KNIME_MEDIAN_TICK_LENGTH;
-    case ind % 2 === 0:
-        return DEFAULT_KNIME_EXT_SUB_TICK_LENGTH;
-    default:
-        return DEFAULT_KNIME_TICK_LENGTH;
+        case ind === 0:
+        case ind === numTick:
+        case numTick % 2 === 0:
+            return DEFAULT_KNIME_TICK_LENGTH;
+        case Math.ceil(numTick / 2) === ind:
+            return DEFAULT_KNIME_MEDIAN_TICK_LENGTH;
+        case ind % 2 === 0:
+            return DEFAULT_KNIME_EXT_SUB_TICK_LENGTH;
+        default:
+            return DEFAULT_KNIME_TICK_LENGTH;
     }
 };
 
