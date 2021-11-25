@@ -380,7 +380,33 @@ describe('PageBuilder store', () => {
                     await storeConfig.actions.getLayoutNodeIds;
                     expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
                     done();
-                }).catch(() => {});
+                });
+            });
+
+            it('does not dispatch a warning if the layout has not changed', (done) => {
+                let newPage = getPage();
+                newPage.wizardPageContent.webNodePageConfiguration.layout.rows = [
+                    {
+                        columns: [
+                            {
+                                content: [
+                                    {
+                                        nodeID: 'id2'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ];
+                store.commit('setPage', newPage);
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id1']
+                }).then(async () => {
+                    await storeConfig.actions.getLayoutNodeIds;
+                    expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
+                    done();
+                });
             });
 
             it('updates multiple webNodes', () => {
