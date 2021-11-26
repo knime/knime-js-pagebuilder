@@ -543,7 +543,6 @@ export default {
                 case 'interactivityRegisterSelectionTranslator':
                     consola.trace(`interactivityRegisterSelectionTranslator`);
                     this.$store.dispatch('pagebuilder/interactivity/registerSelectionTranslator', {
-                        translatorId: event.data.id,
                         translator: event.data.translator
                     });
                     break;
