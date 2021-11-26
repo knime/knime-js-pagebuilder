@@ -14,6 +14,13 @@ describe('PageBuilder store', () => {
         }
     };
 
+    let alertStoreConfig = {
+        namespaced: true,
+        actions: {
+            showAlert: jest.fn()
+        }
+    };
+
     beforeAll(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
@@ -22,6 +29,7 @@ describe('PageBuilder store', () => {
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
         store.registerModule('interactivity', interactivityStoreConfig);
+        store.registerModule('alert', alertStoreConfig);
         jest.resetAllMocks();
     });
 
@@ -289,6 +297,90 @@ describe('PageBuilder store', () => {
 
             store.commit('updateWebNode', update);
             expect(store.state.page.wizardPageContent.webNodes.id1.viewRepresentation.required).toBe(false);
+        });
+
+        // as used in re-execution
+        describe('Check warning message if node is not in layout', () => {
+            const getPage = () => ({
+                wizardPageContent: {
+                    webNodes: {
+                        id1: {
+                            foo: 'bar'
+                        },
+                        id2: {
+                            foo: 'baz'
+                        }
+                    },
+                    nodeViews: {
+                        id3: {
+                            foo: 'qux'
+                        },
+                        id4: {
+                            foo: 'grault'
+                        }
+                    },
+                    webNodePageConfiguration: {
+                        layout: {
+                            rows: []
+                        }
+                    }
+                }
+            });
+
+            beforeEach(() => {
+                store.commit('setPage', getPage());
+            });
+
+            it('dispatches alert when new layout contains nodes which the original layout does not contain', (done) => {
+                let newPage = getPage();
+                newPage.wizardPageContent.webNodePageConfiguration.layout.rows = [
+                    {
+                        columns: [
+                            {
+                                content: [
+                                    {
+                                        nodeID: 'id2'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ];
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id1']
+                }).then(async () => {
+                    await storeConfig.actions.getLayoutNodeIds;
+                    expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
+                    done();
+                });
+            });
+
+            it('does not dispatch a warning if the layout has not changed', (done) => {
+                let newPage = getPage();
+                newPage.wizardPageContent.webNodePageConfiguration.layout.rows = [
+                    {
+                        columns: [
+                            {
+                                content: [
+                                    {
+                                        nodeID: 'id2'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ];
+                store.commit('setPage', newPage);
+                store.dispatch('updatePage', {
+                    page: newPage,
+                    nodeIds: ['id1']
+                }).then(async () => {
+                    await storeConfig.actions.getLayoutNodeIds;
+                    expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
+                    done();
+                });
+            });
         });
     });
 

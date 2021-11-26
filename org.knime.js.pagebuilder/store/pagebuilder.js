@@ -163,12 +163,37 @@ export const actions = {
         }
     },
 
-    updatePage({ commit }, { page = {}, nodeIds }) {
+    updatePage({ commit, dispatch, state }, { page = {}, nodeIds }) {
         consola.trace('PageBuilder: Set page via action: ', page);
         let { webNodes } = page?.wizardPageContent || page;
         nodeIds.forEach(nodeId => {
             commit('updateWebNode', { nodeId, config: webNodes?.[nodeId] });
         });
+        dispatch('getLayoutNodeIds', page).then((newLayoutNodeIds) => {
+            dispatch('getLayoutNodeIds', state.page).then((layoutNodeIds) => {
+                if (newLayoutNodeIds.some((nodeId) => !layoutNodeIds.includes(nodeId))) {
+                    dispatch('alert/showAlert',
+                        { type: 'warn',
+                            message: `Currently, nodes are missing from the composite view layout.
+                            That could interfere with reactive nodes.` });
+                }
+            });
+        });
+    },
+
+    getLayoutNodeIds(_, page) {
+        let { webNodePageConfiguration } = page?.wizardPageContent || page;
+        let layoutRows = webNodePageConfiguration?.layout?.rows || [];
+        let layoutNodeIds = [];
+        layoutRows.forEach((row) => {
+            let cols = row.columns;
+            cols.forEach((col) => {
+                col.content.forEach((elem) => {
+                    layoutNodeIds.push(elem.nodeID);
+                });
+            });
+        });
+        return layoutNodeIds;
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {
