@@ -1,27 +1,20 @@
 <script>
-import { ComponentKnimeService } from 'knime-ui-extension-service';
+import { KnimeService } from 'knime-ui-extension-service';
 
 export default {
     components: {
         // UIExtension
     },
     props: {
-        extensionConfig: {
-            default: () => ({}),
-            type: Object,
-            validate(extensionConfig) {
-                if (typeof extensionConfig !== 'object') {
-                    return false;
-                }
-                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
-                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
-            }
+        knimeService: {
+            default: null,
+            type: KnimeService,
+            required: true
         }
     },
     data() {
         return {
-            componentLoaded: false,
-            knimeService: null
+            componentLoaded: false
         };
     },
     computed: {
@@ -44,8 +37,6 @@ export default {
         }
     },
     async mounted() {
-        this.knimeService = new ComponentKnimeService(this.extensionConfig);
-
         // check if component library needs to be loaded or if it was already loaded before
         if (!window[this.componentId]) {
             await this.loadComponentLibrary();

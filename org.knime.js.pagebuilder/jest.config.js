@@ -8,6 +8,7 @@ module.exports = {
     ],
     transform: {
         '\\.js$': 'babel-jest',
+        '\\.ts$': 'babel-jest',
         '\\.vue$': 'vue-jest',
         '\\.(css|styl|less|sass|scss|ttf|woff|woff2)(\\?|$)': 'jest-transform-stub',
         '\\.svg': '<rootDir>/test/unit/jest-transform-svgs',
@@ -34,7 +35,7 @@ module.exports = {
     coverageReporters: ['lcov', 'text'],
     // keep in sync with sonar-project.properties!
     collectCoverageFrom: [
-        '<rootDir>/**/*.{js,vue}',
+        '<rootDir>/**/*.{js,ts,vue}',
         '!config.js',
         '!**/*.config.js',
         '!.eslintrc*.js',
@@ -51,11 +52,13 @@ module.exports = {
     ],
     testURL: 'http://test.example/',
     testMatch: [
-        '<rootDir>/test/unit/suites/**/*.test.js'
+        '<rootDir>/test/unit/suites/**/*.test.js',
+        '<rootDir>/test/unit/suites/**/*.test.ts'
     ],
     watchPlugins: [
         'jest-watch-typeahead/filename',
         'jest-watch-typeahead/testname'
     ],
-    setupFiles: ['<rootDir>/test/unit/jest-setup']
+    setupFiles: ['<rootDir>/test/unit/jest-setup'],
+    preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel'
 };

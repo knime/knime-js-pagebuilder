@@ -13,6 +13,22 @@ const POLLING_INTERVAL = 2000; // ms between polling actions
  */
 export const actions = {
 
+    /* UI-EXTENSION ACTIONS */
+
+    /**
+     * Initiates a service call to the AP via RPC. No pre-flight manipulation or parsing is done, so the request provided
+     * should contain the necessary information and format to successfully target the desired service.
+     *
+     * @param {Object} context - Vuex context.
+     * @param {Object} param - action config.
+     * @param {any} param.request - the service request to make.
+     * @returns {Promise<Object>} - the results of the service call. The resolved results will optionally contain
+     *      the @property {result} (if the service was successful) or the @property {error} (if the service failed).
+     */
+    callService({ dispatch }, { request }) {
+        return dispatch('singleRPC', { rpcConfig: request });
+    },
+
     /* RE-EXECUTION ACTIONS */
 
     /**
@@ -154,7 +170,6 @@ export const actions = {
      *
      * @param {Object} _ - Vuex context (unused).
      * @param {Object} param - action config.
-     * @param {String} param.nodeId - id of the node who's RPC server should be queried.
      * @param {Object} param.rpcConfig - the RPC configuration for the global RPC invocation.
      *          E.g.: {
      *              jsonrpc: '2.0', (always 2.0)
@@ -165,11 +180,11 @@ export const actions = {
      * @returns {Object} - the results of the RPC call; either with the result property (if the call was successful) or
      *      the error property (if an exception occurred).
      */
-    singleRPC(_, { nodeId, rpcConfig }) {
+    singleRPC(_, { rpcConfig }) {
         let result, error;
         if (typeof jsonrpc === 'function') {
             try {
-                consola.debug(`WrapperAPI store: dispatch RPC node: ${nodeId}`, rpcConfig);
+                consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
                 ({ result, error } = JSON.parse(jsonrpc(JSON.stringify(rpcConfig))));
             } catch (err) {
                 error = err;

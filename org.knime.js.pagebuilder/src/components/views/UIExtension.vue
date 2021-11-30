@@ -1,4 +1,5 @@
 <script>
+import { KnimeService, IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
 import UIExtComponent from '~/src/components/views/UIExtComponent';
 import UIExtIFrame from '~/src/components/views/UIExtIFrame';
 
@@ -27,7 +28,8 @@ export default {
     },
     data() {
         return {
-            configKey: 0
+            configKey: 0,
+            knimeService: null
         };
     },
     computed: {
@@ -39,6 +41,16 @@ export default {
         extensionConfig() {
             this.configKey += 1;
         }
+    },
+    mounted() {
+        const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
+        this.knimeService = new ServiceConstructor(this.extensionConfig, this.callService);
+        this.$store.dispatch('service/registerService', { service: this.knimeService });
+    },
+    methods: {
+        callService(request) {
+            return this.$store.dispatch('api/callService', { request });
+        }
     }
 };
 </script>
@@ -47,12 +59,12 @@ export default {
   <div>
     <UIExtComponent
       v-if="isUIExtComponent"
-      :extension-config="extensionConfig"
+      :knime-service="knimeService"
     />
     <UIExtIFrame
       v-else
       :key="configKey"
-      :extension-config="extensionConfig"
+      :knime-service="knimeService"
     />
   </div>
 </template>

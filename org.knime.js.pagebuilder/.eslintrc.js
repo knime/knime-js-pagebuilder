@@ -9,10 +9,20 @@ module.exports = {
             exceptions: ['require']
         }]
     },
-    overrides: [{
-        files: ['{service-mock,modules,plugins,server,config}/**', '*.config.js'],
-        env: {
-            node: true
+    overrides: [
+        {
+            files: ['{service-mock,modules,plugins,server,config}/**', '*.config.js'],
+            env: {
+                node: true
+            }
+        },
+        {
+            files: ['*.ts'],
+            extends: [
+                './webapps-common/lint/.eslintrc-typescript.js'
+            ],
+            parser: '@typescript-eslint/parser',
+            plugins: ['@typescript-eslint']
         }
-    }]
+    ]
 };

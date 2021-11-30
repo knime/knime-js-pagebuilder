@@ -3,16 +3,10 @@ import { IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
 
 export default {
     props: {
-        extensionConfig: {
-            default: () => ({}),
-            type: Object,
-            validate(extensionConfig) {
-                if (typeof extensionConfig !== 'object') {
-                    return false;
-                }
-                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
-                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
-            }
+        knimeService: {
+            default: null,
+            type: IFrameKnimeServiceAdapter,
+            required: true
         }
     },
     computed: {

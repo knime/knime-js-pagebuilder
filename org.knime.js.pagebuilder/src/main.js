@@ -347,3 +347,9 @@ if (typeof KnimeInteractivity === 'undefined') {
         }
     };
 }
+
+if (typeof jsonrpcNotification === 'undefined') {
+    window.jsonrpcNotification = (notification) => {
+        window.KnimePageLoader.app.$store.dispatch('service/pushNotification', notification);
+    };
+}
