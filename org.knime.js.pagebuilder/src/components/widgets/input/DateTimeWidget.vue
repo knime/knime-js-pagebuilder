@@ -137,7 +137,7 @@ export default {
             return null;
         }
     },
-    beforeMount() {
+    mounted() {
         if (this.viewRep.usedefaultexectime) {
             this.publishUpdate(this.formatDate(this.execTime), this.localTimeZone);
         }
