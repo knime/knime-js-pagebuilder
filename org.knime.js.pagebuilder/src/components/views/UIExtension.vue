@@ -42,7 +42,7 @@ export default {
             this.configKey += 1;
         }
     },
-    mounted() {
+    created() {
         const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
         this.knimeService = new ServiceConstructor(this.extensionConfig, this.callService);
         this.$store.dispatch('service/registerService', { service: this.knimeService });

@@ -1,9 +1,10 @@
 <script>
+import { loadComponentLibrary } from '~/src/util/loadComponentLibrary';
 import { KnimeService } from 'knime-ui-extension-service';
 
 export default {
     components: {
-        // UIExtension
+        // Any Vue-based component library
     },
     props: {
         knimeService: {
@@ -19,7 +20,7 @@ export default {
     },
     computed: {
         resourceInfo() {
-            return this.extensionConfig?.resourceInfo;
+            return this.knimeService?.extensionConfig?.resourceInfo;
         },
         resourceLocation() {
             // TODO: NXT-732 handle relative paths for webportal
@@ -36,39 +37,14 @@ export default {
             return this.resourceInfo?.id;
         }
     },
-    async mounted() {
+    async created() {
         // check if component library needs to be loaded or if it was already loaded before
         if (!window[this.componentId]) {
-            await this.loadComponentLibrary();
+            await loadComponentLibrary(window, this.resourceLocation, this.componentId);
         }
         // register the component locally
         this.$options.components[this.componentId] = window[this.componentId];
         this.componentLoaded = true;
-    },
-    methods: {
-        async loadComponentLibrary() {
-            // Load and mount component library
-            await new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.async = true;
-                script.addEventListener('load', () => {
-                    resolve(script);
-                });
-                script.addEventListener('error', () => {
-                    reject(new Error(`Script loading of "${this.resourceLocation}" failed`));
-                    document.head.removeChild(script);
-                });
-                script.src = this.resourceLocation;
-                document.head.appendChild(script);
-            });
-
-            // Lib build defines component on `window` using the name defined during build.
-            // This name should match the componentId (this.extensionConfig.resourceInfo.id).
-            let Component = window[this.componentId];
-            if (!Component) {
-                throw new Error(`Component loading failed. Script invalid.`);
-            }
-        }
     }
 };
 </script>

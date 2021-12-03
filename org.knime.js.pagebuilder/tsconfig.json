@@ -27,7 +27,9 @@
     }
   },
   "include": [
-    "**/*.ts"
+    "*/*.ts",
+    "*/*.test.ts",
+    "types"
   ],
   "exclude": [
     "mocks",
