@@ -1,6 +1,6 @@
 <script>
 import AlertLocal from '~/src/components/ui/AlertLocal';
-import iframeResizer from 'iframe-resizer/js/iframeResizer';
+import { iframeResizer } from 'iframe-resizer';
 
 import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
 import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
@@ -118,6 +118,7 @@ export default {
         // This global API should only be used/extended for cases where window.postMessage can't be used
         // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
+        // TODO: AP-18040 update the settings store with deafaultMoundId getters
         let storeSettings = this.$store.state.settings;
         let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
         let getRepositoryFunc = this.$store.getters['api/repository'];
