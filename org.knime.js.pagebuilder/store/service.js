@@ -37,7 +37,7 @@ export const actions = {
     },
 
     /**
-     * Dispatches an SSE notification to all globally registered services via their defined callbacks.
+     * Dispatches a notification to all globally registered services via their defined callbacks.
      *
      * @param {Object} context - Vuex context.
      * @param {Object} params - action config.
@@ -46,7 +46,7 @@ export const actions = {
      */
     pushNotification({ state }, { event }) {
         return Promise.all(Object.values(state.services).map(
-            (service) => service.onJsonrpcNotification(event)
+            (service) => service.onJsonRpcNotification(event)
         ));
     }
 };

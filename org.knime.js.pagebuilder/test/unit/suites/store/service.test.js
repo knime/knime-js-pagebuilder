@@ -40,7 +40,7 @@ describe('service store', () => {
         it('dispatches push notifications', async () => {
             const service = new KnimeService(iFrameExtensionConfig, jest.fn());
             await store.dispatch('registerService', { service });
-            let onRPCNotificationSpy = jest.spyOn(service, 'onJsonrpcNotification');
+            let onRPCNotificationSpy = jest.spyOn(service, 'onJsonRpcNotification');
             let mockEvent = { payload: 'message' };
             await store.dispatch('pushNotification', { event: mockEvent });
             expect(onRPCNotificationSpy).toHaveBeenCalledWith(mockEvent);
