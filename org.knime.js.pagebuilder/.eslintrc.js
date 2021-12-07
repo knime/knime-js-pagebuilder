@@ -15,14 +15,6 @@ module.exports = {
             env: {
                 node: true
             }
-        },
-        {
-            files: ['*.ts'],
-            extends: [
-                './webapps-common/lint/.eslintrc-typescript.js'
-            ],
-            parser: '@typescript-eslint/parser',
-            plugins: ['@typescript-eslint']
         }
     ]
 };

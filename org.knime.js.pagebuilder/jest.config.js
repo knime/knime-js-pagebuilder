@@ -8,7 +8,6 @@ module.exports = {
     ],
     transform: {
         '\\.js$': 'babel-jest',
-        '\\.tsx?$': 'ts-jest',
         '\\.vue$': 'vue-jest',
         '\\.(css|styl|less|sass|scss|ttf|woff|woff2)(\\?|$)': 'jest-transform-stub',
         '\\.svg': '<rootDir>/test/unit/jest-transform-svgs',
@@ -36,7 +35,7 @@ module.exports = {
     coverageReporters: ['lcov', 'text'],
     // keep in sync with sonar-project.properties!
     collectCoverageFrom: [
-        '<rootDir>/**/*.{js,ts,vue}',
+        '<rootDir>/**/*.{js,vue}',
         '!config.js',
         '!**/*.config.js',
         '!.eslintrc*.js',
@@ -45,7 +44,7 @@ module.exports = {
         '!<rootDir>/test/unit/test-util'
     ],
     coveragePathIgnorePatterns: [
-        '^<rootDir>/(coverage|dist|test|types|target|node_modules|bin|webapps-common|knime-ui-extension-service)/',
+        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|knime-ui-extension-service)/',
         '^<rootDir>/src/(dev|main.js|dev.js)'
     ],
     watchPathIgnorePatterns: [
@@ -53,13 +52,11 @@ module.exports = {
     ],
     testURL: 'http://test.example/',
     testMatch: [
-        '<rootDir>/test/unit/suites/**/*.test.js',
-        '<rootDir>/test/unit/suites/**/*.test.ts'
+        '<rootDir>/test/unit/suites/**/*.test.js'
     ],
     watchPlugins: [
         'jest-watch-typeahead/filename',
         'jest-watch-typeahead/testname'
     ],
-    setupFiles: ['<rootDir>/test/unit/jest-setup'],
-    preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel'
+    setupFiles: ['<rootDir>/test/unit/jest-setup']
 };
