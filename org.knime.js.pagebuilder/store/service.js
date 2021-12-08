@@ -18,6 +18,17 @@ export const mutations = {
      */
     registerService(state, service) {
         state.services[getUIExtUUID(service)] = service;
+    },
+
+    /**
+     * Removes the provided service from the service map.
+     *
+     * @param {*} state - Vuex state.
+     * @param {KnimeService} service - the service to deregister.
+     * @returns {undefined}
+     */
+    deregisterService(state, service) {
+        delete state.services[getUIExtUUID(service)];
     }
 };
 
@@ -34,6 +45,20 @@ export const actions = {
     registerService({ commit }, { service }) {
         consola.trace('PageBuilder: registerService via action: ', service);
         commit('registerService', service);
+    },
+
+    /**
+     * Deregisters a service in the global service store (e.g. when the component is destroyed) to clean up
+     * application memory.
+     *
+     * @param {Object} context - Vuex context.
+     * @param {Object} param - action config.
+     * @param {KnimeService} param.service - the service to deregister.
+     * @returns {undefined}
+     */
+    deregisterService({ commit }, { service }) {
+        consola.trace('PageBuilder: deregisterService via action: ', service);
+        commit('deregisterService', service);
     },
 
     /**

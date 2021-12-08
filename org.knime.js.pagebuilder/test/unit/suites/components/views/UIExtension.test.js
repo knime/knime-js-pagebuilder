@@ -12,7 +12,7 @@ import { iFrameExtensionConfig, componentExtensionConfig } from '../../../assets
 
 
 describe('UIExtension.vue', () => {
-    const createStore = ({ callServiceMock = jest.fn(), registerServiceMock }) => {
+    const createStore = ({ callServiceMock = jest.fn(), registerServiceMock, deregisterServiceMock }) => {
         let storeConfig = {
             modules: {
                 service: serviceStoreConfig,
@@ -26,6 +26,9 @@ describe('UIExtension.vue', () => {
         };
         if (registerServiceMock) {
             storeConfig.modules.service.actions.registerService = registerServiceMock;
+        }
+        if (deregisterServiceMock) {
+            storeConfig.modules.service.actions.deregisterService = deregisterServiceMock;
         }
         return new Vuex.Store(storeConfig);
     };
@@ -108,5 +111,20 @@ describe('UIExtension.vue', () => {
         let request = { agent: '007' };
         await wrapper.vm.callService(request);
         expect(callServiceMock).toHaveBeenCalledWith(expect.anything(), { request }, expect.undefined);
+    });
+
+    it('deregisters a KnimeService instance during destroy', () => {
+        let deregisterServiceMock = jest.fn();
+        let propsData = getMockComponentProps();
+        let wrapper = shallowMount(UIExtension, {
+            localVue,
+            store: createStore({ deregisterServiceMock }),
+            propsData
+        });
+        expect(deregisterServiceMock).not.toHaveBeenCalled();
+        wrapper.destroy();
+        expect(deregisterServiceMock).toHaveBeenCalledWith(expect.anything(), {
+            service: expect.any(KnimeService)
+        }, expect.undefined);
     });
 });

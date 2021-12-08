@@ -45,5 +45,13 @@ describe('service store', () => {
             await store.dispatch('pushNotification', { event: mockEvent });
             expect(onRPCNotificationSpy).toHaveBeenCalledWith(mockEvent);
         });
+
+        it('deregisters a service', async () => {
+            const service = new KnimeService(iFrameExtensionConfig, jest.fn());
+            await store.dispatch('registerService', { service });
+            expect(store.state.services[getUIExtUUID(service)]).toBe(service);
+            await store.dispatch('deregisterService', { service });
+            expect(store.state.services[getUIExtUUID(service)]).toBeUndefined();
+        });
     });
 });

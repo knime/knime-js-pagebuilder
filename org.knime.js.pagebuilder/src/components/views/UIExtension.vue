@@ -47,6 +47,9 @@ export default {
         this.knimeService = new ServiceConstructor(this.extensionConfig, this.callService);
         this.$store.dispatch('service/registerService', { service: this.knimeService });
     },
+    beforeDestroy() {
+        this.$store.dispatch('service/deregisterService', { service: this.knimeService });
+    },
     methods: {
         callService(request) {
             return this.$store.dispatch('api/callService', { request });
