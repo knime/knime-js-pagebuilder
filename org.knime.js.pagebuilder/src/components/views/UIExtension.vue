@@ -39,7 +39,7 @@ export default {
     },
     watch: {
         extensionConfig() {
-            this.configKey += 1;
+            this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrame
         }
     },
     created() {
