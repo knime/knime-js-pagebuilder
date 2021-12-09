@@ -38,12 +38,18 @@ export default {
         }
     },
     async created() {
+        // TODO: NXT-856 remove dialog workaround when componentId is generalized by the framework
+        let componentId = this.componentId;
+        if (this.knimeService?.extensionConfig?.extensionType === 'dialog' &&
+        this.resourceInfo?.type === 'VUE_COMPONENT_LIB') {
+            componentId = 'NodeDialog';
+        }
         // check if component library needs to be loaded or if it was already loaded before
-        if (!window[this.componentId]) {
-            await loadComponentLibrary(window, this.resourceLocation, this.componentId);
+        if (!window[componentId]) {
+            await loadComponentLibrary(window, this.resourceLocation, componentId);
         }
         // register the component locally
-        this.$options.components[this.componentId] = window[this.componentId];
+        this.$options.components[componentId] = window[componentId];
         this.componentLoaded = true;
     }
 };
