@@ -34,22 +34,22 @@ export default {
          * @returns {string} - unique id for the resource registered to this node.
          */
         componentId() {
-            return this.resourceInfo?.id;
+            // TODO: NXT-856 remove dialog workaround when componentId is generalized by the framework
+            let componentId = this.resourceInfo?.id;
+            if (this.knimeService?.extensionConfig?.extensionType === 'dialog' &&
+            this.resourceInfo?.type === 'VUE_COMPONENT_LIB') {
+                componentId = 'NodeDialog';
+            }
+            return componentId;
         }
     },
     async created() {
-        // TODO: NXT-856 remove dialog workaround when componentId is generalized by the framework
-        let componentId = this.componentId;
-        if (this.knimeService?.extensionConfig?.extensionType === 'dialog' &&
-        this.resourceInfo?.type === 'VUE_COMPONENT_LIB') {
-            componentId = 'NodeDialog';
-        }
         // check if component library needs to be loaded or if it was already loaded before
-        if (!window[componentId]) {
-            await loadComponentLibrary(window, this.resourceLocation, componentId);
+        if (!window[this.componentId]) {
+            await loadComponentLibrary(window, this.resourceLocation, this.componentId);
         }
         // register the component locally
-        this.$options.components[componentId] = window[componentId];
+        this.$options.components[this.componentId] = window[this.componentId];
         this.componentLoaded = true;
     }
 };
