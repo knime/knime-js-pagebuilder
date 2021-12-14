@@ -15,7 +15,7 @@ describe('UIExtension.vue', () => {
     const createStore = ({ callServiceMock = jest.fn(), registerServiceMock, deregisterServiceMock }) => {
         let storeConfig = {
             modules: {
-                service: serviceStoreConfig,
+                'pagebuilder/service': serviceStoreConfig,
                 api: {
                     actions: {
                         callService: callServiceMock
@@ -25,10 +25,10 @@ describe('UIExtension.vue', () => {
             }
         };
         if (registerServiceMock) {
-            storeConfig.modules.service.actions.registerService = registerServiceMock;
+            storeConfig.modules['pagebuilder/service'].actions.registerService = registerServiceMock;
         }
         if (deregisterServiceMock) {
-            storeConfig.modules.service.actions.deregisterService = deregisterServiceMock;
+            storeConfig.modules['pagebuilder/service'].actions.deregisterService = deregisterServiceMock;
         }
         return new Vuex.Store(storeConfig);
     };
