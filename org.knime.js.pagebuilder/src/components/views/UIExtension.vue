@@ -44,7 +44,7 @@ export default {
     },
     created() {
         const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
-        this.knimeService = new ServiceConstructor(this.extensionConfig, this.callService);
+        this.knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
         this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
     },
     beforeDestroy() {
@@ -53,6 +53,9 @@ export default {
     methods: {
         callService(request) {
             return this.$store.dispatch('api/callService', { request });
+        },
+        pushNotification(notification) {
+            return this.$store.dispatch('pagebuilder/service/pushNotification', notification);
         }
     }
 };

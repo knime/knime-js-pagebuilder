@@ -27,6 +27,8 @@ describe('PageBuilder.vue', () => {
     it('initializes the pagebuilder store', () => {
         expect(store.state.pagebuilder).toBeDefined();
         expect(store.state['pagebuilder/interactivity']).toBeDefined();
+        expect(store.state['pagebuilder/service']).toBeDefined();
+        expect(store.state['pagebuilder/alert']).toBeDefined();
     });
 
     it('renders', () => {

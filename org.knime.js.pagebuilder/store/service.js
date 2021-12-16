@@ -1,5 +1,4 @@
 import consola from 'consola';
-import getUIExtUUID from '~/src/util/getUIExtUUID';
 
 export const namespaced = true;
 
@@ -17,7 +16,7 @@ export const mutations = {
      * @returns {undefined}
      */
     registerService(state, service) {
-        state.services[getUIExtUUID(service)] = service;
+        state.services[service.serviceId] = service;
     },
 
     /**
@@ -28,7 +27,7 @@ export const mutations = {
      * @returns {undefined}
      */
     deregisterService(state, service) {
-        delete state.services[getUIExtUUID(service)];
+        delete state.services[service.serviceId];
     }
 };
 
@@ -69,8 +68,8 @@ export const actions = {
      * @param {Notification} param.event - the event to broadcast.
      * @returns {Promise<any>[]} a collection of Promise resolutions for registered notification callbacks.
      */
-    pushNotification({ state }, { event }) {
-        return Promise.all(Object.values(state.services).map(
+    pushNotification({ state }, { event, callerId }) {
+        return Promise.all(Object.values(state.services).filter(serviceId => serviceId !== callerId).map(
             (service) => service.onJsonRpcNotification(event)
         ));
     }
