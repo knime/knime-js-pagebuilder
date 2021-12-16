@@ -20,7 +20,8 @@ export default {
                 try {
                     debugInfo = JSON.parse(window.getDebugInfo());
                 } catch (err) {
-                    consola.debug('Debug information present but unable to load.');
+                    // eslint-disable-next-line no-console
+                    console.debug('Debug information present but unable to load.');
                 }
             }
             return debugInfo;
