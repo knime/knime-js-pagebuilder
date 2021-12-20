@@ -2,7 +2,6 @@ import Vuex from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
 import { KnimeService } from 'knime-ui-extension-service';
 
-import getUIExtUUID from '~/src/util/getUIExtUUID';
 import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
 
 import * as storeConfig from '~/store/service';
@@ -34,7 +33,7 @@ describe('service store', () => {
         it('registers a service', async () => {
             const service = new KnimeService(iFrameExtensionConfig, jest.fn());
             await store.dispatch('registerService', { service });
-            expect(store.state.services[getUIExtUUID(service)]).toBe(service);
+            expect(store.state.services[service.serviceId]).toBe(service);
         });
     
         it('dispatches push notifications', async () => {
@@ -49,9 +48,9 @@ describe('service store', () => {
         it('deregisters a service', async () => {
             const service = new KnimeService(iFrameExtensionConfig, jest.fn());
             await store.dispatch('registerService', { service });
-            expect(store.state.services[getUIExtUUID(service)]).toBe(service);
+            expect(store.state.services[service.serviceId]).toBe(service);
             await store.dispatch('deregisterService', { service });
-            expect(store.state.services[getUIExtUUID(service)]).toBeUndefined();
+            expect(store.state.services[service.serviceId]).toBeUndefined();
         });
     });
 });

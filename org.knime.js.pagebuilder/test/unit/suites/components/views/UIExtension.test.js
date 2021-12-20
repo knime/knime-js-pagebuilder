@@ -12,10 +12,21 @@ import { iFrameExtensionConfig, componentExtensionConfig } from '../../../assets
 
 
 describe('UIExtension.vue', () => {
-    const createStore = ({ callServiceMock = jest.fn(), registerServiceMock, deregisterServiceMock }) => {
+    const createStore = ({
+        callServiceMock = jest.fn(),
+        pushNotificationMock = jest.fn(),
+        registerServiceMock,
+        deregisterServiceMock
+    }) => {
         let storeConfig = {
             modules: {
-                'pagebuilder/service': serviceStoreConfig,
+                'pagebuilder/service': {
+                    ...serviceStoreConfig,
+                    actions: {
+                        ...serviceStoreConfig.actions,
+                        pushNotification: pushNotificationMock
+                    }
+                },
                 api: {
                     actions: {
                         callService: callServiceMock
@@ -97,7 +108,24 @@ describe('UIExtension.vue', () => {
         expect(registerServiceMock).toHaveBeenCalledWith(expect.anything(), {
             service: expect.any(KnimeService)
         }, expect.undefined);
-        expect(KnimeService).toBeCalledWith(propsData.extensionConfig, wrapper.vm.callService);
+        expect(KnimeService).toBeCalledWith(
+            propsData.extensionConfig,
+            wrapper.vm.callService,
+            wrapper.vm.pushNotification
+        );
+    });
+
+    it('pushes service notifications via the pagebuilder store', async () => {
+        let pushNotificationMock = jest.fn();
+        let propsData = getMockComponentProps();
+        let wrapper = shallowMount(UIExtension, {
+            localVue,
+            store: createStore({ pushNotificationMock }),
+            propsData
+        });
+        let notification = { agent: '007' };
+        await wrapper.vm.pushNotification(notification);
+        expect(pushNotificationMock).toHaveBeenCalledWith(expect.anything(), notification, expect.undefined);
     });
 
     it('dispatches service calls to the api store', async () => {
