@@ -17,7 +17,7 @@
     <properties>
         <node.version>v12.8.0</node.version>
         <npm.version>6.10.2</npm.version>
-		<revision>4.4.1</revision>
+		<revision>4.4.3</revision>
     </properties>
 
     <build>
