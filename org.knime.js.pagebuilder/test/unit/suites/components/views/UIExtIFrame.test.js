@@ -6,15 +6,14 @@ import { iFrameExtensionConfig } from '../../../assets/views/extensionConfig';
 
 describe('UIExtIFrame.vue', () => {
     const extensionConfig = iFrameExtensionConfig;
+    const { resourceInfo } = extensionConfig;
 
     let wrapper, knimeService;
 
     beforeAll(() => {
         knimeService = new IFrameKnimeServiceAdapter(extensionConfig, jest.fn());
         wrapper = shallowMount(UIExtIFrame, {
-            propsData: {
-                knimeService
-            }
+            propsData: { knimeService, resourceLocation: resourceInfo.url }
         });
     });
 
@@ -26,7 +25,7 @@ describe('UIExtIFrame.vue', () => {
         let iFrameWrapper = wrapper.find('iframe');
         expect(iFrameWrapper.exists()).toBeTruthy();
         expect(knimeService.iFrameWindow).toBe(iFrameWrapper.element.contentWindow);
-        expect(iFrameWrapper.attributes('src')).toBe(extensionConfig.resourceInfo.url);
+        expect(iFrameWrapper.attributes('src')).toBe(resourceInfo.url);
     });
 
     it('destroys knime service before component destroy', () => {

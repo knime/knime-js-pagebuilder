@@ -11,6 +11,11 @@ export default {
             default: null,
             type: KnimeService,
             required: true
+        },
+        resourceLocation: {
+            default: null,
+            type: String,
+            required: true
         }
     },
     data() {
@@ -21,10 +26,6 @@ export default {
     computed: {
         resourceInfo() {
             return this.knimeService?.extensionConfig?.resourceInfo;
-        },
-        resourceLocation() {
-            // TODO: NXT-732 handle relative paths for webportal
-            return this.resourceInfo?.url;
         },
         /**
          * A unique identifier based on the factory class of a node. Will be shared with other node instances of the

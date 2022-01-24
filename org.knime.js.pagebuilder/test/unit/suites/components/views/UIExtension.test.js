@@ -4,6 +4,7 @@ import { KnimeService } from 'knime-ui-extension-service';
 jest.mock('knime-ui-extension-service');
 
 import * as serviceStoreConfig from '~/store/service';
+import * as apiStoreConfig from '~/store/wrapperApi';
 
 import UIExtension from '@/components/views/UIExtension';
 import UIExtComponent from '@/components/views/UIExtComponent';
@@ -28,6 +29,7 @@ describe('UIExtension.vue', () => {
                     }
                 },
                 api: {
+                    ...apiStoreConfig,
                     actions: {
                         callService: callServiceMock
                     },
@@ -137,8 +139,15 @@ describe('UIExtension.vue', () => {
             propsData
         });
         let request = { agent: '007' };
-        await wrapper.vm.callService(request);
-        expect(callServiceMock).toHaveBeenCalledWith(expect.anything(), { request }, expect.undefined);
+        let method = 'NodeService.callNodeDataService';
+        let serviceType = 'data';
+        await wrapper.vm.callService(method, serviceType, request);
+        expect(callServiceMock).toHaveBeenCalledWith(expect.anything(), {
+            extensionConfig: componentExtensionConfig,
+            method,
+            serviceType,
+            request
+        }, expect.undefined);
     });
 
     it('deregisters a KnimeService instance during destroy', () => {

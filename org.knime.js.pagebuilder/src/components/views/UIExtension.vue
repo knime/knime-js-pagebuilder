@@ -21,7 +21,7 @@ export default {
                 if (typeof extensionConfig !== 'object') {
                     return false;
                 }
-                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
+                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'resourceInfo'];
                 return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
             }
         }
@@ -35,6 +35,11 @@ export default {
     computed: {
         isUIExtComponent() {
             return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
+        },
+        resourceLocation() {
+            return this.$store.getters['api/uiExtResourceLocation']({
+                resourceInfo: this.extensionConfig?.resourceInfo
+            });
         }
     },
     watch: {
@@ -51,8 +56,13 @@ export default {
         this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
     methods: {
-        callService(request) {
-            return this.$store.dispatch('api/callService', { request });
+        callService(method, serviceType, request) {
+            return this.$store.dispatch('api/callService', {
+                extensionConfig: this.extensionConfig,
+                method,
+                serviceType,
+                request
+            });
         },
         pushNotification(notification) {
             return this.$store.dispatch('pagebuilder/service/pushNotification', notification);
@@ -66,11 +76,13 @@ export default {
     <UIExtComponent
       v-if="isUIExtComponent"
       :knime-service="knimeService"
+      :resource-location="resourceLocation"
     />
     <UIExtIFrame
       v-else
       :key="configKey"
       :knime-service="knimeService"
+      :resource-location="resourceLocation"
     />
   </div>
 </template>

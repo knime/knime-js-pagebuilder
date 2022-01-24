@@ -7,12 +7,11 @@ export default {
             default: null,
             type: IFrameKnimeServiceAdapter,
             required: true
-        }
-    },
-    computed: {
-        resourceLocation() {
-            // TODO: NXT-732 handle relative paths for webportal
-            return this.knimeService.extensionConfig?.resourceInfo?.url;
+        },
+        resourceLocation: {
+            default: null,
+            type: String,
+            required: true
         }
     },
     mounted() {
@@ -28,7 +27,7 @@ export default {
   <iframe
     ref="iframe"
     :src="resourceLocation"
-    sandbox="allow-downloads allow-scripts"
+    sandbox="allow-downloads allow-scripts allow-same-origin"
   />
 </template>
 

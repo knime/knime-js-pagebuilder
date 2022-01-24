@@ -2,6 +2,7 @@ export const componentExtensionConfig = {
     nodeId: '0:0:7',
     projectId: 'knime workflow',
     workflowId: 'root:10',
+    extensionType: 'view',
     resourceInfo: {
         id: 'org.knime.base.views.scatterplot.ScatterPlotNodeFactory',
         type: 'VUE_COMPONENT_LIB',
@@ -21,11 +22,12 @@ export const iFrameExtensionConfig = {
     nodeId: '0:0:7',
     projectId: 'knime workflow',
     workflowId: 'root:10',
+    extensionType: 'view',
     resourceInfo: {
         id: 'org.knime.base.views.scatterplot.ScatterPlotNodeFactory',
         type: 'HTML',
         path: null,
-        url: 'http://localhost:8080/my_widget.html'
+        url: 'org.knime.base.views.scatterplot.ScatterPlotNodeFactory/ScatterPlot/index.html'
     },
     nodeInfo: {
         nodeAnnotation: '',

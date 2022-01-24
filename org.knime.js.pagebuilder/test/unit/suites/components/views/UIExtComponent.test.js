@@ -8,7 +8,12 @@ import UIExtComponent from '@/components/views/UIExtComponent';
 
 describe('UIExtComponent.vue', () => {
     const extensionConfig = componentExtensionConfig;
-    const mockComponentId = extensionConfig.resourceInfo.id;
+    const { resourceInfo } = extensionConfig;
+    const propsData = {
+        knimeService: new KnimeService(extensionConfig, jest.fn()),
+        resourceLocation: resourceInfo.url
+    };
+    const mockComponentId = resourceInfo.id;
     const mockComponent = Vue.component(mockComponentId, {
         template: '<div/>'
     });
@@ -20,11 +25,7 @@ describe('UIExtComponent.vue', () => {
 
     it('renders ui extensions as Vue components', async () => {
         window[mockComponentId] = mockComponent;
-        let wrapper = await shallowMount(UIExtComponent, {
-            propsData: {
-                knimeService: new KnimeService(extensionConfig, jest.fn())
-            }
-        });
+        let wrapper = await shallowMount(UIExtComponent, { propsData });
         expect(wrapper.find(UIExtComponent).exists()).toBeTruthy();
         expect(wrapper.find(mockComponent).exists()).toBeTruthy();
     });
@@ -34,9 +35,7 @@ describe('UIExtComponent.vue', () => {
         let loadComponentSpy = jest.spyOn(loadingModule, 'loadComponentLibrary');
 
         let wrapper = await shallowMount(UIExtComponent, {
-            propsData: {
-                knimeService: new KnimeService(extensionConfig, jest.fn())
-            },
+            propsData,
             mocks: {
                 loadComponentLibrary: loadComponentSpy
             }
@@ -53,9 +52,7 @@ describe('UIExtComponent.vue', () => {
                 return mockComponent;
             });
         let wrapper = await shallowMount(UIExtComponent, {
-            propsData: {
-                knimeService: new KnimeService(extensionConfig, jest.fn())
-            },
+            propsData,
             mocks: {
                 loadComponentLibrary: loadComponentSpy
             }

@@ -1,4 +1,7 @@
 /* global jsonrpc */
+import { KnimeUtils } from 'knime-ui-extension-service';
+const { createJsonRpcRequest } = KnimeUtils;
+
 export const namespaced = true;
 
 let pollingTimeout; // global target for assigning setTimeout ids
@@ -16,17 +19,29 @@ export const actions = {
     /* UI-EXTENSION ACTIONS */
 
     /**
-     * Initiates a service call to the AP via RPC. No pre-flight manipulation or parsing is done, so the request provided
-     * should contain the necessary information and format to successfully target the desired service.
+     * Initiates a service call to the AP via RPC. The provided method is mapped to the available node services so,
++     * e.g. 'callNodeDataService' will call a data service method while 'updateDataPointSelection' can be used for
++     * selection services. The additional parameters provided are used to construct the appropriate method signature
++     * as it corresponds to the targeted node service.
      *
      * @param {Object} context - Vuex context.
      * @param {Object} param - action config.
+     * @param {Object} param.extensionConfig - the UI extension config.
+     * @param {string} param.method - the service method name.
+     * @param {string} param.serviceType - the service type.
      * @param {any} param.request - the service request to make.
      * @returns {Promise<Object>} - the results of the service call. The resolved results will optionally contain
      *      the @property {result} (if the service was successful) or the @property {error} (if the service failed).
      */
-    callService({ dispatch }, { request }) {
-        return dispatch('singleRPC', { rpcConfig: request });
+    callService({ dispatch }, { extensionConfig, method, serviceType, request }) {
+        let requestParams = [extensionConfig.projectId, extensionConfig.workflowId, extensionConfig.nodeId,
+            extensionConfig.extensionType, serviceType, request];
+        if (method.includes('updateDataPointSelection')) {
+            // Match the method signature to the selection service expected format (no extension type).
+            // eslint-disable-next-line no-magic-numbers
+            requestParams.splice(3, 1);
+        }
+        return dispatch('singleRPC', { rpcConfig: createJsonRpcRequest(method, requestParams) });
     },
 
     /* RE-EXECUTION ACTIONS */
@@ -72,24 +87,18 @@ export const actions = {
             });
             return;
         }
-
         dispatch('pollRPC', {
             pollAction: 'updatePage',
             callback: 'setPage',
             config: {
                 nodeId,
-                rpcConfig: {
-                    jsonrpc: '2.0',
-                    id: 0,
-                    method: 'ReexecutionService.reexecutePage',
-                    params: [
-                        nodeId,
-                        Object.keys(viewValues).reduce((obj, nId) => {
-                            obj[nId] = JSON.stringify(viewValues[nId]);
-                            return obj;
-                        }, {})
-                    ]
-                }
+                rpcConfig: createJsonRpcRequest('ReexecutionService.reexecutePage', [
+                    nodeId,
+                    Object.keys(viewValues).reduce((obj, nId) => {
+                        obj[nId] = JSON.stringify(viewValues[nId]);
+                        return obj;
+                    }, {})
+                ])
             }
         });
     },
@@ -111,15 +120,7 @@ export const actions = {
         dispatch('pollRPC', {
             pollAction: 'updatePage',
             callback: 'setPage',
-            config: {
-                nodeId,
-                rpcConfig: {
-                    jsonrpc: '2.0',
-                    id: 0,
-                    method: 'ReexecutionService.getPage',
-                    params: []
-                }
-            }
+            config: { nodeId, rpcConfig: createJsonRpcRequest('ReexecutionService.getPage') }
         });
     },
 
@@ -268,4 +269,9 @@ export const actions = {
             message: error
         }, { root: true });
     }
+};
+
+export const getters = {
+    // In local environments (AP), resource locations are defined by 'url' (and not path).
+    uiExtResourceLocation: () => ({ resourceInfo } = {}) => resourceInfo.url
 };
