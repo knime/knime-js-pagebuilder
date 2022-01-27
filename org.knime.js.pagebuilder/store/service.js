@@ -12,22 +12,22 @@ export const mutations = {
      * Adds the provided service to the service map.
      *
      * @param {*} state - Vuex state.
-     * @param {KnimeService} service - the service to register.
+     * @param {Object} serviceWrapper - the service to register, wrapped in an frozen object to prevent reactivity.
      * @returns {undefined}
      */
-    registerService(state, service) {
-        state.services[service.serviceId] = service;
+    registerService(state, serviceWrapper) {
+        state.services[serviceWrapper.service.serviceId] = serviceWrapper;
     },
 
     /**
      * Removes the provided service from the service map.
      *
      * @param {*} state - Vuex state.
-     * @param {KnimeService} service - the service to deregister.
+     * @param {Object} serviceWrapper - the service to deregister, wrapped in an frozen object to prevent reactivity.
      * @returns {undefined}
      */
-    deregisterService(state, service) {
-        delete state.services[service.serviceId];
+    deregisterService(state, serviceWrapper) {
+        delete state.services[serviceWrapper.service.serviceId];
     }
 };
 
@@ -38,12 +38,12 @@ export const actions = {
      *
      * @param {Object} context - Vuex context.
      * @param {Object} param - action config.
-     * @param {KnimeService} param.service - the service to register.
+     * @param {Object} param.serviceWrapper - the service to register, wrapped in an frozen object to prevent reactivity.
      * @returns {undefined}
      */
-    registerService({ commit }, { service }) {
-        consola.trace('PageBuilder: registerService via action: ', service);
-        commit('registerService', service);
+    registerService({ commit }, { serviceWrapper }) {
+        consola.trace('PageBuilder: registerService via action: ', serviceWrapper);
+        commit('registerService', serviceWrapper);
     },
 
     /**
@@ -52,12 +52,12 @@ export const actions = {
      *
      * @param {Object} context - Vuex context.
      * @param {Object} param - action config.
-     * @param {KnimeService} param.service - the service to deregister.
+     * @param {Object} param.serviceWrapper - the service to deregister, wrapped in an frozen object to prevent reactivity.
      * @returns {undefined}
      */
-    deregisterService({ commit }, { service }) {
-        consola.trace('PageBuilder: deregisterService via action: ', service);
-        commit('deregisterService', service);
+    deregisterService({ commit }, { serviceWrapper }) {
+        consola.trace('PageBuilder: deregisterService via action: ', serviceWrapper);
+        commit('deregisterService', serviceWrapper);
     },
 
     /**
@@ -71,8 +71,8 @@ export const actions = {
      * @returns {Promise<any>[]} a collection of Promise resolutions for registered notification callbacks.
      */
     pushNotification({ state }, { event, callerId }) {
-        return Promise.all(Object.values(state.services).filter(service => service.serviceId !== callerId).map(
-            (service) => service.onServiceNotification(event)
-        ));
+        return Promise.all(Object.values(state.services).filter(
+            serviceWrapper => serviceWrapper.service.serviceId !== callerId
+        ).map((service) => service.onServiceNotification(event)));
     }
 };

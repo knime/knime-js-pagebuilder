@@ -13,6 +13,22 @@ export default {
         UIExtComponent,
         UIExtIFrame
     },
+    // using provide/inject instead of a prop to pass the knimeService to the children because
+    // 1) we don't want reactivity in this case
+    // 2) any deeply nested child of the UIComponent can get access to knimeService if needed
+    provide() {
+        const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
+        let service = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
+        // wrapping into frozen object to prevent Vue reactivity deeply iterating over KnimeService props
+        const serviceWrapper = Object.freeze({
+            service
+        });
+        this.knimeService = serviceWrapper;
+        
+        return {
+            knimeService: this.knimeService.service
+        };
+    },
     props: {
         extensionConfig: {
             default: () => ({}),
@@ -48,12 +64,10 @@ export default {
         }
     },
     created() {
-        const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
-        this.knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
-        this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
+        this.$store.dispatch('pagebuilder/service/registerService', { serviceWrapper: this.knimeService });
     },
     beforeDestroy() {
-        this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
+        this.$store.dispatch('pagebuilder/service/deregisterService', { serviceWrapper: this.knimeService });
     },
     methods: {
         callService(method, serviceType, request) {
@@ -75,13 +89,11 @@ export default {
   <div>
     <UIExtComponent
       v-if="isUIExtComponent"
-      :knime-service="knimeService"
       :resource-location="resourceLocation"
     />
     <UIExtIFrame
       v-else
       :key="configKey"
-      :knime-service="knimeService"
       :resource-location="resourceLocation"
     />
   </div>

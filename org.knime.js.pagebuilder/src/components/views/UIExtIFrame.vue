@@ -1,13 +1,7 @@
 <script>
-import { IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
-
 export default {
+    inject: ['knimeService'],
     props: {
-        knimeService: {
-            default: null,
-            type: IFrameKnimeServiceAdapter,
-            required: true
-        },
         resourceLocation: {
             default: null,
             type: String,

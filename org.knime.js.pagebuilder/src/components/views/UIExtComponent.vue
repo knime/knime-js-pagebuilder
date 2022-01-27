@@ -1,17 +1,12 @@
 <script>
 import { loadComponentLibrary } from '~/src/util/loadComponentLibrary';
-import { KnimeService } from 'knime-ui-extension-service';
 
 export default {
     components: {
         // Any Vue-based component library
     },
+    inject: ['knimeService'],
     props: {
-        knimeService: {
-            default: null,
-            type: KnimeService,
-            required: true
-        },
         resourceLocation: {
             default: null,
             type: String,
@@ -24,8 +19,11 @@ export default {
         };
     },
     computed: {
+        extensionConfig() {
+            return this.knimeService?.extensionConfig;
+        },
         resourceInfo() {
-            return this.knimeService?.extensionConfig?.resourceInfo;
+            return this.extensionConfig?.resourceInfo;
         },
         /**
          * A unique identifier based on the factory class of a node. Will be shared with other node instances of the
@@ -37,7 +35,7 @@ export default {
         componentId() {
             // TODO: NXT-856 remove dialog workaround when componentId is generalized by the framework
             let componentId = this.resourceInfo?.id;
-            if (this.knimeService?.extensionConfig?.extensionType === 'dialog' &&
+            if (this.extensionConfig?.extensionType === 'dialog' &&
             this.resourceInfo?.type === 'VUE_COMPONENT_LIB') {
                 componentId = 'NodeDialog';
             }
@@ -60,6 +58,5 @@ export default {
   <component
     :is="componentId"
     v-if="componentLoaded"
-    :knime-service="knimeService"
   />
 </template>
