@@ -13,7 +13,8 @@ describe('UIExtIFrame.vue', () => {
     beforeAll(() => {
         knimeService = new IFrameKnimeServiceAdapter(extensionConfig, jest.fn());
         wrapper = shallowMount(UIExtIFrame, {
-            propsData: { knimeService, resourceLocation: resourceInfo.url }
+            propsData: { resourceLocation: resourceInfo.url },
+            provide: { knimeService }
         });
     });
 

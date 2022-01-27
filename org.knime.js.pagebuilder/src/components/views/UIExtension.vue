@@ -3,6 +3,8 @@ import { KnimeService, IFrameKnimeServiceAdapter } from 'knime-ui-extension-serv
 import UIExtComponent from '~/src/components/views/UIExtComponent';
 import UIExtIFrame from '~/src/components/views/UIExtIFrame';
 
+import muteReactivity from '~/src/util/muteReactivity';
+
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-
  * based). Also detects changes to it's configuration and increments a local counter to help with re-renders of
@@ -18,16 +20,10 @@ export default {
     // 2) any deeply nested child of the UIComponent can get access to knimeService if needed
     provide() {
         const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
-        let service = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
-        // wrapping into frozen object to prevent Vue reactivity deeply iterating over KnimeService props
-        const serviceWrapper = Object.freeze({
-            service
-        });
-        this.knimeService = serviceWrapper;
-        
-        return {
-            knimeService: this.knimeService.service
-        };
+        let knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
+        muteReactivity({ target: knimeService, nonReactiveKeys: ['iFrameWindow'] });
+        this.knimeService = knimeService;
+        return { knimeService };
     },
     props: {
         extensionConfig: {
@@ -64,10 +60,10 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('pagebuilder/service/registerService', { serviceWrapper: this.knimeService });
+        this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
     },
     beforeDestroy() {
-        this.$store.dispatch('pagebuilder/service/deregisterService', { serviceWrapper: this.knimeService });
+        this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
     methods: {
         callService(method, serviceType, request) {

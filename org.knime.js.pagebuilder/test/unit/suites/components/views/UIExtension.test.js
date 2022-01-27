@@ -92,11 +92,11 @@ describe('UIExtension.vue', () => {
             ...context,
             propsData: getMockIFrameProps()
         });
-        expect(wrapper.vm.configKey).toBe(0);
+        const startingKey = wrapper.vm.configKey;
         let { extensionConfig } = getMockIFrameProps();
         extensionConfig.resourceInfo.url = 'http://localhost:8080/your_widget.html';
         wrapper.setProps({ extensionConfig });
-        expect(wrapper.vm.configKey).toBe(1);
+        expect(wrapper.vm.configKey).toBeGreaterThan(startingKey);
     });
 
     it('creates and registers a KnimeService instance during mount', () => {
