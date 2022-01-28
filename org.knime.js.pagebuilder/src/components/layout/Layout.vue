@@ -44,8 +44,11 @@ export default {
         }
     },
     computed: {
-        containsUIExtensionDialog() {
-            return this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews?.hasOwnProperty('DIALOG');
+        containsUIExtension() {
+            const nodeViews = this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews;
+            const hasDialog = nodeViews?.hasOwnProperty('DIALOG');
+            const hasSingleView = nodeViews?.hasOwnProperty('SINGLE');
+            return hasDialog || hasSingleView;
         }
     }
 };
@@ -57,7 +60,7 @@ export default {
       v-for="(row, index) in layout.rows"
       :key="index"
       :row-config="row"
-      :class="containsUIExtensionDialog ? null : 'parent-row'"
+      :class="containsUIExtension ? null : 'parent-row'"
     />
   </div>
 </template>

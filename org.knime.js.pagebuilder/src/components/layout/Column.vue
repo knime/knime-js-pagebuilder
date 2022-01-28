@@ -63,8 +63,11 @@ export default {
         }
     },
     computed: {
-        containsUIExtensionDialog() {
-            return this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews?.hasOwnProperty('DIALOG');
+        containsUIExtension() {
+            const nodeViews = this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews;
+            const hasDialog = nodeViews?.hasOwnProperty('DIALOG');
+            const hasSingleView = nodeViews?.hasOwnProperty('SINGLE');
+            return hasDialog || hasSingleView;
         },
         content() {
             return wrapViewContent(this.columnConfig.content);
@@ -90,7 +93,7 @@ export default {
                 classes = classes.concat(this.columnConfig.additionalClasses);
             }
 
-            if (!this.containsUIExtensionDialog) {
+            if (!this.containsUIExtension) {
                 classes.push('col-padding');
             }
 
