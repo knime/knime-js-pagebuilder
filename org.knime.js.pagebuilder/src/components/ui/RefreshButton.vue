@@ -48,9 +48,11 @@ export default {
   position: fixed;
   bottom: 10px;
 }
+
 .button-right {
   right: 50px;
 }
+
 .button-left {
   left: 50px;
 }
