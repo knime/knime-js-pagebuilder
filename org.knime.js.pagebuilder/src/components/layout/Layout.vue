@@ -42,6 +42,11 @@ export default {
                 return true;
             }
         }
+    },
+    computed: {
+        containsUIExtensionDialog() {
+            return this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews?.hasOwnProperty('DIALOG');
+        }
     }
 };
 </script>
@@ -52,7 +57,7 @@ export default {
       v-for="(row, index) in layout.rows"
       :key="index"
       :row-config="row"
-      class="parent-row"
+      :class="containsUIExtensionDialog ? null : 'parent-row'"
     />
   </div>
 </template>

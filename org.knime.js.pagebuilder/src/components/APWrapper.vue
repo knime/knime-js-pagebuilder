@@ -14,6 +14,9 @@ export default {
         pageBuilderLoaded() {
             return Boolean(Vue.component('PageBuilder'));
         },
+        containsUIExtensionDialog() {
+            return this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews?.hasOwnProperty('DIALOG');
+        },
         debugInfo() {
             let debugInfo = null;
             if (window.getDebugInfo) {
@@ -39,8 +42,14 @@ export default {
   <div>
     <PageBuilder v-if="pageBuilderLoaded" />
     <template v-if="debugEnabled">
-      <DebugButton :debug-port="debugInfo.remoteDebuggingPort" />
-      <RefreshButton v-if="debugInfo.refreshRequired" />
+      <DebugButton
+        :debug-port="debugInfo.remoteDebuggingPort"
+        :position="containsUIExtensionDialog ? 'left' : 'right'"
+      />
+      <RefreshButton
+        v-if="debugInfo.refreshRequired"
+        :position="containsUIExtensionDialog ? 'left' : 'right'"
+      />
     </template>
   </div>
 </template>

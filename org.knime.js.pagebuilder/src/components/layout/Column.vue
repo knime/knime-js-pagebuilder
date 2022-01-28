@@ -63,6 +63,9 @@ export default {
         }
     },
     computed: {
+        containsUIExtensionDialog() {
+            return this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews?.hasOwnProperty('DIALOG');
+        },
         content() {
             return wrapViewContent(this.columnConfig.content);
         },
@@ -85,6 +88,10 @@ export default {
 
             if (Array.isArray(this.columnConfig.additionalClasses)) {
                 classes = classes.concat(this.columnConfig.additionalClasses);
+            }
+
+            if (!this.containsUIExtensionDialog) {
+                classes.push('col-padding');
             }
 
             return classes;
@@ -137,8 +144,6 @@ export default {
 .col {
   position: relative;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
   flex-basis: 0;
   flex-grow: 1;
   max-width: 100%;
@@ -148,6 +153,11 @@ export default {
   & > * {
     flex: 0 0 auto;
   }
+}
+
+.col-padding {
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 /* compatible with Bootstrap 4 grid */

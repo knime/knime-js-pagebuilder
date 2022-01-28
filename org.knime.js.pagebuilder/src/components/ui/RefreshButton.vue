@@ -7,6 +7,18 @@ export default {
         FunctionButton,
         RefreshIcon
     },
+    props: {
+        position: {
+            type: String,
+            required: false,
+            default: 'right'
+        }
+    },
+    computed: {
+        classes() {
+            return ['button', 'button-'.concat(this.position)];
+        }
+    },
     methods: {
         refresh() {
             if (window.reloadCEFWindow) {
@@ -23,7 +35,7 @@ export default {
 <template>
   <FunctionButton
     primary
-    class="button"
+    :class="classes"
     title="Refresh"
     @click="refresh"
   >
@@ -35,7 +47,12 @@ export default {
 .button {
   position: fixed;
   bottom: 10px;
+}
+.button-right {
   right: 50px;
+}
+.button-left {
+  left: 50px;
 }
 </style>
 

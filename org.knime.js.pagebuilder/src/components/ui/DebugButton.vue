@@ -11,6 +11,11 @@ export default {
         debugPort: {
             type: String,
             required: true
+        },
+        position: {
+            type: String,
+            required: false,
+            default: 'right'
         }
     },
     data() {
@@ -22,6 +27,9 @@ export default {
         // Composed URL to either open the correct debugger or the overview page
         debugUrl() {
             return `http://localhost:${this.debugPort}${this.debugPage}`;
+        },
+        classes() {
+            return ['button', 'button-'.concat(this.position)];
         }
     },
     async mounted() {
@@ -51,7 +59,7 @@ export default {
   <FunctionButton
     primary
     target="_blank"
-    class="button"
+    :class="classes"
     title="Open developer tools"
     @click="openBrowser(debugUrl)"
   >
@@ -63,6 +71,11 @@ export default {
 .button {
   position: fixed;
   bottom: 10px;
+}
+.button-right {
   right: 10px;
+}
+.button-left {
+  left: 10px;
 }
 </style>
