@@ -1,5 +1,6 @@
 /* global jsonrpc */
-import { KnimeUtils } from 'knime-ui-extension-service';
+// eslint-disable-next-line no-unused-vars
+import { KnimeUtils, KnimeTypes } from 'knime-ui-extension-service';
 const { createJsonRpcRequest } = KnimeUtils;
 
 export const namespaced = true;
@@ -19,29 +20,27 @@ export const actions = {
     /* UI-EXTENSION ACTIONS */
 
     /**
-     * Initiates a service call to the AP via RPC. The provided method is mapped to the available node services so,
-+     * e.g. 'callNodeDataService' will call a data service method while 'updateDataPointSelection' can be used for
-+     * selection services. The additional parameters provided are used to construct the appropriate method signature
-+     * as it corresponds to the targeted node service.
+     * Initiates a node service call to the AP via RPC which subsequently targets an extension service implementation
+     * of the node identified by the provided extension config.
      *
      * @param {Object} context - Vuex context.
      * @param {Object} param - action config.
      * @param {Object} param.extensionConfig - the UI extension config.
-     * @param {string} param.method - the service method name.
-     * @param {string} param.serviceType - the service type.
+     * @param {KnimeTypes.NodeService} param.nodeService - the node service to call.
+     * @param {KnimeTypes.ExtensionService} param.extensionService - the extension service to call.
      * @param {any} param.request - the service request to make.
      * @returns {Promise<Object>} - the results of the service call. The resolved results will optionally contain
      *      the @property {result} (if the service was successful) or the @property {error} (if the service failed).
      */
-    callService({ dispatch }, { extensionConfig, method, serviceType, request }) {
+    callService({ dispatch }, { extensionConfig, nodeService, extensionService, request }) {
         let requestParams = [extensionConfig.projectId, extensionConfig.workflowId, extensionConfig.nodeId,
-            extensionConfig.extensionType, serviceType, request];
-        if (method.includes('updateDataPointSelection')) {
+            extensionConfig.extensionType, extensionService, request];
+        if (nodeService.includes('updateDataPointSelection')) {
             // Match the method signature to the selection service expected format (no extension type).
             // eslint-disable-next-line no-magic-numbers
             requestParams.splice(3, 1);
         }
-        return dispatch('singleRPC', { rpcConfig: createJsonRpcRequest(method, requestParams) });
+        return dispatch('singleRPC', { rpcConfig: createJsonRpcRequest(nodeService, requestParams) });
     },
 
     /* RE-EXECUTION ACTIONS */
