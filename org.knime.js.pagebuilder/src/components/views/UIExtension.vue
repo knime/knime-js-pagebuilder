@@ -3,6 +3,8 @@ import { KnimeService, IFrameKnimeServiceAdapter } from 'knime-ui-extension-serv
 import UIExtComponent from '~/src/components/views/UIExtComponent';
 import UIExtIFrame from '~/src/components/views/UIExtIFrame';
 
+import muteReactivity from '~/src/util/muteReactivity';
+
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-
  * based). Also detects changes to it's configuration and increments a local counter to help with re-renders of
@@ -13,6 +15,16 @@ export default {
         UIExtComponent,
         UIExtIFrame
     },
+    // using provide/inject instead of a prop to pass the knimeService to the children because
+    // 1) we don't want reactivity in this case
+    // 2) any deeply nested child of the UIComponent can get access to knimeService if needed
+    provide() {
+        const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
+        let knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
+        muteReactivity({ target: knimeService, nonReactiveKeys: ['iFrameWindow'] });
+        this.knimeService = knimeService;
+        return { knimeService };
+    },
     props: {
         extensionConfig: {
             default: () => ({}),
@@ -21,7 +33,7 @@ export default {
                 if (typeof extensionConfig !== 'object') {
                     return false;
                 }
-                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
+                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'resourceInfo'];
                 return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
             }
         }
@@ -35,6 +47,11 @@ export default {
     computed: {
         isUIExtComponent() {
             return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
+        },
+        resourceLocation() {
+            return this.$store.getters['api/uiExtResourceLocation']({
+                resourceInfo: this.extensionConfig?.resourceInfo
+            });
         }
     },
     watch: {
@@ -43,16 +60,19 @@ export default {
         }
     },
     created() {
-        const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
-        this.knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
         this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
     },
     beforeDestroy() {
         this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
     methods: {
-        callService(request) {
-            return this.$store.dispatch('api/callService', { request });
+        callService(method, serviceType, request) {
+            return this.$store.dispatch('api/callService', {
+                extensionConfig: this.extensionConfig,
+                method,
+                serviceType,
+                request
+            });
         },
         pushNotification(notification) {
             return this.$store.dispatch('pagebuilder/service/pushNotification', notification);
@@ -65,12 +85,12 @@ export default {
   <div>
     <UIExtComponent
       v-if="isUIExtComponent"
-      :knime-service="knimeService"
+      :resource-location="resourceLocation"
     />
     <UIExtIFrame
       v-else
       :key="configKey"
-      :knime-service="knimeService"
+      :resource-location="resourceLocation"
     />
   </div>
 </template>

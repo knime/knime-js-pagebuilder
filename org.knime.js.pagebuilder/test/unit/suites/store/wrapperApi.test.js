@@ -6,11 +6,13 @@ import muteConsole from '~/test/unit/test-util/muteConsole';
 import * as wrapperApiConfig from '~/store/wrapperApi';
 import * as pagebuilderConfig from '~/store/pagebuilder';
 import * as alertConfig from '~/store/alert';
+import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
 
 describe('wrapper API store', () => {
     let localVue;
 
     const EMPTY = expect().not.toBeDefined();
+    const extensionConfig = iFrameExtensionConfig;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -29,7 +31,8 @@ describe('wrapper API store', () => {
     } = {}) => {
         let store = new Vuex.Store();
         store.registerModule('api', {
-            actions: { ...wrapperApiConfig.actions, ...wrapperApiMocks }
+            actions: { ...wrapperApiConfig.actions, ...wrapperApiMocks },
+            getters: wrapperApiConfig.getters
         });
         store.registerModule('pagebuilder', {
             ...pagebuilderConfig,
@@ -41,6 +44,57 @@ describe('wrapper API store', () => {
         });
         return store;
     };
+
+    describe('call service', () => {
+        it('creates an RPC callService request', async () => {
+            let singleRPC = jest.fn();
+            let store = getMockStore({ wrapperApiMocks: { singleRPC } });
+            let serviceType = 'data';
+            let method = 'NodeService.callNodeDataService';
+            let request = { value: 'newValue' };
+            let serviceParams = { extensionConfig, method, serviceType, request };
+            await store.dispatch('callService', serviceParams);
+            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), {
+                rpcConfig: {
+                    id: expect.any(Number),
+                    jsonrpc: '2.0',
+                    method,
+                    params: [
+                        extensionConfig.projectId,
+                        extensionConfig.workflowId,
+                        extensionConfig.nodeId,
+                        extensionConfig.extensionType,
+                        serviceType,
+                        request
+                    ]
+                }
+            }, EMPTY);
+        });
+
+        it('updates RPC parameters based on service method called', async () => {
+            let singleRPC = jest.fn();
+            let store = getMockStore({ wrapperApiMocks: { singleRPC } });
+            let serviceType = 'ADD';
+            let method = 'NodeService.updateDataPointSelection';
+            let request = ['1', '2', '3'];
+            let serviceParams = { extensionConfig, method, serviceType, request };
+            await store.dispatch('callService', serviceParams);
+            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), {
+                rpcConfig: {
+                    id: expect.any(Number),
+                    jsonrpc: '2.0',
+                    method,
+                    params: [
+                        extensionConfig.projectId,
+                        extensionConfig.workflowId,
+                        extensionConfig.nodeId,
+                        serviceType,
+                        request
+                    ]
+                }
+            }, EMPTY);
+        });
+    });
 
     describe('re-execution', () => {
         it('successfully dispatches re-execute action', async () => {
@@ -64,7 +118,7 @@ describe('wrapper API store', () => {
                 config: {
                     nodeId: 'foo',
                     rpcConfig: {
-                        id: 0,
+                        id: expect.any(Number),
                         jsonrpc: '2.0',
                         method: 'ReexecutionService.reexecutePage',
                         params: [
@@ -142,7 +196,7 @@ describe('wrapper API store', () => {
                 config: {
                     nodeId: 'foo',
                     rpcConfig: {
-                        id: 0,
+                        id: expect.any(Number),
                         jsonrpc: '2.0',
                         method: 'ReexecutionService.getPage',
                         params: []
@@ -367,7 +421,9 @@ describe('wrapper API store', () => {
             
             expect(pollRPCMock).toHaveBeenCalledTimes(2);
             expect(singleRPC).toHaveBeenCalledTimes(2);
-            expect(singleRPC).toHaveBeenLastCalledWith(expect.anything(), rpcConfig, EMPTY);
+            expect(singleRPC).toHaveBeenLastCalledWith(expect.anything(), {
+                ...rpcConfig, rpcConfig: { ...rpcConfig.rpcConfig, id: expect.any(Number) }
+            }, EMPTY);
             expect(showAlert).not.toHaveBeenCalled();
             expect(setPage).toHaveBeenLastCalledWith(expect.anything(), expectedRes.result, EMPTY);
             expect(updatePageMock).toHaveBeenCalledWith(rpcConfig);
@@ -429,6 +485,14 @@ describe('wrapper API store', () => {
                 },
                 message: error
             }, EMPTY);
+        });
+    });
+
+    describe('getters', () => {
+        it('returns the correct resource location for UI Extensions', () => {
+            const store = getMockStore();
+            const url = 'test';
+            expect(store.getters.uiExtResourceLocation({ resourceInfo: { url } })).toBe(url);
         });
     });
 });

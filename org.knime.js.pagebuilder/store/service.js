@@ -72,7 +72,7 @@ export const actions = {
      */
     pushNotification({ state }, { event, callerId }) {
         return Promise.all(Object.values(state.services).filter(service => service.serviceId !== callerId).map(
-            (service) => service.onJsonRpcNotification(event)
+            (service) => service.onServiceNotification(event)
         ));
     }
 };

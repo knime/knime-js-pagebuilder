@@ -4,6 +4,7 @@ import { KnimeService } from 'knime-ui-extension-service';
 jest.mock('knime-ui-extension-service');
 
 import * as serviceStoreConfig from '~/store/service';
+import * as apiStoreConfig from '~/store/wrapperApi';
 
 import UIExtension from '@/components/views/UIExtension';
 import UIExtComponent from '@/components/views/UIExtComponent';
@@ -28,6 +29,7 @@ describe('UIExtension.vue', () => {
                     }
                 },
                 api: {
+                    ...apiStoreConfig,
                     actions: {
                         callService: callServiceMock
                     },
@@ -90,11 +92,11 @@ describe('UIExtension.vue', () => {
             ...context,
             propsData: getMockIFrameProps()
         });
-        expect(wrapper.vm.configKey).toBe(0);
+        const startingKey = wrapper.vm.configKey;
         let { extensionConfig } = getMockIFrameProps();
         extensionConfig.resourceInfo.url = 'http://localhost:8080/your_widget.html';
         wrapper.setProps({ extensionConfig });
-        expect(wrapper.vm.configKey).toBe(1);
+        expect(wrapper.vm.configKey).toBeGreaterThan(startingKey);
     });
 
     it('creates and registers a KnimeService instance during mount', () => {
@@ -137,8 +139,15 @@ describe('UIExtension.vue', () => {
             propsData
         });
         let request = { agent: '007' };
-        await wrapper.vm.callService(request);
-        expect(callServiceMock).toHaveBeenCalledWith(expect.anything(), { request }, expect.undefined);
+        let method = 'NodeService.callNodeDataService';
+        let serviceType = 'data';
+        await wrapper.vm.callService(method, serviceType, request);
+        expect(callServiceMock).toHaveBeenCalledWith(expect.anything(), {
+            extensionConfig: componentExtensionConfig,
+            method,
+            serviceType,
+            request
+        }, expect.undefined);
     });
 
     it('deregisters a KnimeService instance during destroy', () => {
