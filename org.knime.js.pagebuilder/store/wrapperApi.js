@@ -27,20 +27,20 @@ export const actions = {
      * @param {Object} param - action config.
      * @param {Object} param.extensionConfig - the UI extension config.
      * @param {KnimeTypes.NodeService} param.nodeService - the node service to call.
-     * @param {KnimeTypes.ExtensionService} param.extensionService - the extension service to call.
-     * @param {any} param.request - the service request to make.
+     * @param {KnimeTypes.ServiceRequest} param.serviceRequest - the service request.
+     * @param {any} param.requestParams - the request parameters.
      * @returns {Promise<Object>} - the results of the service call. The resolved results will optionally contain
      *      the @property {result} (if the service was successful) or the @property {error} (if the service failed).
      */
-    callService({ dispatch }, { extensionConfig, nodeService, extensionService, request }) {
-        let requestParams = [extensionConfig.projectId, extensionConfig.workflowId, extensionConfig.nodeId,
-            extensionConfig.extensionType, extensionService, request];
+    callService({ dispatch }, { extensionConfig, nodeService, serviceRequest, requestParams }) {
+        let rpcParams = [extensionConfig.projectId, extensionConfig.workflowId, extensionConfig.nodeId,
+            extensionConfig.extensionType, serviceRequest, requestParams];
         if (nodeService.includes('updateDataPointSelection')) {
             // Match the method signature to the selection service expected format (no extension type).
             // eslint-disable-next-line no-magic-numbers
-            requestParams.splice(3, 1);
+            rpcParams.splice(3, 1);
         }
-        return dispatch('singleRPC', { rpcConfig: createJsonRpcRequest(nodeService, requestParams) });
+        return dispatch('singleRPC', { rpcConfig: createJsonRpcRequest(nodeService, rpcParams) });
     },
 
     /* RE-EXECUTION ACTIONS */

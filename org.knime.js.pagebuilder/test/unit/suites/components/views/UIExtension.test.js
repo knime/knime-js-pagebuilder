@@ -138,15 +138,15 @@ describe('UIExtension.vue', () => {
             store: createStore({ callServiceMock }),
             propsData
         });
-        let request = { agent: '007' };
+        let requestParams = { agent: '007' };
         let nodeService = 'NodeService.callNodeDataService';
-        let extensionService = 'data';
-        await wrapper.vm.callService(nodeService, extensionService, request);
+        let serviceRequest = 'data';
+        await wrapper.vm.callService(nodeService, serviceRequest, requestParams);
         expect(callServiceMock).toHaveBeenCalledWith(expect.anything(), {
             extensionConfig: componentExtensionConfig,
             nodeService,
-            extensionService,
-            request
+            serviceRequest,
+            requestParams
         }, expect.undefined);
     });
 
