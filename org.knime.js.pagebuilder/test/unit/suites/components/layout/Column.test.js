@@ -32,17 +32,7 @@ describe('Column.vue', () => {
                 }
             }
         },
-        nodeViews: nodeViews || {
-            '1:0:1:0:0:9': {
-                baz: 'qux',
-                viewRepresentation: {
-                    '@class': 'testing.notWidget'
-                },
-                nodeInfo: {
-                    displayPossible: true
-                }
-            }
-        },
+        nodeViews: nodeViews || {},
         webNodePageConfiguration: webNodePageConfiguration || {
             projectRelativePageIDSuffix: '1:0:1'
         }
@@ -256,9 +246,9 @@ describe('Column.vue', () => {
         expect(view1).not.toBe(view2);
     });
 
-    it('always renders ui-extension node dialog without col padding', () => {
+    it('always renders ui-extension node without col padding', () => {
         const wizardPageContent = getWizardPageContent();
-        wizardPageContent.nodeViews = { DIALOG: {} };
+        wizardPageContent.nodeViews = { SINGLE: {} };
         context.store.commit('pagebuilder/setPage', {
             wizardPageContent
         });

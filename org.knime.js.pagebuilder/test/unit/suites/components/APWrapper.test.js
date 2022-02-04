@@ -25,15 +25,8 @@ describe('APWrapper.vue', () => {
             }
         },
         nodeViews: nodeViews || {
-            '1:0:1:0:0:9': {
-                baz: 'qux',
-                viewRepresentation: {
-                    '@class': 'testing.notWidget'
-                },
-                nodeInfo: {
-                    displayPossible: true
-                }
-            }
+            DIALOG: {},
+            VIEW: {}
         },
         webNodePageConfiguration: webNodePageConfiguration || {
             projectRelativePageIDSuffix: '1:0:1'

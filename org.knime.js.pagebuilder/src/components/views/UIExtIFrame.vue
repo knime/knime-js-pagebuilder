@@ -38,14 +38,7 @@ export default {
 iframe {
   width: 100%;
   height: 100%;
+  min-height: 400px;  /* TODO NXT-750 remove this when sizing by layout is supported */
   border: none;
-}
-
-div.frame-container {
-  width: 100%;
-  padding-top: 10px; /* provides default spacing between page content */
-  min-height: 0;
-  transition: min-height 0.4s ease-in 0.1s;
-  height: calc(100vh - 10px);
 }
 </style>

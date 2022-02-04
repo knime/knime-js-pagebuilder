@@ -1,10 +1,13 @@
 <script>
-import Layout from './Layout';
+import CompositeLayout from './Layout';
+import DialogLayout from './DialogLayout';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'Page',
     components: {
-        Layout
+        CompositeLayout,
+        DialogLayout
     },
     computed: {
         pageContent() {
@@ -13,14 +16,21 @@ export default {
         layout() {
             return this.pageContent && this.pageContent.webNodePageConfiguration &&
                 this.pageContent.webNodePageConfiguration.layout;
-        }
+        },
+        ...mapGetters({
+            isNodeDialog: 'pagebuilder/isNodeDialog'
+        })
     }
 };
 </script>
 
 <template>
-  <Layout
-    v-if="pageContent"
+  <CompositeLayout
+    v-if="pageContent && !isNodeDialog"
+    :layout="layout"
+  />
+  <DialogLayout
+    v-else-if="pageContent && isNodeDialog"
     :layout="layout"
   />
 </template>

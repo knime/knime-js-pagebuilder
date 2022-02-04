@@ -1,6 +1,7 @@
 <script>
 import wrapViewContent from '../../util/wrapViewContent';
 import NodeView from './NodeView';
+import { mapGetters } from 'vuex';
 
 const maxGridWidth = 12;
 
@@ -63,12 +64,6 @@ export default {
         }
     },
     computed: {
-        containsUIExtension() {
-            const nodeViews = this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews;
-            const hasDialog = nodeViews?.hasOwnProperty('DIALOG');
-            const hasSingleView = nodeViews?.hasOwnProperty('SINGLE');
-            return hasDialog || hasSingleView;
-        },
         content() {
             return wrapViewContent(this.columnConfig.content);
         },
@@ -93,7 +88,7 @@ export default {
                 classes = classes.concat(this.columnConfig.additionalClasses);
             }
 
-            if (!this.containsUIExtension) {
+            if (!this.isNodeView) {
                 classes.push('col-padding');
             }
 
@@ -104,7 +99,10 @@ export default {
                 return this.columnConfig.additionalStyles.join('; ').replace(/;;/g, ';');
             }
             return null;
-        }
+        },
+        ...mapGetters({
+            isNodeView: 'pagebuilder/isNodeView'
+        })
     }
 };
 </script>
