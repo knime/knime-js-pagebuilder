@@ -1,34 +1,18 @@
 <script>
-import { IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
-
 export default {
+    inject: ['knimeService'],
     props: {
-        extensionConfig: {
-            default: () => ({}),
-            type: Object,
-            validate(extensionConfig) {
-                if (typeof extensionConfig !== 'object') {
-                    return false;
-                }
-                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
-                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
-            }
-        }
-    },
-    computed: {
-        resourceLocation() {
-            // TODO: NXT-732 handle relative paths for webportal
-            return this.extensionConfig?.resourceInfo?.url;
+        resourceLocation: {
+            default: null,
+            type: String,
+            required: true
         }
     },
     mounted() {
-        this.iframeAdapter = new IFrameKnimeServiceAdapter({
-            iFrameWindow: this.$refs.iframe.contentWindow,
-            extensionConfig: this.extensionConfig
-        });
+        this.knimeService.setIFrameWindow(this.$refs.iframe.contentWindow);
     },
     beforeDestroy() {
-        this.iframeAdapter.destroy();
+        this.knimeService.destroy();
     }
 };
 </script>
@@ -37,7 +21,7 @@ export default {
   <iframe
     ref="iframe"
     :src="resourceLocation"
-    sandbox="allow-downloads allow-scripts"
+    sandbox="allow-downloads allow-scripts allow-same-origin"
   />
 </template>
 

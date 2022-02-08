@@ -9,10 +9,12 @@ module.exports = {
             exceptions: ['require']
         }]
     },
-    overrides: [{
-        files: ['{service-mock,modules,plugins,server,config}/**', '*.config.js'],
-        env: {
-            node: true
+    overrides: [
+        {
+            files: ['{service-mock,modules,plugins,server,config}/**', '*.config.js'],
+            env: {
+                node: true
+            }
         }
-    }]
+    ]
 };

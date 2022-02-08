@@ -2,6 +2,7 @@
 import * as pagebuilderStoreConfig from '~/store/pagebuilder';
 import * as interactivityStoreConfig from '~/store/interactivity';
 import * as alertStoreConfig from '~/store/alert';
+import * as serviceStoreConfig from '~/store/service';
 import Page from '~/src/components/layout/Page';
 import AlertGlobal from '~/src/components/ui/AlertGlobal';
 
@@ -14,6 +15,7 @@ export default {
         store.registerModule('pagebuilder', pagebuilderStoreConfig);
         store.registerModule('pagebuilder/interactivity', interactivityStoreConfig);
         store.registerModule('pagebuilder/alert', alertStoreConfig);
+        store.registerModule('pagebuilder/service', serviceStoreConfig);
     },
     computed: {
         hasPage() {

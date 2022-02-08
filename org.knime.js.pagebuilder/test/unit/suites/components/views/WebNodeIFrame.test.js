@@ -14,11 +14,11 @@ jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertH
     foo = ['%NODEID%'];`, { virtual: true });
 jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
     foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
-jest.mock('iframe-resizer/js/iframeResizer');
+jest.mock('iframe-resizer');
 
 describe('WebNodeIFrame.vue', () => {
     let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
-        mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
+        mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload, wrapper;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -118,11 +118,12 @@ describe('WebNodeIFrame.vue', () => {
     });
 
     afterEach(() => {
+        wrapper?.destroy();
         jest.restoreAllMocks();
     });
 
     it('renders', () => {
-        let wrapper = shallowMount(WebNodeIFrame, {
+        wrapper = shallowMount(WebNodeIFrame, {
             ...context,
             propsData: {
                 nodeId: '0:0:7'
@@ -150,7 +151,7 @@ describe('WebNodeIFrame.vue', () => {
                     nodeId: '0:0:7'
                 }
             };
-            let wrapper = shallowMount(WebNodeIFrame, iframeConfig);
+            wrapper = shallowMount(WebNodeIFrame, iframeConfig);
 
             let html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('messageListener.js mock');
@@ -197,7 +198,7 @@ describe('WebNodeIFrame.vue', () => {
                     nodeId: '0:0:7'
                 }
             };
-            let wrapper = shallowMount(WebNodeIFrame, iframeConfig);
+            wrapper = shallowMount(WebNodeIFrame, iframeConfig);
 
             let html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('messageListener.js mock');
@@ -218,7 +219,7 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         it('handles resource loading', () => {
-            let wrapper = shallowMount(WebNodeIFrame, {
+            wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -255,7 +256,7 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         it('sets view loading on store', () => {
-            let wrapper = shallowMount(WebNodeIFrame, {
+            wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -288,8 +289,8 @@ describe('WebNodeIFrame.vue', () => {
         });
     });
 
-    it('passes sizing config to iframe-resizer', () => {
-        let iframeResizerMock = require('iframe-resizer/js/iframeResizer');
+    it('passes sizing config to iframe-resizer', async () => {
+        let { iframeResizer } = jest.requireMock('iframe-resizer');
         let viewConfig = {
             nodeID: '0:0:7',
             resizeMethod: 'viewLowestElement',
@@ -302,7 +303,7 @@ describe('WebNodeIFrame.vue', () => {
             minHeight: 5,
             maxHeight: 50
         };
-        shallowMount(WebNodeIFrame, {
+        wrapper = shallowMount(WebNodeIFrame, {
             ...context,
             attachToDocument: true,
             propsData: {
@@ -311,9 +312,16 @@ describe('WebNodeIFrame.vue', () => {
                     namespace: 'knimespace'
                 },
                 nodeId: '0:0:7'
+            },
+            mocks: {
+                iframeResizer
             }
         });
-        expect(iframeResizerMock).toHaveBeenCalledWith(expect.objectContaining({
+        // wait for document + iframe creation + 'load' callback
+        await wrapper.vm.$nextTick();
+        await wrapper.vm.$nextTick();
+        expect(wrapper.vm.autoHeight).toBe(true);
+        expect(iframeResizer).toHaveBeenCalledWith(expect.objectContaining({
             autoResize: viewConfig.autoResize,
             scrolling: viewConfig.scrolling,
             heightCalculationMethod: 'lowestElement',
@@ -328,7 +336,7 @@ describe('WebNodeIFrame.vue', () => {
 
     describe('view value retrieval', () => {
         it('handles getValue call', () => {
-            let wrapper = shallowMount(WebNodeIFrame, {
+            wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -353,7 +361,7 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         it('resolves getValue promise', () => {
-            let wrapper = shallowMount(WebNodeIFrame, {
+            wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -380,7 +388,7 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         it('rejects getValue promise on error', () => {
-            let wrapper = shallowMount(WebNodeIFrame, {
+            wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
                 propsData: {
@@ -451,6 +459,7 @@ describe('WebNodeIFrame.vue', () => {
             localWrapper.vm.closeAlert(true);
             expect(localWrapper.vm.displayAlert).toBe(null);
             expect(localWrapper.vm.alert).toBe(null);
+            localWrapper.destroy();
         });
 
         it('handles show alert events', () => {
@@ -502,6 +511,7 @@ describe('WebNodeIFrame.vue', () => {
                 ...localWrapper.vm.alert,
                 callback: localWrapper.vm.closeAlert
             }, undefined);
+            localWrapper.destroy();
         });
     });
 });

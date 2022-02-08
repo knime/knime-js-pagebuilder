@@ -33,6 +33,16 @@ export default {
         if (debuggerInstances.length === 1) {
             this.debugPage = debuggerInstances[0].devtoolsFrontendUrl;
         }
+    },
+    methods: {
+        openBrowser(url) {
+            if (window.openBrowser) {
+                window.openBrowser(url);
+            } else {
+                // eslint-disable-next-line no-console
+                console.warn("No 'openBrowser'-browser function available");
+            }
+        }
     }
 };
 </script>
@@ -40,10 +50,10 @@ export default {
 <template>
   <FunctionButton
     primary
-    :href="debugUrl"
     target="_blank"
     class="button"
     title="Open developer tools"
+    @click="openBrowser(debugUrl)"
   >
     <InspectorIcon />
   </FunctionButton>

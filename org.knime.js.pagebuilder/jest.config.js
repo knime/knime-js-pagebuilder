@@ -28,7 +28,8 @@ module.exports = {
         '\\.svg\\?data$': '<rootDir>/test/unit/assets/stub.data',
         '^vue$': 'vue/dist/vue.common.js',
         '^@/(.*)$': '<rootDir>/src/$1',
-        '^~/(.*)$': '<rootDir>/$1'
+        '^~/(.*)$': '<rootDir>/$1',
+        'knime-ui-extension-service': '<rootDir>/knime-ui-extension-service'
     },
     reporters: ['default', ['jest-junit', { outputDirectory: './coverage' }]],
     coverageReporters: ['lcov', 'text'],
@@ -43,8 +44,8 @@ module.exports = {
         '!<rootDir>/test/unit/test-util'
     ],
     coveragePathIgnorePatterns: [
-        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|knime-ui-extension-service|src/dev)/',
-        '^<rootDir>/src/(main.js|dev.js)'
+        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|knime-ui-extension-service)/',
+        '^<rootDir>/src/(dev|main.js|dev.js)'
     ],
     watchPathIgnorePatterns: [
         '^<rootDir>/(coverage|dist|target|node_modules|bin|webapps-common|knime-ui-extension-service)/'

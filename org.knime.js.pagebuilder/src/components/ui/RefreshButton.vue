@@ -9,7 +9,12 @@ export default {
     },
     methods: {
         refresh() {
-            location.reload();
+            if (window.reloadCEFWindow) {
+                window.reloadCEFWindow();
+            } else {
+                // eslint-disable-next-line no-console
+                console.warn("No 'reloadCEFWindow'-browser function available");
+            }
         }
     }
 };

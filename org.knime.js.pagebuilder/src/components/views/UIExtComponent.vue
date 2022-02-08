@@ -1,36 +1,29 @@
 <script>
-import { ComponentKnimeService } from 'knime-ui-extension-service';
+import { loadComponentLibrary } from '~/src/util/loadComponentLibrary';
 
 export default {
     components: {
-        // UIExtension
+        // Any Vue-based component library
     },
+    inject: ['knimeService'],
     props: {
-        extensionConfig: {
-            default: () => ({}),
-            type: Object,
-            validate(extensionConfig) {
-                if (typeof extensionConfig !== 'object') {
-                    return false;
-                }
-                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'info'];
-                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
-            }
+        resourceLocation: {
+            default: null,
+            type: String,
+            required: true
         }
     },
     data() {
         return {
-            componentLoaded: false,
-            knimeService: null
+            componentLoaded: false
         };
     },
     computed: {
+        extensionConfig() {
+            return this.knimeService?.extensionConfig;
+        },
         resourceInfo() {
             return this.extensionConfig?.resourceInfo;
-        },
-        resourceLocation() {
-            // TODO: NXT-732 handle relative paths for webportal
-            return this.resourceInfo?.url;
         },
         /**
          * A unique identifier based on the factory class of a node. Will be shared with other node instances of the
@@ -40,44 +33,23 @@ export default {
          * @returns {string} - unique id for the resource registered to this node.
          */
         componentId() {
-            return this.resourceInfo?.id;
+            // TODO: NXT-856 remove dialog workaround when componentId is generalized by the framework
+            let componentId = this.resourceInfo?.id;
+            if (this.extensionConfig?.extensionType === 'dialog' &&
+            this.resourceInfo?.type === 'VUE_COMPONENT_LIB') {
+                componentId = 'NodeDialog';
+            }
+            return componentId;
         }
     },
-    async mounted() {
-        this.knimeService = new ComponentKnimeService(this.extensionConfig);
-
+    async created() {
         // check if component library needs to be loaded or if it was already loaded before
         if (!window[this.componentId]) {
-            await this.loadComponentLibrary();
+            await loadComponentLibrary(window, this.resourceLocation, this.componentId);
         }
         // register the component locally
         this.$options.components[this.componentId] = window[this.componentId];
         this.componentLoaded = true;
-    },
-    methods: {
-        async loadComponentLibrary() {
-            // Load and mount component library
-            await new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.async = true;
-                script.addEventListener('load', () => {
-                    resolve(script);
-                });
-                script.addEventListener('error', () => {
-                    reject(new Error(`Script loading of "${this.resourceLocation}" failed`));
-                    document.head.removeChild(script);
-                });
-                script.src = this.resourceLocation;
-                document.head.appendChild(script);
-            });
-
-            // Lib build defines component on `window` using the name defined during build.
-            // This name should match the componentId (this.extensionConfig.resourceInfo.id).
-            let Component = window[this.componentId];
-            if (!Component) {
-                throw new Error(`Component loading failed. Script invalid.`);
-            }
-        }
     }
 };
 </script>
@@ -86,6 +58,5 @@ export default {
   <component
     :is="componentId"
     v-if="componentLoaded"
-    :knime-service="knimeService"
   />
 </template>
