@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import { setProp } from '@/util/nestedProperty';
 import overrideRequired from '@/util/overrideRequired';
+import getLayoutNodeIds from '@/util/getLayoutNodeIds';
 
 export const namespaced = true;
 
@@ -181,31 +182,15 @@ export const actions = {
         webNodePageConfiguration?.selectionTranslators?.forEach(translator => {
             dispatch('interactivity/updateSelectionTranslator', { translator });
         });
-        dispatch('getLayoutNodeIds', page).then((newLayoutNodeIds) => {
-            dispatch('getLayoutNodeIds', state.page).then((layoutNodeIds) => {
-                if (newLayoutNodeIds.some((nodeId) => !layoutNodeIds.includes(nodeId))) {
-                    dispatch('alert/showAlert',
-                        { type: 'warn',
-                            message: `Currently, nodes are missing from the composite view layout.
-                            That could interfere with reactive nodes.` });
-                }
-            });
-        });
-    },
 
-    getLayoutNodeIds(_, page) {
-        let { webNodePageConfiguration } = page?.wizardPageContent || page;
-        let layoutRows = webNodePageConfiguration.layout.rows;
-        let layoutNodeIds = [];
-        layoutRows.forEach((row) => {
-            let cols = row.columns;
-            cols.forEach((col) => {
-                col.content.forEach((elem) => {
-                    layoutNodeIds.push(elem.nodeID);
-                });
+        let currentLayoutNodeIds = getLayoutNodeIds(state.page);
+        if (nodeIds.some((nodeId) => !currentLayoutNodeIds.includes(nodeId))) {
+            dispatch('alert/showAlert', {
+                type: 'warn',
+                message: 'Currently, nodes are missing from the composite view layout. ' +
+                    'That could interfere with reactive nodes.'
             });
-        });
-        return layoutNodeIds;
+        }
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {

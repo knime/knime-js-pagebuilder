@@ -326,7 +326,16 @@ describe('PageBuilder store', () => {
                     },
                     webNodePageConfiguration: {
                         layout: {
-                            rows: []
+                            rows: [{
+                                columns: [{
+                                    content: [
+                                        { nodeID: 'id1' },
+                                        { nodeID: 'id2' },
+                                        { nodeID: 'id3' },
+                                        { nodeID: 'id4' }
+                                    ]
+                                }]
+                            }]
                         }
                     }
                 }
@@ -357,57 +366,6 @@ describe('PageBuilder store', () => {
                     nodeIds: ['id1']
                 });
                 checkPage(store.state.page, ['qux', 'baz'], ['qux', 'grault']);
-            });
-
-            it('dispatches alert when new layout contains nodes which the original layout does not contain', (done) => {
-                let newPage = getPage();
-                newPage.wizardPageContent.webNodePageConfiguration.layout.rows = [
-                    {
-                        columns: [
-                            {
-                                content: [
-                                    {
-                                        nodeID: 'id2'
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ];
-                store.dispatch('updatePage', {
-                    page: newPage,
-                    nodeIds: ['id1']
-                }).then(async () => {
-                    await storeConfig.actions.getLayoutNodeIds;
-                    expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('does not dispatch a warning if the layout has not changed', (done) => {
-                let newPage = getPage();
-                newPage.wizardPageContent.webNodePageConfiguration.layout.rows = [
-                    {
-                        columns: [
-                            {
-                                content: [
-                                    {
-                                        nodeID: 'id2'
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ];
-                store.commit('setPage', newPage);
-                store.dispatch('updatePage', {
-                    page: newPage,
-                    nodeIds: ['id1']
-                }).then(async () => {
-                    await storeConfig.actions.getLayoutNodeIds;
-                    expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
-                    done();
-                });
             });
 
             it('updates multiple webNodes', () => {
@@ -471,6 +429,24 @@ describe('PageBuilder store', () => {
                 expect(interactivityStoreConfig.actions.updateSelectionTranslator).toHaveBeenCalledWith(
                     expect.anything(), { translator }, expect.undefined
                 );
+            });
+
+            it('does not dispatch a warning if the layout has not changed', () => {
+                expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
+                store.dispatch('updatePage', {
+                    page: { webNodePageConfiguration: {} },
+                    nodeIds: ['id1']
+                });
+                expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
+            });
+
+            it('dispatches alert when new layout contains nodes which the original layout does not contain', () => {
+                expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
+                store.dispatch('updatePage', {
+                    page: { webNodePageConfiguration: {} },
+                    nodeIds: ['id5']
+                });
+                expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
             });
         });
     });

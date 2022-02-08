@@ -8,11 +8,10 @@ export default {
     },
     computed: {
         pageContent() {
-            return this.$store.state.pagebuilder.page && this.$store.state.pagebuilder.page.wizardPageContent;
+            return this.$store.state.pagebuilder.page?.wizardPageContent;
         },
         layout() {
-            return this.pageContent && this.pageContent.webNodePageConfiguration &&
-                this.pageContent.webNodePageConfiguration.layout;
+            return this.pageContent?.webNodePageConfiguration?.layout;
         }
     }
 };
