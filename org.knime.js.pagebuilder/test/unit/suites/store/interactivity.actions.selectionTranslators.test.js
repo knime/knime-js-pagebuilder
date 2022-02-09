@@ -73,26 +73,26 @@ describe('Interactivity store', () => {
 
     describe('updating translators', () => {
         it('does not update invalid selection translators', () => {
-            let invalidTranslator = { dummyElement: 'foo' };
-            store.dispatch('updateSelectionTranslator', { translator: invalidTranslator });
+            let invalidTranslators = [{ dummyElement: 'foo' }];
+            store.dispatch('updateSelectionTranslators', { translators: invalidTranslators });
             expect(store.state).toEqual({});
-            invalidTranslator = { sourceID: 'foo' };
-            store.dispatch('updateSelectionTranslator', { translator: invalidTranslator });
+            invalidTranslators[0] = { sourceID: 'foo' };
+            store.dispatch('updateSelectionTranslators', { translators: invalidTranslators });
             expect(store.state).toEqual({});
-            invalidTranslator = { targetIDs };
-            store.dispatch('updateSelectionTranslator', { translator: invalidTranslator });
+            invalidTranslators[0] = { targetIDs };
+            store.dispatch('updateSelectionTranslators', { translators: invalidTranslators });
             expect(store.state).toEqual({});
-            invalidTranslator = { sourceID, targetIDs };
-            store.dispatch('updateSelectionTranslator', { translator: invalidTranslator });
+            invalidTranslators[0] = { sourceID, targetIDs };
+            store.dispatch('updateSelectionTranslators', { translators: invalidTranslators });
             expect(store.state).toEqual({});
-            invalidTranslator = { sourceID, targetIDs, forward: false };
-            store.dispatch('updateSelectionTranslator', { translator: invalidTranslator });
+            invalidTranslators[0] = { sourceID, targetIDs, forward: false };
+            store.dispatch('updateSelectionTranslators', { translators: invalidTranslators });
             expect(store.state).toEqual({});
         });
 
         it('adds translators which are not yet registered', () => {
-            let translator = { sourceID, targetIDs, forward: true };
-            store.dispatch('updateSelectionTranslator', { translator });
+            let translators = [{ sourceID, targetIDs, forward: true }];
+            store.dispatch('updateSelectionTranslators', { translators });
             expect(store.state[prefix + sourceID]).toBeDefined();
             expect(store.state[prefix + sourceID].subscribers[0]).toBeDefined();
             expect(store.state[prefix + targetIDs[0]]).toBeDefined();
@@ -103,8 +103,7 @@ describe('Interactivity store', () => {
             let translator = { sourceID, targetIDs, forward: true };
             store.dispatch('registerSelectionTranslator', { translator });
             let cb = store.state[prefix + sourceID].subscribers[0].callback;
-            translator = { sourceID, targetIDs, forward: true };
-            store.dispatch('updateSelectionTranslator', { translator });
+            store.dispatch('updateSelectionTranslators', { translators: [translator] });
             expect(cb).not.toEqual(store.state[prefix + sourceID].subscribers[0].callback);
         });
 
@@ -112,8 +111,8 @@ describe('Interactivity store', () => {
             let translator = { sourceID, targetIDs, forward: true };
             store.dispatch('registerSelectionTranslator', { translator });
             expect(store.state[prefix + sourceID].subscribers).toHaveLength(1);
-            translator = { sourceID, targetIDs: multipleTargetIDs, forward: true };
-            store.dispatch('updateSelectionTranslator', { translator });
+            store.dispatch('updateSelectionTranslators',
+                { translators: [{ sourceID, targetIDs: multipleTargetIDs, forward: true }] });
             expect(store.state[prefix + sourceID].subscribers).toHaveLength(1);
         });
 
@@ -126,7 +125,7 @@ describe('Interactivity store', () => {
             expect(store.state[id].subscribers).toHaveLength(2);
             let cbs = store.state[id].subscribers.map(subscriber => subscriber.callback);
             translator = { sourceID, targetIDs, forward: true };
-            store.dispatch('updateSelectionTranslator', { translator });
+            store.dispatch('updateSelectionTranslators', { translators: [translator] });
             expect(store.state[id].subscribers).toHaveLength(2);
             // ensure anonymous callbacks have been updated
             store.state[id].subscribers.forEach((subscriber, subInd) => {
@@ -141,7 +140,7 @@ describe('Interactivity store', () => {
             store.dispatch('registerSelectionTranslator', { translator: translator2 });
             let id = prefix + targetIDs[0];
             expect(store.state[id].subscribers).toHaveLength(2);
-            store.dispatch('updateSelectionTranslator', { translator: translator1 });
+            store.dispatch('updateSelectionTranslators', { translators: [translator1] });
             expect(store.state[id].subscribers).toHaveLength(1);
         });
 
@@ -151,9 +150,36 @@ describe('Interactivity store', () => {
             let payload = { changeSet: { added: ['Row42'] } };
             store.dispatch('publish', { id: prefix + sourceID, data: payload });
             expect(store.state[prefix + sourceID].data.elements).toHaveLength(1);
-            translator = { sourceID, targetIDs, forward: true };
-            store.dispatch('updateSelectionTranslator', { translator });
+            store.dispatch('updateSelectionTranslators', { translators: [translator] });
             expect(store.state[prefix + sourceID].data.elements).toHaveLength(0);
+        });
+
+        it('updates multiple subscribers with shared sources without losing updated targets', () => {
+            let targetIDs = ['0:0:7'];
+            let sourceID = 'main_source';
+            let subSourceId = 'sub_source';
+            let translator1 = { sourceID, targetIDs, forward: true };
+            store.dispatch('registerSelectionTranslator', { translator: translator1 });
+            let translator2 = { sourceID: subSourceId, targetIDs, forward: true };
+            store.dispatch('registerSelectionTranslator', { translator: translator2 });
+            let translator3 = { sourceID: subSourceId, targetIDs: [sourceID], forward: true };
+            store.dispatch('registerSelectionTranslator', { translator: translator3 });
+            let targetId = prefix + targetIDs[0];
+            let targetId2 = `${prefix}${sourceID}`;
+            let targetId3 = `${prefix}${subSourceId}`;
+            // non-translator 0:0:7 includes both main and sub-source subscribers
+            expect(store.state[targetId].subscribers).toHaveLength(2);
+            // main_source subscribers expected to be sub_source subscriber and self/sourceToTarget
+            expect(store.state[targetId2].subscribers).toHaveLength(2);
+            // both self/sourceToTarget subscribers expected to be registered
+            expect(store.state[targetId3].subscribers).toHaveLength(2);
+            store.dispatch('updateSelectionTranslators', { translators: [translator2, translator3] });
+            // main_source -> 0:0:7 outdated subscriber expected to be removed
+            expect(store.state[targetId].subscribers).toHaveLength(1);
+            // sub_source -> main_source only subscriber (no longer translator) after clearing outdated translators
+            expect(store.state[targetId2].subscribers).toHaveLength(1);
+            // both sourceToTarget translators present in the updated, shared source translator
+            expect(store.state[targetId3].subscribers).toHaveLength(2);
         });
     });
 

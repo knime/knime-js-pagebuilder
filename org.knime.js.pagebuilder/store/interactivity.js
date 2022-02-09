@@ -433,7 +433,7 @@ const getTranslatorSourceCallback = function ({ dispatch, getters }, { translato
 };
 
 // Callback method for one target of a selection translator. Forwards selection events to the source.
-const getTranslatorTargetCallback = function ({ dispatch, getters }, { translator, handlerId }) {
+const getTranslatorTargetCallback = function ({ dispatch, getters }, { translator, targetId }) {
     let translatorCallback = (id, data) => {
         if (!data || data.mappedEvent === translator.sourceID) {
             return;
@@ -441,7 +441,7 @@ const getTranslatorTargetCallback = function ({ dispatch, getters }, { translato
         handleSelectionTranslatorEvent({ dispatch, getters }, {
             data,
             translator,
-            targetId: handlerId,
+            targetId,
             sourceToTarget: false,
             skipCallback: translatorCallback
         });
@@ -457,27 +457,29 @@ const subscribeSourceTranslator = function ({ dispatch, getters }, { translator 
     });
 };
 
-const subscribeTargetTranslator = function ({ dispatch, getters }, { translator, handlerId }) {
+const subscribeTargetTranslator = function ({ dispatch, getters }, { translator, targetId }) {
     dispatch('subscribe', {
-        id: `selection-${handlerId}`,
-        callback: getTranslatorTargetCallback({ dispatch, getters }, { translator, handlerId }),
+        id: `selection-${targetId}`,
+        callback: getTranslatorTargetCallback({ dispatch, getters }, { translator, targetId }),
         isTranslator: true
     });
 };
 
-const updateSourceTranslator = function ({ dispatch, commit, getters }, { translator }) {
+const updateSourceTranslator = function ({ dispatch, commit, getters }, { translator, clear }) {
     commit('updateSubscriber', {
         id: `selection-${translator.sourceID}`,
         callback: getTranslatorSourceCallback({ dispatch, getters }, { translator }),
-        isTranslator: true
+        isTranslator: true,
+        clear
     });
 };
 
-const updateTargetTranslator = function ({ dispatch, commit, getters }, { translator, handlerId }) {
+const updateTargetTranslator = function ({ dispatch, commit, getters }, { translator, targetId, clear }) {
     commit('updateSubscriber', {
-        id: `selection-${handlerId}`,
-        callback: getTranslatorTargetCallback({ dispatch, getters }, { translator, handlerId }),
-        isTranslator: true
+        id: `selection-${targetId}`,
+        callback: getTranslatorTargetCallback({ dispatch, getters }, { translator, targetId }),
+        isTranslator: true,
+        clear
     });
 };
 
@@ -497,16 +499,16 @@ export const mutations = {
         addInteractivityId(state, { id, subscriberOnly: true });
         state[id].subscribers.push({ callback, filterIds: elementFilter, isTranslator });
     },
-    updateSubscriber(state, { id, callback, elementFilter, isTranslator }) {
+    updateSubscriber(state, { id, callback, elementFilter, isTranslator, clear }) {
         if (state[id]) {
-            state[id].subscribers = [
+            if (clear) {
                 // keep non-translated subscribers to maintain channel with non-updated elements
-                ...state[id].subscribers.filter(subscriber => !subscriber.isTranslator),
-                { callback, filterIds: elementFilter, isTranslator }
-            ];
-            state[id].data = {
-                elements: []
-            };
+                state[id].subscribers = state[id].subscribers.filter(subscriber => !subscriber.isTranslator);
+                state[id].data = {
+                    elements: []
+                };
+            }
+            state[id].subscribers.push({ callback, filterIds: elementFilter, isTranslator });
         }
     },
     removeSubscriber(state, { id, callback }) {
@@ -616,18 +618,26 @@ export const actions = {
         // subscribe translators in both directions
         subscribeSourceTranslator({ dispatch, getters }, { translator });
         translator.targetIDs.forEach((targetId) => {
-            subscribeTargetTranslator({ dispatch, getters }, { translator, handlerId: targetId });
+            subscribeTargetTranslator({ dispatch, getters }, { translator, targetId });
         });
     },
-    updateSelectionTranslator({ dispatch, commit, getters, state }, { translator }) {
-        // handle new selection translator from newly activated branches of the workflow
-        if (typeof state[`selection-${translator.sourceID}`] === 'undefined') {
-            dispatch('registerSelectionTranslator', { translator });
-            return;
-        }
-        updateSourceTranslator({ dispatch, commit, getters }, { translator });
-        translator.targetIDs.forEach((targetId) => {
-            updateTargetTranslator({ dispatch, commit, getters }, { translator, handlerId: targetId });
+    updateSelectionTranslators({ dispatch, commit, getters, state }, { translators }) {
+        // A translator source may have different translators for different sets of target IDs, so only clear once.
+        let updatedSources = new Set([]);
+        translators.forEach(translator => {
+            // handle new selection translator from newly activated branches of the workflow
+            if (typeof state[`selection-${translator.sourceID}`] === 'undefined') {
+                dispatch('registerSelectionTranslator', { translator });
+                return;
+            }
+            updateSourceTranslator({ dispatch, commit, getters },
+                { translator, clear: !updatedSources.has(translator.sourceID) });
+            updatedSources.add(translator.sourceID);
+            translator.targetIDs.forEach((targetId) => {
+                updateTargetTranslator({ dispatch, commit, getters },
+                    { translator, targetId, clear: !updatedSources.has(targetId) });
+                updatedSources.add(targetId);
+            });
         });
     },
     clear({ commit }) {

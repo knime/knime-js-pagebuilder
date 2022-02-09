@@ -155,13 +155,11 @@ export const actions = {
         dispatch('interactivity/clear');
 
         // register all defined selection translators from the page configuration
-        if (page && page.wizardPageContent) {
+        if (page?.wizardPageContent) {
             let pageConfig = page.wizardPageContent.webNodePageConfiguration;
-            if (pageConfig && pageConfig.selectionTranslators && pageConfig.selectionTranslators.length > 0) {
-                pageConfig.selectionTranslators.forEach(translator => {
-                    dispatch('interactivity/registerSelectionTranslator', { translator });
-                });
-            }
+            pageConfig?.selectionTranslators?.forEach(translator => {
+                dispatch('interactivity/registerSelectionTranslator', { translator });
+            });
         }
     },
 
@@ -179,12 +177,14 @@ export const actions = {
             commit('updateViewConfig', updateConfig);
         });
         // update translators with the interactivity store
-        webNodePageConfiguration?.selectionTranslators?.forEach(translator => {
-            dispatch('interactivity/updateSelectionTranslator', { translator });
-        });
-
+        let { selectionTranslators: translators } = webNodePageConfiguration || {};
+        if (translators) {
+            dispatch('interactivity/updateSelectionTranslators', { translators });
+        }
         let currentLayoutNodeIds = getLayoutNodeIds(state.page);
-        if (nodeIds.some((nodeId) => !currentLayoutNodeIds.includes(nodeId))) {
+        // need to use node ids from new layout (and not provided nodeIds) because layout node ids are absolute.
+        let newLayoutNodeIds = getLayoutNodeIds(page);
+        if (newLayoutNodeIds.some((nodeId) => !currentLayoutNodeIds.includes(nodeId))) {
             dispatch('alert/showAlert', {
                 type: 'warn',
                 message: 'Currently, nodes are missing from the composite view layout. ' +
