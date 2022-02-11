@@ -70,7 +70,7 @@ describe('DialogLayout.vue', () => {
     });
 
     it('renders', () => {
-        let wrapper = shallowMount(DialogLayout, context);
+        const wrapper = shallowMount(DialogLayout, context);
 
         expect(wrapper.is('div')).toBe(true);
         expect(wrapper.attributes('class')).toEqual('row');
@@ -78,9 +78,9 @@ describe('DialogLayout.vue', () => {
 
     it('renders view and dialog', () => {
         const columns = context.propsData.layout.rows[0].columns;
-        let wrapper = mount(DialogLayout, context);
+        const wrapper = mount(DialogLayout, context);
 
-        let nodeViews = wrapper.findAll(NodeView);
+        const nodeViews = wrapper.findAll(NodeView);
         expect(nodeViews.length).toBe(2);
         expect(nodeViews.at(0).props().viewConfig).toEqual(columns[0].content[0]);
         expect(nodeViews.at(1).props().viewConfig).toEqual(columns[1].content[0]);

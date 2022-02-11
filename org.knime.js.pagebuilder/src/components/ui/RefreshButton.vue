@@ -7,16 +7,12 @@ export default {
         FunctionButton,
         RefreshIcon
     },
-    props: {
-        position: {
-            type: String,
-            required: false,
-            default: 'right'
-        }
-    },
     computed: {
-        classes() {
-            return ['button', 'button-'.concat(this.position)];
+        position() {
+            return this.isNodeDialog ? 'button-left' : 'button-right';
+        },
+        isNodeDialog() {
+            return this.$store.state.pagebuilder.isNodeDialog;
         }
     },
     methods: {
@@ -35,7 +31,7 @@ export default {
 <template>
   <FunctionButton
     primary
-    :class="classes"
+    :class="['button', position]"
     title="Refresh"
     @click="refresh"
   >

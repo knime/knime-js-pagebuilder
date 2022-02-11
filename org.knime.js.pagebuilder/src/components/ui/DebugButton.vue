@@ -11,11 +11,6 @@ export default {
         debugPort: {
             type: String,
             required: true
-        },
-        position: {
-            type: String,
-            required: false,
-            default: 'right'
         }
     },
     data() {
@@ -28,8 +23,11 @@ export default {
         debugUrl() {
             return `http://localhost:${this.debugPort}${this.debugPage}`;
         },
-        classes() {
-            return ['button', 'button-'.concat(this.position)];
+        position() {
+            return this.isNodeDialog ? 'button-left' : 'button-right';
+        },
+        isNodeDialog() {
+            return this.$store.state.pagebuilder.isNodeDialog;
         }
     },
     async mounted() {
@@ -59,7 +57,7 @@ export default {
   <FunctionButton
     primary
     target="_blank"
-    :class="classes"
+    :class="['button', position]"
     title="Open developer tools"
     @click="openBrowser(debugUrl)"
   >

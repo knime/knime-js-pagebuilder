@@ -1,7 +1,6 @@
 <script>
 import wrapViewContent from '../../util/wrapViewContent';
 import NodeView from './NodeView';
-import { mapGetters } from 'vuex';
 
 const maxGridWidth = 12;
 
@@ -88,7 +87,7 @@ export default {
                 classes = classes.concat(this.columnConfig.additionalClasses);
             }
 
-            if (!this.isNodeView) {
+            if (this.isWebNode) {
                 classes.push('col-padding');
             }
 
@@ -100,9 +99,9 @@ export default {
             }
             return null;
         },
-        ...mapGetters({
-            isNodeView: 'pagebuilder/isNodeView'
-        })
+        isWebNode() {
+            return this.$store.state.pagebuilder.isWebNode;
+        }
     }
 };
 </script>

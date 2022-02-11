@@ -1,6 +1,5 @@
 <script>
 import Vue from 'vue';
-import { mapGetters } from 'vuex';
 import DebugButton from '~/src/components/ui/DebugButton';
 import RefreshButton from '~/src/components/ui/RefreshButton';
 
@@ -27,13 +26,12 @@ export default {
             }
             return debugInfo;
         },
-        /* For now debugging is assumed to be enabled if a remote debugging port is set */
-        debugEnabled() {
+        debugPort() {
             return this.debugInfo?.remoteDebuggingPort;
         },
-        ...mapGetters({
-            isNodeDialog: 'pagebuilder/isNodeDialog'
-        })
+        isNodeDialog() {
+            return this.$store.state.pagebuilder.isNodeDialog;
+        }
     }
 };
 </script>
@@ -41,14 +39,14 @@ export default {
 <template>
   <div>
     <PageBuilder v-if="pageBuilderLoaded" />
-    <template v-if="debugEnabled">
+    <template v-if="debugPort">
       <DebugButton
-        :debug-port="debugInfo.remoteDebuggingPort"
-        :position="isNodeDialog ? 'left' : 'right'"
+        :debug-port="debugPort"
+        :class="buttonClass"
       />
       <RefreshButton
         v-if="debugInfo.refreshRequired"
-        :position="isNodeDialog ? 'left' : 'right'"
+        :class="buttonClass"
       />
     </template>
   </div>

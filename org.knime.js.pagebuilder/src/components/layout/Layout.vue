@@ -1,6 +1,5 @@
 <script>
 import Row from './Row';
-import { mapGetters } from 'vuex';
 
 /**
  * Layout container for combining multiple views to one page
@@ -43,11 +42,6 @@ export default {
                 return true;
             }
         }
-    },
-    computed: {
-        ...mapGetters({
-            isNodeView: 'pagebuilder/isNodeView'
-        })
     }
 };
 </script>
@@ -58,7 +52,7 @@ export default {
       v-for="(row, index) in layout.rows"
       :key="index"
       :row-config="row"
-      :class="isNodeView ? null : 'parent-row'"
+      class="parent-row"
     />
   </div>
 </template>

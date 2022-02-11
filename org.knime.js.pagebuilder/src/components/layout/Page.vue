@@ -1,12 +1,11 @@
 <script>
-import CompositeLayout from './Layout';
+import Layout from './Layout';
 import DialogLayout from './DialogLayout';
-import { mapGetters } from 'vuex';
 
 export default {
     name: 'Page',
     components: {
-        CompositeLayout,
+        Layout,
         DialogLayout
     },
     computed: {
@@ -17,20 +16,24 @@ export default {
             return this.pageContent && this.pageContent.webNodePageConfiguration &&
                 this.pageContent.webNodePageConfiguration.layout;
         },
-        ...mapGetters({
-            isNodeDialog: 'pagebuilder/isNodeDialog'
-        })
+        isNodeDialog() {
+            return this.$store.state.pagebuilder.isNodeDialog;
+        }
     }
 };
 </script>
 
 <template>
-  <CompositeLayout
-    v-if="pageContent && !isNodeDialog"
-    :layout="layout"
-  />
-  <DialogLayout
-    v-else-if="pageContent && isNodeDialog"
-    :layout="layout"
-  />
+  <div>
+    <template v-if="pageContent">
+      <DialogLayout
+        v-if="isNodeDialog"
+        :layout="layout"
+      />
+      <Layout
+        v-else
+        :layout="layout"
+      />
+    </template>
+  </div>
 </template>

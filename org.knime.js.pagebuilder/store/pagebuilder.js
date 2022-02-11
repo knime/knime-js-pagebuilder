@@ -7,7 +7,7 @@ export const namespaced = true;
 export const state = () => ({
     page: null,
     isNodeDialog: false,
-    isNodeView: false,
+    isWebNode: false,
     resourceBaseUrl: '',
     webNodesLoading: [],
     pageValueGetters: {},
@@ -20,9 +20,7 @@ export const state = () => ({
 // TODO: WEBP-791 remove single-property getters
 export const getters = {
     nodesReExecuting: state => state.nodesReExecuting,
-    reExecutionUpdates: state => state.reExecutionUpdates,
-    isNodeDialog: state => state.isNodeDialog,
-    isNodeView: state => state.isNodeView
+    reExecutionUpdates: state => state.reExecutionUpdates
 };
 
 export const mutations = {
@@ -35,13 +33,13 @@ export const mutations = {
      */
     setPage(state, page) {
         state.page = page;
-        if (typeof page?.wizardPageContent?.webNodes === 'object') {
+        const webNodes = page?.wizardPageContent?.webNodes;
+        if (typeof webNodes === 'object') {
             state.pageValidators = {};
             state.pageValueGetters = {};
         }
-        const nodeViews = page?.wizardPageContent?.nodeViews;
-        state.isNodeDialog = Boolean(nodeViews?.DIALOG);
-        state.isNodeView = nodeViews && Object.keys(nodeViews).length;
+        state.isNodeDialog = Boolean(page?.wizardPageContent?.nodeViews?.DIALOG);
+        state.isWebNode = Boolean(webNodes && Object.keys(webNodes).length);
     },
     /**
      * Set base URL for any external libraries or resources served to the views.

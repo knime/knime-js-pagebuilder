@@ -1,5 +1,4 @@
 <script>
-import wrapViewContent from '../../util/wrapViewContent';
 import NodeView from './NodeView';
 
 
@@ -26,10 +25,15 @@ export default {
         }
     },
     computed: {
-        content() {
+        columns() {
             const rowConfig = this.layout.rows[0];
-            const columns = rowConfig.columns;
-            return [wrapViewContent(columns[0].content)[0], wrapViewContent(columns[1].content)[0]];
+            return rowConfig.columns;
+        },
+        dialogContent() {
+            return this.columns[1].content[0];
+        },
+        viewContent() {
+            return this.columns[0].content[0];
         }
     }
 };
@@ -38,21 +42,21 @@ export default {
 <template>
   <div class="row">
     <div
-      class="col col-9"
+      class="col view-col"
       :style="styles"
     >
+      <!-- View -->
       <NodeView
-        :key="'0-' + Date.now()"
-        :view-config="content[0]"
+        :view-config="viewContent"
       />
     </div>
     <div
-      class="col col-3"
+      class="col dialog-col"
       :style="styles"
     >
+      <!-- Dialog -->
       <NodeView
-        :key="'1-' + Date.now()"
-        :view-config="content[1]"
+        :view-config="dialogContent"
       />
     </div>
   </div>
@@ -66,7 +70,7 @@ export default {
   margin-left: -15px;
 }
 
-.col >>> iframe {
+.view-col >>> iframe {
   height: calc(100vh - 10px);
 }
 
@@ -84,12 +88,12 @@ export default {
   }
 }
 
-.col-3 {
+.dialog-col {
   flex: 0 0 calc(3 * 100% / 12);
   max-width: calc(3 * 100% / 12);
 }
 
-.col-9 {
+.view-col {
   flex: 0 0 calc(9 * 100% / 12);
   max-width: calc(9 * 100% / 12);
 }
