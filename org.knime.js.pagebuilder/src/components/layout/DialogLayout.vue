@@ -39,47 +39,31 @@ export default {
 </script>
 
 <template>
-  <div class="row">
-    <div
-      class="col view-col"
-      :style="styles"
-    >
-      <!-- View -->
-      <NodeView
-        :view-config="viewContent"
-      />
+  <div class="layout">
+    <div class="item view">
+      <NodeView :view-config="viewContent" />
     </div>
-    <div
-      class="col dialog-col"
-      :style="styles"
-    >
-      <!-- Dialog -->
-      <NodeView
-        :view-config="dialogContent"
-      />
+    <div class="item dialog">
+      <NodeView :view-config="dialogContent" />
     </div>
   </div>
 </template>
 
 <style lang="postcss" scoped>
-.row {
+.layout {
   display: flex;
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
 }
 
-.view-col >>> iframe {
-  height: calc(100vh - 10px);
-}
-
-.col {
+.item {
   position: relative;
+  display: flex;
   width: 100%;
+  max-width: 100%;
   flex-basis: 0;
   flex-grow: 1;
-  max-width: 100%;
-  display: flex;
   flex-direction: column;
 
   & > * {
@@ -87,14 +71,17 @@ export default {
   }
 }
 
-.dialog-col {
+.dialog {
   flex: 0 0 calc(3 * 100% / 12);
   max-width: calc(3 * 100% / 12);
 }
 
-.view-col {
+.view {
   flex: 0 0 calc(9 * 100% / 12);
   max-width: calc(9 * 100% / 12);
-}
 
+  & >>> iframe {
+    height: calc(100vh - 10px);
+  }
+}
 </style>

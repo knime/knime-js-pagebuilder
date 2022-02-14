@@ -73,7 +73,7 @@ describe('DialogLayout.vue', () => {
         const wrapper = shallowMount(DialogLayout, context);
 
         expect(wrapper.is('div')).toBe(true);
-        expect(wrapper.attributes('class')).toEqual('row');
+        expect(wrapper.attributes('class')).toEqual('layout');
     });
 
     it('renders view and dialog', () => {
