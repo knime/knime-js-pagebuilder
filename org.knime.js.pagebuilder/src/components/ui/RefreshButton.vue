@@ -8,9 +8,6 @@ export default {
         RefreshIcon
     },
     computed: {
-        position() {
-            return this.isNodeDialog ? 'button-left' : 'button-right';
-        },
         isNodeDialog() {
             return this.$store.state.pagebuilder.isNodeDialog;
         }
@@ -31,7 +28,7 @@ export default {
 <template>
   <FunctionButton
     primary
-    :class="['button', position]"
+    class="button"
     title="Refresh"
     @click="refresh"
   >
@@ -43,13 +40,6 @@ export default {
 .button {
   position: fixed;
   bottom: 10px;
-}
-
-.button-right {
-  right: 50px;
-}
-
-.button-left {
   left: 50px;
 }
 </style>

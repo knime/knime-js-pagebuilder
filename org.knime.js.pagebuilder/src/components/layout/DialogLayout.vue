@@ -1,7 +1,6 @@
 <script>
 import NodeView from './NodeView';
 
-
 export default {
     components: {
         NodeView

@@ -29,7 +29,7 @@ export default {
 iframe {
   width: 100%;
   height: 100%;
-  min-height: 400px;  /* TODO NXT-750 remove this when sizing by layout is supported */
+  min-height: 400px; /* TODO NXT-750 remove this when sizing by layout is supported */
   border: none;
 }
 </style>

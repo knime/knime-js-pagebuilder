@@ -23,9 +23,6 @@ export default {
         debugUrl() {
             return `http://localhost:${this.debugPort}${this.debugPage}`;
         },
-        position() {
-            return this.isNodeDialog ? 'button-left' : 'button-right';
-        },
         isNodeDialog() {
             return this.$store.state.pagebuilder.isNodeDialog;
         }
@@ -57,7 +54,7 @@ export default {
   <FunctionButton
     primary
     target="_blank"
-    :class="['button', position]"
+    class="button"
     title="Open developer tools"
     @click="openBrowser(debugUrl)"
   >
@@ -69,13 +66,6 @@ export default {
 .button {
   position: fixed;
   bottom: 10px;
-}
-
-.button-right {
-  right: 10px;
-}
-
-.button-left {
   left: 10px;
 }
 </style>
