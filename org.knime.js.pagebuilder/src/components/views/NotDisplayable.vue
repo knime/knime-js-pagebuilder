@@ -8,7 +8,7 @@ export default {
         SignWarningIcon
     },
     props: {
-        // TODO: NXT-734 Accept UI Extension config
+        // TODO: UIEXT-110 Accept UI Extension config
         nodeInfo: {
             type: Object,
             default: () => {}

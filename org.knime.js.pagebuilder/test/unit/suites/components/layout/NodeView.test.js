@@ -141,7 +141,7 @@ describe('NodeView.vue', () => {
         });
 
         xit('renders not displayable ui extensions', () => {
-            // TODO: NXT-734 Handle displayability of UIExtensions
+            // TODO: UIEXT-110 Handle displayability of UIExtensions
         });
 
         it('renders nothing if no view available', () => {

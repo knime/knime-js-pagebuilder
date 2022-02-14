@@ -71,7 +71,7 @@ export default {
             return this.isWebNodeView || this.isUIExtension;
         },
         viewDisplayable() {
-            // TODO: NXT-734 Handle displayability of UIExtensions
+            // TODO: UIEXT-110 Handle displayability of UIExtensions
             if (this.isUIExtension) {
                 return true;
             }
