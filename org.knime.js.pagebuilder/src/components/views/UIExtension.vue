@@ -66,12 +66,12 @@ export default {
         this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
     methods: {
-        callService(method, serviceType, request) {
+        callService(nodeService, serviceRequest, requestParams) {
             return this.$store.dispatch('api/callService', {
                 extensionConfig: this.extensionConfig,
-                method,
-                serviceType,
-                request
+                nodeService,
+                serviceRequest,
+                requestParams
             });
         },
         pushNotification(notification) {
