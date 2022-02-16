@@ -7,6 +7,11 @@ export default {
         FunctionButton,
         RefreshIcon
     },
+    computed: {
+        isNodeDialog() {
+            return this.$store.state.pagebuilder.isNodeDialog;
+        }
+    },
     methods: {
         refresh() {
             if (window.reloadCEFWindow) {
@@ -35,7 +40,7 @@ export default {
 .button {
   position: fixed;
   bottom: 10px;
-  right: 50px;
+  left: 50px;
 }
 </style>
 

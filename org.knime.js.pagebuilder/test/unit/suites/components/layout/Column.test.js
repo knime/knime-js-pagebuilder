@@ -1,8 +1,10 @@
-import { shallowMount } from '@vue/test-utils';
+import Vuex from 'vuex';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import Column from '@/components/layout/Column';
 import NodeView from '@/components/layout/NodeView';
 
+import * as storeConfig from '~/store/pagebuilder';
 // this is required because the Row component is imported asynchronously in Column, cf.
 // https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components
 const Row = {
@@ -16,8 +18,35 @@ const stubs = {
 };
 
 describe('Column.vue', () => {
-    it('renders without classes and styles', () => {
-        let wrapper = shallowMount(Column, {
+    let localVue, context;
+
+    const getWizardPageContent = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => ({
+        webNodes: webNodes || {
+            '1:0:1:0:0:7': {
+                foo: 'bar',
+                viewRepresentation: {
+                    '@class': 'testing.notWidget'
+                },
+                nodeInfo: {
+                    displayPossible: true
+                }
+            }
+        },
+        nodeViews: nodeViews || {},
+        webNodePageConfiguration: webNodePageConfiguration || {
+            projectRelativePageIDSuffix: '1:0:1'
+        }
+    });
+
+    const createContext = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => {
+        let store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        store.commit('pagebuilder/setPage', {
+            wizardPageContent: getWizardPageContent({ webNodes, nodeViews, webNodePageConfiguration })
+        });
+
+        return {
+            store,
+            localVue,
             stubs,
             propsData: {
                 columnConfig: {
@@ -26,53 +55,53 @@ describe('Column.vue', () => {
                     additionalStyles: []
                 }
             }
-        });
+        };
+    };
+
+    beforeAll(() => {
+        localVue = createLocalVue();
+        localVue.use(Vuex);
+
+        context = createContext();
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('renders without classes and styles', () => {
+        const wrapper = shallowMount(Column, context);
         expect(wrapper.is('div')).toBe(true);
-        expect(wrapper.attributes('class')).toEqual('col col-6');
+        expect(wrapper.attributes('class')).toEqual('col col-6 col-padding');
         expect(wrapper.attributes('style')).toBeUndefined();
     });
 
     it('renders with classes and styles', () => {
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {
-                    widthXS: 6,
-                    additionalClasses: ['class1', 'class2'],
-                    additionalStyles: ['color: red;', 'border: 1px solid green;']
-                }
-            }
-        });
-        expect(wrapper.attributes('class')).toEqual('col col-6 class1 class2');
+        context.propsData.columnConfig.additionalClasses = ['class1', 'class2'];
+        context.propsData.columnConfig.additionalStyles = ['color: red;', 'border: 1px solid green;'];
+        const wrapper = shallowMount(Column, context);
+        expect(wrapper.attributes('class')).toEqual('col col-6 class1 class2 col-padding');
         expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
     });
 
     it('renders responsive grid classes', () => {
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {
-                    widthXS: 12,
-                    widthMD: 11,
-                    widthLG: 10,
-                    widthXL: 9,
-                    widthSM: 8,
-                    additionalClasses: ['class1', 'class2']
-                }
-            }
-        });
+        context.propsData.columnConfig = {
+            widthXS: 12,
+            widthMD: 11,
+            widthLG: 10,
+            widthXL: 9,
+            widthSM: 8,
+            additionalClasses: ['class1', 'class2']
+        };
+        const wrapper = shallowMount(Column, context);
         expect(wrapper.attributes('class'))
-            .toEqual('col col-12 col-sm-8 col-md-11 col-lg-10 col-xl-9 class1 class2');
+            .toEqual('col col-12 col-sm-8 col-md-11 col-lg-10 col-xl-9 class1 class2 col-padding');
     });
 
     it('renders default responsive grid class if no width defined', () => {
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {}
-            }
-        });
-        expect(wrapper.attributes('class')).toEqual('col col-12');
+        context.propsData.columnConfig = {};
+        const wrapper = shallowMount(Column, context);
+        expect(wrapper.attributes('class')).toEqual('col col-12 col-padding');
     });
 
     it('renders views', () => {
@@ -80,15 +109,8 @@ describe('Column.vue', () => {
             type: 'view',
             nodeID: '9:0:4'
         }];
-
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {
-                    content
-                }
-            }
-        });
+        context.propsData.columnConfig = { content };
+        const wrapper = shallowMount(Column, context);
 
         const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
         expect(views.length).toBe(1);
@@ -105,15 +127,8 @@ describe('Column.vue', () => {
             type: 'JSONLayoutViewContent',
             nodeID: '9:0:5'
         }];
-
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {
-                    content
-                }
-            }
-        });
+        context.propsData.columnConfig = { content };
+        const wrapper = shallowMount(Column, context);
 
         let [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
         expect(views.length).toBe(0);
@@ -144,15 +159,8 @@ describe('Column.vue', () => {
             type: 'JSONLayoutRow',
             foo: 'bar'
         }];
-
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {
-                    content
-                }
-            }
-        });
+        context.propsData.columnConfig = { content };
+        const wrapper = shallowMount(Column, context);
 
         const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
         expect(views.length).toBe(0);
@@ -183,15 +191,8 @@ describe('Column.vue', () => {
                 }]
             }
         }];
-
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {
-                    content
-                }
-            }
-        });
+        context.propsData.columnConfig = { content };
+        const wrapper = shallowMount(Column, context);
 
         const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
         expect(views.length).toBe(0);
@@ -206,22 +207,17 @@ describe('Column.vue', () => {
     it('renders HTML', () => {
         let html = '<span>foo</span>';
         let html2 = '<span>bar</span>';
-
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {
-                    content: [{
-                        type: 'html',
-                        value: html
-                    },
-                    {
-                        type: 'JSONLayoutHTMLContent',
-                        value: html2
-                    }]
-                }
-            }
-        });
+        context.propsData.columnConfig = {
+            content: [{
+                type: 'html',
+                value: html
+            },
+            {
+                type: 'JSONLayoutHTMLContent',
+                value: html2
+            }]
+        };
+        const wrapper = shallowMount(Column, context);
 
         const [views, rows, divs] = [wrapper.findAll(NodeView), wrapper.findAll(Row), wrapper.findAll('div div')];
         expect(views.length).toBe(0);
@@ -238,15 +234,8 @@ describe('Column.vue', () => {
             type: 'view',
             nodeID: '9:0:4'
         }];
-
-        let wrapper = shallowMount(Column, {
-            stubs,
-            propsData: {
-                columnConfig: {
-                    content
-                }
-            }
-        });
+        context.propsData.columnConfig = { content };
+        const wrapper = shallowMount(Column, context);
 
         let view1 = wrapper.find(NodeView).element;
 
@@ -255,5 +244,16 @@ describe('Column.vue', () => {
         let view2 = wrapper.find(NodeView).element;
 
         expect(view1).not.toBe(view2);
+    });
+
+    it('always renders column without col padding if no web node is present', () => {
+        const wizardPageContent = getWizardPageContent();
+        wizardPageContent.nodeViews = { SINGLE: {} };
+        wizardPageContent.webNodes = {};
+        context.store.commit('pagebuilder/setPage', {
+            wizardPageContent
+        });
+        const wrapper = shallowMount(Column, context);
+        expect(wrapper.attributes('class').includes('col-padding')).toBeFalsy();
     });
 });

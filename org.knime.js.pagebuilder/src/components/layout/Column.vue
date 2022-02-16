@@ -87,6 +87,10 @@ export default {
                 classes = classes.concat(this.columnConfig.additionalClasses);
             }
 
+            if (this.isWebNode) {
+                classes.push('col-padding');
+            }
+
             return classes;
         },
         styles() {
@@ -94,6 +98,9 @@ export default {
                 return this.columnConfig.additionalStyles.join('; ').replace(/;;/g, ';');
             }
             return null;
+        },
+        isWebNode() {
+            return this.$store.state.pagebuilder.isWebNode;
         }
     }
 };
@@ -137,8 +144,6 @@ export default {
 .col {
   position: relative;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
   flex-basis: 0;
   flex-grow: 1;
   max-width: 100%;
@@ -148,6 +153,11 @@ export default {
   & > * {
     flex: 0 0 auto;
   }
+}
+
+.col-padding {
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 /* compatible with Bootstrap 4 grid */

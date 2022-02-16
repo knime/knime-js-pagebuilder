@@ -1,12 +1,12 @@
 import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 
-import Layout from '@/components/layout/Layout';
-import Row from '@/components/layout/Row';
+import DialogLayout from '@/components/layout/DialogLayout';
+import NodeView from '@/components/layout/NodeView';
 
 import * as storeConfig from '~/store/pagebuilder';
 
-describe('Layout.vue', () => {
+describe('DialogLayout.vue', () => {
     let localVue, context;
 
     const getWizardPageContent = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => ({
@@ -40,9 +40,20 @@ describe('Layout.vue', () => {
             store,
             localVue,
             propsData: {
-                layout: {
-                    rows: [{ dummy: 'dummy' }, { foo: 'foo' }]
-                }
+                layout: { rows: [{ columns: [
+                    {
+                        content: [{
+                            type: '"JSONLayoutViewContent"',
+                            nodeID: 'VIEW'
+                        }]
+                    },
+                    {
+                        content: [{
+                            type: '"JSONLayoutViewContent"',
+                            nodeID: 'DIALOG'
+                        }]
+                    }
+                ] }] }
             }
         };
     };
@@ -59,18 +70,19 @@ describe('Layout.vue', () => {
     });
 
     it('renders', () => {
-        const wrapper = shallowMount(Layout, context);
+        const wrapper = shallowMount(DialogLayout, context);
 
         expect(wrapper.is('div')).toBe(true);
-        expect(wrapper.attributes('class')).toEqual('container-fluid');
+        expect(wrapper.attributes('class')).toEqual('layout');
     });
 
-    it('renders rows', () => {
-        const wrapper = shallowMount(Layout, context);
+    it('renders view and dialog', () => {
+        const columns = context.propsData.layout.rows[0].columns;
+        const wrapper = mount(DialogLayout, context);
 
-        let rows = wrapper.findAll(Row);
-        expect(rows.length).toBe(2);
-        expect(rows.at(0).props().rowConfig).toEqual({ dummy: 'dummy' });
-        expect(rows.at(1).props().rowConfig).toEqual({ foo: 'foo' });
+        const nodeViews = wrapper.findAll(NodeView);
+        expect(nodeViews.length).toBe(2);
+        expect(nodeViews.at(0).props().viewConfig).toEqual(columns[0].content[0]);
+        expect(nodeViews.at(1).props().viewConfig).toEqual(columns[1].content[0]);
     });
 });

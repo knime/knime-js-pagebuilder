@@ -26,11 +26,12 @@ export default {
             }
             return debugInfo;
         },
-        /* For now debugging is assumed to be enabled if a remote debugging port is set */
-        debugEnabled() {
+        debugPort() {
             return this.debugInfo?.remoteDebuggingPort;
+        },
+        isNodeDialog() {
+            return this.$store.state.pagebuilder.isNodeDialog;
         }
-
     }
 };
 </script>
@@ -38,8 +39,8 @@ export default {
 <template>
   <div>
     <PageBuilder v-if="pageBuilderLoaded" />
-    <template v-if="debugEnabled">
-      <DebugButton :debug-port="debugInfo.remoteDebuggingPort" />
+    <template v-if="debugPort">
+      <DebugButton :debug-port="debugPort" />
       <RefreshButton v-if="debugInfo.refreshRequired" />
     </template>
   </div>

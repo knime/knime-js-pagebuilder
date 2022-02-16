@@ -22,6 +22,9 @@ export default {
         // Composed URL to either open the correct debugger or the overview page
         debugUrl() {
             return `http://localhost:${this.debugPort}${this.debugPage}`;
+        },
+        isNodeDialog() {
+            return this.$store.state.pagebuilder.isNodeDialog;
         }
     },
     async mounted() {
@@ -63,6 +66,6 @@ export default {
 .button {
   position: fixed;
   bottom: 10px;
-  right: 10px;
+  left: 10px;
 }
 </style>

@@ -49,23 +49,23 @@ describe('wrapper API store', () => {
         it('creates an RPC callService request', async () => {
             let singleRPC = jest.fn();
             let store = getMockStore({ wrapperApiMocks: { singleRPC } });
-            let serviceType = 'data';
-            let method = 'NodeService.callNodeDataService';
-            let request = { value: 'newValue' };
-            let serviceParams = { extensionConfig, method, serviceType, request };
+            let nodeService = 'NodeService.callNodeDataService';
+            let serviceRequest = 'data';
+            let requestParams = { value: 'newValue' };
+            let serviceParams = { extensionConfig, nodeService, serviceRequest, requestParams };
             await store.dispatch('callService', serviceParams);
             expect(singleRPC).toHaveBeenCalledWith(expect.anything(), {
                 rpcConfig: {
                     id: expect.any(Number),
                     jsonrpc: '2.0',
-                    method,
+                    method: nodeService,
                     params: [
                         extensionConfig.projectId,
                         extensionConfig.workflowId,
                         extensionConfig.nodeId,
                         extensionConfig.extensionType,
-                        serviceType,
-                        request
+                        serviceRequest,
+                        requestParams
                     ]
                 }
             }, EMPTY);
@@ -74,22 +74,22 @@ describe('wrapper API store', () => {
         it('updates RPC parameters based on service method called', async () => {
             let singleRPC = jest.fn();
             let store = getMockStore({ wrapperApiMocks: { singleRPC } });
-            let serviceType = 'ADD';
-            let method = 'NodeService.updateDataPointSelection';
-            let request = ['1', '2', '3'];
-            let serviceParams = { extensionConfig, method, serviceType, request };
+            let nodeService = 'NodeService.updateDataPointSelection';
+            let serviceRequest = 'ADD';
+            let requestParams = ['1', '2', '3'];
+            let serviceParams = { extensionConfig, nodeService, serviceRequest, requestParams };
             await store.dispatch('callService', serviceParams);
             expect(singleRPC).toHaveBeenCalledWith(expect.anything(), {
                 rpcConfig: {
                     id: expect.any(Number),
                     jsonrpc: '2.0',
-                    method,
+                    method: nodeService,
                     params: [
                         extensionConfig.projectId,
                         extensionConfig.workflowId,
                         extensionConfig.nodeId,
-                        serviceType,
-                        request
+                        serviceRequest,
+                        requestParams
                     ]
                 }
             }, EMPTY);

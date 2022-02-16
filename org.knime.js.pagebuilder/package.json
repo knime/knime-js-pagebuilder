@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run opensourcecredits -- -- -- --no-overwrite\" \"npm run build:mock:lib\" \"npm run build:mock:html\" && concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist http-server\" \"vue-cli-service serve src/dev.js\"",
-    "dev:integration": "concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist/ http-server\" \"npm run build:credits && npm run build:lib -- --watch\"",
+    "dev:ap": "npm run build && npm run build:lib:dev",
+    "dev:webportal": "concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist/ http-server\" \"npm run build:credits && npm run build:lib -- --watch\"",
     "build": "npm run build:credits && npm run build:lib && npm run build:wrapper",
     "build:credits": "npm run opensourcecredits && vue-cli-service build --target lib --formats umd-min --name knime-pagebuilder-credits src/components/PageBuilderCredits.vue",
     "build:lib": "vue-cli-service build --no-clean --target lib --formats umd-min src/components/PageBuilder.vue",

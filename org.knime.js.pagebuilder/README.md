@@ -38,7 +38,7 @@ npm run dev
 When developing PageBuilder for Analytics Platform run the following command
 
 ```sh
-npm run build && npm run build:lib:dev
+npm run dev:ap
 ```
 
 and follow these steps:
@@ -55,7 +55,7 @@ When developing the [WebPortal], a web server with the built version of the libr
 this via the command:
 
 ```sh
-npm run dev:integration
+npm run dev:webportal
 ```
 
 This does not create an app on its own, only the library for usage in [WebPortal] dev mode. It starts a web server,

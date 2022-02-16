@@ -1,10 +1,12 @@
 <script>
 import Layout from './Layout';
+import DialogLayout from './DialogLayout';
 
 export default {
     name: 'Page',
     components: {
-        Layout
+        Layout,
+        DialogLayout
     },
     computed: {
         pageContent() {
@@ -12,14 +14,25 @@ export default {
         },
         layout() {
             return this.pageContent?.webNodePageConfiguration?.layout;
+        },
+        isNodeDialog() {
+            return this.$store.state.pagebuilder.isNodeDialog;
         }
     }
 };
 </script>
 
 <template>
-  <Layout
-    v-if="pageContent"
-    :layout="layout"
-  />
+  <div>
+    <template v-if="pageContent">
+      <DialogLayout
+        v-if="isNodeDialog"
+        :layout="layout"
+      />
+      <Layout
+        v-else
+        :layout="layout"
+      />
+    </template>
+  </div>
 </template>
