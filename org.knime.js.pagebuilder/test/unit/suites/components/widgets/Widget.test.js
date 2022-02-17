@@ -103,6 +103,12 @@ describe('Widget.vue', () => {
         localVue.use(Vuex);
 
         store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        store.registerModule('api', {
+            namespaced: true,
+            actions: {
+                triggerReExecution: jest.fn()
+            }
+        });
         let page = {
             wizardPageContent: {
                 webNodes: {

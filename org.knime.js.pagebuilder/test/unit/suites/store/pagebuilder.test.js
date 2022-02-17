@@ -22,6 +22,13 @@ describe('PageBuilder store', () => {
         }
     };
 
+    let apiStoreConfig = {
+        namespaced: true,
+        actions: {
+            triggerReExecution: jest.fn()
+        }
+    };
+
     beforeAll(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
@@ -31,6 +38,7 @@ describe('PageBuilder store', () => {
         store = new Vuex.Store(storeConfig);
         store.registerModule('interactivity', interactivityStoreConfig);
         store.registerModule('alert', alertStoreConfig);
+        store.registerModule('api', apiStoreConfig);
         jest.resetAllMocks();
     });
 

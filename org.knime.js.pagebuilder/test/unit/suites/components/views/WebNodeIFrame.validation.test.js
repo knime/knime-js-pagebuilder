@@ -58,7 +58,8 @@ describe('WebNodeIFrame.vue', () => {
         wizardConfig = {
             namespaced: true,
             getters: {
-                workflowPath: jest.fn().mockReturnValue('/some/path')
+                workflowPath: jest.fn().mockReturnValue('/some/path'),
+                currentJobId: jest.fn().mockReturnValue(1)
             }
         };
         settingsConfig = {

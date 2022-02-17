@@ -58,7 +58,8 @@ describe('WebNodeIFrame.vue', () => {
         wizardConfig = {
             namespaced: true,
             getters: {
-                workflowPath: jest.fn().mockReturnValue('/some/path')
+                workflowPath: jest.fn().mockReturnValue('/some/path'),
+                currentJobId: jest.fn()
             }
         };
         settingsConfig = {
@@ -138,7 +139,8 @@ describe('WebNodeIFrame.vue', () => {
                     }
                 },
                 settings: settingsConfig,
-                'pagebuilder/alert': alertStoreConfig
+                'pagebuilder/alert': alertStoreConfig,
+                wizardExecution: wizardConfig
             }
         });
         methodsStore.commit('pagebuilder/setResourceBaseUrl', 'http://baseurl.test.example/');
