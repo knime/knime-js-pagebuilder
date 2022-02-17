@@ -20,7 +20,7 @@ export default {
     computed: {
         hasPage() {
             let page = this.$store.state.pagebuilder.page;
-            return Boolean(page && page.wizardPageContent);
+            return Boolean(page?.wizardPageContent);
         }
     }
 };

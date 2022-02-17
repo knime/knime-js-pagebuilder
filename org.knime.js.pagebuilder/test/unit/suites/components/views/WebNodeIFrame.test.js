@@ -448,7 +448,7 @@ describe('WebNodeIFrame.vue', () => {
             };
 
             expect(localWrapper.vm.alert).toBe(null);
-            expect(localWrapper.vm.displayAlert).toBe(null);
+            expect(localWrapper.vm.displayAlert).toBe(false);
             localWrapper.vm.handleAlert(alertData);
             expect(localWrapper.vm.alert).toStrictEqual({
                 ...alertData,
@@ -457,7 +457,7 @@ describe('WebNodeIFrame.vue', () => {
             });
             expect(localWrapper.vm.displayAlert).toBe(true);
             localWrapper.vm.closeAlert(true);
-            expect(localWrapper.vm.displayAlert).toBe(null);
+            expect(localWrapper.vm.displayAlert).toBe(false);
             expect(localWrapper.vm.alert).toBe(null);
             localWrapper.destroy();
         });

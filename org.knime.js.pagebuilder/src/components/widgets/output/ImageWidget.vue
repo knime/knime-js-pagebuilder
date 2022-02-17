@@ -77,7 +77,7 @@ export default {
     },
     methods: {
         updateSvgSize() {
-            let svg = this.$refs.svg && this.$refs.svg.children[0];
+            let svg = this.$refs.svg?.children[0];
             if (svg) {
                 this.svgModifySize(svg, this.maxWidth, this.maxHeight);
             }

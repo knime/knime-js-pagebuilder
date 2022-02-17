@@ -24,16 +24,16 @@ export default {
     },
     computed: {
         nodeAnnotation() {
-            return this.nodeInfo && this.nodeInfo.nodeAnnotation;
+            return this.nodeInfo?.nodeAnnotation;
         },
         hasErrorMessage() {
-            return this.nodeInfo && this.nodeInfo.nodeErrorMessage;
+            return this.nodeInfo?.nodeErrorMessage;
         },
         hasWarnMessages() {
-            return this.nodeInfo && this.nodeInfo.nodeWarnMessage;
+            return this.nodeInfo?.nodeWarnMessage;
         },
         nodeName() {
-            return this.nodeInfo ? this.nodeInfo.nodeName : 'Missing node';
+            return this.nodeInfo?.nodeName || 'Missing node';
         },
         text() {
             let annotation = this.nodeAnnotation ? ` - ${this.nodeAnnotation}` : '';

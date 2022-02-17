@@ -62,7 +62,7 @@ export default {
     },
     computed: {
         isFolder() {
-            return this.model.children && this.model.children.length;
+            return this.model.children?.length;
         },
         classes() {
             return [

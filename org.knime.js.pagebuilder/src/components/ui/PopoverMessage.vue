@@ -69,7 +69,7 @@ export default {
          * @returns {Boolean} - if the message should be expandable or if it's short enough to be pre-expanded.
          */
         expandable() {
-            return this.messageBody && this.messageBody.length > MAX_EXPANDED_MESSAGE_LENGTH;
+            return this.messageBody?.length > MAX_EXPANDED_MESSAGE_LENGTH;
         },
         expanded() {
             return !this.expandable || this.messageExpanded;

@@ -22,16 +22,16 @@ export default {
          * @values warn, error (default)
          */
         type() {
-            return this.alert && this.alert.type ? this.alert.type : 'error';
+            return this.alert?.type || 'error';
         },
         isError() {
             return this.type === 'error';
         },
         nodeId() {
-            return this.alert && this.alert.nodeId ? this.alert.nodeId : '';
+            return this.alert?.nodeId || '';
         },
         nodeInfo() {
-            return this.alert && this.alert.nodeInfo ? this.alert.nodeInfo : {};
+            return this.alert?.nodeInfo || {};
         },
         nodeName() {
             return this.nodeInfo.nodeName || 'Missing node';
@@ -43,9 +43,7 @@ export default {
             return this.isError ? 'Sorry, a problem occurred:' : 'Message(s) on node:';
         },
         messageText() {
-            return this.alert && this.alert.message
-                ? this.alert.message
-                : 'No further information available. Please check the workflow configuration.';
+            return this.alert?.message || 'No further information available. Please check the workflow configuration.';
         }
     },
     methods: {

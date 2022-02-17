@@ -68,9 +68,7 @@ export default {
             return this.nodeConfig.stylesheets || [];
         },
         autoHeight() {
-            return !this.isSingleView &&
-                this.viewConfig.resizeMethod &&
-                this.viewConfig.resizeMethod.startsWith('view');
+            return !this.isSingleView && this.viewConfig.resizeMethod?.startsWith('view');
         },
         classes() {
             let classes = [];
@@ -90,10 +88,10 @@ export default {
             return postMessageOrigin;
         },
         isSingleView() {
-            return this.page && this.page.wizardPageContent && this.page.wizardPageContent.isSingleView;
+            return this.page?.wizardPageContent?.isSingleView;
         },
         displayAlert() {
-            return this.alert && this.alert.type === 'error';
+            return this.alert?.type === 'error';
         }
     },
 
@@ -200,7 +198,7 @@ export default {
         this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValidationErrorSetter', { nodeId: this.nodeId });
-        if (window.KnimePageBuilderAPI && window.KnimePageBuilderAPI.teardown(this.currentJobId)) {
+        if (window.KnimePageBuilderAPI?.teardown(this.currentJobId)) {
             delete window.KnimePageBuilderAPI;
         }
     },
@@ -285,7 +283,7 @@ export default {
             );
 
             // custom CSS from node configuration
-            if (this.nodeConfig.customCSS && this.nodeConfig.customCSS.length) {
+            if (this.nodeConfig.customCSS?.length) {
                 // replace '</style' with CSS-escaped '\00003c/style'
                 styles.push(`<style>${this.nodeConfig.customCSS.replace(/<(\/style)\b/gi, '\\00003c$1')}</style>`);
             }

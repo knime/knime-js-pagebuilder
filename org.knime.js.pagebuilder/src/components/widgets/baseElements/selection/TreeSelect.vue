@@ -65,7 +65,7 @@ export default {
             return model;
         },
         initializeData(items) {
-            if (items && items.length > 0) {
+            if (items?.length > 0) {
                 for (let i = 0; i < items.length; i++) {
                     items[i] = this.createModelObject(items[i]);
                     this.initializeData(items[i].children);
@@ -74,7 +74,7 @@ export default {
         },
         handleRecursionNodeChildren(node, func) {
             if (func(node) !== false) {
-                if (node.$children && node.$children.length > 0) {
+                if (node.$children?.length > 0) {
                     for (let childNode of node.$children) {
                         if (!childNode.disabled) {
                             this.handleRecursionNodeChildren(childNode, func);
