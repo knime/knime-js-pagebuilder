@@ -37,15 +37,13 @@ export default {
         }
     },
     computed: {
+        ...mapState('pagebuilder', ['nodesReExecuting']),
         viewRep() {
             return this.nodeConfig.viewRepresentation;
         },
         isExecuting() {
             return this.nodesReExecuting?.length || null;
-        },
-        ...mapState({
-            nodesReExecuting: state => state.pagebuilder.nodesReExecuting
-        })
+        }
     },
     methods: {
         onClick() {

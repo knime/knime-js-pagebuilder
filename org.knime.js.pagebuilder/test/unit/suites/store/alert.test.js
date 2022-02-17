@@ -22,7 +22,7 @@ describe('alert store', () => {
 
     it('creates an empty store', () => {
         expect(store.state).toEqual({
-            activeAlert: null
+            alert: null
         });
     });
     
@@ -31,10 +31,10 @@ describe('alert store', () => {
             id: '1:2:3:4'
         };
         store.dispatch('showAlert', testAlert);
-        expect(store.state.activeAlert).toEqual(testAlert);
+        expect(store.state.alert).toEqual(testAlert);
         store.dispatch('closeAlert');
         expect(store.state).toEqual({
-            activeAlert: null
+            alert: null
         });
     });
 

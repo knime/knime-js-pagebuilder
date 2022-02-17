@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import FunctionButton from '~/webapps-common/ui/components/FunctionButton';
 import RefreshIcon from '~/webapps-common/ui/assets/img/icons/load.svg?inline';
 
@@ -8,9 +9,7 @@ export default {
         RefreshIcon
     },
     computed: {
-        isNodeDialog() {
-            return this.$store.state.pagebuilder.isNodeDialog;
-        }
+        ...mapState('pagebuilder', ['isNodeDialog'])
     },
     methods: {
         refresh() {

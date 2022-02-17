@@ -1,4 +1,5 @@
 <script>
+import { mapState, mapGetters } from 'vuex';
 import AlertLocal from '~/src/components/ui/AlertLocal';
 import { iframeResizer } from 'iframe-resizer';
 
@@ -54,12 +55,11 @@ export default {
         };
     },
     computed: {
+        ...mapState('pagebuilder', ['page']),
+        ...mapGetters('wizardExecution', ['currentJobId']), // Expected values include null (no job) or undefined (AP execution).
         iframeId() {
             // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
             return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
-        },
-        page() {
-            return this.$store.state.pagebuilder.page;
         },
         nodeJsLibs() {
             return this.nodeConfig.javascriptLibraries || [];
@@ -94,10 +94,6 @@ export default {
         },
         displayAlert() {
             return this.alert && this.alert.type === 'error';
-        },
-        currentJobId() {
-            // Expected values include null (no job) or undefined (AP execution).
-            return this.$store.getters['wizardExecution/currentJobId'];
         }
     },
 

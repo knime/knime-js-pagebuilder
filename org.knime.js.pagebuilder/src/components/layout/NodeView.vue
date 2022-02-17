@@ -1,5 +1,5 @@
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 import WebNode from '~/src/components/views/WebNode';
 import UIExtension from '~/src/components/views/UIExtension';
@@ -42,22 +42,20 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
-            nodesReExecuting: 'pagebuilder/nodesReExecuting',
-            updateCount: 'pagebuilder/reExecutionUpdates'
-        }),
+        ...mapState('pagebuilder', ['page']),
+        ...mapGetters('pagebuilder', ['nodesReExecuting', 'reExecutionUpdates']),
         pageIdPrefix() {
-            return this.$store.state.pagebuilder.page?.wizardPageContent?.webNodePageConfiguration
+            return this.page?.wizardPageContent?.webNodePageConfiguration
                 ?.projectRelativePageIDSuffix;
         },
         nodeId() {
             return this.pageIdPrefix ? `${this.pageIdPrefix}:${this.viewConfig.nodeID}` : this.viewConfig.nodeID;
         },
         webNodeConfig() {
-            return this.$store.state.pagebuilder.page.wizardPageContent?.webNodes?.[this.nodeId];
+            return this.page.wizardPageContent?.webNodes?.[this.nodeId];
         },
         uiExtensionConfig() {
-            return this.$store.state.pagebuilder.page.wizardPageContent?.nodeViews?.[this.nodeId];
+            return this.page.wizardPageContent?.nodeViews?.[this.nodeId];
         },
         isWebNodeView() {
             return Boolean(this.webNodeConfig);
@@ -90,7 +88,7 @@ export default {
             return isReExecuting;
         },
         showSpinner() {
-            return this.updateCount >= 2;
+            return this.reExecutionUpdates >= 2;
         }
     }
 };

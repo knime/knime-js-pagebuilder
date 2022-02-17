@@ -1,5 +1,5 @@
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import Popover from './Popover';
 import PopoverMessage from './PopoverMessage';
 
@@ -15,6 +15,7 @@ export default {
         PopoverMessage
     },
     computed: {
+        ...mapState('pagebuilder/alert', ['alert']),
         /*
          * Controls the message content and @see PopoverMessage styling.
          *
@@ -45,10 +46,7 @@ export default {
             return this.alert && this.alert.message
                 ? this.alert.message
                 : 'No further information available. Please check the workflow configuration.';
-        },
-        ...mapGetters({
-            alert: 'pagebuilder/alert/currentAlert'
-        })
+        }
     },
     methods: {
         /**

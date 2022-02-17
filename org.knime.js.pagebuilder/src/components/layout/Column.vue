@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import wrapViewContent from '../../util/wrapViewContent';
 import NodeView from './NodeView';
 
@@ -63,6 +64,7 @@ export default {
         }
     },
     computed: {
+        ...mapState('pagebuilder', ['isWebNode']),
         content() {
             return wrapViewContent(this.columnConfig.content);
         },
@@ -98,9 +100,6 @@ export default {
                 return this.columnConfig.additionalStyles.join('; ').replace(/;;/g, ';');
             }
             return null;
-        },
-        isWebNode() {
-            return this.$store.state.pagebuilder.isWebNode;
         }
     }
 };

@@ -6,17 +6,17 @@
 export const namespaced = true;
 
 export const state = () => ({
-    activeAlert: null
+    alert: null
 });
 
 export const mutations = {
 
     showAlert(state, alert) {
-        state.activeAlert = alert;
+        state.alert = alert;
     },
 
     closeAlert(state) {
-        state.activeAlert = null;
+        state.alert = null;
     }
 };
 
@@ -27,13 +27,9 @@ export const actions = {
     },
 
     closeAlert({ commit, state }, remove) {
-        if (state.activeAlert.callback) {
-            state.activeAlert.callback(remove);
+        if (state.alert.callback) {
+            state.alert.callback(remove);
         }
         commit('closeAlert');
     }
-};
-
-export const getters = {
-    currentAlert: state => state.activeAlert
 };

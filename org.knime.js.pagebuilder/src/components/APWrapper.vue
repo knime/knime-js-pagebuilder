@@ -1,5 +1,6 @@
 <script>
 import Vue from 'vue';
+import { mapState } from 'vuex';
 import DebugButton from '~/src/components/ui/DebugButton';
 import RefreshButton from '~/src/components/ui/RefreshButton';
 
@@ -10,6 +11,7 @@ export default {
         DebugButton
     },
     computed: {
+        ...mapState('pagebuilder', ['isNodeDialog']),
         /* Checks if pageBuilderLoader middleware was successful */
         pageBuilderLoaded() {
             return Boolean(Vue.component('PageBuilder'));
@@ -28,9 +30,6 @@ export default {
         },
         debugPort() {
             return this.debugInfo?.remoteDebuggingPort;
-        },
-        isNodeDialog() {
-            return this.$store.state.pagebuilder.isNodeDialog;
         }
     }
 };

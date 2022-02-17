@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import FunctionButton from '~/webapps-common/ui/components/FunctionButton';
 import InspectorIcon from '~/webapps-common/ui/assets/img/icons/code-html.svg?inline';
 
@@ -19,12 +20,10 @@ export default {
         };
     },
     computed: {
+        ...mapState('pagebuilder', ['isNodeDialog']),
         // Composed URL to either open the correct debugger or the overview page
         debugUrl() {
             return `http://localhost:${this.debugPort}${this.debugPage}`;
-        },
-        isNodeDialog() {
-            return this.$store.state.pagebuilder.isNodeDialog;
         }
     },
     async mounted() {

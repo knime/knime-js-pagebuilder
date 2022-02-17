@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import Layout from './Layout';
 import DialogLayout from './DialogLayout';
 
@@ -9,14 +10,12 @@ export default {
         DialogLayout
     },
     computed: {
+        ...mapState('pagebuilder', ['isNodeDialog']),
         pageContent() {
             return this.$store.state.pagebuilder.page?.wizardPageContent;
         },
         layout() {
             return this.pageContent?.webNodePageConfiguration?.layout;
-        },
-        isNodeDialog() {
-            return this.$store.state.pagebuilder.isNodeDialog;
         }
     }
 };
