@@ -122,7 +122,7 @@ export default {
         :key="index"
         :row-config="item"
       />
-      <template v-else-if="item.type === 'nestedLayout' || item.type === 'JSONNestedLayout'">
+      <template v-else-if="(item.type === 'nestedLayout' || item.type === 'JSONNestedLayout') && item.layout">
         <Row
           v-for="(row, rowIndex) in item.layout.rows"
           :key="index + '-' + rowIndex"
