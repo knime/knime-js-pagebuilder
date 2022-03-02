@@ -216,8 +216,14 @@ describe('Column.vue', () => {
                 }]
             }
         }];
-        context.propsData.columnConfig = { content };
-        const wrapper = shallowMount(Column, context);
+        const wrapper = shallowMount(Column, {
+            stubs,
+            propsData: {
+                columnConfig: {
+                    content
+                }
+            }
+        });
 
         const rows = wrapper.findAll(Row);
         expect(rows.length).toBe(1);
