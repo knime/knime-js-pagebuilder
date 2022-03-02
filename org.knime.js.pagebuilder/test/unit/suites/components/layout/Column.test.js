@@ -203,6 +203,27 @@ describe('Column.vue', () => {
         expect(divs.length).toBe(0);
     });
 
+    it('does not render nested layouts which are missing', () => {
+        let content = [{
+            type: 'nestedLayout',
+            layout: null
+        }, {
+            type: 'JSONNestedLayout',
+            layout: {
+                rows: [{
+                    type: 'JSONLayoutRow',
+                    baz: 'qux'
+                }]
+            }
+        }];
+        context.propsData.columnConfig = { content };
+        const wrapper = shallowMount(Column, context);
+
+        const rows = wrapper.findAll(Row);
+        expect(rows.length).toBe(1);
+        expect(rows.at(0).props('rowConfig')).toEqual({ type: 'JSONLayoutRow', baz: 'qux' });
+    });
+
     it('renders HTML', () => {
         let html = '<span>foo</span>';
         let html2 = '<span>bar</span>';
