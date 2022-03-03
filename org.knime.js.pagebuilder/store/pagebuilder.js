@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import { setProp } from '@/util/nestedProperty';
 import overrideRequired from '@/util/overrideRequired';
+import getLayoutNodeIds from '@/util/getLayoutNodeIds';
 
 export const namespaced = true;
 
@@ -154,19 +155,17 @@ export const actions = {
         dispatch('interactivity/clear');
 
         // register all defined selection translators from the page configuration
-        if (page && page.wizardPageContent) {
+        if (page?.wizardPageContent) {
             let pageConfig = page.wizardPageContent.webNodePageConfiguration;
-            if (pageConfig && pageConfig.selectionTranslators && pageConfig.selectionTranslators.length > 0) {
-                pageConfig.selectionTranslators.forEach((translator, i) => {
-                    dispatch('interactivity/registerSelectionTranslator', { translatorId: i, translator });
-                });
-            }
+            pageConfig?.selectionTranslators?.forEach(translator => {
+                dispatch('interactivity/registerSelectionTranslator', { translator });
+            });
         }
     },
 
     updatePage({ commit, dispatch, state }, { page = {}, nodeIds }) {
-        consola.trace('PageBuilder: Set page via action: ', page);
-        let { webNodes, nodeViews } = page?.wizardPageContent || page;
+        consola.trace('PageBuilder: Update page via action: ', page);
+        let { webNodes, nodeViews, webNodePageConfiguration } = page?.wizardPageContent || page;
         nodeIds.forEach(nodeId => {
             // default webNode update
             let updateConfig = { nodeId, config: webNodes?.[nodeId] };
@@ -177,31 +176,21 @@ export const actions = {
             }
             commit('updateViewConfig', updateConfig);
         });
-        dispatch('getLayoutNodeIds', page).then((newLayoutNodeIds) => {
-            dispatch('getLayoutNodeIds', state.page).then((layoutNodeIds) => {
-                if (newLayoutNodeIds.some((nodeId) => !layoutNodeIds.includes(nodeId))) {
-                    dispatch('alert/showAlert',
-                        { type: 'warn',
-                            message: `Currently, nodes are missing from the composite view layout.
-                            That could interfere with reactive nodes.` });
-                }
+        // update translators with the interactivity store
+        let { selectionTranslators: translators } = webNodePageConfiguration || {};
+        if (translators) {
+            dispatch('interactivity/updateSelectionTranslators', { translators });
+        }
+        let currentLayoutNodeIds = getLayoutNodeIds(state.page);
+        // need to use node ids from new layout (and not provided nodeIds) because layout node ids are absolute.
+        let newLayoutNodeIds = getLayoutNodeIds(page);
+        if (newLayoutNodeIds.some((nodeId) => !currentLayoutNodeIds.includes(nodeId))) {
+            dispatch('alert/showAlert', {
+                type: 'warn',
+                message: 'Currently, nodes are missing from the composite view layout. ' +
+                    'That could interfere with reactive nodes.'
             });
-        });
-    },
-
-    getLayoutNodeIds(_, page) {
-        let { webNodePageConfiguration } = page?.wizardPageContent || page;
-        let layoutRows = webNodePageConfiguration.layout.rows;
-        let layoutNodeIds = [];
-        layoutRows.forEach((row) => {
-            let cols = row.columns;
-            cols.forEach((col) => {
-                col.content.forEach((elem) => {
-                    layoutNodeIds.push(elem.nodeID);
-                });
-            });
-        });
-        return layoutNodeIds;
+        }
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {

@@ -41,6 +41,39 @@ describe('Interactivity store', () => {
         expect(payload.callback).not.toHaveBeenCalled();
     });
 
+    it('updates subscriber by clearing outdated translators', () => {
+        expect(store.state).toEqual({});
+        let id = 'foo';
+        let callback = jest.fn();
+        store.state[id] = {
+            subscribers: [
+                { callback, filterIds: [], isTranslator: true },
+                { callback, filterIds: [], isTranslator: true },
+                { callback, filterIds: [] }
+            ]
+        };
+        store.commit('updateSubscriber', { id, callback: jest.fn(), isTranslator: true, clear: true });
+        expect(store.state[id].subscribers).toHaveLength(2);
+        expect(store.state[id].subscribers[0].isTranslator).not.toBeDefined();
+        expect(store.state[id].subscribers[1].callback).not.toEqual(callback);
+    });
+
+    it('updates subscriber without clearing translators', () => {
+        expect(store.state).toEqual({});
+        let id = 'foo';
+        let callback = jest.fn();
+        store.state[id] = {
+            subscribers: [
+                { callback, filterIds: [], isTranslator: true },
+                { callback, filterIds: [], isTranslator: true },
+                { callback, filterIds: [] }
+            ]
+        };
+        store.commit('updateSubscriber', { id, callback: jest.fn(), isTranslator: true });
+        // eslint-disable-next-line no-magic-numbers
+        expect(store.state[id].subscribers).toHaveLength(4);
+    });
+
     it('remove subscriber', () => {
         expect(store.state).toEqual({});
         let payload = { id: subscriberId, callback: jest.fn() };

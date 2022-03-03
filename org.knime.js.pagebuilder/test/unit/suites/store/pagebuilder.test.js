@@ -10,6 +10,7 @@ describe('PageBuilder store', () => {
         namespaced: true,
         actions: {
             registerSelectionTranslator: jest.fn(),
+            updateSelectionTranslators: jest.fn(),
             clear: jest.fn()
         }
     };
@@ -18,6 +19,13 @@ describe('PageBuilder store', () => {
         namespaced: true,
         actions: {
             showAlert: jest.fn()
+        }
+    };
+
+    let apiStoreConfig = {
+        namespaced: true,
+        actions: {
+            triggerReExecution: jest.fn()
         }
     };
 
@@ -30,6 +38,7 @@ describe('PageBuilder store', () => {
         store = new Vuex.Store(storeConfig);
         store.registerModule('interactivity', interactivityStoreConfig);
         store.registerModule('alert', alertStoreConfig);
+        store.registerModule('api', apiStoreConfig);
         jest.resetAllMocks();
     });
 
@@ -99,7 +108,7 @@ describe('PageBuilder store', () => {
         };
         store.dispatch('setPage', { page });
         expect(interactivityStoreConfig.actions.registerSelectionTranslator).toHaveBeenCalledWith(
-            expect.anything(), { translator: dummyTranslator, translatorId: 0 }, undefined
+            expect.anything(), { translator: dummyTranslator }, expect.undefined
         );
     });
 
@@ -325,7 +334,16 @@ describe('PageBuilder store', () => {
                     },
                     webNodePageConfiguration: {
                         layout: {
-                            rows: []
+                            rows: [{
+                                columns: [{
+                                    content: [
+                                        { nodeID: 'id1' },
+                                        { nodeID: 'id2' },
+                                        { nodeID: 'id3' },
+                                        { nodeID: 'id4' }
+                                    ]
+                                }]
+                            }]
                         }
                     }
                 }
@@ -356,57 +374,6 @@ describe('PageBuilder store', () => {
                     nodeIds: ['id1']
                 });
                 checkPage(store.state.page, ['qux', 'baz'], ['qux', 'grault']);
-            });
-
-            it('dispatches alert when new layout contains nodes which the original layout does not contain', (done) => {
-                let newPage = getPage();
-                newPage.wizardPageContent.webNodePageConfiguration.layout.rows = [
-                    {
-                        columns: [
-                            {
-                                content: [
-                                    {
-                                        nodeID: 'id2'
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ];
-                store.dispatch('updatePage', {
-                    page: newPage,
-                    nodeIds: ['id1']
-                }).then(async () => {
-                    await storeConfig.actions.getLayoutNodeIds;
-                    expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('does not dispatch a warning if the layout has not changed', (done) => {
-                let newPage = getPage();
-                newPage.wizardPageContent.webNodePageConfiguration.layout.rows = [
-                    {
-                        columns: [
-                            {
-                                content: [
-                                    {
-                                        nodeID: 'id2'
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ];
-                store.commit('setPage', newPage);
-                store.dispatch('updatePage', {
-                    page: newPage,
-                    nodeIds: ['id1']
-                }).then(async () => {
-                    await storeConfig.actions.getLayoutNodeIds;
-                    expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
-                    done();
-                });
             });
 
             it('updates multiple webNodes', () => {
@@ -457,6 +424,37 @@ describe('PageBuilder store', () => {
                     nodeIds: ['id1', 'id3']
                 });
                 checkPage(store.state.page, ['qux', 'baz'], ['bar', 'grault']);
+            });
+
+            it('updates selection translators if present in updated page', () => {
+                expect(interactivityStoreConfig.actions.updateSelectionTranslators).not.toHaveBeenCalled();
+                let newPage = getPage();
+                let translators = [{ sourceID: 'foo', targetIDs: ['bar'], forward: true }];
+                newPage.wizardPageContent.webNodePageConfiguration = {
+                    selectionTranslators: translators
+                };
+                store.dispatch('updatePage', { page: newPage, nodeIds: [] });
+                expect(interactivityStoreConfig.actions.updateSelectionTranslators).toHaveBeenCalledWith(
+                    expect.anything(), { translators }, expect.undefined
+                );
+            });
+
+            it('does not dispatch a warning if the layout has not changed', () => {
+                expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
+                let newPage = getPage();
+                newPage.wizardPageContent.webNodePageConfiguration.layout.rows[0].columns[0].content =
+                    [{ nodeID: 'id1' }];
+                store.dispatch('updatePage', { page: newPage, nodeIds: ['id1'] });
+                expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
+            });
+
+            it('dispatches alert when new layout contains nodes which the original layout does not', () => {
+                expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
+                let newPage = getPage();
+                newPage.wizardPageContent.webNodePageConfiguration.layout.rows[0].columns[0].content =
+                    [{ nodeID: 'id5' }];
+                store.dispatch('updatePage', { page: newPage, nodeIds: ['id5'] });
+                expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
             });
         });
     });
