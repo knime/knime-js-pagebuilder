@@ -9,6 +9,7 @@ library "knime-pipeline@$BN"
 
 properties([
     buildDiscarder(logRotator(numToKeepStr: '5')),
+    parameters([p2Tools.getP2pruningParameter()]),
     disableConcurrentBuilds()
 ])
 
