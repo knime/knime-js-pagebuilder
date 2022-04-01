@@ -7,7 +7,7 @@ It is built as an [Vue library] and used in KNIME Analytics Platform and KNIME W
 
 ### Prerequisites
 
-* Install [Node.js][node], see version in [.nvmrc](.nvmrc).
+* Install [Node.js][node], see version in [package.json](package.json).
 * Only for test coverage uploads to SonarQube: you also need [Java]™ 8 or 11.
 
 Newer versions may also work, but have not been tested.
