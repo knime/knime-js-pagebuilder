@@ -44,6 +44,8 @@
     "webapps-common": "file:webapps-common"
   },
   "devDependencies": {
+    "@fontsource/roboto": "4.5.5",
+    "@fontsource/roboto-mono": "4.5.5",
     "@vue/cli-plugin-babel": "4.5.4",
     "@vue/cli-plugin-unit-jest": "4.5.4",
     "@vue/cli-service": "4.5.4",
@@ -59,8 +61,6 @@
     "eslint-plugin-jest-formatting": "3.0.0",
     "eslint-plugin-jsonc": "2.0.0",
     "eslint-plugin-vue": "7.20.0",
-    "@fontsource/roboto": "4.x",
-    "@fontsource/roboto-mono": "4.x",
     "http-server": "0.12.3",
     "jest-junit": "7.0.0",
     "modern-normalize": "1.1.0",
