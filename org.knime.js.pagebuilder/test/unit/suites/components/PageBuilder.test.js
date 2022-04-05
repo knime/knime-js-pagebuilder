@@ -6,14 +6,14 @@ import Page from '@/components/layout/Page';
 import AlertGlobal from '@/components/ui/AlertGlobal';
 
 describe('PageBuilder.vue', () => {
-    let store, localVue, context;
+    let store, localVue, context, page;
 
     beforeEach(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
         store = new Vuex.Store();
         PageBuilder.initStore(store);
-        const page = {
+        page = {
             wizardExecutionState: 'INTERACTION_REQUIRED',
             wizardPageContent: {}
         };
@@ -36,6 +36,20 @@ describe('PageBuilder.vue', () => {
 
         expect(wrapper.find(Page).exists()).toBeTruthy();
         expect(wrapper.find(AlertGlobal).exists()).toBeTruthy();
+    });
+
+    it('hide global alert when page isNodeDialog', () => {
+        const localPage = {
+            ...page,
+            wizardPageContent: {
+                nodeViews: { DIALOG: {} }
+            }
+        };
+        store.commit('pagebuilder/setPage', localPage);
+        let wrapper = shallowMount(PageBuilder, context);
+
+        expect(wrapper.find(Page).exists()).toBeTruthy();
+        expect(wrapper.find(AlertGlobal).exists()).toBeFalsy();
     });
 
     it('does not render Page if called with unsupported wizardExecutionState', () => {

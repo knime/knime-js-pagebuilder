@@ -1,9 +1,13 @@
 <script>
+import { mapState } from 'vuex';
+
 import NodeView from './NodeView';
+import Messages from '~/webapps-common/ui/components/Messages';
 
 export default {
     components: {
-        NodeView
+        NodeView,
+        Messages
     },
     props: {
         /**
@@ -24,6 +28,7 @@ export default {
         }
     },
     computed: {
+        ...mapState('pagebuilder/alert', ['alert']),
         columns() {
             const rowConfig = this.layout.rows[0];
             return rowConfig.columns;
@@ -33,6 +38,39 @@ export default {
         },
         viewContent() {
             return this.columns[0].content[0];
+        },
+        messages() {
+            if (!this.alert) {
+                return [];
+            }
+            let { message: details, type = 'UNKNOWN', subtitle: message = '', nodeId, nodeInfo } = this.alert;
+            if (details) {
+                message += ` ${details}`;
+            }
+            let typeHeader = type === 'info' ? 'WARNING' : type.toUpperCase();
+            return [{
+                message: `${typeHeader} ${nodeInfo?.nodeName || 'Missing node'}`,
+                details: message || 'No further information available. Please check the workflow configuration.',
+                count: 1,
+                id: nodeId,
+                type,
+                showCollapser: true,
+                showCloseButton: true
+            }];
+        }
+    },
+    methods: {
+        /**
+         * Event handler for closing the global alert from the alert store. This method takes a parameter passed to
+         * the callback function of the global alert which can be used to conditionally clear the notification
+         * locally. This enables different behavior e.g. when the user clicks the 'close' button (requesting a true
+         * alert dismissal) vs. a click-away or 'minimize' event (where the user just wants to hide the alert).
+         *
+         * @param {Boolean} remove - the parameter passed to the alert callback function.
+         * @returns {undefined}
+         */
+        onClose(remove) {
+            this.$store.dispatch('pagebuilder/alert/closeAlert', remove);
         }
     }
 };
@@ -42,6 +80,12 @@ export default {
   <div class="layout">
     <div class="item view">
       <NodeView :view-config="viewContent" />
+      <Messages
+        v-if="alert"
+        class="messages"
+        :messages="messages"
+        @dismiss="onClose"
+      />
     </div>
     <div class="item dialog">
       <NodeView :view-config="dialogContent" />
@@ -68,6 +112,25 @@ export default {
 
   & > * {
     flex: 0 0 auto;
+  }
+
+  & .messages {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+
+    & >>> .panel {
+      padding-left: 25%;
+      margin-left: -25%;
+      padding-right: 25%;
+      margin-right: -25%;
+      width: unset;
+      max-width: none;
+      display: block;
+      position: unset;
+    }
   }
 }
 

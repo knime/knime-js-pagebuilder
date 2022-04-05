@@ -3,6 +3,7 @@ import { mapState, mapGetters } from 'vuex';
 
 import WebNode from '~/src/components/views/WebNode';
 import UIExtension from '~/src/components/views/UIExtension';
+import ViewExecutable from '~/src/components/views/ViewExecutable';
 import NotDisplayable from '~/src/components/views/NotDisplayable';
 import ExecutingOverlay from '~/src/components/ui/ExecutingOverlay';
 
@@ -21,11 +22,12 @@ export default {
         WebNode,
         UIExtension,
         NotDisplayable,
+        ViewExecutable,
         ExecutingOverlay
     },
     props: {
         /**
-         * View configuration as received from the REST API
+         * View configuration as defined in the page.
          */
         viewConfig: {
             default: () => ({}),
@@ -57,11 +59,20 @@ export default {
         uiExtensionConfig() {
             return this.page.wizardPageContent?.nodeViews?.[this.nodeId];
         },
+        nodeInfo() {
+            return (this.webNodeConfig || this.uiExtensionConfig)?.nodeInfo;
+        },
         isWebNodeView() {
             return Boolean(this.webNodeConfig);
         },
         isUIExtension() {
             return Boolean(this.uiExtensionConfig);
+        },
+        isNodeDialog() {
+            return this.isUIExtension && this.nodeId === 'DIALOG';
+        },
+        isExecuted() {
+            return this.nodeInfo?.nodeState === 'executed';
         },
         viewAvailable() {
             // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
@@ -75,7 +86,10 @@ export default {
             }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
-            return this.webNodeConfig?.nodeInfo?.displayPossible;
+            return this.nodeInfo?.displayPossible;
+        },
+        showViewExecutable() {
+            return this.isUIExtension && !this.isNodeDialog && !this.isExecuted;
         },
         showExecutionOverlay() {
             /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this
@@ -83,7 +97,7 @@ export default {
             let isReExecuting = this.nodesReExecuting?.includes(this.nodeId);
             if (this.isWebNodeView && !isReExecuting) {
                 // only the original "webNodes" have node state
-                isReExecuting = this.webNodeConfig?.nodeInfo?.nodeState === 'executing';
+                isReExecuting = this.nodeInfo?.nodeState === 'executing';
             }
             return isReExecuting;
         },
@@ -99,10 +113,11 @@ export default {
     <template v-if="viewAvailable">
       <NotDisplayable
         v-if="!viewDisplayable"
-        :node-info="webNodeConfig.nodeInfo"
+        :node-info="nodeInfo"
         :node-id="nodeId"
         :show-error="!showExecutionOverlay"
       />
+      <ViewExecutable v-else-if="showViewExecutable" />
       <WebNode
         v-else-if="isWebNodeView"
         :view-config="viewConfig"

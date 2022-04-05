@@ -40,10 +40,15 @@ export default {
             return `${this.isError ? 'ERROR' : 'WARNING'}: ${this.nodeName}`;
         },
         subtitle() {
+            if (this.alert?.subtitle && this.alert?.message) {
+                return this.alert.subtitle;
+            }
             return this.isError ? 'Sorry, a problem occurred:' : 'Message(s) on node:';
         },
         messageText() {
-            return this.alert?.message || 'No further information available. Please check the workflow configuration.';
+            return this.alert?.message ||
+              this.alert?.subtitle ||
+              'No further information available. Please check the workflow configuration.';
         }
     },
     methods: {

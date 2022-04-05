@@ -62,7 +62,7 @@ describe('PopoverMessage', () => {
         }, { root: true });
     });
 
-    it('only minimizes error messages', () => {
+    it('minimizes error messages', () => {
         wrapper = mount(PopoverMessage, {
             propsData: {
                 type: 'warn',
@@ -81,6 +81,11 @@ describe('PopoverMessage', () => {
             }
         });
         let minimizeButton = wrapper.find('.minimize-button');
+        expect(minimizeButton.exists()).toBe(true);
+        minimizeButton.trigger('click');
+        expect(wrapper.emitted('closeAlert'));
+        wrapper.setProps({ type: 'info' });
+        minimizeButton = wrapper.find('.minimize-button');
         expect(minimizeButton.exists()).toBe(true);
         minimizeButton.trigger('click');
         expect(wrapper.emitted('closeAlert'));

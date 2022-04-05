@@ -55,14 +55,16 @@ describe('AlertGlobal', () => {
     });
 
     it('parses alert from store', () => {
-        store.dispatch('pagebuilder/alert/showAlert', SAMPLE_ALERT);
-        expect(wrapper.vm.alert).toBe(SAMPLE_ALERT);
+        const subtitle = 'Custom Subtitle';
+        const alertWithSubtitle = { ...SAMPLE_ALERT, subtitle };
+        store.dispatch('pagebuilder/alert/showAlert', alertWithSubtitle);
+        expect(wrapper.vm.alert).toStrictEqual(alertWithSubtitle);
         expect(wrapper.vm.type).toBe(SAMPLE_ALERT.type);
         expect(wrapper.vm.nodeId).toBe(SAMPLE_ALERT.nodeId);
         expect(wrapper.vm.nodeInfo).toBe(SAMPLE_ALERT.nodeInfo);
         expect(wrapper.vm.nodeName).toBe(SAMPLE_ALERT.nodeInfo.nodeName);
         expect(wrapper.vm.title).toBe('ERROR: KNIME Node');
-        expect(wrapper.vm.subtitle).toBe('Sorry, a problem occurred:');
+        expect(wrapper.vm.subtitle).toBe(subtitle);
         expect(wrapper.vm.messageText).toBe(SAMPLE_ALERT.message);
     });
 

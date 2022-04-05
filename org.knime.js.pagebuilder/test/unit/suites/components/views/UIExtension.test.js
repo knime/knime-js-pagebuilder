@@ -3,12 +3,17 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import { KnimeService } from 'knime-ui-extension-service';
 jest.mock('knime-ui-extension-service');
 
+import * as pagebuilderStoreConfig from '~/store/pagebuilder';
+import * as alertStoreConfig from '~/store/alert';
 import * as serviceStoreConfig from '~/store/service';
 import * as apiStoreConfig from '~/store/wrapperApi';
 
 import UIExtension from '@/components/views/UIExtension';
 import UIExtComponent from '@/components/views/UIExtComponent';
 import UIExtIFrame from '@/components/views/UIExtIFrame';
+import AlertLocal from '@/components/ui/AlertLocal';
+import WarningButton from '@/components/ui/WarningButton';
+
 import { iFrameExtensionConfig, componentExtensionConfig } from '../../../assets/views/extensionConfig';
 
 
@@ -21,6 +26,8 @@ describe('UIExtension.vue', () => {
     }) => {
         let storeConfig = {
             modules: {
+                pagebuilder: pagebuilderStoreConfig,
+                'pagebuilder/alert': alertStoreConfig,
                 'pagebuilder/service': {
                     ...serviceStoreConfig,
                     actions: {
@@ -148,6 +155,90 @@ describe('UIExtension.vue', () => {
             serviceRequest,
             requestParams
         }, expect.undefined);
+    });
+
+    describe('handling messages', () => {
+        const mockAlert = { message: 'Shaken not stirred.' };
+
+        it('displays alerts via push notification', async () => {
+            let pushNotificationMock = jest.fn();
+            let propsData = getMockComponentProps();
+            let wrapper = shallowMount(UIExtension, {
+                localVue,
+                store: createStore({ pushNotificationMock }),
+                propsData
+            });
+            let handleAlertSpy = jest.spyOn(wrapper.vm, 'handleAlert');
+            let notification = { type: 'alert', alert: mockAlert };
+            await wrapper.vm.pushNotification(notification);
+            expect(pushNotificationMock).not.toHaveBeenCalled();
+            expect(handleAlertSpy).toHaveBeenCalledWith(mockAlert);
+        });
+
+        it('sets alerts locally', () => {
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: getMockComponentProps()
+            });
+            let showAlertSpy = jest.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/showAlert'], '0');
+            wrapper.vm.handleAlert(mockAlert);
+            expect(showAlertSpy).not.toHaveBeenCalled();
+            expect(wrapper.vm.alert).toStrictEqual(mockAlert);
+        });
+
+        it('sets alerts via pagebuilder store', () => {
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: getMockComponentProps()
+            });
+            wrapper.vm.$store.state.pagebuilder.isNodeDialog = true;
+            let showAlertSpy = jest.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/showAlert'], '0');
+            wrapper.vm.handleAlert(mockAlert);
+            expect(showAlertSpy).toHaveBeenCalledWith({
+                ...mockAlert, callback: wrapper.vm.closeAlert
+            });
+            expect(wrapper.vm.alert).toBeFalsy();
+        });
+
+        it('removes local alerts', () => {
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: getMockComponentProps()
+            });
+            wrapper.setData({ alert: mockAlert });
+            wrapper.vm.closeAlert(true);
+            expect(wrapper.vm.alert).toBeFalsy();
+        });
+    });
+
+    describe('displaying messages', () => {
+        it('displays error alerts', () => {
+            let mockErrorAlert = { message: 'Shaken not stirred.', type: 'error' };
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: getMockComponentProps()
+            });
+            let showAlertSpy = jest.spyOn(wrapper.vm, 'showAlert');
+            wrapper.setData({ alert: mockErrorAlert });
+            let alertLocal = wrapper.find(AlertLocal);
+            expect(alertLocal.exists()).toBeTruthy();
+            alertLocal.vm.$emit('showAlert');
+            expect(showAlertSpy).toHaveBeenCalledWith(mockErrorAlert);
+        });
+
+        it('displays warning alerts', () => {
+            let mockWarningAlert = { message: 'Bond, James Bond.', type: 'info' };
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: getMockComponentProps()
+            });
+            let showAlertSpy = jest.spyOn(wrapper.vm, 'showAlert');
+            wrapper.setData({ alert: mockWarningAlert });
+            let warningButton = wrapper.find(WarningButton);
+            expect(warningButton.exists()).toBeTruthy();
+            warningButton.vm.$emit('click');
+            expect(showAlertSpy).toHaveBeenCalledWith(mockWarningAlert);
+        });
     });
 
     it('deregisters a KnimeService instance during destroy', () => {

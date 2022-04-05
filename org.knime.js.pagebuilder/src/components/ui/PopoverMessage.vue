@@ -40,7 +40,7 @@ export default {
         /*
          * Controls the styling and default functionality.
          *
-         * @values warn, error (default)
+         * @values warn/info, error (default)
          */
         type: {
             type: String,
@@ -115,7 +115,7 @@ export default {
   <div :class="['pop-over',{ expanded, expandable }, type]">
     <header>
       <Component
-        :is="type === 'warn' ? 'CircleWarningIcon' : 'SignWarningIcon'"
+        :is="type === 'error' ? 'SignWarningIcon' : 'CircleWarningIcon'"
         class="icon warn-icon"
       />
       <Label
@@ -123,7 +123,7 @@ export default {
         class="label"
       />
       <Button
-        v-if="type === 'error'"
+        v-if="type !== 'warn'"
         title="Minimize"
         class="minimize-button"
         @click="onClose()"
@@ -380,6 +380,10 @@ export default {
 
   &.warn header {
     background-color: var(--theme-color-action-required);
+  }
+
+  &.info header {
+    background-color: var(--theme-color-info);
   }
 
   &:not(.expandable) {

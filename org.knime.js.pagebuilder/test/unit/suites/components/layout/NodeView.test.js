@@ -5,6 +5,7 @@ import NodeView from '@/components/layout/NodeView';
 import WebNode from '@/components/views/WebNode';
 import UIExtension from '@/components/views/UIExtension';
 import NotDisplayable from '@/components/views/NotDisplayable';
+import ViewExecutable from '@/components/views/ViewExecutable';
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay';
 
 import * as storeConfig from '~/store/pagebuilder';
@@ -15,28 +16,34 @@ describe('NodeView.vue', () => {
     const getWebNodeProps = () => ({ viewConfig: { nodeID: '0:0:7' } });
     const getUIExtProps = () => ({ viewConfig: { nodeID: '0:0:9' } });
 
+    const mockWebNodeConfig = {
+        foo: 'bar',
+        viewRepresentation: {
+            '@class': 'testing.notWidget'
+        },
+        nodeInfo: {
+            displayPossible: true
+        }
+    };
+    const mockNodeViewConfig = {
+        baz: 'qux',
+        resourceInfo: {},
+        initialData: '{}',
+        projectId: '1:0:1',
+        workflowId: 'root',
+        extensionType: 'VIEW',
+        nodeInfo: {
+            displayPossible: true,
+            nodeState: 'executed'
+        }
+    };
+
     const getWizardPageContent = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => ({
         webNodes: webNodes || {
-            '1:0:1:0:0:7': {
-                foo: 'bar',
-                viewRepresentation: {
-                    '@class': 'testing.notWidget'
-                },
-                nodeInfo: {
-                    displayPossible: true
-                }
-            }
+            '1:0:1:0:0:7': { ...mockWebNodeConfig }
         },
         nodeViews: nodeViews || {
-            '1:0:1:0:0:9': {
-                baz: 'qux',
-                viewRepresentation: {
-                    '@class': 'testing.notWidget'
-                },
-                nodeInfo: {
-                    displayPossible: true
-                }
-            }
+            '1:0:1:0:0:9': { ...mockNodeViewConfig }
         },
         webNodePageConfiguration: webNodePageConfiguration || {
             projectRelativePageIDSuffix: '1:0:1'
@@ -115,26 +122,16 @@ describe('NodeView.vue', () => {
             };
             let localContext = createContext({
                 webNodes: {
-                    '1:0:1:0:0:7': {
-                        foo: 'bar',
-                        viewRepresentation: {
-                            '@class': 'testing.notWidget'
-                        },
-                        nodeInfo: expectedNodeInfo
-                    }
+                    '1:0:1:0:0:7': { ...mockWebNodeConfig, nodeInfo: expectedNodeInfo }
                 }
             });
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
-                propsData: {
-                    viewConfig: {
-                        nodeID: '0:0:7',
-                        resizeMethod: 'viewLowestElement',
-                        autoResize: true
-                    }
-                }
+                propsData: getWebNodeProps()
             });
 
+            expect(wrapper.vm.viewAvailable).toBe(true);
+            expect(wrapper.vm.viewDisplayable).toBe(false);
             expect(wrapper.find(NotDisplayable).exists()).toBe(true);
             expect(wrapper.find(NotDisplayable).props('nodeInfo')).toEqual(expectedNodeInfo);
             expect(wrapper.find(NotDisplayable).props('nodeId')).toEqual('1:0:1:0:0:7');
@@ -142,6 +139,26 @@ describe('NodeView.vue', () => {
 
         xit('renders not displayable ui extensions', () => {
             // TODO: UIEXT-110 Handle displayability of UIExtensions
+        });
+
+        it('renders execute component for UI-Extensions', () => {
+            let expectedNodeInfo = {
+                displayPossible: true,
+                nodeState: 'idle'
+            };
+            let localContext = createContext({
+                nodeViews: {
+                    '1:0:1:0:0:9': { ...mockNodeViewConfig, nodeInfo: expectedNodeInfo }
+                }
+            });
+            let wrapper = shallowMount(NodeView, {
+                ...localContext,
+                propsData: getUIExtProps()
+            });
+
+            expect(wrapper.vm.viewAvailable).toBe(true);
+            expect(wrapper.vm.viewDisplayable).toBe(true);
+            expect(wrapper.find(ViewExecutable).exists()).toBe(true);
         });
 
         it('renders nothing if no view available', () => {

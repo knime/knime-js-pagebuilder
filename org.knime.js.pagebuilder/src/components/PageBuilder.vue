@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import * as pagebuilderStoreConfig from '~/store/pagebuilder';
 import * as interactivityStoreConfig from '~/store/interactivity';
 import * as alertStoreConfig from '~/store/alert';
@@ -18,6 +19,7 @@ export default {
         store.registerModule('pagebuilder/service', serviceStoreConfig);
     },
     computed: {
+        ...mapState('pagebuilder', ['isNodeDialog']),
         hasPage() {
             let page = this.$store.state.pagebuilder.page;
             return Boolean(page?.wizardPageContent);
@@ -29,6 +31,6 @@ export default {
 <template>
   <div>
     <Page v-if="hasPage" />
-    <AlertGlobal />
+    <AlertGlobal v-if="!isNodeDialog" />
   </div>
 </template>

@@ -1,7 +1,10 @@
 <script>
+import { mapState } from 'vuex';
 import { KnimeService, IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
 import UIExtComponent from '~/src/components/views/UIExtComponent';
 import UIExtIFrame from '~/src/components/views/UIExtIFrame';
+import AlertLocal from '~/src/components/ui/AlertLocal';
+import WarningButton from '~/src/components/ui/WarningButton';
 
 import muteReactivity from '~/src/util/muteReactivity';
 
@@ -13,7 +16,9 @@ import muteReactivity from '~/src/util/muteReactivity';
 export default {
     components: {
         UIExtComponent,
-        UIExtIFrame
+        UIExtIFrame,
+        AlertLocal,
+        WarningButton
     },
     // using provide/inject instead of a prop to pass the knimeService to the children because
     // 1) we don't want reactivity in this case
@@ -41,10 +46,12 @@ export default {
     data() {
         return {
             configKey: 0,
-            knimeService: null
+            knimeService: null,
+            alert: null
         };
     },
     computed: {
+        ...mapState('pagebuilder', ['isNodeDialog']),
         isUIExtComponent() {
             return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
         },
@@ -52,6 +59,12 @@ export default {
             return this.$store.getters['api/uiExtResourceLocation']({
                 resourceInfo: this.extensionConfig?.resourceInfo
             });
+        },
+        displayError() {
+            return this.alert?.type === 'error';
+        },
+        displayWarning() {
+            return this.alert?.type === 'info';
         }
     },
     watch: {
@@ -75,7 +88,41 @@ export default {
             });
         },
         pushNotification(notification) {
+            if (notification?.type === 'alert') {
+                if (notification.alert?.type === 'warn') {
+                    notification.alert.type = 'info';
+                }
+                return this.handleAlert(notification.alert);
+            }
             return this.$store.dispatch('pagebuilder/service/pushNotification', notification);
+        },
+        handleAlert(alert) {
+            if (this.isNodeDialog) {
+                this.showAlert(alert);
+            } else {
+                this.alert = alert;
+            }
+        },
+        /**
+         * Dispatches an event to show the local alert details with the global alert via store action.
+         *
+         * @param {Object} alert - the alert to display.
+         * @returns {Promise}
+         */
+        showAlert(alert) {
+            return this.$store.dispatch('pagebuilder/alert/showAlert', { ...alert, callback: this.closeAlert });
+        },
+        /**
+         * Callback function passed to the alert store to close the local alert when a global alert action is
+         * triggered. Can be used locally if needed.
+         *
+         * @param {Boolean} [remove] - optionally if the local alert should be cleared.
+         * @returns {undefined}
+         */
+        closeAlert(remove) {
+            if (remove) {
+                this.alert = null;
+            }
         }
     }
 };
@@ -92,5 +139,23 @@ export default {
       :key="configKey"
       :resource-location="resourceLocation"
     />
+    <AlertLocal
+      v-if="displayError"
+      active
+      @showAlert="showAlert(alert)"
+    />
+    <WarningButton
+      v-if="displayWarning"
+      class="warning-button"
+      @click="showAlert(alert)"
+    />
   </div>
 </template>
+
+<style lang="postcss" scoped>
+.warning-button {
+  position: absolute;
+  bottom: 0;
+  top: unset;
+}
+</style>
