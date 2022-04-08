@@ -9,6 +9,7 @@ export default {
         }
     },
     mounted() {
+        this.knimeService.updateEventListener();
         this.knimeService.setIFrameWindow(this.$refs.iframe.contentWindow);
     },
     beforeDestroy() {
