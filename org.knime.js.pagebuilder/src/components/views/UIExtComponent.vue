@@ -33,13 +33,10 @@ export default {
          * @returns {string} - unique id for the resource registered to this node.
          */
         componentId() {
-            // TODO: NXT-856 remove dialog workaround when componentId is generalized by the framework
-            let componentId = this.resourceInfo?.id;
-            if (this.extensionConfig?.extensionType === 'dialog' &&
-            this.resourceInfo?.type === 'VUE_COMPONENT_LIB') {
-                componentId = 'NodeDialog';
+            if (this.extensionConfig?.extensionType === 'dialog') {
+                return 'DefaultNodeDialog';
             }
-            return componentId;
+            return this.resourceInfo?.id;
         }
     },
     async created() {
