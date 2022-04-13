@@ -7,8 +7,7 @@ It is built as an [Vue library] and used in KNIME Analytics Platform and KNIME W
 
 ### Prerequisites
 
-* Install [Node.js][node], see version in [.nvmrc](.nvmrc).
-* Only for test coverage uploads to SonarQube: you also need [Java]™ 8 or 11.
+* Install [Node.js][node], see version in [package.json](package.json).
 
 Newer versions may also work, but have not been tested.
 
@@ -82,14 +81,6 @@ npm run coverage
 
 The output can be found in the `coverage` folder. It contains a browseable html report as well as raw coverage data in
 [LCOV] and [Clover] format, which can be used in analysis software (SonarQube, Jenkins, …).
-
-The following command allows you to upload the coverage data to SonarQube:
-
-```sh
-npm run sendcoverage
-```
-It requires the `SONAR_LOGIN` and `SONAR_PASSWORD` environment variables to be set, which must be valid credentials
-for the SonarQube instance configured in `sonar-project.properties`.
 
 
 ### Running security audit

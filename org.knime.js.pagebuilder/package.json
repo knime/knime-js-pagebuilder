@@ -19,11 +19,11 @@
     "lint:js": "eslint --ext .js,.vue .",
     "lint:json": "eslint --ext .json .",
     "lint:css": "stylelint '**/*.{css,vue}'",
-    "audit": "check-audit --production",
+    "lint:ci": "eslint --ext .js,.vue,.json -f json -o target/eslint.json || true; stylelint '**/*.{css,vue}' -f json -o target/stylelint.json || true",
+    "audit": "check-audit --production --json > target/audit.json || true",
     "test:unit": "vue-cli-service test:unit",
-    "coverage": "vue-cli-service test:unit --coverage",
+    "coverage": "vue-cli-service test:unit --coverage || true",
     "coverage:watch": "npm run test:unit -- --coverage --watch",
-    "sendcoverage": "cross-var sonar-scanner -Dsonar.login=\"$SONAR_LOGIN\" -Dsonar.password=\"$SONAR_PASSWORD\"",
     "opensourcecredits": "npm run --prefix webapps-common/ opensourcecredits"
   },
   "license": "UNLICENSED",
@@ -46,6 +46,8 @@
     "webapps-common": "file:webapps-common"
   },
   "devDependencies": {
+    "@fontsource/roboto": "4.5.5",
+    "@fontsource/roboto-mono": "4.5.5",
     "@vue/cli-plugin-babel": "4.5.4",
     "@vue/cli-plugin-unit-jest": "4.5.4",
     "@vue/cli-service": "4.5.4",
@@ -61,8 +63,6 @@
     "eslint-plugin-jest-formatting": "3.0.0",
     "eslint-plugin-jsonc": "2.0.0",
     "eslint-plugin-vue": "7.20.0",
-    "fontsource-roboto": "3.0.3",
-    "fontsource-roboto-mono": "3.0.3",
     "http-server": "0.12.3",
     "jest-junit": "7.0.0",
     "modern-normalize": "1.1.0",
