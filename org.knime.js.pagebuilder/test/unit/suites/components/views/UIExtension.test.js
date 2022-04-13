@@ -12,7 +12,7 @@ import UIExtension from '@/components/views/UIExtension';
 import UIExtComponent from '@/components/views/UIExtComponent';
 import UIExtIFrame from '@/components/views/UIExtIFrame';
 import AlertLocal from '@/components/ui/AlertLocal';
-import WarningButton from '@/components/ui/WarningButton';
+import WarningLocal from '@/components/ui/WarningLocal';
 
 import { iFrameExtensionConfig, componentExtensionConfig } from '../../../assets/views/extensionConfig';
 
@@ -227,14 +227,14 @@ describe('UIExtension.vue', () => {
         });
 
         it('displays warning alerts', () => {
-            let mockWarningAlert = { message: 'Bond, James Bond.', type: 'info' };
+            let mockWarningAlert = { message: 'Bond, James Bond.', type: 'warn' };
             let wrapper = shallowMount(UIExtension, {
                 ...context,
                 propsData: getMockComponentProps()
             });
             let showAlertSpy = jest.spyOn(wrapper.vm, 'showAlert');
             wrapper.setData({ alert: mockWarningAlert });
-            let warningButton = wrapper.find(WarningButton);
+            let warningButton = wrapper.find(WarningLocal);
             expect(warningButton.exists()).toBeTruthy();
             warningButton.vm.$emit('click');
             expect(showAlertSpy).toHaveBeenCalledWith(mockWarningAlert);

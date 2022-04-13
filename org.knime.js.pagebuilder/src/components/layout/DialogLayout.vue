@@ -1,5 +1,5 @@
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 import NodeView from './NodeView';
 import Messages from '~/webapps-common/ui/components/Messages';
@@ -28,7 +28,9 @@ export default {
         }
     },
     computed: {
-        ...mapState('pagebuilder/alert', ['alert']),
+        ...mapGetters({
+            message: 'pagebuilder/alert/alertAsMessage'
+        }),
         columns() {
             const rowConfig = this.layout.rows[0];
             return rowConfig.columns;
@@ -40,23 +42,13 @@ export default {
             return this.columns[0].content[0];
         },
         messages() {
-            if (!this.alert) {
+            if (!this.message) {
                 return [];
             }
-            let { message: details, type = 'UNKNOWN', subtitle: message = '', nodeId, nodeInfo } = this.alert;
-            if (details) {
-                message += ` ${details}`;
-            }
-            let typeHeader = type === 'info' ? 'WARNING' : type.toUpperCase();
-            return [{
-                message: `${typeHeader} ${nodeInfo?.nodeName || 'Missing node'}`,
-                details: message || 'No further information available. Please check the workflow configuration.',
-                count: 1,
-                id: nodeId,
-                type,
-                showCollapser: true,
-                showCloseButton: true
-            }];
+            return [this.message];
+        },
+        showMessages() {
+            return Boolean(this.messages.length);
         }
     },
     methods: {
@@ -79,9 +71,12 @@ export default {
 <template>
   <div class="layout">
     <div class="item view">
-      <NodeView :view-config="viewContent" />
+      <NodeView
+        class="view-content"
+        :view-config="viewContent"
+      />
       <Messages
-        v-if="alert"
+        v-if="showMessages"
         class="messages"
         :messages="messages"
         @dismiss="onClose"
@@ -110,8 +105,11 @@ export default {
   flex-grow: 1;
   flex-direction: column;
 
-  & > * {
-    flex: 0 0 auto;
+  & .view-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   & .messages {

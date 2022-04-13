@@ -112,11 +112,11 @@ describe('DialogLayout.vue', () => {
         wrapper.vm.$store.dispatch('pagebuilder/alert/showAlert', mockAlert);
         expect(wrapper.vm.messages).toStrictEqual([{
             count: 1,
-            details: 'Category Column Universe_0_0 is not present in table.',
+            details: '',
             id: '0:0:7',
-            message: 'ERROR Scatter Plot',
+            message: 'ERROR Category Column Universe_0_0 is not present in table.',
             showCloseButton: true,
-            showCollapser: true,
+            showCollapser: false,
             type: 'error'
         }]);
     });

@@ -58,27 +58,26 @@ export default {
 
 <style lang="postcss" scoped>
 .view-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 50%;
-    margin-top: -25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    & > * {
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-    }
+  & > * {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+  }
 
-    & .message {
-        font-size: 18px;
-        line-height: 21px;
-        font-weight: 400;
-    }
+  & .message {
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 300;
+    color: var(--knime-masala);
+  }
 
-    & svg {
-        max-height: 15%;
-        max-width: 15%;
-        stroke: var(--knime-gray-dark-semi);
-    }
+  & svg {
+    max-height: 200px;
+    max-width: 200px;
+    stroke: var(--knime-gray-dark-semi);
+  }
 }
 </style>

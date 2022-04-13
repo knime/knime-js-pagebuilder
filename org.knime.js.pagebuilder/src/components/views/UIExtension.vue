@@ -4,7 +4,7 @@ import { KnimeService, IFrameKnimeServiceAdapter } from 'knime-ui-extension-serv
 import UIExtComponent from '~/src/components/views/UIExtComponent';
 import UIExtIFrame from '~/src/components/views/UIExtIFrame';
 import AlertLocal from '~/src/components/ui/AlertLocal';
-import WarningButton from '~/src/components/ui/WarningButton';
+import WarningLocal from '~/src/components/ui/WarningLocal';
 
 import muteReactivity from '~/src/util/muteReactivity';
 
@@ -18,7 +18,7 @@ export default {
         UIExtComponent,
         UIExtIFrame,
         AlertLocal,
-        WarningButton
+        WarningLocal
     },
     // using provide/inject instead of a prop to pass the knimeService to the children because
     // 1) we don't want reactivity in this case
@@ -64,7 +64,7 @@ export default {
             return this.alert?.type === 'error';
         },
         displayWarning() {
-            return this.alert?.type === 'info';
+            return this.alert?.type === 'warn';
         }
     },
     watch: {
@@ -89,9 +89,6 @@ export default {
         },
         pushNotification(notification) {
             if (notification?.type === 'alert') {
-                if (notification.alert?.type === 'warn') {
-                    notification.alert.type = 'info';
-                }
                 return this.handleAlert(notification.alert);
             }
             return this.$store.dispatch('pagebuilder/service/pushNotification', notification);
@@ -144,16 +141,16 @@ export default {
       active
       @showAlert="showAlert(alert)"
     />
-    <WarningButton
+    <WarningLocal
       v-if="displayWarning"
-      class="warning-button"
+      class="local-warning"
       @click="showAlert(alert)"
     />
   </div>
 </template>
 
 <style lang="postcss" scoped>
-.warning-button {
+.local-warning {
   position: absolute;
   bottom: 0;
   top: unset;
