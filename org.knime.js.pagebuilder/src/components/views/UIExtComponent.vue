@@ -1,6 +1,8 @@
 <script>
 import { loadComponentLibrary } from '~/src/util/loadComponentLibrary';
 
+const DEFAULT_DIALOG_NAMESPACE_ID = 'DefaultNodeDialog';
+
 export default {
     components: {
         // Any Vue-based component library
@@ -33,13 +35,10 @@ export default {
          * @returns {string} - unique id for the resource registered to this node.
          */
         componentId() {
-            // TODO: NXT-856 remove dialog workaround when componentId is generalized by the framework
-            let componentId = this.resourceInfo?.id;
-            if (this.extensionConfig?.extensionType === 'dialog' &&
-            this.resourceInfo?.type === 'VUE_COMPONENT_LIB') {
-                componentId = 'NodeDialog';
+            if (this.extensionConfig?.extensionType === 'dialog') {
+                return DEFAULT_DIALOG_NAMESPACE_ID;
             }
-            return componentId;
+            return this.resourceInfo?.id;
         }
     },
     async created() {
