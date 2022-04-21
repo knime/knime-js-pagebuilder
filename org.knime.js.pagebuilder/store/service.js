@@ -3,7 +3,8 @@ import consola from 'consola';
 export const namespaced = true;
 
 export const state = () => ({
-    services: {}
+    services: {},
+    dialogApplySettings: null
 });
 
 export const mutations = {
@@ -28,6 +29,10 @@ export const mutations = {
      */
     deregisterService(state, service) {
         delete state.services[service.serviceId];
+    },
+
+    setApplySettings(state, applySettingsMethod) {
+        state.dialogApplySettings = applySettingsMethod;
     }
 };
 
@@ -74,5 +79,15 @@ export const actions = {
         return Promise.all(Object.values(state.services).filter(service => service.serviceId !== callerId).map(
             (service) => service.onServiceNotification(event)
         ));
+    },
+
+    setApplySettings({ commit }, { dialogApplySettings }) {
+        commit('setApplySettings', dialogApplySettings);
+    },
+
+    applySettings({ state }) {
+        return new Promise((resolve, reject) => {
+            resolve(state.dialogApplySettings());
+        });
     }
 };

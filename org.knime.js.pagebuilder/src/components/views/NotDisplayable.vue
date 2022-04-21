@@ -8,7 +8,6 @@ export default {
         SignWarningIcon
     },
     props: {
-        // TODO: UIEXT-110 Accept UI Extension config
         nodeInfo: {
             type: Object,
             default: () => {}

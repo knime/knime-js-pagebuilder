@@ -80,9 +80,11 @@ export default {
             return this.isWebNodeView || this.isUIExtension;
         },
         viewDisplayable() {
-            // TODO: UIEXT-110 Handle displayability of UIExtensions
-            if (this.isUIExtension) {
+            if (this.isNodeDialog) {
                 return true;
+            }
+            if (this.isUIExtension) {
+                return this.nodeInfo?.nodeState === 'executed';
             }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
@@ -117,7 +119,10 @@ export default {
         :node-id="nodeId"
         :show-error="!showExecutionOverlay"
       />
-      <ViewExecutable v-else-if="showViewExecutable" />
+      <ViewExecutable
+        v-else-if="showViewExecutable"
+        :node-id="nodeId"
+      />
       <WebNode
         v-else-if="isWebNodeView"
         :view-config="viewConfig"

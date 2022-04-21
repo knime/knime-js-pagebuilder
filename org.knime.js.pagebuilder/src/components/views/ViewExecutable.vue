@@ -1,9 +1,33 @@
 <script>
+// import { mapActions } from 'vuex';
 import Button from '~/webapps-common/ui/components/Button';
+import ExecutingOverlay from '../ui/ExecutingOverlay';
 
 export default {
     components: {
-        Button
+        Button,
+        ExecutingOverlay
+    },
+    props: {
+        nodeId: {
+            type: String,
+            default: ''
+        }
+    },
+    data() {
+        return {
+            showReexecutionOverlay: false,
+            showReexecutionSpinner: false
+        };
+    },
+    methods: {
+        async executeViewSaveSettings() {
+            this.showReexecutionOverlay = true;
+            setTimeout(() => {
+                this.showReexecutionSpinner = true;
+            }, 1);
+            await this.$store.dispatch('pagebuilder/service/applySettings');
+        }
     }
 };
 </script>
@@ -45,11 +69,14 @@ export default {
       <line x1="46.5" y1="2.18557e-08" x2="46.5" y2="93" />
     </svg>
     <!-- eslint-enable -->
-    <!-- TODO: UIEXT-110: Enable execute from view -->
+    <ExecutingOverlay
+      :show="showReexecutionOverlay"
+      :show-spinner="showReexecutionSpinner"
+    />
     <Button
       with-border
-      disabled
       title="Execute & save"
+      @click="executeViewSaveSettings"
     >
       Execute & save
     </Button>
