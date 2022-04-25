@@ -121,7 +121,7 @@ export default {
       />
       <ViewExecutable
         v-else-if="showViewExecutable"
-        :node-id="nodeId"
+        :extension-config="uiExtensionConfig"
       />
       <WebNode
         v-else-if="isWebNodeView"

@@ -9,9 +9,16 @@ export default {
         ExecutingOverlay
     },
     props: {
-        nodeId: {
-            type: String,
-            default: ''
+        extensionConfig: {
+            default: () => ({}),
+            type: Object,
+            validate(extensionConfig) {
+                if (typeof extensionConfig !== 'object') {
+                    return false;
+                }
+                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'resourceInfo'];
+                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
+            }
         }
     },
     data() {
@@ -25,8 +32,12 @@ export default {
             this.showReexecutionOverlay = true;
             setTimeout(() => {
                 this.showReexecutionSpinner = true;
-            }, 1);
+            }, 0);
             await this.$store.dispatch('pagebuilder/service/applySettings');
+            await this.$store.dispatch('api/changeNodeStates', {
+                extensionConfig: this.extensionConfig,
+                newNodeState: 'execute'
+            });
         }
     }
 };

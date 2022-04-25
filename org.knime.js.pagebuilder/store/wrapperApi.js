@@ -46,6 +46,23 @@ export const actions = {
     /* RE-EXECUTION ACTIONS */
 
     /**
+     *
+     * @param {Object} context - Vuex context.
+     * @param {Object} param - action config.
+     * @param {Object} param.extensionConfig - the UI extension config.
+     * @param {KnimeTypes.NodeService} param.newNodeState - the new node state.
+     * @returns {Promise<Object>} - the results of the changeNodeStates call.
+     */
+    changeNodeStates({ dispatch }, { extensionConfig, newNodeState }) {
+        const rpcParams = [
+            extensionConfig.projectId, extensionConfig.workflowId, [extensionConfig.nodeId], newNodeState
+        ];
+        return dispatch('singleRPC', {
+            rpcConfig: createJsonRpcRequest('NodeService.changeNodeStates', rpcParams)
+        });
+    },
+
+    /**
      * Triggers a partial re-execution of the composite view. This consists of the following steps: validation, value
      * retrieval and page update or polling initialization.
      *
