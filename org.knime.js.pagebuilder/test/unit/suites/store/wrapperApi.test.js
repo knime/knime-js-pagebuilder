@@ -97,6 +97,28 @@ describe('wrapper API store', () => {
     });
 
     describe('re-execution', () => {
+        it('successfully dispatches nodeStateChange action', async () => {
+            let singleRPC = jest.fn();
+            let store = getMockStore({ wrapperApiMocks: { singleRPC } });
+            let nodeService = 'NodeService.changeNodeStates';
+            let newNodeState = 'execute';
+            let rpcParams = { extensionConfig, newNodeState };
+            await store.dispatch('changeNodeStates', rpcParams);
+            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), {
+                rpcConfig: {
+                    id: expect.any(Number),
+                    jsonrpc: '2.0',
+                    method: nodeService,
+                    params: [
+                        extensionConfig.projectId,
+                        extensionConfig.workflowId,
+                        [extensionConfig.nodeId],
+                        newNodeState
+                    ]
+                }
+            }, EMPTY);
+        });
+
         it('successfully dispatches re-execute action', async () => {
             let validResponse = Promise.resolve({ foo: true });
             let valueResponse = Promise.resolve({ foo: 1 });

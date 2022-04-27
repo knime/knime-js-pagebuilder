@@ -137,10 +137,6 @@ describe('NodeView.vue', () => {
             expect(wrapper.find(NotDisplayable).props('nodeId')).toEqual('1:0:1:0:0:7');
         });
 
-        xit('renders not displayable ui extensions', () => {
-            // TODO: UIEXT-110 Handle displayability of UIExtensions
-        });
-
         it('renders execute component for UI-Extensions', () => {
             let expectedNodeInfo = {
                 displayPossible: true,

@@ -16,7 +16,7 @@ export default {
                 if (typeof extensionConfig !== 'object') {
                     return false;
                 }
-                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'resourceInfo'];
+                const requiredProperties = ['nodeId', 'workflowId', 'projectId'];
                 return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
             }
         }
