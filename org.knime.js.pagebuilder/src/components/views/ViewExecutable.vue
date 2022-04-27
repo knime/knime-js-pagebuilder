@@ -1,5 +1,4 @@
 <script>
-// import { mapActions } from 'vuex';
 import Button from '~/webapps-common/ui/components/Button';
 import ExecutingOverlay from '../ui/ExecutingOverlay';
 
@@ -13,7 +12,7 @@ export default {
             default: () => ({}),
             type: Object,
             validate(extensionConfig) {
-                if (typeof extensionConfig !== 'object') {
+                if (typeof extensionConfig !== 'object' || Array.isArray(extensionConfig)) {
                     return false;
                 }
                 const requiredProperties = ['nodeId', 'workflowId', 'projectId'];
@@ -30,9 +29,7 @@ export default {
     methods: {
         async executeViewSaveSettings() {
             this.showReexecutionOverlay = true;
-            setTimeout(() => {
-                this.showReexecutionSpinner = true;
-            }, 0);
+            this.showReexecutionSpinner = true;
             await this.$store.dispatch('pagebuilder/service/applySettings');
             await this.$store.dispatch('api/changeNodeStates', {
                 extensionConfig: this.extensionConfig,

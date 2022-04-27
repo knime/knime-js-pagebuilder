@@ -90,6 +90,8 @@ describe('ViewExecutable.vue', () => {
                 propsData
             });
             await wrapper.vm.executeViewSaveSettings();
+            expect(wrapper.vm.showReexecutionOverlay).toBeTruthy();
+            expect(wrapper.vm.showReexecutionSpinner).toBeTruthy();
             expect(wrapper.find(ExecutingOverlay).exists()).toBeTruthy();
         });
 
