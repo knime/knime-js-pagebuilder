@@ -87,9 +87,7 @@ export const mutations = {
     updateViewConfig(state, { nodeId, update, config, type, viewType = 'webNodes' } = {}) {
         // Update viewValues and other nested properties.
         if (update) {
-            let currentWebNode = viewType === 'webNodes'
-                ? state.page.wizardPageContent[viewType][nodeId]
-                : state.page.wizardPageContent.nodeViews.VIEW;
+            let currentWebNode = state.page.wizardPageContent[viewType][nodeId];
             for (let [key, value] of Object.entries(update)) {
                 try {
                     setProp(currentWebNode, key, value);
@@ -204,7 +202,7 @@ export const actions = {
         const newViewConfig = {
             viewType: 'nodeViews',
             update: nodeView,
-            nodeId: nodeView.nodeId
+            nodeId: 'VIEW'
         };
         commit('updateViewConfig', newViewConfig);
     },

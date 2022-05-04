@@ -107,8 +107,6 @@ export const actions = {
      * @returns {Promise<any>} - a Promise calling the applySettings method.
      */
     callApplySettings({ state }) {
-        return new Promise((resolve, reject) => {
-            resolve(state.applyDialogSettings());
-        });
+        return state.applyDialogSettings();
     }
 };

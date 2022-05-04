@@ -46,6 +46,7 @@ export const actions = {
     /* RE-EXECUTION ACTIONS */
 
     /**
+     * Calls the NodeService via an RPC to change the NodeState of the given Node.
      *
      * @param {Object} context - Vuex context.
      * @param {Object} param - action config.
