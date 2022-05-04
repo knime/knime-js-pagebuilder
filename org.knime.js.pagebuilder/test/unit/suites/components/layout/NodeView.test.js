@@ -153,8 +153,9 @@ describe('NodeView.vue', () => {
             });
 
             expect(wrapper.vm.viewAvailable).toBe(true);
-            expect(wrapper.vm.viewDisplayable).toBe(true);
-            expect(wrapper.find(ViewExecutable).exists()).toBe(true);
+            expect(wrapper.vm.viewDisplayable).toBe(false);
+            // expect(wrapper.find(ViewExecutable).exists()).toBe(true);
+            expect(wrapper.find(NotDisplayable).exists()).toBe(true);
         });
 
         it('renders nothing if no view available', () => {

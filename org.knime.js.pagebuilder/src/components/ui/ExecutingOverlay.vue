@@ -13,10 +13,15 @@ export default {
         showSpinner: {
             type: Boolean,
             default: false
+        },
+        transitionName: {
+            type: String,
+            default: 'fade'
         }
     },
     data() {
         return {
+            overlayRefAvailable: false,
             SVG_STROKE_PIXEL_OFFSET: 3 // px
         };
     },
@@ -49,6 +54,9 @@ export default {
         getOverlayWidth() {
             let el = this.$refs?.overlay?.offsetWidth;
             return el ? el / 2 : 0;
+        },
+        afterEnter() {
+            this.overlayRefAvailable = true;
         }
     }
 };
@@ -58,13 +66,14 @@ export default {
   <transition
     v-if="show"
     appear
-    name="fade"
+    :name="transitionName"
+    @after-enter="afterEnter()"
   >
     <div ref="overlay">
       <transition
-        v-if="showSpinner"
+        v-if="showSpinner && overlayRefAvailable"
         appear
-        name="fade"
+        :name="transitionName"
       >
         <svg
           :view-box="`0 0 ${spinnerHeight} ${spinnerHeight}`"

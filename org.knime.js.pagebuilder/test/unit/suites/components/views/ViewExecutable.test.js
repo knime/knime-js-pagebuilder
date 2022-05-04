@@ -64,7 +64,7 @@ describe('ViewExecutable.vue', () => {
                         'pagebuilder/service': {
                             ...serviceStoreConfig,
                             actions: {
-                                applySettings: applySettingsMock
+                                callApplySettings: applySettingsMock
                             }
                         },
                         api: {

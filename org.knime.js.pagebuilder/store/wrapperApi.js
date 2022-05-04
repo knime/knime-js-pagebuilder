@@ -51,13 +51,13 @@ export const actions = {
      * @param {Object} param - action config.
      * @param {Object} param.extensionConfig - the UI extension config.
      * @param {KnimeTypes.NodeService} param.newNodeState - the new node state.
-     * @returns {Promise<Object>} - the results of the changeNodeStates call.
+     * @returns {undefined}
      */
     changeNodeStates({ dispatch }, { extensionConfig, newNodeState }) {
         const rpcParams = [
             extensionConfig.projectId, extensionConfig.workflowId, [extensionConfig.nodeId], newNodeState
         ];
-        return dispatch('singleRPC', {
+        dispatch('singleRPC', {
             rpcConfig: createJsonRpcRequest('NodeService.changeNodeStates', rpcParams)
         });
     },

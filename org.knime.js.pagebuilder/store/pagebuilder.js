@@ -87,7 +87,9 @@ export const mutations = {
     updateViewConfig(state, { nodeId, update, config, type, viewType = 'webNodes' } = {}) {
         // Update viewValues and other nested properties.
         if (update) {
-            let currentWebNode = state.page.wizardPageContent[viewType][nodeId];
+            let currentWebNode = viewType === 'webNodes'
+                ? state.page.wizardPageContent[viewType][nodeId]
+                : state.page.wizardPageContent.nodeViews.VIEW;
             for (let [key, value] of Object.entries(update)) {
                 try {
                     setProp(currentWebNode, key, value);
@@ -196,6 +198,15 @@ export const actions = {
                     'That could interfere with reactive nodes.'
             });
         }
+    },
+
+    updateNodeViewConfig({ commit }, { nodeView }) {
+        const newViewConfig = {
+            viewType: 'nodeViews',
+            update: nodeView,
+            nodeId: nodeView.nodeId
+        };
+        commit('updateViewConfig', newViewConfig);
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {

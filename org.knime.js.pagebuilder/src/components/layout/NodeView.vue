@@ -84,7 +84,7 @@ export default {
                 return true;
             }
             if (this.isUIExtension) {
-                return this.nodeInfo?.nodeState === 'executed';
+                return this.isExecuted;
             }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable

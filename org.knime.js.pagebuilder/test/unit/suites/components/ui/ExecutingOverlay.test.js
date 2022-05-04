@@ -23,7 +23,7 @@ describe('ExecutingOverlay.vue', () => {
         expect(wrapper.find('svg').exists()).toBeFalsy();
     });
 
-    it('renders loading svg via prop', () => {
+    it('renders loading svg via prop after transition ending', () => {
         let wrapper = shallowMount(ExecutingOverlay, {
             propsData: {
                 nodeId: '007',
@@ -31,6 +31,7 @@ describe('ExecutingOverlay.vue', () => {
                 showSpinner: true
             }
         });
+        wrapper.vm.afterEnter();
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.find('svg').exists()).toBeTruthy();
     });
