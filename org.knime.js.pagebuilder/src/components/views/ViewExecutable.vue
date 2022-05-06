@@ -77,11 +77,6 @@ export default {
       <line x1="46.5" y1="2.18557e-08" x2="46.5" y2="93" />
     </svg>
     <!-- eslint-enable -->
-    <ExecutingOverlay
-      :show="showReexecutionOverlay"
-      :show-spinner="showReexecutionSpinner"
-      :transition-name="'none'"
-    />
     <Button
       with-border
       title="Execute & save"
@@ -89,6 +84,11 @@ export default {
     >
       Execute & save
     </Button>
+    <ExecutingOverlay
+      :show="showReexecutionOverlay"
+      :show-spinner="showReexecutionSpinner"
+      :transition-name="'none'"
+    />
   </div>
 </template>
 

@@ -35,10 +35,13 @@ export default {
         svgLeft() {
             return this.showSpinner ? this.getOverlayWidth() : 0;
         },
+        svgTop() {
+            return this.showSpinner ? this.getOverlayHeight() : 0;
+        },
         svgStyle() {
             return `height:${this.spinnerHeight}px;` +
                 `width:${this.spinnerHeight}px;` +
-                `top:${this.spinnerHeight / 2}px;` +
+                `top:${this.svgTop - (this.spinnerHeight / 2)}px;` +
                 `left:${this.svgLeft - (this.spinnerHeight / 2)}px;`;
         },
         spinnerStyle() {
@@ -53,6 +56,10 @@ export default {
         },
         getOverlayWidth() {
             let el = this.$refs?.overlay?.offsetWidth;
+            return el ? el / 2 : 0;
+        },
+        getOverlayHeight() {
+            let el = this.$refs?.overlay?.offsetHeight;
             return el ? el / 2 : 0;
         },
         afterEnter() {
