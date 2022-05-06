@@ -61,14 +61,14 @@ export default {
       <path d="M70 83.6148C77.5194 83.6148 83.615 77.5191 83.615 69.9998C83.615 62.4804 77.5194 56.3848 70 56.3848C62.4807 56.3848 56.385 62.4804 56.385 69.9998C56.385 77.5191 62.4807 83.6148 70 83.6148Z" stroke-miterlimit="10" stroke-linejoin="round"/>
       <path d="M11.5 57V82" stroke-miterlimit="10" stroke-linejoin="round"/>
       <path d="M11 81.5H36" stroke-miterlimit="10" stroke-linejoin="round"/>
-      <line stroke-linecap="round" x1="20" y1="62" x2="20" y2="62" transform="translate(x, y) scale(1.6)" stroke-width="1.5%"/>
-      <line stroke-linecap="round" x1="30.5" y1="58.5" x2="30.5" y2="58.5" transform="translate(x, y) scale(1.6)" stroke-width="1.5%"/>
-      <line stroke-linecap="round" x1="25.5" y1="64.5" x2="25.5" y2="64.5" transform="translate(x, y) scale(1.6)" stroke-width="1.5%"/>
-      <line stroke-linecap="round" x1="33.5" y1="63.5" x2="33.5" y2="63.5" transform="translate(x, y) scale(1.6)" stroke-width="1.5%"/>
-      <line stroke-linecap="round" x1="30.5" y1="67.5" x2="30.5" y2="67.5" transform="translate(x, y) scale(1.6)" stroke-width="1.5%"/>
-      <line stroke-linecap="round" x1="20.5" y1="67.5" x2="20.5" y2="67.5" transform="translate(x, y) scale(1.6)" stroke-width="1.5%"/>
-      <line stroke-linecap="round" x1="17.5" y1="71.5" x2="17.5" y2="71.5" transform="translate(x, y) scale(1.6)" stroke-width="1.5%"/>
-      <line stroke-linecap="round" x1="14.5" y1="76.5" x2="14.5" y2="76.5" transform="translate(x, y) scale(1.6)" stroke-width="1.5%"/>
+      <line stroke-linecap="round" x1="0" y1="0" x2="0" y2="0" transform="translate (20,62) scale(1.6)" stroke-width="1.5%"/>
+      <line stroke-linecap="round" x1="0" y1="0" x2="0" y2="0" transform="translate (30.5,58.5) scale(1.6)" stroke-width="1.5%"/>
+      <line stroke-linecap="round" x1="0" y1="0" x2="0" y2="0" transform="translate (25.5,64.5) scale(1.6)" stroke-width="1.5%"/>
+      <line stroke-linecap="round" x1="0" y1="0" x2="0" y2="0" transform="translate (33.5,63.5) scale(1.6)" stroke-width="1.5%"/>
+      <line stroke-linecap="round" x1="0" y1="0" x2="0" y2="0" transform="translate (30.5,67.5) scale(1.6)" stroke-width="1.5%"/>
+      <line stroke-linecap="round" x1="0" y1="0" x2="0" y2="0" transform="translate (20.5,67.5) scale(1.6)" stroke-width="1.5%"/>
+      <line stroke-linecap="round" x1="0" y1="0" x2="0" y2="0" transform="translate (17.5,71.5) scale(1.6)" stroke-width="1.5%"/>
+      <line stroke-linecap="round" x1="0" y1="0" x2="0" y2="0" transform="translate (14.5,76.5) scale(1.6)" stroke-width="1.5%"/>
       <path d="M23 9.65283L8.966 19.8488L14.327 36.3468H31.673L37.034 19.8488L23 9.65283Z" stroke-miterlimit="10" stroke-linejoin="round"/>
       <path d="M37.034 19.8488L23 23.9248V9.65283" stroke-miterlimit="10" stroke-linejoin="round"/>
       <path d="M31.673 36.3471L23 23.9251L14.327 36.3471L8.966 19.8491L23 23.9251" stroke-miterlimit="10" stroke-linejoin="round"/>
