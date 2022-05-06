@@ -120,4 +120,14 @@ describe('DialogLayout.vue', () => {
             type: 'error'
         }]);
     });
+
+    it('closes Messages using the alert store', () => {
+        const wrapper = shallowMount(DialogLayout, context);
+        wrapper.vm.$store.dispatch('pagebuilder/alert/showAlert', mockAlert);
+        const messagesWrapper = wrapper.find(Messages);
+        expect(messagesWrapper.exists()).toBeTruthy();
+        const closeSpy = jest.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/closeAlert'], '0');
+        messagesWrapper.vm.$emit('dismiss');
+        expect(closeSpy).toHaveBeenCalled();
+    });
 });

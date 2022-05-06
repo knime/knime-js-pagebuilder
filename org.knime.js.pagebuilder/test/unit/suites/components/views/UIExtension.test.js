@@ -239,6 +239,21 @@ describe('UIExtension.vue', () => {
             warningButton.vm.$emit('click');
             expect(showAlertSpy).toHaveBeenCalledWith(mockWarningAlert);
         });
+
+        it('clears alerts', () => {
+            let mockWarningAlert = { message: 'M' };
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: getMockComponentProps()
+            });
+            wrapper.setData({ alert: mockWarningAlert });
+            expect(wrapper.vm.alert).toStrictEqual(mockWarningAlert);
+            wrapper.vm.closeAlert();
+            // expect nothing
+            expect(wrapper.vm.alert).toStrictEqual(mockWarningAlert);
+            wrapper.vm.closeAlert(true);
+            expect(wrapper.vm.alert).toBe(null);
+        });
     });
 
     it('deregisters a KnimeService instance during destroy', () => {

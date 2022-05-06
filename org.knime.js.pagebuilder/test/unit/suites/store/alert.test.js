@@ -61,4 +61,47 @@ describe('alert store', () => {
         store.dispatch('closeAlert', 'test');
         expect(callbackMock).toHaveBeenCalledWith('test');
     });
+
+    describe('alert formatting', () => {
+        afterEach(() => {
+            if (store.state.alert) {
+                store.dispatch('closeAlert');
+            }
+        });
+
+        it('returns null if there is not an alert', () => {
+            expect(store.state.alert).toBe(null);
+            expect(store.getters.alertAsMessage).toBe(null);
+        });
+
+        it('creates an empty message if alert is empty', () => {
+            store.dispatch('showAlert', {});
+            expect(store.getters.alertAsMessage.message).toBe('UNKNOWN ');
+            expect(store.getters.alertAsMessage.type).toBe('UNKNOWN');
+            expect(store.getters.alertAsMessage.details).toBe(
+                'No further information available. Please check the workflow configuration.'
+            );
+        });
+
+        it('formats messages without a type', () => {
+            store.dispatch('showAlert', { message: 'Unknown error occurred' });
+            expect(store.getters.alertAsMessage.message).toBe('UNKNOWN Unknown error occurred');
+            expect(store.getters.alertAsMessage.type).toBe('UNKNOWN');
+        });
+
+        it('formats warning messages', () => {
+            const message = 'Only the first 2500 rows are shown';
+            store.dispatch('showAlert', { type: 'warn', message });
+            expect(store.getters.alertAsMessage.message).toBe(`WARNING ${message}`);
+        });
+
+        it('formats subtitles and details', () => {
+            const subtitle = 'A runtime error occurred while fetching data';
+            const message = 'Some stacktrace.';
+            store.dispatch('showAlert', { type: 'error', message, subtitle });
+            expect(store.getters.alertAsMessage.message).toBe(`ERROR ${subtitle}`);
+            expect(store.getters.alertAsMessage.details).toBe(message);
+            expect(store.getters.alertAsMessage.showCollapser).toBe(true);
+        });
+    });
 });
