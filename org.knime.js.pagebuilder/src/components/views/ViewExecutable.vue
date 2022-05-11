@@ -87,7 +87,7 @@ export default {
     <ExecutingOverlay
       :show="showReexecutionOverlay"
       :show-spinner="showReexecutionSpinner"
-      :transition-name="'none'"
+      :use-css-transition="false"
     />
   </div>
 </template>

@@ -14,9 +14,9 @@ export default {
             type: Boolean,
             default: false
         },
-        transitionName: {
-            type: String,
-            default: 'fade'
+        useCssTransition: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -33,10 +33,10 @@ export default {
             return Math.max((this.spinnerHeight / 2) - this.SVG_STROKE_PIXEL_OFFSET, 0);
         },
         svgLeft() {
-            return this.showSpinner ? this.getOverlayWidth() : 0;
+            return this.showSpinner ? this.getHalfOverlayWidth() : 0;
         },
         svgTop() {
-            return this.showSpinner ? this.getOverlayHeight() : 0;
+            return this.showSpinner ? this.getHalfOverlayHeight() : 0;
         },
         svgStyle() {
             return `height:${this.spinnerHeight}px;` +
@@ -51,19 +51,15 @@ export default {
     },
     methods: {
         getSpinnerHeight() {
-            let el = this.$refs?.overlay?.offsetHeight;
-            return el ? Math.min(el / 2, MAX_SPINNER_HEIGHT) : 0;
+            return Math.min(this.getHalfOverlayHeight(), MAX_SPINNER_HEIGHT);
         },
-        getOverlayWidth() {
-            let el = this.$refs?.overlay?.offsetWidth;
-            return el ? el / 2 : 0;
+        getHalfOverlayWidth() {
+            let el = this.$refs.overlay.offsetWidth;
+            return el / 2;
         },
-        getOverlayHeight() {
-            let el = this.$refs?.overlay?.offsetHeight;
-            return el ? el / 2 : 0;
-        },
-        afterEnter() {
-            this.overlayRefAvailable = true;
+        getHalfOverlayHeight() {
+            let el = this.$refs.overlay.offsetHeight;
+            return el / 2;
         }
     }
 };
@@ -73,14 +69,16 @@ export default {
   <transition
     v-if="show"
     appear
-    :name="transitionName"
-    @after-enter="afterEnter()"
+    name="fade"
+    :css="useCssTransition"
+    @after-enter="overlayRefAvailable = true"
   >
     <div ref="overlay">
       <transition
         v-if="showSpinner && overlayRefAvailable"
         appear
-        :name="transitionName"
+        name="fade"
+        :css="useCssTransition"
       >
         <svg
           :view-box="`0 0 ${spinnerHeight} ${spinnerHeight}`"

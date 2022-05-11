@@ -73,7 +73,7 @@ export default {
             return this.isUIExtension && this.nodeId === 'DIALOG';
         },
         isConfigured() {
-            return this.nodeInfo.nodeState === 'configured';
+            return this.nodeInfo?.nodeState === 'configured';
         },
         isExecuted() {
             return this.nodeInfo?.nodeState === 'executed';

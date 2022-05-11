@@ -15,6 +15,7 @@ describe('NodeView.vue', () => {
 
     const getWebNodeProps = () => ({ viewConfig: { nodeID: '0:0:7' } });
     const getUIExtProps = () => ({ viewConfig: { nodeID: '0:0:9' } });
+    const getUIExtDialogProps = () => ({ viewConfig: { nodeID: 'DIALOG' } });
 
     const mockWebNodeConfig = {
         foo: 'bar',
@@ -33,7 +34,14 @@ describe('NodeView.vue', () => {
         workflowId: 'root',
         extensionType: 'VIEW',
         nodeInfo: {
-            displayPossible: true,
+            nodeState: 'executed'
+        }
+    };
+    const mockNodeDialogConfig = {
+        projectId: '1:0:1',
+        workflowId: 'root',
+        extensionType: 'dialog',
+        nodeInfo: {
             nodeState: 'executed'
         }
     };
@@ -46,7 +54,7 @@ describe('NodeView.vue', () => {
             '1:0:1:0:0:9': { ...mockNodeViewConfig }
         },
         webNodePageConfiguration: webNodePageConfiguration || {
-            projectRelativePageIDSuffix: '1:0:1'
+            projectRelativePageIDSuffix: nodeViews?.DIALOG ? '' : '1:0:1'
         }
     });
 
@@ -55,10 +63,14 @@ describe('NodeView.vue', () => {
         store.commit('pagebuilder/setPage', {
             wizardPageContent: getWizardPageContent({ webNodes, nodeViews, webNodePageConfiguration })
         });
+        const provide = {
+            platform: 'AP'
+        };
 
         return {
             store,
-            localVue
+            localVue,
+            provide
         };
     };
 
@@ -137,10 +149,28 @@ describe('NodeView.vue', () => {
             expect(wrapper.find(NotDisplayable).props('nodeId')).toEqual('1:0:1:0:0:7');
         });
 
-        it('renders execute component for UI-Extensions', () => {
+        it('always renders the node dialog', () => {
+            let localContext = createContext({
+                nodeViews: {
+                    DIALOG: { ...mockNodeDialogConfig }
+                }
+            });
+            let wrapper = shallowMount(NodeView, {
+                ...localContext,
+                propsData: getUIExtDialogProps()
+            });
+
+            expect(wrapper.vm.viewAvailable).toBe(true);
+            expect(wrapper.vm.viewDisplayable).toBe(true);
+            expect(wrapper.vm.showViewExecutable).toBe(false);
+            expect(wrapper.find(ViewExecutable).exists()).toBe(false);
+            expect(wrapper.find(NotDisplayable).exists()).toBe(false);
+            expect(wrapper.find(UIExtension).exists()).toBe(true);
+        });
+
+        it('renders execute component for UI-Extensions when in configured state on AP', () => {
             let expectedNodeInfo = {
-                displayPossible: true,
-                nodeState: 'idle'
+                nodeState: 'configured'
             };
             let localContext = createContext({
                 nodeViews: {
@@ -153,8 +183,32 @@ describe('NodeView.vue', () => {
             });
 
             expect(wrapper.vm.viewAvailable).toBe(true);
+            expect(wrapper.vm.viewDisplayable).toBe(true);
+            expect(wrapper.find(ViewExecutable).exists()).toBe(true);
+        });
+
+        it('renders notDisplayable component for UI-Extensions when in configured state on Webportal', () => {
+            let expectedNodeInfo = {
+                nodeState: 'configured'
+            };
+            let localContext = createContext({
+                nodeViews: {
+                    '1:0:1:0:0:9': { ...mockNodeViewConfig, nodeInfo: expectedNodeInfo }
+                }
+            });
+            let localProvide = {
+                provide: {
+                    platform: 'Webportal'
+                }
+            };
+            let wrapper = shallowMount(NodeView, {
+                ...localContext,
+                propsData: getUIExtProps(),
+                ...localProvide
+            });
+
+            expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(false);
-            // expect(wrapper.find(ViewExecutable).exists()).toBe(true);
             expect(wrapper.find(NotDisplayable).exists()).toBe(true);
         });
 

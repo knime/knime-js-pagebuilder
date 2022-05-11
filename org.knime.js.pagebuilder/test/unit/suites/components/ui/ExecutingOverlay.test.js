@@ -31,7 +31,7 @@ describe('ExecutingOverlay.vue', () => {
                 showSpinner: true
             }
         });
-        wrapper.vm.afterEnter();
+        wrapper.vm.overlayRefAvailable = true;
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.find('svg').exists()).toBeTruthy();
     });
