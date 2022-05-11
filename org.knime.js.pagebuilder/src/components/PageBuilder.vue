@@ -12,6 +12,15 @@ export default {
         Page,
         AlertGlobal
     },
+    provide() {
+        return { platform: this.platform };
+    },
+    props: {
+        platform: {
+            type: String,
+            default: 'Webportal'
+        }
+    },
     initStore(store) { // this method is to be called by the embedding app, cf. README
         store.registerModule('pagebuilder', pagebuilderStoreConfig);
         store.registerModule('pagebuilder/interactivity', interactivityStoreConfig);
