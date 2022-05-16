@@ -25,8 +25,7 @@ describe('service store', () => {
 
     it('creates an empty store', () => {
         expect(store.state).toEqual({
-            services: {},
-            applyDialogSettings: null
+            services: {}
         });
     });
 
@@ -52,20 +51,6 @@ describe('service store', () => {
             expect(store.state.services[service.serviceId]).toBe(service);
             await store.dispatch('deregisterService', { service });
             expect(store.state.services[service.serviceId]).toBeUndefined();
-        });
-
-        it('sets the applySettings method', async () => {
-            const applyDialogSettingsMethod = jest.fn();
-            await store.dispatch('setApplySettings', { applyDialogSettingsMethod });
-            expect(store.state.applyDialogSettings).toBe(applyDialogSettingsMethod);
-        });
-
-        it('calls the applySettings method', async () => {
-            const applyDialogSettingsMethod = jest.fn();
-            await store.dispatch('setApplySettings', { applyDialogSettingsMethod });
-            const applyDialogSettingsMethodSpy = jest.spyOn(store.state, 'applyDialogSettings');
-            await store.dispatch('callApplySettings');
-            expect(applyDialogSettingsMethodSpy).toHaveBeenCalled();
         });
     });
 });

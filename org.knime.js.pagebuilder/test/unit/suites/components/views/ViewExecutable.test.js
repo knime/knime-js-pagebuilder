@@ -61,7 +61,7 @@ describe('ViewExecutable.vue', () => {
             context = {
                 store: new Vuex.Store({
                     modules: {
-                        'pagebuilder/service': {
+                        'pagebuilder/dialog': {
                             ...serviceStoreConfig,
                             actions: {
                                 callApplySettings: applySettingsMock

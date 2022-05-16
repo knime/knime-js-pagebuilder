@@ -3,8 +3,7 @@ import consola from 'consola';
 export const namespaced = true;
 
 export const state = () => ({
-    services: {},
-    applyDialogSettings: null
+    services: {}
 });
 
 export const mutations = {
@@ -29,17 +28,6 @@ export const mutations = {
      */
     deregisterService(state, service) {
         delete state.services[service.serviceId];
-    },
-
-    /**
-     * Adds the method to apply the dialog settings to the dialogApplySettings key.
-     *
-     * @param {*} state - Vuex state.
-     * @param {function} applyDialogSettingsMethod - the method to add.
-     * @returns {undefined}
-     */
-    setApplySettings(state, applyDialogSettingsMethod) {
-        state.applyDialogSettings = applyDialogSettingsMethod;
     }
 };
 
@@ -86,27 +74,5 @@ export const actions = {
         return Promise.all(Object.values(state.services).filter(service => service.serviceId !== callerId).map(
             (service) => service.onServiceNotification(event)
         ));
-    },
-
-    /**
-     * Calls setApplySettings to add the applySettings method to the store.
-     *
-     * @param {Object} context - Vuex context.
-     * @param {Object} params - action config.
-     * @param {function} param.dialogApplySettings - the method to commit to the state.
-     * @returns {undefined}
-     */
-    setApplySettings({ commit }, { applyDialogSettingsMethod }) {
-        commit('setApplySettings', applyDialogSettingsMethod);
-    },
-
-    /**
-     * Calls the setApplySettings method to update the changed settings.
-     *
-     * @param {Object} context - Vuex context.
-     * @returns {Promise<any>} - a Promise calling the applySettings method.
-     */
-    callApplySettings({ state }) {
-        return state.applyDialogSettings();
     }
 };

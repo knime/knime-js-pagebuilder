@@ -30,7 +30,7 @@ export default {
         async executeViewSaveSettings() {
             this.showReexecutionOverlay = true;
             this.showReexecutionSpinner = true;
-            await this.$store.dispatch('pagebuilder/service/callApplySettings');
+            await this.$store.dispatch('pagebuilder/dialog/callApplySettings');
             await this.$store.dispatch('api/changeNodeStates', {
                 extensionConfig: this.extensionConfig,
                 newNodeState: 'execute'
