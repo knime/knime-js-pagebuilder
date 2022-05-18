@@ -25,7 +25,6 @@ export default {
         ViewExecutable,
         ExecutingOverlay
     },
-    inject: ['platform'],
     props: {
         /**
          * View configuration as defined in the page.
@@ -88,7 +87,7 @@ export default {
                 return true;
             }
             if (this.isUIExtension) {
-                return this.isExecuted || (this.isConfigured && this.platform === 'AP');
+                return this.isExecuted || (this.isConfigured && this.isDialogLayout);
             }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable

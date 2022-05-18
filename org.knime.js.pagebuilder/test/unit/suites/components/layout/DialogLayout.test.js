@@ -49,10 +49,6 @@ describe('DialogLayout.vue', () => {
             wizardPageContent: getWizardPageContent({ webNodes, nodeViews, webNodePageConfiguration })
         });
 
-        const provide = {
-            platform: 'AP'
-        };
-
         return {
             store,
             localVue,
@@ -71,8 +67,7 @@ describe('DialogLayout.vue', () => {
                         }]
                     }
                 ] }] }
-            },
-            provide
+            }
         };
     };
 

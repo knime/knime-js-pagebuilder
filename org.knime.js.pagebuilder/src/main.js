@@ -350,8 +350,6 @@ if (typeof KnimeInteractivity === 'undefined') {
 
 if (typeof jsonrpcNotification === 'undefined') {
     window.jsonrpcNotification = (notification) => {
-        window.KnimePageLoader.app.$store.dispatch('pagebuilder/service/pushNotification', { event: notification });
-
         const { method, params } = JSON.parse(notification);
         const isNodeStateChange = method === 'NodeViewStateEvent' &&
             params[0].nodeView.nodeInfo.nodeState === 'executed';
@@ -359,6 +357,8 @@ if (typeof jsonrpcNotification === 'undefined') {
             window.KnimePageLoader.app.$store.dispatch('pagebuilder/updateNodeViewConfig', {
                 nodeView: params[0].nodeView
             });
+        } else {
+            window.KnimePageLoader.app.$store.dispatch('pagebuilder/service/pushNotification', { event: notification });
         }
     };
 }

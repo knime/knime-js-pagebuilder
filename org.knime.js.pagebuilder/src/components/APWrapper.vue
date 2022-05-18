@@ -37,10 +37,7 @@ export default {
 
 <template>
   <div>
-    <PageBuilder
-      v-if="pageBuilderLoaded"
-      platform="AP"
-    />
+    <PageBuilder v-if="pageBuilderLoaded" />
     <template v-if="debugPort">
       <DebugButton :debug-port="debugPort" />
       <RefreshButton v-if="debugInfo.refreshRequired" />

@@ -63,14 +63,10 @@ describe('NodeView.vue', () => {
         store.commit('pagebuilder/setPage', {
             wizardPageContent: getWizardPageContent({ webNodes, nodeViews, webNodePageConfiguration })
         });
-        const provide = {
-            platform: 'AP'
-        };
 
         return {
             store,
-            localVue,
-            provide
+            localVue
         };
     };
 
@@ -168,7 +164,7 @@ describe('NodeView.vue', () => {
             expect(wrapper.find(UIExtension).exists()).toBe(true);
         });
 
-        it('renders execute component for UI-Extensions when in configured state on AP', () => {
+        it('renders notDisplayable component for UI-Extensions when in configured state on Webportal', () => {
             let expectedNodeInfo = {
                 nodeState: 'configured'
             };
@@ -180,31 +176,6 @@ describe('NodeView.vue', () => {
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
                 propsData: getUIExtProps()
-            });
-
-            expect(wrapper.vm.viewAvailable).toBe(true);
-            expect(wrapper.vm.viewDisplayable).toBe(true);
-            expect(wrapper.find(ViewExecutable).exists()).toBe(true);
-        });
-
-        it('renders notDisplayable component for UI-Extensions when in configured state on Webportal', () => {
-            let expectedNodeInfo = {
-                nodeState: 'configured'
-            };
-            let localContext = createContext({
-                nodeViews: {
-                    '1:0:1:0:0:9': { ...mockNodeViewConfig, nodeInfo: expectedNodeInfo }
-                }
-            });
-            let localProvide = {
-                provide: {
-                    platform: 'Webportal'
-                }
-            };
-            let wrapper = shallowMount(NodeView, {
-                ...localContext,
-                propsData: getUIExtProps(),
-                ...localProvide
             });
 
             expect(wrapper.vm.viewAvailable).toBe(true);
