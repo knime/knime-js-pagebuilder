@@ -9,7 +9,7 @@ export default {
         RefreshIcon
     },
     computed: {
-        ...mapState('pagebuilder', ['isNodeDialog'])
+        ...mapState('pagebuilder', ['isDialogLayout'])
     },
     methods: {
         refresh() {

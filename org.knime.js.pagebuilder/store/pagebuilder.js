@@ -7,7 +7,7 @@ export const namespaced = true;
 
 export const state = () => ({
     page: null,
-    isNodeDialog: false,
+    isDialogLayout: false,
     isWebNode: false,
     resourceBaseUrl: '',
     webNodesLoading: [],
@@ -39,7 +39,7 @@ export const mutations = {
             state.pageValidators = {};
             state.pageValueGetters = {};
         }
-        state.isNodeDialog = Boolean(page?.wizardPageContent?.nodeViews?.DIALOG);
+        state.isDialogLayout = Boolean(page?.wizardPageContent?.nodeViews?.DIALOG);
         state.isWebNode = Boolean(webNodes && Object.keys(webNodes).length);
     },
     /**

@@ -191,7 +191,7 @@ describe('UIExtension.vue', () => {
                 ...context,
                 propsData: getMockComponentProps()
             });
-            wrapper.vm.$store.state.pagebuilder.isNodeDialog = true;
+            wrapper.vm.$store.state.pagebuilder.isDialogLayout = true;
             let showAlertSpy = jest.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/showAlert'], '0');
             wrapper.vm.handleAlert(mockAlert);
             expect(showAlertSpy).toHaveBeenCalledWith({

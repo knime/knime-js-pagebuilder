@@ -11,7 +11,7 @@ export default {
         DebugButton
     },
     computed: {
-        ...mapState('pagebuilder', ['isNodeDialog']),
+        ...mapState('pagebuilder', ['isDialogLayout']),
         /* Checks if pageBuilderLoader middleware was successful */
         pageBuilderLoaded() {
             return Boolean(Vue.component('PageBuilder'));

@@ -10,7 +10,7 @@ export default {
         DialogLayout
     },
     computed: {
-        ...mapState('pagebuilder', ['isNodeDialog']),
+        ...mapState('pagebuilder', ['isDialogLayout']),
         pageContent() {
             return this.$store.state.pagebuilder.page?.wizardPageContent;
         },
@@ -25,7 +25,7 @@ export default {
   <div>
     <template v-if="pageContent">
       <DialogLayout
-        v-if="isNodeDialog"
+        v-if="isDialogLayout"
         :layout="layout"
       />
       <Layout

@@ -28,7 +28,7 @@ export default {
         store.registerModule('pagebuilder/service', serviceStoreConfig);
     },
     computed: {
-        ...mapState('pagebuilder', ['isNodeDialog']),
+        ...mapState('pagebuilder', ['isDialogLayout']),
         hasPage() {
             let page = this.$store.state.pagebuilder.page;
             return Boolean(page?.wizardPageContent);
@@ -40,6 +40,6 @@ export default {
 <template>
   <div>
     <Page v-if="hasPage" />
-    <AlertGlobal v-if="!isNodeDialog" />
+    <AlertGlobal v-if="!isDialogLayout" />
   </div>
 </template>

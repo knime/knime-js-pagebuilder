@@ -51,7 +51,7 @@ export default {
         };
     },
     computed: {
-        ...mapState('pagebuilder', ['isNodeDialog']),
+        ...mapState('pagebuilder', ['isDialogLayout']),
         isUIExtComponent() {
             return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
         },
@@ -94,7 +94,7 @@ export default {
             return this.$store.dispatch('pagebuilder/service/pushNotification', notification);
         },
         handleAlert(alert) {
-            if (this.isNodeDialog) {
+            if (this.isDialogLayout) {
                 this.showAlert(alert);
             } else {
                 this.alert = alert;

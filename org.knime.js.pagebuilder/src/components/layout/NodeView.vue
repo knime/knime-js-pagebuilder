@@ -45,7 +45,7 @@ export default {
         }
     },
     computed: {
-        ...mapState('pagebuilder', ['page']),
+        ...mapState('pagebuilder', ['page', 'isDialogLayout']),
         ...mapGetters('pagebuilder', ['nodesReExecuting', 'reExecutionUpdates']),
         pageIdPrefix() {
             return this.page?.wizardPageContent?.webNodePageConfiguration

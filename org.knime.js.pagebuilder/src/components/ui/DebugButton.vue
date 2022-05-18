@@ -20,7 +20,7 @@ export default {
         };
     },
     computed: {
-        ...mapState('pagebuilder', ['isNodeDialog']),
+        ...mapState('pagebuilder', ['isDialogLayout']),
         // Composed URL to either open the correct debugger or the overview page
         debugUrl() {
             return `http://localhost:${this.debugPort}${this.debugPage}`;

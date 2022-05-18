@@ -38,7 +38,7 @@ describe('PageBuilder.vue', () => {
         expect(wrapper.find(AlertGlobal).exists()).toBeTruthy();
     });
 
-    it('hide global alert when page isNodeDialog', () => {
+    it('hide global alert when page isDialogLayout', () => {
         const localPage = {
             ...page,
             wizardPageContent: {
