@@ -39,6 +39,10 @@ describe('dialog store', () => {
             await store.dispatch('dirtySettings', true);
             expect(store.state.dirtySettings).toBe(true);
             expect(store.state.dirtyModelSettings).toBe(true);
+            // without diff mechanism, settings should stay dirty
+            await store.dispatch('dirtySettings', false);
+            expect(store.state.dirtySettings).toBe(true);
+            expect(store.state.dirtyModelSettings).toBe(true);
         });
 
         it('sets the applySettings method', async () => {

@@ -10,7 +10,9 @@ export const mutations = {
 
     dirtySettings(state, isModelSetting) {
         state.dirtySettings = true;
-        state.dirtyModelSettings = Boolean(isModelSetting);
+        if (isModelSetting) {
+            state.dirtyModelSettings = true;
+        }
     },
 
     /**
