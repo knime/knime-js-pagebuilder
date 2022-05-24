@@ -45,6 +45,12 @@ describe('dialog store', () => {
             expect(store.state.dirtyModelSettings).toBe(true);
         });
 
+        it('cleans all settings', async () => {
+            await store.dispatch('cleanSettings');
+            expect(store.state.dirtySettings).toBe(false);
+            expect(store.state.dirtyModelSettings).toBe(false);
+        });
+
         it('sets the applySettings method', async () => {
             const applySettings = jest.fn();
             await store.dispatch('setApplySettings', { applySettings });

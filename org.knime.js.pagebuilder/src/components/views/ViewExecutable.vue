@@ -50,10 +50,10 @@ export default {
     <ExecutableImage />
     <Button
       with-border
-      title="Execute & save"
+      title="Save & execute"
       @click="executeViewSaveSettings"
     >
-      Execute & save
+      Save & execute
     </Button>
     <ExecutingOverlay
       :show="showReexecutionOverlay"

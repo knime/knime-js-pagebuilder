@@ -15,6 +15,11 @@ export const mutations = {
         }
     },
 
+    cleanSettings(state) {
+        state.dirtySettings = false;
+        state.dirtyModelSettings = false;
+    },
+
     /**
      * Adds the method to apply the dialog settings to the dialogApplySettings key.
      *
@@ -31,6 +36,10 @@ export const actions = {
 
     dirtySettings({ commit }, isModelSetting) {
         commit('dirtySettings', isModelSetting);
+    },
+
+    cleanSettings({ commit }) {
+        commit('cleanSettings');
     },
 
     /**

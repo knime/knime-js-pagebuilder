@@ -45,6 +45,7 @@ export default {
     },
     computed: {
         ...mapState('pagebuilder', ['page', 'isDialogLayout']),
+        ...mapState('pagebuilder/dialog', ['dirtyModelSettings']),
         ...mapGetters('pagebuilder', ['nodesReExecuting', 'reExecutionUpdates']),
         pageIdPrefix() {
             return this.page?.wizardPageContent?.webNodePageConfiguration
@@ -83,18 +84,15 @@ export default {
             return this.isWebNodeView || this.isUIExtension;
         },
         viewDisplayable() {
-            if (this.isNodeDialog) {
-                return true;
-            }
             if (this.isUIExtension) {
-                return this.isExecuted || (this.isConfigured && this.isDialogLayout);
+                return this.isExecuted || this.isDialogLayout;
             }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
             return this.nodeInfo?.displayPossible;
         },
         showViewExecutable() {
-            return this.isUIExtension && !this.isNodeDialog && !this.isExecuted;
+            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings);
         },
         showExecutionOverlay() {
             /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this

@@ -198,13 +198,14 @@ export const actions = {
         }
     },
 
-    updateNodeViewConfig({ commit }, { nodeView }) {
+    updateNodeViewConfig({ commit, dispatch }, { nodeView }) {
         const newViewConfig = {
             viewType: 'nodeViews',
             update: nodeView,
             nodeId: 'VIEW'
         };
         commit('updateViewConfig', newViewConfig);
+        dispatch('pagebuilder/dialog/cleanSettings', null, { root: true });
     },
 
     setResourceBaseUrl({ commit }, { resourceBaseUrl }) {

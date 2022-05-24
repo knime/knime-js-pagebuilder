@@ -8,7 +8,8 @@ import NotDisplayable from '@/components/views/NotDisplayable';
 import ViewExecutable from '@/components/views/ViewExecutable';
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay';
 
-import * as storeConfig from '~/store/pagebuilder';
+import * as pagebuilderConfig from '~/store/pagebuilder';
+import * as dialogConfig from '~/store/dialog';
 
 describe('NodeView.vue', () => {
     let localVue, context;
@@ -54,12 +55,16 @@ describe('NodeView.vue', () => {
             '1:0:1:0:0:9': { ...mockNodeViewConfig }
         },
         webNodePageConfiguration: webNodePageConfiguration || {
-            projectRelativePageIDSuffix: nodeViews?.DIALOG ? '' : '1:0:1'
+            // eslint-disable-next-line no-extra-parens
+            projectRelativePageIDSuffix: (nodeViews?.DIALOG || nodeViews?.SINGLE) ? '' : '1:0:1'
         }
     });
 
     const createContext = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => {
-        let store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        let store = new Vuex.Store({ modules: {
+            pagebuilder: pagebuilderConfig,
+            'pagebuilder/dialog': dialogConfig
+        } });
         store.commit('pagebuilder/setPage', {
             wizardPageContent: getWizardPageContent({ webNodes, nodeViews, webNodePageConfiguration })
         });
@@ -145,11 +150,60 @@ describe('NodeView.vue', () => {
             expect(wrapper.find(NotDisplayable).props('nodeId')).toEqual('1:0:1:0:0:7');
         });
 
-        it('always renders the node dialog', () => {
+        it('renders view executable when nodeView is not executed', () => {
             let localContext = createContext({
                 nodeViews: {
-                    DIALOG: { ...mockNodeDialogConfig }
+                    SINGLE: {
+                        ...mockNodeViewConfig,
+                        nodeInfo: {
+                            displayPossible: true,
+                            nodeState: 'idle'
+                        }
+                    },
+                    DIALOG: mockNodeDialogConfig
                 }
+            });
+            let wrapper = shallowMount(NodeView, {
+                ...localContext,
+                propsData: { viewConfig: { nodeID: 'SINGLE' } }
+            });
+
+            expect(wrapper.vm.viewAvailable).toBe(true);
+            expect(wrapper.vm.viewDisplayable).toBe(true);
+            expect(wrapper.vm.showViewExecutable).toBe(true);
+            expect(wrapper.find(ViewExecutable).exists()).toBe(true);
+            expect(wrapper.find(NotDisplayable).exists()).toBe(false);
+            expect(wrapper.find(UIExtension).exists()).toBe(false);
+        });
+
+        it('renders view executable when model settings are dirty', () => {
+            let localContext = createContext({
+                nodeViews: { SINGLE: mockNodeViewConfig, DIALOG: mockNodeDialogConfig }
+            });
+            let wrapper = shallowMount(NodeView, {
+                ...localContext,
+                propsData: { viewConfig: { nodeID: 'SINGLE' } }
+            });
+            expect(wrapper.vm.viewAvailable).toBe(true);
+            expect(wrapper.vm.viewDisplayable).toBe(true);
+            expect(wrapper.vm.showViewExecutable).toBe(false);
+            expect(wrapper.find(ViewExecutable).exists()).toBe(false);
+            expect(wrapper.find(NotDisplayable).exists()).toBe(false);
+            expect(wrapper.find(UIExtension).exists()).toBe(true);
+
+            wrapper.vm.$store.dispatch('pagebuilder/dialog/dirtySettings', true);
+
+            expect(wrapper.vm.viewAvailable).toBe(true);
+            expect(wrapper.vm.viewDisplayable).toBe(true);
+            expect(wrapper.vm.showViewExecutable).toBe(true);
+            expect(wrapper.find(ViewExecutable).exists()).toBe(true);
+            expect(wrapper.find(NotDisplayable).exists()).toBe(false);
+            expect(wrapper.find(UIExtension).exists()).toBe(false);
+        });
+
+        it('always renders the node dialog', () => {
+            let localContext = createContext({
+                nodeViews: { DIALOG: mockNodeDialogConfig }
             });
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
