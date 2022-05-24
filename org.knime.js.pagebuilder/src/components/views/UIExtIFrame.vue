@@ -1,11 +1,16 @@
 <script>
 export default {
-    inject: ['knimeService'],
+    inject: ['getKnimeService'],
     props: {
         resourceLocation: {
             default: null,
             type: String,
             required: true
+        }
+    },
+    computed: {
+        knimeService() {
+            return this.getKnimeService();
         }
     },
     mounted() {

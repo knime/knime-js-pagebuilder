@@ -7,7 +7,7 @@ export default {
     components: {
         // Any Vue-based component library
     },
-    inject: ['knimeService'],
+    inject: ['getKnimeService'],
     props: {
         resourceLocation: {
             default: null,
@@ -21,6 +21,9 @@ export default {
         };
     },
     computed: {
+        knimeService() {
+            return this.getKnimeService();
+        },
         extensionConfig() {
             return this.knimeService?.extensionConfig;
         },

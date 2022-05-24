@@ -11,7 +11,7 @@ describe('UIExtComponent.vue', () => {
     const { resourceInfo } = extensionConfig;
     const context = {
         propsData: { resourceLocation: resourceInfo.url },
-        provide: { knimeService: new KnimeService(extensionConfig, jest.fn()) }
+        provide: { getKnimeService: () => new KnimeService(extensionConfig, jest.fn()) }
     };
     const mockComponentId = resourceInfo.id;
     const mockComponent = Vue.component(mockComponentId, {

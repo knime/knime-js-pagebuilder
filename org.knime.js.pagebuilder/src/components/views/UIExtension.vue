@@ -24,11 +24,10 @@ export default {
     // 1) we don't want reactivity in this case
     // 2) any deeply nested child of the UIComponent can get access to knimeService if needed
     provide() {
-        const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
-        let knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
-        muteReactivity({ target: knimeService, nonReactiveKeys: ['iFrameWindow'] });
-        this.knimeService = knimeService;
-        return { knimeService };
+        this.initKnimeService();
+        const getKnimeService = () => this.knimeService;
+        getKnimeService.bind(this);
+        return { getKnimeService };
     },
     props: {
         extensionConfig: {
@@ -69,16 +68,22 @@ export default {
     },
     watch: {
         extensionConfig() {
+            this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
+            this.initKnimeService();
             this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrame
         }
-    },
-    created() {
-        this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
     },
     beforeDestroy() {
         this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
     methods: {
+        initKnimeService() {
+            const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
+            let knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
+            muteReactivity({ target: knimeService, nonReactiveKeys: ['iFrameWindow'] });
+            this.knimeService = knimeService;
+            this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
+        },
         callService(nodeService, serviceRequest, requestParams) {
             return this.$store.dispatch('api/callService', {
                 extensionConfig: this.extensionConfig,
