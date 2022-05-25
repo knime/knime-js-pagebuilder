@@ -135,7 +135,7 @@ export default {
       />
       <UIExtension
         v-else-if="isUIExtension"
-        :class="[{singleView: isSingleView}]"
+        :class="{'single-view': isSingleView}"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
       />
@@ -151,7 +151,7 @@ export default {
 .node-view {
   background-color: var(--knime-white);
 }
-.singleView {
+.single-view {
     height:100vh;
 }
 </style>
