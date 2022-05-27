@@ -174,9 +174,10 @@ export const actions = {
         nodeIds.forEach(nodeId => {
             // default webNode update
             let updateConfig = { nodeId, config: webNodes?.[nodeId] };
-            // modify update if nodeId references nodeView
-            if (nodeViews?.[nodeId]) {
-                updateConfig.config = nodeViews[nodeId];
+            // modify update if nodeId references or used to reference a nodeView;
+            // replaces or removes the nodeView, respectively
+            if (nodeViews?.[nodeId] || state.page.wizardPageContent.nodeViews?.[nodeId]) {
+                updateConfig.config = nodeViews?.[nodeId];
                 updateConfig.viewType = 'nodeViews';
             }
             commit('updateViewConfig', updateConfig);

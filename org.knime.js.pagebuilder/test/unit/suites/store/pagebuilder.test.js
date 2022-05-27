@@ -322,6 +322,9 @@ describe('PageBuilder store', () => {
                         },
                         id2: {
                             foo: 'baz'
+                        },
+                        id6: {
+                            foo: 'view_to_be_removed_on_update'
                         }
                     },
                     nodeViews: {
@@ -330,6 +333,9 @@ describe('PageBuilder store', () => {
                         },
                         id4: {
                             foo: 'grault'
+                        },
+                        id5: {
+                            foo: 'view_to_be_removed_on_update'
                         }
                     },
                     webNodePageConfiguration: {
@@ -412,18 +418,24 @@ describe('PageBuilder store', () => {
                 checkPage(store.state.page, ['bar', 'baz'], ['bar', 'baz']);
             });
 
-            it('updates a combination of webNodes and nodeViews', () => {
+            it('updates and removes a combination of webNodes and nodeViews', () => {
                 let newPage = getPage();
                 newPage.wizardPageContent.webNodes.id1.foo = 'qux';
                 newPage.wizardPageContent.webNodes.id2.foo = 'grault';
+                delete newPage.wizardPageContent.webNodes.id6;
                 newPage.wizardPageContent.nodeViews.id3.foo = 'bar';
                 newPage.wizardPageContent.nodeViews.id4.foo = 'baz';
+                delete newPage.wizardPageContent.nodeViews.id5;
                 checkPage(store.state.page, ['bar', 'baz'], ['qux', 'grault']);
+                expect(store.state.page.wizardPageContent.webNodes.id6).toBeDefined();
+                expect(store.state.page.wizardPageContent.nodeViews.id5).toBeDefined();
                 store.dispatch('updatePage', {
                     page: newPage,
-                    nodeIds: ['id1', 'id3']
+                    nodeIds: ['id1', 'id3', 'id5', 'id6']
                 });
                 checkPage(store.state.page, ['qux', 'baz'], ['bar', 'grault']);
+                expect(store.state.page.wizardPageContent.webNodes.id6).toBeUndefined();
+                expect(store.state.page.wizardPageContent.nodeViews.id5).toBeUndefined();
             });
 
             it('updates selection translators if present in updated page', () => {
