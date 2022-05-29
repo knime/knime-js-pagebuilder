@@ -51,12 +51,12 @@ export const actions = {
      * @param {Object} context - Vuex context.
      * @param {Object} param - action config.
      * @param {Object} param.extensionConfig - the UI extension config.
-     * @param {KnimeTypes.NodeService} param.newNodeState - the new node state.
+     * @param {KnimeTypes.NodeService} param.action - the action to change the node state.
      * @returns {undefined}
      */
-    changeNodeStates({ dispatch }, { extensionConfig, newNodeState }) {
+    changeNodeStates({ dispatch }, { extensionConfig, action }) {
         const rpcParams = [
-            extensionConfig.projectId, extensionConfig.workflowId, [extensionConfig.nodeId], newNodeState
+            extensionConfig.projectId, extensionConfig.workflowId, [extensionConfig.nodeId], action
         ];
         dispatch('singleRPC', {
             rpcConfig: createJsonRpcRequest('NodeService.changeNodeStates', rpcParams)
