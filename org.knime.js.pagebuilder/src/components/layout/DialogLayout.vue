@@ -133,13 +133,13 @@ export default {
 }
 
 .dialog {
-  flex: 0 0 calc(3 * 100% / 12);
-  max-width: calc(3 * 100% / 12);
+  flex: 0 0 calc(4 * 100% / 12);
+  max-width: calc(4 * 100% / 12);
 }
 
 .view {
-  flex: 0 0 calc(9 * 100% / 12);
-  max-width: calc(9 * 100% / 12);
+  flex: 0 0 calc(8 * 100% / 12);
+  max-width: calc(8 * 100% / 12);
 
   & >>> iframe {
     height: calc(100vh - 10px);
