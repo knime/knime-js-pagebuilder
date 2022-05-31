@@ -72,6 +72,9 @@ export default {
         isNodeDialog() {
             return this.isUIExtension && this.nodeId === 'DIALOG';
         },
+        isSingleView() {
+            return this.isUIExtension && this.nodeId === 'SINGLE';
+        },
         isConfigured() {
             return this.nodeInfo?.nodeState === 'configured';
         },
@@ -132,6 +135,7 @@ export default {
       />
       <UIExtension
         v-else-if="isUIExtension"
+        :class="{'single-view': isSingleView}"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
       />
@@ -146,5 +150,8 @@ export default {
 <style lang="postcss" scoped>
 .node-view {
   background-color: var(--knime-white);
+}
+.single-view {
+    height:100vh;
 }
 </style>

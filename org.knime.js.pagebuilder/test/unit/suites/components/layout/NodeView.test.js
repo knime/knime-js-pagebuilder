@@ -16,6 +16,7 @@ describe('NodeView.vue', () => {
 
     const getWebNodeProps = () => ({ viewConfig: { nodeID: '0:0:7' } });
     const getUIExtProps = () => ({ viewConfig: { nodeID: '0:0:9' } });
+    const getSingleUIExtProps = () => ({ viewConfig: { nodeID: 'SINGLE' } });
     const getUIExtDialogProps = () => ({ viewConfig: { nodeID: 'DIALOG' } });
 
     const mockWebNodeConfig = {
@@ -127,6 +128,26 @@ describe('NodeView.vue', () => {
             expect(wrapper.find(UIExtension).exists()).toBeTruthy();
             expect(wrapper.find(WebNode).exists()).toBeFalsy();
             expect(wrapper.find(NotDisplayable).exists()).toBeFalsy();
+        });
+
+        it('checks that UI extensions in single view have the singleView class', () => {
+            let localContext = createContext({
+                nodeViews: { SINGLE: mockNodeViewConfig }
+            });
+
+            let wrapper = shallowMount(NodeView, { ...localContext, propsData: getSingleUIExtProps() });
+            expect(wrapper.find(UIExtension).exists()).toBeTruthy();
+            expect(wrapper.find(UIExtension).classes()).toContain('single-view');
+        });
+
+        it('Make sure single-view class is not set on preview', () => {
+            let localContext = createContext({
+                nodeViews: { VIEW: mockNodeViewConfig, DIALOG: mockNodeDialogConfig }
+            });
+
+            let wrapper = shallowMount(NodeView, { ...localContext, propsData: getUIExtDialogProps() });
+            expect(wrapper.find(UIExtension).exists()).toBeTruthy();
+            expect(wrapper.find(UIExtension).classes()).not.toContain('single-view');
         });
 
         it('renders not displayable web nodes', () => {
