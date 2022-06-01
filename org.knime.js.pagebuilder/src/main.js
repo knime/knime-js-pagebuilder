@@ -350,7 +350,8 @@ if (typeof KnimeInteractivity === 'undefined') {
 
 if (typeof jsonrpcNotification === 'undefined') {
     window.jsonrpcNotification = (notification) => {
-        const { method, params } = JSON.parse(notification);
+        const parsedNotification = JSON.parse(notification);
+        const { method, params } = parsedNotification;
         if (method === 'NodeViewStateEvent') {
             // Updating the view config has multiple purposes (see ViewExecutable):
             // * displaying the actual view if the node is successfully executed
@@ -360,7 +361,8 @@ if (typeof jsonrpcNotification === 'undefined') {
                 nodeView: params[0].nodeView
             });
         } else {
-            window.KnimePageLoader.app.$store.dispatch('pagebuilder/service/pushNotification', { event: notification });
+            window.KnimePageLoader.app.$store
+                .dispatch('pagebuilder/service/pushNotification', { event: parsedNotification });
         }
     };
 }
