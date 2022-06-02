@@ -76,6 +76,15 @@ export default {
     beforeDestroy() {
         this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
+    mounted() {
+        const nodeInfo = this.extensionConfig.nodeInfo;
+        const alertMessage = nodeInfo?.nodeErrorMessage || nodeInfo?.nodeWarnMessage;
+        if (alertMessage) {
+            const isError = nodeInfo?.nodeErrorMessage;
+            const nodeId = this.extensionConfig.nodeId;
+            this.handleAlert({ message: alertMessage, type: isError ? 'error' : 'warn', subtitle: '', nodeId });
+        }
+    },
     methods: {
         initKnimeService() {
             const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
