@@ -175,6 +175,30 @@ describe('UIExtension.vue', () => {
             expect(handleAlertSpy).toHaveBeenCalledWith(mockAlert);
         });
 
+        it('displays alerts via extensionConfig', () => {
+            let handleAlertMock = jest.fn();
+            const message = 'test error';
+            let propsData = {
+                ...getMockComponentProps(),
+                extensionConfig: {
+                    ...getMockComponentProps().extensionConfig,
+                    nodeInfo: {
+                        nodeWarnMessage: null,
+                        nodeErrorMessage: message
+                    }
+                }
+            };
+            shallowMount(UIExtension, {
+                ...context,
+                localVue,
+                propsData,
+                methods: { handleAlert: handleAlertMock }
+            });
+            const expectedAlert = { message, type: 'error', subtitle: '', nodeId: propsData.extensionConfig.nodeId };
+            
+            expect(handleAlertMock).toHaveBeenCalledWith(expectedAlert);
+        });
+
         it('sets alerts locally', () => {
             let wrapper = shallowMount(UIExtension, {
                 ...context,
