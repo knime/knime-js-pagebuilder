@@ -12,29 +12,44 @@ import { componentExtensionConfig } from '../../../assets/views/extensionConfig'
 
 describe('ViewExecutable.vue', () => {
     it('renders', () => {
-        const wrapper = shallowMount(ViewExecutable);
+        const wrapper = shallowMount(ViewExecutable, {
+            propsData: {
+                extensionConfig: { nodeInfo: { nodeState: 'executed' } }
+            }
+        });
         expect(wrapper.exists()).toBeTruthy();
         const executeButton = wrapper.find(Button);
         expect(executeButton.exists()).toBeTruthy();
+        expect(executeButton.attributes().disabled).toBeUndefined();
     });
 
     describe('props validation', () => {
         it('accepts a valid extensionConfig', () => {
             const wrapper = shallowMount(ViewExecutable, {
                 propsData: {
-                    extensionConfig: { nodeId: null, workflowId: null, projectId: null }
+                    extensionConfig: {
+                        nodeId: null,
+                        workflowId: null,
+                        projectId: null,
+                        nodeInfo: { nodeState: 'executed' }
+                    }
                 }
             });
             const extensionConfigValidator = wrapper.vm.$options.props.extensionConfig.validate;
             expect(
-                extensionConfigValidator({ nodeId: null, workflowId: null, projectId: null })
+                extensionConfigValidator({ nodeId: null, workflowId: null, projectId: null, nodeInfo: null })
             ).toBe(true);
         });
 
         it('declines an invalid extensionConfig', () => {
             const wrapper = shallowMount(ViewExecutable, {
                 propsData: {
-                    extensionConfig: { nodeId: null, workflowId: null, projectId: null }
+                    extensionConfig: {
+                        nodeId: null,
+                        workflowId: null,
+                        projectId: null,
+                        nodeInfo: { nodeState: 'executed' }
+                    }
                 }
             });
             const extensionConfigValidator = wrapper.vm.$options.props.extensionConfig.validate;
@@ -113,6 +128,17 @@ describe('ViewExecutable.vue', () => {
             });
             await wrapper.vm.executeViewSaveSettings();
             expect(changeNodeStatesMock).toHaveBeenCalled();
+        });
+
+        test('Save & Execute button is disabled if node cannot be executed', () => {
+            let propsData = getMockComponentProps();
+            propsData.extensionConfig.nodeInfo.nodeState = 'idle';
+            let wrapper = shallowMount(ViewExecutable, {
+                ...context,
+                propsData
+            });
+            expect(wrapper.find(Button).attributes().disabled).toBeTruthy();
+            expect(wrapper.find('.message').text()).toContain('cannot be executed');
         });
     });
 });

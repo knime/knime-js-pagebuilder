@@ -101,8 +101,8 @@ describe('wrapper API store', () => {
             let singleRPC = jest.fn();
             let store = getMockStore({ wrapperApiMocks: { singleRPC } });
             let nodeService = 'NodeService.changeNodeStates';
-            let newNodeState = 'execute';
-            let rpcParams = { extensionConfig, newNodeState };
+            let action = 'execute';
+            let rpcParams = { extensionConfig, action };
             await store.dispatch('changeNodeStates', rpcParams);
             expect(singleRPC).toHaveBeenCalledWith(expect.anything(), {
                 rpcConfig: {
@@ -113,7 +113,7 @@ describe('wrapper API store', () => {
                         extensionConfig.projectId,
                         extensionConfig.workflowId,
                         [extensionConfig.nodeId],
-                        newNodeState
+                        action
                     ]
                 }
             }, EMPTY);
