@@ -351,9 +351,11 @@ if (typeof KnimeInteractivity === 'undefined') {
 if (typeof jsonrpcNotification === 'undefined') {
     window.jsonrpcNotification = (notification) => {
         const { method, params } = JSON.parse(notification);
-        const isNodeStateChange = method === 'NodeViewStateEvent' &&
-            params[0].nodeView.nodeInfo.nodeState === 'executed';
-        if (isNodeStateChange) {
+        if (method === 'NodeViewStateEvent') {
+            // Updating the view config has multiple purposes (see ViewExecutable):
+            // * displaying the actual view if the node is successfully executed
+            // * removing the execution overlay in case the node configuration failed (due to invalid model settings)
+            // * show possible error/warning messages in the view (e.g., when the node configuration failed)
             window.KnimePageLoader.app.$store.dispatch('pagebuilder/updateNodeViewConfig', {
                 nodeView: params[0].nodeView
             });

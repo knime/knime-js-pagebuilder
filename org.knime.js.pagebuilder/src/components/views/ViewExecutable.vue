@@ -22,32 +22,42 @@ export default {
             }
         }
     },
-    data() {
-        return {
-            showReexecutionOverlay: false,
-            showReexecutionSpinner: false
-        };
-    },
     computed: {
         canExecute() {
-            // Strictly speaking there are situations where a node could still be executed even if it's in state 'idle'.
-            // However, since 'idle' implies that no input spec is available, it will become available upon execution
-            // (because the predecessors nodes are being executed then, too). And, since the node dialog (with the
-            // view preview) has been opened without input specs available (e.g. column choices), we actually would need
-            // to update the node dialog settings (i.e. the json schema) after execution (which we don't support, yet).
-            // That's why we decided to not support that to avoid node dialogs which are not in sync with the input specs.
-            return this.extensionConfig.nodeInfo.nodeState !== 'idle';
+            return this.extensionConfig.nodeInfo.canExecute !== false;
+        },
+        isExecuting() {
+            return this.extensionConfig.nodeInfo.nodeState === 'executing';
         }
+    },
+    watch: {
+        'extensionConfig.nodeInfo': {
+            handler() {
+                this.showAlert();
+            },
+            deep: true
+        }
+    },
+    mounted() {
+        this.showAlert();
     },
     methods: {
         async executeViewSaveSettings() {
-            this.showReexecutionOverlay = true;
-            this.showReexecutionSpinner = true;
             await this.$store.dispatch('pagebuilder/dialog/callApplySettings');
             await this.$store.dispatch('api/changeNodeStates', {
                 extensionConfig: this.extensionConfig,
                 action: 'execute'
             });
+        },
+        showAlert() {
+            const nodeInfo = this.extensionConfig.nodeInfo;
+            const alertMessage = nodeInfo?.nodeErrorMessage || nodeInfo?.nodeWarnMessage;
+            if (alertMessage) {
+                const isError = nodeInfo?.nodeErrorMessage;
+                const nodeId = this.extensionConfig.nodeId;
+                const alert = { message: alertMessage, type: isError ? 'error' : 'warn', subtitle: '', nodeId };
+                this.$store.dispatch('pagebuilder/alert/showAlert', alert);
+            }
         }
     }
 };
@@ -77,8 +87,8 @@ export default {
       Save & execute
     </Button>
     <ExecutingOverlay
-      :show="showReexecutionOverlay"
-      :show-spinner="showReexecutionSpinner"
+      :show="isExecuting"
+      :show-spinner="isExecuting"
       :use-css-transition="false"
     />
   </div>
