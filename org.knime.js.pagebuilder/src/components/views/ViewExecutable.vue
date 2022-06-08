@@ -24,10 +24,10 @@ export default {
     },
     computed: {
         canExecute() {
-            return this.extensionConfig.nodeInfo.canExecute !== false;
+            return this.extensionConfig.nodeInfo?.canExecute !== false;
         },
         isExecuting() {
-            return this.extensionConfig.nodeInfo.nodeState === 'executing';
+            return this.extensionConfig.nodeInfo?.nodeState === 'executing';
         }
     },
     watch: {
