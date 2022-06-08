@@ -151,7 +151,8 @@ export default {
 .node-view {
   background-color: var(--knime-white);
 }
+
 .single-view {
-    height:100vh;
+  height: 100vh;
 }
 </style>
