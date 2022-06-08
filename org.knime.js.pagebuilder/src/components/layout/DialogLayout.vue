@@ -106,10 +106,10 @@ export default {
   flex-direction: column;
 
   & .view-content {
+    width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    max-height: 100vh;
+    overflow: auto;
   }
 
   & .messages {
