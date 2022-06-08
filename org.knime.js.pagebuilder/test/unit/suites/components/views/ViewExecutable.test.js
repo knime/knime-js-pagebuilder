@@ -3,6 +3,7 @@ import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 
 import * as serviceStoreConfig from '~/store/service';
 import * as apiStoreConfig from '~/store/wrapperApi';
+import * as alertStoreConfig from '~/store/alert';
 
 import ViewExecutable from '@/components/views/ViewExecutable';
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay';
@@ -14,7 +15,7 @@ describe('ViewExecutable.vue', () => {
     it('renders', () => {
         const wrapper = shallowMount(ViewExecutable, {
             propsData: {
-                extensionConfig: { nodeInfo: { nodeState: 'executed' } }
+                extensionConfig: { nodeInfo: { canExecute: true } }
             }
         });
         expect(wrapper.exists()).toBeTruthy();
@@ -64,11 +65,12 @@ describe('ViewExecutable.vue', () => {
 
     describe('Save & Execute on Button Click', () => {
         const getMockComponentProps = () => ({ extensionConfig: { ...componentExtensionConfig } });
-        let localVue, context, applySettingsMock, changeNodeStatesMock;
+        let localVue, context, applySettingsMock, changeNodeStatesMock, showAlertMock;
 
         beforeAll(() => {
             applySettingsMock = jest.fn();
             changeNodeStatesMock = jest.fn();
+            showAlertMock = jest.fn();
 
             localVue = createLocalVue();
             localVue.use(Vuex);
@@ -87,6 +89,12 @@ describe('ViewExecutable.vue', () => {
                             actions: {
                                 changeNodeStates: changeNodeStatesMock
                             }
+                        },
+                        'pagebuilder/alert': {
+                            ...alertStoreConfig,
+                            actions: {
+                                showAlert: showAlertMock
+                            }
                         }
                     }
                 }),
@@ -100,13 +108,13 @@ describe('ViewExecutable.vue', () => {
 
         it('shows the executing overlay', async () => {
             let propsData = getMockComponentProps();
+            propsData.extensionConfig.nodeInfo.nodeState = 'executing';
             let wrapper = mount(ViewExecutable, {
                 ...context,
                 propsData
             });
             await wrapper.vm.executeViewSaveSettings();
-            expect(wrapper.vm.showReexecutionOverlay).toBeTruthy();
-            expect(wrapper.vm.showReexecutionSpinner).toBeTruthy();
+            expect(wrapper.vm.isExecuting).toBeTruthy();
             expect(wrapper.find(ExecutingOverlay).exists()).toBeTruthy();
         });
 
@@ -132,13 +140,25 @@ describe('ViewExecutable.vue', () => {
 
         test('Save & Execute button is disabled if node cannot be executed', () => {
             let propsData = getMockComponentProps();
-            propsData.extensionConfig.nodeInfo.nodeState = 'idle';
+            propsData.extensionConfig.nodeInfo.canExecute = false;
             let wrapper = shallowMount(ViewExecutable, {
                 ...context,
                 propsData
             });
             expect(wrapper.find(Button).attributes().disabled).toBeTruthy();
             expect(wrapper.find('.message').text()).toContain('cannot be executed');
+        });
+
+        it('dispatches calls to the pagebuilder/alert store', () => {
+            let propsData = getMockComponentProps();
+            propsData.extensionConfig.nodeInfo.nodeWarnMessage = 'warning message';
+            shallowMount(ViewExecutable, {
+                ...context,
+                propsData
+            });
+            expect(showAlertMock).toHaveBeenCalledWith(expect.anything(), {
+                message: 'warning message', nodeId: '0:0:7', subtitle: '', type: 'warn'
+            }, undefined);
         });
     });
 });

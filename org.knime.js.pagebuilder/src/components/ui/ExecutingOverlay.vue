@@ -54,12 +54,10 @@ export default {
             return Math.min(this.getHalfOverlayHeight(), MAX_SPINNER_HEIGHT);
         },
         getHalfOverlayWidth() {
-            let el = this.$refs.overlay.offsetWidth;
-            return el / 2;
+            return this.$refs.overlay?.offsetWidth / 2 || 0;
         },
         getHalfOverlayHeight() {
-            let el = this.$refs.overlay.offsetHeight;
-            return el / 2;
+            return this.$refs.overlay?.offsetHeight / 2 || 0;
         }
     }
 };
