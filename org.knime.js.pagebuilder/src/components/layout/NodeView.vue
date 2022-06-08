@@ -70,7 +70,10 @@ export default {
             return Boolean(this.uiExtensionConfig);
         },
         isNodeDialog() {
-            return this.isUIExtension && this.nodeId === 'DIALOG';
+            if (!this.isUIExtension) {
+                return false;
+            }
+            return this.nodeId === 'DIALOG' || this.uiExtensionConfig.extensionType === 'dialog';
         },
         isSingleView() {
             return this.isUIExtension && this.nodeId === 'SINGLE';
@@ -88,18 +91,14 @@ export default {
         },
         viewDisplayable() {
             if (this.isUIExtension) {
-                return this.isExecuted || this.isDialogLayout || this.isSingleDialog;
+                return this.isExecuted || this.isDialogLayout || this.isNodeDialog;
             }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
             return this.nodeInfo?.displayPossible;
         },
-        isSingleDialog() {
-            return this.page.wizardPageContent?.nodeViews.SINGLE.extensionType === 'dialog';
-        },
         showViewExecutable() {
-            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings) &&
-                !this.isSingleDialog;
+            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings);
         },
         showExecutionOverlay() {
             /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this
