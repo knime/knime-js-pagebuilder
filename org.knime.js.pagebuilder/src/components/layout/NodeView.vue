@@ -138,7 +138,7 @@ export default {
       />
       <UIExtension
         v-else-if="isUIExtension"
-        :class="{'single-view': isSingleView, 'single-dialog': isSingleDialog}"
+        :class="{'single-view': isSingleView, 'single-dialog': isNodeDialog && isSingleView}"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
       />
