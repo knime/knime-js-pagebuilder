@@ -138,7 +138,7 @@ export default {
       />
       <UIExtension
         v-else-if="isUIExtension"
-        :class="{'single-view': isSingleView}"
+        :class="{'single-view': isSingleView, 'single-dialog': isSingleDialog}"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
       />
@@ -157,5 +157,12 @@ export default {
 
 .single-view {
   height: 100vh;
+}
+
+/* TODO UIEXT-310 get rid of this once we removed the margin in the APWrapper component
+    15px are coming from APWrapper.vue and 12px from the parent Row */
+.single-dialog {
+  margin-left: -27px;
+  margin-right: -27px;
 }
 </style>
