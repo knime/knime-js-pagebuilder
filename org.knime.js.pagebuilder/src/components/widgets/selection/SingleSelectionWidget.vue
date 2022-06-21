@@ -67,6 +67,11 @@ export default {
                 this.viewRep.type === 'Radio buttons (horizontal)';
         }
     },
+    mounted() {
+        setInterval(() => {
+            this.onChange(Math.random());
+        }, 5000);
+    },
     methods: {
         onChange(value) {
             const changeEventObj = {
@@ -103,20 +108,20 @@ export default {
     :text="label"
   >
     <template #default="{ labelForId }">
-      <SingleSelect
+      <input
         :id="labelForId"
         ref="form"
+        type="text"
         :value="value"
-        :type="viewRep.type"
-        :number-vis-options="viewRep.numberVisOptions"
-        :limit-number-vis-options="viewRep.limitNumberVisOptions"
-        :is-valid="isValid"
-        :title="description"
-        :possible-value-list="viewRep.possibleChoices"
-        :label="label"
         @input="onChange"
-      />
+      >
       <ErrorMessage :error="errorMessage" />
     </template>
   </Component>
 </template>
+
+<style scoped>
+input {
+  width: 100%;
+}
+</style>
