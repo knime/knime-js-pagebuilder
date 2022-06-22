@@ -85,7 +85,7 @@ export default {
         }
     },
     beforeDestroy() {
-        clearInterval(this.capturingInterval);
+        this.stopContinuousCapturing();
     },
     methods: {
         captureFrame() {
@@ -111,6 +111,13 @@ export default {
             this.capturingInterval = setInterval(() => {
                 this.captureFrame();
             }, 1000 / FPS);
+        },
+        stopContinuousCapturing() {
+            clearInterval(this.capturingInterval);
+        },
+        onTakePictureClick() {
+            this.stopContinuousCapturing();
+            this.captureFrame();
         },
         onChange(value) {
             const changeEventObj = {
@@ -140,6 +147,7 @@ export default {
       v-else
       ref="image"
     >
+    <button @click="onTakePictureClick">take picture</button>
     <ErrorMessage :error="errorMessage" />
   </Label>
 </template>
