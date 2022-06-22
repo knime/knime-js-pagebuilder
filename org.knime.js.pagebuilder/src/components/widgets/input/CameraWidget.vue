@@ -1,5 +1,6 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
+import Button from 'webapps-common/ui/components/Button';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 
 const DATA_TYPE_KEY = 'value';
@@ -10,6 +11,7 @@ const FPS = 0.2;
 export default {
     components: {
         Label,
+        Button,
         ErrorMessage
     },
     props: {
@@ -147,7 +149,12 @@ export default {
       v-else
       ref="image"
     >
-    <button @click="onTakePictureClick">take picture</button>
+    <br>
+    <Button
+      primary
+      @click="onTakePictureClick"
+    >take picture</Button>
+    
     <ErrorMessage :error="errorMessage" />
   </Label>
 </template>
