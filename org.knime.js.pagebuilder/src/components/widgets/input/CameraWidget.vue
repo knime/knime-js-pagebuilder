@@ -5,7 +5,7 @@ import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 const DATA_TYPE_KEY = 'value';
 
 const FALLBACK_WS_URL = 'ws://localhost:3001';
-const FPS = 0.1;
+const FPS = 0.2;
 
 export default {
     components: {
@@ -89,6 +89,7 @@ export default {
     },
     methods: {
         captureFrame() {
+            consola.log('capturing frame');
             let imageDataURL;
             if (this.usingWebSocket) {
                 imageDataURL = this.$refs.image.src;
@@ -101,9 +102,12 @@ export default {
                 const data = canvas.toDataURL('image/png');
                 imageDataURL = String(data);
             }
-            this.onChange(imageDataURL.replace('data:image/png;base64,', ''));
+            consola.log('captured frame', imageDataURL);
+            const rawBase64 = imageDataURL.replace('data:image/png;base64,', '');
+            this.onChange(rawBase64);
         },
         startContinuousCapturing() {
+            consola.log('start continuous capturing');
             this.capturingInterval = setInterval(() => {
                 this.captureFrame();
             }, 1000 / FPS);
@@ -117,21 +121,7 @@ export default {
             this.$emit('updateWidget', changeEventObj);
         },
         validate() {
-            if (this.viewRep.possibleChoices.length === 0) {
-                return { isValid: false, errorMessage: 'No choices were specified.' };
-            }
-            let isValid = true;
-            let errorMessage;
-            if (this.viewRep.required && !this.$refs.form.hasSelection()) {
-                isValid = false;
-                errorMessage = 'Selection is required.';
-            }
-            if (typeof this.$refs.form.validate === 'function') {
-                let validateEvent = this.$refs.form.validate();
-                isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Current selection is invalid.';
-            }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
+            return { isValid: true, errorMessage: null };
         }
     }
 };
