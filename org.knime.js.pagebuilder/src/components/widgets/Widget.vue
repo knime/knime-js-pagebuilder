@@ -11,6 +11,7 @@ import CredentialsWidget from './input/CredentialsWidget';
 import DateTimeWidget from './input/DateTimeWidget';
 import FileUploadWidget from './input/FileUploadWidget';
 import CameraWidget from './input/CameraWidget';
+import MicrophoneWidget from './input/MicrophoneWidget';
 // selection widgets
 import SingleSelectionWidget from './selection/SingleSelectionWidget';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
@@ -69,6 +70,7 @@ export default {
         DateTimeWidget,
         FileUploadWidget,
         CameraWidget,
+        MicrophoneWidget,
         // selection widgets
         SingleSelectionWidget,
         MultipleSelectionWidget,

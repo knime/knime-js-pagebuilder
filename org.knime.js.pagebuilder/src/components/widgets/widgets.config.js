@@ -22,6 +22,7 @@ export const classToComponentMap = {
     'org.knime.js.base.node.widget.input.date.DateWidgetNodeRepresentation': 'DateTimeWidget',
     'org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation': 'FileUploadWidget',
     'org.knime.js.base.node.widget.input.camera.CameraNodeRepresentation': 'CameraWidget',
+    'org.knime.js.base.node.widget.input.microphone.MicrophoneNodeRepresentation': 'MicrophoneWidget',
 
     // selection widgets
     'org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation': 'SingleSelectionWidget',
