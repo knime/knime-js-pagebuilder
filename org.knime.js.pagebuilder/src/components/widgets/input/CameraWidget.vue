@@ -110,6 +110,7 @@ export default {
         },
         stopContinuousCapturing() {
             clearInterval(this.capturingInterval);
+            this.capturingInterval = null;
         },
         onTakePictureClick() {
             this.captureFrame();

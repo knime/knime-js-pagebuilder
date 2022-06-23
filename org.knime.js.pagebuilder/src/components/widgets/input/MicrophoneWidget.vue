@@ -1,15 +1,18 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
 import Button from 'webapps-common/ui/components/Button';
+import ToggleSwitch from 'webapps-common/ui/components/forms/ToggleSwitch';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 import Recorder from './recorder.js';
 
 const DATA_TYPE_KEY = 'value';
+const CHUNK_LENGTH = 5000; // 5s
 
 export default {
     components: {
         Label,
         Button,
+        ToggleSwitch,
         ErrorMessage
     },
     props: {
@@ -44,7 +47,7 @@ export default {
     },
     data() {
         return {
-            capturingInterval: null,
+            capturingTimeout: null,
             isRecording: false,
             isRecordingAvailable: false
         };
@@ -60,10 +63,8 @@ export default {
             return this.valuePair[DATA_TYPE_KEY];
         }
     },
-    async mounted() {
-    },
     beforeDestroy() {
-        // this.stopContinuousCapturing();
+        this.stopContinuousCapturing();
     },
     methods: {
         async onStartRecording() {
@@ -101,17 +102,22 @@ export default {
                 newSource.start(0);
             });
         },
-        /*
         startContinuousCapturing() {
             consola.log('start continuous capturing');
-            this.capturingInterval = setInterval(() => {
-                this.captureFrame();
-            }, 1000 / FPS);
+            this.onStartRecording();
+            this.capturingTimeout = setTimeout(() => {
+                this.onStopRecording();
+
+                if (this.capturingTimeout !== null) {
+                    this.startContinuousCapturing();
+                }
+            }, CHUNK_LENGTH);
         },
         stopContinuousCapturing() {
-            clearInterval(this.capturingInterval);
+            this.onStopRecording();
+            clearTimeout(this.capturingTimeout);
+            this.capturingTimeout = null;
         },
-        */
         getWAV() {
             this.recorder.exportWAV(async (blob) => {
                 let base64 = await this.blobToBase64(blob);
@@ -133,6 +139,13 @@ export default {
                 value
             };
             this.$emit('updateWidget', changeEventObj);
+        },
+        onContinouslyRecordInput(enable) {
+            if (enable) {
+                this.startContinuousCapturing();
+            } else {
+                this.stopContinuousCapturing();
+            }
         },
         validate() {
             return { isValid: true, errorMessage: null };
@@ -162,6 +175,11 @@ export default {
       :disabled="!isRecordingAvailable"
       @click="onPlayRecording"
     >Play recording</Button>
+    <br>
+    <ToggleSwitch
+      @input="onContinouslyRecordInput"
+    >continously record</ToggleSwitch>
+
     
     <ErrorMessage :error="errorMessage" />
   </Label>
