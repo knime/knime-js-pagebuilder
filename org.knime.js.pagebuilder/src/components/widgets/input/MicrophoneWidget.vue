@@ -61,30 +61,31 @@ export default {
         }
     },
     async mounted() {
-        try {
-            this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        } catch (e) {
-            consola.error(`Couldn't access microphone`);
-        }
     },
     beforeDestroy() {
         // this.stopContinuousCapturing();
     },
     methods: {
-        onStartRecording() {
-            this.isRecording = true;
-            this.audioContext = new AudioContext();
-            let input = this.audioContext.createMediaStreamSource(this.stream);
+        async onStartRecording() {
+            try {
+                this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                this.audioContext = new AudioContext();
+                let input = this.audioContext.createMediaStreamSource(this.stream);
 
-            this.recorder = new Recorder(input, { numChannels: 1 });
-            this.recorder.record();
+                this.recorder = new Recorder(input, { numChannels: 1 });
+                this.recorder.record();
+                this.isRecording = true;
+            } catch (e) {
+                this.isRecording = false;
+                consola.error(`Couldn't access microphone`);
+            }
         },
         onStopRecording() {
             this.isRecording = false;
             this.isRecordingAvailable = true;
 
             this.recorder.stop();
-            // this.stream.getAudioTracks()[0].stop();
+            this.stream.getAudioTracks()[0].stop();
 
             this.getWAV();
         },
@@ -149,13 +150,13 @@ export default {
       v-show="!isRecording"
       primary
       @click="onStartRecording"
-    >Start recording</Button>
+    >Start audio recording</Button>
     &nbsp;
     <Button
       v-show="isRecording"
       primary
       @click="onStopRecording"
-    >Stop recording</Button>
+    >Stop audio recording</Button>
     <Button
       with-border
       :disabled="!isRecordingAvailable"
