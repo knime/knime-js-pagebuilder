@@ -58,9 +58,7 @@ export default {
             return this.viewRep.label;
         },
         value() {
-            // unwrap the value form the array, single selection values are still arrays in the json
-            // because they share some impl parts with multiple selection values
-            return this.valuePair[DATA_TYPE_KEY][0];
+            return this.valuePair[DATA_TYPE_KEY];
         }
     },
     async mounted() {
@@ -125,7 +123,7 @@ export default {
             const changeEventObj = {
                 nodeId: this.nodeId,
                 type: DATA_TYPE_KEY,
-                value: [value]
+                value
             };
             this.$emit('updateWidget', changeEventObj);
         },
@@ -154,7 +152,7 @@ export default {
       primary
       @click="onTakePictureClick"
     >take picture</Button>
-    
+
     <ErrorMessage :error="errorMessage" />
   </Label>
 </template>
