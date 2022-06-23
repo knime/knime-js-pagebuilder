@@ -70,7 +70,7 @@ export default {
         async onStartRecording() {
             try {
                 this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                this.audioContext = new AudioContext();
+                this.audioContext = new AudioContext({ latencyHint: 'interactive', sampleRate: 44100});
                 let input = this.audioContext.createMediaStreamSource(this.stream);
 
                 this.recorder = new Recorder(input, { numChannels: 1 });
