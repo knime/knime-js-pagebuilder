@@ -1,0 +1,110 @@
+{
+  "hasPreviousPage": true,
+  "nodeMessages": {},
+  "wizardExecutionState": "INTERACTION_REQUIRED",
+  "wizardPageContent": {
+    "@class": "org.knime.js.core.JSONWebNodePage",
+    "webNodePageConfiguration": {
+      "@class": "org.knime.js.core.JSONWebNodePageConfiguration",
+      "layout": {
+        "rows": [
+          {
+            "type": "JSONLayoutRow",
+            "additionalStyles": [],
+            "additionalClasses": [],
+            "columns": [
+              {
+                "content": [
+                  {
+                    "type": "JSONLayoutRow",
+                    "additionalStyles": [],
+                    "additionalClasses": [],
+                    "columns": [
+                      {
+                        "content": [
+                          {
+                            "type": "JSONLayoutViewContent",
+                            "useLegacyMode": false,
+                            "resizeMethod": "viewLowestElement",
+                            "nodeID": "15:0:19",
+                            "resizeInterval": null,
+                            "resizeTolerance": 5,
+                            "scrolling": false,
+                            "maxHeight": null,
+                            "maxWidth": null,
+                            "minHeight": null,
+                            "minWidth": null,
+                            "autoResize": true,
+                            "sizeHeight": true,
+                            "sizeWidth": false,
+                            "additionalStyles": [],
+                            "additionalClasses": []
+                          }
+                        ],
+                        "widthXS": 12,
+                        "widthLG": null,
+                        "widthXL": null,
+                        "widthSM": null,
+                        "widthMD": null,
+                        "additionalStyles": [],
+                        "additionalClasses": []
+                      }
+                    ]
+                  }
+                ],
+                "widthXS": 12,
+                "widthLG": null,
+                "widthXL": null,
+                "widthSM": null,
+                "widthMD": null,
+                "additionalStyles": [],
+                "additionalClasses": []
+              }
+            ]
+          }
+        ]
+      },
+      "blackBoard": null,
+      "selectionTranslators": null,
+      "version": "4.1.0.v201910311645"
+    },
+    "webNodes": {
+      "15:0:19": {
+        "@class": "org.knime.js.core.JSONWebNode",
+        "viewValue": null,
+        "customCSS": "",
+        "viewRepresentation": {
+          "@class": "org.knime.js.base.node.widget.input.camera.CameraNodeRepresentation",
+          "label": "This is the label (default true)",
+          "description": "This is the description.",
+          "required": true,
+          "defaultValue": {
+            "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+            "string": ""
+          },
+          "currentValue": {
+            "@class": "org.knime.js.base.node.base.input.bool.BooleanNodeValue",
+            "string": ""
+          }
+        },
+        "initMethodName": "init",
+        "setValidationErrorMethodName": "setValidationErrorMessage",
+        "validateMethodName": "validate",
+        "nodeInfo": {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          "nodeName": "Microphone Widget",
+          "nodeState": "executed",
+          "nodeAnnotation": "",
+          "nodeErrorMessage": null,
+          "nodeWarnMessage": null,
+          "displayPossible": true
+        },
+        "stylesheets": [],
+        "namespace": "knimeBooleanWidget",
+        "javascriptLibraries": [],
+        "getViewValueMethodName": "value"
+      }
+    },
+    "version": "4.1.0.v201910311645"
+  }
+}
