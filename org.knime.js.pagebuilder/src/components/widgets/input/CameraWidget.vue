@@ -1,6 +1,7 @@
 <script>
 import Label from 'webapps-common/ui/components/forms/Label';
 import Button from 'webapps-common/ui/components/Button';
+import ToggleSwitch from 'webapps-common/ui/components/forms/ToggleSwitch';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 
 const DATA_TYPE_KEY = 'value';
@@ -12,6 +13,7 @@ export default {
     components: {
         Label,
         Button,
+        ToggleSwitch,
         ErrorMessage
     },
     props: {
@@ -65,7 +67,6 @@ export default {
         try {
             let stream = await navigator.mediaDevices.getUserMedia({ video: { width: 426, height: 240 } });
             this.$refs.video.srcObject = stream;
-            this.startContinuousCapturing();
         } catch (e) {
             // couldn't access webcam, try to connect to WebSocket (only as work-around while developing)
             consola.log(`Couldn't access webcam, trying to connect to ${FALLBACK_WS_URL}`);
@@ -76,11 +77,6 @@ export default {
             };
             ws.onmessage = (message) => {
                 this.$refs.image.src = message.data;
-
-                // start capturing on first message
-                if (!this.capturingInterval) {
-                    this.startContinuousCapturing();
-                }
             };
         }
     },
@@ -116,8 +112,15 @@ export default {
             clearInterval(this.capturingInterval);
         },
         onTakePictureClick() {
-            this.stopContinuousCapturing();
             this.captureFrame();
+        },
+        onContinouslyTakePicturesInput(enable) {
+            if (enable) {
+                this.captureFrame();
+                this.startContinuousCapturing();
+            } else {
+                this.stopContinuousCapturing();
+            }
         },
         onChange(value) {
             const changeEventObj = {
@@ -152,6 +155,10 @@ export default {
       primary
       @click="onTakePictureClick"
     >take picture</Button>
+    &nbsp;
+    <ToggleSwitch
+      @input="onContinouslyTakePicturesInput"
+    >continously take pictures</ToggleSwitch>
 
     <ErrorMessage :error="errorMessage" />
   </Label>
