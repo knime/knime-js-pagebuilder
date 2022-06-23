@@ -5,7 +5,7 @@ import ToggleSwitch from 'webapps-common/ui/components/forms/ToggleSwitch';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 import Recorder from './recorder.js';
 
-const DATA_TYPE_KEY = 'value';
+const DATA_TYPE_KEY = 'string';
 const CHUNK_LENGTH = 5000; // 5s
 
 export default {
@@ -36,7 +36,7 @@ export default {
         },
         valuePair: {
             default: () => ({
-                [DATA_TYPE_KEY]: ''
+                [DATA_TYPE_KEY]: 0
             }),
             type: Object
         },

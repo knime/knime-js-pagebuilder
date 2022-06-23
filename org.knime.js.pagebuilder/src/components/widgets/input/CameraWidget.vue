@@ -4,7 +4,7 @@ import Button from 'webapps-common/ui/components/Button';
 import ToggleSwitch from 'webapps-common/ui/components/forms/ToggleSwitch';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 
-const DATA_TYPE_KEY = 'value';
+const DATA_TYPE_KEY = 'string';
 
 const FALLBACK_WS_URL = 'ws://localhost:3001';
 const FPS = 0.2;
@@ -37,7 +37,7 @@ export default {
         },
         valuePair: {
             default: () => ({
-                [DATA_TYPE_KEY]: ''
+                [DATA_TYPE_KEY]: 0
             }),
             type: Object
         },
@@ -65,7 +65,12 @@ export default {
     },
     async mounted() {
         try {
-            let stream = await navigator.mediaDevices.getUserMedia({ video: { width: 426, height: 240 } });
+            let stream = await navigator.mediaDevices.getUserMedia({ audio: false,
+                video: {
+                    facingMode: 'environment',
+                    width: 448,
+                    height: 448
+                } });
             this.$refs.video.srcObject = stream;
         } catch (e) {
             // couldn't access webcam, try to connect to WebSocket (only as work-around while developing)
@@ -168,7 +173,9 @@ export default {
 <style scoped>
 video,
 img {
-  width: 436px;
-  height: 240px;
+  width: 448px;
+  height: 448px;
+  margin-bottom: 20px;
+  padding: 0;
 }
 </style>
