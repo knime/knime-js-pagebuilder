@@ -3,11 +3,15 @@ import { mapGetters } from 'vuex';
 
 import NodeView from './NodeView';
 import Messages from '~/webapps-common/ui/components/Messages';
+import { Splitpanes, Pane } from 'splitpanes';
+import 'splitpanes/dist/splitpanes.css';
 
 export default {
     components: {
         NodeView,
-        Messages
+        Messages,
+        Splitpanes,
+        Pane
     },
     props: {
         /**
@@ -69,42 +73,34 @@ export default {
 </script>
 
 <template>
-  <div class="layout">
-    <div class="item view">
-      <NodeView
-        class="view-content"
-        :view-config="viewContent"
-      />
-      <Messages
-        v-if="showMessages"
-        class="messages"
-        :messages="messages"
-        @dismiss="onClose"
-      />
-    </div>
-    <div class="item dialog">
+  <Splitpanes class="layout default-theme">
+    <Pane class="item view">
+      <div>
+        <NodeView
+          class="view-content"
+          :view-config="viewContent"
+        />
+        <Messages
+          v-if="showMessages"
+          class="messages"
+          :messages="messages"
+          @dismiss="onClose"
+        />
+      </div>
+    </Pane>
+    <Pane class="item dialog">
       <NodeView :view-config="dialogContent" />
-    </div>
-  </div>
+    </Pane>
+  </Splitpanes>
 </template>
 
 <style lang="postcss" scoped>
 .layout {
-  display: flex;
-  flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
 }
 
 .item {
-  position: relative;
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  flex-basis: 0;
-  flex-grow: 1;
-  flex-direction: column;
-
   & .view-content {
     width: 100%;
     height: 100%;
@@ -132,15 +128,8 @@ export default {
   }
 }
 
-.dialog {
-  flex: 0 0 calc(4 * 100% / 12);
-  max-width: calc(4 * 100% / 12);
-}
 
 .view {
-  flex: 0 0 calc(8 * 100% / 12);
-  max-width: calc(8 * 100% / 12);
-
   & >>> iframe {
     height: calc(100vh - 10px);
   }
