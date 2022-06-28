@@ -3,6 +3,10 @@ import Button from '~/webapps-common/ui/components/Button';
 import ExecutingOverlay from '../ui/ExecutingOverlay';
 import ExecutableImage from '../../assets/executable-plot.svg?inline';
 
+/**
+ * Stylized overlay displayed in the Dialog-Preview when the node is not executed or requires
+ * re-execution. Displays a button to trigger the execution of the underlying node.
+ */
 export default {
     components: {
         Button,
