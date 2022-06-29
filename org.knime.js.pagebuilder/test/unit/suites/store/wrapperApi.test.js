@@ -513,8 +513,9 @@ describe('wrapper API store', () => {
     describe('getters', () => {
         it('returns the correct resource location for UI Extensions', () => {
             const store = getMockStore();
-            const url = 'test';
-            expect(store.getters.uiExtResourceLocation({ resourceInfo: { url } })).toBe(url);
+            const baseUrl = 'baseUrl/';
+            const path = 'path';
+            expect(store.getters.uiExtResourceLocation({ resourceInfo: { baseUrl, path } })).toBe(baseUrl + path);
         });
     });
 });

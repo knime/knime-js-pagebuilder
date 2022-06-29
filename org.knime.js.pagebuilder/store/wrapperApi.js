@@ -289,6 +289,6 @@ export const actions = {
 };
 
 export const getters = {
-    // In local environments (AP), resource locations are defined by 'url' (and not path).
-    uiExtResourceLocation: () => ({ resourceInfo } = {}) => resourceInfo?.url
+    // In local environments (AP), resource locations are defined by the 'baseUrl' and the relative resource path.
+    uiExtResourceLocation: () => ({ resourceInfo } = {}) => resourceInfo?.baseUrl + resourceInfo?.path
 };
