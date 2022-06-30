@@ -516,6 +516,9 @@ describe('wrapper API store', () => {
             const baseUrl = 'baseUrl/';
             const path = 'path';
             expect(store.getters.uiExtResourceLocation({ resourceInfo: { baseUrl, path } })).toBe(baseUrl + path);
+
+            const debugUrl = 'test-debug-url';
+            expect(store.getters.uiExtResourceLocation({ resourceInfo: { debugUrl, baseUrl, path } })).toBe(debugUrl);
         });
     });
 });
