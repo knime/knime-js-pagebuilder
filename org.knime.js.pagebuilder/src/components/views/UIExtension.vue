@@ -143,6 +143,7 @@ export default {
   <div>
     <UIExtComponent
       v-if="isUIExtComponent"
+      :key="configKey"
       :resource-location="resourceLocation"
     />
     <UIExtIFrame

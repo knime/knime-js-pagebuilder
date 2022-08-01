@@ -94,16 +94,36 @@ describe('UIExtension.vue', () => {
         expect(wrapper.find(UIExtComponent).exists()).toBeFalsy();
     });
 
-    it('increments key when node info updates', () => {
+    it('increments key on UIExtIFrame when node info updates', () => {
         let wrapper = shallowMount(UIExtension, {
             ...context,
             propsData: getMockIFrameProps()
         });
-        const startingKey = wrapper.vm.configKey;
+        const startingLocalKey = wrapper.vm.configKey;
+        const startingIFrameKey = wrapper.find(UIExtIFrame).vm.$vnode.key;
+        expect(startingLocalKey).toBe(0);
+        expect(startingIFrameKey).toBe(0);
         let { extensionConfig } = getMockIFrameProps();
-        extensionConfig.resourceInfo.url = 'http://localhost:8080/your_widget.html';
+        extensionConfig.resourceInfo.url = 'http://localhost:8080/your_iframe_widget.html';
         wrapper.setProps({ extensionConfig });
-        expect(wrapper.vm.configKey).toBeGreaterThan(startingKey);
+        expect(wrapper.vm.configKey).toBeGreaterThan(startingLocalKey);
+        expect(wrapper.find(UIExtIFrame).vm.$vnode.key).toBeGreaterThan(startingIFrameKey);
+    });
+
+    it('increments key on UIExtComponent when node info updates', () => {
+        let wrapper = shallowMount(UIExtension, {
+            ...context,
+            propsData: getMockComponentProps()
+        });
+        const startingLocalKey = wrapper.vm.configKey;
+        const startingComponentKey = wrapper.find(UIExtComponent).vm.$vnode.key;
+        expect(startingLocalKey).toBe(0);
+        expect(startingComponentKey).toBe(0);
+        let { extensionConfig } = getMockComponentProps();
+        extensionConfig.resourceInfo.url = 'http://localhost:8080/your_vue_widget.html';
+        wrapper.setProps({ extensionConfig });
+        expect(wrapper.vm.configKey).toBeGreaterThan(startingLocalKey);
+        expect(wrapper.find(UIExtComponent).vm.$vnode.key).toBeGreaterThan(startingComponentKey);
     });
 
     it('creates and registers a KnimeService instance during mount', () => {
