@@ -70,7 +70,7 @@ export default {
         extensionConfig() {
             this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
             this.initKnimeService();
-            this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrame
+            this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrames and UIExtComponents
         }
     },
     beforeDestroy() {
