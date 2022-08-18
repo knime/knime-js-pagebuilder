@@ -141,7 +141,7 @@ export default {
         :class="{
           'single-view': isSingleView,
           'single-dialog': isNodeDialog && isSingleView,
-          'view-config-window': !isNodeDialog && !isSingleView
+          'view-and-dialog': !isNodeDialog && !isSingleView
         }"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
@@ -170,7 +170,7 @@ export default {
   margin-right: -27px;
 }
 
-.view-config-window {
+.view-and-dialog {
   height: 100%;
 }
 </style>
