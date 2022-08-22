@@ -94,8 +94,9 @@ export default {
                     zonestring: this.value.zonestring
                 };
             }
-            // use exec time (only once as we have no zonestring given)
-            if (this.viewRep.usedefaultexectime) {
+            // Update with FE (local) exec time only on initial execution.
+            // Additional re-executions will be skipped by comparing the default and current WizardNode values.
+            if (this.viewRep.usedefaultexectime && this.value?.datestring === this.viewRep?.defaultValue?.datestring) {
                 return {
                     datestring: this.formatDate(this.execTime),
                     zonestring: this.localTimeZone
@@ -138,8 +139,12 @@ export default {
         }
     },
     mounted() {
-        if (this.viewRep.usedefaultexectime) {
-            this.publishUpdate(this.formatDate(this.execTime), this.localTimeZone);
+        const { datestring: inDateStr, zonestring: inZoneStr } = this.value || {};
+        const { datestring, zonestring } = this.dateValue;
+        // Check and publish locally updated values on mount. Reasons for update include "use execution time" setting
+        // or local parsing of timezone.
+        if (datestring !== inDateStr || zonestring !== inZoneStr) {
+            this.publishUpdate(datestring, zonestring);
         }
     },
     methods: {
