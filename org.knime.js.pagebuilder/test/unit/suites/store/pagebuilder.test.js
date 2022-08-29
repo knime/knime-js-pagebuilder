@@ -83,11 +83,43 @@ describe('PageBuilder store', () => {
         expect(store.state.nodesReExecuting).toEqual(nodesReExecuting);
     });
 
-    it('allows setting page via action', () => {
+    it('updates nodes re-executing if null received', () => {
+        let nodesReExecuting = ['1', '2'];
+        expect(store.state.nodesReExecuting).toEqual([]);
+        store.commit('setNodesReExecuting', nodesReExecuting);
+        expect(store.state.nodesReExecuting).toEqual(nodesReExecuting);
+        store.commit('setNodesReExecuting', null);
+        expect(store.state.nodesReExecuting).toEqual([]);
+    });
+
+    it('allows setting re-executing nodes via action', () => {
+        expect(store.state.nodesReExecuting).toEqual([]);
+        store.dispatch('setPage', { });
+        store.dispatch('setNodesReExecuting', true);
+        expect(store.state.nodesReExecuting).toEqual([]);
+    });
+
+    it('handles empty pages during re-execution', () => {
         let nodesReExecuting = ['1', '2'];
         expect(store.state.nodesReExecuting).toEqual([]);
         store.dispatch('setNodesReExecuting', nodesReExecuting);
         expect(store.state.nodesReExecuting).toEqual(nodesReExecuting);
+    });
+
+    it('initializes re-execution using nodeIds from the page', () => {
+        let page = {
+            wizardPageContent: {
+                webNodes: {
+                    id1: {
+                        foo: 'bar'
+                    }
+                }
+            }
+        };
+        store.commit('setPage', page);
+        expect(store.state.nodesReExecuting).toEqual([]);
+        store.dispatch('setNodesReExecuting', true);
+        expect(store.state.nodesReExecuting).toEqual(['id1']);
     });
 
     it('clears interactivity when setting a page', () => {

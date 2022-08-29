@@ -141,6 +141,9 @@ export const mutations = {
     },
     
     setNodesReExecuting(state, nodesReExecuting) {
+        if (!nodesReExecuting?.length) {
+            nodesReExecuting = nodesReExecuting ? Object.keys(state.page?.wizardPageContent?.webNodes || {}) : [];
+        }
         let lenInEq = nodesReExecuting.length !== state.nodesReExecuting.length;
         let contentInEq = nodesReExecuting.some(nodeId => state.nodesReExecuting.indexOf(nodeId) < 0);
         // Prevent unnecessary updates
