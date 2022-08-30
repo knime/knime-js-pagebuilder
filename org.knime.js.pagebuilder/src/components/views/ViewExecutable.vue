@@ -107,11 +107,6 @@ export default {
   align-items: center;
   justify-content: center;
 
-  & > * {
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-  }
-
   & .message {
     font-size: 16px;
     line-height: 21px;
