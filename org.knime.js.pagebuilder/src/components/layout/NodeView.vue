@@ -138,7 +138,11 @@ export default {
       />
       <UIExtension
         v-else-if="isUIExtension"
-        :class="{'single-view': isSingleView, 'single-dialog': isNodeDialog && isSingleView}"
+        :class="{
+          'single-view': isSingleView,
+          'single-dialog': isNodeDialog && isSingleView,
+          'view-and-dialog': !isNodeDialog && !isSingleView
+        }"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
       />
@@ -164,5 +168,9 @@ export default {
 .single-dialog {
   margin-left: -27px;
   margin-right: -27px;
+}
+
+.view-and-dialog {
+  height: 100%;
 }
 </style>

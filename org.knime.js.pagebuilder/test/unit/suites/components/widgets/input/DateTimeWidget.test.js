@@ -218,7 +218,6 @@ describe('DateTimeWidget.vue', () => {
 
         propsUseExecTimes.valuePair = propsUseExecTimes.nodeConfig.viewRepresentation.currentValue;
 
-
         propsDataNoTimeZone = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
@@ -447,7 +446,7 @@ describe('DateTimeWidget.vue', () => {
             input.vm.$emit('input', 'Asia/Bangkok');
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0].update['viewRepresentation.currentValue'].zonestring)
+            expect(wrapper.emitted().updateWidget[1][0].update['viewRepresentation.currentValue'].zonestring)
                 .toStrictEqual('Asia/Bangkok');
         });
 
@@ -463,7 +462,7 @@ describe('DateTimeWidget.vue', () => {
             input.vm.$emit('click');
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
-            const eventData = wrapper.emitted().updateWidget[0][0].update['viewRepresentation.currentValue'];
+            const eventData = wrapper.emitted().updateWidget[1][0].update['viewRepresentation.currentValue'];
 
             const compareDateFormat = 'yyyy-MM-dd';
             expect(format(new Date(eventData.datestring), compareDateFormat))
@@ -484,12 +483,12 @@ describe('DateTimeWidget.vue', () => {
             input.vm.$emit('click');
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
-            const eventData = wrapper.emitted().updateWidget[0][0].update['viewRepresentation.currentValue'];
+            const eventData = wrapper.emitted().updateWidget[1][0].update['viewRepresentation.currentValue'];
             // time is changed
             const compareDateFormat = 'HH:mm';
             expect(format(new Date(eventData.datestring), compareDateFormat))
                 .toBe(format(new Date(), compareDateFormat));
-            // date it self is not changed
+            // date if self is not changed
             expect(differenceInCalendarDays(new Date('2020-05-03'), new Date(eventData.datestring))).toBe(0);
         });
 
@@ -507,7 +506,7 @@ describe('DateTimeWidget.vue', () => {
             input.vm.$emit('input', new Date(testValue));
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+            expect(wrapper.emitted().updateWidget[1][0]).toStrictEqual({
                 nodeId: propsDataAll.nodeId,
                 update: {
                     'viewRepresentation.currentValue': {
@@ -545,7 +544,6 @@ describe('DateTimeWidget.vue', () => {
             expect(res.datestring).toBe('');
             expect(res.zonestring).toBe('');
         });
-
 
         it('formats date to expected strings', () => {
             let wrapper = mount(DateTimeWidget, {
