@@ -1,5 +1,5 @@
 <script>
-import { loadComponentLibrary } from '~/src/util/loadComponentLibrary';
+import { loadComponentLibrary } from '../../util/loadComponentLibrary';
 
 const DEFAULT_DIALOG_NAMESPACE_ID = 'DefaultNodeDialog';
 

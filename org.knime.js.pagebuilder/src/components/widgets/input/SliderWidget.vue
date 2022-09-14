@@ -1,9 +1,9 @@
 <script>
-import Slider from '../baseElements/input/Slider';
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import formatTooltip from '@/util/tooltipFormatter';
-import { createTicks } from '@/util/widgetUtil/slider/tickUtil';
+import Slider from '../baseElements/input/Slider.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import formatTooltip from '../../../util/tooltipFormatter';
+import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
 
 const DATA_TYPE = 'double';
 const MINIMUM_SLIDER_STEP = .0000001;

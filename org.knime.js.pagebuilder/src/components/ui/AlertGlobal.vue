@@ -1,7 +1,7 @@
 <script>
 import { mapState } from 'vuex';
-import Popover from './Popover';
-import PopoverMessage from './PopoverMessage';
+import Popover from './Popover.vue';
+import PopoverMessage from './PopoverMessage.vue';
 
 /**
  * This is the PageBuilder top level alert/error management component. It relies on the global alert store and

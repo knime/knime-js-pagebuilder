@@ -1,7 +1,7 @@
 <script>
-import WebNodeIFrame from './WebNodeIFrame';
-import Widget from '~/src/components/widgets/Widget';
-import { classToComponentMap, legacyExclusions } from '~/src/components/widgets/widgets.config';
+import WebNodeIFrame from './WebNodeIFrame.vue';
+import Widget from '../widgets/Widget.vue';
+import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config';
 
 /**
  * Wrapper for a WebNode based visualization implementation or a Widget. Determines the type of component to render,

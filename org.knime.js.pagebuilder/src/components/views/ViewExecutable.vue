@@ -1,6 +1,6 @@
 <script>
-import Button from '~/webapps-common/ui/components/Button';
-import ExecutingOverlay from '../ui/ExecutingOverlay';
+import Button from '~/webapps-common/ui/components/Button.vue';
+import ExecutingOverlay from '../ui/ExecutingOverlay.vue';
 import ExecutableImage from '../../assets/executable-plot.svg?inline';
 
 /**

@@ -1,7 +1,7 @@
 <script>
-import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons';
-import ListBox from 'webapps-common/ui/components/forms/ListBox';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
+import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons.vue';
+import ListBox from 'webapps-common/ui/components/forms/ListBox.vue';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
 
 /**
  * SingleSelect Component

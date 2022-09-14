@@ -1,7 +1,7 @@
 <script>
-import TextArea from '~/webapps-common/ui/components/forms/TextArea';
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
+import TextArea from '~/webapps-common/ui/components/forms/TextArea.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 
 const DATA_TYPE = 'string';
 

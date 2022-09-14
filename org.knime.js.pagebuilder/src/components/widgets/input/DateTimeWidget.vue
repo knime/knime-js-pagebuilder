@@ -1,9 +1,9 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import DateTimeInput from '~/webapps-common/ui/components/forms/DateTimeInput';
-import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
-import Button from '~/webapps-common/ui/components/Button';
+import Label from '~/webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import DateTimeInput from '~/webapps-common/ui/components/forms/DateTimeInput.vue';
+import Dropdown from '~/webapps-common/ui/components/forms/Dropdown.vue';
+import Button from '~/webapps-common/ui/components/Button.vue';
 import updateTime from '~/webapps-common/util/updateTime';
 import getLocalTimeZone from '~/webapps-common/util/localTimezone';
 

@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import { setProp } from '@/util/nestedProperty';
-import overrideRequired from '@/util/overrideRequired';
-import getLayoutNodeIds from '@/util/getLayoutNodeIds';
+import { setProp } from '../src/util/nestedProperty';
+import overrideRequired from '../src/util/overrideRequired';
+import getLayoutNodeIds from '../src/util/getLayoutNodeIds';
 
 export const namespaced = true;
 

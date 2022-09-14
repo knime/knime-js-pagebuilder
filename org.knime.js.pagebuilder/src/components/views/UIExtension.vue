@@ -1,12 +1,12 @@
 <script>
 import { mapState } from 'vuex';
 import { KnimeService, IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
-import UIExtComponent from '~/src/components/views/UIExtComponent';
-import UIExtIFrame from '~/src/components/views/UIExtIFrame';
-import AlertLocal from '~/src/components/ui/AlertLocal';
-import WarningLocal from '~/src/components/ui/WarningLocal';
+import UIExtComponent from './UIExtComponent.vue';
+import UIExtIFrame from './UIExtIFrame.vue';
+import AlertLocal from '../ui/AlertLocal.vue';
+import WarningLocal from '../ui/WarningLocal.vue';
 
-import muteReactivity from '~/src/util/muteReactivity';
+import muteReactivity from '../../util/muteReactivity';
 
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-

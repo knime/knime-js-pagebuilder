@@ -1,8 +1,8 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
+import Multiselect from '../baseElements/selection/Multiselect.vue';
 
 const DATA_TYPE = 'value';
 

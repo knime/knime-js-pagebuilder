@@ -1,15 +1,15 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import TreeSelect from '../baseElements/selection/TreeSelect';
+import Label from '~/webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import TreeSelect from '../baseElements/selection/TreeSelect.vue';
 
 import fileIcon from '~/webapps-common/ui/assets/img/icons/file-text.svg?inline';
 import cogIcon from '~/webapps-common/ui/assets/img/icons/cog.svg?inline';
 import workflowIcon from '~/webapps-common/ui/assets/img/icons/workflow.svg?inline';
 import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
 
-import { trimSchema as utilTrimSchema, getRootPath as utilGetRootPath } from '~/src/util/fileUtils';
-import { default as utilCreateTreeItem } from '~/src/util/createTreeItem';
+import { trimSchema as utilTrimSchema, getRootPath as utilGetRootPath } from '../../../util/fileUtils';
+import { default as utilCreateTreeItem } from '../../../util/createTreeItem';
 
 const DATA_TYPE = 'items';
 const SCHEMA = 'knime';

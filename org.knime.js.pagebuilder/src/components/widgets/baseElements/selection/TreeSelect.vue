@@ -1,5 +1,5 @@
 <script>
-import TreeSelectItem from './TreeSelectItem';
+import TreeSelectItem from './TreeSelectItem.vue';
 
 let ITEM_ID = 0;
 

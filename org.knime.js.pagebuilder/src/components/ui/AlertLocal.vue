@@ -1,5 +1,5 @@
 <script>
-import Popover from './Popover';
+import Popover from './Popover.vue';
 import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg?inline';
 
 /**

@@ -1,7 +1,7 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import Button from '~/webapps-common/ui/components/Button';
-import FunctionButton from '~/webapps-common/ui/components/FunctionButton';
+import Label from '~/webapps-common/ui/components/forms/Label.vue';
+import Button from '~/webapps-common/ui/components/Button.vue';
+import FunctionButton from '~/webapps-common/ui/components/FunctionButton.vue';
 
 import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg?inline';
 import CircleWarningIcon from '~/webapps-common/ui/assets/img/icons/circle-warning.svg?inline';

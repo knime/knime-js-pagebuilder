@@ -1,9 +1,9 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
+import SingleSelect from '../baseElements/selection/SingleSelect.vue';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
 
 const VALUE_KEY_NAME = 'value';
 const COLUMN_KEY_NAME = 'column';

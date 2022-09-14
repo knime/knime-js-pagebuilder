@@ -1,13 +1,13 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
-import AlertLocal from '~/src/components/ui/AlertLocal';
+import AlertLocal from '../ui/AlertLocal.vue';
 import { iframeResizer } from 'iframe-resizer';
 
-import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
-import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
-import iframeResizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow.js';
-import loadingErrorHandlerSrc from 'raw-loader!./injectedScripts/loadErrorHandler.js';
-import viewAlertHandlerSrc from 'raw-loader!./injectedScripts/viewAlertHandler.js';
+import scriptLoaderSrc from './injectedScripts/scriptLoader.js?raw';
+import messageListenerSrc from './injectedScripts/messageListener.js?raw';
+import iframeResizerContentSrc from 'iframe-resizer/js/iframeResizer.contentWindow.js?raw';
+import loadingErrorHandlerSrc from './injectedScripts/loadErrorHandler.js?raw';
+import viewAlertHandlerSrc from './injectedScripts/viewAlertHandler.js?raw';
 
 const valueGetterTimeout = 30000; // ms
 const validatorTimeout = 5000; // ms

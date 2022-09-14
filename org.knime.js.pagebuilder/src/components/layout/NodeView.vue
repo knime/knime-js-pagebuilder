@@ -1,11 +1,11 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 
-import WebNode from '~/src/components/views/WebNode';
-import UIExtension from '~/src/components/views/UIExtension';
-import ViewExecutable from '~/src/components/views/ViewExecutable';
-import NotDisplayable from '~/src/components/views/NotDisplayable';
-import ExecutingOverlay from '~/src/components/ui/ExecutingOverlay';
+import WebNode from '../views/WebNode.vue';
+import UIExtension from '../views/UIExtension.vue';
+import ViewExecutable from '../views/ViewExecutable.vue';
+import NotDisplayable from '../views/NotDisplayable.vue';
+import ExecutingOverlay from '../ui/ExecutingOverlay.vue';
 
 /**
  * A node-level member of the layout tree, this component is responsible for shared functionality

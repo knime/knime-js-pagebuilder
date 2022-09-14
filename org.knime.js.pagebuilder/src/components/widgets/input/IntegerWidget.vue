@@ -1,5 +1,5 @@
 <script>
-import NumberWidget from '../NumberWidget';
+import NumberWidget from '../NumberWidget.vue';
 
 /**
  * This is the implementation of the Integer Input Widget. This component relies

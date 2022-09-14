@@ -1,7 +1,7 @@
 <script>
 import { mapState } from 'vuex';
 import wrapViewContent from '../../util/wrapViewContent';
-import NodeView from './NodeView';
+import NodeView from './NodeView.vue';
 
 const maxGridWidth = 12;
 
@@ -43,7 +43,7 @@ export default {
     components: {
         NodeView,
         // https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components
-        Row: () => import('./Row')
+        Row: () => import('./Row.vue')
     },
     props: {
         /**
@@ -119,7 +119,7 @@ export default {
       />
       <Row
         v-else-if="item.type === 'row' || item.type === 'JSONLayoutRow'"
-        :key="index"
+        :key="index + '-1'"
         :row-config="item"
       />
       <template v-else-if="(item.type === 'nestedLayout' || item.type === 'JSONNestedLayout') && item.layout">
@@ -132,7 +132,7 @@ export default {
       <!-- eslint-disable vue/no-v-html  -->
       <div
         v-else-if="item.type === 'html' || item.type === 'JSONLayoutHTMLContent'"
-        :key="index"
+        :key="index + '-2'"
         v-html="item.value"
       />
     </template>

@@ -1,5 +1,5 @@
 <script>
-import Column from './Column';
+import Column from './Column.vue';
 
 /**
  * Row container (part of a page layout)

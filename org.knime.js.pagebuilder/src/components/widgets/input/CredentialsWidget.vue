@@ -1,8 +1,8 @@
 <script>
-import Fieldset from '~/webapps-common/ui/components/forms/Fieldset';
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import InputField from '~/webapps-common/ui/components/forms/InputField';
+import Fieldset from '~/webapps-common/ui/components/forms/Fieldset.vue';
+import Label from '~/webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import InputField from '~/webapps-common/ui/components/forms/InputField.vue';
 
 const SERVER_ERROR_MESSAGE = 'KNIME Server login credentials could not be fetched!';
 const DEFAULT_ERROR_MESSAGE = 'Please correct input for ';

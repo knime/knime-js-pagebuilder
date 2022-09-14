@@ -1,32 +1,32 @@
 <script>
 import { mapActions } from 'vuex';
 // input widgets
-import BooleanWidget from './input/BooleanWidget';
-import IntegerWidget from './input/IntegerWidget';
-import DoubleWidget from './input/DoubleWidget';
-import StringWidget from './input/StringWidget';
-import SliderWidget from './input/SliderWidget';
-import ListBoxInputWidget from './input/ListBoxInputWidget';
-import CredentialsWidget from './input/CredentialsWidget';
-import DateTimeWidget from './input/DateTimeWidget';
-import FileUploadWidget from './input/FileUploadWidget';
+import BooleanWidget from './input/BooleanWidget.vue';
+import IntegerWidget from './input/IntegerWidget.vue';
+import DoubleWidget from './input/DoubleWidget.vue';
+import StringWidget from './input/StringWidget.vue';
+import SliderWidget from './input/SliderWidget.vue';
+import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
+import CredentialsWidget from './input/CredentialsWidget.vue';
+import DateTimeWidget from './input/DateTimeWidget.vue';
+import FileUploadWidget from './input/FileUploadWidget.vue';
 // selection widgets
-import SingleSelectionWidget from './selection/SingleSelectionWidget';
-import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
-import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget';
-import ColumnSelectionWidget from './selection/ColumnSelectionWidget';
-import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
-import ValueSelectionWidget from './selection/ValueSelectionWidget';
-import FileChooserWidget from './selection/FileChooserWidget';
+import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
+import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
+import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget.vue';
+import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
+import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
+import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
+import FileChooserWidget from './selection/FileChooserWidget.vue';
 // output widgets
-import TextWidget from './output/TextWidget';
-import ImageWidget from './output/ImageWidget';
-import FileDownloadWidget from './output/FileDownloadWidget';
+import TextWidget from './output/TextWidget.vue';
+import ImageWidget from './output/ImageWidget.vue';
+import FileDownloadWidget from './output/FileDownloadWidget.vue';
 // interactive widgets
-import InteractiveValueWidget from './interactive/InteractiveValueWidget';
-import InteractiveRangeWidget from './interactive/InteractiveRangeWidget';
+import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
+import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
 // reactive widgets
-import RefreshButtonWidget from './reactive/RefreshButtonWidget';
+import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 
 /**
  * A Widget node view. This top level component sits at

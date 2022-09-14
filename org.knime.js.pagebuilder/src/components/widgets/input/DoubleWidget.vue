@@ -1,5 +1,5 @@
 <script>
-import NumberWidget from '../NumberWidget';
+import NumberWidget from '../NumberWidget.vue';
 
 /**
  * This is the implementation of the Double Input Widget. This component relies

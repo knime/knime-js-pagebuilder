@@ -1,6 +1,6 @@
 <script>
 import { mapState } from 'vuex';
-import FunctionButton from '~/webapps-common/ui/components/FunctionButton';
+import FunctionButton from '~/webapps-common/ui/components/FunctionButton.vue';
 import RefreshIcon from '~/webapps-common/ui/assets/img/icons/load.svg?inline';
 
 export default {

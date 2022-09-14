@@ -1,8 +1,8 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import NodeView from './NodeView';
-import Messages from '~/webapps-common/ui/components/Messages';
+import NodeView from './NodeView.vue';
+import Messages from '~/webapps-common/ui/components/Messages.vue';
 
 export default {
     components: {

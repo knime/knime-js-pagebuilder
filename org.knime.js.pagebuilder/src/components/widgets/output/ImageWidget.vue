@@ -1,6 +1,6 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
+import Label from '~/webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 
 /**
  * This is the Image Output widget. It supports SVG and PNG image formats.

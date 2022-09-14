@@ -40,10 +40,9 @@
     "iframe-resizer": "4.2.10",
     "v-calendar": "2.0.1",
     "vue": "2.6.11",
-    "vue-clickaway2": "2.3.2",
     "vue-slider-component": "3.1.5",
     "vuex": "3.0.1",
-    "webapps-common": "file:webapps-common"
+    "knime-ui-extension-service": "file:knime-ui-extension-service"
   },
   "devDependencies": {
     "@fontsource/roboto": "4.5.5",

@@ -1,5 +1,5 @@
 <script>
-import SliderWidget from '@/components/widgets/input/SliderWidget';
+import SliderWidget from '../input/SliderWidget.vue';
 
 const DATA_TYPE = 'double';
 const UPDATE_KEY_MIN = 'viewValue.filter.columns.0.minimum';

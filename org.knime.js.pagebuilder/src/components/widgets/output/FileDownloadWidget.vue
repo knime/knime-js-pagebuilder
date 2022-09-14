@@ -1,9 +1,9 @@
 <script>
 import mime from 'mime-types';
-import { getFileExtension } from '~/src/util/fileUtils';
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import FileLink from 'webapps-common/ui/components/FileLink';
+import { getFileExtension } from '../../../util/fileUtils';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import FileLink from 'webapps-common/ui/components/FileLink.vue';
 
 /**
  * File Download Widget

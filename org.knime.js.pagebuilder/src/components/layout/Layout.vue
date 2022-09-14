@@ -1,5 +1,5 @@
 <script>
-import Row from './Row';
+import Row from './Row.vue';
 
 /**
  * Layout container for combining multiple views to one page
