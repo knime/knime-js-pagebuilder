@@ -14,8 +14,6 @@ export default {
         AlertGlobal
     },
     initStore(store) { // this method is to be called by the embedding app, cf. README
-        consola.warn('initStore');
-        debugger;
         store.registerModule('pagebuilder', pagebuilderStoreConfig);
         store.registerModule('pagebuilder/interactivity', interactivityStoreConfig);
         store.registerModule('pagebuilder/alert', alertStoreConfig);
