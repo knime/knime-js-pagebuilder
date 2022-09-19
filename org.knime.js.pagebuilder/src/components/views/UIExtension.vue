@@ -73,7 +73,7 @@ export default {
             this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrames and UIExtComponents
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
     mounted() {
@@ -143,12 +143,12 @@ export default {
   <div>
     <UIExtComponent
       v-if="isUIExtComponent"
-      :key="configKey"
+      :key="configKey + '-1'"
       :resource-location="resourceLocation"
     />
     <UIExtIFrame
       v-else
-      :key="configKey"
+      :key="configKey + '-2'"
       :resource-location="resourceLocation"
     />
     <AlertLocal

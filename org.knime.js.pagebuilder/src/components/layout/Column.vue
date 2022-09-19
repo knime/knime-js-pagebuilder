@@ -1,5 +1,6 @@
 <script>
 import { mapState } from 'vuex';
+import { defineAsyncComponent } from 'vue';
 import wrapViewContent from '../../util/wrapViewContent';
 import NodeView from './NodeView.vue';
 
@@ -43,7 +44,9 @@ export default {
     components: {
         NodeView,
         // https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components
-        Row: () => import('./Row.vue')
+        Row: defineAsyncComponent(() =>
+            import('./Row.vue')
+        )
     },
     props: {
         /**

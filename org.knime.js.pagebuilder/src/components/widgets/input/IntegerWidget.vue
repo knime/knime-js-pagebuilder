@@ -22,9 +22,8 @@ export default {
 
 <template>
   <NumberWidget
+    v-bind="$attrs"
     ref="widget"
     type="integer"
-    v-bind="$attrs"
-    v-on="$listeners"
   />
 </template>

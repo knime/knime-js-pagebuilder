@@ -116,7 +116,7 @@ export default {
   >
     <Widget
       v-if="isWidget"
-      :type="widgetComponentName"
+      :widget-name="widgetComponentName"
       :node-config="nodeConfig"
       :node-id="nodeId"
     />

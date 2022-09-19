@@ -193,7 +193,7 @@ export default {
         }
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
         window.removeEventListener('message', this.messageFromIframe);
         this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });

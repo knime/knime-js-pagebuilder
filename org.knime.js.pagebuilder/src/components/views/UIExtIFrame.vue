@@ -17,7 +17,7 @@ export default {
         this.knimeService.updateEventListener();
         this.knimeService.setIFrameWindow(this.$refs.iframe.contentWindow);
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.knimeService.destroy();
     }
 };

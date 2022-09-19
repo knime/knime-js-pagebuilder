@@ -138,7 +138,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
->>> label {
+:deep(label) {
   cursor: pointer;
 }
 </style>

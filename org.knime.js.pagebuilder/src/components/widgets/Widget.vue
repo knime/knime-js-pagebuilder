@@ -21,14 +21,13 @@ import { mapActions } from 'vuex';
  import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
  import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
  import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
+ import IntegerWidget from './input/IntegerWidget.vue';
+
  /**
  * tested with errors
  */
 // overall missing script and style imports
 
-// error after interaction: WebNode[type: IntegerWidget, id: 11:0:14]: Value not updated because the provided key was
-// invalid. Key: viewRepresentation.currentValue.IntegerWidget
-import IntegerWidget from './input/IntegerWidget.vue';
 // error after interaction: WebNode[type: DoubleWidget, id: 9:0:15]: Value not updated because the provided key was 
 // invalid. Key: viewRepresentation.currentValue.DoubleWidget
 import DoubleWidget from './input/DoubleWidget.vue';
@@ -55,7 +54,7 @@ import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 /**
  * not yet tested
  */
-//import DateTimeWidget from './input/DateTimeWidget.vue';
+//import DateTimeWidget from './input/DateTimeWidget.vue';DoubleWidget
 //import FileDownloadWidget from './output/FileDownloadWidget.vue';
 
 /**
@@ -140,11 +139,11 @@ export default {
         /**
          * The Vue Widget Component name as mapped to the node settings.
          */
-        type: {
+        widgetName: {
             required: true,
             type: String,
-            validator(nodeId) {
-                return nodeId !== '';
+            validator(widgetName) {
+                return widgetName !== '';
             }
         }
     },
@@ -218,7 +217,7 @@ export default {
             await this.validate();
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (this.hasValidationErrorMessage) {
             this.$store.dispatch('pagebuilder/removeValidationErrorSetter', {
                 nodeId: this.nodeId
@@ -299,7 +298,7 @@ export default {
 <template>
   <div class="widget">
     <Component
-      :is="type"
+      :is="widgetName"
       ref="widget"
       v-bind="$props"
       :is-valid="isValid"

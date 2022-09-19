@@ -24,8 +24,7 @@ export default {
   <!-- https://learn-vuejs.github.io/vue-patterns/patterns/#passing-props-listeners -->
   <NumberWidget
     ref="widget"
-    type="double"
     v-bind="$attrs"
-    v-on="$listeners"
+    type="double"
   />
 </template>
