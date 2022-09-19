@@ -1,39 +1,62 @@
 <script>
 import { mapActions } from 'vuex';
 
+/**
+ * seems to run fine
+ */
 
+/**
+ * tested with warnings
+ */
+ import BooleanWidget from './input/BooleanWidget.vue';
+ import StringWidget from './input/StringWidget.vue';
+ // No errors in console but interaction was not possible
+ import SliderWidget from './input/SliderWidget.vue'; 
+ import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
+ // the mock is named CredentialInputWidget
+ import CredentialsWidget from './input/CredentialsWidget.vue';
+ import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
+ import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
+ import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget.vue';
+ import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
+ import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
+ import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
+ /**
+ * tested with errors
+ */
+// overall missing script and style imports
 
+// error after interaction: WebNode[type: IntegerWidget, id: 11:0:14]: Value not updated because the provided key was
+// invalid. Key: viewRepresentation.currentValue.IntegerWidget
+import IntegerWidget from './input/IntegerWidget.vue';
+// error after interaction: WebNode[type: DoubleWidget, id: 9:0:15]: Value not updated because the provided key was 
+// invalid. Key: viewRepresentation.currentValue.DoubleWidget
+import DoubleWidget from './input/DoubleWidget.vue';
+// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
+// no interaction possible
+import FileUploadWidget from './input/FileUploadWidget.vue';
+// TypeError: Cannot destructure property 'response' of '(intermediate value)' as it is null.
+import FileChooserWidget from './selection/FileChooserWidget.vue';
+// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
+import TextWidget from './output/TextWidget.vue';
+// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
+// DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/webapps-common/ui/assets/img/icons/sign-warning.svg?inline') is not a valid name.
+import ImageWidget from './output/ImageWidget.vue';
+// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
+// DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/webapps-common/ui/assets/img/icons/sign-warning.svg?inline') is not a valid name.
+import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
+// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
+// DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/webapps-common/ui/assets/img/icons/sign-warning.svg?inline') is not a valid name.
+import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
+
+// doesn't seem to have a mock
+import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 
 /**
  * not yet tested
  */
-// input widgets
-import BooleanWidget from './input/BooleanWidget.vue';
-import IntegerWidget from './input/IntegerWidget.vue';
-import DoubleWidget from './input/DoubleWidget.vue';
-import StringWidget from './input/StringWidget.vue';
-import SliderWidget from './input/SliderWidget.vue';
-import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
-import CredentialsWidget from './input/CredentialsWidget.vue';
 //import DateTimeWidget from './input/DateTimeWidget.vue';
-import FileUploadWidget from './input/FileUploadWidget.vue';
-// selection widgets
-import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
-import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
-import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget.vue';
-import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
-import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
-import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
-import FileChooserWidget from './selection/FileChooserWidget.vue';
-// output widgets
-import TextWidget from './output/TextWidget.vue';
-import ImageWidget from './output/ImageWidget.vue';
 //import FileDownloadWidget from './output/FileDownloadWidget.vue';
-// interactive widgets
-import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
-import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
-// reactive widgets
-import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 
 /**
  * A Widget node view. This top level component sits at
