@@ -115,7 +115,7 @@ export default {
 
 <template>
   <Label
-    v-slot="{ labelForId }"
+    #default="{ labelForId }"
     class="label"
     :text="label"
   >

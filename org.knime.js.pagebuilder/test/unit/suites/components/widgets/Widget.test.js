@@ -137,7 +137,9 @@ describe('Widget.vue', () => {
                     template: '<div />',
                     ref: 'widget',
                     methods: {
-                        onChange() { return true; }, // because hasValueGetter checks for it,
+                        onChange() {
+                            return true;
+                        }, // because hasValueGetter checks for it,
                         validate: jest.fn().mockReturnValue(Promise.resolve(true))
                     }
                 }
@@ -335,7 +337,9 @@ describe('Widget.vue', () => {
                     template: '<div />',
                     ref: 'widget',
                     methods: {
-                        validate() { return true; }
+                        validate() {
+                            return true;
+                        }
                     }
                 }
             }

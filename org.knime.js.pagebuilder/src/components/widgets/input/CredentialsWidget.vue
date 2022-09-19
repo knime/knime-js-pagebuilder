@@ -142,7 +142,7 @@ export default {
   >
     <Label
       v-if="promptUsername"
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       class="label"
       text="User"
     >
@@ -156,7 +156,7 @@ export default {
       />
     </Label>
     <Label
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       class="label"
       text="Password"
     >

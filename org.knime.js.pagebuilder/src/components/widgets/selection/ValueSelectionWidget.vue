@@ -140,7 +140,7 @@ export default {
     <template #default="mainLabel">
       <Label
         v-if="!isColumnLocked"
-        v-slot="columnLabel"
+        #default="columnLabel"
         text="Column"
       >
         <Dropdown

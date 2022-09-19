@@ -2,8 +2,6 @@
 import { mapActions } from 'vuex';
 
 
-
-
 /**
  * not yet tested
  */
@@ -15,7 +13,7 @@ import StringWidget from './input/StringWidget.vue';
 import SliderWidget from './input/SliderWidget.vue';
 import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
 import CredentialsWidget from './input/CredentialsWidget.vue';
-//import DateTimeWidget from './input/DateTimeWidget.vue';
+// import DateTimeWidget from './input/DateTimeWidget.vue';
 import FileUploadWidget from './input/FileUploadWidget.vue';
 // selection widgets
 import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
@@ -28,7 +26,7 @@ import FileChooserWidget from './selection/FileChooserWidget.vue';
 // output widgets
 import TextWidget from './output/TextWidget.vue';
 import ImageWidget from './output/ImageWidget.vue';
-//import FileDownloadWidget from './output/FileDownloadWidget.vue';
+// import FileDownloadWidget from './output/FileDownloadWidget.vue';
 // interactive widgets
 import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
 import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
@@ -72,7 +70,7 @@ export default {
         SliderWidget,
         ListBoxInputWidget,
         CredentialsWidget,
-        //DateTimeWidget,
+        // DateTimeWidget,
         FileUploadWidget,
         // selection widgets
         SingleSelectionWidget,
@@ -85,7 +83,7 @@ export default {
         // output widgets
         TextWidget,
         ImageWidget,
-        //FileDownloadWidget,
+        // FileDownloadWidget,
         // interactive widgets
         InteractiveValueWidget,
         InteractiveRangeWidget,
@@ -195,7 +193,7 @@ export default {
             await this.validate();
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (this.hasValidationErrorMessage) {
             this.$store.dispatch('pagebuilder/removeValidationErrorSetter', {
                 nodeId: this.nodeId

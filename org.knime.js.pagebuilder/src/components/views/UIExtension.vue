@@ -73,7 +73,7 @@ export default {
             this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrames and UIExtComponents
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
     mounted() {

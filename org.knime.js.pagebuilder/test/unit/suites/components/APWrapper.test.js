@@ -119,10 +119,14 @@ describe('APWrapper.vue', () => {
         });
 
         it('handles non-critical errors loading debug info', () => {
-            const debugMock = jest.fn(() => { throw Error('Something went wrong getting info'); });
+            const debugMock = jest.fn(() => {
+                throw Error('Something went wrong getting info');
+            });
             window.getDebugInfo = debugMock;
             let wrapper;
-            expect(() => { wrapper = shallowMount(APWrapper, context); }).not.toThrow();
+            expect(() => {
+                wrapper = shallowMount(APWrapper, context);
+            }).not.toThrow();
             expect(wrapper.vm.debugInfo).toBe(null);
             delete window.getDebugInfo;
         });

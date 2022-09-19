@@ -129,7 +129,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-
 .aspectRatio16by9,
 .aspectRatio4by3,
 .aspectRatio1by1 {

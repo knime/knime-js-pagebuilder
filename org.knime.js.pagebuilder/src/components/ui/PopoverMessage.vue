@@ -203,7 +203,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px 0 rgb(0 0 0 / 50%);
 
   & header {
     position: relative;
@@ -211,7 +211,7 @@ export default {
 
     & .label >>> label.label-text {
       color: white;
-      margin: 6px 0 4px 0;
+      margin: 6px 0 4px;
       line-height: 24px;
       max-width: 100%;
       text-overflow: ellipsis;

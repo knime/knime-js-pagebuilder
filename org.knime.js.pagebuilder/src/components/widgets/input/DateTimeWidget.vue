@@ -210,7 +210,7 @@ export default {
 
 <template>
   <Label
-    v-slot="{ labelForId }"
+    #default="{ labelForId }"
     class="date-time-label"
     :text="label"
   >

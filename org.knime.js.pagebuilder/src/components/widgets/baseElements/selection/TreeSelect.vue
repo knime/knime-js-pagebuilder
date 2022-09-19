@@ -316,7 +316,7 @@ export default {
   border: none;
 
   &.invalid::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 3px;
     left: 0;

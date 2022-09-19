@@ -306,7 +306,7 @@ input {
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 50%;

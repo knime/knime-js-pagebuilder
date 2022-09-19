@@ -1,8 +1,8 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import DebugButton from './ui/DebugButton';
-import RefreshButton from './ui/RefreshButton';
+import DebugButton from './ui/DebugButton.vue';
+import RefreshButton from './ui/RefreshButton.vue';
 
 export default {
     components: {

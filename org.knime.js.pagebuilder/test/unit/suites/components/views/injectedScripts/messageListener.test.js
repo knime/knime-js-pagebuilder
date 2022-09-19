@@ -50,7 +50,9 @@ describe('message listener', () => {
             viewRepresentation: {}
         };
 
-        let errorSpy = jest.fn(() => { throw new Error('test'); });
+        let errorSpy = jest.fn(() => {
+            throw new Error('test');
+        });
         let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
         window['com.example'] = { init: errorSpy };
 
@@ -140,7 +142,9 @@ describe('message listener', () => {
             getViewValueMethodName: 'value'
         };
 
-        let errorSpy = jest.fn(() => { throw new Error(); });
+        let errorSpy = jest.fn(() => {
+            throw new Error();
+        });
         let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
 
         window['com.example'] = { value: errorSpy };
@@ -226,7 +230,9 @@ describe('message listener', () => {
             validateMethodName: 'validate'
         };
 
-        let errorSpy = jest.fn(() => { throw new Error('test'); });
+        let errorSpy = jest.fn(() => {
+            throw new Error('test');
+        });
         let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
 
         window['com.example'] = { validate: errorSpy };
@@ -312,7 +318,9 @@ describe('message listener', () => {
             errorMessage: 'test'
         };
 
-        let errorSpy = jest.fn(() => { throw new Error('test'); });
+        let errorSpy = jest.fn(() => {
+            throw new Error('test');
+        });
         let messageSpy = jest.spyOn(parent, 'postMessage').mockImplementation(jest.fn());
 
         window['com.example'] = { setValidationError: errorSpy };
