@@ -5,7 +5,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import consola from 'consola';
 import APWrapper from './components/APWrapper.vue';
-import * as wrapperApiStore from '../store/wrapperApi';
+import * as wrapperApiStore from './store/wrapperApi';
 
 const DIV_TARGET = 'knime-pagebuilder';
 const CONST_DEBUG_LOG_LEVEL = 4;
