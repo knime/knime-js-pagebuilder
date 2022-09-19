@@ -141,8 +141,10 @@ export const mutations = {
     },
     
     setNodesReExecuting(state, nodesReExecuting) {
-        if (!nodesReExecuting?.length) {
-            nodesReExecuting = nodesReExecuting ? Object.keys(state.page?.wizardPageContent?.webNodes || {}) : [];
+        if (nodesReExecuting === true) { // explicitly handle true to set as all nodes
+            nodesReExecuting = Object.keys(state.page?.wizardPageContent?.webNodes || {});
+        } else if (!nodesReExecuting?.length) { // check for null or missing parameters
+            nodesReExecuting = [];
         }
         let lenInEq = nodesReExecuting.length !== state.nodesReExecuting.length;
         let contentInEq = nodesReExecuting.some(nodeId => state.nodesReExecuting.indexOf(nodeId) < 0);
