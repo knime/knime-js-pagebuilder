@@ -1,8 +1,8 @@
 <script>
-import itemIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg?inline';
-import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
-import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
-import fileIcon from '~/webapps-common/ui/assets/img/icons/file-text.svg?inline';
+import itemIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg';
+import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg';
+import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg';
+import fileIcon from '~/webapps-common/ui/assets/img/icons/file-text.svg';
 
 import { icons } from '~/webapps-common/ui/util/fileTypeIcons';
 

@@ -3,12 +3,12 @@ import Label from '~/webapps-common/ui/components/forms/Label.vue';
 import Button from '~/webapps-common/ui/components/Button.vue';
 import FunctionButton from '~/webapps-common/ui/components/FunctionButton.vue';
 
-import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg?inline';
-import CircleWarningIcon from '~/webapps-common/ui/assets/img/icons/circle-warning.svg?inline';
-import CircleMinus from '~/webapps-common/ui/assets/img/icons/circle-minus.svg?inline';
-import CloseIcon from '~/webapps-common/ui/assets/img/icons/close.svg?inline';
-import DropdownIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline';
-import CopyIcon from '~/webapps-common/ui/assets/img/icons/copy.svg?inline';
+import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg';
+import CircleWarningIcon from '~/webapps-common/ui/assets/img/icons/circle-warning.svg';
+import CircleMinus from '~/webapps-common/ui/assets/img/icons/circle-minus.svg';
+import CloseIcon from '~/webapps-common/ui/assets/img/icons/close.svg';
+import DropdownIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg';
+import CopyIcon from '~/webapps-common/ui/assets/img/icons/copy.svg';
 
 import { copyText } from '~/webapps-common/util/copyText';
 
