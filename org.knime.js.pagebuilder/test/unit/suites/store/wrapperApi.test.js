@@ -244,7 +244,7 @@ describe('wrapper API store', () => {
                 resetNodes: ['foo'],
                 reexecutedNodes: []
             } });
-            expect(shouldPoll).toBe(false);
+            expect(shouldPoll).toStrictEqual({ shouldPoll: false });
             expect(updatePage).toHaveBeenCalledWith(expect.anything(), {
                 nodeIds: ['foo'],
                 page: {
@@ -270,7 +270,7 @@ describe('wrapper API store', () => {
                 resetNodes: ['foo'],
                 reexecutedNodes: []
             });
-            expect(shouldPoll).toBe(true);
+            expect(shouldPoll).toStrictEqual({ shouldPoll: true });
             expect(updatePage).not.toHaveBeenCalled();
             expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), ['foo'], EMPTY);
             expect(showAlert).not.toHaveBeenCalled();
@@ -289,7 +289,7 @@ describe('wrapper API store', () => {
                 resetNodes: ['foo', 'bar'],
                 reexecutedNodes: ['bar']
             });
-            expect(shouldPoll).toBe(true);
+            expect(shouldPoll).toStrictEqual({ shouldPoll: true });
             expect(updatePage).not.toHaveBeenCalled();
             expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), ['foo'], EMPTY);
             expect(showAlert).not.toHaveBeenCalled();
@@ -305,7 +305,7 @@ describe('wrapper API store', () => {
             });
 
             let shouldPoll = await muteConsole(() => store.dispatch('setPage'));
-            expect(shouldPoll).toBe(false);
+            expect(shouldPoll).toStrictEqual({ shouldPoll: false });
             expect(updatePage).not.toHaveBeenCalled();
             expect(setNodesReExecuting).not.toHaveBeenCalled();
             expect(showAlert).toHaveBeenCalledWith(expect.anything(), {
@@ -421,7 +421,8 @@ describe('wrapper API store', () => {
             let expectedRes = { result: { page: { webNodes: { foo: 3 } } } };
             let rpcResponse = Promise.resolve(expectedRes);
             let singleRPC = jest.fn().mockReturnValue(rpcResponse);
-            let setPage = jest.fn().mockReturnValueOnce(true).mockReturnValueOnce(false);
+            let setPage = jest.fn().mockReturnValueOnce({ shouldPoll: true})
+                .mockReturnValueOnce({ shouldPoll: false });
             let showAlert = jest.fn().mockReturnValue(Promise.resolve({}));
             let store = getMockStore({
                 wrapperApiMocks: { singleRPC, setPage },

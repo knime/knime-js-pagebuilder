@@ -151,33 +151,40 @@ export const actions = {
      *      execution has finished.
      * @param {Array} [param.resetNodes] - the optional array of all nodeIds which were reset for re-execution.
      * @param {Array} param.reexecutedNodes - a subset of the resetNodes nodeIds which are no longer executing.
-     * @returns {boolean} - false if the page was successfully updated else true if polling/updates should be
-     *      continued.
+     * @returns {Object} pollConfig - configuration for additional polling.
+     * @returns {boolean} pollConfig.shouldPoll - false if the page was successfully updated else true if polling
+     *      /updates should be continued.
+     * @returns {number} [pollConfig.pollInterval] - optional integer value for next polling interval (default is
+     *      undefined).
      */
     setPage({ dispatch }, { page, resetNodes = [], reexecutedNodes: reExecutedNodes = [] } = {}) {
         consola.debug(
             'WrapperAPI store: setPage (page, resetNodes, reexecutedNodes)', page, resetNodes, reExecutedNodes
         );
-        let shouldPoll = false;
         try {
             if (page) {
                 let nodeIds = reExecutedNodes?.length ? reExecutedNodes : Object.keys(page.webNodes);
                 dispatch('pagebuilder/setNodesReExecuting', [], { root: true });
                 dispatch('pagebuilder/updatePage', { page, nodeIds }, { root: true });
+                return { shouldPoll: false };
             } else if (resetNodes?.length) {
+                if (resetNodes?.every(nodeId => reExecutedNodes?.includes(nodeId))) {
+                    // If all nodes have executed, but page isn't ready, don't wait or update- just fetch page.
+                    return { shouldPoll: true, pollInterval: 1 };
+                }
                 dispatch(
                     'pagebuilder/setNodesReExecuting',
                     resetNodes.filter(id => !reExecutedNodes.includes(id)),
                     { root: true }
                 );
-                shouldPoll = true;
+                return { shouldPoll: true }
             } else {
                 throw new Error('No updates were provided for the page');
             }
         } catch (error) {
             dispatch('handleError', { caller: 'setPage', error });
+            return { shouldPoll: false };
         }
-        return shouldPoll;
     },
 
     /* RPC ACTIONS */
@@ -254,13 +261,13 @@ export const actions = {
             });
             return;
         }
-        let shouldPoll = await dispatch(callback, result);
+        let { shouldPoll, pollInterval = POLLING_INTERVAL } = await dispatch(callback, result) || {};
         if (shouldPoll) {
             consola.debug('WrapperAPI store: polling action', pollAction);
             clearTimeout(pollingTimeout);
             pollingTimeout = setTimeout(() => {
                 dispatch(pollAction, config);
-            }, POLLING_INTERVAL);
+            }, pollInterval);
         }
     },
 
