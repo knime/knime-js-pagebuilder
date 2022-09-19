@@ -1,5 +1,5 @@
 <script>
-import packages from '~/webapps-common/buildtools/opensourcecredits/used-packages.json';
+import packages from 'webapps-common/buildtools/opensourcecredits/used-packages.json';
 
 /**
  * Wrapper component that is built as a separate library. The purpose of this renderless

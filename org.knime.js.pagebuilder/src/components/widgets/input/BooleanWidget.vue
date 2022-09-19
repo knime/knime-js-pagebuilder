@@ -1,5 +1,5 @@
 <script>
-import Checkbox from '~/webapps-common/ui/components/forms/Checkbox.vue';
+import Checkbox from 'webapps-common/ui/components/forms/Checkbox.vue';
 
 const DATA_TYPE = 'boolean';
 

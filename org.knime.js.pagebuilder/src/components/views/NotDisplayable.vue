@@ -1,6 +1,6 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label.vue';
-import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import SignWarningIcon from 'webapps-common/ui/assets/img/icons/sign-warning.svg';
 
 export default {
     components: {

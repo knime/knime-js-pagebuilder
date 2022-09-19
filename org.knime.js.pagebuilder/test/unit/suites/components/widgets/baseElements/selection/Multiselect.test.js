@@ -1,10 +1,10 @@
 import { mount, shallowMount } from '@vue/test-utils';
 
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
-import Checkboxes from '~/webapps-common/ui/components/forms/Checkboxes';
-import MultiselectListBox from '~/webapps-common/ui/components/forms/MultiselectListBox';
-import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
-import Checkbox from '~/webapps-common/ui/components/forms/Checkbox';
+import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
+import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox';
+import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
+import Checkbox from 'webapps-common/ui/components/forms/Checkbox';
 
 
 describe('Multiselect.vue', () => {

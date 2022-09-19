@@ -1,7 +1,7 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
 import ListBoxInputWidget from '@/components/widgets/input/ListBoxInputWidget';
-import TextArea from '~/webapps-common/ui/components/forms/TextArea';
+import TextArea from 'webapps-common/ui/components/forms/TextArea';
 
 describe('ListBoxInputWidget.vue', () => {
     let propsDataEmailRegexLineSplit, propsDataCharSplit, propsDataCSVSplit;

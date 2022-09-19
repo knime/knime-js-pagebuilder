@@ -1,6 +1,6 @@
 <script>
-import InputField from '~/webapps-common/ui/components/forms/InputField.vue';
-import TextArea from '~/webapps-common/ui/components/forms/TextArea.vue';
+import InputField from 'webapps-common/ui/components/forms/InputField.vue';
+import TextArea from 'webapps-common/ui/components/forms/TextArea.vue';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 

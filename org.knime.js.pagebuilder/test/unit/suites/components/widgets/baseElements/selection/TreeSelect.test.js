@@ -4,8 +4,8 @@ import { mount, shallowMount } from '@vue/test-utils';
 import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect';
 import TreeSelectItem from '@/components/widgets/baseElements/selection/TreeSelectItem';
 
-import customIcon from '~/webapps-common/ui/assets/img/icons/activity.svg';
-import customSelectedIcon from '~/webapps-common/ui/assets/img/icons/cart.svg';
+import customIcon from 'webapps-common/ui/assets/img/icons/activity.svg';
+import customSelectedIcon from 'webapps-common/ui/assets/img/icons/cart.svg';
 
 describe('TreeSelect.vue', () => {
     let context, propsData;

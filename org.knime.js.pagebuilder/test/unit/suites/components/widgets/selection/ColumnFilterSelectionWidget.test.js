@@ -2,7 +2,7 @@
 import { mount, shallowMount } from '@vue/test-utils';
 
 import ColumnFilterWidget from '@/components/widgets/selection/ColumnFilterSelectionWidget';
-import Twinlist from '~/webapps-common/ui/components/forms/Twinlist';
+import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
 
 describe('ColumnFilterSelectionWidget.vue', () => {
     let propsData;

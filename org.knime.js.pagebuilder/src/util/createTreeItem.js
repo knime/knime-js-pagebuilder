@@ -1,4 +1,4 @@
-import * as icons from '~/webapps-common/ui/util/fileTypeIcons';
+import * as icons from 'webapps-common/ui/util/fileTypeIcons';
 import { getFileExtension, getNameFromPath } from './fileUtils';
 
 let getIcon, createTreeItemRecursively, checkDefaultPaths;
