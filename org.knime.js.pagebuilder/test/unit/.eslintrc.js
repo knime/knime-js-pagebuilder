@@ -1,5 +1,5 @@
 module.exports = {
-    extends: ['../../webapps-common/lint/.eslintrc-jest.js'],
+    extends: ['@knime/eslint-config/jest'],
     env: {
         node: true
     }

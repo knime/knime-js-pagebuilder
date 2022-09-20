@@ -3,7 +3,7 @@ import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 
 import DialogLayout from '@/components/layout/DialogLayout';
 import NodeView from '@/components/layout/NodeView';
-import Messages from '~/webapps-common/ui/components/Messages';
+import Messages from 'webapps-common/ui/components/Messages';
 
 import * as storeConfig from '~/store/pagebuilder';
 import * as alertStoreConfig from '~/store/alert';

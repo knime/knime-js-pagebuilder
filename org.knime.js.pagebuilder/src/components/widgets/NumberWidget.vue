@@ -118,7 +118,7 @@ export default {
 <template>
   <div>
     <Label
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       :text="label"
     >
       <NumberInput

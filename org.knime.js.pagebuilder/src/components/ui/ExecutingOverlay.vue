@@ -95,7 +95,6 @@ export default {
 </template>
 
 <style type="postcss" scoped>
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);

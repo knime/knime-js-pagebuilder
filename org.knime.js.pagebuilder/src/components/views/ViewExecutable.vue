@@ -1,7 +1,7 @@
 <script>
-import Button from '~/webapps-common/ui/components/Button.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
 import ExecutingOverlay from '../ui/ExecutingOverlay.vue';
-import ExecutableImage from '../../assets/executable-plot.svg?inline';
+import ExecutableImage from '../../assets/executable-plot.svg';
 
 /**
  * Stylized overlay displayed in the Dialog-Preview when the node is not executed or requires

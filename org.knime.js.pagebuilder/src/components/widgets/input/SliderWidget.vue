@@ -284,7 +284,7 @@ export default {
 <template>
   <div>
     <Label
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       :text="label"
       :class="[`slider-${sliderSettings.orientation}-label`,
                { 'tooltip-label': tooltips }]"
@@ -319,10 +319,7 @@ export default {
 
 <style lang="postcss" scoped>
 .slider-horizontal {
-  padding-top: 10px;
-  padding-right: 15px;
-  padding-bottom: 25px;
-  padding-left: 15px;
+  padding: 10px 15px 25px;
 }
 
 .slider-horizontal.tooltip-slider {
@@ -332,10 +329,7 @@ export default {
 }
 
 .slider-vertical {
-  padding-top: 10px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+  padding: 10px 20px 10px 10px;
 }
 
 .slider-vertical.tooltip-slider {

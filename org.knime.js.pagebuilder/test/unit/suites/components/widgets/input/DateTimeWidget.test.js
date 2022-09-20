@@ -2,7 +2,7 @@
 import { mount } from '@vue/test-utils';
 
 import DateTimeWidget from '@/components/widgets/input/DateTimeWidget';
-import DateTimeInput from '~/webapps-common/ui/components/forms/DateTimeInput';
+import DateTimeInput from 'webapps-common/ui/components/forms/DateTimeInput';
 import { format, differenceInCalendarDays } from 'date-fns';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 

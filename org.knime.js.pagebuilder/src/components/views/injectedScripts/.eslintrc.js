@@ -1,4 +1,4 @@
 module.exports = {
     root: true,
-    extends: ['../../../../webapps-common/lint/.eslintrc-legacy.js']
+    extends: ['@knime/eslint-config/legacy']
 };

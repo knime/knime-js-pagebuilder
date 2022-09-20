@@ -1,16 +1,16 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label.vue';
-import Button from '~/webapps-common/ui/components/Button.vue';
-import FunctionButton from '~/webapps-common/ui/components/FunctionButton.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
+import FunctionButton from 'webapps-common/ui/components/FunctionButton.vue';
 
-import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg?inline';
-import CircleWarningIcon from '~/webapps-common/ui/assets/img/icons/circle-warning.svg?inline';
-import CircleMinus from '~/webapps-common/ui/assets/img/icons/circle-minus.svg?inline';
-import CloseIcon from '~/webapps-common/ui/assets/img/icons/close.svg?inline';
-import DropdownIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline';
-import CopyIcon from '~/webapps-common/ui/assets/img/icons/copy.svg?inline';
+import SignWarningIcon from 'webapps-common/ui/assets/img/icons/sign-warning.svg';
+import CircleWarningIcon from 'webapps-common/ui/assets/img/icons/circle-warning.svg';
+import CircleMinus from 'webapps-common/ui/assets/img/icons/circle-minus.svg';
+import CloseIcon from 'webapps-common/ui/assets/img/icons/close.svg';
+import DropdownIcon from 'webapps-common/ui/assets/img/icons/arrow-dropdown.svg';
+import CopyIcon from 'webapps-common/ui/assets/img/icons/copy.svg';
 
-import { copyText } from '~/webapps-common/util/copyText';
+import { copyText } from 'webapps-common/util/copyText';
 
 // Arbitrary length limit to determine if messages should be expandable or displayed initially.
 const MAX_EXPANDED_MESSAGE_LENGTH = 280;
@@ -203,7 +203,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px 0 rgb(0 0 0 / 50%);
 
   & header {
     position: relative;
@@ -211,7 +211,7 @@ export default {
 
     & .label >>> label.label-text {
       color: white;
-      margin: 6px 0 4px 0;
+      margin: 6px 0 4px;
       line-height: 24px;
       max-width: 100%;
       text-overflow: ellipsis;

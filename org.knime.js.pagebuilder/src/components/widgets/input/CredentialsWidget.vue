@@ -1,8 +1,8 @@
 <script>
-import Fieldset from '~/webapps-common/ui/components/forms/Fieldset.vue';
-import Label from '~/webapps-common/ui/components/forms/Label.vue';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
 import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
-import InputField from '~/webapps-common/ui/components/forms/InputField.vue';
+import InputField from 'webapps-common/ui/components/forms/InputField.vue';
 
 const SERVER_ERROR_MESSAGE = 'KNIME Server login credentials could not be fetched!';
 const DEFAULT_ERROR_MESSAGE = 'Please correct input for ';
@@ -142,7 +142,7 @@ export default {
   >
     <Label
       v-if="promptUsername"
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       class="label"
       text="User"
     >
@@ -156,7 +156,7 @@ export default {
       />
     </Label>
     <Label
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       class="label"
       text="Password"
     >

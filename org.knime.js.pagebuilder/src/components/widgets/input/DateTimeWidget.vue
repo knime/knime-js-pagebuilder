@@ -1,11 +1,11 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
 import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
-import DateTimeInput from '~/webapps-common/ui/components/forms/DateTimeInput.vue';
-import Dropdown from '~/webapps-common/ui/components/forms/Dropdown.vue';
-import Button from '~/webapps-common/ui/components/Button.vue';
-import updateTime from '~/webapps-common/util/updateTime';
-import getLocalTimeZone from '~/webapps-common/util/localTimezone';
+import DateTimeInput from 'webapps-common/ui/components/forms/DateTimeInput.vue';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
+import updateTime from 'webapps-common/util/updateTime';
+import getLocalTimeZone from 'webapps-common/util/localTimezone';
 
 import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
@@ -210,7 +210,7 @@ export default {
 
 <template>
   <Label
-    v-slot="{ labelForId }"
+    #default="{ labelForId }"
     class="date-time-label"
     :text="label"
   >

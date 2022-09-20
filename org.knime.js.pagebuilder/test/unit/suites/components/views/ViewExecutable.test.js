@@ -7,7 +7,7 @@ import * as alertStoreConfig from '~/store/alert';
 
 import ViewExecutable from '@/components/views/ViewExecutable';
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay';
-import Button from '~/webapps-common/ui/components/Button';
+import Button from 'webapps-common/ui/components/Button';
 
 import { componentExtensionConfig } from '../../../assets/views/extensionConfig';
 

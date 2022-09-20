@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 
-import Checkbox from '~/webapps-common/ui/components/forms/Checkbox';
+import Checkbox from 'webapps-common/ui/components/forms/Checkbox';
 import BooleanWidget from '@/components/widgets/input/BooleanWidget.vue';
 
 describe('BooleanWidget.vue', () => {

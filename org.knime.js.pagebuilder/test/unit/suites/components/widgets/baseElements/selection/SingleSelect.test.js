@@ -1,9 +1,9 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
-import RadioButtons from '~/webapps-common/ui/components/forms/RadioButtons';
-import ListBox from '~/webapps-common/ui/components/forms/ListBox';
-import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
+import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons';
+import ListBox from 'webapps-common/ui/components/forms/ListBox';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
 
 describe('SingleSelect.vue', () => {
     let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;

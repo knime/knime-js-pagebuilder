@@ -3,9 +3,9 @@ import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
 
 import CredentialsWidget from '@/components/widgets/input/CredentialsWidget';
-import InputField from '~/webapps-common/ui/components/forms/InputField';
-import Label from '~/webapps-common/ui/components/forms/Label';
-import Fieldset from '~/webapps-common/ui/components/forms/Fieldset';
+import InputField from 'webapps-common/ui/components/forms/InputField';
+import Label from 'webapps-common/ui/components/forms/Label';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
 
 describe('CredentialsWidget.vue', () => {

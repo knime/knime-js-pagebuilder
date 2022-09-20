@@ -8,29 +8,30 @@ import { mapActions } from 'vuex';
 /**
  * tested with warnings
  */
- import BooleanWidget from './input/BooleanWidget.vue';
- import StringWidget from './input/StringWidget.vue';
- // No errors in console but interaction was not possible
- import SliderWidget from './input/SliderWidget.vue'; 
- import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
- // the mock is named CredentialInputWidget
- import CredentialsWidget from './input/CredentialsWidget.vue';
- import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
- import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
- import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget.vue';
- import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
- import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
- import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
- import IntegerWidget from './input/IntegerWidget.vue';
+import BooleanWidget from './input/BooleanWidget.vue';
+import StringWidget from './input/StringWidget.vue';
+// No errors in console but interaction was not possible
+import SliderWidget from './input/SliderWidget.vue';
+import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
+// the mock is named CredentialInputWidget
+import CredentialsWidget from './input/CredentialsWidget.vue';
+import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
+import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
+import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget.vue';
+import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
+import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
+import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
+import IntegerWidget from './input/IntegerWidget.vue';
+import DoubleWidget from './input/DoubleWidget.vue';
 
- /**
+/**
  * tested with errors
  */
 // overall missing script and style imports
 
-// error after interaction: WebNode[type: DoubleWidget, id: 9:0:15]: Value not updated because the provided key was 
+// error after interaction: WebNode[type: DoubleWidget, id: 9:0:15]: Value not updated because the provided key was
 // invalid. Key: viewRepresentation.currentValue.DoubleWidget
-import DoubleWidget from './input/DoubleWidget.vue';
+
 // Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
 // no interaction possible
 import FileUploadWidget from './input/FileUploadWidget.vue';
@@ -54,8 +55,8 @@ import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 /**
  * not yet tested
  */
-//import DateTimeWidget from './input/DateTimeWidget.vue';DoubleWidget
-//import FileDownloadWidget from './output/FileDownloadWidget.vue';
+// import DateTimeWidget from './input/DateTimeWidget.vue';DoubleWidget
+// import FileDownloadWidget from './output/FileDownloadWidget.vue';
 
 /**
  * A Widget node view. This top level component sits at
@@ -94,7 +95,7 @@ export default {
         SliderWidget,
         ListBoxInputWidget,
         CredentialsWidget,
-        //DateTimeWidget,
+        // DateTimeWidget,
         FileUploadWidget,
         // selection widgets
         SingleSelectionWidget,
@@ -107,7 +108,7 @@ export default {
         // output widgets
         TextWidget,
         ImageWidget,
-        //FileDownloadWidget,
+        // FileDownloadWidget,
         // interactive widgets
         InteractiveValueWidget,
         InteractiveRangeWidget,

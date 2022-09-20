@@ -35,39 +35,14 @@
     "knime-ui-extension-service": "file:knime-ui-extension-service"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "4.5.4",
-    "@vue/cli-plugin-unit-jest": "4.5.4",
-    "@vue/cli-service": "4.5.4",
-    "@vue/test-utils": "1.0.0-beta.29",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "10.0.3",
-    "babel-jest": "24.9.0",
-    "concurrently": "5.3.0",
-    "cross-env": "5.2.0",
-    "cross-var": "1.1.0",
-    "eslint": "7.32.0",
-    "eslint-plugin-jest": "25.2.4",
-    "eslint-plugin-jest-formatting": "3.0.0",
-    "eslint-plugin-jsonc": "2.0.0",
-    "eslint-plugin-vue": "7.20.0",
-    "http-server": "0.12.3",
-    "jest-junit": "7.0.0",
-    "modern-normalize": "1.1.0",
-    "npm-audit-resolver": "2.3.1",
-    "postcss-import": "12.0.1",
-    "postcss-preset-env": "6.7.0",
-    "postcss-url": "8.0.0",
-    "raw-loader": "3.1.0",
-    "stylelint": "13.13.1",
-    "stylelint-config-standard": "20.0.0",
-    "svgo-loader": "2.2.1",
-    "vue-svg-loader": "0.16.0",
-    "vue-template-compiler": "2.6.11"
+    "@knime/eslint-config": "7.0.3",
+    "eslint": "8.23.0",
+    "stylelint": "14.11.0"
   },
   "engines": {
-    "node": "14.x"
+    "node": "18.x"
   },
   "volta": {
-    "node": "14.19.0"
+    "node": "18.7.0"
   }
 }
