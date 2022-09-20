@@ -345,20 +345,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "15:0:20": {
@@ -391,20 +380,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "15:0:21": {
@@ -437,20 +415,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "15:0:24": {
@@ -483,20 +450,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "15:0:14": {
@@ -529,20 +485,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "15:0:22": {
@@ -575,20 +520,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "15:0:23": {
@@ -621,20 +555,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "15:0:17": {
@@ -667,20 +590,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "15:0:18": {
@@ -713,20 +625,9 @@
           "nodeWarnMessage": null,
           "displayPossible": true
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "namespace": "knimeBooleanWidget",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/bool/booleanWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       }
     },

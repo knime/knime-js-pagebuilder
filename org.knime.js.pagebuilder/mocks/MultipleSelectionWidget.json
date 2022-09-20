@@ -420,17 +420,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -440,12 +430,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -485,17 +470,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -505,12 +480,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -550,17 +520,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -570,12 +530,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -615,17 +570,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -635,12 +580,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -680,17 +620,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -700,12 +630,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -745,17 +670,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -765,12 +680,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -810,17 +720,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -830,12 +730,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -875,17 +770,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -895,12 +780,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -940,17 +820,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -960,12 +830,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -1005,17 +870,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -1025,12 +880,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -1070,17 +920,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -1090,12 +930,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {
@@ -1135,17 +970,7 @@
         "@class": "org.knime.js.core.JSONWebNode",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/knime/knime_twinlist_1_0_0.js",
-          "/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js",
-          "/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js"
-        ],
+        "javascriptLibraries": [],
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
           "displayPossible": true,
@@ -1155,12 +980,7 @@
           "nodeAnnotation": "",
           "nodeName": "Multiple Selection Widget"
         },
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "viewRepresentation": {

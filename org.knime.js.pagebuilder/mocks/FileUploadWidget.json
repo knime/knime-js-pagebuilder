@@ -225,19 +225,8 @@
           "nodeWarnMessage": "No file or URL provided"
         },
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/fileupload/fileUploadWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "namespace": "knimeFileUploadWidget"
       },
       "5:0:6": {
@@ -288,19 +277,8 @@
           "nodeWarnMessage": "File with no extension is not valid"
         },
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/fileupload/fileUploadWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "namespace": "knimeFileUploadWidget"
       },
       "5:0:5": {
@@ -348,19 +326,8 @@
           "nodeWarnMessage": "File with no extension is not valid"
         },
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/fileupload/fileUploadWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "namespace": "knimeFileUploadWidget"
       },
       "5:0:1": {
@@ -406,19 +373,8 @@
           "nodeWarnMessage": "No such file: \"/Users/albrecht/Downloads/sample_with_underscores.txt\""
         },
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/fileupload/fileUploadWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "namespace": "knimeFileUploadWidget"
       },
       "5:0:7": {
@@ -464,19 +420,8 @@
           "nodeWarnMessage": "No file or URL provided"
         },
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/quickform/input/fileupload/FileUpload.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "namespace": "org_knime_js_base_node_quickform_input_fileupload"
       }
     },

@@ -80,6 +80,10 @@ export default {
             return 0;
         }
     },
+    created() {
+        consola.log('label', this.label);
+        consola.log('description', this.description);
+    },
     methods: {
         validate() {
             let isValid = this.link !== null;

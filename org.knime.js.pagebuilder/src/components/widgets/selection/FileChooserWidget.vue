@@ -125,18 +125,22 @@ export default {
     },
     methods: {
         async requestRepository(rootPath) {
-            let { response, errorResponse } = await this.repositoryAPI({
-                path: rootPath,
-                filter: null
-            });
-            const defaultPaths = this.defaultPaths;
-            this.dataReady = true;
-            if (errorResponse) {
+            try {
+                let { response, errorResponse } = await this.repositoryAPI({
+                    path: rootPath,
+                    filter: null
+                });
+                const defaultPaths = this.defaultPaths;
+                this.dataReady = true;
+                if (errorResponse) {
+                    return null;
+                }
+                if (response) {
+                    this.setRepository(response, defaultPaths);
+                    this.onChange();
+                }
+            } catch (err) {
                 return null;
-            }
-            if (response) {
-                this.setRepository(response, defaultPaths);
-                this.onChange();
             }
             return null;
         },

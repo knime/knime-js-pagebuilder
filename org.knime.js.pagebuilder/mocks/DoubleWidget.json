@@ -244,12 +244,7 @@
         "namespace": "knimeDoubleWidget",
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -280,13 +275,7 @@
           "nodeErrorMessage": null,
           "displayPossible": true
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "9:0:13": {
@@ -294,12 +283,7 @@
         "namespace": "knimeDoubleWidget",
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -330,13 +314,7 @@
           "nodeErrorMessage": null,
           "displayPossible": true
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "9:0:14": {
@@ -344,12 +322,7 @@
         "namespace": "knimeDoubleWidget",
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -380,13 +353,7 @@
           "nodeErrorMessage": null,
           "displayPossible": true
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "9:0:8": {
@@ -394,12 +361,7 @@
         "namespace": "knimeDoubleWidget",
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -430,13 +392,7 @@
           "nodeErrorMessage": null,
           "displayPossible": true
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "9:0:15": {
@@ -444,12 +400,7 @@
         "namespace": "knimeDoubleWidget",
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -480,13 +431,7 @@
           "nodeErrorMessage": null,
           "displayPossible": true
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "9:0:11": {
@@ -494,12 +439,7 @@
         "namespace": "knimeDoubleWidget",
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -530,13 +470,7 @@
           "nodeErrorMessage": null,
           "displayPossible": true
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       },
       "9:0:16": {
@@ -544,12 +478,7 @@
         "namespace": "knimeDoubleWidget",
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "stylesheets": [],
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
@@ -580,13 +509,7 @@
           "nodeErrorMessage": null,
           "displayPossible": true
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/input/double/doubleWidget.js"
-        ],
+        "javascriptLibraries": [],
         "getViewValueMethodName": "value"
       }
     },

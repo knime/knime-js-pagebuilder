@@ -10,10 +10,8 @@ import { mapActions } from 'vuex';
  */
 import BooleanWidget from './input/BooleanWidget.vue';
 import StringWidget from './input/StringWidget.vue';
-// No errors in console but interaction was not possible
-import SliderWidget from './input/SliderWidget.vue';
+import SliderWidget from './input/SliderWidget.vue'; // interaction was not possible
 import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
-// the mock is named CredentialInputWidget
 import CredentialsWidget from './input/CredentialsWidget.vue';
 import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
@@ -23,40 +21,25 @@ import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.v
 import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
 import IntegerWidget from './input/IntegerWidget.vue';
 import DoubleWidget from './input/DoubleWidget.vue';
-
-/**
- * tested with errors
- */
-// overall missing script and style imports
-
-// error after interaction: WebNode[type: DoubleWidget, id: 9:0:15]: Value not updated because the provided key was
-// invalid. Key: viewRepresentation.currentValue.DoubleWidget
-
-// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
-// no interaction possible
-import FileUploadWidget from './input/FileUploadWidget.vue';
-// TypeError: Cannot destructure property 'response' of '(intermediate value)' as it is null.
-import FileChooserWidget from './selection/FileChooserWidget.vue';
-// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
 import TextWidget from './output/TextWidget.vue';
-// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
-// DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/webapps-common/ui/assets/img/icons/sign-warning.svg?inline') is not a valid name.
 import ImageWidget from './output/ImageWidget.vue';
-// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
-// DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/webapps-common/ui/assets/img/icons/sign-warning.svg?inline') is not a valid name.
+import FileUploadWidget from './input/FileUploadWidget.vue';
+import FileDownloadWidget from './output/FileDownloadWidget.vue';
+
+// contains (unresolved) quickforms elements (e.g. referenced in the mock as class
+// org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation but there is no mapping
+// in the widget.config.js to resolve these elements to an actually vuew component)
+import FileChooserWidget from './selection/FileChooserWidget.vue';
 import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
-// Uncaught DOMException: Failed to execute 'postMessage' on 'Window': [object Object] could not be cloned.
-// DOMException: Failed to execute 'createElement' on 'Document': The tag name provided ('/webapps-common/ui/assets/img/icons/sign-warning.svg?inline') is not a valid name.
 import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
 
-// doesn't seem to have a mock
+// no mock
 import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 
 /**
  * not yet tested
  */
 // import DateTimeWidget from './input/DateTimeWidget.vue';DoubleWidget
-// import FileDownloadWidget from './output/FileDownloadWidget.vue';
 
 /**
  * A Widget node view. This top level component sits at
@@ -108,7 +91,7 @@ export default {
         // output widgets
         TextWidget,
         ImageWidget,
-        // FileDownloadWidget,
+        FileDownloadWidget,
         // interactive widgets
         InteractiveValueWidget,
         InteractiveRangeWidget,
