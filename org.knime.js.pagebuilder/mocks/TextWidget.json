@@ -230,11 +230,11 @@
       "13:0:12": {
         "@class": "org.knime.js.core.JSONWebNode",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "customCSS": "",
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "text": "This is the default text output.",
           "textFormat": "Text",
           "description": "This is the description",
@@ -271,11 +271,11 @@
       "13:0:15": {
         "@class": "org.knime.js.core.JSONWebNode",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "customCSS": "",
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "text": "This is the preformatted text output.",
           "textFormat": "Preformatted",
           "description": "This is the description",
@@ -312,11 +312,11 @@
       "13:0:16": {
         "@class": "org.knime.js.core.JSONWebNode",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "customCSS": "",
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "text": "<p>this is the html text output</p>",
           "textFormat": "Html",
           "description": "This is the description",
@@ -353,11 +353,11 @@
       "13:0:17": {
         "@class": "org.knime.js.core.JSONWebNode",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "customCSS": "",
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "text": "This is the default text output with alot of text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa enim nec dui nunc mattis enim. In hac habitasse platea dictumst quisque sagittis purus. Viverra orci sagittis eu volutpat odio facilisis mauris. Sit amet nisl suscipit adipiscing bibendum. Venenatis tellus in metus vulputate eu scelerisque felis imperdiet proin. Mauris nunc congue nisi vitae. Cras semper auctor neque vitae. Nunc mi ipsum faucibus vitae aliquet nec. Sodales ut eu sem integer vitae justo eget magna. Nunc sed blandit libero volutpat sed. Eu augue ut lectus arcu bibendum. Diam sollicitudin tempor id eu nisl nunc. Quis eleifend quam adipiscing vitae proin sagittis. Auctor elit sed vulputate mi sit amet mauris. Quis vel eros donec ac odio.\n\nEget mauris pharetra et ultrices. Ultricies lacus sed turpis tincidunt. Risus sed vulputate odio ut enim blandit. Ut consequat semper viverra nam libero justo laoreet sit amet. Tortor pretium viverra suspendisse potenti nullam. Vel turpis nunc eget lorem dolor sed. Et sollicitudin ac orci phasellus egestas tellus rutrum. Mi proin sed libero enim sed faucibus turpis. Tincidunt arcu non sodales neque sodales ut etiam sit. Dignissim cras tincidunt lobortis feugiat. Mauris augue neque gravida in fermentum et. Malesuada fames ac turpis egestas maecenas pharetra convallis. Iaculis eu non diam phasellus vestibulum lorem sed. Sed blandit libero volutpat sed cras ornare arcu. Sem fringilla ut morbi tincidunt augue interdum velit euismod in. Consectetur adipiscing elit duis tristique sollicitudin nibh. Nunc eget lorem dolor sed viverra ipsum.\n\nAmet consectetur adipiscing elit ut aliquam purus sit. A iaculis at erat pellentesque adipiscing commodo elit. Ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Sit amet facilisis magna etiam tempor orci eu lobortis. Amet nulla facilisi morbi tempus. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Mollis nunc sed id semper risus in hendrerit. Convallis a cras semper auctor. Convallis tellus id interdum velit laoreet. Habitant morbi tristique senectus et netus et malesuada. Semper eget duis at tellus at urna condimentum mattis pellentesque. Iaculis nunc sed augue lacus. Erat nam at lectus urna duis convallis. Tincidunt tortor aliquam nulla facilisi cras. Sed risus pretium quam vulputate dignissim suspendisse in est ante. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non. Mauris vitae ultricies leo integer malesuada nunc. Mauris cursus mattis molestie a iaculis at erat.\n\nOrnare arcu dui vivamus arcu felis bibendum ut tristique. Fringilla est ullamcorper eget nulla facilisi etiam dignissim. Scelerisque in dictum non consectetur a erat nam at. Nulla at volutpat diam ut venenatis tellus in. Nibh ipsum consequat nisl vel. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. Velit dignissim sodales ut eu sem. Tempor id eu nisl nunc mi ipsum. Montes nascetur ridiculus mus mauris vitae ultricies leo integer malesuada. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Scelerisque viverra mauris in aliquam sem. Sit amet nisl purus in mollis nunc.\n\nNibh cras pulvinar mattis nunc sed blandit libero. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Justo donec enim diam vulputate. Ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt. Tellus cras adipiscing enim eu turpis egestas pretium aenean. Amet dictum sit amet justo donec enim diam vulputate. Lectus nulla at volutpat diam. Egestas congue quisque egestas diam in. Diam maecenas sed enim ut sem viverra aliquet eget sit. Purus ut faucibus pulvinar elementum integer enim. Amet consectetur adipiscing elit ut aliquam purus sit amet luctus. Habitasse platea dictumst vestibulum rhoncus est pellentesque. Vitae justo eget magna fermentum iaculis eu non. Nam aliquam sem et tortor consequat id porta nibh venenatis. Risus ultricies tristique nulla aliquet enim tortor. Sagittis id consectetur purus ut faucibus. Integer quis auctor elit sed vulputate mi sit amet mauris. Lectus proin nibh nisl condimentum id venenatis a condimentum vitae.",
           "textFormat": "Text",
           "description": "This is the description",
@@ -394,11 +394,11 @@
       "13:0:18": {
         "@class": "org.knime.js.core.JSONWebNode",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "customCSS": "",
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "text": "This is the default text output with alot of text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa enim nec dui nunc mattis enim. In hac habitasse platea dictumst quisque sagittis purus. Viverra orci sagittis eu volutpat odio facilisis mauris. Sit amet nisl suscipit adipiscing bibendum. Venenatis tellus in metus vulputate eu scelerisque felis imperdiet proin. Mauris nunc congue nisi vitae. Cras semper auctor neque vitae. Nunc mi ipsum faucibus vitae aliquet nec. Sodales ut eu sem integer vitae justo eget magna. Nunc sed blandit libero volutpat sed. Eu augue ut lectus arcu bibendum. Diam sollicitudin tempor id eu nisl nunc. Quis eleifend quam adipiscing vitae proin sagittis. Auctor elit sed vulputate mi sit amet mauris. Quis vel eros donec ac odio.\n\nEget mauris pharetra et ultrices. Ultricies lacus sed turpis tincidunt. Risus sed vulputate odio ut enim blandit. Ut consequat semper viverra nam libero justo laoreet sit amet. Tortor pretium viverra suspendisse potenti nullam. Vel turpis nunc eget lorem dolor sed. Et sollicitudin ac orci phasellus egestas tellus rutrum. Mi proin sed libero enim sed faucibus turpis. Tincidunt arcu non sodales neque sodales ut etiam sit. Dignissim cras tincidunt lobortis feugiat. Mauris augue neque gravida in fermentum et. Malesuada fames ac turpis egestas maecenas pharetra convallis. Iaculis eu non diam phasellus vestibulum lorem sed. Sed blandit libero volutpat sed cras ornare arcu. Sem fringilla ut morbi tincidunt augue interdum velit euismod in. Consectetur adipiscing elit duis tristique sollicitudin nibh. Nunc eget lorem dolor sed viverra ipsum.\n\nAmet consectetur adipiscing elit ut aliquam purus sit. A iaculis at erat pellentesque adipiscing commodo elit. Ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Sit amet facilisis magna etiam tempor orci eu lobortis. Amet nulla facilisi morbi tempus. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien et. Mollis nunc sed id semper risus in hendrerit. Convallis a cras semper auctor. Convallis tellus id interdum velit laoreet. Habitant morbi tristique senectus et netus et malesuada. Semper eget duis at tellus at urna condimentum mattis pellentesque. Iaculis nunc sed augue lacus. Erat nam at lectus urna duis convallis. Tincidunt tortor aliquam nulla facilisi cras. Sed risus pretium quam vulputate dignissim suspendisse in est ante. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non. Mauris vitae ultricies leo integer malesuada nunc. Mauris cursus mattis molestie a iaculis at erat.\n\nOrnare arcu dui vivamus arcu felis bibendum ut tristique. Fringilla est ullamcorper eget nulla facilisi etiam dignissim. Scelerisque in dictum non consectetur a erat nam at. Nulla at volutpat diam ut venenatis tellus in. Nibh ipsum consequat nisl vel. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien. Velit dignissim sodales ut eu sem. Tempor id eu nisl nunc mi ipsum. Montes nascetur ridiculus mus mauris vitae ultricies leo integer malesuada. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Scelerisque viverra mauris in aliquam sem. Sit amet nisl purus in mollis nunc.\n\nNibh cras pulvinar mattis nunc sed blandit libero. Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Justo donec enim diam vulputate. Ut faucibus pulvinar elementum integer enim neque volutpat ac tincidunt. Tellus cras adipiscing enim eu turpis egestas pretium aenean. Amet dictum sit amet justo donec enim diam vulputate. Lectus nulla at volutpat diam. Egestas congue quisque egestas diam in. Diam maecenas sed enim ut sem viverra aliquet eget sit. Purus ut faucibus pulvinar elementum integer enim. Amet consectetur adipiscing elit ut aliquam purus sit amet luctus. Habitasse platea dictumst vestibulum rhoncus est pellentesque. Vitae justo eget magna fermentum iaculis eu non. Nam aliquam sem et tortor consequat id porta nibh venenatis. Risus ultricies tristique nulla aliquet enim tortor. Sagittis id consectetur purus ut faucibus. Integer quis auctor elit sed vulputate mi sit amet mauris. Lectus proin nibh nisl condimentum id venenatis a condimentum vitae.",
           "textFormat": "Preformatted",
           "description": "This is the description for lots of text (preformatted)",
@@ -435,11 +435,11 @@
       "13:0:19": {
         "@class": "org.knime.js.core.JSONWebNode",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "customCSS": "",
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "text": "<h1>HTML Ipsum Presents</h1>\n\n<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href=\"#\">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>\n\n<h2>Header Level 2</h2>\n\n<ol>\n   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>\n   <li>Aliquam tincidunt mauris eu risus.</li>\n</ol>\n\n<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>\n\n<h3>Header Level 3</h3>\n\n<ul>\n   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>\n   <li>Aliquam tincidunt mauris eu risus.</li>\n</ul>\n\n<pre><code>\n#header h1 a {\n  display: block;\n  width: 300px;\n  height: 80px;\n}\n</code></pre>",
           "textFormat": "Html",
           "description": "This is the description for lots of text (html)",

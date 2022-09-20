@@ -3399,10 +3399,10 @@
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "textFormat": "Html",
           "text": "<br>\n",
           "description": "",
@@ -3440,10 +3440,10 @@
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "textFormat": "Html",
           "text": "<p class=\"knime-title\">System Setup</p>\n",
           "description": "Enter Description",
@@ -3481,10 +3481,10 @@
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "textFormat": "Html",
           "text": "<div class=\"sidetext\">\n<h1 class=\"sidetext\">Guide</h1>\n<hr class=\"sidetext\">\n<h2 class=\"sidetext\">Required Tasks</h2>\n\n<p class=\"sidetext\">\nThis workflow can help you in labeling unlabeled documents using active learning.\n</p>\n\n<p class=\"sidetext\">\nThe available data is about moview review. \nPlease follow the instructions to upload your own unlabeled documents.\n</p>\n\n<p class=\"sidetext\">\n<ul>\n<li>Upload your document in a CSV file with the exact columns showed in this example of movie reviews:</li>\n<br>\n<center>\n<table class=\"tg\">\n  <tr>\n    <th class=\"tg-cscf\">Title</th>\n    <th class=\"tg-abx8\">Text</th>\n  </tr>\n  <tr>\n    <td class=\"tg-tz6l\">A great movie!</td>\n    <td class=\"tg-tz6l\">I really enjoyed this movie because..</td>\n  </tr>\n  <tr>\n    <td class=\"tg-tz6l\">Worst movie ever!</td>\n    <td class=\"tg-tz6l\">I could not finish the movie because..</td>\n  </tr>\n  <tr>\n    <td class=\"tg-i81m\">...</td>\n    <td class=\"tg-i81m\">...</td>\n  </tr>\n</table>\n</center>\n<br>\n<li>Double click  the cells of the table to type in the classes labels. Add also abbreviations so that they are easy to type in afterwards. If you decide to upload a CSV file for your labels and abbreviations, your custom settings in the table will be ignored.</li>\n</ul>\n</p>\n</div>\n\n\n",
           "description": "",
