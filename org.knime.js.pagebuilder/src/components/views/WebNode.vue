@@ -97,8 +97,8 @@ export default {
             return { ...classToComponentMap, ...legacyExclusions }[this.nodeConfig?.viewRepresentation?.['@class']];
         },
         isWidget() {
-            return legacyExclusions[this.nodeConfig?.viewRepresentation?.['@class']] ||
-                (this.legacyModeDisabled && this.widgetComponentName);
+            return Boolean(legacyExclusions[this.nodeConfig?.viewRepresentation?.['@class']] ||
+                (this.legacyModeDisabled && this.widgetComponentName));
         }
     },
     watch: {
