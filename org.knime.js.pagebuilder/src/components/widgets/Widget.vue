@@ -5,8 +5,9 @@ import { mapActions } from 'vuex';
  * seems to run fine
  */
 
+
 /**
- * tested with warnings
+ * tested with vue3 compat warnings
  */
 import BooleanWidget from './input/BooleanWidget.vue';
 import StringWidget from './input/StringWidget.vue';
@@ -26,9 +27,10 @@ import ImageWidget from './output/ImageWidget.vue';
 import FileUploadWidget from './input/FileUploadWidget.vue';
 import FileDownloadWidget from './output/FileDownloadWidget.vue';
 
-// contains (unresolved) quickforms elements (e.g. referenced in the mock as class
-// org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation but there is no mapping
-// in the widget.config.js to resolve these elements to an actually vuew component)
+// contains (unresolved) quickform elements (e.g. referenced in the mock as class
+// org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation, but there is no mapping
+// in the widget.config.js to resolve this elements to an actually vue component) this causes the isWidget test to fail
+// and loads the WebNodeIFrame instead
 import FileChooserWidget from './selection/FileChooserWidget.vue';
 import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
 import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
