@@ -97,8 +97,6 @@ export default {
             return { ...classToComponentMap, ...legacyExclusions }[this.nodeConfig?.viewRepresentation?.['@class']];
         },
         isWidget() {
-            // consola.log(legacyExclusions[this.nodeConfig?.viewRepresentation?.['@class']], this.legacyModeDisabled, this.widgetComponentName);
-            
             return Boolean(legacyExclusions[this.nodeConfig?.viewRepresentation?.['@class']] ||
                 (this.legacyModeDisabled && this.widgetComponentName));
         }
