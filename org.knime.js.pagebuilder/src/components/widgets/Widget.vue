@@ -11,7 +11,6 @@ import { mapActions } from 'vuex';
  */
 import BooleanWidget from './input/BooleanWidget.vue';
 import StringWidget from './input/StringWidget.vue';
-import SliderWidget from './input/SliderWidget.vue'; // interaction was not possible
 import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
 import CredentialsWidget from './input/CredentialsWidget.vue';
 import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
@@ -41,7 +40,8 @@ import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 /**
  * not yet tested
  */
-// import DateTimeWidget from './input/DateTimeWidget.vue';DoubleWidget
+// import DateTimeWidget from './input/DateTimeWidget.vue';
+import SliderWidget from './input/SliderWidget.vue'; // interaction was not possible
 
 /**
  * A Widget node view. This top level component sits at

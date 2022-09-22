@@ -43,10 +43,8 @@ const maxGridWidth = 12;
 export default {
     components: {
         NodeView,
-        // https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components
-        Row: defineAsyncComponent(() =>
-            import('./Row.vue')
-        )
+        // TODO check if this is the best way to handle circular components in Vue3
+        Row: defineAsyncComponent(() => import('./Row.vue'))
     },
     props: {
         /**

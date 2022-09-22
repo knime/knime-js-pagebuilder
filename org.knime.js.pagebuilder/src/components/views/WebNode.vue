@@ -1,5 +1,5 @@
 <script>
-// import WebNodeIFrame from './WebNodeIFrame.vue';
+// TODO import WebNodeIFrame from './WebNodeIFrame.vue';
 import Widget from '../widgets/Widget.vue';
 import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config';
 
