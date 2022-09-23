@@ -58,7 +58,11 @@ export default {
     },
     computed: {
         ...mapState('pagebuilder', ['page']),
-        ...mapGetters('wizardExecution', ['currentJobId']), // Expected values include null (no job) or undefined (AP execution).
+        ...mapGetters({
+            currentJobId: 'wizardExecution/currentJobId', // Expected values include null (no job) or undefined (AP execution).
+            accessToken: 'oauth/accessToken',
+            authParameter: 'oauth/authParameter'
+        }),
         iframeId() {
             // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
             return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
@@ -215,10 +219,9 @@ export default {
          */
         injectContent() {
             const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
-            const accessToken = this.$store.state.settings?.['knime:access_token'];
-
-            let styles = this.computeStyles(resourceBaseUrl, accessToken);
-            let scripts = this.computeScripts(resourceBaseUrl, accessToken);
+            
+            let styles = this.computeStyles(resourceBaseUrl, this.accessToken);
+            let scripts = this.computeScripts(resourceBaseUrl, this.accessToken);
 
             // runtime/script injection error handling
             let loadingErrorHandler = `<script>${loadingErrorHandlerSrc
@@ -271,16 +274,15 @@ export default {
         /**
          * Helper method that computes the required `<style>` elements that should be injected into the iframe
          * @param {String} resourceBaseUrl Base URL from store
-         * @param {String} [accessToken] An optional JWT access token used to authenticate resource requests
          * @returns {String}
          */
-        computeStyles(resourceBaseUrl, accessToken) {
+        computeStyles(resourceBaseUrl) {
             // stylesheets from the node view itself
             let styles = this.nodeStylesheets.map(
                 style => {
                     let href = `${resourceBaseUrl}${encodeURI(style)}`;
-                    if (accessToken) {
-                        href += `?knime:access_token=${accessToken}`;
+                    if (this.accessToken) {
+                        href += `?${this.authParameter}=${this.accessToken}`;
                     }
                     return `<link type="text/css" rel="stylesheet" href="${href}">`;
                 }
@@ -307,7 +309,7 @@ export default {
                 lib => {
                     let src = `${resourceBaseUrl}${lib}`;
                     if (accessToken) {
-                        src += `?knime:access_token=${accessToken}`;
+                        src += `?${this.authParameter}=${accessToken}`;
                     }
                     return `<script src="${src}" 
                         onload="knimeLoader(true)" 

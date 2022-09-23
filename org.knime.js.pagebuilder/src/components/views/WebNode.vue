@@ -1,5 +1,5 @@
 <script>
-// TODO import WebNodeIFrame from './WebNodeIFrame.vue';
+import WebNodeIFrame from './WebNodeIFrame.vue';
 import Widget from '../widgets/Widget.vue';
 import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config';
 
@@ -11,7 +11,7 @@ import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config
  */
 export default {
     components: {
-        // WebNodeIFrame,
+        WebNodeIFrame,
         Widget
     },
     props: {
@@ -121,14 +121,11 @@ export default {
       :node-config="nodeConfig"
       :node-id="nodeId"
     />
-    <div v-else>
-      <div>this is a WebNodeIFrame or a linked widget which was not found (e.g. unresolved quickform references)</div>
-    </div>
-    <!-- <WebNodeIFrame
+    <WebNodeIFrame
       v-else
       :key="nodeViewIFrameKey"
       v-bind="$props"
-    /> -->
+    />
   </div>
 </template>
 
