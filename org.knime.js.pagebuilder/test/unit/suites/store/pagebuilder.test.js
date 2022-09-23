@@ -92,6 +92,15 @@ describe('PageBuilder store', () => {
         expect(store.state.nodesReExecuting).toEqual([]);
     });
 
+    it('updates nodes re-executing if empty re-executing nodes received', () => {
+        let nodesReExecuting = ['1', '2'];
+        expect(store.state.nodesReExecuting).toEqual([]);
+        store.commit('setNodesReExecuting', nodesReExecuting);
+        expect(store.state.nodesReExecuting).toEqual(nodesReExecuting);
+        store.commit('setNodesReExecuting', []);
+        expect(store.state.nodesReExecuting).toEqual([]);
+    });
+
     it('allows setting re-executing nodes via action', () => {
         expect(store.state.nodesReExecuting).toEqual([]);
         store.dispatch('setPage', { });

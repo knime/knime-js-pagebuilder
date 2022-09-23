@@ -4,7 +4,7 @@
   "description": "PageBuilder for KNIME® Analytics Platform & WebPortal",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run opensourcecredits -- -- -- --no-overwrite\" \"npm run build:mock:lib\" \"npm run build:mock:html\" && concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist http-server\" \"vue-cli-service serve src/dev.js\"",
+    "dev": "mkdir -p dist && concurrently \"npm run opensourcecredits -- -- -- --no-overwrite\" \"npm run build:mock:lib\" \"npm run build:mock:html\" && concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist http-server\" \"vue-cli-service serve src/dev.js\"",
     "dev:ap": "npm run build && npm run build:lib:dev",
     "dev:webportal": "concurrently -n server,app -c yellow,blue \"http-server -c-1 --cors -p 4000 dist/ http-server\" \"npm run build:credits && npm run build:lib -- --watch\"",
     "build": "npm run build:credits && npm run build:lib && npm run build:wrapper",
