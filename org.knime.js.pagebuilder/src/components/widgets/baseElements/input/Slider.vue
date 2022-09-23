@@ -111,7 +111,7 @@ export default {
       @focus="$refs.slider.focus(i)"
       @blur="$refs.slider.blur(i)"
     />
-    <vue-slider
+    <VueSlider
       ref="slider"
       :width="direction.includes('tt') ? 1 : 'auto'"
       :value="value"
