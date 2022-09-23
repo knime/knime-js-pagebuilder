@@ -26,6 +26,10 @@ import ImageWidget from './output/ImageWidget.vue';
 import FileUploadWidget from './input/FileUploadWidget.vue';
 import FileDownloadWidget from './output/FileDownloadWidget.vue';
 
+/**
+ * not yet tested
+ */
+
 // contains (unresolved) quickform elements (e.g. referenced in the mock as class
 // org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation, but there is no mapping
 // in the widget.config.js to resolve this elements to an actually vue component) this causes the isWidget test to fail
@@ -37,9 +41,6 @@ import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
 // no mock
 import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 
-/**
- * not yet tested
- */
 // import DateTimeWidget from './input/DateTimeWidget.vue';
 import SliderWidget from './input/SliderWidget.vue'; // interaction was not possible
 
