@@ -148,8 +148,8 @@ export default {
 .label {
   max-width: 100%;
 
-  & >>> textarea,
-  & >>> label {
+  & :deep(textarea),
+  & :deep(label) {
     cursor: pointer;
     max-width: 100%;
   }

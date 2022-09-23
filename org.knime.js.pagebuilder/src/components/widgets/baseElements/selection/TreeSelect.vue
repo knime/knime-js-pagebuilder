@@ -354,12 +354,12 @@ export default {
   display: inline-block;
   min-width: 100%;
 
-  & >>> .tree-anchor,
-  & >>> .tree-icon {
+  & :deep(.tree-anchor),
+  & :deep(.tree-icon) {
     position: relative;
   }
 
-  & >>> .tree-wholerow {
+  & :deep(.tree-wholerow) {
     width: 100%;
     position: absolute;
     left: 0;

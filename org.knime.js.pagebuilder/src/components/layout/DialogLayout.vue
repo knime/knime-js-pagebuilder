@@ -119,7 +119,7 @@ export default {
     bottom: 0;
     z-index: 10;
 
-    & >>> .panel {
+    & :deep(.panel) {
       padding-left: 25%;
       margin-left: -25%;
       padding-right: 25%;
@@ -141,7 +141,7 @@ export default {
   flex: 0 0 calc(8 * 100% / 12);
   max-width: calc(8 * 100% / 12);
 
-  & >>> iframe {
+  & :deep(iframe) {
     height: calc(100vh - 10px);
   }
 }

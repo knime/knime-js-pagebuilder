@@ -258,7 +258,7 @@ export default {
 .date-time-label {
   /* remove the 10px label margin - they are provided by DateTimeInput which is required to have working
   wrapping with margin */
-  & >>> label {
+  & :deep(label) {
     margin-bottom: 0;
   }
 

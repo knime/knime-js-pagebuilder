@@ -178,7 +178,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.hide >>> *:not(:last-child) {
+.hide :deep(*:not(:last-child)) {
   display: none;
 }
 </style>

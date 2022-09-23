@@ -187,7 +187,7 @@ export default {
     z-index: 3;
   }
 
-  & >>> div:first-child {
+  & :deep(div:first-child) {
     pointer-events: all;
   }
 }

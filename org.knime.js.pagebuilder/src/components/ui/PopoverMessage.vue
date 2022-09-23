@@ -118,6 +118,7 @@ export default {
         :is="type === 'error' ? 'SignWarningIcon' : 'CircleWarningIcon'"
         class="icon warn-icon"
       />
+
       <Label
         :text="title"
         class="label"
@@ -209,7 +210,7 @@ export default {
     position: relative;
     padding: 8px 80px 8px 50px;
 
-    & .label >>> label.label-text {
+    & .label :deep(label.label-text) {
       color: white;
       margin: 6px 0 4px;
       line-height: 24px;
@@ -300,7 +301,7 @@ export default {
     max-height: 75%;
     transition: max-height 0.3s ease-out;
 
-    & .expand-button >>> svg {
+    & .expand-button :deep(svg) {
       transform: scaleY(-1);
     }
 
@@ -358,7 +359,7 @@ export default {
         color: var(--theme-button-function-foreground-color-hover);
         background-color: var(--theme-button-function-background-color-hover);
 
-        & >>> svg {
+        & :deep(svg) {
           stroke: var(--theme-button-function-foreground-color-hover);
         }
       }
@@ -367,7 +368,7 @@ export default {
         color: var(--theme-button-function-foreground-color-focus);
         background-color: var(--theme-button-function-background-color-focus);
 
-        & >>> svg {
+        & :deep(svg) {
           stroke: var(--theme-button-function-foreground-color-focus);
         }
       }

@@ -120,20 +120,20 @@ export default {
       />
       <Row
         v-else-if="item.type === 'row' || item.type === 'JSONLayoutRow'"
-        :key="index + '-1'"
+        :key="index + '-' + item.type + '-1'"
         :row-config="item"
       />
       <template v-else-if="(item.type === 'nestedLayout' || item.type === 'JSONNestedLayout') && item.layout">
         <Row
           v-for="(row, rowIndex) in item.layout.rows"
-          :key="index + '-' + rowIndex"
+          :key="index + '-' + rowIndex + '-2'"
           :row-config="row"
         />
       </template>
       <!-- eslint-disable vue/no-v-html  -->
       <div
         v-else-if="item.type === 'html' || item.type === 'JSONLayoutHTMLContent'"
-        :key="index + '-2'"
+        :key="index + '-' + item.type + '-3'"
         v-html="item.value"
       />
     </template>

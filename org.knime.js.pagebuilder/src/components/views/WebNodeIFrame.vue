@@ -3,11 +3,13 @@ import { mapState, mapGetters } from 'vuex';
 import AlertLocal from '../ui/AlertLocal.vue';
 import { iframeResizer } from 'iframe-resizer';
 
+/* eslint-disable import/extensions */
 import scriptLoaderSrc from './injectedScripts/scriptLoader.js?raw';
 import messageListenerSrc from './injectedScripts/messageListener.js?raw';
 import iframeResizerContentSrc from 'iframe-resizer/js/iframeResizer.contentWindow.js?raw';
 import loadingErrorHandlerSrc from './injectedScripts/loadErrorHandler.js?raw';
 import viewAlertHandlerSrc from './injectedScripts/viewAlertHandler.js?raw';
+/* eslint-enable import/extensions */
 
 const valueGetterTimeout = 30000; // ms
 const validatorTimeout = 5000; // ms
@@ -119,7 +121,8 @@ export default {
         let getUserFunc = this.$store.getters['api/user'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
-        let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
+        // TODO: HUB-3296
+        // let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
         if (!window.KnimePageBuilderAPI || window.KnimePageBuilderAPI.teardown(this.currentJobId)) {
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
@@ -167,13 +170,14 @@ export default {
                         return null;
                     }
                 },
-                getCustomSketcherPath() {
-                    if (typeof sketcherPath === 'string') {
-                        return sketcherPath;
-                    } else {
-                        return null;
-                    }
-                },
+                // TODO: HUB-3296
+                // getCustomSketcherPath() {
+                //     if (typeof sketcherPath === 'string') {
+                //         return sketcherPath;
+                //     } else {
+                //         return null;
+                //     }
+                // },
                 /**
                  * Utility check method to prevent concurrent/unnecessary initialization of the global
                  * KnimePageBuilderAPI. Vue can create race conditions during create and destroy hooks depending on the

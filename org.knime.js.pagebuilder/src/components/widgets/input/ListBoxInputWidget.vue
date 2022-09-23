@@ -161,12 +161,12 @@ export default {
 
 <style lang="postcss" scoped>
 .listBoxInput {
-  & >>> textarea {
+  & :deep(textarea) {
     width: 100%;
     max-width: 100%;
   }
 
-  & >>> label {
+  & :deep(label) {
     cursor: pointer;
   }
 }

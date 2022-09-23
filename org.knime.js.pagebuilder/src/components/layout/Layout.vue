@@ -62,9 +62,9 @@ export default {
   width: 100%;
 
   &,
-  & >>> *,
-  & >>> *::before,
-  & >>> *::after {
+  & :deep(*),
+  & :deep(*::before),
+  & :deep(*::after) {
     box-sizing: border-box;
   }
 

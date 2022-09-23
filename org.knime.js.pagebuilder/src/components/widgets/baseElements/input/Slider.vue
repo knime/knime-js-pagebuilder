@@ -71,6 +71,7 @@ export default {
             type: Boolean
         }
     },
+    emits: ['input'],
     methods: {
         getValue() {
             return this.$refs.slider.getValue();
@@ -110,7 +111,7 @@ export default {
       @focus="$refs.slider.focus(i)"
       @blur="$refs.slider.blur(i)"
     />
-    <VueSlider
+    <vue-slider
       ref="slider"
       :width="direction.includes('tt') ? 1 : 'auto'"
       :value="value"
@@ -138,101 +139,101 @@ export default {
 
 <style lang="postcss" scoped>
 .slider-container {
-  & >>> .slider-focusable:focus {
+  & :deep(.slider-focusable):focus {
     outline: none;
   }
 
-  & >>> .vue-slider {
+  & :deep(.vue-slider) {
     cursor: pointer;
     box-sizing: unset !important;
   }
 
-  & >>> .vue-slider-disabled {
+  & :deep(.vue-slider-disabled) {
     opacity: 0.5;
     cursor: not-allowed;
   }
 
   /* rail style */
-  & >>> .vue-slider-rail {
+  & :deep(.vue-slider-rail) {
     cursor: pointer;
     background-color: var(--knime-stone-gray);
     border-radius: 0;
   }
 
   /* invalid state */
-  & >>> .slider-invalid .vue-slider-rail {
+  & :deep(.slider-invalid .vue-slider-rail) {
     background-color: var(--theme-color-error);
   }
 
-  & >>> .vue-slider-rtl .vue-slider-rail,
-  & >>> .vue-slider-ltr .vue-slider-rail {
+  & :deep(.vue-slider-rtl .vue-slider-rail),
+  & :deep(.vue-slider-ltr .vue-slider-rail) {
     height: 1px !important;
   }
 
   /* process style */
-  & >>> .vue-slider-process {
+  & :deep(.vue-slider-process) {
     cursor: pointer;
     background-color: var(--theme-slider-background-color);
     border-radius: var(--theme-slider-bar-radius, 3.5px);
   }
 
   /* invalid state */
-  & >>> .knime-invalid-widget .vue-slider-process {
+  & :deep(.knime-invalid-widget .vue-slider-process) {
     background-color: var(--theme-color-error);
   }
 
-  & >>> .vue-slider-ttb .vue-slider-process,
-  & >>> .vue-slider-btt .vue-slider-process {
+  & :deep(.vue-slider-ttb .vue-slider-process),
+  & :deep(.vue-slider-btt .vue-slider-process) {
     width: 7px !important;
     left: -3px !important;
   }
 
-  & >>> .vue-slider-rtl .vue-slider-process,
-  & >>> .vue-slider-ltr .vue-slider-process {
+  & :deep(.vue-slider-rtl .vue-slider-process),
+  & :deep(.vue-slider-ltr .vue-slider-process) {
     height: 7px !important;
     top: -3px !important;
   }
 
-  & >>> .none .vue-slider-process {
+  & :deep(.none .vue-slider-process) {
     display: none !important;
   }
 
-  & >>> .both.vue-slider-rtl .vue-slider-process,
-  & >>> .both.vue-slider-ltr .vue-slider-process {
+  & :deep(.both.vue-slider-rtl .vue-slider-process),
+  & :deep(.both.vue-slider-ltr .vue-slider-process) {
     width: 100% !important;
   }
 
-  & >>> .both.vue-slider-ttb .vue-slider-process,
-  & >>> .both.vue-slider-btt .vue-slider-process {
+  & :deep(.both.vue-slider-ttb .vue-slider-process),
+  & :deep(.both.vue-slider-btt .vue-slider-process) {
     height: 100% !important;
   }
 
   /* mark style */
-  & >>> .vue-slider-mark {
+  & :deep(.vue-slider-mark) {
     cursor: pointer;
     z-index: 1;
   }
 
-  & >>> .vue-slider-mark-step {
+  & :deep(.vue-slider-mark-step) {
     cursor: pointer;
     background-color: var(--knime-silver-sand);
   }
 
-  & >>> .vue-slider-ttb .vue-slider-mark-step,
-  & >>> .vue-slider-btt .vue-slider-mark-step {
+  & :deep(.vue-slider-ttb .vue-slider-mark-step),
+  & :deep(.vue-slider-btt .vue-slider-mark-step) {
     width: 10px !important;
     height: 1px !important;
     left: 11px !important;
   }
 
-  & >>> .vue-slider-ltr .vue-slider-mark-step,
-  & >>> .vue-slider-rtl .vue-slider-mark-step {
+  & :deep(.vue-slider-ltr .vue-slider-mark-step),
+  & :deep(.vue-slider-rtl .vue-slider-mark-step) {
     width: 1px !important;
     height: 10px !important;
     top: 11px !important;
   }
 
-  & >>> .vue-slider-mark-label {
+  & :deep(.vue-slider-mark-label) {
     cursor: pointer;
     font-size: 11px;
     line-height: 18px;
@@ -240,18 +241,18 @@ export default {
     color: var(--knime-masala);
   }
 
-  & >>> .vue-slider-ttb .vue-slider-mark-label,
-  & >>> .vue-slider-btt .vue-slider-mark-label {
+  & :deep(.vue-slider-ttb .vue-slider-mark-label),
+  & :deep(.vue-slider-btt .vue-slider-mark-label) {
     margin-left: 24px !important;
   }
 
-  & >>> .vue-slider-ltr .vue-slider-mark-label,
-  & >>> .vue-slider-rtl .vue-slider-mark-label {
+  & :deep(.vue-slider-ltr .vue-slider-mark-label),
+  & :deep(.vue-slider-rtl .vue-slider-mark-label) {
     margin-top: 20px !important;
   }
 
   /* dot style */
-  & >>> .vue-slider-dot {
+  & :deep(.vue-slider-dot) {
     cursor: pointer;
     height: 29px !important;
     width: 13px !important;
@@ -261,28 +262,28 @@ export default {
     z-index: 1;
   }
 
-  & >>> .vue-slider-dot:hover {
+  & :deep(.vue-slider-dot:hover) {
     border-color: var(--theme-slider-border-color-hover);
     background-color: var(--theme-slider-foreground-color-hover); /* transparency not working here */
   }
 
-  & >>> .vue-slider-ttb .vue-slider-dot,
-  & >>> .vue-slider-btt .vue-slider-dot {
+  & :deep(.vue-slider-ttb .vue-slider-dot),
+  & :deep(.vue-slider-btt .vue-slider-dot) {
     left: 0 !important;
     height: 13px !important;
     width: 29px !important;
   }
 
-  & >>> .vue-slider-dot-focus {
+  & :deep(.vue-slider-dot-focus) {
     background-color: var(--theme-slider-foreground-color-focus) !important;
     border-color: var(--theme-slider-border-color-focus) !important;
   }
 
-  & >>> .vue-slider-dot-handle {
+  & :deep(.vue-slider-dot-handle) {
     display: none;
   }
 
-  & >>> .vue-slider-dot-tooltip-inner {
+  & :deep(.vue-slider-dot-tooltip-inner) {
     cursor: pointer;
     font-size: 11px;
     line-height: 18px;
@@ -296,12 +297,12 @@ export default {
     box-sizing: content-box !important;
   }
 
-  & >>> .vue-slider-dot-tooltip-inner::after {
+  & :deep(.vue-slider-dot-tooltip-inner::after) {
     content: "";
     position: absolute;
   }
 
-  & >>> .vue-slider-dot-tooltip-inner-top::after {
+  & :deep(.vue-slider-dot-tooltip-inner-top::after) {
     top: 100%;
     left: 50%;
     transform: translate(-50%, 0);
@@ -313,7 +314,7 @@ export default {
     border-top-color: inherit;
   }
 
-  & >>> .vue-slider-dot-tooltip-inner-bottom::after {
+  & :deep(.vue-slider-dot-tooltip-inner-bottom::after) {
     bottom: 100%;
     left: 50%;
     transform: translate(-50%, 0);
@@ -325,7 +326,7 @@ export default {
     border-bottom-color: inherit;
   }
 
-  & >>> .vue-slider-dot-tooltip-inner-left::after {
+  & :deep(.vue-slider-dot-tooltip-inner-left::after) {
     left: 100%;
     top: 50%;
     transform: translate(0, -50%);
@@ -337,7 +338,7 @@ export default {
     border-left-color: inherit;
   }
 
-  & >>> .vue-slider-dot-tooltip-inner-right::after {
+  & :deep(.vue-slider-dot-tooltip-inner-right::after) {
     right: 100%;
     top: 50%;
     transform: translate(0, -50%);
@@ -349,12 +350,12 @@ export default {
     border-right-color: inherit;
   }
 
-  & >>> .vue-slider-dot-tooltip-wrapper {
+  & :deep(.vue-slider-dot-tooltip-wrapper) {
     opacity: 0;
     transition: all 0.3s;
   }
 
-  & >>> .vue-slider-dot-tooltip-wrapper-show {
+  & :deep(.vue-slider-dot-tooltip-wrapper-show) {
     opacity: 1;
   }
 }

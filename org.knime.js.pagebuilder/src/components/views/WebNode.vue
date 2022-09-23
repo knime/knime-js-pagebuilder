@@ -87,6 +87,7 @@ export default {
             return style.join(';').replace(/;;/g, ';');
         },
         legacyModeDisabled() {
+            // TODO HUB-3311 remove legacy mode
             // only return true if legacy flag *explicitly* set to false; default workflows with unset legacy flag to
             // use legacy mode
             return this.viewConfig.useLegacyMode === false;
