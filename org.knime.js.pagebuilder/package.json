@@ -31,8 +31,9 @@
   "dependencies": {
     "consola": "2.10.1",
     "iframe-resizer": "4.2.10",
-    "vue-slider-component": "3.1.5",
-    "knime-ui-extension-service": "file:knime-ui-extension-service"
+    "knime-ui-extension-service": "file:knime-ui-extension-service",
+    "mime": "^3.0.0",
+    "vue-slider-component": "^4.1.0-beta.2"
   },
   "devDependencies": {
     "@knime/eslint-config": "7.0.3",

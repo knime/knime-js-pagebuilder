@@ -1,5 +1,5 @@
 <script>
-import mime from 'mime-types';
+import mime from 'mime/lite';
 import { getFileExtension } from '../../../util/fileUtils';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
@@ -57,7 +57,7 @@ export default {
             return this.viewRep.linkTitle;
         },
         fileType() {
-            return mime.lookup(this.viewRep.path) || 'application/octet-stream';
+            return mime.getType(this.viewRep.path) || 'application/octet-stream';
         },
         fileExt() {
             return getFileExtension(this.viewRep.path);
