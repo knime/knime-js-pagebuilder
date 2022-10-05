@@ -60,7 +60,6 @@ export default {
         ...mapState('pagebuilder', ['page']),
         ...mapGetters({
             currentJobId: 'wizardExecution/currentJobId', // Expected values include null (no job) or undefined (AP execution).
-            accessToken: 'oauth/accessToken',
             authParameter: 'oauth/authParameter'
         }),
         iframeId() {
@@ -220,8 +219,8 @@ export default {
         injectContent() {
             const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
             
-            let styles = this.computeStyles(resourceBaseUrl, this.accessToken);
-            let scripts = this.computeScripts(resourceBaseUrl, this.accessToken);
+            let styles = this.computeStyles(resourceBaseUrl);
+            let scripts = this.computeScripts(resourceBaseUrl);
 
             // runtime/script injection error handling
             let loadingErrorHandler = `<script>${loadingErrorHandlerSrc
@@ -397,8 +396,8 @@ export default {
                     nodeId: this.nodeId,
                     namespace: this.nodeConfig.namespace,
                     initMethodName: this.nodeConfig.initMethodName,
-                    viewRepresentation: this.nodeConfig.viewRepresentation,
-                    viewValue: this.nodeConfig.viewValue,
+                    viewRepresentation: JSON.stringify(this.nodeConfig.viewRepresentation),
+                    viewValue: JSON.stringify(this.nodeConfig.viewValue),
                     type: 'init'
                 }, this.origin);
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
@@ -557,7 +556,7 @@ export default {
                 nodeId: this.nodeId,
                 type: 'interactivityEvent',
                 id,
-                payload
+                payload: JSON.parse(JSON.stringify(payload)) // copy object to avoid serialization errors
             };
             this.document.defaultView.postMessage(data, this.origin);
         },
