@@ -25,5 +25,6 @@ export default {
     v-bind="$attrs"
     ref="widget"
     type="integer"
+    v-on="$listeners"
   />
 </template>
