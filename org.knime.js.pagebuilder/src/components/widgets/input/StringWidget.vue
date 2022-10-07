@@ -134,11 +134,11 @@ export default {
       v-else
       :id="labelForId"
       ref="form"
-      :value="value"
+      :model-value="value"
       :is-valid="isValid"
       :title="description"
       :pattern="regex"
-      @input="onChange"
+      @update:model-value="onChange"
     />
     <ErrorMessage :error="errorMessage" />
   </Label>
