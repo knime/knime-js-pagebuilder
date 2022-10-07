@@ -149,7 +149,7 @@ export default {
       <InputField
         :id="labelForId"
         ref="usernameForm"
-        :value="value.username"
+        :model-value="value.username"
         :is-valid="isValid"
         :title="description"
         @input="onUsernameChange"
@@ -164,7 +164,7 @@ export default {
         :id="labelForId"
         ref="passwordForm"
         type="password"
-        :value="value.magicDefaultPassword"
+        :model-value="value.magicDefaultPassword"
         :is-valid="isValid"
         :title="description"
         @input="onPasswordChange"
