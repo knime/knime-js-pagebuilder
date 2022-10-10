@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { shallowMount } from '@vue/test-utils';
-import { KnimeService } from 'knime-ui-extension-service';
+import { KnimeService } from '@knime/ui-extension-service';
 import * as loadingModule from '~/src/util/loadComponentLibrary';
 import { componentExtensionConfig } from '../../../assets/views/extensionConfig';
 

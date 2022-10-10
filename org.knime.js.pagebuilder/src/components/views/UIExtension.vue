@@ -1,6 +1,6 @@
 <script>
 import { mapState } from 'vuex';
-import { KnimeService, IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
+import { KnimeService, IFrameKnimeServiceAdapter } from '@knime/ui-extension-service';
 import UIExtComponent from './UIExtComponent.vue';
 import UIExtIFrame from './UIExtIFrame.vue';
 import AlertLocal from '../ui/AlertLocal.vue';

@@ -1,7 +1,7 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
-import { KnimeService } from 'knime-ui-extension-service';
-jest.mock('knime-ui-extension-service');
+import { KnimeService } from '@knime/ui-extension-service';
+jest.mock('@knime/ui-extension-service');
 
 import * as pagebuilderStoreConfig from '~/store/pagebuilder';
 import * as alertStoreConfig from '~/store/alert';
