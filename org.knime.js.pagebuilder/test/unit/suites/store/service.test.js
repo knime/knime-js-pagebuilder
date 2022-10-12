@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
-import { KnimeService } from 'knime-ui-extension-service';
+import { KnimeService } from '@knime/ui-extension-service';
 
 import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
 

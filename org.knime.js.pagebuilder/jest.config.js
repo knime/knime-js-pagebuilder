@@ -16,11 +16,7 @@ module.exports = {
         '\\.(jpg|webp)': '<rootDir>/test/unit/jest-file-loader'
     },
     transformIgnorePatterns: [
-        '/node_modules/'
-    ],
-    modulePathIgnorePatterns: [
-        // Needed for local typescript module (see https://github.com/facebook/jest/issues/9021).
-        '<rootDir>/knime-ui-extension-service/dist'
+        "node_modules/(?!@knime/ui-extension-service)" // not needed anymore when updating Node/jest
     ],
     moduleNameMapper: {
         '\\.(jpg|png)\\?(jpg|webp)': '<rootDir>/test/unit/assets/stub.$2',
@@ -30,8 +26,7 @@ module.exports = {
         '\\.svg\\?data$': '<rootDir>/test/unit/assets/stub.data',
         '^vue$': 'vue/dist/vue.common.js',
         '^@/(.*)$': '<rootDir>/src/$1',
-        '^~/(.*)$': '<rootDir>/$1',
-        'knime-ui-extension-service': '<rootDir>/knime-ui-extension-service'
+        '^~/(.*)$': '<rootDir>/$1'
     },
     reporters: ['default', ['jest-junit', { outputDirectory: './coverage' }]],
     coverageReporters: ['lcov', 'text'],
@@ -46,11 +41,11 @@ module.exports = {
         '!<rootDir>/test/unit/test-util'
     ],
     coveragePathIgnorePatterns: [
-        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common|knime-ui-extension-service)/',
+        '^<rootDir>/(coverage|dist|test|target|node_modules|bin|webapps-common)/',
         '^<rootDir>/src/(dev|main.js|dev.js)'
     ],
     watchPathIgnorePatterns: [
-        '^<rootDir>/(coverage|dist|target|node_modules|bin|webapps-common|knime-ui-extension-service)/'
+        '^<rootDir>/(coverage|dist|target|node_modules|bin|webapps-common)/'
     ],
     testURL: 'http://test.example/',
     testMatch: [

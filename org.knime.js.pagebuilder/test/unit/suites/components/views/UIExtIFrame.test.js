@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import { IFrameKnimeServiceAdapter } from 'knime-ui-extension-service';
+import { IFrameKnimeServiceAdapter } from '@knime/ui-extension-service';
 
 import UIExtIFrame from '@/components/views/UIExtIFrame';
 import { iFrameExtensionConfig } from '../../../assets/views/extensionConfig';
