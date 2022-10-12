@@ -73,7 +73,7 @@ export default {
       v-if="canExecute"
       class="message"
     >
-      Please execute the node to see the preview again.
+      Please execute the node to see the preview.
     </p>
     <p
       v-else
@@ -117,7 +117,8 @@ export default {
   & svg {
     max-height: 200px;
     max-width: 200px;
-    stroke: var(--knime-gray-dark-semi);
+    stroke: var(--knime-silver-sand);
+    margin-bottom: 20px;
   }
 }
 </style>
