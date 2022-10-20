@@ -1,7 +1,7 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import FileDownloadWidget from '@/components/widgets/output/FileDownloadWidget.vue';
-import FileLink from 'webapps-common/ui/components/FileLink';
+import FileLink from 'webapps-common/ui/components/FileLink.vue';
 import Vuex from 'vuex';
 
 const downloadResourceLinkMock = jest.fn();

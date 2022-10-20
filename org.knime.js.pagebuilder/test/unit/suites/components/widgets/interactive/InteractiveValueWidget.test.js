@@ -3,11 +3,11 @@ import Vuex from 'vuex';
 
 import * as interactiveConfig from '~/store/interactivity';
 
-import InteractiveValueWidget from '@/components/widgets/interactive/InteractiveValueWidget';
-import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
-import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
-import Label from 'webapps-common/ui/components/forms/Label';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
+import InteractiveValueWidget from '@/components/widgets/interactive/InteractiveValueWidget.vue';
+import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
+import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
 
 describe('InteractiveValueWidget.vue', () => {
     let propsData, localVue, store, context;

@@ -421,7 +421,7 @@ describe('wrapper API store', () => {
             let expectedRes = { result: { page: { webNodes: { foo: 3 } } } };
             let rpcResponse = Promise.resolve(expectedRes);
             let singleRPC = jest.fn().mockReturnValue(rpcResponse);
-            let setPage = jest.fn().mockReturnValueOnce({ shouldPoll: true})
+            let setPage = jest.fn().mockReturnValueOnce({ shouldPoll: true })
                 .mockReturnValueOnce({ shouldPoll: false });
             let showAlert = jest.fn().mockReturnValue(Promise.resolve({}));
             let store = getMockStore({

@@ -1,9 +1,9 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import PageBuilder from '@/components/PageBuilder';
-import Page from '@/components/layout/Page';
-import AlertGlobal from '@/components/ui/AlertGlobal';
+import PageBuilder from '@/components/PageBuilder.vue';
+import Page from '@/components/layout/Page.vue';
+import AlertGlobal from '@/components/ui/AlertGlobal.vue';
 
 describe('PageBuilder.vue', () => {
     let store, localVue, context, page;

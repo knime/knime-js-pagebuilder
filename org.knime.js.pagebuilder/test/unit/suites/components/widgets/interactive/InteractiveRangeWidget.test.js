@@ -3,8 +3,8 @@ import Vuex from 'vuex';
 
 import * as interactiveConfig from '~/store/interactivity';
 
-import InteractiveRangeWidget from '@/components/widgets/interactive/InteractiveRangeWidget';
-import SliderWidget from '@/components/widgets/input/SliderWidget';
+import InteractiveRangeWidget from '@/components/widgets/interactive/InteractiveRangeWidget.vue';
+import SliderWidget from '@/components/widgets/input/SliderWidget.vue';
 
 describe('InteractiveRangeWidget.vue', () => {
     let propsData, localVue, store, context;

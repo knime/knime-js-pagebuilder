@@ -2,9 +2,9 @@ import Vuex from 'vuex';
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import RefreshButtonWidget from '@/components/widgets/reactive/RefreshButtonWidget.vue';
-import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
-import Label from 'webapps-common/ui/components/forms/Label';
-import Button from 'webapps-common/ui/components/Button';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
 
 import * as storeConfig from '~/store/pagebuilder';
 

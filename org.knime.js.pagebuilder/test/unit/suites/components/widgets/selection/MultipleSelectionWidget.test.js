@@ -1,7 +1,7 @@
 import { mount, shallowMount } from '@vue/test-utils';
 
-import MultipleSelectionWidget from '@/components/widgets/selection/MultipleSelectionWidget';
-import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
+import MultipleSelectionWidget from '@/components/widgets/selection/MultipleSelectionWidget.vue';
+import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
 
 describe('MultipleSelectionWidget.vue', () => {
     let propsDataTwinlist, propsDataCheckboxHorizontal, propsDataCheckboxVertical, propsDataMultiselectListBox;

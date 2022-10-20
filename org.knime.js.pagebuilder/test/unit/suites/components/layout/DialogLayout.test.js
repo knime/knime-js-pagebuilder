@@ -1,9 +1,9 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 
-import DialogLayout from '@/components/layout/DialogLayout';
-import NodeView from '@/components/layout/NodeView';
-import Messages from 'webapps-common/ui/components/Messages';
+import DialogLayout from '@/components/layout/DialogLayout.vue';
+import NodeView from '@/components/layout/NodeView.vue';
+import Messages from 'webapps-common/ui/components/Messages.vue';
 
 import * as storeConfig from '~/store/pagebuilder';
 import * as alertStoreConfig from '~/store/alert';

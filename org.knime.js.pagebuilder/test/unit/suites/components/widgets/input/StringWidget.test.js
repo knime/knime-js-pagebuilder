@@ -2,9 +2,9 @@
 import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
 
-import StringWidget from '@/components/widgets/input/StringWidget';
-import InputField from 'webapps-common/ui/components/forms/InputField';
-import TextArea from 'webapps-common/ui/components/forms/TextArea';
+import StringWidget from '@/components/widgets/input/StringWidget.vue';
+import InputField from 'webapps-common/ui/components/forms/InputField.vue';
+import TextArea from 'webapps-common/ui/components/forms/TextArea.vue';
 
 describe('StringWidget.vue', () => {
     let propsDataInput, propsDateTextArea;

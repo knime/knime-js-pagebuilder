@@ -1,12 +1,12 @@
 import { mount, shallowMount } from '@vue/test-utils';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
 import propsDataColumnLockedListImport from '~/test/unit/assets/propsDataColumnLockedList';
 import propsDataRadioHorizontalImport from '~/test/unit/assets/propsDataRadioHorizontal';
 import propsDataRadioVerticalImport from '~/test/unit/assets/propsDataRadioVertical';
 import propsDataDropdownImport from '~/test/unit/assets/propsDataDropdown';
 import propsDataListImport from '~/test/unit/assets/propsDataList';
 
-import ValueSelectionWidget from '@/components/widgets/selection/ValueSelectionWidget';
+import ValueSelectionWidget from '@/components/widgets/selection/ValueSelectionWidget.vue';
 
 describe('ValueSelectionWidget.vue', () => {
     let propsDataColumnLockedList, propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;

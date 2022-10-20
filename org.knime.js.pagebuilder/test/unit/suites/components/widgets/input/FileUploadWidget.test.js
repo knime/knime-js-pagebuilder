@@ -1,7 +1,7 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import FileUploadWidget from '@/components/widgets/input/FileUploadWidget.vue';
-import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 import Vuex from 'vuex';
 import Vue from 'vue';
 

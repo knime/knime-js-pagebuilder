@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 
-import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 
 describe('ErrorMessage.vue', () => {
     let propsData;

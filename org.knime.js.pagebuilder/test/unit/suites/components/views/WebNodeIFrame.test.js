@@ -1,8 +1,8 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import WebNodeIFrame from '@/components/views/WebNodeIFrame';
-import AlertLocal from '@/components/ui/AlertLocal';
+import WebNodeIFrame from '@/components/views/WebNodeIFrame.vue';
+import AlertLocal from '@/components/ui/AlertLocal.vue';
 
 import * as storeConfig from '@/../store/pagebuilder';
 import * as alertStoreConfig from '@/../store/alert';

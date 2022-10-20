@@ -4,7 +4,7 @@ import { KnimeService } from '@knime/ui-extension-service';
 import * as loadingModule from '~/src/util/loadComponentLibrary';
 import { componentExtensionConfig } from '../../../assets/views/extensionConfig';
 
-import UIExtComponent from '@/components/views/UIExtComponent';
+import UIExtComponent from '@/components/views/UIExtComponent.vue';
 
 describe('UIExtComponent.vue', () => {
     const extensionConfig = componentExtensionConfig;

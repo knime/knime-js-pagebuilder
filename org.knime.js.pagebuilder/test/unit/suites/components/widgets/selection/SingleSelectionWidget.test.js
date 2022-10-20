@@ -1,7 +1,7 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
-import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget';
-import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
+import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget.vue';
+import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect.vue';
 
 describe('SingleSelectionWidget.vue', () => {
     let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;

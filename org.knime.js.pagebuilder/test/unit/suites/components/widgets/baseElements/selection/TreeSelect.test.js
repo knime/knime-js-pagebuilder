@@ -1,8 +1,8 @@
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
-import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect';
-import TreeSelectItem from '@/components/widgets/baseElements/selection/TreeSelectItem';
+import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect.vue';
+import TreeSelectItem from '@/components/widgets/baseElements/selection/TreeSelectItem.vue';
 
 import customIcon from 'webapps-common/ui/assets/img/icons/activity.svg';
 import customSelectedIcon from 'webapps-common/ui/assets/img/icons/cart.svg';

@@ -1,8 +1,8 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
-import PopoverMessage from '~/src/components/ui/PopoverMessage';
-import Label from 'webapps-common/ui/components/forms/Label';
-import Button from 'webapps-common/ui/components/Button';
+import PopoverMessage from '~/src/components/ui/PopoverMessage.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
 
 jest.mock('~/webapps-common/util/copyText');
 

@@ -1,10 +1,10 @@
 /* eslint-disable max-lines */
 import { mount } from '@vue/test-utils';
 
-import DateTimeWidget from '@/components/widgets/input/DateTimeWidget';
-import DateTimeInput from 'webapps-common/ui/components/forms/DateTimeInput';
+import DateTimeWidget from '@/components/widgets/input/DateTimeWidget.vue';
+import DateTimeInput from 'webapps-common/ui/components/forms/DateTimeInput.vue';
 import { format, differenceInCalendarDays } from 'date-fns';
-import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 
 describe('DateTimeWidget.vue', () => {
     let propsDataAll, propsDataNoTimeZone, propsDataNoNowButton,

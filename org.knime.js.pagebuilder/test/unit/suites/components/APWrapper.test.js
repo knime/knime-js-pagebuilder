@@ -2,10 +2,10 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import APWrapper from '@/components/APWrapper';
-import PageBuilder from '@/components/PageBuilder';
-import DebugButton from '@/components/ui/DebugButton';
-import RefreshButton from '@/components/ui/RefreshButton';
+import APWrapper from '@/components/APWrapper.vue';
+import PageBuilder from '@/components/PageBuilder.vue';
+import DebugButton from '@/components/ui/DebugButton.vue';
+import RefreshButton from '@/components/ui/RefreshButton.vue';
 
 import * as storeConfig from '~/store/pagebuilder';
 

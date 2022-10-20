@@ -2,8 +2,8 @@ import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Vue from 'vue';
 
-import FileChooserWidget from '@/components/widgets/selection/FileChooserWidget';
-import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect';
+import FileChooserWidget from '@/components/widgets/selection/FileChooserWidget.vue';
+import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect.vue';
 
 
 const propsDataTemplate = {

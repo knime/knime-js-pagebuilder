@@ -5,9 +5,9 @@ import * as serviceStoreConfig from '~/store/service';
 import * as apiStoreConfig from '~/store/wrapperApi';
 import * as alertStoreConfig from '~/store/alert';
 
-import ViewExecutable from '@/components/views/ViewExecutable';
-import ExecutingOverlay from '@/components/ui/ExecutingOverlay';
-import Button from 'webapps-common/ui/components/Button';
+import ViewExecutable from '@/components/views/ViewExecutable.vue';
+import ExecutingOverlay from '@/components/ui/ExecutingOverlay.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
 
 import { componentExtensionConfig } from '../../../assets/views/extensionConfig';
 

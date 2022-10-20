@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 
-import ValueFilterSelectionWidget from '@/components/widgets/selection/ValueFilterSelectionWidget';
-import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
+import ValueFilterSelectionWidget from '@/components/widgets/selection/ValueFilterSelectionWidget.vue';
+import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
 
 describe('ValueFilterSelectionWidget.vue', () => {
     let propsData, propsDataColumnLocked;

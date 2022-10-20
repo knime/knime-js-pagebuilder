@@ -1,8 +1,8 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import Column from '@/components/layout/Column';
-import NodeView from '@/components/layout/NodeView';
+import Column from '@/components/layout/Column.vue';
+import NodeView from '@/components/layout/NodeView.vue';
 
 import * as storeConfig from '~/store/pagebuilder';
 // this is required because the Row component is imported asynchronously in Column, cf.

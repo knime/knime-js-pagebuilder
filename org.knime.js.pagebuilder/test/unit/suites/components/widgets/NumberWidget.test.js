@@ -1,7 +1,7 @@
 import { shallowMount, mount } from '@vue/test-utils';
 
-import NumberWidget from '@/components/widgets/NumberWidget';
-import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
+import NumberWidget from '@/components/widgets/NumberWidget.vue';
+import NumberInput from 'webapps-common/ui/components/forms/NumberInput.vue';
 
 describe('NumberWidget.vue', () => {
     let propsData;

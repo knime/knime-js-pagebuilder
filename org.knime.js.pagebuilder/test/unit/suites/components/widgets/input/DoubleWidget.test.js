@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 
-import DoubleWidget from '@/components/widgets/input/DoubleWidget';
+import DoubleWidget from '@/components/widgets/input/DoubleWidget.vue';
 
 describe('DoubleWidget.vue', () => {
     let mountOptions;

@@ -1,8 +1,8 @@
 import { shallowMount } from '@vue/test-utils';
 
-import WebNode from '@/components/views/WebNode';
-import WebNodeIFrame from '@/components/views/WebNodeIFrame';
-import Widget from '@/components/widgets/Widget';
+import WebNode from '@/components/views/WebNode.vue';
+import WebNodeIFrame from '@/components/views/WebNodeIFrame.vue';
+import Widget from '@/components/widgets/Widget.vue';
 
 describe('WebNode.vue', () => {
     const getMockIFrameProps = () => {

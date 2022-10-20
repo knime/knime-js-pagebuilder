@@ -2,7 +2,7 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import Widget from '@/components/widgets/Widget';
+import Widget from '@/components/widgets/Widget.vue';
 import { getProp, setProp } from '@/util/nestedProperty';
 
 import * as storeConfig from '~/store/pagebuilder';

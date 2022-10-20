@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils';
 
-import Row from '@/components/layout/Row';
-import Column from '@/components/layout/Column';
+import Row from '@/components/layout/Row.vue';
+import Column from '@/components/layout/Column.vue';
 
 describe('Row.vue', () => {
     it('renders without classes and styles', () => {

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 
-import Slider from '@/components/widgets/baseElements/input/Slider';
+import Slider from '@/components/widgets/baseElements/input/Slider.vue';
 import VueSlider from 'vue-slider-component';
 
 describe('Slider.vue', () => {

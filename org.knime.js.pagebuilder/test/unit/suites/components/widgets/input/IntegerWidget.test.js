@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 
-import IntegerWidget from '@/components/widgets/input/IntegerWidget';
+import IntegerWidget from '@/components/widgets/input/IntegerWidget.vue';
 
 describe('IntegerWidget.vue', () => {
     let mountOptions;

@@ -1,8 +1,8 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import Layout from '@/components/layout/Layout';
-import Row from '@/components/layout/Row';
+import Layout from '@/components/layout/Layout.vue';
+import Row from '@/components/layout/Row.vue';
 
 import * as storeConfig from '~/store/pagebuilder';
 

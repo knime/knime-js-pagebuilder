@@ -1,12 +1,12 @@
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
-import NodeView from '@/components/layout/NodeView';
-import WebNode from '@/components/views/WebNode';
-import UIExtension from '@/components/views/UIExtension';
-import NotDisplayable from '@/components/views/NotDisplayable';
-import ViewExecutable from '@/components/views/ViewExecutable';
-import ExecutingOverlay from '@/components/ui/ExecutingOverlay';
+import NodeView from '@/components/layout/NodeView.vue';
+import WebNode from '@/components/views/WebNode.vue';
+import UIExtension from '@/components/views/UIExtension.vue';
+import NotDisplayable from '@/components/views/NotDisplayable.vue';
+import ViewExecutable from '@/components/views/ViewExecutable.vue';
+import ExecutingOverlay from '@/components/ui/ExecutingOverlay.vue';
 
 import * as pagebuilderConfig from '~/store/pagebuilder';
 import * as dialogConfig from '~/store/dialog';

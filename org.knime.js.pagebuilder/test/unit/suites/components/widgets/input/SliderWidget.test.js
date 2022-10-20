@@ -2,9 +2,9 @@
 import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
 
-import SliderWidget from '@/components/widgets/input/SliderWidget';
-import Slider from '@/components/widgets/baseElements/input/Slider';
-import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
+import SliderWidget from '@/components/widgets/input/SliderWidget.vue';
+import Slider from '@/components/widgets/baseElements/input/Slider.vue';
+import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 
 describe('SliderWidget.vue', () => {
     let context, nodeConfig, nodeId, isValid, wrapper;

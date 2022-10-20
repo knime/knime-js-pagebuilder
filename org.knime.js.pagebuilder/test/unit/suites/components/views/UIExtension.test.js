@@ -8,11 +8,11 @@ import * as alertStoreConfig from '~/store/alert';
 import * as serviceStoreConfig from '~/store/service';
 import * as apiStoreConfig from '~/store/wrapperApi';
 
-import UIExtension from '@/components/views/UIExtension';
-import UIExtComponent from '@/components/views/UIExtComponent';
-import UIExtIFrame from '@/components/views/UIExtIFrame';
-import AlertLocal from '@/components/ui/AlertLocal';
-import WarningLocal from '@/components/ui/WarningLocal';
+import UIExtension from '@/components/views/UIExtension.vue';
+import UIExtComponent from '@/components/views/UIExtComponent.vue';
+import UIExtIFrame from '@/components/views/UIExtIFrame.vue';
+import AlertLocal from '@/components/ui/AlertLocal.vue';
+import WarningLocal from '@/components/ui/WarningLocal.vue';
 
 import { iFrameExtensionConfig, componentExtensionConfig } from '../../../assets/views/extensionConfig';
 

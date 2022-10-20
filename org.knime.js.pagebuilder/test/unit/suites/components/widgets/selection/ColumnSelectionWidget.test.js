@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils';
 
-import ColumnSelectionWidget from '@/components/widgets/selection/ColumnSelectionWidget';
-import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
-import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget';
+import ColumnSelectionWidget from '@/components/widgets/selection/ColumnSelectionWidget.vue';
+import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect.vue';
+import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget.vue';
 
 describe('ColumnSelectionWidget.vue', () => {
     let propsDataColumnSelectionList;
