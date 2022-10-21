@@ -18,7 +18,7 @@ if (typeof KnimePageLoader === 'undefined') {
      * - getContextRoot: used for old widget registration
      * - reset: tear-down handled globally
      * - getPublishedElement: handled by pagebuilder/interactivity store
-     * - getPublishedData: handled by pagebuilder/interactivity store
+     * - getPublishedData: handled by pagebuilder/interactivity stoxwre
      * - autoResize: **"stubbed" not removed; handled by NodeViewIFrame*
      *
      * Added in 4.4:

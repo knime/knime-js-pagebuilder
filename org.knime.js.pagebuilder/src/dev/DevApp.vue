@@ -12,33 +12,33 @@ export default {
     },
     computed: {
         pageMocks() {
-            const mocks = require.context('../../mocks', false, /.json$/); // eslint-disable-line no-undef
-            return mocks.keys().sort().map(x => ({
-                name: x.replace('./', ''),
-                src: mocks(x)
+            const mocks = import.meta.glob('@@/mocks/*.json', { eager: true });
+            return Object.keys(mocks).sort().map(file => ({
+                name: file.replace('/mocks/', ''),
+                src: mocks[file]
             }));
         }
     },
     watch: {
-        currentPageIndex(newIdx) {
-            localStorage.setItem('pageIdx', newIdx);
+        currentPageIndex(newIndex) {
+            localStorage.setItem('pageIndex', newIndex);
         }
     },
     created() {
         let store = this.$store;
         PageBuilder.initStore(store);
         // load default page mock
-        if (localStorage && localStorage.pageIdx) {
-            this.currentPageIndex = Number(localStorage.getItem('pageIdx'));
+        if (localStorage && localStorage.pageIndex) {
+            this.currentPageIndex = Number(localStorage.getItem('pageIndex'));
         }
         let pageMock = this.pageMocks[this.currentPageIndex];
         this.$store.dispatch('pagebuilder/setPage', { page: pageMock ? pageMock.src : null });
     },
     methods: {
         onPageSelect(e) {
-            let pageIdx = e.target.selectedOptions[0].index - 1;
-            this.currentPageIndex = pageIdx;
-            let pageMock = this.pageMocks[pageIdx];
+            let pageIndex = e.target.selectedOptions[0].index - 1;
+            this.currentPageIndex = pageIndex;
+            let pageMock = this.pageMocks[pageIndex];
             this.$store.dispatch('pagebuilder/setPage', { page: pageMock ? pageMock.src : null });
         },
         async onValidate() {
@@ -63,28 +63,18 @@ export default {
 
 <template>
   <div>
-    <h1>PageBuilder Dev App</h1>
+    <h1>KNIME PageBuilder Dev App</h1>
     <p>
-      This webportal app simulator can be run with <code>npm run dev</code> and features hot reloading when any source
-      file changes.
-    </p>
-    <p>
-      Use <code>npm run dev:integration</code> to integrate with the dev mode of the <code>knime-webportal</code>
-      project.
-    </p>
-    <p>
-      See the README file for details.
+      This app provides a standalone development environment with hot reloading using mocked pages.
+      See the README file for ways to integrate a development version into KNIME Analytics Platform.
     </p>
     <p>
       Page mock:
-      <select
-        @change="onPageSelect"
-      >
-        <option :value="null">-</option>
+      <select @change="onPageSelect">
+        <option>-</option>
         <option
           v-for="(page, index) in pageMocks"
           :key="page.name"
-          :value="page.src"
           :selected="index === currentPageIndex"
         >
           {{ page.name }}
