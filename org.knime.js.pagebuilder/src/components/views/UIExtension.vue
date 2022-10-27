@@ -1,12 +1,11 @@
 <script>
+import { markRaw, toRaw } from 'vue';
 import { mapState } from 'vuex';
 import { KnimeService, IFrameKnimeServiceAdapter } from '@knime/ui-extension-service';
 import UIExtComponent from './UIExtComponent.vue';
 import UIExtIFrame from './UIExtIFrame.vue';
 import AlertLocal from '../ui/AlertLocal.vue';
 import WarningLocal from '../ui/WarningLocal.vue';
-
-import muteReactivity from '../../util/muteReactivity';
 
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-
@@ -26,7 +25,6 @@ export default {
     provide() {
         this.initKnimeService();
         const getKnimeService = () => this.knimeService;
-        getKnimeService.bind(this);
         return { getKnimeService };
     },
     props: {
@@ -69,6 +67,7 @@ export default {
     watch: {
         extensionConfig() {
             this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
+            
             this.initKnimeService();
             this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrames and UIExtComponents
         }
@@ -88,14 +87,17 @@ export default {
     methods: {
         initKnimeService() {
             const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
-            let knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
-            muteReactivity({ target: knimeService, nonReactiveKeys: ['iFrameWindow'] });
-            this.knimeService = knimeService;
+            let knimeService = new ServiceConstructor(
+                toRaw(this.extensionConfig),
+                this.callService,
+                this.pushNotification
+            );
+            this.knimeService = markRaw(knimeService);
             this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
         },
         callService(nodeService, serviceRequest, requestParams) {
             return this.$store.dispatch('api/callService', {
-                extensionConfig: this.extensionConfig,
+                extensionConfig: toRaw(this.extensionConfig),
                 nodeService,
                 serviceRequest,
                 requestParams
