@@ -1,16 +1,31 @@
 /* eslint-disable no-undef, arrow-body-style */
 // Standalone build for the KNIME AP Integration
 
-import Vue from 'vue';
-import Vuex from 'vuex';
+import * as Vue from 'vue';
+import { createStore } from 'vuex';
 import consola from 'consola';
 import APWrapper from './components/APWrapper.vue';
 import * as wrapperApiStore from './store/wrapperApi';
 
-const DIV_TARGET = 'knime-pagebuilder';
 const CONST_DEBUG_LOG_LEVEL = 4;
 const SINGLE_NODE_ID = 'SINGLE';
 const SINGLE_VIEW_FRAME_ID = `node-${SINGLE_NODE_ID}`;
+
+window.consola = consola.create({
+    level: import.meta.env.KNIME_LOG_TO_CONSOLE === 'true' ? import.meta.env.KNIME_LOG_LEVEL : -1
+});
+
+// needed for async loaded Vue components (see UIExtComponent.vue)
+window.Vue = Vue;
+
+let app = Vue.createApp(APWrapper);
+let store = createStore({
+    modules: {
+        api: wrapperApiStore
+    }
+});
+app.use(store);
+app.mount('#app');
 
 if (typeof KnimePageLoader === 'undefined') {
     /**
@@ -25,37 +40,9 @@ if (typeof KnimePageLoader === 'undefined') {
      * - wrapper API store
      */
     window.KnimePageLoader = (function () {
-        // PageBuilder Library loading
-        let loadPageBuilderLibrary = async () => {
-            // initialize VueX
-            Vue.config.productionTip = false;
-            Vue.use(Vuex);
-            window.Vue = Vue;
-            // Load and mount PageBuilder component library
-            await new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                let url = 'org/knime/core/knime-pagebuilder2.js';
-                script.async = true;
-                script.addEventListener('load', () => {
-                    resolve(script);
-                });
-                script.addEventListener('error', () => {
-                    reject(new Error(`Script loading of "${url}" failed`));
-                    document.head.removeChild(script);
-                });
-                script.src = url;
-                document.head.appendChild(script);
-            });
-            let Component = window['knime-pagebuilder'];
-            if (!Component) {
-                throw new Error(`PageBuilder component loading failed. Script invalid.`);
-            }
-            delete window['knime-pagebuilder'];
-            return Component;
-        };
         // main application mapping
         let pageBuilder = {
-            app: null,
+            app,
             el: null,
             isSingleView: false,
             viewRequests: [],
@@ -63,12 +50,11 @@ if (typeof KnimePageLoader === 'undefined') {
             isDebugHTML: false
         };
         // application entry
-        pageBuilder.init = async (arg1, arg2, arg3, debug) => {
+        pageBuilder.init = (arg1, arg2, arg3, debug) => {
             // set the global consola object to allow debugging and successful headless image generation
             let logLevel = debug && !window.headless ? CONST_DEBUG_LOG_LEVEL : -1;
-            window.consola = consola.create({
-                level: logLevel
-            });
+            window.consola.level = logLevel; // TODO verify if changing the log level works
+
             // parse page
             let page = {
                 wizardPageContent: typeof arg1 === 'string' ? JSON.parse(arg1) : arg1,
@@ -80,33 +66,15 @@ if (typeof KnimePageLoader === 'undefined') {
             pageBuilder.isDebugHTML = typeof debugHTML !== 'undefined';
             pageBuilder.isSingleView = page.wizardPageContent.isSingleView;
             pageBuilder.pageId = page.pageNodeID;
-            // create element
-            pageBuilder.el = document.createElement('div');
-            pageBuilder.el.setAttribute('id', DIV_TARGET);
-            document.body.appendChild(pageBuilder.el);
-            // Load PageBuilder component library
-            let Component = await loadPageBuilderLibrary();
-            // initialize Vue
-            pageBuilder.app = new Vue({
-                created() {
-                    // initialize the PageBuilder store as namespaced modules
-                    Component.initStore(this.$store);
-                    Vue.component('PageBuilder', Component);
-                    this.$store.dispatch('pagebuilder/setResourceBaseUrl', { resourceBaseUrl: './' });
-                    this.$store.dispatch('pagebuilder/setPage', { page });
-                    this.$mount(`#${DIV_TARGET}`);
-                },
-                render: h => h(APWrapper),
-                store: new Vuex.Store({
-                    modules: {
-                        api: wrapperApiStore
-                    }
-                })
-            });
+
+            // set page
+            store.dispatch('pagebuilder/setResourceBaseUrl', { resourceBaseUrl: './' });
+            store.dispatch('pagebuilder/setPage', { page });
+
             window.isPushSupported = () => true;
         };
 
-        // KAP Public API methods called by selenium-knime-bridge or SWT browser
+        // KAP Public API methods called by CEF browser (TODO and selenium-knime-bridge or SWT?)
         pageBuilder.getPageValues = () => {
             return pageBuilder.app.$store.dispatch('pagebuilder/getViewValues', null)
                 .then(values => {
@@ -162,6 +130,7 @@ if (typeof KnimePageLoader === 'undefined') {
         };
 
         // environment detection methods
+        // TODO cleanup: what is needed, what not?
         pageBuilder.isPushSupported = () => !pageBuilder.isDebugHTML; // window.isDebugHTML set in debug HTML creation only
 
         pageBuilder.isRunningInWebportal = () => false; // wrapper is only in AP

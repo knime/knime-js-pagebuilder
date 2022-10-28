@@ -63,7 +63,7 @@ export default {
 
 <template>
   <div>
-    <h1>KNIME PageBuilder Dev App</h1>
+    <h1>KNIME PageBuilder Dev App with mocks</h1>
     <p>
       This app provides a standalone development environment with hot reloading using mocked pages.
       See the README file for ways to integrate a development version into KNIME Analytics Platform.
@@ -91,7 +91,7 @@ export default {
 </template>
 
 <style lang="postcss">
-@import "webapps-common/ui/css";
+@import url("webapps-common/ui/css");
 
 body {
   margin: 10px;

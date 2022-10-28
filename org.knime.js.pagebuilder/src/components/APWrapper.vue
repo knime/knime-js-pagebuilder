@@ -1,43 +1,43 @@
 <script>
-import Vue from 'vue';
 import { mapState } from 'vuex';
+import PageBuilder from './PageBuilder.vue';
 import DebugButton from './ui/DebugButton.vue';
 import RefreshButton from './ui/RefreshButton.vue';
 
 export default {
     components: {
-        // PageBuilder,
+        PageBuilder,
         RefreshButton,
         DebugButton
     },
+    data() {
+        return {
+            debugInfo: null
+        };
+    },
     computed: {
         ...mapState('pagebuilder', ['isDialogLayout']),
-        /* Checks if pageBuilderLoader middleware was successful */
-        pageBuilderLoaded() {
-            return Boolean(Vue.component('PageBuilder'));
-        },
-        debugInfo() {
-            let debugInfo = null;
-            if (window.getDebugInfo) {
-                try {
-                    debugInfo = JSON.parse(window.getDebugInfo());
-                } catch (err) {
-                    // eslint-disable-next-line no-console
-                    console.debug('Debug information present but unable to load.');
-                }
-            }
-            return debugInfo;
-        },
         debugPort() {
             return this.debugInfo?.remoteDebuggingPort;
         }
+    },
+    created() {
+        if (window.getDebugInfo) {
+            try {
+                this.debugInfo = JSON.parse(window.getDebugInfo());
+            } catch (err) {
+                consola.debug('Debug information present but unable to load.');
+            }
+        }
+
+        PageBuilder.initStore(this.$store);
     }
 };
 </script>
 
 <template>
   <div>
-    <PageBuilder v-if="pageBuilderLoaded" />
+    <PageBuilder />
     <template v-if="debugPort">
       <DebugButton :debug-port="debugPort" />
       <RefreshButton v-if="debugInfo.refreshRequired" />
@@ -46,7 +46,10 @@ export default {
 </template>
 
 <style lang="postcss">
-@import "webapps-common/ui/css";
+@import url('modern-normalize/modern-normalize.css');
+@import url("webapps-common/ui/css/variables");
+@import url("webapps-common/ui/css/basics");
+@import url("webapps-common/ui/css/fonts");
 
 body {
   padding: 0 15px; /* simulate reduced WebPortal margins */

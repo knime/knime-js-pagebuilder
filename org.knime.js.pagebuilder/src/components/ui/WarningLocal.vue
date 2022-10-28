@@ -12,10 +12,10 @@ export default {
 
 <template>
   <FunctionButton
+    v-bind="$attrs"
     primary
     class="button"
     title="Show messages"
-    v-on="$listeners"
   >
     <WarningIcon />
   </FunctionButton>

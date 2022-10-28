@@ -1,15 +1,16 @@
-# ![Image](https://www.knime.com/files/knime_logo_github_40x40_4layers.png) PageBuilder for KNIME Analytics Platform & KNIME WebPortal
+# ![Image](https://www.knime.com/files/knime_logo_github_40x40_4layers.png) PageBuilder for KNIME Analytics Platform & KNIME Data Apps
 
 This repository contains the frontend components of the PageBuilder based on the [Vue] JavaScript framework and is used for layouting and rendering KNIME's JavaScript-based visualizations.
-It is built as an [Vue library] and used in KNIME Analytics Platform and KNIME WebPortal.
+
+It has two build outputs:
+- regular Vue app which is used in KNIME Analytics Platform
+- [Vue library] which is used in KNIME Analytics Platform Modern UI and KNIME Data Apps running in Hub Execution Webapp
 
 ## Development
 
 ### Prerequisites
 
 * Install [Node.js][node], see version in [package.json](package.json).
-
-Newer versions may also work, but have not been tested.
 
 Pull the contained [git submodules](https://stackoverflow.com/a/4438292/5134084) with
 ```sh
@@ -19,35 +20,36 @@ git submodule update --init
 ### Install dependencies
 
 ```sh
-npm install
+npm i
 ```
 
-and then use the following commands. For detailed explanations see [Vue CLI docs]:
+and then use the following commands.
 
 
-### Launch development server with demo app and mocks
-Compiles all JavaScript sources, assets, … and starts a local web server with a demo app for development.
-Includes hot-reloading, so code changes will be visible in the browser immediately.
+### Launch development server
 
 ```sh
 npm run dev
 ```
-### Development integration with KNIME Analytics Platform
 
-When developing PageBuilder for Analytics Platform run the following command
+#### Development with mocked pages
 
-```sh
-npm run dev:ap
-```
+Browse to the dev server URL provided by the command above to get a standalone development environment with mocked pages (see [/mocks](/mocks) directory).
 
-and follow these steps:
+
+#### Development integration with KNIME Analytics Platform (classic UI)
+
 1. add the Java project of this repository to Eclipse
-2. start Analytics Platform from Eclipse in debug mode
-3. now open a single or composite node view
+2. add following to the run configuration in Eclipse
+```
+TODO
+-Dorg.knime.ui.dev.pagebuilder.url=http://localhost:5173/apWrapper.html
+-Dchromium.remote_debugging_port=8888
+```
+4. start Analytics Platform from Eclipse
+5. now open a single or composite node view
 
-Please note that currently there is no hot code reloading available, you need to close the view window and reopen it to
-see your changes.
-
+<!---
 ### Development integration with KNIME WebPortal
 
 When developing the [WebPortal], a web server with the built version of the library is required. This project provides
@@ -59,6 +61,7 @@ npm run dev:webportal
 
 This does not create an app on its own, only the library for usage in [WebPortal] dev mode. It starts a web server,
 and re-builds the library on source file change. The web portal page then needs to be manually refreshed.
+-->
 
 ### Testing
 
@@ -85,26 +88,17 @@ The output can be found in the `coverage` folder. It contains a browseable html 
 
 ### Running security audit
 
-npm provides a check against known security issues of used dependencies. Run it by calling
 ```sh
-npm audit
+npm run audit
 ```
-
-### Logging
-
-You can log using the global `consola` variable (which the embedding application needs to provide).
-
-See https://github.com/nuxt/consola for details.
 
 ## Building
 
-To build the PageBuilder as [Vue library], use the following command:
+The following command builds two outputs, the Vue app and also [Vue library] which both are saved to `/dist`.
 
 ```sh
 npm run build
 ```
-
-Results are saved to `/dist`.
 
 This project can also be built via a maven build wrapper
 
@@ -117,8 +111,7 @@ mvn clean install
 The PageBuilder can be used in Vue/Nuxt apps like a regular Vue component.
 In the KNIME WebPortal the built version is loaded during runtime via HTTP.
  
-Integrating the source as a Git submodule and building it with the embedding app should also work, but was not tested
-yet.
+Integrating the source as a Git submodule and building it with the embedding app also works.
 
 ### Requirements
 
@@ -258,11 +251,7 @@ let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
 
 [Vue]: https://vuejs.org/
 [node]: https://knime-com.atlassian.net/wiki/spaces/SPECS/pages/905281540/Node.js+Installation
-[Java]: https://www.oracle.com/technetwork/java/javase/downloads/index.html
-[Vue CLI docs]: https://cli.vuejs.org/guide/
-[Vue library]: https://cli.vuejs.org/guide/build-targets.html#library
-[Nightwatch.js]: http://nightwatchjs.org/
+[Vue library]: https://vitejs.dev/guide/build.html#library-mode
 [jest]: https://jestjs.io/en
 [LCOV]: https://github.com/linux-test-project/lcov
 [Clover]: http://openclover.org/
-[WebPortal]: https://bitbucket.org/KNIME/knime-webportal

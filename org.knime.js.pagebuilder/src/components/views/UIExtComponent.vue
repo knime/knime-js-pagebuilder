@@ -1,5 +1,5 @@
 <script>
-import { loadComponentLibrary } from '../../util/loadComponentLibrary';
+import { loadAsyncComponent } from '../../util/loadComponentLibrary';
 
 const DEFAULT_DIALOG_NAMESPACE_ID = 'DefaultNodeDialog';
 
@@ -14,11 +14,6 @@ export default {
             type: String,
             required: true
         }
-    },
-    data() {
-        return {
-            componentLoaded: false
-        };
     },
     computed: {
         knimeService() {
@@ -44,21 +39,15 @@ export default {
             return this.resourceInfo?.id;
         }
     },
-    async created() {
-        // check if component library needs to be loaded or if it was already loaded before
-        if (!window[this.componentId]) {
-            await loadComponentLibrary(window, this.resourceLocation, this.componentId);
-        }
-        // register the component locally
-        this.$options.components[this.componentId] = window[this.componentId];
-        this.componentLoaded = true;
+    created() {
+        this.$options.components[this.componentId] = loadAsyncComponent({
+            resourceLocation: this.resourceLocation,
+            componentName: this.componentId
+        });
     }
 };
 </script>
 
 <template>
-  <component
-    :is="componentId"
-    v-if="componentLoaded"
-  />
+  <component :is="componentId" />
 </template>
