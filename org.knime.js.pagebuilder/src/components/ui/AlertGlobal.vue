@@ -73,7 +73,7 @@ export default {
     class="container"
     :active="Boolean(alert)"
     :level="'global'"
-    @clickAway="onClose(!isError)"
+    @click-away="onClose(!isError)"
   >
     <template #popoverContent>
       <PopoverMessage
@@ -81,7 +81,7 @@ export default {
         :title="title"
         :subtitle="subtitle"
         :message-body="messageText"
-        @closeAlert="remove => onClose(remove)"
+        @close-alert="remove => onClose(remove)"
       >
         <template #messageBodyHeader>
           <span v-if="isError">

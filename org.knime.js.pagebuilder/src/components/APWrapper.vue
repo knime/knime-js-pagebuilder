@@ -46,7 +46,7 @@ export default {
 </template>
 
 <style lang="postcss">
-@import url('modern-normalize/modern-normalize.css');
+@import url("modern-normalize/modern-normalize.css");
 @import url("webapps-common/ui/css/variables");
 @import url("webapps-common/ui/css/basics");
 @import url("webapps-common/ui/css/fonts");

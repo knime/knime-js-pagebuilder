@@ -59,6 +59,7 @@ export default {
             default: ''
         }
     },
+    emits: ['closeAlert'],
     data() {
         return {
             messageExpanded: false

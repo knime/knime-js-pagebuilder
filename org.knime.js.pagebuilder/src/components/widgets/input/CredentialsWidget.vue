@@ -42,6 +42,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     data() {
         return {
             serverCredentialsFetchError: false,
@@ -152,7 +153,7 @@ export default {
         :model-value="value.username"
         :is-valid="isValid"
         :title="description"
-        @input="onUsernameChange"
+        @update:model-value="onUsernameChange"
       />
     </Label>
     <Label
@@ -167,7 +168,7 @@ export default {
         :model-value="value.magicDefaultPassword"
         :is-valid="isValid"
         :title="description"
-        @input="onPasswordChange"
+        @update:model-value="onPasswordChange"
       />
     </Label>
     <ErrorMessage

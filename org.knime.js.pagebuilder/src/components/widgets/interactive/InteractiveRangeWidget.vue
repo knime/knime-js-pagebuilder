@@ -39,6 +39,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewValue() {
             return this.nodeConfig.viewValue;
@@ -133,6 +134,6 @@ export default {
     v-bind="$props"
     :value-pair="value"
     :invert-process="invertProcess"
-    @updateWidget="onChange"
+    @update-widget="onChange"
   />
 </template>

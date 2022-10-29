@@ -415,7 +415,7 @@ export default {
         },
 
         validate() {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 this.validateCallback = ({ isValid }) => {
                     if (!isValid) {
                         this.setLocalError('View validation failed.');
@@ -599,7 +599,7 @@ export default {
     />
     <AlertLocal
       :active="displayAlert"
-      @showAlert="showAlert"
+      @show-alert="showAlert"
     />
   </div>
 </template>

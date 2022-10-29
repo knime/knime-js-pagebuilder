@@ -37,7 +37,8 @@ export default defineConfig(({ mode }) => {
     const config:UserConfig = {
         base: './',
         plugins: [
-            vue({
+            vue(
+                /* {
                 template: {
                     compilerOptions: {
                         compatConfig: {
@@ -45,12 +46,13 @@ export default defineConfig(({ mode }) => {
                         }
                     }
                 }
-            }),
+                } */
+            ),
             svgLoader()
         ],
         resolve: {
             alias: {
-                vue: '@vue/compat',
+                // vue: '@vue/compat',
                 '@': fileURLToPath(new URL('./src', import.meta.url)),
                 '@@': fileURLToPath(new URL('.', import.meta.url))
             }

@@ -54,6 +54,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     data() {
         return {
             repositoryAPI: null,

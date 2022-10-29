@@ -50,6 +50,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     data() {
         return {
             // tz database timezones (e.g. Europe/Berlin)
@@ -217,7 +218,7 @@ export default {
     <DateTimeInput
       :id="labelForId"
       ref="dateInput"
-      :value="dateObject"
+      :model-value="dateObject"
       :required="viewRep.required"
       :min="minDate"
       :max="maxDate"
@@ -227,17 +228,17 @@ export default {
       :show-milliseconds="showMilliseconds"
       :is-valid="isValid"
       :timezone="showZone ? timezone : localTimeZone"
-      @input="onDateChange"
+      @update:model-value="onDateChange"
     />
     <div class="zone-wrapper">
       <Dropdown
         v-if="showZone"
         ref="timezone"
         aria-label="Timezone"
-        :value="timezone"
+        :model-value="timezone"
         class="timezone"
         :possible-values="possibleTimeZones"
-        @input="onTimezoneChange"
+        @update:model-value="onTimezoneChange"
       />
       <Button
         v-if="showNowButton"

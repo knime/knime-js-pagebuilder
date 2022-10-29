@@ -57,6 +57,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     data() {
         return {
             uploadAPI: null,
@@ -239,7 +240,7 @@ export default {
         ref="input"
         type="file"
         :accept="fileTypes.join(',')"
-        @input="onChange"
+        @update:model-value="onChange"
       >
       <div
         :class="['progress-bar-wrapper', {'show-bar': uploading}]"

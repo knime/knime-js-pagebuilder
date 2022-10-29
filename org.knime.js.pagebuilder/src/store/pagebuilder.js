@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import { setProp } from '../util/nestedProperty';
 import overrideRequired from '../util/overrideRequired';
 import getLayoutNodeIds from '../util/getLayoutNodeIds';
@@ -80,7 +79,7 @@ export const mutations = {
      * @param {Object.<UpdateValuePath, Object>} [param.update] - the optional update to apply to the page state.
      *      The property referenced by the provided {@type UpdateValuePath} will be set to the provided value
      *      {@type Object}. If no update is provided, the event is considered reactive and the existing configuration
-     *      will used to force a Vuex reactive update(via {@method Vue.set}).
+     *      will used to force a Vuex reactive update.
      * @param {String} param.viewType - 'webNodes' for wizardNodeViews (default) or 'nodeViews' for ui-extensions.
      * @return {undefined}
      */
@@ -99,10 +98,10 @@ export const mutations = {
             }
             return;
         }
-        // Otherwise, replace webNodes entirely (reactivity).
+        // Otherwise, replace webNodes entirely
         consola.debug('pagebuilder/updateWebNode replacing web node content.');
         // TODO WEBP-327 Remove `overrideRequired` if dialog option added.
-        Vue.set(state.page.wizardPageContent[viewType], nodeId, overrideRequired(config));
+        state.page.wizardPageContent[viewType].nodeId = overrideRequired(config);
     },
 
     setWebNodeLoading(state, { nodeId, loading }) {

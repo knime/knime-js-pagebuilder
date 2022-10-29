@@ -2,7 +2,7 @@
 import { mapActions } from 'vuex';
 
 /**
- * seems to run fine
+ * TODO seems to run fine
  */
 
 
@@ -252,7 +252,7 @@ export default {
             });
         },
         validate() {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 let isValid = true;
                 let errorMessage = null;
                 try {
@@ -268,7 +268,7 @@ export default {
             });
         },
         setValidationError(errMsg) {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 this.serverValidationErrorMessage = errMsg;
                 this.isValid = false;
                 resolve();
@@ -291,7 +291,7 @@ export default {
       :is-valid="isValid"
       :value-pair="valuePair"
       :error-message="serverValidationErrorMessage || errorMessage"
-      @updateWidget="publishUpdate"
+      @update-widget="publishUpdate"
     />
   </div>
 </template>

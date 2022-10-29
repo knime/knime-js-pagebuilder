@@ -53,6 +53,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -146,11 +147,11 @@ export default {
         <Dropdown
           :id="columnLabel.labelForId"
           ref="column"
-          :value="column"
+          :model-value="column"
           :is-valid="isColumnValid"
           aria-label="Column"
           :possible-values="possibleColumns"
-          @input="onColumnChange"
+          @update:model-value="onColumnChange"
         />
       </Label>
       <Label
@@ -161,7 +162,7 @@ export default {
       <SingleSelect
         :id="mainLabel.labelForId"
         ref="form"
-        :value="value"
+        :model-value="value"
         :type="viewRep.type"
         :number-vis-options="viewRep.numberVisOptions"
         :limit-number-vis-options="viewRep.limitNumberVisOptions"
@@ -169,7 +170,7 @@ export default {
         :title="description"
         :possible-value-list="possibleValueList"
         :label="label"
-        @input="onChange"
+        @update:model-value="onChange"
       />
       <ErrorMessage :error="errorMessage" />
     </template>

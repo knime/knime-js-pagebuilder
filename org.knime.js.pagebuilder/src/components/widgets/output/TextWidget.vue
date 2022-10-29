@@ -111,6 +111,7 @@ export default {
     <Label
       :text="label"
     />
+    <!-- eslint-disable vue/no-v-text-v-html-on-component -->
     <Component
       :is="elementType"
       v-if="elementType"

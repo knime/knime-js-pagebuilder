@@ -62,6 +62,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -125,12 +126,12 @@ export default {
         :id="labelForId"
         ref="form"
         :type="type"
-        :value="value"
+        :model-value="value"
         :min="min"
         :max="max"
         :is-valid="isValid"
         :title="description"
-        @input="onChange"
+        @update:model-value="onChange"
       />
     </Label>
     <ErrorMessage :error="errorMessage" />

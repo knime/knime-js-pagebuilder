@@ -52,6 +52,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -123,12 +124,12 @@ export default {
       v-if="isMultiLine"
       :id="labelForId"
       ref="form"
-      :value="value"
+      :model-value="value"
       :cols="multiColumns"
       :rows="multiRows"
       :is-valid="isValid"
       :title="description"
-      @input="onChange"
+      @update:model-value="onChange"
     />
     <InputField
       v-else

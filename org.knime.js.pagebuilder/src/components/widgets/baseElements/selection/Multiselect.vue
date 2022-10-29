@@ -61,11 +61,12 @@ export default {
             type: String,
             default: ''
         },
-        value: {
+        modelValue: {
             type: Array,
             default: () => []
         }
     },
+    emits: ['update:modelValue'],
     computed: {
         maxVisibleListEntries() {
             if (this.limitNumberVisOptions) {
@@ -100,8 +101,8 @@ export default {
         }
     },
     methods: {
-        onInput(value) {
-            this.$emit('input', value);
+        onChange(value) {
+            this.$emit('update:modelValue', value);
         },
         hasSelection() {
             return this.$refs.form.hasSelection();
@@ -125,38 +126,38 @@ export default {
       v-if="isCheckboxes"
       :id="id"
       ref="form"
-      :value="value"
+      :model-value="modelValue"
       :alignment="checkBoxesAlignment"
       :aria-label="label"
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
     />
     <Twinlist
       v-if="isTwinlist"
       :id="id"
       ref="form"
-      :value="value"
+      :model-value="modelValue"
       :size="maxVisibleListEntries"
       label-left="Excludes"
       label-right="Includes"
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
     />
     <MultiselectListBox
       v-if="isList"
       :id="id"
       ref="form"
-      :value="value"
+      :model-value="modelValue"
       :size="maxVisibleListEntries"
       :aria-label="label"
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
     />
   </div>
 </template>

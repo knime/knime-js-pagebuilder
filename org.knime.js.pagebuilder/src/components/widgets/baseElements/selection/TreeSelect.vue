@@ -37,6 +37,7 @@ export default {
             default: true
         }
     },
+    emits: ['item-click', 'item-toggle'],
     data() {
         return {
             lastClickedNode: null,

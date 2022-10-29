@@ -44,6 +44,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -105,12 +106,12 @@ export default {
       ref="form"
       label-left="Excludes"
       label-right="Includes"
-      :value="value"
+      :model-value="value"
       :size="maxVisibleListEntries"
       :possible-values="possibleColumns"
       :is-valid="isValid"
       :title="description"
-      @input="onChange"
+      @update:model-value="onChange"
     />
     <ErrorMessage :error="errorMessage" />
   </Fieldset>

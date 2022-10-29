@@ -54,6 +54,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -142,11 +143,11 @@ export default {
           v-if="!isColumnLocked"
           :id="labelForId"
           ref="column"
-          :value="column"
+          :model-value="column"
           :is-valid="isColumnValid"
           aria-label="Column"
           :possible-values="possibleColumns"
-          @input="onColumnChange"
+          @update:model-value="onColumnChange"
         />
       </template>
     </Label>
@@ -158,7 +159,7 @@ export default {
         <Multiselect
           :id="labelForId"
           ref="form"
-          :value="value"
+          :model-value="value"
           :type="viewRep.type"
           :number-vis-options="viewRep.numberVisOptions"
           :limit-number-vis-options="viewRep.limitNumberVisOptions"
@@ -166,7 +167,7 @@ export default {
           :is-valid="isValid"
           :description="description"
           :label="label"
-          @input="onChange"
+          @update:model-value="onChange"
         />
         <ErrorMessage :error="errorMessage" />
       </template>

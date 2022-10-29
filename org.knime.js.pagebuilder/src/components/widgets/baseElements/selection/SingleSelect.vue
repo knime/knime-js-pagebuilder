@@ -60,11 +60,12 @@ export default {
             type: String,
             default: ''
         },
-        value: {
+        modelValue: {
             type: String,
             default: () => ''
         }
     },
+    emits: ['update:modelValue'],
     data() {
         return {
             customValidationErrorMessage: null
@@ -104,8 +105,8 @@ export default {
         }
     },
     methods: {
-        onInput(value) {
-            this.$emit('input', value);
+        onChange(value) {
+            this.$emit('update:modelValue', value);
         },
         /**
          * Has a selection?
@@ -134,34 +135,34 @@ export default {
       :id="id"
       ref="form"
       :alignment="radioButtonsAlignment"
-      :value="value"
+      :model-value="modelValue"
       :possible-values="possibleChoices"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
     />
     <ListBox
       v-if="isList"
       :id="id"
       ref="form"
-      :value="value"
+      :model-value="modelValue"
       :size="maxVisibleListEntries"
       :aria-label="label"
       :possible-values="possibleChoices"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
     />
     <Dropdown
       v-if="isDropdown"
       :id="id"
       ref="form"
-      :value="value"
+      :model-value="modelValue"
       :aria-label="label"
       :possible-values="possibleChoices"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
     />
   </div>
 </template>

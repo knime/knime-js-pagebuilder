@@ -81,6 +81,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -294,7 +295,7 @@ export default {
         ref="form"
         :minimum="min"
         :maximum="max"
-        :value="value"
+        :model-value="value"
         :process="process"
         :is-valid="isValid"
         :direction="direction"
@@ -306,7 +307,7 @@ export default {
         :connect="connect"
         :class="[`slider-${sliderSettings.orientation}`,
                  {'tooltip-slider': tooltips }]"
-        @input="onChange"
+        @update:model-value="onChange"
       />
       <ErrorMessage
         :error="errorMessage"

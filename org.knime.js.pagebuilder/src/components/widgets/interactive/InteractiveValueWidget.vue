@@ -44,6 +44,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -127,14 +128,14 @@ export default {
     <Component
       :is="formComponentType"
       ref="form"
-      :value="value"
+      :model-value="value"
       :type="viewRep.type"
       :number-vis-options="viewRep.numberVisOptions"
       :limit-number-vis-options="viewRep.limitNumberVisOptions"
       :possible-value-list="viewRep.possibleValues"
       :is-valid="isValid"
       :label="label"
-      @input="onChange"
+      @update:model-value="onChange"
     />
     <ErrorMessage :error="errorMessage" />
   </Component>

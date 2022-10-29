@@ -20,6 +20,7 @@ export default {
             default: false
         }
     },
+    emits: ['showAlert'],
     methods: {
         /**
          * Emits an event when the popover icon is clicked to allow the parent component to display more information.

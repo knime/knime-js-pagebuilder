@@ -14,7 +14,7 @@ export default {
         VueSlider
     },
     props: {
-        value: {
+        modelValue: {
             default: DEFAULT_SLIDER_VALUE,
             type: [Number, Array]
         },
@@ -71,13 +71,13 @@ export default {
             type: Boolean
         }
     },
-    emits: ['input'],
+    emits: ['update:modelValue'],
     methods: {
         getValue() {
             return this.$refs.slider.getValue();
         },
-        onInput(e) {
-            this.$emit('input', this.getValue());
+        onChange() {
+            this.$emit('update:modelValue', this.getValue());
         },
         validate() {
             let value = this.getValue();
@@ -114,7 +114,7 @@ export default {
     <VueSlider
       ref="slider"
       :width="direction.includes('tt') ? 1 : 'auto'"
-      :value="value"
+      :model-value="modelValue"
       :min="minimum"
       :max="maximum"
       :silent="true"
@@ -132,7 +132,7 @@ export default {
       :lazy="true"
       :enable-cross="false"
       x-ms-format-detection="none"
-      @change="onInput"
+      @change="onChange"
     />
   </div>
 </template>

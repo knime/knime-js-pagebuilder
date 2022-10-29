@@ -14,7 +14,9 @@
       "@@/*": [
         "./*"
       ],
-      "vue-slider-component": ["./src/vue-slider-component.d.ts"]
+      "vue-slider-component": [
+        "./src/vue-slider-component.d.ts"
+      ]
     },
     "allowJs": true,
     "jsx": "preserve"

@@ -156,7 +156,7 @@ export default {
     <AlertLocal
       v-if="displayError"
       active
-      @showAlert="showAlert(alert)"
+      @show-alert="showAlert(alert)"
     />
     <WarningLocal
       v-if="displayWarning"

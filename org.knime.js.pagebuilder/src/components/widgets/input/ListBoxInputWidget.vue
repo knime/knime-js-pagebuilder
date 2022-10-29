@@ -46,6 +46,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -146,12 +147,12 @@ export default {
         <TextArea
           :id="labelForId"
           ref="form"
-          :value="value"
+          :model-value="value"
           :cols="20"
           :rows="numberVisOptions"
           :is-valid="isValid"
           :title="description"
-          @input="onChange"
+          @update:model-value="onChange"
         />
         <ErrorMessage :error="errorMessage" />
       </template>

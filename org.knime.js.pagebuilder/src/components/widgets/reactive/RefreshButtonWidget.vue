@@ -36,6 +36,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         ...mapState('pagebuilder', ['nodesReExecuting']),
         viewRep() {

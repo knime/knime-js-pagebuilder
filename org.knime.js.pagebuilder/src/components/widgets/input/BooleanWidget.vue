@@ -36,6 +36,7 @@ export default {
             type: Object
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -71,9 +72,9 @@ export default {
   <Checkbox
     ref="form"
     label-size="large"
-    :value="value"
+    :model-value="value"
     :title="description"
-    @input="onChange"
+    @update:model-value="onChange"
   >
     <span :title="label">{{ label }}</span>
   </Checkbox>

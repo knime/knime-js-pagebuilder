@@ -47,6 +47,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -102,7 +103,7 @@ export default {
       <SingleSelect
         :id="labelForId"
         ref="form"
-        :value="value"
+        :model-value="value"
         :type="viewRep.type"
         :number-vis-options="viewRep.numberVisOptions"
         :limit-number-vis-options="viewRep.limitNumberVisOptions"
@@ -110,7 +111,7 @@ export default {
         :title="description"
         :possible-value-list="viewRep.possibleColumns"
         :label="label"
-        @input="onChange"
+        @update:model-value="onChange"
       />
       <ErrorMessage :error="errorMessage" />
     </template>
