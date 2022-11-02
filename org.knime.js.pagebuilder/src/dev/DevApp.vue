@@ -15,7 +15,7 @@ export default {
             const mocks = import.meta.glob('@@/mocks/*.json', { eager: true });
             return Object.keys(mocks).sort().map(file => ({
                 name: file.replace('/mocks/', ''),
-                src: mocks[file]
+                src: mocks[file].default // .default needed for reactivity to work
             }));
         }
     },
