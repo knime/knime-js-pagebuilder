@@ -104,7 +104,7 @@ export default {
 <template>
   <div class="slider-container">
     <div
-      v-for="(v, i) in (value.length ? value : [value])"
+      v-for="(v, i) in (modelValue.length ? modelValue : [modelValue])"
       :key="i"
       class="slider-focusable"
       tabindex="0"

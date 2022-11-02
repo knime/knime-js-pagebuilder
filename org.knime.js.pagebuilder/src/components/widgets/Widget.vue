@@ -10,7 +10,6 @@ import DoubleWidget from './input/DoubleWidget.vue';
 import FileUploadWidget from './input/FileUploadWidget.vue';
 import IntegerWidget from './input/IntegerWidget.vue';
 import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
-// TODO migrate SliderWidget to Vue3
 import SliderWidget from './input/SliderWidget.vue';
 import StringWidget from './input/StringWidget.vue';
 
