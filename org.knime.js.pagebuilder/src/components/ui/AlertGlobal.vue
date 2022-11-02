@@ -81,7 +81,7 @@ export default {
         :title="title"
         :subtitle="subtitle"
         :message-body="messageText"
-        @close-alert="remove => onClose(remove)"
+        @close-alert="onClose"
       >
         <template #messageBodyHeader>
           <span v-if="isError">

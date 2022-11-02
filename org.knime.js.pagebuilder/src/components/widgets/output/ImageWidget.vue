@@ -130,7 +130,7 @@ export default {
 
 <template>
   <div
-    class="imageOutput"
+    class="image-output"
     :title="description"
   >
     <Label
@@ -153,7 +153,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.imageOutput {
+.image-output {
   & > img {
     display: block;
   }

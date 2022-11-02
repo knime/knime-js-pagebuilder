@@ -1,5 +1,5 @@
 <script>
-import { loadAsyncComponent } from '../../util/loadComponentLibrary';
+import { loadAsyncComponent } from 'webapps-common/ui/util/loadComponentLibrary';
 
 const DEFAULT_DIALOG_NAMESPACE_ID = 'DefaultNodeDialog';
 

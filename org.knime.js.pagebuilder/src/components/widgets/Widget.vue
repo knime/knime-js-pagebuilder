@@ -1,48 +1,45 @@
 <script>
 import { mapActions } from 'vuex';
 
-/**
- * TODO seems to run fine
- */
-
-
-/**
- * tested with vue3 compat warnings
- */
+// input widgets
 import BooleanWidget from './input/BooleanWidget.vue';
-import StringWidget from './input/StringWidget.vue';
-import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
 import CredentialsWidget from './input/CredentialsWidget.vue';
-import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
-import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
+// TODO migrate DateTimeWidget to Vue3
+// import DateTimeWidget from './input/DateTimeWidget.vue';
+import DoubleWidget from './input/DoubleWidget.vue';
+import FileUploadWidget from './input/FileUploadWidget.vue';
+import IntegerWidget from './input/IntegerWidget.vue';
+import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
+// TODO migrate SliderWidget to Vue3
+import SliderWidget from './input/SliderWidget.vue';
+import StringWidget from './input/StringWidget.vue';
+
+// selection widgets
 import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget.vue';
 import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
-import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
-import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
-import IntegerWidget from './input/IntegerWidget.vue';
-import DoubleWidget from './input/DoubleWidget.vue';
-import TextWidget from './output/TextWidget.vue';
-import ImageWidget from './output/ImageWidget.vue';
-import FileUploadWidget from './input/FileUploadWidget.vue';
-import FileDownloadWidget from './output/FileDownloadWidget.vue';
-
-/**
- * not yet tested
- */
-
+// TODO verify FileChooserWidget works, fix mocks
 // contains (unresolved) quickform elements (e.g. referenced in the mock as class
 // org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation, but there is no mapping
-// in the widget.config.js to resolve this elements to an actually vue component) this causes the isWidget test to fail
+// in the widget.config.js to resolve these elements to an actually vue component). This causes the isWidget condition to fail
 // and loads the WebNodeIFrame instead
 import FileChooserWidget from './selection/FileChooserWidget.vue';
-import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
-import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
+import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
+import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
+import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
+import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
 
-// no mock
+// output widgets
+import FileDownloadWidget from './output/FileDownloadWidget.vue';
+import ImageWidget from './output/ImageWidget.vue';
+import TextWidget from './output/TextWidget.vue';
+
+// interactive widgets
+import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
+import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
+
+// reactive widgets
 import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
 
-// import DateTimeWidget from './input/DateTimeWidget.vue';
-import SliderWidget from './input/SliderWidget.vue'; // interaction was not possible
 
 /**
  * A Widget node view. This top level component sits at
@@ -75,29 +72,29 @@ export default {
     components: {
         // input widgets
         BooleanWidget,
-        IntegerWidget,
-        DoubleWidget,
-        StringWidget,
-        SliderWidget,
-        ListBoxInputWidget,
         CredentialsWidget,
-        // DateTimeWidget,
+        // TODO DateTimeWidget,
+        DoubleWidget,
         FileUploadWidget,
+        IntegerWidget,
+        ListBoxInputWidget,
+        SliderWidget,
+        StringWidget,
         // selection widgets
-        SingleSelectionWidget,
-        MultipleSelectionWidget,
         ColumnFilterSelectionWidget,
         ColumnSelectionWidget,
+        FileChooserWidget,
+        MultipleSelectionWidget,
+        SingleSelectionWidget,
         ValueFilterSelectionWidget,
         ValueSelectionWidget,
-        FileChooserWidget,
         // output widgets
-        TextWidget,
-        ImageWidget,
         FileDownloadWidget,
+        ImageWidget,
+        TextWidget,
         // interactive widgets
-        InteractiveValueWidget,
         InteractiveRangeWidget,
+        InteractiveValueWidget,
         // reactive widgets
         RefreshButtonWidget
     },

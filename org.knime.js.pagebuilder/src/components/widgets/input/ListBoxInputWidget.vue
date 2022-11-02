@@ -139,7 +139,7 @@ export default {
 </script>
 
 <template>
-  <div class="listBoxInput">
+  <div class="list-box-input">
     <Label
       :text="label"
     >
@@ -161,7 +161,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.listBoxInput {
+.list-box-input {
   & :deep(textarea) {
     width: 100%;
     max-width: 100%;

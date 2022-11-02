@@ -9,6 +9,9 @@ import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config
  * additional styles). Also detects changes to it's configuration and increments a local counter to help with re-
  * renders of iframe-based components.
  */
+
+// TODO use native 'aspect-ratio' CSS rule & fix stylelint
+
 export default {
     components: {
         WebNodeIFrame,
