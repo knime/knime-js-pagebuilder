@@ -1,4 +1,4 @@
-// TODO WEBP-327 Remove if dialog option added.
+// TODO AP-19689 Remove if 'required' functionality implemented
 /**
  * Overrides the `required` property in a WebNodeConfig; specifically for widgets. Needed during re-execution to
  * prevent inputs from becoming required after update @see AP-17576.

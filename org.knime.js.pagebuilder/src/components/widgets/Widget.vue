@@ -176,7 +176,7 @@ export default {
         }
     },
     async mounted() {
-        // TODO WEBP-182 File Upload Vue Widget should be required; WEBP-327 Remove if dialog option added.
+        // TODO AP-19689 Remove if 'required' functionality implemented
         if (this.nodeConfig.viewRepresentation.required) {
             this.updateWebNode({
                 nodeId: this.nodeId,
