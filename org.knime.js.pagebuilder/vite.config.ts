@@ -28,7 +28,8 @@ export default defineConfig(({ mode }) => {
             external: ['vue', 'consola'],
             output: {
                 globals: {
-                    vue: 'Vue'
+                    vue: 'Vue',
+                    consola: 'consola'
                 }
             }
         }
