@@ -21,7 +21,7 @@ const dispatchJsonrpcNotification = function (jsonrpcNotification) {
         // * removing the execution overlay in case the node configuration failed (due to invalid model settings)
         // * show possible error/warning messages in the view (e.g., when the node configuration failed)
         window.KnimePageLoader.app.$store.dispatch('pagebuilder/updateNodeViewConfig', {
-            nodeView: params[-1].nodeView
+            nodeView: params[0].nodeView
         });
     } else {
         window.KnimePageLoader.app.$store
