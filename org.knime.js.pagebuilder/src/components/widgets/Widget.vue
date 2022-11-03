@@ -4,8 +4,7 @@ import { mapActions } from 'vuex';
 // input widgets
 import BooleanWidget from './input/BooleanWidget.vue';
 import CredentialsWidget from './input/CredentialsWidget.vue';
-// TODO migrate DateTimeWidget to Vue3
-// import DateTimeWidget from './input/DateTimeWidget.vue';
+import DateTimeWidget from './input/DateTimeWidget.vue';
 import DoubleWidget from './input/DoubleWidget.vue';
 import FileUploadWidget from './input/FileUploadWidget.vue';
 import IntegerWidget from './input/IntegerWidget.vue';
@@ -72,7 +71,7 @@ export default {
         // input widgets
         BooleanWidget,
         CredentialsWidget,
-        // TODO DateTimeWidget,
+        DateTimeWidget,
         DoubleWidget,
         FileUploadWidget,
         IntegerWidget,

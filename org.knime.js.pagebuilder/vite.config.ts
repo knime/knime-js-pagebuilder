@@ -37,25 +37,17 @@ export default defineConfig(({ mode }) => {
     const config:UserConfig = {
         base: './',
         plugins: [
-            vue(
-                /* {
-                template: {
-                    compilerOptions: {
-                        compatConfig: {
-                            MODE: 3
-                        }
-                    }
-                }
-                } */
-            ),
+            vue(),
             svgLoader()
         ],
         resolve: {
             alias: {
-                // vue: '@vue/compat',
                 '@': fileURLToPath(new URL('./src', import.meta.url)),
                 '@@': fileURLToPath(new URL('.', import.meta.url))
-            }
+            },
+            dedupe: [
+                'vue' // needed for DateTimeWidget v-calendar to work
+            ]
         },
         envPrefix: 'KNIME_'
     };
