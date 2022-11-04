@@ -126,7 +126,7 @@ if (typeof KnimePageLoader === 'undefined') {
                 // CEF browser communication (push events)
                 window.EquoCommService.on(
                     `org.knime.js.cef.jsonrpcNotification#${window.cefBrowserInstanceId}`,
-                    jsonrpcNotification => dispatchJsonrpcNotification(window.atob(jsonrpcNotification)),
+                    jsonrpcNotification => dispatchJsonrpcNotification(jsonrpcNotification),
                     // eslint-disable-next-line no-console
                     e => console.error(e)
                 );
