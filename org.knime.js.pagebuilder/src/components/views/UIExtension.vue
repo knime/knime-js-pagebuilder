@@ -40,6 +40,13 @@ export default {
                 const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'resourceInfo'];
                 return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
             }
+        },
+        /**
+         * View configuration, mainly layout and sizing options
+         */
+         viewConfig: {
+            default: () => ({}),
+            type: Object
         }
     },
     data() {
@@ -64,6 +71,42 @@ export default {
         },
         displayWarning() {
             return this.alert?.type === 'warn';
+        },
+        resizeMethod() {
+            return this.viewConfig.resizeMethod || '';
+        },
+        classes() {
+            let classes = [];
+            // add aspect ratio sizing classes; other resize methods are handled by WebNodeIFrame itself
+            if (this.resizeMethod.startsWith('aspectRatio')) {
+                classes.push(this.resizeMethod);
+            }
+            if (Array.isArray(this.viewConfig.additionalClasses)) {
+                classes = classes.concat(this.viewConfig.additionalClasses);
+            }
+            return classes;
+        },
+        style() {
+            let style = [];
+            if (this.viewConfig.additionalStyles) {
+                style = style.concat(this.viewConfig.additionalStyles);
+            }
+            if (this.resizeMethod.startsWith('viewLowestElement')) {
+                let { maxHeight = null, maxWidth = null, minHeight = null, minWidth = null } = this.viewConfig;
+                if (maxHeight !== null) {
+                    style.push(`max-height:${maxHeight}px`);
+                }
+                if (maxWidth !== null) {
+                    style.push(`max-width:${maxWidth}px`);
+                }
+                if (minHeight !== null) {
+                    style.push(`min-height:${minHeight}px`);
+                }
+                if (minWidth !== null) {
+                    style.push(`min-width:${minWidth}px`);
+                }
+            }
+            return style.join(';').replace(/;;/g, ';');
         }
     },
     watch: {
@@ -140,7 +183,10 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div
+    :class="classes"
+    :style="style"
+  >
     <UIExtComponent
       v-if="isUIExtComponent"
       :key="configKey"
@@ -165,6 +211,8 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
+@import './commonLayoutStyles.css';
+
 .local-warning {
   position: absolute;
   bottom: 0;

@@ -1,0 +1,11 @@
+.aspectRatio16by9 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspectRatio4by3 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspectRatio1by1 {
+  aspect-ratio: 1 / 1;
+}

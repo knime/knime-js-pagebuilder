@@ -75,13 +75,13 @@ export default {
                     style.push(`max-height:${maxHeight}px`);
                 }
                 if (maxWidth !== null) {
-                    style.push(`max-width:${maxHeight}px`);
+                    style.push(`max-width:${maxWidth}px`);
                 }
                 if (minHeight !== null) {
-                    style.push(`min-height:${maxHeight}px`);
+                    style.push(`min-height:${minHeight}px`);
                 }
                 if (minWidth !== null) {
-                    style.push(`min-width:${maxHeight}px`);
+                    style.push(`min-width:${minWidth}px`);
                 }
             }
             return style.join(';').replace(/;;/g, ';');
@@ -129,32 +129,5 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-
-.aspectRatio16by9,
-.aspectRatio4by3,
-.aspectRatio1by1 {
-  position: relative;
-  width: 100%;
-  height: 0;
-
-  & > :first-child {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-}
-
-.aspectRatio16by9 {
-  padding-bottom: calc(100% / (16 / 9));
-}
-
-.aspectRatio4by3 {
-  padding-bottom: calc(100% / (4 / 3));
-}
-
-.aspectRatio1by1 {
-  padding-bottom: 100%;
-}
+@import './commonLayoutStyles.css';
 </style>
