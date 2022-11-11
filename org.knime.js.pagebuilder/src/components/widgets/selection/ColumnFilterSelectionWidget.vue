@@ -103,8 +103,8 @@ export default {
   >
     <Twinlist
       ref="form"
-      label-left="Excludes"
-      label-right="Includes"
+      left-label="Excludes"
+      right-label="Includes"
       :value="value"
       :size="maxVisibleListEntries"
       :possible-values="possibleColumns"
