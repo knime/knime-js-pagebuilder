@@ -77,7 +77,7 @@ export default {
         },
         classes() {
             let classes = [];
-            // add aspect ratio sizing classes; other resize methods are handled by WebNodeIFrame itself
+            // add aspect ratio sizing classes;
             if (this.resizeMethod.startsWith('aspectRatio')) {
                 classes.push(this.resizeMethod);
             }

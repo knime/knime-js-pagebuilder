@@ -15,6 +15,7 @@ import AlertLocal from '@/components/ui/AlertLocal';
 import WarningLocal from '@/components/ui/WarningLocal';
 
 import { iFrameExtensionConfig, componentExtensionConfig } from '../../../assets/views/extensionConfig';
+import { viewConfig } from '../../../assets/views/viewConfig';
 
 
 describe('UIExtension.vue', () => {
@@ -53,9 +54,9 @@ describe('UIExtension.vue', () => {
         return new Vuex.Store(storeConfig);
     };
 
-    const getMockIFrameProps = () => ({ extensionConfig: { ...iFrameExtensionConfig } });
+    const getMockIFrameProps = () => ({ extensionConfig: { ...iFrameExtensionConfig }, viewConfig: { ...viewConfig} });
 
-    const getMockComponentProps = () => ({ extensionConfig: { ...componentExtensionConfig } });
+    const getMockComponentProps = () => ({extensionConfig: { ...componentExtensionConfig }, viewConfig: { ...viewConfig} });
 
     let localVue, context;
 
@@ -313,5 +314,59 @@ describe('UIExtension.vue', () => {
         expect(deregisterServiceMock).toHaveBeenCalledWith(expect.anything(), {
             service: expect.any(KnimeService)
         }, expect.undefined);
+    });
+
+    describe('styling', () => {
+        it('respects resize classes', () => {
+            viewConfig.resizeMethod = 'aspectRatio1by1'
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: getMockIFrameProps()
+            });
+            expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio1by1');
+            viewConfig.resizeMethod = 'aspectRatio16by9';
+            wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: getMockIFrameProps()
+            });
+            expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio16by9');
+        });
+
+        it('renders with classes and styles', () => {
+            let mockProps = getMockIFrameProps();
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: {
+                    ...getMockIFrameProps(),
+                    viewConfig: {
+                        resizeMethod: 'aspectRatio1by1',
+                        additionalClasses: ['class1', 'class2'],
+                        additionalStyles: ['color: red;', 'border: 1px solid green;']
+                    }
+                }
+            });
+            expect(wrapper.attributes('class')).toEqual('aspectRatio1by1 class1 class2');
+            expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
+        });
+        it('adds classes for min/max height & width', () => {
+            let wrapper = shallowMount(UIExtension, {
+                ...context,
+                propsData: {
+                    ...getMockIFrameProps(),
+                    viewConfig: {
+                        resizeMethod: 'viewLowestElement',
+                        additionalClasses: ['class1', 'class2'],
+                        additionalStyles: ['color: red;', 'border: 1px solid green;'],
+                        minHeight: 100,
+                        maxHeight: 200,
+                        minWidth: 100,
+                        maxWidth: 200
+                    }
+                }
+            });
+            expect(wrapper.attributes('class')).toEqual('class1 class2');
+            expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green; max-height: 200px;' +
+                ' max-width: 200px; min-height: 100px; min-width: 100px;');
+        });
     });
 });
