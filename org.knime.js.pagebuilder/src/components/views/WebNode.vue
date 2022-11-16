@@ -2,6 +2,7 @@
 import WebNodeIFrame from './WebNodeIFrame';
 import Widget from '~/src/components/widgets/Widget';
 import { classToComponentMap, legacyExclusions } from '~/src/components/widgets/widgets.config';
+import layoutMixin from '../mixins/layoutMixin';
 
 /**
  * Wrapper for a WebNode based visualization implementation or a Widget. Determines the type of component to render,
@@ -14,6 +15,7 @@ export default {
         WebNodeIFrame,
         Widget
     },
+    mixins: [layoutMixin],
     props: {
         /**
          * View configuration, mainly layout and sizing options
@@ -49,42 +51,6 @@ export default {
     computed: {
         nodeState() {
             return this.nodeConfig?.nodeInfo?.nodeState;
-        },
-        resizeMethod() {
-            return this.viewConfig.resizeMethod || '';
-        },
-        classes() {
-            let classes = [];
-            // add aspect ratio sizing classes; other resize methods are handled by WebNodeIFrame itself
-            if (this.resizeMethod.startsWith('aspectRatio')) {
-                classes.push(this.resizeMethod);
-            }
-            if (Array.isArray(this.viewConfig.additionalClasses)) {
-                classes = classes.concat(this.viewConfig.additionalClasses);
-            }
-            return classes;
-        },
-        style() {
-            let style = [];
-            if (this.viewConfig.additionalStyles) {
-                style = style.concat(this.viewConfig.additionalStyles);
-            }
-            if (this.resizeMethod.startsWith('viewLowestElement') && this.isWidget) {
-                let { maxHeight = null, maxWidth = null, minHeight = null, minWidth = null } = this.viewConfig;
-                if (maxHeight !== null) {
-                    style.push(`max-height:${maxHeight}px`);
-                }
-                if (maxWidth !== null) {
-                    style.push(`max-width:${maxWidth}px`);
-                }
-                if (minHeight !== null) {
-                    style.push(`min-height:${minHeight}px`);
-                }
-                if (minWidth !== null) {
-                    style.push(`min-width:${minWidth}px`);
-                }
-            }
-            return style.join(';').replace(/;;/g, ';');
         },
         legacyModeDisabled() {
             // only return true if legacy flag *explicitly* set to false; default workflows with unset legacy flag to
