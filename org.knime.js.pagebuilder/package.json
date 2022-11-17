@@ -21,8 +21,8 @@
     "lint:css": "stylelint '**/*.{css,vue}'",
     "lint:ci": "eslint --ext .js,.vue,.json -f json -o target/eslint.json || true; stylelint '**/*.{css,vue}' -f json -o target/stylelint.json || true",
     "audit": "check-audit --production --json > target/audit.json || true",
-    "test:unit": "vue-cli-service test:unit",
-    "coverage": "vue-cli-service test:unit --coverage || true",
+    "test:unit": "TZ='Europe/Berlin' vue-cli-service test:unit",
+    "coverage": "TZ='Europe/Berlin' vue-cli-service test:unit --coverage || true",
     "coverage:watch": "npm run test:unit -- --coverage --watch",
     "opensourcecredits": "npm run --prefix webapps-common/ opensourcecredits"
   },
