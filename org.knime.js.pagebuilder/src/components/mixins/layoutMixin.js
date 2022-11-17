@@ -3,7 +3,7 @@ const layoutMixin = {
         resizeMethod() {
             return this.viewConfig.resizeMethod || '';
         },
-        classes() {
+        layoutClasses() {
             let classes = [];
             // add aspect ratio sizing classes;
             if (this.resizeMethod.startsWith('aspectRatio')) {
@@ -14,7 +14,7 @@ const layoutMixin = {
             }
             return classes;
         },
-        style() {
+        layoutStyle() {
             let style = [];
             if (this.viewConfig.additionalStyles) {
                 style = style.concat(this.viewConfig.additionalStyles);

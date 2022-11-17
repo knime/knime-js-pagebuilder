@@ -150,8 +150,8 @@ export default {
 
 <template>
   <div
-    :class="classes"
-    :style="style"
+    :class="layoutClasses"
+    :style="layoutStyle"
   >
     <UIExtComponent
       v-if="isUIExtComponent"
@@ -177,7 +177,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import './commonLayoutStyles.css';
+@import '../mixins/layoutMixin.css';
 
 .local-warning {
   position: absolute;

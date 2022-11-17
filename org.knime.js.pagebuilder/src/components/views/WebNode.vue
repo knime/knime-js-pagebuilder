@@ -77,8 +77,8 @@ export default {
 
 <template>
   <div
-    :class="classes"
-    :style="style"
+    :class="layoutClasses"
+    :style="layoutStyle"
   >
     <Widget
       v-if="isWidget"
@@ -95,5 +95,5 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import './commonLayoutStyles.css';
+@import '../mixins/layoutMixin.css';
 </style>
