@@ -157,6 +157,7 @@ export default {
 
 <style lang="postcss" scoped>
 .node-view {
+  height: 100%;
   background-color: var(--knime-white);
 }
 
