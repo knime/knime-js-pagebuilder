@@ -64,7 +64,7 @@ export default {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 </style>

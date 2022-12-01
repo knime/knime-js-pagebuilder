@@ -47,8 +47,4 @@ export default {
 
 <style lang="postcss">
 @import "webapps-common/ui/css";
-
-body {
-  padding: 0 15px; /* simulate reduced WebPortal margins */
-}
 </style>

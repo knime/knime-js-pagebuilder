@@ -159,6 +159,11 @@ export default {
 .node-view {
   height: 100%;
   background-color: var(--knime-white);
+  border-radius: 15px;
+  margin-right: 5px;
+  margin-left: 5px;
+  padding: 5px;
+  overflow: auto;
 }
 
 .single-view {

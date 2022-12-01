@@ -36,3 +36,9 @@ export default {
     <AlertGlobal v-if="!isDialogLayout" />
   </div>
 </template>
+
+<style>
+body {
+  background-color: var(--knime-porcelain);
+}
+</style>
