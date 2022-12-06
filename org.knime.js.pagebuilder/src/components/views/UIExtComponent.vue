@@ -1,8 +1,6 @@
 <script>
 import { loadComponentLibrary } from '~/src/util/loadComponentLibrary';
 
-const DEFAULT_DIALOG_NAMESPACE_ID = 'DefaultNodeDialog';
-
 export default {
     components: {
         // Any Vue-based component library
@@ -38,9 +36,6 @@ export default {
          * @returns {string} - unique id for the resource registered to this node.
          */
         componentId() {
-            if (this.extensionConfig?.extensionType === 'dialog') {
-                return DEFAULT_DIALOG_NAMESPACE_ID;
-            }
             return this.resourceInfo?.id;
         }
     },
