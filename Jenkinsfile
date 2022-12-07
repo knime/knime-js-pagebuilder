@@ -11,7 +11,7 @@ properties([
 ])
 
 try {
-    node('maven && java11') {
+    node('maven && java17') {
         knimetools.defaultTychoBuild(updateSiteProject: 'org.knime.update.js.pagebuilder', disableOWASP: true)
         
         junit '**/coverage/junit.xml'
