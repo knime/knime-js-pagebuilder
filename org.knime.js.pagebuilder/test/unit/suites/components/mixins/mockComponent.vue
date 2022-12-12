@@ -13,6 +13,14 @@
       viewConfig: {
             default: () => ({}),
             type: Object
+      },
+      isWidget: {
+          default: false,
+          type: Boolean
+      },
+      extensionConfig: {
+          default: () => null,
+          type: Object
       }
     }
   };
