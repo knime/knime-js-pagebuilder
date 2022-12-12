@@ -69,7 +69,41 @@ describe('layoutMixin.js', () => {
             expect(wrapper.vm.layoutStyle).toEqual('testStyle;otherTestStyle');
         });
 
-        it('applies styles if viewLowestElement is set', () => {
+        it('applies styles if viewLowestElement is set and it is a widget', () => {
+            const wrapper = shallowMount(MockComponent, {
+                propsData: {
+                    viewConfig: {
+                        resizeMethod: 'viewLowestElement',
+                        maxHeight: 300,
+                        maxWidth: 300,
+                        minHeight: 100,
+                        minWidth: 100
+                    },
+                    isWidget: true
+                },
+                mixins: [layoutMixin]
+            });
+            expect(wrapper.vm.layoutStyle).toEqual('max-height:300px;max-width:300px;min-height:100px;min-width:100px');
+        });
+
+        it('applies styles if viewLowestElement is set and it is a ui-extension', () => {
+            const wrapper = shallowMount(MockComponent, {
+                propsData: {
+                    viewConfig: {
+                        resizeMethod: 'viewLowestElement',
+                        maxHeight: 300,
+                        maxWidth: 300,
+                        minHeight: 100,
+                        minWidth: 100
+                    },
+                    extensionConfig: {name: 'test'}
+                },
+                mixins: [layoutMixin]
+            });
+            expect(wrapper.vm.layoutStyle).toEqual('max-height:300px;max-width:300px;min-height:100px;min-width:100px');
+        });
+
+        it('does not apply styles if viewLowestElement is set, but it is not a widget or ui-extension', () => {
             const wrapper = shallowMount(MockComponent, {
                 propsData: {
                     viewConfig: {
@@ -82,7 +116,7 @@ describe('layoutMixin.js', () => {
                 },
                 mixins: [layoutMixin]
             });
-            expect(wrapper.vm.layoutStyle).toEqual('max-height:300px;max-width:300px;min-height:100px;min-width:100px');
+            expect(wrapper.vm.layoutStyle).toEqual('');
         });
 
         it('does not apply styles if viewLowestElement is not set', () => {
