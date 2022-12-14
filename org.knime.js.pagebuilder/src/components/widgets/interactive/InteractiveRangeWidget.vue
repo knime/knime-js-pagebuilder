@@ -37,6 +37,12 @@ export default {
         errorMessage: {
             type: String,
             default: null
+        },
+        valuePair: {
+            default: () => ({
+                [DATA_TYPE]: 0
+            }),
+            type: [Object, Array]
         }
     },
     emits: ['updateWidget'],
