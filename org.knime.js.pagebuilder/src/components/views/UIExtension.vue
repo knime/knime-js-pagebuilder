@@ -98,6 +98,13 @@ export default {
         initKnimeService() {
             const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
             let knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
+            if (this.extensionConfig?.imageGeneration === true){
+                knimeService.registerImageGeneratedCallback(generatedImage => window.generatedImage = generatedImage);
+                // TODO revisit in UIEXT-728 once the windowless CEF browser supports the Comm service
+                //knimeService.onImageGeneratedCallback(
+                //    image => window.EquoCommService.send('generatedImageMessageId', image));
+            }
+            
             muteReactivity({ target: knimeService, nonReactiveKeys: ['iFrameWindow'] });
             this.knimeService = knimeService;
             this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
