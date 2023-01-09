@@ -13,7 +13,14 @@ export default defineConfig(({ mode }) => {
             input: {
                 apWrapper: fileURLToPath(new URL('apWrapper.html', import.meta.url))
             }
-        }
+        },
+        // All the web resources for the legacy javascript-based views are made available to the frontend at a
+        // 'single entry point', referenced through paths relative to the page-builder main html-document (see above).
+        // As a result, all the resources need to be properly 'namespaced' by residing at unique relative paths.
+        // To achieve that, the resources are usually organised by the names/ids of the projects contributing it.
+        // And since the page-builder assets are made available in the same way, we 'namespace' them by using
+        // the page-builder project-name for consinstency and to avoid 'collisions' with other resources.
+        assetsDir: 'org/knime/core/ui/pagebuilder/app/assets'
     };
 
     const libBuild:BuildOptions = {
