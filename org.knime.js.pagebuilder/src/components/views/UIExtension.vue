@@ -10,9 +10,9 @@ import muteReactivity from '~/src/util/muteReactivity';
 import layoutMixin from '../mixins/layoutMixin';
 
 /**
- * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-
- * based). Also detects changes to it's configuration and increments a local counter to help with re-renders of
- * iframe-based components.
+ * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based). 
+ * Also detects changes to it's configuration and increments a local counter to help with re-renders of iframe-based
+ * components.
  */
 export default {
     components: {
