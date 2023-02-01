@@ -1,4 +1,5 @@
 <script>
+import { markRaw, shallowRef } from 'vue';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 import TreeSelect from '../baseElements/selection/TreeSelect.vue';
@@ -102,7 +103,7 @@ export default {
 
             return rootPath || rootDir;
         },
-        // Checks if the current execution environment is the new WebPortal.
+        // Checks if the current execution environment is not the AP .
         runningInWebPortal() {
             return !window.KnimePageLoader || window.KnimePageLoader?.isRunningInWebportal();
         },
@@ -128,8 +129,7 @@ export default {
         async requestRepository(rootPath) {
             try {
                 let { response, errorResponse } = await this.repositoryAPI({
-                    path: rootPath,
-                    filter: null
+                    path: rootPath
                 });
                 const defaultPaths = this.defaultPaths;
                 this.dataReady = true;
@@ -180,20 +180,20 @@ export default {
         },
         transformTreeItem(item) {
             const state = item.state || {};
-            return {
+            return markRaw({
                 text: item.text,
                 value: item.text,
                 opened: Boolean(state.opened),
                 selected: Boolean(state.selected),
                 disabled: Boolean(state.disabled),
-                icon: item.icon || this.iconForItem(item),
-                selectedIcon: item.children ? '' : cogIcon,
+                icon: shallowRef(item.icon || this.iconForItem(item)),
+                selectedIcon: item.children ? '' : shallowRef(cogIcon),
                 userData: {
                     path: item.id,
                     type: item.type
                 },
                 children: item.children?.map(child => this.transformTreeItem(child)) || []
-            };
+            });
         },
         /**
          * Generate a items value from the treeData.
@@ -231,11 +231,11 @@ export default {
             };
             this.$emit('updateWidget', changeEventObj);
         },
-        checkMountId() {
+        async checkMountId() {
             // determine path prefix from mountId
             let mountId = this.viewRep.customMountId;
             if (this.viewRep.useDefaultMountId) {
-                mountId = this.$store.state.settings.defaultMountId;
+                mountId = await this.$store.getters['api/defaultMountId'];
             }
             if (mountId) {
                 this.prefix = SCHEMA_PART + mountId;

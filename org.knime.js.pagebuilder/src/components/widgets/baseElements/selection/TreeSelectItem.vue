@@ -1,4 +1,5 @@
 <script>
+import { shallowRef, markRaw } from 'vue';
 import itemIcon from 'webapps-common/ui/assets/img/icons/file-question.svg';
 import folderIcon from 'webapps-common/ui/assets/img/icons/folder.svg';
 import arrowNextIcon from 'webapps-common/ui/assets/img/icons/arrow-next.svg';
@@ -159,8 +160,8 @@ export default {
                 let length = 0;
                 let childHeight = 0;
                 if (this.model.opened) {
-                    length = this.$children.length;
-                    for (let children of this.$children) {
+                    length = this.$refs.children.length;
+                    for (let children of this.$refs.children) {
                         childHeight += children.maxHeight;
                     }
                 }
@@ -233,6 +234,7 @@ export default {
       <TreeSelectItem
         v-for="(child, index) in model.children"
         :key="index"
+        ref="children"
         :data="child"
         :allow-transition="allowTransition"
         :height="height"
