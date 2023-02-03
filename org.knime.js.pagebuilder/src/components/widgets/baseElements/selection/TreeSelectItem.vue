@@ -1,5 +1,4 @@
 <script>
-import { shallowRef, markRaw } from 'vue';
 import itemIcon from 'webapps-common/ui/assets/img/icons/file-question.svg';
 import folderIcon from 'webapps-common/ui/assets/img/icons/folder.svg';
 import arrowNextIcon from 'webapps-common/ui/assets/img/icons/arrow-next.svg';
