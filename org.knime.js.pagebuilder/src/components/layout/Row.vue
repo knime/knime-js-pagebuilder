@@ -31,7 +31,7 @@ export default {
             return this.rowConfig.columns;
         },
         classes() {
-            let classes = ['row'];
+            let classes = !Boolean(window.headless) ? ['row', 'notHeadless'] : ['row'];
             if (Array.isArray(this.rowConfig.additionalClasses)) {
                 classes = classes.concat(this.rowConfig.additionalClasses);
             }
@@ -64,7 +64,10 @@ export default {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+
+  &.notHeadless {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
 }
 </style>
