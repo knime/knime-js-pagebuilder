@@ -240,7 +240,7 @@ export default {
         ref="input"
         type="file"
         :accept="fileTypes.join(',')"
-        @update:model-value="onChange"
+        @change="onChange"
       >
       <div
         :class="['progress-bar-wrapper', {'show-bar': uploading}]"
