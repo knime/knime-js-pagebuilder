@@ -1,5 +1,5 @@
 <script>
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 import Button from 'webapps-common/ui/components/Button.vue';
