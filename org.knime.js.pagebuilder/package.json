@@ -33,25 +33,25 @@
   },
   "devDependencies": {
     "@knime/eslint-config": "7.1.3",
-    "@types/node": "18.11.2",
-    "@vitejs/plugin-vue": "3.2.0",
+    "@types/node": "18.13.0",
+    "@vitejs/plugin-vue": "4.0.0",
     "@vue/tsconfig": "0.1.3",
-    "eslint": "8.25.0",
+    "eslint": "8.34.0",
     "npm-run-all": "4.1.5",
     "postcss-import": "15.1.0",
     "postcss-preset-env": "8.0.0",
     "postcss-url": "10.1.3",
     "stylelint": "15.1.0",
-    "typescript": "4.8.4",
-    "vite": "3.2.0",
-    "vite-plugin-css-injected-by-js": "2.1.1",
-    "vite-svg-loader": "3.6.0",
-    "vue-tsc": "1.0.8"
+    "typescript": "4.9.5",
+    "vite": "4.1.2",
+    "vite-plugin-css-injected-by-js": "3.0.1",
+    "vite-svg-loader": "4.0.0",
+    "vue-tsc": "1.1.2"
   },
   "engines": {
     "node": "18.x"
   },
   "volta": {
-    "node": "18.14.0"
+    "node": "18.14.2"
   }
 }
