@@ -1,5 +1,5 @@
 <script>
-import { filesize } from 'filesize';
+import { partial } from 'filesize';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 import Button from 'webapps-common/ui/components/Button.vue';
@@ -95,7 +95,7 @@ export default {
             if (!this.localFileSize) {
                 return null;
             }
-            let parsedSize = filesize.partial({
+            let parsedSize = partial({
                 output: 'object'
             })(this.localFileSize);
             return parsedSize;
