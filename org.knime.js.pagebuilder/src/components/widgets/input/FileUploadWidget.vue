@@ -172,9 +172,9 @@ export default {
             if (!this.uploadAPI) {
                 return { isValid };
             }
-            if (this.fileTypes?.length && this.path) {
+            if (this.fileTypes?.length && this.fileName) {
                 isValid = this.fileTypes?.map(type => type?.toLowerCase())
-                    .includes(`.${getFileExtension(this.path)?.toLowerCase()}`);
+                    .includes(`.${getFileExtension(this.fileName)?.toLowerCase()}`);
                 if (!isValid) {
                     errorMessage = `The type of the selected file does not match the allowed file ` +
                         `types (${this.fileTypes.join(', ')}).`;
