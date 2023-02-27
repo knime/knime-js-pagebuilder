@@ -105,7 +105,7 @@ if (typeof KnimePageLoader === 'undefined') {
 
         // KAP Public API methods called by CEF browser (TODO and selenium-knime-bridge or SWT?)
         pageBuilder.getPageValues = () => {
-            return pageBuilder.app.$store.dispatch('pagebuilder/getViewValues', null)
+            return store.dispatch('pagebuilder/getViewValues', null)
                 .then(values => {
                     let parsedValues = {};
                     let nodeIds = Object.keys(values);
@@ -126,7 +126,7 @@ if (typeof KnimePageLoader === 'undefined') {
         };
 
         pageBuilder.validate = () => {
-            return pageBuilder.app.$store.dispatch('pagebuilder/getValidity', null)
+            return store.dispatch('pagebuilder/getValidity', null)
                 .then(res => {
                     let isValid = false;
                     let viewValidities = Object.values(res);
@@ -155,7 +155,7 @@ if (typeof KnimePageLoader === 'undefined') {
                     }
                 };
             }
-            return pageBuilder.app.$store.dispatch('pagebuilder/setValidationErrors', { page });
+            return store.dispatch('pagebuilder/setValidationErrors', { page });
         };
 
         // environment detection methods
@@ -342,6 +342,24 @@ if (typeof KnimeInteractivity === 'undefined') {
         },
         updateResponseMonitor(monitor) {
             return window.KnimePageLoader.updateResponseMonitor(monitor);
+        }
+    };
+}
+
+if (typeof jsonrpcNotification === 'undefined') {
+    window.jsonrpcNotification = (notification) => {
+        const parsedNotification = JSON.parse(notification);
+        const { method, params } = parsedNotification;
+        if (method === 'NodeViewStateEvent') {
+            // Updating the view config has multiple purposes (see ViewExecutable):
+            // * displaying the actual view if the node is successfully executed
+            // * removing the execution overlay in case the node configuration failed (due to invalid model settings)
+            // * show possible error/warning messages in the view (e.g., when the node configuration failed)
+            store.dispatch('pagebuilder/updateNodeViewConfig', {
+                nodeView: params[0].nodeView
+            });
+        } else {
+            store.dispatch('pagebuilder/service/pushNotification', { event: parsedNotification });
         }
     };
 }
