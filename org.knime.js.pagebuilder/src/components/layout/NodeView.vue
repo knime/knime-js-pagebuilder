@@ -78,11 +78,11 @@ export default {
         isSingleView() {
             return this.isUIExtension && this.nodeId === 'SINGLE';
         },
-        isConfigured() {
-            return this.nodeInfo?.nodeState === 'configured';
-        },
         isExecuted() {
             return this.nodeInfo?.nodeState === 'executed';
+        },
+        isImageGeneration() {
+            return this.isUIExtension && this.uiExtensionConfig?.imageGeneration === true;
         },
         viewAvailable() {
             // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
@@ -91,14 +91,15 @@ export default {
         },
         viewDisplayable() {
             if (this.isUIExtension) {
-                return this.isExecuted || this.isDialogLayout || this.isNodeDialog;
+                return this.isExecuted || this.isImageGeneration || this.isDialogLayout || this.isNodeDialog;
             }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
             return this.nodeInfo?.displayPossible;
         },
         showViewExecutable() {
-            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings);
+            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings)
+                && !this.isImageGeneration;
         },
         showExecutionOverlay() {
             /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this
@@ -138,6 +139,7 @@ export default {
       />
       <UIExtension
         v-else-if="isUIExtension"
+        :view-config="viewConfig"
         :class="{
           'single-view': isSingleView,
           'single-dialog': isNodeDialog && isSingleView,
@@ -156,6 +158,7 @@ export default {
 
 <style lang="postcss" scoped>
 .node-view {
+  height: 100%;
   background-color: var(--knime-white);
 }
 

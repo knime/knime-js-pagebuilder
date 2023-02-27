@@ -11,6 +11,23 @@ const CONST_DEBUG_LOG_LEVEL = 4;
 const SINGLE_NODE_ID = 'SINGLE';
 const SINGLE_VIEW_FRAME_ID = `node-${SINGLE_NODE_ID}`;
 
+const dispatchJsonrpcNotification = function (jsonrpcNotification) {
+    const parsedNotification = JSON.parse(jsonrpcNotification);
+    const { method, params } = parsedNotification;
+    if (method === 'NodeViewStateEvent') {
+        // Updating the view config has multiple purposes (see ViewExecutable):
+        // * displaying the actual view if the node is successfully executed
+        // * removing the execution overlay in case the node configuration failed (due to invalid model settings)
+        // * show possible error/warning messages in the view (e.g., when the node configuration failed)
+        window.KnimePageLoader.app.$store.dispatch('pagebuilder/updateNodeViewConfig', {
+            nodeView: params[0].nodeView
+        });
+    } else {
+        window.KnimePageLoader.app.$store
+            .dispatch('pagebuilder/service/pushNotification', { event: parsedNotification });
+    }
+};
+
 window.consola = consola.create({
     level: import.meta.env.KNIME_LOG_TO_CONSOLE === 'true' ? import.meta.env.KNIME_LOG_LEVEL : -1
 });
@@ -65,13 +82,25 @@ if (typeof KnimePageLoader === 'undefined') {
             pageBuilder.isDebug = debug;
             pageBuilder.isDebugHTML = typeof debugHTML !== 'undefined';
             pageBuilder.isSingleView = page.wizardPageContent.isSingleView;
-            pageBuilder.pageId = page.pageNodeID;
 
             // set page
             store.dispatch('pagebuilder/setResourceBaseUrl', { resourceBaseUrl: './' });
             store.dispatch('pagebuilder/setPage', { page });
 
             window.isPushSupported = () => true;
+
+            if (window.EquoCommService) {
+                // CEF browser communication (push events)
+                window.EquoCommService.on(
+                    `org.knime.js.cef.jsonrpcNotification#${window.cefBrowserInstanceId}`,
+                    jsonrpcNotification => dispatchJsonrpcNotification(jsonrpcNotification),
+                    // eslint-disable-next-line no-console
+                    e => console.error(e)
+                );
+            } else if (typeof window.jsonrpcNotification === 'undefined') {
+                // SWT browser communication (push events)
+                window.jsonrpcNotification = dispatchJsonrpcNotification;
+            }
         };
 
         // KAP Public API methods called by CEF browser (TODO and selenium-knime-bridge or SWT?)
@@ -313,25 +342,6 @@ if (typeof KnimeInteractivity === 'undefined') {
         },
         updateResponseMonitor(monitor) {
             return window.KnimePageLoader.updateResponseMonitor(monitor);
-        }
-    };
-}
-
-if (typeof jsonrpcNotification === 'undefined') {
-    window.jsonrpcNotification = (notification) => {
-        const parsedNotification = JSON.parse(notification);
-        const { method, params } = parsedNotification;
-        if (method === 'NodeViewStateEvent') {
-            // Updating the view config has multiple purposes (see ViewExecutable):
-            // * displaying the actual view if the node is successfully executed
-            // * removing the execution overlay in case the node configuration failed (due to invalid model settings)
-            // * show possible error/warning messages in the view (e.g., when the node configuration failed)
-            window.KnimePageLoader.app.$store.dispatch('pagebuilder/updateNodeViewConfig', {
-                nodeView: params[0].nodeView
-            });
-        } else {
-            window.KnimePageLoader.app.$store
-                .dispatch('pagebuilder/service/pushNotification', { event: parsedNotification });
         }
     };
 }

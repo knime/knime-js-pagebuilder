@@ -68,7 +68,7 @@ export default {
     box-sizing: border-box;
   }
 
-  & .parent-row.row {
+  & .parent-row.row.notHeadless {
     /* prevent top level overflow of layout which will cause a small scroll on small screens */
     margin-right: var(--grid-gap-width);
     margin-left: var(--grid-gap-width);

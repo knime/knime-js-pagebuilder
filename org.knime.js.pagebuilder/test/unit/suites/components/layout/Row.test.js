@@ -16,7 +16,7 @@ describe('Row.vue', () => {
             }
         });
         expect(wrapper.is('div')).toBe(true);
-        expect(wrapper.attributes('class')).toEqual('row');
+        expect(wrapper.attributes('class')).toEqual('row notHeadless');
         expect(wrapper.attributes('style')).toBeUndefined();
     });
 
@@ -31,7 +31,7 @@ describe('Row.vue', () => {
                 }
             }
         });
-        expect(wrapper.attributes('class')).toEqual('row class1 class2');
+        expect(wrapper.attributes('class')).toEqual('row notHeadless class1 class2');
         expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
     });
 

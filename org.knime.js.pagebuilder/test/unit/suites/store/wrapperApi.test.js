@@ -237,13 +237,15 @@ describe('wrapper API store', () => {
                 alertMocks: { showAlert }
             });
 
-            let shouldPoll = await store.dispatch('setPage', { page: {
-                webNodes: {
-                    foo: {}
-                },
-                resetNodes: ['foo'],
-                reexecutedNodes: []
-            } });
+            let shouldPoll = await store.dispatch('setPage', {
+                page: {
+                    webNodes: {
+                        foo: {}
+                    },
+                    resetNodes: ['foo'],
+                    reexecutedNodes: []
+                }
+            });
             expect(shouldPoll).toStrictEqual({ shouldPoll: false });
             expect(updatePage).toHaveBeenCalledWith(expect.anything(), {
                 nodeIds: ['foo'],
@@ -341,13 +343,23 @@ describe('wrapper API store', () => {
                 params: []
             };
             let expected = { result: { foo: 2 } };
-            let rpcMock = jest.fn().mockReturnValue(JSON.stringify(expected));
-            window.jsonrpc = rpcMock;
             let store = getMockStore();
 
+            let jsonrpcMock = jest.fn().mockReturnValue(JSON.stringify(expected));
+            window.jsonrpc = jsonrpcMock;
             let res = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
-            expect(rpcMock).toHaveBeenCalledWith(JSON.stringify(rpcConfig));
+            expect(jsonrpcMock).toHaveBeenCalledWith(JSON.stringify(rpcConfig));
             expect(res).toStrictEqual({ ...expected, error: EMPTY });
+
+            window.jsonrpc = undefined;
+            const sendMock = jest.fn().mockReturnValue(expected);
+            window.EquoCommService = {
+                send: sendMock
+            }
+            window.cefBrowserInstanceId = 1234;
+            const res2 = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
+            expect(sendMock).toHaveBeenCalledWith('org.knime.js.cef.jsonrpc#1234', JSON.stringify(rpcConfig));
+            expect(res2).toStrictEqual({ ...expected, error: EMPTY });
         });
 
         it('handles errors during RPC invocation', async () => {
@@ -361,11 +373,21 @@ describe('wrapper API store', () => {
             let rpcMock = jest.fn().mockImplementation(() => {
                 throw new Error(expectedError);
             });
-            window.jsonrpc = rpcMock;
             let store = getMockStore();
 
+            window.jsonrpc = rpcMock;
             let res = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
             expect(rpcMock).toHaveBeenCalledWith(JSON.stringify(rpcConfig));
+            expect(res).toStrictEqual({ error: expect.any(Error), result: EMPTY });
+            expect(res.error.toString()).toContain(expectedError);
+
+            window.jsonrpc = undefined;
+            window.EquoCommService = {
+                send: rpcMock
+            }
+            window.cefBrowserInstanceId = 1234;
+            const res2 = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
+            expect(rpcMock).toHaveBeenCalledWith('org.knime.js.cef.jsonrpc#1234', JSON.stringify(rpcConfig));
             expect(res).toStrictEqual({ error: expect.any(Error), result: EMPTY });
             expect(res.error.toString()).toContain(expectedError);
         });
@@ -439,9 +461,9 @@ describe('wrapper API store', () => {
             expect(showAlert).not.toHaveBeenCalled();
             expect(setPage).toHaveBeenCalledWith(expect.anything(), expectedRes.result, EMPTY);
             expect(updatePageMock).not.toHaveBeenCalled();
-            
+
             jest.runAllTimers();
-            
+
             expect(pollRPCMock).toHaveBeenCalledTimes(2);
             expect(singleRPC).toHaveBeenCalledTimes(2);
             expect(singleRPC).toHaveBeenLastCalledWith(expect.anything(), {

@@ -193,6 +193,7 @@ export const actions = {
      * Calls a single RPC call via the global RPC function (jsonrpc). If no global function exists, return value will have the
      * error property set.
      *
+     * @async
      * @param {Object} _ - Vuex context (unused).
      * @param {Object} param - action config.
      * @param {Object} param.rpcConfig - the RPC configuration for the global RPC invocation.
@@ -205,12 +206,22 @@ export const actions = {
      * @returns {Object} - the results of the RPC call; either with the result property (if the call was successful) or
      *      the error property (if an exception occurred).
      */
-    singleRPC(_, { rpcConfig }) {
+    async singleRPC(_, { rpcConfig }) {
         let result, error;
-        if (typeof jsonrpc === 'function') {
+        if (typeof window.jsonrpc === 'function') {
+            // SWT browser communication (request-response)
             try {
                 consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
-                ({ result, error } = JSON.parse(jsonrpc(JSON.stringify(rpcConfig))));
+                ({ result, error } = JSON.parse(window.jsonrpc(JSON.stringify(rpcConfig))));
+            } catch (err) {
+                error = err;
+            }
+        } else if (window.EquoCommService) {
+            // CEF browser communication (request-response)
+            try {
+                consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
+                ({ result, error } = await window.EquoCommService
+                    .send(`org.knime.js.cef.jsonrpc#${window.cefBrowserInstanceId}`, JSON.stringify(rpcConfig)));
             } catch (err) {
                 error = err;
             }
@@ -219,7 +230,7 @@ export const actions = {
                 'browser is selected by going to ‘Preferences → KNIME → JavaScript Views’ and selecting the ' +
                 'option ‘Chromium Embedded Framework (CEF) Browser’.';
         }
-        return { result, error };
+        return Promise.resolve({ result, error });
     },
 
     /**
@@ -253,7 +264,7 @@ export const actions = {
      */
     async pollRPC({ dispatch }, { pollAction, callback, config }) {
         let { result, error } = await dispatch('singleRPC', config);
-        
+
         if (!result || error) {
             dispatch('handleError', {
                 caller: config?.rpcConfig?.method || pollAction,

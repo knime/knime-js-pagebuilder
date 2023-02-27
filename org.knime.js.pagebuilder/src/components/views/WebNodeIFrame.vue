@@ -101,6 +101,9 @@ export default {
     },
 
     mounted() {
+        if (this.autoHeight) {
+            this.initIFrameResize();
+        }
         this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: true });
         window.addEventListener('message', this.messageFromIframe);
 
@@ -329,52 +332,50 @@ export default {
         },
 
         initIFrameResize() {
-            if (this.autoHeight) {
-                // apply a default tolerance of 5px to avoid unnecessary screen flicker
-                const defaultResizeTolerance = 5;
-                const defaultResizeMethod = 'lowestElement';
-                let conf = this.viewConfig;
+            // apply a default tolerance of 5px to avoid unnecessary screen flicker
+            const defaultResizeTolerance = 5;
+            const defaultResizeMethod = 'lowestElement';
+            let conf = this.viewConfig;
 
-                // strip prefix from resize method to determine heightCalculationMethod
-                let prefix = 'view'.length;
-                let method = defaultResizeMethod;
-                if (conf.resizeMethod) {
-                    method = conf.resizeMethod.substring(prefix, prefix + 1).toLowerCase() +
-                        conf.resizeMethod.substring(prefix + 1);
-                }
-                // special case, this used a different resize method for IE, but is not supported anymore
-                if (method === 'lowestElementIEMax') {
-                    method = defaultResizeMethod;
-                }
-
-                // populate settings object
-                let resizeSettings = {
-                    log: false,
-                    checkOrigin: [window.origin],
-                    resizeFrom: 'child',
-                    warningTimeout: 0, // suppress warning
-
-                    autoResize: conf.autoResize,
-                    scrolling: conf.scrolling,
-                    heightCalculationMethod: method,
-                    sizeHeight: conf.sizeHeight,
-                    tolerance: conf.resizeTolerance || defaultResizeTolerance
-                };
-                if (conf.minWidth) {
-                    resizeSettings.minWidth = conf.minWidth;
-                }
-                if (conf.maxWidth) {
-                    resizeSettings.maxWidth = conf.maxWidth;
-                }
-                if (conf.minHeight) {
-                    resizeSettings.minHeight = conf.minHeight;
-                }
-                if (conf.maxHeight) {
-                    resizeSettings.maxHeight = conf.maxHeight;
-                }
-
-                iframeResizer(resizeSettings, this.$refs.iframe);
+            // strip prefix from resize method to determine heightCalculationMethod
+            let prefix = 'view'.length;
+            let method = defaultResizeMethod;
+            if (conf.resizeMethod) {
+                method = conf.resizeMethod.substring(prefix, prefix + 1).toLowerCase() +
+                    conf.resizeMethod.substring(prefix + 1);
             }
+            // special case, this used a different resize method for IE, but is not supported anymore
+            if (method === 'lowestElementIEMax') {
+                method = defaultResizeMethod;
+            }
+
+            // populate settings object
+            let resizeSettings = {
+                log: false,
+                checkOrigin: [window.origin],
+                resizeFrom: 'child',
+                warningTimeout: 0, // suppress warning
+
+                autoResize: conf.autoResize,
+                scrolling: conf.scrolling,
+                heightCalculationMethod: method,
+                sizeHeight: conf.sizeHeight,
+                tolerance: conf.resizeTolerance || defaultResizeTolerance
+            };
+            if (conf.minWidth) {
+                resizeSettings.minWidth = conf.minWidth;
+            }
+            if (conf.maxWidth) {
+                resizeSettings.maxWidth = conf.maxWidth;
+            }
+            if (conf.minHeight) {
+                resizeSettings.minHeight = conf.minHeight;
+            }
+            if (conf.maxHeight) {
+                resizeSettings.maxHeight = conf.maxHeight;
+            }
+
+            iframeResizer(resizeSettings, this.$refs.iframe);
         },
 
         messageFromIframe(event) {
@@ -595,7 +596,6 @@ export default {
       :id="iframeId"
       ref="iframe"
       :class="classes"
-      @load="initIFrameResize"
     />
     <AlertLocal
       :active="displayAlert"
@@ -607,6 +607,7 @@ export default {
 <style lang="postcss" scoped>
 div.frame-container {
   width: 100%;
+  height: 100%;
   padding-top: 10px; /* provides default spacing between page content */
   min-height: 0;
   transition: min-height 0.4s ease-in 0.1s;

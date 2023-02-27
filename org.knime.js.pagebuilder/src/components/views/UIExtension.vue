@@ -6,11 +6,12 @@ import UIExtComponent from './UIExtComponent.vue';
 import UIExtIFrame from './UIExtIFrame.vue';
 import AlertLocal from '../ui/AlertLocal.vue';
 import WarningLocal from '../ui/WarningLocal.vue';
+import layoutMixin from '../mixins/layoutMixin';
 
 /**
- * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-
- * based). Also detects changes to it's configuration and increments a local counter to help with re-renders of
- * iframe-based components.
+ * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
+ * Also detects changes to it's configuration and increments a local counter to help with re-renders of iframe-based
+ * components.
  */
 export default {
     components: {
@@ -19,6 +20,7 @@ export default {
         AlertLocal,
         WarningLocal
     },
+    mixins: [layoutMixin],
     // using provide/inject instead of a prop to pass the knimeService to the children because
     // 1) we don't want reactivity in this case
     // 2) any deeply nested child of the UIComponent can get access to knimeService if needed
@@ -38,6 +40,13 @@ export default {
                 const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'resourceInfo'];
                 return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
             }
+        },
+        /**
+         * View configuration, mainly layout and sizing options
+         */
+        viewConfig: {
+            default: () => ({}),
+            type: Object
         }
     },
     data() {
@@ -92,6 +101,11 @@ export default {
                 this.callService,
                 this.pushNotification
             );
+            if (this.extensionConfig?.imageGeneration === true) {
+                knimeService.registerImageGeneratedCallback(
+                    generatedImage => window.EquoCommService.send('generatedImage', generatedImage)
+                );
+            }
             this.knimeService = markRaw(knimeService);
             this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
         },
@@ -142,7 +156,10 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div
+    :class="layoutClasses"
+    :style="layoutStyle"
+  >
     <UIExtComponent
       v-if="isUIExtComponent"
       :key="configKey + '-1'"
@@ -167,6 +184,8 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
+@import '../mixins/layoutMixin.css';
+
 .local-warning {
   position: absolute;
   bottom: 0;

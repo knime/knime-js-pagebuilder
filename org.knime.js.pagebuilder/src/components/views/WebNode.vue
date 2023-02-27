@@ -2,6 +2,7 @@
 import WebNodeIFrame from './WebNodeIFrame.vue';
 import Widget from '../widgets/Widget.vue';
 import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config';
+import layoutMixin from '../mixins/layoutMixin';
 
 /**
  * Wrapper for a WebNode based visualization implementation or a Widget. Determines the type of component to render,
@@ -17,6 +18,7 @@ export default {
         WebNodeIFrame,
         Widget
     },
+    mixins: [layoutMixin],
     props: {
         /**
          * View configuration, mainly layout and sizing options
@@ -53,42 +55,6 @@ export default {
         nodeState() {
             return this.nodeConfig?.nodeInfo?.nodeState;
         },
-        resizeMethod() {
-            return this.viewConfig.resizeMethod || '';
-        },
-        classes() {
-            let classes = [];
-            // add aspect ratio sizing classes; other resize methods are handled by WebNodeIFrame itself
-            if (this.resizeMethod.startsWith('aspectRatio')) {
-                classes.push(this.resizeMethod);
-            }
-            if (Array.isArray(this.viewConfig.additionalClasses)) {
-                classes = classes.concat(this.viewConfig.additionalClasses);
-            }
-            return classes;
-        },
-        style() {
-            let style = [];
-            if (this.viewConfig.additionalStyles) {
-                style = style.concat(this.viewConfig.additionalStyles);
-            }
-            if (this.resizeMethod.startsWith('viewLowestElement') && this.isWidget) {
-                let { maxHeight = null, maxWidth = null, minHeight = null, minWidth = null } = this.viewConfig;
-                if (maxHeight !== null) {
-                    style.push(`max-height:${maxHeight}px`);
-                }
-                if (maxWidth !== null) {
-                    style.push(`max-width:${maxHeight}px`);
-                }
-                if (minHeight !== null) {
-                    style.push(`min-height:${maxHeight}px`);
-                }
-                if (minWidth !== null) {
-                    style.push(`min-width:${maxHeight}px`);
-                }
-            }
-            return style.join(';').replace(/;;/g, ';');
-        },
         legacyModeDisabled() {
             // TODO HUB-3311 remove legacy mode
             // only return true if legacy flag *explicitly* set to false; default workflows with unset legacy flag to
@@ -115,8 +81,8 @@ export default {
 
 <template>
   <div
-    :class="classes"
-    :style="style"
+    :class="layoutClasses"
+    :style="layoutStyle"
   >
     <Widget
       v-if="isWidget"
@@ -133,31 +99,5 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.aspectRatio16by9,
-.aspectRatio4by3,
-.aspectRatio1by1 {
-  position: relative;
-  width: 100%;
-  height: 0;
-
-  & > :first-child {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-}
-
-.aspectRatio16by9 {
-  padding-bottom: calc(100% / (16 / 9));
-}
-
-.aspectRatio4by3 {
-  padding-bottom: calc(100% / (4 / 3));
-}
-
-.aspectRatio1by1 {
-  padding-bottom: 100%;
-}
+@import '../mixins/layoutMixin.css';
 </style>

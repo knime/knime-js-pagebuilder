@@ -107,7 +107,7 @@ describe('WebNode.vue', () => {
             });
             expect(wrapper.attributes('class')).toEqual('class1 class2');
             expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green; max-height: 200px;' +
-                ' max-width: 200px; min-height: 200px; min-width: 200px;');
+                ' max-width: 200px; min-height: 100px; min-width: 100px;');
         });
     });
 

@@ -19,6 +19,9 @@ export default {
         ...mapState('pagebuilder', ['isDialogLayout']),
         debugPort() {
             return this.debugInfo?.remoteDebuggingPort;
+        },
+        isNotHeadless() {
+            return !window.headless;
         }
     },
     created() {
@@ -36,7 +39,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div :class="[ 'apWrapper', {notHeadless: isNotHeadless }]">
     <PageBuilder />
     <template v-if="debugPort">
       <DebugButton :debug-port="debugPort" />
@@ -51,7 +54,7 @@ export default {
 @import url("webapps-common/ui/css/basics");
 @import url("webapps-common/ui/css/fonts");
 
-body {
+.apWrapper.notHeadless {
   padding: 0 15px; /* simulate reduced WebPortal margins */
 }
 </style>

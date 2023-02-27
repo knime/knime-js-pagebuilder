@@ -91,8 +91,8 @@ describe('ColumnFilterSelectionWidget.vue', () => {
             },
             nodeId: '3:0:9',
             isValid: false,
-            labelLeft: 'Label Left',
-            labelRight: 'Label Right'
+            leftLabel: 'Left Label',
+            rightLabel: 'Right Label'
         };
     });
 

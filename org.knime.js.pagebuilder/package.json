@@ -14,15 +14,15 @@
     "ci:lint": "run-p lint:*",
     "jenkins:lint": "eslint --ext .js,.vue,.json -f json -o target/eslint.json || true; stylelint '**/*.{css,vue}' -f json -o target/stylelint.json || true",
     "audit": "npm audit --omit dev",
-    "_TODO_test:unit": "vue-cli-service test:unit",
-    "_TODO_coverage": "vue-cli-service test:unit --coverage || true",
+    "_TODO_test:unit": "TZ='Europe/Berlin' vue-cli-service test:unit",
+    "_TODO_coverage": "TZ='Europe/Berlin' vue-cli-service test:unit --coverage || true",
     "_TODO_opensourcecredits": "npm run --prefix webapps-common/ opensourcecredits",
     "_TODO_build:credits": "npm run opensourcecredits && vue-cli-service build --target lib --formats umd-min --name knime-pagebuilder-credits src/components/PageBuilderCredits.vue"
   },
   "license": "UNLICENSED",
   "author": "KNIME AG, Zurich, Switzerland",
   "dependencies": {
-    "@knime/ui-extension-service": "0.1.0",
+    "@knime/ui-extension-service": "0.5.0",
     "consola": "2.15.3",
     "iframe-resizer": "4.2.10",
     "mime": "3.0.0",
