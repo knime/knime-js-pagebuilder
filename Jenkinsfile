@@ -14,9 +14,11 @@ try {
     node('maven && java17') {
         knimetools.defaultTychoBuild(updateSiteProject: 'org.knime.update.js.pagebuilder', disableOWASP: true)
         
-        junit '**/coverage/junit.xml'
-        knimetools.processAuditResults()
+        // disabled; tests will move to Bitbucket Pipelines
+        //junit '**/coverage/junit.xml'
+        //knimetools.processAuditResults()
         
+        /*
         stage('Sonarqube analysis') {
             withCredentials([usernamePassword(credentialsId: 'ARTIFACTORY_CREDENTIALS', passwordVariable: 'ARTIFACTORY_PASSWORD', usernameVariable: 'ARTIFACTORY_LOGIN')]) {
                 withSonarQubeEnv('Sonarcloud') {
@@ -29,6 +31,7 @@ try {
                 }
             }
         }
+        */
     }
 } catch (ex) {
     currentBuild.result = 'FAILURE'
