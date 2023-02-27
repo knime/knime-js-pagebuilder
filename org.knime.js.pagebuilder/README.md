@@ -42,7 +42,6 @@ Browse to the dev server URL provided by the command above to get a standalone d
 1. add the Java project of this repository to Eclipse
 2. add following to the run configuration in Eclipse
 ```
-TODO
 -Dorg.knime.ui.dev.pagebuilder.url=http://localhost:5173/apWrapper.html
 -Dchromium.remote_debugging_port=8888
 ```
