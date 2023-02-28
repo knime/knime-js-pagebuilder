@@ -225,15 +225,6 @@ export const actions = {
             } catch (err) {
                 error = err;
             }
-        } else if (window.EquoCommService) {
-            // CEF browser communication (request-response)
-            try {
-                consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
-                ({ result, error } = await window.EquoCommService
-                    .send(`org.knime.js.cef.jsonrpc#${window.cefBrowserInstanceId}`, JSON.stringify(rpcConfig)));
-            } catch (err) {
-                error = err;
-            }
         } else {
             error = 'This functionality is not supported with the current browser. Please ensure the correct ' +
                 'browser is selected by going to ‘Preferences → KNIME → JavaScript Views’ and selecting the ' +
