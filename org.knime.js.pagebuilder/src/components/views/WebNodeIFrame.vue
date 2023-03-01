@@ -120,15 +120,14 @@ export default {
         // This global API should only be used/extended for cases where window.postMessage can't be used
         // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
-        // TODO: AP-18040 update the settings store with deafaultMoundId getters
+        // TODO: AP-18040 update the settings store with defaultMountId getters
         let storeSettings = this.$store.state.settings;
         let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
         let getRepositoryFunc = this.$store.getters['api/repository'];
         let getUserFunc = this.$store.getters['api/user'];
         let getDownloadLinkFunc = this.$store.getters['api/downloadResourceLink'];
         let getUploadLinkFunc = this.$store.getters['api/uploadResourceLink'];
-        // TODO: HUB-3296
-        // let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
+        let sketcherPath = this.$store.getters['settings/getCustomSketcherPath'];
         if (!window.KnimePageBuilderAPI || window.KnimePageBuilderAPI.teardown(this.currentJobId)) {
             window.KnimePageBuilderAPI = {
                 interactivityGetPublishedData(id) {
@@ -176,14 +175,13 @@ export default {
                         return null;
                     }
                 },
-                // TODO: HUB-3296
-                // getCustomSketcherPath() {
-                //     if (typeof sketcherPath === 'string') {
-                //         return sketcherPath;
-                //     } else {
-                //         return null;
-                //     }
-                // },
+                getCustomSketcherPath() {
+                    if (typeof sketcherPath === 'string') {
+                        return sketcherPath;
+                    } else {
+                        return null;
+                    }
+                },
                 /**
                  * Utility check method to prevent concurrent/unnecessary initialization of the global
                  * KnimePageBuilderAPI. Vue can create race conditions during create and destroy hooks depending on the

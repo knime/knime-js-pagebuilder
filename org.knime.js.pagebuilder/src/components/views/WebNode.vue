@@ -11,8 +11,6 @@ import layoutMixin from '../mixins/layoutMixin';
  * renders of iframe-based components.
  */
 
-// TODO use native 'aspect-ratio' CSS rule & fix stylelint
-
 export default {
     components: {
         WebNodeIFrame,

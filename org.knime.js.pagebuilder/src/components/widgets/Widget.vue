@@ -15,11 +15,6 @@ import StringWidget from './input/StringWidget.vue';
 // selection widgets
 import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget.vue';
 import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
-// TODO verify FileChooserWidget works, fix mocks
-// contains (unresolved) quickform elements (e.g. referenced in the mock as class
-// org.knime.js.base.node.quickform.filter.definition.value.ValueFilterDefinitionRepresentation, but there is no mapping
-// in the widget.config.js to resolve these elements to an actually vue component). This causes the isWidget condition to fail
-// and loads the WebNodeIFrame instead
 import FileChooserWidget from './selection/FileChooserWidget.vue';
 import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
 import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';

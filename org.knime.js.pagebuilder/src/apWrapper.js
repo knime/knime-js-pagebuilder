@@ -68,7 +68,7 @@ if (typeof KnimePageLoader === 'undefined') {
         pageBuilder.init = (arg1, arg2, arg3, debug) => {
             // set the global consola object to allow debugging and successful headless image generation
             let logLevel = debug && !window.headless ? CONST_DEBUG_LOG_LEVEL : -1;
-            window.consola.level = logLevel; // TODO verify if changing the log level works
+            window.consola.level = logLevel;
 
             // parse page
             let page = {
@@ -101,7 +101,7 @@ if (typeof KnimePageLoader === 'undefined') {
             }
         };
 
-        // KAP Public API methods called by CEF browser (TODO and selenium-knime-bridge or SWT?)
+        // KAP Public API methods called by CEF browser (and selenium-knime-bridge or SWT?)
         pageBuilder.getPageValues = () => {
             return store.dispatch('pagebuilder/getViewValues', null)
                 .then(values => {
