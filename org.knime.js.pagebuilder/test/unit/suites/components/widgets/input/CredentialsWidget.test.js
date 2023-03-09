@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
@@ -290,8 +291,8 @@ describe('CredentialsWidget.vue', () => {
                     InputField: {
                         template: '<div />',
                         methods: {
-                            getValue: jest.fn().mockReturnValue('test_string'),
-                            validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                            getValue: vi.fn().mockReturnValue('test_string'),
+                            validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
                         }
                     }
                 }
@@ -302,7 +303,7 @@ describe('CredentialsWidget.vue', () => {
         });
 
         it('renders serverCredentials input correctly', () => {
-            const checkServerCredentialsSpy = jest.fn();
+            const checkServerCredentialsSpy = vi.fn();
             let wrapper = shallowMount(CredentialsWidget, {
                 propsData: propsDataServer,
                 stubs: { Label, Fieldset },
@@ -317,7 +318,7 @@ describe('CredentialsWidget.vue', () => {
         });
 
         it('displays server error in correct hierarchy', () => {
-            let validate = jest.fn();
+            let validate = vi.fn();
             let wrapper = mount(CredentialsWidget, {
                 propsData: {
                     ...propsDataServer,
@@ -337,7 +338,7 @@ describe('CredentialsWidget.vue', () => {
                     InputField: {
                         template: '<div />',
                         methods: {
-                            getValue: jest.fn().mockReturnValue(null),
+                            getValue: vi.fn().mockReturnValue(null),
                             validate
                         }
                     }

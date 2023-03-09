@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -178,7 +179,7 @@ describe('InteractiveValueWidget.vue', () => {
                 ...context,
                 propsData
             });
-            jest.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => undefined);
+            vi.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => undefined);
             expect(wrapperBroken.vm.validate().isValid).toBe(false);
         });
     });

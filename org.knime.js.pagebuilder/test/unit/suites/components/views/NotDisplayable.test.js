@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import NotDisplayable from '~/src/components/views/NotDisplayable';
 import { shallowMount } from '@vue/test-utils';
 import Label from 'webapps-common/ui/components/forms/Label.vue';

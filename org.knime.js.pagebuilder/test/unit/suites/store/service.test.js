@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
@@ -16,11 +17,11 @@ describe('service store', () => {
 
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it('creates an empty store', () => {
@@ -31,22 +32,22 @@ describe('service store', () => {
 
     describe('service store actions', () => {
         it('registers a service', async () => {
-            const service = new KnimeService(iFrameExtensionConfig, jest.fn());
+            const service = new KnimeService(iFrameExtensionConfig, vi.fn());
             await store.dispatch('registerService', { service });
             expect(store.state.services[service.serviceId]).toBe(service);
         });
     
         it('dispatches push notifications', async () => {
-            const service = new KnimeService(iFrameExtensionConfig, jest.fn());
+            const service = new KnimeService(iFrameExtensionConfig, vi.fn());
             await store.dispatch('registerService', { service });
-            let onRPCNotificationSpy = jest.spyOn(service, 'onServiceNotification');
+            let onRPCNotificationSpy = vi.spyOn(service, 'onServiceNotification');
             let mockEvent = { payload: 'message' };
             await store.dispatch('pushNotification', { event: mockEvent });
             expect(onRPCNotificationSpy).toHaveBeenCalledWith(mockEvent);
         });
 
         it('deregisters a service', async () => {
-            const service = new KnimeService(iFrameExtensionConfig, jest.fn());
+            const service = new KnimeService(iFrameExtensionConfig, vi.fn());
             await store.dispatch('registerService', { service });
             expect(store.state.services[service.serviceId]).toBe(service);
             await store.dispatch('deregisterService', { service });

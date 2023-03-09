@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, it, vi, afterEach } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
 
@@ -13,11 +14,11 @@ describe('dialog store', () => {
 
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it('creates an empty store', () => {
@@ -52,15 +53,15 @@ describe('dialog store', () => {
         });
 
         it('sets the applySettings method', async () => {
-            const applySettings = jest.fn();
+            const applySettings = vi.fn();
             await store.dispatch('setApplySettings', { applySettings });
             expect(store.state.applySettings).toBe(applySettings);
         });
 
         it('calls the applySettings method', async () => {
-            const applySettings = jest.fn();
+            const applySettings = vi.fn();
             await store.dispatch('setApplySettings', { applySettings });
-            const applySettingsSpy = jest.spyOn(store.state, 'applySettings');
+            const applySettingsSpy = vi.spyOn(store.state, 'applySettings');
             await store.dispatch('callApplySettings');
             expect(applySettingsSpy).toHaveBeenCalled();
         });

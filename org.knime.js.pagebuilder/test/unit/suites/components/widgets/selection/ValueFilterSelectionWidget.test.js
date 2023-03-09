@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import ValueFilterSelectionWidget from '@/components/widgets/selection/ValueFilterSelectionWidget.vue';
@@ -260,7 +261,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
                     Multiselect: {
                         template: '<div />',
                         methods: {
-                            hasSelection: jest.fn().mockReturnValueOnce(true)
+                            hasSelection: vi.fn().mockReturnValueOnce(true)
                         }
                     }
                 }
@@ -282,7 +283,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
                     Multiselect: {
                         template: '<div />',
                         methods: {
-                            hasSelection: jest.fn().mockReturnValueOnce(false)
+                            hasSelection: vi.fn().mockReturnValueOnce(false)
                                 .mockReturnValueOnce(true)
                         }
                     }
@@ -306,8 +307,8 @@ describe('ValueFilterSelectionWidget.vue', () => {
                     Multiselect: {
                         template: '<div />',
                         methods: {
-                            hasSelection: jest.fn().mockReturnValue(true),
-                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                            hasSelection: vi.fn().mockReturnValue(true),
+                            validate: vi.fn().mockReturnValueOnce(childResponse)
                                 .mockReturnValueOnce({ isValid: false })
                         }
                     }

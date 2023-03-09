@@ -1,6 +1,7 @@
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
 import Vue from 'vue';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import APWrapper from '@/components/APWrapper.vue';
 import PageBuilder from '@/components/PageBuilder.vue';
@@ -10,7 +11,7 @@ import RefreshButton from '@/components/ui/RefreshButton.vue';
 import * as storeConfig from '~/store/pagebuilder';
 
 describe('APWrapper.vue', () => {
-    let localVue, context;
+    let context;
 
     const getWizardPageContent = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => ({
         webNodes: webNodes || {
@@ -34,26 +35,26 @@ describe('APWrapper.vue', () => {
     });
 
     const createContext = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => {
-        let store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        let store = createStore({ modules: { pagebuilder: storeConfig } });
         store.commit('pagebuilder/setPage', {
             wizardPageContent: getWizardPageContent({ webNodes, nodeViews, webNodePageConfiguration })
         });
 
         return {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
     };
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
         context = createContext();
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it('renders empty wrapper', () => {
@@ -79,7 +80,7 @@ describe('APWrapper.vue', () => {
 
         it('conditionally shows debug button', () => {
             const debugInfo = { remoteDebuggingPort: '8888' };
-            const debugMock = jest.fn(() => JSON.stringify(debugInfo));
+            const debugMock = vi.fn(() => JSON.stringify(debugInfo));
             window.getDebugInfo = debugMock;
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
@@ -89,7 +90,7 @@ describe('APWrapper.vue', () => {
 
         it('do not show debug button if no remoteDebuggingPort is set', () => {
             const debugInfo = { refreshRequired: true };
-            const debugMock = jest.fn(() => JSON.stringify(debugInfo));
+            const debugMock = vi.fn(() => JSON.stringify(debugInfo));
             window.getDebugInfo = debugMock;
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
@@ -99,7 +100,7 @@ describe('APWrapper.vue', () => {
 
         it('conditionally shows refresh button', () => {
             const debugInfo = { refreshRequired: true, remoteDebuggingPort: '8888' };
-            const debugMock = jest.fn(() => JSON.stringify(debugInfo));
+            const debugMock = vi.fn(() => JSON.stringify(debugInfo));
             window.getDebugInfo = debugMock;
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
@@ -110,7 +111,7 @@ describe('APWrapper.vue', () => {
 
         it('do not show refresh button if no remoteDebuggingPort is set', () => {
             const debugInfo = { refreshRequired: true };
-            const debugMock = jest.fn(() => JSON.stringify(debugInfo));
+            const debugMock = vi.fn(() => JSON.stringify(debugInfo));
             window.getDebugInfo = debugMock;
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
@@ -119,7 +120,7 @@ describe('APWrapper.vue', () => {
         });
 
         it('handles non-critical errors loading debug info', () => {
-            const debugMock = jest.fn(() => {
+            const debugMock = vi.fn(() => {
                 throw Error('Something went wrong getting info');
             });
             window.getDebugInfo = debugMock;

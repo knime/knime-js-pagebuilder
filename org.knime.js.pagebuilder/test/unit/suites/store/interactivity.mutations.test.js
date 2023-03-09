@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -14,13 +15,13 @@ describe('Interactivity store', () => {
 
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
 
     it('add subscriber', () => {
         expect(store.state).toEqual({});
-        let payload = { id: subscriberId, callback: jest.fn() };
+        let payload = { id: subscriberId, callback: vi.fn() };
         store.commit('addSubscriber', payload);
         expect(store.state[payload.id].subscribers.length).toEqual(1);
         expect(store.state[payload.id].subscribers[0]).toEqual({
@@ -30,7 +31,7 @@ describe('Interactivity store', () => {
         expect(payload.callback).not.toHaveBeenCalled();
 
         // subscriber with same id added
-        let payload2 = { id: subscriberId, callback: jest.fn(), elementFilter: ['dummy'] };
+        let payload2 = { id: subscriberId, callback: vi.fn(), elementFilter: ['dummy'] };
         store.commit('addSubscriber', payload2);
         expect(store.state[payload2.id].subscribers.length).toEqual(2);
         expect(store.state[payload2.id].subscribers[1]).toEqual({
@@ -44,7 +45,7 @@ describe('Interactivity store', () => {
     it('updates subscriber by clearing outdated translators', () => {
         expect(store.state).toEqual({});
         let id = 'foo';
-        let callback = jest.fn();
+        let callback = vi.fn();
         store.state[id] = {
             subscribers: [
                 { callback, filterIds: [], isTranslator: true },
@@ -52,7 +53,7 @@ describe('Interactivity store', () => {
                 { callback, filterIds: [] }
             ]
         };
-        store.commit('updateSubscriber', { id, callback: jest.fn(), isTranslator: true, clear: true });
+        store.commit('updateSubscriber', { id, callback: vi.fn(), isTranslator: true, clear: true });
         expect(store.state[id].subscribers).toHaveLength(2);
         expect(store.state[id].subscribers[0].isTranslator).not.toBeDefined();
         expect(store.state[id].subscribers[1].callback).not.toEqual(callback);
@@ -61,7 +62,7 @@ describe('Interactivity store', () => {
     it('updates subscriber without clearing translators', () => {
         expect(store.state).toEqual({});
         let id = 'foo';
-        let callback = jest.fn();
+        let callback = vi.fn();
         store.state[id] = {
             subscribers: [
                 { callback, filterIds: [], isTranslator: true },
@@ -69,14 +70,14 @@ describe('Interactivity store', () => {
                 { callback, filterIds: [] }
             ]
         };
-        store.commit('updateSubscriber', { id, callback: jest.fn(), isTranslator: true });
+        store.commit('updateSubscriber', { id, callback: vi.fn(), isTranslator: true });
         // eslint-disable-next-line no-magic-numbers
         expect(store.state[id].subscribers).toHaveLength(4);
     });
 
     it('remove subscriber', () => {
         expect(store.state).toEqual({});
-        let payload = { id: subscriberId, callback: jest.fn() };
+        let payload = { id: subscriberId, callback: vi.fn() };
         store.commit('addSubscriber', payload);
         expect(store.state[payload.id].subscribers.length).toEqual(1);
         expect(store.state[payload.id].subscribers[0]).toEqual({
@@ -102,7 +103,7 @@ describe('Interactivity store', () => {
         store.commit('updateData', dataPayload);
         expect(store.state[dataPayload.id].subscribers.length).toEqual(0);
 
-        let payload = { id: subscriberId, callback: jest.fn() };
+        let payload = { id: subscriberId, callback: vi.fn() };
         store.commit('addSubscriber', payload);
         expect(store.state[payload.id].subscribers.length).toEqual(1);
         expect(store.state[payload.id].subscribers[0]).toEqual({

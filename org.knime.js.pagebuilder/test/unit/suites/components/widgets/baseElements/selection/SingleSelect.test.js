@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect.vue';

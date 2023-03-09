@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, mount } from '@vue/test-utils';
 

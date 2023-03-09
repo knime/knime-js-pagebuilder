@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 /* eslint-disable max-lines */
 import { mount } from '@vue/test-utils';
 

@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
 import propsDataColumnLockedListImport from '~/test/unit/assets/propsDataColumnLockedList';
@@ -196,7 +197,7 @@ describe('ValueSelectionWidget.vue', () => {
                     SingleSelect: {
                         template: '<div />',
                         methods: {
-                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                            validate: vi.fn().mockReturnValueOnce(childResponse)
                                 .mockReturnValueOnce({ isValid: false })
                         }
                     }

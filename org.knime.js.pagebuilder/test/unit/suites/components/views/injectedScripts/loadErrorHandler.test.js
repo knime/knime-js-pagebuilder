@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import fs from 'fs';
 
 describe('load error handler', () => {
@@ -9,11 +10,11 @@ describe('load error handler', () => {
         // trick taken from https://jasonstitt.com/istanbul-cover-eval to allow coverage in evaluated src
         loadErrorHandlerSrc = instrumenter.instrumentSync(fs.readFileSync(filename, 'utf-8'), filename);
 
-        jest.spyOn(window, 'postMessage').mockImplementation(() => {});
+        vi.spyOn(window, 'postMessage').mockImplementation(() => {});
     });
 
     afterEach(() => {
-        jest.resetAllMocks();
+        vi.resetAllMocks();
         delete window.onerror;
     });
 

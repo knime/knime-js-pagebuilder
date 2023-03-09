@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -20,7 +21,7 @@ describe('wrapper API store', () => {
     });
 
     afterAll(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         delete window.jsonrpc;
     });
 
@@ -47,7 +48,7 @@ describe('wrapper API store', () => {
 
     describe('call service', () => {
         it('creates an RPC callService request', async () => {
-            let singleRPC = jest.fn();
+            let singleRPC = vi.fn();
             let store = getMockStore({ wrapperApiMocks: { singleRPC } });
             let nodeService = 'NodeService.callNodeDataService';
             let serviceRequest = 'data';
@@ -72,7 +73,7 @@ describe('wrapper API store', () => {
         });
 
         it('updates RPC parameters based on service method called', async () => {
-            let singleRPC = jest.fn();
+            let singleRPC = vi.fn();
             let store = getMockStore({ wrapperApiMocks: { singleRPC } });
             let nodeService = 'NodeService.updateDataPointSelection';
             let serviceRequest = 'ADD';
@@ -98,7 +99,7 @@ describe('wrapper API store', () => {
 
     describe('re-execution', () => {
         it('successfully dispatches nodeStateChange action', async () => {
-            let singleRPC = jest.fn();
+            let singleRPC = vi.fn();
             let store = getMockStore({ wrapperApiMocks: { singleRPC } });
             let nodeService = 'NodeService.changeNodeStates';
             let action = 'execute';
@@ -122,10 +123,10 @@ describe('wrapper API store', () => {
         it('successfully dispatches re-execute action', async () => {
             let validResponse = Promise.resolve({ foo: true });
             let valueResponse = Promise.resolve({ foo: 1 });
-            let getValidity = jest.fn().mockReturnValue(validResponse);
-            let getViewValues = jest.fn().mockReturnValue(valueResponse);
-            let showAlert = jest.fn().mockReturnValue(Promise.resolve({}));
-            let pollRPC = jest.fn();
+            let getValidity = vi.fn().mockReturnValue(validResponse);
+            let getViewValues = vi.fn().mockReturnValue(valueResponse);
+            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
+            let pollRPC = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { pollRPC },
                 pagebuilderMocks: { getViewValues, getValidity },
@@ -157,10 +158,10 @@ describe('wrapper API store', () => {
         it('does not trigger re-execution if validation fails', async () => {
             let validResponse = Promise.reject(new Error());
             let valueResponse = Promise.resolve({ foo: 1 });
-            let getValidity = jest.fn().mockReturnValue(validResponse);
-            let getViewValues = jest.fn().mockReturnValue(valueResponse);
-            let showAlert = jest.fn().mockReturnValue(Promise.resolve({}));
-            let pollRPC = jest.fn();
+            let getValidity = vi.fn().mockReturnValue(validResponse);
+            let getViewValues = vi.fn().mockReturnValue(valueResponse);
+            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
+            let pollRPC = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { pollRPC },
                 pagebuilderMocks: { getViewValues, getValidity },
@@ -182,10 +183,10 @@ describe('wrapper API store', () => {
         it('does not trigger re-execution if value retrieval fails', async () => {
             let validResponse = Promise.resolve({ foo: true });
             let valueResponse = Promise.reject(new Error());
-            let getValidity = jest.fn().mockReturnValue(validResponse);
-            let getViewValues = jest.fn().mockReturnValue(valueResponse);
-            let showAlert = jest.fn().mockReturnValue(Promise.resolve({}));
-            let pollRPC = jest.fn();
+            let getValidity = vi.fn().mockReturnValue(validResponse);
+            let getViewValues = vi.fn().mockReturnValue(valueResponse);
+            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
+            let pollRPC = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { pollRPC },
                 pagebuilderMocks: { getViewValues, getValidity },
@@ -207,7 +208,7 @@ describe('wrapper API store', () => {
 
     describe('wizard actions', () => {
         it('updates page', async () => {
-            let pollRPC = jest.fn();
+            let pollRPC = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { pollRPC }
             });
@@ -229,9 +230,9 @@ describe('wrapper API store', () => {
         });
 
         it('sets page', async () => {
-            let setNodesReExecuting = jest.fn();
-            let updatePage = jest.fn();
-            let showAlert = jest.fn();
+            let setNodesReExecuting = vi.fn();
+            let updatePage = vi.fn();
+            let showAlert = vi.fn();
             let store = getMockStore({
                 pagebuilderMocks: { setNodesReExecuting, updatePage },
                 alertMocks: { showAlert }
@@ -260,9 +261,9 @@ describe('wrapper API store', () => {
         });
 
         it('updates reset nodes if no page', async () => {
-            let setNodesReExecuting = jest.fn();
-            let updatePage = jest.fn();
-            let showAlert = jest.fn();
+            let setNodesReExecuting = vi.fn();
+            let updatePage = vi.fn();
+            let showAlert = vi.fn();
             let store = getMockStore({
                 pagebuilderMocks: { setNodesReExecuting, updatePage },
                 alertMocks: { showAlert }
@@ -279,9 +280,9 @@ describe('wrapper API store', () => {
         });
 
         it('updates reset nodes excluding finished nodes if no page', async () => {
-            let setNodesReExecuting = jest.fn();
-            let updatePage = jest.fn();
-            let showAlert = jest.fn();
+            let setNodesReExecuting = vi.fn();
+            let updatePage = vi.fn();
+            let showAlert = vi.fn();
             let store = getMockStore({
                 pagebuilderMocks: { setNodesReExecuting, updatePage },
                 alertMocks: { showAlert }
@@ -298,9 +299,9 @@ describe('wrapper API store', () => {
         });
 
         it('handles missing page and reset nodes', async () => {
-            let setNodesReExecuting = jest.fn();
-            let updatePage = jest.fn();
-            let showAlert = jest.fn();
+            let setNodesReExecuting = vi.fn();
+            let updatePage = vi.fn();
+            let showAlert = vi.fn();
             let store = getMockStore({
                 pagebuilderMocks: { setNodesReExecuting, updatePage },
                 alertMocks: { showAlert }
@@ -345,14 +346,14 @@ describe('wrapper API store', () => {
             let expected = { result: { foo: 2 } };
             let store = getMockStore();
 
-            let jsonrpcMock = jest.fn().mockReturnValue(JSON.stringify(expected));
+            let jsonrpcMock = vi.fn().mockReturnValue(JSON.stringify(expected));
             window.jsonrpc = jsonrpcMock;
             let res = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
             expect(jsonrpcMock).toHaveBeenCalledWith(JSON.stringify(rpcConfig));
             expect(res).toStrictEqual({ ...expected, error: EMPTY });
 
             window.jsonrpc = undefined;
-            const sendMock = jest.fn().mockReturnValue(expected);
+            const sendMock = vi.fn().mockReturnValue(expected);
             window.EquoCommService = {
                 send: sendMock
             };
@@ -370,7 +371,7 @@ describe('wrapper API store', () => {
                 params: []
             };
             let expectedError = 'Test error';
-            let rpcMock = jest.fn().mockImplementation(() => {
+            let rpcMock = vi.fn().mockImplementation(() => {
                 throw new Error(expectedError);
             });
             let store = getMockStore();
@@ -408,10 +409,10 @@ describe('wrapper API store', () => {
             };
             let expectedRes = { result: { page: { webNodes: { foo: 3 } } } };
             let rpcResponse = Promise.resolve(expectedRes);
-            let singleRPC = jest.fn().mockReturnValue(rpcResponse);
-            let setPage = jest.fn().mockReturnValue(false);
-            let showAlert = jest.fn().mockReturnValue(Promise.resolve({}));
-            let updatePage = jest.fn();
+            let singleRPC = vi.fn().mockReturnValue(rpcResponse);
+            let setPage = vi.fn().mockReturnValue(false);
+            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
+            let updatePage = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { singleRPC, setPage },
                 alertMocks: { showAlert }
@@ -425,7 +426,7 @@ describe('wrapper API store', () => {
         });
 
         it('handles RPC polling with resolution after multiple call', async () => {
-            jest.useFakeTimers();
+            vi.useFakeTimers();
             let rpcConfig = {
                 nodeId: 'foo',
                 rpcConfig: {
@@ -442,16 +443,16 @@ describe('wrapper API store', () => {
             };
             let expectedRes = { result: { page: { webNodes: { foo: 3 } } } };
             let rpcResponse = Promise.resolve(expectedRes);
-            let singleRPC = jest.fn().mockReturnValue(rpcResponse);
-            let setPage = jest.fn().mockReturnValueOnce({ shouldPoll: true })
+            let singleRPC = vi.fn().mockReturnValue(rpcResponse);
+            let setPage = vi.fn().mockReturnValueOnce({ shouldPoll: true })
                 .mockReturnValueOnce({ shouldPoll: false });
-            let showAlert = jest.fn().mockReturnValue(Promise.resolve({}));
+            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
             let store = getMockStore({
                 wrapperApiMocks: { singleRPC, setPage },
                 alertMocks: { showAlert }
             });
-            let updatePageMock = jest.spyOn(store._actions.updatePage, '0');
-            let pollRPCMock = jest.spyOn(store._actions.pollRPC, '0');
+            let updatePageMock = vi.spyOn(store._actions.updatePage, '0');
+            let pollRPCMock = vi.spyOn(store._actions.pollRPC, '0');
 
             await store.dispatch('pollRPC', config);
 
@@ -462,7 +463,7 @@ describe('wrapper API store', () => {
             expect(setPage).toHaveBeenCalledWith(expect.anything(), expectedRes.result, EMPTY);
             expect(updatePageMock).not.toHaveBeenCalled();
 
-            jest.runAllTimers();
+            vi.runAllTimers();
 
             expect(pollRPCMock).toHaveBeenCalledTimes(2);
             expect(singleRPC).toHaveBeenCalledTimes(2);
@@ -473,7 +474,7 @@ describe('wrapper API store', () => {
             expect(setPage).toHaveBeenLastCalledWith(expect.anything(), expectedRes.result, EMPTY);
             expect(updatePageMock).toHaveBeenCalledWith(rpcConfig);
 
-            jest.clearAllTimers();
+            vi.clearAllTimers();
         });
 
         it('handles errors during RPC polling', async () => {
@@ -492,10 +493,10 @@ describe('wrapper API store', () => {
             };
             let expectedRes = { error: 'Something went wrong' };
             let rpcResponse = Promise.resolve(expectedRes);
-            let singleRPC = jest.fn().mockReturnValue(rpcResponse);
-            let setPage = jest.fn();
-            let showAlert = jest.fn().mockReturnValue(Promise.resolve({}));
-            let updatePage = jest.fn();
+            let singleRPC = vi.fn().mockReturnValue(rpcResponse);
+            let setPage = vi.fn();
+            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
+            let updatePage = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { singleRPC, setPage, updatePage },
                 alertMocks: { showAlert }
@@ -518,7 +519,7 @@ describe('wrapper API store', () => {
         it('shows pagebuilder alert messages', () => {
             let caller = 'testFn';
             let error = 'testError';
-            let showAlert = jest.fn();
+            let showAlert = vi.fn();
             let store = getMockStore({
                 alertMocks: { showAlert }
             });

@@ -97,5 +97,5 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import '../mixins/layoutMixin.css';
+@import url('../mixins/layoutMixin.css');
 </style>

@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import overrideRequired from '~/src/util/overrideRequired';
 
 describe('overrideRequired util', () => {

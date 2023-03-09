@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay.vue';
@@ -49,7 +50,7 @@ describe('ExecutingOverlay.vue', () => {
         const overlayHeight2 = 100;
         const expectedSpinnerHeight2 = 40;
         Object.defineProperty(wrapper.vm.$refs.overlay, 'offsetHeight', {
-            get: jest.fn()
+            get: vi.fn()
                 .mockImplementationOnce(() => overlayHeight1)
                 .mockImplementationOnce(() => overlayHeight2)
         });

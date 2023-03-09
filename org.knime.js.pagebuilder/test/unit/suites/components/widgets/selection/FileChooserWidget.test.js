@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Vue from 'vue';
@@ -126,7 +127,7 @@ describe('FileChooserWidget.vue AP', () => {
         propsData = JSON.parse(JSON.stringify(propsDataTemplate));
         propsData.nodeConfig.viewRepresentation.runningOnServer = true;
 
-        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValue(false);
+        window.KnimePageLoader.isRunningInWebportal = vi.fn().mockReturnValue(false);
     });
 
     it('renders', () => {
@@ -259,7 +260,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
                 },
                 wizardExecution: {
                     getters: {
-                        workflowPath: jest.fn().mockReturnValue('/../test/../')
+                        workflowPath: vi.fn().mockReturnValue('/../test/../')
                     },
                     namespaced: true
                 }
@@ -317,7 +318,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
             ]
         };
         // mocks the pageloade to simulate execution in new webportal
-        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValue(true);
+        window.KnimePageLoader.isRunningInWebportal = vi.fn().mockReturnValue(true);
     });
 
     it('updates tree on change of viewRepresentation on new WebPortal', async () => {
@@ -343,7 +344,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
     });
 
     it('shows info message if it is not running on the server', () => {
-        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValueOnce(false);
+        window.KnimePageLoader.isRunningInWebportal = vi.fn().mockReturnValueOnce(false);
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
@@ -352,7 +353,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
     });
 
     it('reports as valid if info message is shown', () => {
-        window.KnimePageLoader.isRunningInWebportal = jest.fn().mockReturnValueOnce(false);
+        window.KnimePageLoader.isRunningInWebportal = vi.fn().mockReturnValueOnce(false);
         let wrapper = mount(FileChooserWidget, {
             propsData,
             mocks
@@ -490,7 +491,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
                 },
                 wizardExecution: {
                     getters: {
-                        workflowPath: jest.fn().mockReturnValue('/../test/../')
+                        workflowPath: vi.fn().mockReturnValue('/../test/../')
                     },
                     namespaced: true
                 }

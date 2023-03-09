@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import wrapViewContent from '~/src/util/wrapViewContent';
 
 const localWrapView = item => ({

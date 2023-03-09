@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createTicks } from '@/util/widgetUtil/slider/tickUtil';
 
 describe('tickUtil.js', () => {

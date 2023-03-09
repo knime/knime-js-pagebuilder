@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -13,7 +14,7 @@ describe('Interactivity store', () => {
 
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     const prefix = 'selection-';
@@ -119,7 +120,7 @@ describe('Interactivity store', () => {
         it('keeps non-translator subscribers registered during update', () => {
             let translator = { sourceID, targetIDs, forward: true };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             let id = prefix + targetIDs[0];
             store.dispatch('subscribe', { id, callback: subscriber });
             expect(store.state[id].subscribers).toHaveLength(2);
@@ -187,7 +188,7 @@ describe('Interactivity store', () => {
         it('forwards selection event to target', () => {
             let translator = { sourceID, targetIDs, forward: true };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             store.dispatch('subscribe', { id: prefix + targetIDs[0], callback: subscriber });
             expect(subscriber).not.toHaveBeenCalled();
             let payload = { changeSet: { added: ['Row42'] } };
@@ -200,7 +201,7 @@ describe('Interactivity store', () => {
             store.dispatch('registerSelectionTranslator', { translator });
             let callbacks = [];
             multipleTargetIDs.forEach((targetID) => {
-                let callback = jest.fn();
+                let callback = vi.fn();
                 callbacks.push(callback);
                 store.dispatch('subscribe', { id: prefix + targetID, callback });
                 expect(callback).not.toHaveBeenCalled();
@@ -215,7 +216,7 @@ describe('Interactivity store', () => {
         it('forwards selection event to source', () => {
             let translator = { sourceID, targetIDs, forward: true };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             store.dispatch('subscribe', { id: prefix + sourceID, callback: subscriber });
             expect(subscriber).not.toHaveBeenCalled();
             let payload = { changeSet: { added: ['Row42'] } };
@@ -235,7 +236,7 @@ describe('Interactivity store', () => {
             let mapping = { wibble: ['wobble'] };
             let translator = { sourceID, targetIDs, mapping };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             store.dispatch('subscribe', { id: prefix + targetIDs[0], callback: subscriber });
             let payload = { changeSet: { added: ['wibble'] } };
             store.dispatch('publish', { id: prefix + sourceID, data: payload });
@@ -248,7 +249,7 @@ describe('Interactivity store', () => {
             let mapping = { wibble: ['wobble'] };
             let translator = { sourceID, targetIDs, mapping };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             store.dispatch('subscribe', { id: prefix + sourceID, callback: subscriber });
             let payload = { changeSet: { added: ['wobble'] } };
             store.dispatch('publish', { id: prefix + targetIDs[0], data: payload });
@@ -261,7 +262,7 @@ describe('Interactivity store', () => {
             let mapping = { wibble: ['wobble'] };
             let translator = { sourceID, targetIDs, mapping };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             store.dispatch('subscribe', { id: prefix + targetIDs[0], callback: subscriber });
             let payload = { changeSet: { added: ['foo'] } };
             store.dispatch('publish', { id: prefix + sourceID, data: payload });
@@ -272,7 +273,7 @@ describe('Interactivity store', () => {
             let mapping = { wibble: ['wobble', 'wubble', 'flob'] };
             let translator = { sourceID, targetIDs, mapping };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             store.dispatch('subscribe', { id: prefix + targetIDs[0], callback: subscriber });
             let payload = { changeSet: { added: ['wibble'] } };
             store.dispatch('publish', { id: prefix + sourceID, data: payload });
@@ -290,7 +291,7 @@ describe('Interactivity store', () => {
             let mapping = { wibble: ['wobble', 'wubble', 'flob'] };
             let translator = { sourceID, targetIDs, mapping };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             store.dispatch('subscribe', { id: prefix + sourceID, callback: subscriber });
             let payload = { changeSet: { added: mapping.wibble } };
             store.dispatch('publish', { id: prefix + targetIDs[0], data: payload });
@@ -308,7 +309,7 @@ describe('Interactivity store', () => {
             let mapping = { wibble: ['wobble', 'wubble', 'flob'] };
             let translator = { sourceID, targetIDs, mapping };
             store.dispatch('registerSelectionTranslator', { translator });
-            let subscriber = jest.fn();
+            let subscriber = vi.fn();
             store.dispatch('subscribe', { id: prefix + sourceID, callback: subscriber });
 
             let payload = { changeSet: { added: ['wobble'] } };
@@ -318,7 +319,7 @@ describe('Interactivity store', () => {
                 changeSet: { partialAdded: ['wibble'] }
             }));
 
-            jest.resetAllMocks();
+            vi.resetAllMocks();
             payload = { changeSet: { added: ['wubble'] } };
             store.dispatch('publish', { id: prefix + targetIDs[0], data: payload });
             // no change to mapped event, subscriber is not called
@@ -338,7 +339,7 @@ describe('Interactivity store', () => {
                 changeSet: { removed: ['wibble'], partialAdded: ['wibble'] }
             }));
 
-            jest.resetAllMocks();
+            vi.resetAllMocks();
             payload = { changeSet: { removed: ['flob'] } };
             store.dispatch('publish', { id: prefix + targetIDs[0], data: payload });
             // no change to mapped event, subscriber is not called

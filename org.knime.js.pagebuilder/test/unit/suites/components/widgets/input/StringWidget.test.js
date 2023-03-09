@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
@@ -253,8 +254,8 @@ describe('StringWidget.vue', () => {
                 InputField: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue('test_string'),
-                        validate: jest.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                        getValue: vi.fn().mockReturnValue('test_string'),
+                        validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
                     }
                 }
             }
@@ -271,8 +272,8 @@ describe('StringWidget.vue', () => {
                 InputField: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue('test_string'),
-                        validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        getValue: vi.fn().mockReturnValue('test_string'),
+                        validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
                     }
                 }
             }
@@ -290,8 +291,8 @@ describe('StringWidget.vue', () => {
                 InputField: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue('test_string'),
-                        validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        getValue: vi.fn().mockReturnValue('test_string'),
+                        validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
                     }
                 }
             }
@@ -308,7 +309,7 @@ describe('StringWidget.vue', () => {
                 InputField: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue('abc')
+                        getValue: vi.fn().mockReturnValue('abc')
                     }
                 }
             }
@@ -325,7 +326,7 @@ describe('StringWidget.vue', () => {
                 InputField: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(null)
+                        getValue: vi.fn().mockReturnValue(null)
                     }
                 }
             }

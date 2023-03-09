@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import formatTooltip from '@/util/tooltipFormatter';
 

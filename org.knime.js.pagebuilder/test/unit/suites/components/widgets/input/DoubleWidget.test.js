@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import DoubleWidget from '@/components/widgets/input/DoubleWidget.vue';
@@ -31,13 +32,13 @@ describe('DoubleWidget.vue', () => {
                 NumberWidget: {
                     template: '<div />',
                     methods: {
-                        validate: jest.fn(),
-                        onChange: jest.fn()
+                        validate: vi.fn(),
+                        onChange: vi.fn()
                     }
                 }
             },
             listeners: {
-                fakeEvent: jest.fn()
+                fakeEvent: vi.fn()
             }
         };
     });

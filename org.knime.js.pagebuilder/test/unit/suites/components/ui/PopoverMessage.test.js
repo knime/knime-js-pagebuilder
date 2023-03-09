@@ -1,10 +1,11 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import PopoverMessage from '~/src/components/ui/PopoverMessage.vue';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import Button from 'webapps-common/ui/components/Button.vue';
 
-jest.mock('~/webapps-common/util/copyText');
+vi.mock('~/webapps-common/util/copyText');
 
 describe('PopoverMessage', () => {
     let wrapper;
@@ -40,7 +41,7 @@ describe('PopoverMessage', () => {
     });
 
     it('copies text', () => {
-        const dispatchMock = jest.fn();
+        const dispatchMock = vi.fn();
         wrapper = shallowMount(PopoverMessage, {
             propsData: {
                 type: 'error',

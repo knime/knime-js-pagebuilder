@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="4" failures="4" errors="0" time="3.443">
+    <testsuite name="test/unit/suites/components/APWrapper.test.js" timestamp="2023-03-09T14:32:00.876Z" hostname="baernrep-Precision-5550" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+    <testsuite name="test/unit/suites/components/PageBuilder.test.js" timestamp="2023-03-09T14:32:00.876Z" hostname="baernrep-Precision-5550" tests="4" failures="4" errors="0" skipped="0" time="0.011">
+        <testcase classname="test/unit/suites/components/PageBuilder.test.js" name="PageBuilder.vue &gt; initializes the pagebuilder store" time="0.003">
+            <failure message="createLocalVue is not a function" type="TypeError">
+TypeError: createLocalVue is not a function
+ ❯ test/unit/suites/components/PageBuilder.test.js:13:20
+            </failure>
+        </testcase>
+        <testcase classname="test/unit/suites/components/PageBuilder.test.js" name="PageBuilder.vue &gt; renders" time="0">
+            <failure message="createLocalVue is not a function" type="TypeError">
+TypeError: createLocalVue is not a function
+ ❯ test/unit/suites/components/PageBuilder.test.js:13:20
+            </failure>
+        </testcase>
+        <testcase classname="test/unit/suites/components/PageBuilder.test.js" name="PageBuilder.vue &gt; hide global alert when page isDialogLayout" time="0.001">
+            <failure message="createLocalVue is not a function" type="TypeError">
+TypeError: createLocalVue is not a function
+ ❯ test/unit/suites/components/PageBuilder.test.js:13:20
+            </failure>
+        </testcase>
+        <testcase classname="test/unit/suites/components/PageBuilder.test.js" name="PageBuilder.vue &gt; does not render Page if called with unsupported wizardExecutionState" time="0">
+            <failure message="createLocalVue is not a function" type="TypeError">
+TypeError: createLocalVue is not a function
+ ❯ test/unit/suites/components/PageBuilder.test.js:13:20
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="test/unit/suites/components/PageBuilderCredits.test.js" timestamp="2023-03-09T14:32:00.878Z" hostname="baernrep-Precision-5550" tests="0" failures="0" errors="0" skipped="0" time="0">
+    </testsuite>
+</testsuites>

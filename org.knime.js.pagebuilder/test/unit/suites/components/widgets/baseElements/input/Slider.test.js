@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import Slider from '@/components/widgets/baseElements/input/Slider.vue';

@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import Row from '@/components/layout/Row.vue';

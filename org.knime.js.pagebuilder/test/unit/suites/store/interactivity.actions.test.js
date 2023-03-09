@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -13,7 +14,7 @@ describe('Interactivity store', () => {
 
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     it('creates an empty store', () => {
@@ -30,7 +31,7 @@ describe('Interactivity store', () => {
         });
 
         it('allows adding a subscriber without elementFilter', () => {
-            let payload = { id: subscriberId, callback: jest.fn() };
+            let payload = { id: subscriberId, callback: vi.fn() };
             store.dispatch('subscribe', payload);
             expect(store.state[payload.id].subscribers.length).toEqual(1);
             expect(store.state[payload.id].subscribers[0]).toEqual({
@@ -42,7 +43,7 @@ describe('Interactivity store', () => {
         });
 
         it('allows adding a subscriber with elementFilter', () => {
-            let payload = { id: subscriberId, callback: jest.fn(), elementFilter: [2] };
+            let payload = { id: subscriberId, callback: vi.fn(), elementFilter: [2] };
             store.dispatch('subscribe', payload);
             expect(store.state[payload.id].subscribers.length).toEqual(1);
             expect(store.state[payload.id].subscribers[0]).toEqual({
@@ -54,7 +55,7 @@ describe('Interactivity store', () => {
         });
 
         it('informs callback of current state when subscribing', () => {
-            let payload = { id: dataId, callback: jest.fn() };
+            let payload = { id: dataId, callback: vi.fn() };
             store.dispatch('subscribe', payload);
             expect(store.state[payload.id].subscribers.length).toEqual(1);
             expect(store.state[payload.id].subscribers[0]).toEqual({
@@ -70,7 +71,7 @@ describe('Interactivity store', () => {
 
     describe('removing subscribers', () => {
         const id = 'selection-12345-12345-12345';
-        const payload = { id, callback: jest.fn(), elementFilter: 2 };
+        const payload = { id, callback: vi.fn(), elementFilter: 2 };
 
         it('allows removing a subscriber', () => {
             store.commit('addSubscriber', payload);
@@ -89,7 +90,7 @@ describe('Interactivity store', () => {
     describe('updating filters', () => {
         const id = 'filter-12345-12345-12345';
         const filterId = '0.0.9 Spectre';
-        const payload = { id, data: { id: filterId, data: 42 }, callback: jest.fn() };
+        const payload = { id, data: { id: filterId, data: 42 }, callback: vi.fn() };
 
         it('adds a filter if it hasn\'t been added', () => {
             expect(store.state[payload.id]).not.toBeDefined();
@@ -128,8 +129,8 @@ describe('Interactivity store', () => {
             const filterId = '0.0.8 Bill';
             const filterId2 = '0.0.9 Spectre';
             const minimalData = { elements: [{ id: filterId, data: 42 }] };
-            let subscriberCallback = jest.fn();
-            let filteredCallback = jest.fn();
+            let subscriberCallback = vi.fn();
+            let filteredCallback = vi.fn();
 
             beforeEach(() => {
                 let subscriber = { id: publishId, callback: subscriberCallback };
@@ -167,7 +168,7 @@ describe('Interactivity store', () => {
                 doubleData.elements.push(secondElement);
                 let payload = { id: publishId, data: doubleData };
                 store.dispatch('publish', payload);
-                jest.resetAllMocks();
+                vi.resetAllMocks();
 
                 // relevant element changed
                 let filteredData = JSON.parse(JSON.stringify(minimalData));
@@ -190,14 +191,14 @@ describe('Interactivity store', () => {
             it('does not notify on unchanged data', () => {
                 let payload = { id: publishId, data: minimalData };
                 store.dispatch('publish', payload);
-                jest.resetAllMocks();
+                vi.resetAllMocks();
                 store.dispatch('publish', payload);
                 expect(subscriberCallback).not.toHaveBeenCalled();
                 expect(filteredCallback).not.toHaveBeenCalled();
             });
 
             it('does not notify skipped callback', () => {
-                let skipCallback = jest.fn();
+                let skipCallback = vi.fn();
                 let skipPayload = { id: publishId, callback: skipCallback };
                 store.commit('addSubscriber', skipPayload);
                 let payload = { id: publishId, data: minimalData, skipCallback };
@@ -422,7 +423,7 @@ describe('Interactivity store', () => {
 
         it('allows clearing the store without data', () => {
             expect(store.state).toEqual({});
-            let payload = { id: '0.0.7', callback: jest.fn() };
+            let payload = { id: '0.0.7', callback: vi.fn() };
             store.commit('addSubscriber', payload);
             expect(store.state[payload.id]).toBeDefined();
             store.dispatch('clear');

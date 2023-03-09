@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import WebNode from '@/components/views/WebNode.vue';

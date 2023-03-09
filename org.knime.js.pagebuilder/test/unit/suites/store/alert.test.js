@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterEach, it, vi } from 'vitest';
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -13,11 +14,11 @@ describe('alert store', () => {
 
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it('creates an empty store', () => {
@@ -39,7 +40,7 @@ describe('alert store', () => {
     });
 
     it('calls a callback when closing the alert if provided', () => {
-        let callbackMock = jest.fn();
+        let callbackMock = vi.fn();
         let testAlert = {
             id: '1:2:3:4',
             callback: callbackMock
@@ -51,7 +52,7 @@ describe('alert store', () => {
     });
 
     it('passes a parameter to the callback function on close', () => {
-        let callbackMock = jest.fn();
+        let callbackMock = vi.fn();
         let testAlert = {
             id: '1:2:3:4',
             callback: callbackMock

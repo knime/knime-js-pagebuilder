@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import AlertLocal from '@/components/ui/AlertLocal.vue';

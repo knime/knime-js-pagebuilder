@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 
@@ -68,9 +69,9 @@ describe('ViewExecutable.vue', () => {
         let localVue, context, applySettingsMock, changeNodeStatesMock, showAlertMock;
 
         beforeAll(() => {
-            applySettingsMock = jest.fn();
-            changeNodeStatesMock = jest.fn();
-            showAlertMock = jest.fn();
+            applySettingsMock = vi.fn();
+            changeNodeStatesMock = vi.fn();
+            showAlertMock = vi.fn();
 
             localVue = createLocalVue();
             localVue.use(Vuex);
@@ -103,7 +104,7 @@ describe('ViewExecutable.vue', () => {
         });
 
         afterEach(() => {
-            jest.clearAllMocks();
+            vi.clearAllMocks();
         });
 
         it('shows the executing overlay', async () => {

@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import Vue from 'vue';
 import { shallowMount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
@@ -11,7 +12,7 @@ describe('UIExtComponent.vue', () => {
     const { resourceInfo } = extensionConfig;
     const context = {
         propsData: { resourceLocation: resourceInfo.url },
-        provide: { getKnimeService: () => new KnimeService(extensionConfig, jest.fn()) }
+        provide: { getKnimeService: () => new KnimeService(extensionConfig, vi.fn()) }
     };
     const mockComponentId = resourceInfo.id;
     const mockComponent = Vue.component(mockComponentId, {
@@ -19,7 +20,7 @@ describe('UIExtComponent.vue', () => {
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         delete window[mockComponentId];
     });
 
@@ -32,7 +33,7 @@ describe('UIExtComponent.vue', () => {
 
     it('skips loading a component library which is already loaded', async () => {
         window[mockComponentId] = mockComponent;
-        let loadComponentSpy = jest.spyOn(loadingModule, 'loadComponentLibrary');
+        let loadComponentSpy = vi.spyOn(loadingModule, 'loadComponentLibrary');
 
         let wrapper = await shallowMount(UIExtComponent, {
             ...context,
@@ -46,7 +47,7 @@ describe('UIExtComponent.vue', () => {
     });
 
     it('loads a component library if not already loaded', async () => {
-        let loadComponentSpy = jest.spyOn(loadingModule, 'loadComponentLibrary')
+        let loadComponentSpy = vi.spyOn(loadingModule, 'loadComponentLibrary')
             .mockImplementation((win, resourceLocation, componentId) => {
                 win[componentId] = mockComponent;
                 return mockComponent;

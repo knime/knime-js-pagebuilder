@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
@@ -320,7 +321,7 @@ describe('SliderWidget.vue', () => {
                 Slider: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(50)
+                        getValue: vi.fn().mockReturnValue(50)
                     }
                 }
             }
@@ -340,8 +341,8 @@ describe('SliderWidget.vue', () => {
                 Slider: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(null),
-                        validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        getValue: vi.fn().mockReturnValue(null),
+                        validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
                     }
                 }
             }
@@ -371,8 +372,8 @@ describe('SliderWidget.vue', () => {
                 Slider: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(null),
-                        validate: jest.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                        getValue: vi.fn().mockReturnValue(null),
+                        validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
                     }
                 }
             }

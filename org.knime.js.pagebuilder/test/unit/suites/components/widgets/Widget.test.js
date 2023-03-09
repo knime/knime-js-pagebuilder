@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
@@ -106,7 +107,7 @@ describe('Widget.vue', () => {
         store.registerModule('api', {
             namespaced: true,
             actions: {
-                triggerReExecution: jest.fn()
+                triggerReExecution: vi.fn()
             }
         });
         let page = {
@@ -140,7 +141,7 @@ describe('Widget.vue', () => {
                         onChange() {
                             return true;
                         }, // because hasValueGetter checks for it,
-                        validate: jest.fn().mockReturnValue(Promise.resolve(true))
+                        validate: vi.fn().mockReturnValue(Promise.resolve(true))
                     }
                 }
             }
@@ -182,7 +183,7 @@ describe('Widget.vue', () => {
     });
 
     it('uses update object in change event if provided', () => {
-        let updateMock = jest.spyOn(wrapper.vm, 'updateWebNode');
+        let updateMock = vi.spyOn(wrapper.vm, 'updateWebNode');
         wrapper.vm.publishUpdate({
             nodeId,
             update: {
@@ -243,7 +244,7 @@ describe('Widget.vue', () => {
                 type: 'SliderWidget'
             }
         });
-        let mock = jest.fn();
+        let mock = vi.fn();
         localWrapper.vm.publishUpdate({
             nodeId,
             type: 'testValue',
@@ -364,7 +365,7 @@ describe('Widget.vue', () => {
                     template: '<div />',
                     ref: 'widget',
                     methods: {
-                        validate: jest.fn().mockReturnValue(Promise.resolve(true))
+                        validate: vi.fn().mockReturnValue(Promise.resolve(true))
                     }
                 }
             },
@@ -381,7 +382,7 @@ describe('Widget.vue', () => {
             }
         });
 
-        let updateSpy = jest.spyOn(localWrapper.vm, 'updateWebNode').mockResolvedValueOnce(true);
+        let updateSpy = vi.spyOn(localWrapper.vm, 'updateWebNode').mockResolvedValueOnce(true);
         await localWrapper.vm.$refs.widget.$emit('updateWidget', { type: 'any', value: 'some' });
 
         expect(updateSpy).not.toHaveBeenCalled();
@@ -402,7 +403,7 @@ describe('Widget.vue', () => {
                 type: 'SliderWidget'
             }
         });
-        let updateSpy = jest.spyOn(localWrapper.vm, 'updateWebNode').mockReturnValueOnce(true);
+        let updateSpy = vi.spyOn(localWrapper.vm, 'updateWebNode').mockReturnValueOnce(true);
         await localWrapper.vm.$refs.widget.$emit('updateWidget', { type: 'any', value: 'some' });
 
         expect(updateSpy).toHaveBeenCalledWith({
@@ -423,7 +424,7 @@ describe('Widget.vue', () => {
                     template: '<div />',
                     ref: 'widget',
                     methods: {
-                        validate: jest.fn().mockReturnValue(Promise.resolve(true))
+                        validate: vi.fn().mockReturnValue(Promise.resolve(true))
                     }
                 }
             },
@@ -440,7 +441,7 @@ describe('Widget.vue', () => {
             }
         });
 
-        let triggerSpy = jest.spyOn(localWrapper.vm, 'triggerReExecution').mockReturnValueOnce(true);
+        let triggerSpy = vi.spyOn(localWrapper.vm, 'triggerReExecution').mockReturnValueOnce(true);
         await localWrapper.vm.$refs.widget.$emit('updateWidget', { type: 'any', value: 'some' });
 
         expect(triggerSpy).toHaveBeenCalled();

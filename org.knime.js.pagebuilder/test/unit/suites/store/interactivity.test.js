@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -13,7 +14,7 @@ describe('Interactivity store', () => {
 
     beforeEach(() => {
         store = new Vuex.Store(storeConfig);
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     it('creates an empty store', () => {
@@ -25,7 +26,7 @@ describe('Interactivity store', () => {
             it('returns the data', () => {
                 let id = 'selection-12345-12345-12345';
                 let minimalDummyData = { elements: [{ id: 1, testData: 1 }] };
-                let payload = { id, data: minimalDummyData, callback: jest.fn() };
+                let payload = { id, data: minimalDummyData, callback: vi.fn() };
                 store.dispatch('publish', payload);
 
                 expect(store.getters.getPublishedData(id)).toEqual(payload.data);

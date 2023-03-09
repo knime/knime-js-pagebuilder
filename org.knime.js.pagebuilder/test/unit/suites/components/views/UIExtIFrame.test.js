@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import { IFrameKnimeServiceAdapter } from '@knime/ui-extension-service';
 
@@ -11,7 +12,7 @@ describe('UIExtIFrame.vue', () => {
     let wrapper, knimeService;
 
     beforeAll(() => {
-        knimeService = new IFrameKnimeServiceAdapter(extensionConfig, jest.fn());
+        knimeService = new IFrameKnimeServiceAdapter(extensionConfig, vi.fn());
         wrapper = shallowMount(UIExtIFrame, {
             propsData: { resourceLocation: resourceInfo.url },
             provide: { getKnimeService: () => knimeService }
@@ -19,7 +20,7 @@ describe('UIExtIFrame.vue', () => {
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it('renders html as iframes', () => {
@@ -30,7 +31,7 @@ describe('UIExtIFrame.vue', () => {
     });
 
     it('destroys knime service before component destroy', () => {
-        let destroySpy = jest.spyOn(knimeService, 'destroy');
+        let destroySpy = vi.spyOn(knimeService, 'destroy');
         wrapper.destroy();
         expect(destroySpy).toHaveBeenCalled();
     });

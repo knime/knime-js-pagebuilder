@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 
@@ -79,7 +80,7 @@ describe('DialogLayout.vue', () => {
     });
 
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it('renders', () => {
@@ -126,7 +127,7 @@ describe('DialogLayout.vue', () => {
         wrapper.vm.$store.dispatch('pagebuilder/alert/showAlert', mockAlert);
         const messagesWrapper = wrapper.find(Messages);
         expect(messagesWrapper.exists()).toBeTruthy();
-        const closeSpy = jest.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/closeAlert'], '0');
+        const closeSpy = vi.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/closeAlert'], '0');
         messagesWrapper.vm.$emit('dismiss');
         expect(closeSpy).toHaveBeenCalled();
     });

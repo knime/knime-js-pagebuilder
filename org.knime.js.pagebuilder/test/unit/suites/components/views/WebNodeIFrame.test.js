@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
@@ -8,13 +9,13 @@ import * as storeConfig from '@/../store/pagebuilder';
 import * as alertStoreConfig from '@/../store/alert';
 
 // extra mock to simulate a loaded view script
-jest.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
+vi.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
     foo = ['%NODEID%'];`, { virtual: true });
-jest.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertHandler.js mock";
+vi.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertHandler.js mock";
     foo = ['%NODEID%'];`, { virtual: true });
-jest.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
+vi.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
     foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
-jest.mock('iframe-resizer');
+vi.mock('iframe-resizer');
 
 describe('WebNodeIFrame.vue', () => {
     let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
@@ -24,43 +25,43 @@ describe('WebNodeIFrame.vue', () => {
         localVue = createLocalVue();
         localVue.use(Vuex);
 
-        storeConfig.actions.setWebNodeLoading = jest.fn();
-        mockGetPublishedData = jest.fn();
+        storeConfig.actions.setWebNodeLoading = vi.fn();
+        mockGetPublishedData = vi.fn();
         interactivityConfig = {
             namespaced: true,
             actions: {
-                subscribe: jest.fn(),
-                unsubscribe: jest.fn(),
-                publish: jest.fn(),
-                registerSelectionTranslator: jest.fn(),
-                clear: jest.fn()
+                subscribe: vi.fn(),
+                unsubscribe: vi.fn(),
+                publish: vi.fn(),
+                registerSelectionTranslator: vi.fn(),
+                clear: vi.fn()
             },
             getters: {
-                getPublishedData: jest.fn().mockReturnValue(mockGetPublishedData)
+                getPublishedData: vi.fn().mockReturnValue(mockGetPublishedData)
             }
         };
-        mockGetUser = jest.fn();
-        mockGetRepository = jest.fn();
-        mockGetDownloadLink = jest.fn();
-        mockGetUploadLink = jest.fn();
-        mockUpload = jest.fn();
+        mockGetUser = vi.fn();
+        mockGetRepository = vi.fn();
+        mockGetDownloadLink = vi.fn();
+        mockGetUploadLink = vi.fn();
+        mockUpload = vi.fn();
         apiConfig = {
             namespaced: true,
             actions: {
                 uploadResource: mockUpload
             },
             getters: {
-                user: jest.fn().mockReturnValue(mockGetUser),
-                repository: jest.fn().mockReturnValue(mockGetRepository),
-                downloadResourceLink: jest.fn().mockReturnValue(mockGetDownloadLink),
-                uploadResourceLink: jest.fn().mockReturnValue(mockGetUploadLink)
+                user: vi.fn().mockReturnValue(mockGetUser),
+                repository: vi.fn().mockReturnValue(mockGetRepository),
+                downloadResourceLink: vi.fn().mockReturnValue(mockGetDownloadLink),
+                uploadResourceLink: vi.fn().mockReturnValue(mockGetUploadLink)
             }
         };
         wizardConfig = {
             namespaced: true,
             getters: {
-                workflowPath: jest.fn().mockReturnValue('/some/path'),
-                currentJobId: jest.fn().mockReturnValue(1)
+                workflowPath: vi.fn().mockReturnValue('/some/path'),
+                currentJobId: vi.fn().mockReturnValue(1)
             }
         };
         settingsConfig = {
@@ -79,7 +80,7 @@ describe('WebNodeIFrame.vue', () => {
                 }
             },
             getters: {
-                getCustomSketcherPath: jest.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
+                getCustomSketcherPath: vi.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
         };
         store = new Vuex.Store({ modules: {
@@ -120,7 +121,7 @@ describe('WebNodeIFrame.vue', () => {
 
     afterEach(() => {
         wrapper?.destroy();
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it('renders', () => {
@@ -237,7 +238,7 @@ describe('WebNodeIFrame.vue', () => {
                 }
             });
 
-            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+            vi.spyOn(wrapper.vm.document.defaultView, 'postMessage');
 
             // fake resource loading
             // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260
@@ -291,7 +292,7 @@ describe('WebNodeIFrame.vue', () => {
     });
 
     it('passes sizing config to iframe-resizer', async () => {
-        let { iframeResizer } = jest.requireMock('iframe-resizer');
+        let { iframeResizer } = vi.requireMock('iframe-resizer');
         let viewConfig = {
             nodeID: '0:0:7',
             resizeMethod: 'viewLowestElement',
@@ -351,7 +352,7 @@ describe('WebNodeIFrame.vue', () => {
                     nodeId: '0:0:7'
                 }
             });
-            jest.spyOn(wrapper.vm.document.defaultView, 'postMessage');
+            vi.spyOn(wrapper.vm.document.defaultView, 'postMessage');
             wrapper.vm.getValue();
             expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith({
                 nodeId: '0:0:7',
@@ -464,7 +465,7 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         it('handles show alert events', () => {
-            let showAlertMock = jest.fn();
+            let showAlertMock = vi.fn();
             let localWrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 store: new Vuex.Store({ modules: {

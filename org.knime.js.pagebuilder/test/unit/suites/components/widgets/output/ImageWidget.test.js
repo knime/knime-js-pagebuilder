@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import ImageWidget from '@/components/widgets/output/ImageWidget.vue';

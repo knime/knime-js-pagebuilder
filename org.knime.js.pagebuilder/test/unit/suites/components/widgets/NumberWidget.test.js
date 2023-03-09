@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import NumberWidget from '@/components/widgets/NumberWidget.vue';
@@ -119,8 +120,8 @@ describe('NumberWidget.vue', () => {
                 NumberInput: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(null),
-                        validate: jest.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                        getValue: vi.fn().mockReturnValue(null),
+                        validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
                     }
                 }
             }
@@ -135,8 +136,8 @@ describe('NumberWidget.vue', () => {
                 NumberInput: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(null),
-                        validate: jest.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        getValue: vi.fn().mockReturnValue(null),
+                        validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
                     }
                 }
             }
@@ -154,7 +155,7 @@ describe('NumberWidget.vue', () => {
                 NumberInput: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(validValue)
+                        getValue: vi.fn().mockReturnValue(validValue)
                     }
                 }
             }
@@ -169,7 +170,7 @@ describe('NumberWidget.vue', () => {
                 NumberInput: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue('abc')
+                        getValue: vi.fn().mockReturnValue('abc')
                     }
                 }
             }
@@ -187,7 +188,7 @@ describe('NumberWidget.vue', () => {
                 NumberInput: {
                     template: '<div />',
                     methods: {
-                        getValue: jest.fn().mockReturnValue(invalidValue)
+                        getValue: vi.fn().mockReturnValue(invalidValue)
                     }
                 }
             }

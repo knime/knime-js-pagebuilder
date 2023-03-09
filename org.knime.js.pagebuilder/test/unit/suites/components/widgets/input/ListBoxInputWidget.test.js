@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import ListBoxInputWidget from '@/components/widgets/input/ListBoxInputWidget.vue';
@@ -217,7 +218,7 @@ describe('ListBoxInputWidget.vue', () => {
                     TextArea: {
                         template: '<div />',
                         methods: {
-                            getValue: jest.fn().mockReturnValue('ABCD\nEF')
+                            getValue: vi.fn().mockReturnValue('ABCD\nEF')
                         }
                     }
                 }
@@ -233,7 +234,7 @@ describe('ListBoxInputWidget.vue', () => {
                     TextArea: {
                         template: '<div />',
                         methods: {
-                            getValue: jest.fn().mockReturnValue('Test 1,,Test 2,Test 3')
+                            getValue: vi.fn().mockReturnValue('Test 1,,Test 2,Test 3')
                         }
                     }
                 }
@@ -249,7 +250,7 @@ describe('ListBoxInputWidget.vue', () => {
                     TextArea: {
                         template: '<div />',
                         methods: {
-                            getValue: jest.fn().mockReturnValue('Test 1\n\nTest 2\nTest 3')
+                            getValue: vi.fn().mockReturnValue('Test 1\n\nTest 2\nTest 3')
                         }
                     }
                 }
@@ -297,7 +298,7 @@ describe('ListBoxInputWidget.vue', () => {
                     TextArea: {
                         template: '<div />',
                         methods: {
-                            getValue: jest.fn().mockReturnValue('abc@example.com')
+                            getValue: vi.fn().mockReturnValue('abc@example.com')
                         }
                     }
                 }
@@ -313,7 +314,7 @@ describe('ListBoxInputWidget.vue', () => {
                     TextArea: {
                         template: '<div />',
                         methods: {
-                            getValue: jest.fn().mockReturnValue('test@example.com\nabc')
+                            getValue: vi.fn().mockReturnValue('test@example.com\nabc')
                         }
                     }
                 }
@@ -331,7 +332,7 @@ describe('ListBoxInputWidget.vue', () => {
                     TextArea: {
                         template: '<div />',
                         methods: {
-                            getValue: jest.fn().mockReturnValue(null)
+                            getValue: vi.fn().mockReturnValue(null)
                         }
                     }
                 }

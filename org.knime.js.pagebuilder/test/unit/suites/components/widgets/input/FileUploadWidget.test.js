@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import FileUploadWidget from '@/components/widgets/input/FileUploadWidget.vue';
@@ -5,8 +6,8 @@ import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vu
 import Vuex from 'vuex';
 import Vue from 'vue';
 
-const uploadResourceMock = jest.fn().mockReturnValue(() => ({ errorResponse: {}, response: {} }));
-const cancelUploadResourceMock = jest.fn().mockReturnValue(() => {});
+const uploadResourceMock = vi.fn().mockReturnValue(() => ({ errorResponse: {}, response: {} }));
+const cancelUploadResourceMock = vi.fn().mockReturnValue(() => {});
 const file = { size: 1000, type: 'image/png', name: 'avatar.png' };
 const event = {
     target: {
@@ -96,7 +97,7 @@ describe('FileUploadWidget.vue', () => {
     });
 
     it('triggers input on click', () => {
-        const triggerInputMock = jest.fn();
+        const triggerInputMock = vi.fn();
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
@@ -267,7 +268,7 @@ describe('FileUploadWidget.vue', () => {
     });
 
     it('displays upload error message', async () => {
-        let uploadErrorResourceMock = jest.fn().mockReturnValue({
+        let uploadErrorResourceMock = vi.fn().mockReturnValue({
             errorResponse: {
                 cancelled: false
             }
@@ -285,7 +286,7 @@ describe('FileUploadWidget.vue', () => {
     });
 
     it('cancels upload correctly', async () => {
-        let uploadErrorResourceMock = jest.fn().mockReturnValue({
+        let uploadErrorResourceMock = vi.fn().mockReturnValue({
             errorResponse: {
                 cancelled: true
             }
@@ -307,7 +308,7 @@ describe('FileUploadWidget.vue', () => {
     });
 
     it('uploads files on the AP', (done) => {
-        let uploadResourceMock = jest.fn();
+        let uploadResourceMock = vi.fn();
         window.KnimePageLoader = { /* empty mock simulates AP wrapper API */ };
         let wrapper = mount(FileUploadWidget, {
             store,

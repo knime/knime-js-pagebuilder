@@ -14,8 +14,8 @@
     "ci:lint": "run-p lint:*",
     "jenkins:lint": "eslint --ext .js,.vue,.json -f json -o target/eslint.json || true; stylelint '**/*.{css,vue}' -f json -o target/stylelint.json || true",
     "audit": "npm audit --omit dev",
-    "_TODO_test:unit": "TZ='Europe/Berlin' vue-cli-service test:unit",
-    "_TODO_coverage": "TZ='Europe/Berlin' vue-cli-service test:unit --coverage || true",
+    "test:unit": "TZ='Europe/Berlin' vitest",
+    "coverage": "TZ='Europe/Berlin' vitest --coverage",
     "_TODO_opensourcecredits": "npm run --prefix webapps-common/ opensourcecredits",
     "_TODO_build:credits": "npm run opensourcecredits && vue-cli-service build --target lib --formats umd-min --name knime-pagebuilder-credits src/components/PageBuilderCredits.vue"
   },
@@ -46,7 +46,8 @@
     "vite": "4.1.4",
     "vite-plugin-css-injected-by-js": "3.0.1",
     "vite-svg-loader": "4.0.0",
-    "vue-tsc": "1.2.0"
+    "vue-tsc": "1.2.0",
+    "vitest": "0.29.2"
   },
   "engines": {
     "node": "18.x"

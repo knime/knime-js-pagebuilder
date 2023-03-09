@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
@@ -165,7 +166,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
                     Twinlist: {
                         template: '<div />',
                         methods: {
-                            hasSelection: jest.fn().mockReturnValueOnce(false)
+                            hasSelection: vi.fn().mockReturnValueOnce(false)
                                 .mockReturnValueOnce(true)
                         }
                     }
@@ -184,8 +185,8 @@ describe('ColumnFilterSelectionWidget.vue', () => {
                     Twinlist: {
                         template: '<div />',
                         methods: {
-                            hasSelection: jest.fn().mockReturnValue(true),
-                            validate: jest.fn().mockReturnValueOnce(childResponse)
+                            hasSelection: vi.fn().mockReturnValue(true),
+                            validate: vi.fn().mockReturnValueOnce(childResponse)
                                 .mockReturnValueOnce({ isValid: false })
                         }
                     }

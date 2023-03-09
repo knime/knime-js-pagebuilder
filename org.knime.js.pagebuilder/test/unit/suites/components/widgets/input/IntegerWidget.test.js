@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import IntegerWidget from '@/components/widgets/input/IntegerWidget.vue';
@@ -31,13 +32,13 @@ describe('IntegerWidget.vue', () => {
                 NumberWidget: {
                     template: '<div />',
                     methods: {
-                        validate: jest.fn(),
-                        onChange: jest.fn()
+                        validate: vi.fn(),
+                        onChange: vi.fn()
                     }
                 }
             },
             listeners: {
-                fakeEvent: jest.fn()
+                fakeEvent: vi.fn()
             }
         };
     });

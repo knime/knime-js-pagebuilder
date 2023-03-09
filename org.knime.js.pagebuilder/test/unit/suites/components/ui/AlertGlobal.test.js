@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, mount } from '@vue/test-utils';
 
@@ -16,7 +17,7 @@ const SAMPLE_ALERT = {
     message: 'Sample error.'
 };
 
-let closeAlertMock = jest.fn();
+let closeAlertMock = vi.fn();
 
 let alertStoreConfig = {
     ...storeConfig,
@@ -44,7 +45,7 @@ describe('AlertGlobal', () => {
     });
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     it('renders default', () => {

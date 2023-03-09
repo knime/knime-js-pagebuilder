@@ -1,3 +1,4 @@
+import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -9,23 +10,23 @@ describe('PageBuilder store', () => {
     let interactivityStoreConfig = {
         namespaced: true,
         actions: {
-            registerSelectionTranslator: jest.fn(),
-            updateSelectionTranslators: jest.fn(),
-            clear: jest.fn()
+            registerSelectionTranslator: vi.fn(),
+            updateSelectionTranslators: vi.fn(),
+            clear: vi.fn()
         }
     };
 
     let alertStoreConfig = {
         namespaced: true,
         actions: {
-            showAlert: jest.fn()
+            showAlert: vi.fn()
         }
     };
 
     let apiStoreConfig = {
         namespaced: true,
         actions: {
-            triggerReExecution: jest.fn()
+            triggerReExecution: vi.fn()
         }
     };
 
@@ -39,7 +40,7 @@ describe('PageBuilder store', () => {
         store.registerModule('interactivity', interactivityStoreConfig);
         store.registerModule('alert', alertStoreConfig);
         store.registerModule('api', apiStoreConfig);
-        jest.resetAllMocks();
+        vi.resetAllMocks();
     });
 
     it('creates an empty store', () => {
@@ -155,7 +156,7 @@ describe('PageBuilder store', () => {
 
     it('dispatches reactivity events', () => {
         let nodeId = '0.0.7';
-        let triggerReExecution = jest.fn();
+        let triggerReExecution = vi.fn();
         let apiStoreConfig = {
             namespaced: true,
             actions: {
