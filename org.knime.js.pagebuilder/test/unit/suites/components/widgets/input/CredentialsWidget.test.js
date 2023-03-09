@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
@@ -10,10 +10,10 @@ import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 
 describe('CredentialsWidget.vue', () => {
-    let propsDataDefault, propsDataServer;
+    let propsDefault, propsServer;
 
     beforeEach(() => {
-        propsDataDefault = {
+        propsDefault = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 namespace: 'knimeCredentialsWidget',
@@ -74,7 +74,7 @@ describe('CredentialsWidget.vue', () => {
             isValid: false
         };
 
-        propsDataServer = {
+        propsServer = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 initMethodName: 'init',
@@ -152,23 +152,23 @@ describe('CredentialsWidget.vue', () => {
     describe('credentials widget', () => {
         it('renders', () => {
             let wrapper = shallowMount(CredentialsWidget, {
-                propsData: propsDataDefault,
+                props: propsDefault,
                 stubs: { Label, Fieldset }
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.findComponent(Fieldset)).toBeTruthy();
-            expect(wrapper.findAll(InputField).length).toBe(2);
+            expect(wrapper.findAllComponents(InputField).length).toBe(2);
         });
 
         it('adds hidden class if noDisplay is true', () => {
             let wrapper = shallowMount(CredentialsWidget, {
-                propsData: {
-                    ...propsDataDefault,
+                props: {
+                    ...propsDefault,
                     nodeConfig: {
-                        ...propsDataDefault.nodeConfig,
+                        ...propsDefault.nodeConfig,
                         viewRepresentation: {
-                            ...propsDataDefault.nodeConfig.viewRepresentation, noDisplay: true
+                            ...propsDefault.nodeConfig.viewRepresentation, noDisplay: true
                         }
                     }
                 },
@@ -179,12 +179,12 @@ describe('CredentialsWidget.vue', () => {
 
         it('renders no username input if promptUsername is false', () => {
             let wrapper = shallowMount(CredentialsWidget, {
-                propsData: {
-                    ...propsDataDefault,
+                props: {
+                    ...propsDefault,
                     nodeConfig: {
-                        ...propsDataDefault.nodeConfig,
+                        ...propsDefault.nodeConfig,
                         viewRepresentation: {
-                            ...propsDataDefault.nodeConfig.viewRepresentation,
+                            ...propsDefault.nodeConfig.viewRepresentation,
                             promptUsername: false
                         }
                     }
@@ -197,7 +197,7 @@ describe('CredentialsWidget.vue', () => {
 
         it('emits @updateWidget on username if child emits @input', () => {
             let wrapper = mount(CredentialsWidget, {
-                propsData: propsDataDefault,
+                props: propsDefault,
                 stubs: { Label, Fieldset }
             });
 
@@ -207,7 +207,7 @@ describe('CredentialsWidget.vue', () => {
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataDefault.nodeId,
+                nodeId: propsDefault.nodeId,
                 type: 'username',
                 value: testValue
             });
@@ -215,7 +215,7 @@ describe('CredentialsWidget.vue', () => {
 
         it('emits @updateWidget on password if child emits @input', () => {
             let wrapper = shallowMount(CredentialsWidget, {
-                propsData: propsDataDefault,
+                props: propsDefault,
                 stubs: { Label, Fieldset }
             });
 
@@ -225,7 +225,7 @@ describe('CredentialsWidget.vue', () => {
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataDefault.nodeId,
+                nodeId: propsDefault.nodeId,
                 type: 'magicDefaultPassword',
                 value: testValue
             });
@@ -233,20 +233,20 @@ describe('CredentialsWidget.vue', () => {
 
         it('emits @updateWidget on password only if input differs from serverCredentials', () => {
             let wrapper = shallowMount(CredentialsWidget, {
-                propsData: propsDataServer,
+                props: propsServer,
                 stubs: { Label, Fieldset }
             });
 
             const testValue = 'VALUE';
             const input = wrapper.find({ ref: 'passwordForm' });
-            input.vm.$emit('input', propsDataServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
+            input.vm.$emit('input', propsServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
 
             expect(wrapper.emitted().updateWidget).toBeFalsy();
 
             input.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataServer.nodeId,
+                nodeId: propsServer.nodeId,
                 type: 'magicDefaultPassword',
                 value: testValue
             });
@@ -254,20 +254,20 @@ describe('CredentialsWidget.vue', () => {
 
         it('emits @updateWidget on username only if input differs from serverCredentials', () => {
             let wrapper = shallowMount(CredentialsWidget, {
-                propsData: propsDataServer,
+                props: propsServer,
                 stubs: { Label, Fieldset }
             });
 
             const testValue = 'VALUE';
             const input = wrapper.find({ ref: 'usernameForm' });
-            input.vm.$emit('input', propsDataServer.nodeConfig.viewRepresentation.defaultValue.username);
+            input.vm.$emit('input', propsServer.nodeConfig.viewRepresentation.defaultValue.username);
 
             expect(wrapper.emitted().updateWidget).toBeFalsy();
 
             input.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataServer.nodeId,
+                nodeId: propsServer.nodeId,
                 type: 'username',
                 value: testValue
             });
@@ -275,7 +275,7 @@ describe('CredentialsWidget.vue', () => {
 
         it('will be invalid if widget is', () => {
             let widget = mount(CredentialsWidget, {
-                propsData: { ...propsDataDefault, isValid: true }
+                props: { ...propsDefault, isValid: true }
             });
 
             let textComponent = widget.findComponent(InputField);
@@ -286,7 +286,7 @@ describe('CredentialsWidget.vue', () => {
 
         it('takes specific error message over child error message', async () => {
             let wrapper = mount(CredentialsWidget, {
-                propsData: propsDataDefault,
+                props: propsDefault,
                 stubs: {
                     InputField: {
                         template: '<div />',
@@ -305,28 +305,28 @@ describe('CredentialsWidget.vue', () => {
         it('renders serverCredentials input correctly', () => {
             const checkServerCredentialsSpy = vi.fn();
             let wrapper = shallowMount(CredentialsWidget, {
-                propsData: propsDataServer,
+                props: propsServer,
                 stubs: { Label, Fieldset },
                 methods: { checkServerCredentials: checkServerCredentialsSpy }
             });
             expect(wrapper.find({ ref: 'usernameForm' }).props('value'))
-                .toEqual(propsDataServer.nodeConfig.viewRepresentation.defaultValue.username);
+                .toEqual(propsServer.nodeConfig.viewRepresentation.defaultValue.username);
 
             expect(wrapper.find({ ref: 'passwordForm' }).props('value'))
-                .toEqual(propsDataServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
+                .toEqual(propsServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
             expect(checkServerCredentialsSpy).toHaveBeenCalled();
         });
 
         it('displays server error in correct hierarchy', () => {
             let validate = vi.fn();
             let wrapper = mount(CredentialsWidget, {
-                propsData: {
-                    ...propsDataServer,
+                props: {
+                    ...propsServer,
                     nodeConfig: {
-                        ...propsDataServer.nodeConfig,
+                        ...propsServer.nodeConfig,
                         viewValue: null,
                         viewRepresentation: {
-                            ...propsDataServer.nodeConfig.viewRepresentation,
+                            ...propsServer.nodeConfig.viewRepresentation,
                             defaultValue: null,
                             currentValue: null
                         }
@@ -378,13 +378,13 @@ describe('CredentialsWidget.vue', () => {
 
         it('renders server credentials error if no username gets prompted', () => {
             let wrapper = mount(CredentialsWidget, {
-                propsData: {
-                    ...propsDataServer,
+                props: {
+                    ...propsServer,
                     nodeConfig: {
-                        ...propsDataServer.nodeConfig,
+                        ...propsServer.nodeConfig,
                         viewValue: null,
                         viewRepresentation: {
-                            ...propsDataServer.nodeConfig.viewRepresentation,
+                            ...propsServer.nodeConfig.viewRepresentation,
                             defaultValue: null,
                             currentValue: null,
                             promptUsername: false

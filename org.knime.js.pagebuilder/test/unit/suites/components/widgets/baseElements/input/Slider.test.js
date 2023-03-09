@@ -1,14 +1,14 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import Slider from '@/components/widgets/baseElements/input/Slider.vue';
 import VueSlider from 'vue-slider-component';
 
 describe('Slider.vue', () => {
-    let context, propsData;
+    let context, props;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             value: 50,
             maximum: 100,
             minimum: 0,
@@ -28,7 +28,7 @@ describe('Slider.vue', () => {
     it('renders', () => {
         let wrapper = mount(Slider, {
             ...context,
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -47,7 +47,7 @@ describe('Slider.vue', () => {
     it('receives onValueChange events', () => {
         let wrapper = mount(Slider, {
             ...context,
-            propsData
+            props
         });
         let newValue = wrapper.vm.value + 1;
         wrapper.vm.$refs.slider.setValue(newValue);
@@ -58,11 +58,11 @@ describe('Slider.vue', () => {
     it('invalidates undefined values', () => {
         let wrapper = mount(Slider, {
             ...context,
-            propsData
+            props
         });
 
         // should be undefined
-        wrapper.vm.$refs.slider.setValue(propsData.newValue);
+        wrapper.vm.$refs.slider.setValue(props.newValue);
 
         expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Value is not a number.', isValid: false });
     });
@@ -70,7 +70,7 @@ describe('Slider.vue', () => {
     it('invalidates values outside the given range', () => {
         let wrapper = mount(Slider, {
             ...context,
-            propsData
+            props
         });
         const lowValue = -10;
         const okayValue = 10;
@@ -93,11 +93,11 @@ describe('Slider.vue', () => {
     });
 
     it('invalidates incorrect range', () => {
-        propsData.minimum = 100;
-        propsData.maximum = 0;
+        props.minimum = 100;
+        props.maximum = 0;
         let wrapper = mount(Slider, {
             ...context,
-            propsData
+            props
         });
 
         expect(wrapper.vm.validate()).toStrictEqual(

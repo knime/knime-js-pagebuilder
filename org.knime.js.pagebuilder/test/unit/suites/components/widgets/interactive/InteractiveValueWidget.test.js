@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -11,10 +11,10 @@ import Label from 'webapps-common/ui/components/forms/Label.vue';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
 
 describe('InteractiveValueWidget.vue', () => {
-    let propsData, localVue, store, context;
+    let props, localVue, store, context;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 initMethodName: 'init',
@@ -82,7 +82,7 @@ describe('InteractiveValueWidget.vue', () => {
         it('renders SingleSelect', () => {
             let wrapper = mount(InteractiveValueWidget, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.findComponent(SingleSelect)).toBeTruthy();
@@ -91,14 +91,14 @@ describe('InteractiveValueWidget.vue', () => {
         it('uses correct label component', () => {
             let wrapperList = mount(InteractiveValueWidget, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapperList.findComponent(Label)).toBeTruthy();
 
-            propsData.nodeConfig.viewRepresentation.type = 'Checkboxes';
+            props.nodeConfig.viewRepresentation.type = 'Checkboxes';
             let wrapperOther = mount(InteractiveValueWidget, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapperOther.findComponent(Fieldset)).toBeTruthy();
         });
@@ -106,27 +106,27 @@ describe('InteractiveValueWidget.vue', () => {
 
     describe('Multiselect components', () => {
         it('renders Multiselect', () => {
-            propsData.nodeConfig.viewRepresentation.multipleValues = true;
+            props.nodeConfig.viewRepresentation.multipleValues = true;
             let wrapper = mount(InteractiveValueWidget, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapper.isVisible()).toBeTruthy();
             expect(wrapper.findComponent(Multiselect)).toBeTruthy();
         });
 
         it('uses correct label component', () => {
-            propsData.nodeConfig.viewRepresentation.multipleValues = true;
+            props.nodeConfig.viewRepresentation.multipleValues = true;
             let wrapperList = mount(InteractiveValueWidget, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapperList.findComponent(Label)).toBeTruthy();
 
-            propsData.nodeConfig.viewRepresentation.type = 'Radio buttons (vertical)';
+            props.nodeConfig.viewRepresentation.type = 'Radio buttons (vertical)';
             let wrapperOther = mount(InteractiveValueWidget, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapperOther.findComponent(Fieldset)).toBeTruthy();
         });
@@ -135,14 +135,14 @@ describe('InteractiveValueWidget.vue', () => {
     it('respects settings to disable the label', () => {
         let wrapperEnable = shallowMount(InteractiveValueWidget, {
             ...context,
-            propsData
+            props
         });
         expect(wrapperEnable.vm.label).toBe('Cluster Membership');
 
-        propsData.nodeConfig.viewRepresentation.label = null;
+        props.nodeConfig.viewRepresentation.label = null;
         let wrapperDisable = shallowMount(InteractiveValueWidget, {
             ...context,
-            propsData
+            props
         });
         expect(wrapperDisable.vm.label).toBe('');
     });
@@ -150,7 +150,7 @@ describe('InteractiveValueWidget.vue', () => {
     it('sends @updateWidget if child emits @input', () => {
         let wrapper = shallowMount(InteractiveValueWidget, {
             ...context,
-            propsData
+            props
         });
 
         const testValue = ['VALUE2'];
@@ -160,7 +160,7 @@ describe('InteractiveValueWidget.vue', () => {
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
             callback: expect.anything(),
-            nodeId: propsData.nodeId,
+            nodeId: props.nodeId,
             update: {
                 'viewValue.filter.columns.0.values': testValue
             }
@@ -171,13 +171,13 @@ describe('InteractiveValueWidget.vue', () => {
         it('is always valid get value method works', () => {
             let wrapper = shallowMount(InteractiveValueWidget, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapper.vm.validate().isValid).toBe(true);
             
             let wrapperBroken = shallowMount(InteractiveValueWidget, {
                 ...context,
-                propsData
+                props
             });
             vi.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => undefined);
             expect(wrapperBroken.vm.validate().isValid).toBe(false);

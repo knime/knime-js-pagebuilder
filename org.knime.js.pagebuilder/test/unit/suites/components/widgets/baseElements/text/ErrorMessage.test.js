@@ -1,20 +1,20 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 
 describe('ErrorMessage.vue', () => {
-    let propsData;
+    let props;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             error: 'Widget is broken'
         };
     });
 
     it('renders', () => {
         let wrapper = shallowMount(ErrorMessage, {
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -28,7 +28,7 @@ describe('ErrorMessage.vue', () => {
 
     it('renders empty wrapper when there is no error message', () => {
         let wrapper = shallowMount(ErrorMessage, {
-            propsData: {
+            props: {
                 error: null
             }
         });

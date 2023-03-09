@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect.vue';
@@ -7,10 +7,10 @@ import ListBox from 'webapps-common/ui/components/forms/ListBox.vue';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
 
 describe('SingleSelect.vue', () => {
-    let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
+    let propsRadioHorizontal, propsRadioVertical, propsDropdown, propsList;
 
     beforeEach(() => {
-        propsDataRadioHorizontal = {
+        propsRadioHorizontal = {
             label: 'Radio Hor',
             possibleValueList: [
                 'O1 ',
@@ -25,7 +25,7 @@ describe('SingleSelect.vue', () => {
             isValid: false
         };
 
-        propsDataRadioVertical = {
+        propsRadioVertical = {
             label: 'Radio Vertical',
             value: 'O3',
             possibleValueList: [
@@ -40,7 +40,7 @@ describe('SingleSelect.vue', () => {
             isValid: false
         };
 
-        propsDataDropdown = {
+        propsDropdown = {
             label: 'Dropdown',
             value: 'Option 2',
             possibleValueList: [
@@ -55,7 +55,7 @@ describe('SingleSelect.vue', () => {
             isValid: false
         };
 
-        propsDataList = {
+        propsList = {
             label: 'List',
             value: 'List Item 3',
             possibleValueList: [
@@ -93,7 +93,7 @@ describe('SingleSelect.vue', () => {
     describe('radiobuttons', () => {
         it('renders horizontal', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataRadioHorizontal
+                props: propsRadioHorizontal
             });
 
             let rb = wrapper.findComponent(RadioButtons);
@@ -102,9 +102,9 @@ describe('SingleSelect.vue', () => {
         });
 
         it('fails on invalid type (alignment)', () => {
-            propsDataRadioHorizontal.type = 'Radio buttons (vulcano)';
+            propsRadioHorizontal.type = 'Radio buttons (vulcano)';
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataRadioHorizontal
+                props: propsRadioHorizontal
             });
 
             expect(wrapper.vm.radioButtonsAlignment).toBe(null);
@@ -113,7 +113,7 @@ describe('SingleSelect.vue', () => {
 
         it('renders vertical', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataRadioVertical
+                props: propsRadioVertical
             });
 
             let rb = wrapper.findComponent(RadioButtons);
@@ -123,7 +123,7 @@ describe('SingleSelect.vue', () => {
 
         it('emits @input', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataRadioVertical
+                props: propsRadioVertical
             });
 
             const testValue = 'VALUE';
@@ -138,28 +138,28 @@ describe('SingleSelect.vue', () => {
     describe('list', () => {
         it('renders', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataList
+                props: propsList
             });
 
             expect(wrapper.findComponent(ListBox).exists()).toBe(true);
         });
 
         it('has size set', () => {
-            propsDataList.isValid = true;
+            propsList.isValid = true;
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataList
+                props: propsList
             });
-            let size = propsDataList.numberVisOptions;
+            let size = propsList.numberVisOptions;
             expect(wrapper.findComponent(ListBox).props('size')).toBe(size);
         });
 
         it('does not render duplicate entries', () => {
-            propsDataList.possibleValueList = ['1', '2', '3', '3', '3', '4'];
+            propsList.possibleValueList = ['1', '2', '3', '3', '3', '4'];
             let wrapper = mount(SingleSelect, {
-                propsData: propsDataList
+                props: propsList
             });
             // duplicate entry will not be shown twice
-            const choicesUnique = [...new Set(propsDataList.possibleValueList)].length;
+            const choicesUnique = [...new Set(propsList.possibleValueList)].length;
             expect(wrapper.vm.possibleChoices.length).toBe(choicesUnique);
         });
 
@@ -174,8 +174,8 @@ describe('SingleSelect.vue', () => {
 
         it('passes isValid to component', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: {
-                    ...propsDataList,
+                props: {
+                    ...propsList,
                     isValid: false
                 }
             });
@@ -184,7 +184,7 @@ describe('SingleSelect.vue', () => {
 
         it('emits @input', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataList
+                props: propsList
             });
 
             const testValue = 'VALUE';
@@ -199,7 +199,7 @@ describe('SingleSelect.vue', () => {
     describe('dropdown', () => {
         it('renders', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataDropdown
+                props: propsDropdown
             });
 
             expect(wrapper.findComponent(Dropdown).exists()).toBe(true);
@@ -207,8 +207,8 @@ describe('SingleSelect.vue', () => {
 
         it('passes isValid to component', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: {
-                    ...propsDataDropdown,
+                props: {
+                    ...propsDropdown,
                     isValid: false
                 }
             });
@@ -217,7 +217,7 @@ describe('SingleSelect.vue', () => {
 
         it('emits @input', () => {
             let wrapper = shallowMount(SingleSelect, {
-                propsData: propsDataDropdown
+                props: propsDropdown
             });
 
             const testValue = 'VALUE';
@@ -231,7 +231,7 @@ describe('SingleSelect.vue', () => {
 
     it('provides a hasSelection method for validation', () => {
         let wrapper = mount(SingleSelect, {
-            propsData: propsDataList
+            props: propsList
         });
 
         expect(wrapper.vm.hasSelection()).toBe(true);

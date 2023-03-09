@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import fs from 'fs';
 
 describe('load error handler', () => {

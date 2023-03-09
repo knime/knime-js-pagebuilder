@@ -1,6 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { expect, describe, beforeAll, it, vi, afterEach } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import NodeView from '@/components/layout/NodeView.vue';
 import WebNode from '@/components/views/WebNode.vue';
@@ -13,7 +13,7 @@ import * as pagebuilderConfig from '@/store/pagebuilder';
 import * as dialogConfig from '@/store/dialog';
 
 describe('NodeView.vue', () => {
-    let localVue, context;
+    let context;
 
     const getWebNodeProps = () => ({ viewConfig: { nodeID: '0:0:7' } });
     const getUIExtProps = () => ({ viewConfig: { nodeID: '0:0:9' } });
@@ -63,7 +63,7 @@ describe('NodeView.vue', () => {
     });
 
     const createContext = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => {
-        let store = new Vuex.Store({ modules: {
+        let store = createStore({ modules: {
             pagebuilder: pagebuilderConfig,
             'pagebuilder/dialog': dialogConfig
         } });
@@ -72,15 +72,15 @@ describe('NodeView.vue', () => {
         });
 
         return {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
     };
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
         context = createContext();
     });
 
@@ -99,7 +99,7 @@ describe('NodeView.vue', () => {
 
         let wrapper = shallowMount(NodeView, {
             ...localContext,
-            propsData: getWebNodeProps()
+            props: getWebNodeProps()
         });
 
         expect(wrapper.vm.nodeId).toEqual(viewConfig.nodeID);
@@ -108,7 +108,7 @@ describe('NodeView.vue', () => {
 
         wrapper = shallowMount(NodeView, {
             ...localContext,
-            propsData: {
+            props: {
                 viewConfig
             }
         });
@@ -118,14 +118,14 @@ describe('NodeView.vue', () => {
 
     describe('conditional rendering', () => {
         it('renders views as WebNodes', () => {
-            let wrapper = shallowMount(NodeView, { ...context, propsData: getWebNodeProps() });
+            let wrapper = shallowMount(NodeView, { ...context, props: getWebNodeProps() });
             expect(wrapper.findComponent(WebNode).exists()).toBeTruthy();
             expect(wrapper.findComponent(UIExtension).exists()).toBeFalsy();
             expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
         });
 
         it('renders views as UI extension', () => {
-            let wrapper = shallowMount(NodeView, { ...context, propsData: getUIExtProps() });
+            let wrapper = shallowMount(NodeView, { ...context, props: getUIExtProps() });
             expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
             expect(wrapper.findComponent(WebNode).exists()).toBeFalsy();
             expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
@@ -136,7 +136,7 @@ describe('NodeView.vue', () => {
                 nodeViews: { SINGLE: mockNodeViewConfig }
             });
 
-            let wrapper = shallowMount(NodeView, { ...localContext, propsData: getSingleUIExtProps() });
+            let wrapper = shallowMount(NodeView, { ...localContext, props: getSingleUIExtProps() });
             expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
             expect(wrapper.findComponent(UIExtension).classes()).toContain('single-view');
         });
@@ -146,7 +146,7 @@ describe('NodeView.vue', () => {
                 nodeViews: { VIEW: mockNodeViewConfig, DIALOG: mockNodeDialogConfig }
             });
 
-            let wrapper = shallowMount(NodeView, { ...localContext, propsData: getUIExtDialogProps() });
+            let wrapper = shallowMount(NodeView, { ...localContext, props: getUIExtDialogProps() });
             expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
             expect(wrapper.findComponent(UIExtension).classes()).not.toContain('single-view');
         });
@@ -162,7 +162,7 @@ describe('NodeView.vue', () => {
             });
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
-                propsData: getWebNodeProps()
+                props: getWebNodeProps()
             });
 
             expect(wrapper.vm.viewAvailable).toBe(true);
@@ -187,7 +187,7 @@ describe('NodeView.vue', () => {
             });
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
-                propsData: { viewConfig: { nodeID: 'SINGLE' } }
+                props: { viewConfig: { nodeID: 'SINGLE' } }
             });
 
             expect(wrapper.vm.viewAvailable).toBe(true);
@@ -198,13 +198,13 @@ describe('NodeView.vue', () => {
             expect(wrapper.findComponent(UIExtension).exists()).toBe(false);
         });
 
-        it('renders view executable when model settings are dirty', () => {
+        it('renders view executable when model settings are dirty', async () => {
             let localContext = createContext({
                 nodeViews: { SINGLE: mockNodeViewConfig, DIALOG: mockNodeDialogConfig }
             });
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
-                propsData: { viewConfig: { nodeID: 'SINGLE' } }
+                props: { viewConfig: { nodeID: 'SINGLE' } }
             });
             expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(true);
@@ -213,7 +213,7 @@ describe('NodeView.vue', () => {
             expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
             expect(wrapper.findComponent(UIExtension).exists()).toBe(true);
 
-            wrapper.vm.$store.dispatch('pagebuilder/dialog/dirtySettings', true);
+            await wrapper.vm.$store.dispatch('pagebuilder/dialog/dirtySettings', true);
 
             expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(true);
@@ -229,7 +229,7 @@ describe('NodeView.vue', () => {
             });
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
-                propsData: getUIExtDialogProps()
+                props: getUIExtDialogProps()
             });
 
             expect(wrapper.vm.viewAvailable).toBe(true);
@@ -251,7 +251,7 @@ describe('NodeView.vue', () => {
             });
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
-                propsData: getUIExtProps()
+                props: getUIExtProps()
             });
 
             expect(wrapper.vm.viewAvailable).toBe(true);
@@ -265,7 +265,7 @@ describe('NodeView.vue', () => {
                     webNodes: {},
                     nodeViews: {}
                 }),
-                propsData: getWebNodeProps()
+                props: getWebNodeProps()
             });
             expect(wrapper.findComponent(UIExtension).exists()).toBeFalsy();
             expect(wrapper.findComponent(WebNode).exists()).toBeFalsy();
@@ -290,7 +290,7 @@ describe('NodeView.vue', () => {
                         }
                     }
                 }),
-                propsData: getWebNodeProps()
+                props: getWebNodeProps()
             });
 
             expect(wrapper.vm.showExecutionOverlay).toBe(true);
@@ -299,11 +299,11 @@ describe('NodeView.vue', () => {
 
         it('detects if the node is currently (re)executing via re-executing node ids', () => {
             let localContext = createContext();
-            localContext.store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
+            localContext.global.mocks.$store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
 
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
-                propsData: getWebNodeProps()
+                props: getWebNodeProps()
             });
 
             expect(wrapper.vm.showExecutionOverlay).toBe(true);
@@ -312,18 +312,18 @@ describe('NodeView.vue', () => {
 
         it('decides when to show a spinner on executing content via updateCount', () => {
             let localContext = createContext();
-            localContext.store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
+            localContext.global.mocks.$store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
 
             let wrapper = shallowMount(NodeView, {
                 ...localContext,
-                propsData: getWebNodeProps()
+                props: getWebNodeProps()
             });
 
             expect(wrapper.vm.showExecutionOverlay).toBe(true);
             expect(wrapper.findComponent(ExecutingOverlay).vm.show).toBe(true);
             expect(wrapper.vm.showSpinner).toBe(false);
 
-            localContext.store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
+            localContext.global.mocks.$store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
 
             expect(wrapper.vm.showExecutionOverlay).toBe(true);
             expect(wrapper.findComponent(ExecutingOverlay).vm.show).toBe(true);

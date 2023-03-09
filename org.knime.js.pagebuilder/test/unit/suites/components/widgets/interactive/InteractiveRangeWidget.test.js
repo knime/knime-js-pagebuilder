@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -8,10 +8,10 @@ import InteractiveRangeWidget from '@/components/widgets/interactive/Interactive
 import SliderWidget from '@/components/widgets/input/SliderWidget.vue';
 
 describe('InteractiveRangeWidget.vue', () => {
-    let propsData, localVue, store, context;
+    let props, localVue, store, context;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 initMethodName: 'init',
@@ -115,7 +115,7 @@ describe('InteractiveRangeWidget.vue', () => {
     it('renders the SliderWidget', () => {
         let wrapper = mount(InteractiveRangeWidget, {
             ...context,
-            propsData
+            props
         });
         expect(wrapper.isVisible()).toBeTruthy();
         expect(wrapper.findComponent(SliderWidget)).toBeTruthy();
@@ -124,17 +124,17 @@ describe('InteractiveRangeWidget.vue', () => {
     it('handles range slider (2 value) widgets', () => {
         let wrapper = mount(InteractiveRangeWidget, {
             ...context,
-            propsData
+            props
         });
         expect(wrapper.vm.isRangeSlider).toBe(true);
         expect(wrapper.vm.value).toStrictEqual([0, 1]);
     });
     
     it('handles single value slider widgets', () => {
-        propsData.nodeConfig.viewValue.filter.columns[0].minimum = '-Infinity';
+        props.nodeConfig.viewValue.filter.columns[0].minimum = '-Infinity';
         let wrapper = mount(InteractiveRangeWidget, {
             ...context,
-            propsData
+            props
         });
         expect(wrapper.vm.isRangeSlider).toBe(false);
         expect(wrapper.vm.value).toStrictEqual({
@@ -146,7 +146,7 @@ describe('InteractiveRangeWidget.vue', () => {
         // test multivalue update
         let wrapper = shallowMount(InteractiveRangeWidget, {
             ...context,
-            propsData
+            props
         });
         const NEW_MIN = .25;
         const NEW_MAX = .25;
@@ -158,17 +158,17 @@ describe('InteractiveRangeWidget.vue', () => {
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
             callback: expect.anything(),
-            nodeId: propsData.nodeId,
+            nodeId: props.nodeId,
             update: {
                 'viewValue.filter.columns.0.minimum': NEW_MIN,
                 'viewValue.filter.columns.0.maximum': NEW_MAX
             }
         });
         // test single value update
-        propsData.nodeConfig.viewValue.filter.columns[0].minimum = '-Infinity';
+        props.nodeConfig.viewValue.filter.columns[0].minimum = '-Infinity';
         let wrapper1 = shallowMount(InteractiveRangeWidget, {
             ...context,
-            propsData
+            props
         });
         const testUpdate1 = {
             value: NEW_MAX
@@ -177,7 +177,7 @@ describe('InteractiveRangeWidget.vue', () => {
         expect(wrapper1.emitted().updateWidget).toBeTruthy();
         expect(wrapper1.emitted().updateWidget[0][0]).toStrictEqual({
             callback: expect.anything(),
-            nodeId: propsData.nodeId,
+            nodeId: props.nodeId,
             update: {
                 'viewValue.filter.columns.0.maximum': NEW_MAX
             }
@@ -187,12 +187,12 @@ describe('InteractiveRangeWidget.vue', () => {
     it('rounds values when returning the value with the getValue method', () => {
         const originalMaximum = .9876543210123;
         const originalMinimum = .0123456789098;
-        let highPrecisionNodeConfig = JSON.parse(JSON.stringify(propsData));
+        let highPrecisionNodeConfig = JSON.parse(JSON.stringify(props));
         highPrecisionNodeConfig.nodeConfig.viewValue.filter.columns[0].maximum = originalMaximum;
         highPrecisionNodeConfig.nodeConfig.viewValue.filter.columns[0].minimum = originalMinimum;
         let wrapper = shallowMount(InteractiveRangeWidget, {
             ...context,
-            propsData: highPrecisionNodeConfig
+            props: highPrecisionNodeConfig
         });
         let currentValue = wrapper.vm.getValue();
         expect(currentValue.filter.columns[0].maximum < originalMaximum).toBe(true);
@@ -207,13 +207,13 @@ describe('InteractiveRangeWidget.vue', () => {
         it('is always valid get value method works', () => {
             let wrapper = shallowMount(InteractiveRangeWidget, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapper.vm.validate().isValid).toBe(true);
             
             let wrapperBroken = shallowMount(InteractiveRangeWidget, {
                 ...context,
-                propsData
+                props
             });
             vi.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => undefined);
             expect(wrapperBroken.vm.validate().isValid).toBe(false);

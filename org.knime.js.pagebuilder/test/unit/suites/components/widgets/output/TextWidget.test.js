@@ -1,13 +1,13 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import TextWidget from '@/components/widgets/output/TextWidget.vue';
 
 describe('TextWidget.vue', () => {
-    let propsData;
+    let props;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 viewValue: {
@@ -56,7 +56,7 @@ describe('TextWidget.vue', () => {
 
     it('renders', () => {
         let wrapper = mount(TextWidget, {
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -64,61 +64,61 @@ describe('TextWidget.vue', () => {
 
     it('recognizes the Text element type', () => {
         let wrapper = mount(TextWidget, {
-            propsData
+            props
         });
         expect(wrapper.vm.elementType).toBe('p');
     });
 
     it('recognizes the Preformatted element type', () => {
-        propsData.nodeConfig.viewRepresentation.textFormat = 'Preformatted';
+        props.nodeConfig.viewRepresentation.textFormat = 'Preformatted';
         let wrapper = mount(TextWidget, {
-            propsData
+            props
         });
         expect(wrapper.vm.elementType).toBe('pre');
     });
 
     it('recognizes the HTML element type', () => {
-        propsData.nodeConfig.viewRepresentation.textFormat = 'Html';
+        props.nodeConfig.viewRepresentation.textFormat = 'Html';
         let wrapper = mount(TextWidget, {
-            propsData
+            props
         });
         expect(wrapper.vm.elementType).toBe(false);
     });
 
     it('has no error message when valid', () => {
         let wrapper = shallowMount(TextWidget, {
-            propsData
+            props
         });
 
         expect(wrapper.vm.errorMessage).toBe(null);
     });
 
     it('has default error message', () => {
-        propsData.isValid = false;
-        propsData.nodeConfig.viewRepresentation.errorMessage = false;
+        props.isValid = false;
+        props.nodeConfig.viewRepresentation.errorMessage = false;
         let wrapper = shallowMount(TextWidget, {
-            propsData
+            props
         });
 
         expect(wrapper.vm.errorMessage).toBe('Current text output value is invalid');
     });
 
     it('has warning message', () => {
-        propsData.isValid = false;
-        propsData.nodeConfig.viewRepresentation.errorMessage = false;
-        propsData.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
+        props.isValid = false;
+        props.nodeConfig.viewRepresentation.errorMessage = false;
+        props.nodeConfig.nodeInfo.nodeWarnMessage = 'Testing warning message';
         let wrapper = shallowMount(TextWidget, {
-            propsData
+            props
         });
 
         expect(wrapper.vm.errorMessage).toBe('Testing warning message');
     });
 
     it('has error message', () => {
-        propsData.isValid = false;
-        propsData.nodeConfig.viewRepresentation.errorMessage = 'Testing error message';
+        props.isValid = false;
+        props.nodeConfig.viewRepresentation.errorMessage = 'Testing error message';
         let wrapper = shallowMount(TextWidget, {
-            propsData
+            props
         });
 
         expect(wrapper.vm.errorMessage).toBe('Testing error message');

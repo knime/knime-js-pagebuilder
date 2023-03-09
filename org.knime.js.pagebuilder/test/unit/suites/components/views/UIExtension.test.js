@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
@@ -81,7 +81,7 @@ describe('UIExtension.vue', () => {
     it('renders ui extensions as Vue components', () => {
         let wrapper = shallowMount(UIExtension, {
             ...context,
-            propsData: getMockComponentProps()
+            props: getMockComponentProps()
         });
         expect(wrapper.findComponent(UIExtComponent).exists()).toBeTruthy();
         expect(wrapper.findComponent(UIExtIFrame).exists()).toBeFalsy();
@@ -90,7 +90,7 @@ describe('UIExtension.vue', () => {
     it('renders ui extensions as iframes', () => {
         let wrapper = shallowMount(UIExtension, {
             ...context,
-            propsData: getMockIFrameProps()
+            props: getMockIFrameProps()
         });
         expect(wrapper.findComponent(UIExtIFrame).exists()).toBeTruthy();
         expect(wrapper.findComponent(UIExtComponent).exists()).toBeFalsy();
@@ -99,7 +99,7 @@ describe('UIExtension.vue', () => {
     it('increments key on UIExtIFrame when node info updates', () => {
         let wrapper = shallowMount(UIExtension, {
             ...context,
-            propsData: getMockIFrameProps()
+            props: getMockIFrameProps()
         });
         const startingLocalKey = wrapper.vm.configKey;
         const startingIFrameKey = wrapper.findComponent(UIExtIFrame).vm.$vnode.key;
@@ -115,7 +115,7 @@ describe('UIExtension.vue', () => {
     it('increments key on UIExtComponent when node info updates', () => {
         let wrapper = shallowMount(UIExtension, {
             ...context,
-            propsData: getMockComponentProps()
+            props: getMockComponentProps()
         });
         const startingLocalKey = wrapper.vm.configKey;
         const startingComponentKey = wrapper.findComponent(UIExtComponent).vm.$vnode.key;
@@ -130,17 +130,17 @@ describe('UIExtension.vue', () => {
 
     it('creates and registers a KnimeService instance during mount', () => {
         let registerServiceMock = vi.fn();
-        let propsData = getMockComponentProps();
+        let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
             localVue,
             store: createStore({ registerServiceMock }),
-            propsData
+            props
         });
         expect(registerServiceMock).toHaveBeenCalledWith(expect.anything(), {
             service: expect.any(KnimeService)
         }, expect.undefined);
         expect(KnimeService).toBeCalledWith(
-            propsData.extensionConfig,
+            props.extensionConfig,
             wrapper.vm.callService,
             wrapper.vm.pushNotification
         );
@@ -148,11 +148,11 @@ describe('UIExtension.vue', () => {
 
     it('pushes service notifications via the pagebuilder store', async () => {
         let pushNotificationMock = vi.fn();
-        let propsData = getMockComponentProps();
+        let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
             localVue,
             store: createStore({ pushNotificationMock }),
-            propsData
+            props
         });
         let notification = { agent: '007' };
         await wrapper.vm.pushNotification(notification);
@@ -161,11 +161,11 @@ describe('UIExtension.vue', () => {
 
     it('dispatches service calls to the api store', async () => {
         let callServiceMock = vi.fn();
-        let propsData = getMockComponentProps();
+        let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
             localVue,
             store: createStore({ callServiceMock }),
-            propsData
+            props
         });
         let requestParams = { agent: '007' };
         let nodeService = 'NodeService.callNodeDataService';
@@ -184,11 +184,11 @@ describe('UIExtension.vue', () => {
 
         it('displays alerts via push notification', async () => {
             let pushNotificationMock = vi.fn();
-            let propsData = getMockComponentProps();
+            let props = getMockComponentProps();
             let wrapper = shallowMount(UIExtension, {
                 localVue,
                 store: createStore({ pushNotificationMock }),
-                propsData
+                props
             });
             let handleAlertSpy = vi.spyOn(wrapper.vm, 'handleAlert');
             let notification = { type: 'alert', alert: mockAlert };
@@ -200,7 +200,7 @@ describe('UIExtension.vue', () => {
         it('displays alerts via extensionConfig', () => {
             let handleAlertMock = vi.fn();
             const message = 'test error';
-            let propsData = {
+            let props = {
                 ...getMockComponentProps(),
                 extensionConfig: {
                     ...getMockComponentProps().extensionConfig,
@@ -213,10 +213,10 @@ describe('UIExtension.vue', () => {
             shallowMount(UIExtension, {
                 ...context,
                 localVue,
-                propsData,
+                props,
                 methods: { handleAlert: handleAlertMock }
             });
-            const expectedAlert = { message, type: 'error', subtitle: '', nodeId: propsData.extensionConfig.nodeId };
+            const expectedAlert = { message, type: 'error', subtitle: '', nodeId: props.extensionConfig.nodeId };
             
             expect(handleAlertMock).toHaveBeenCalledWith(expectedAlert);
         });
@@ -224,7 +224,7 @@ describe('UIExtension.vue', () => {
         it('sets alerts locally', () => {
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: getMockComponentProps()
+                props: getMockComponentProps()
             });
             let showAlertSpy = vi.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/showAlert'], '0');
             wrapper.vm.handleAlert(mockAlert);
@@ -235,7 +235,7 @@ describe('UIExtension.vue', () => {
         it('sets alerts via pagebuilder store', () => {
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: getMockComponentProps()
+                props: getMockComponentProps()
             });
             wrapper.vm.$store.state.pagebuilder.isDialogLayout = true;
             let showAlertSpy = vi.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/showAlert'], '0');
@@ -249,7 +249,7 @@ describe('UIExtension.vue', () => {
         it('removes local alerts', () => {
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: getMockComponentProps()
+                props: getMockComponentProps()
             });
             wrapper.setData({ alert: mockAlert });
             wrapper.vm.closeAlert(true);
@@ -262,7 +262,7 @@ describe('UIExtension.vue', () => {
             let mockErrorAlert = { message: 'Shaken not stirred.', type: 'error' };
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: getMockComponentProps()
+                props: getMockComponentProps()
             });
             let showAlertSpy = vi.spyOn(wrapper.vm, 'showAlert');
             wrapper.setData({ alert: mockErrorAlert });
@@ -276,7 +276,7 @@ describe('UIExtension.vue', () => {
             let mockWarningAlert = { message: 'Bond, James Bond.', type: 'warn' };
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: getMockComponentProps()
+                props: getMockComponentProps()
             });
             let showAlertSpy = vi.spyOn(wrapper.vm, 'showAlert');
             wrapper.setData({ alert: mockWarningAlert });
@@ -290,7 +290,7 @@ describe('UIExtension.vue', () => {
             let mockWarningAlert = { message: 'M' };
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: getMockComponentProps()
+                props: getMockComponentProps()
             });
             wrapper.setData({ alert: mockWarningAlert });
             expect(wrapper.vm.alert).toStrictEqual(mockWarningAlert);
@@ -304,11 +304,11 @@ describe('UIExtension.vue', () => {
 
     it('deregisters a KnimeService instance during destroy', () => {
         let deregisterServiceMock = vi.fn();
-        let propsData = getMockComponentProps();
+        let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
             localVue,
             store: createStore({ deregisterServiceMock }),
-            propsData
+            props
         });
         expect(deregisterServiceMock).not.toHaveBeenCalled();
         wrapper.destroy();
@@ -322,13 +322,13 @@ describe('UIExtension.vue', () => {
             viewConfig.resizeMethod = 'aspectRatio1by1';
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: getMockIFrameProps()
+                props: getMockIFrameProps()
             });
             expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio1by1');
             viewConfig.resizeMethod = 'aspectRatio16by9';
             wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: getMockIFrameProps()
+                props: getMockIFrameProps()
             });
             expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio16by9');
         });
@@ -337,7 +337,7 @@ describe('UIExtension.vue', () => {
             let mockProps = getMockIFrameProps();
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: {
+                props: {
                     ...getMockIFrameProps(),
                     viewConfig: {
                         resizeMethod: 'aspectRatio1by1',
@@ -353,7 +353,7 @@ describe('UIExtension.vue', () => {
         it('adds classes for min/max height & width', () => {
             let wrapper = shallowMount(UIExtension, {
                 ...context,
-                propsData: {
+                props: {
                     ...getMockIFrameProps(),
                     viewConfig: {
                         resizeMethod: 'viewLowestElement',

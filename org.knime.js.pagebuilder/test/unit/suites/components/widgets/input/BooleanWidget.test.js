@@ -1,14 +1,14 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import Checkbox from 'webapps-common/ui/components/forms/Checkbox.vue';
 import BooleanWidget from '@/components/widgets/input/BooleanWidget.vue';
 
 describe('BooleanWidget.vue', () => {
-    let propsData;
+    let props;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 viewValue: null,
@@ -62,7 +62,7 @@ describe('BooleanWidget.vue', () => {
 
     it('renders', () => {
         let wrapper = shallowMount(BooleanWidget, {
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -72,7 +72,7 @@ describe('BooleanWidget.vue', () => {
         let mockChild = document.createElement('div');
         mockChild.setAttribute('class', 'knime-boolean');
         let wrapper = shallowMount(BooleanWidget, {
-            propsData,
+            props,
             mocks: {
                 $el: mockChild
             }
@@ -84,20 +84,20 @@ describe('BooleanWidget.vue', () => {
 
     describe('validation', () => {
         it('is valid if boolean', () => {
-            propsData.nodeConfig.viewRepresentation.required = true;
-            propsData.valuePair = { boolean: false };
+            props.nodeConfig.viewRepresentation.required = true;
+            props.valuePair = { boolean: false };
             let wrapper = shallowMount(BooleanWidget, {
-                propsData
+                props
             });
 
             expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
         it('is invalid if value is undefined', () => {
-            propsData.nodeConfig.viewRepresentation.required = true;
-            propsData.valuePair = {};
+            props.nodeConfig.viewRepresentation.required = true;
+            props.valuePair = {};
             let wrapper = shallowMount(BooleanWidget, {
-                propsData
+                props
             });
 
             expect(wrapper.vm.validate().isValid).toBe(false);

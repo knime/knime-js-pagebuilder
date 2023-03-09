@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import Vue from 'vue';
 import { shallowMount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
@@ -11,7 +11,7 @@ describe('UIExtComponent.vue', () => {
     const extensionConfig = componentExtensionConfig;
     const { resourceInfo } = extensionConfig;
     const context = {
-        propsData: { resourceLocation: resourceInfo.url },
+        props: { resourceLocation: resourceInfo.url },
         provide: { getKnimeService: () => new KnimeService(extensionConfig, vi.fn()) }
     };
     const mockComponentId = resourceInfo.id;

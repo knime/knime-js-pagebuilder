@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
@@ -9,10 +9,10 @@ import Checkbox from 'webapps-common/ui/components/forms/Checkbox.vue';
 
 
 describe('Multiselect.vue', () => {
-    let propsDataTwinlist, propsDataCheckboxHorizontal, propsDataCheckboxVertical, propsDataMultiselectListBox;
+    let propsTwinlist, propsCheckboxHorizontal, propsCheckboxVertical, propsMultiselectListBox;
 
     beforeEach(() => {
-        propsDataTwinlist = {
+        propsTwinlist = {
             possibleValueList: [
                 'TwinList 1',
                 'TwinList 2',
@@ -31,7 +31,7 @@ describe('Multiselect.vue', () => {
             numberVisOptions: 4,
             isValid: false
         };
-        propsDataMultiselectListBox = {
+        propsMultiselectListBox = {
             value: [
                 'List 3',
                 'List 4',
@@ -52,7 +52,7 @@ describe('Multiselect.vue', () => {
             numberVisOptions: 5,
             isValid: false
         };
-        propsDataCheckboxVertical = {
+        propsCheckboxVertical = {
             value: [
                 'CBV 2',
                 'CBV 4',
@@ -71,7 +71,7 @@ describe('Multiselect.vue', () => {
             numberVisOptions: 10,
             isValid: false
         };
-        propsDataCheckboxHorizontal = {
+        propsCheckboxHorizontal = {
             value: [
                 'CBH 1',
                 'CBH 4'
@@ -94,25 +94,25 @@ describe('Multiselect.vue', () => {
 
     it('renders all different types', () => {
         let wrapper = shallowMount(Multiselect, {
-            propsData: propsDataTwinlist
+            props: propsTwinlist
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
 
         let wrapper2 = shallowMount(Multiselect, {
-            propsData: propsDataCheckboxHorizontal
+            props: propsCheckboxHorizontal
         });
         expect(wrapper2.html()).toBeTruthy();
         expect(wrapper2.isVisible()).toBeTruthy();
 
         let wrapper3 = shallowMount(Multiselect, {
-            propsData: propsDataCheckboxVertical
+            props: propsCheckboxVertical
         });
         expect(wrapper3.html()).toBeTruthy();
         expect(wrapper3.isVisible()).toBeTruthy();
 
         let wrapper4 = shallowMount(Multiselect, {
-            propsData: propsDataMultiselectListBox
+            props: propsMultiselectListBox
         });
         expect(wrapper4.html()).toBeTruthy();
         expect(wrapper4.isVisible()).toBeTruthy();
@@ -120,22 +120,22 @@ describe('Multiselect.vue', () => {
 
     describe('checkboxes', () => {
         it('render horizontal', () => {
-            propsDataCheckboxHorizontal.isValid = true;
+            propsCheckboxHorizontal.isValid = true;
             let wrapper = mount(Multiselect, {
-                propsData: propsDataCheckboxHorizontal
+                props: propsCheckboxHorizontal
             });
 
             let checkboxes = wrapper.findComponent(Checkboxes);
             expect(checkboxes.exists()).toBeTruthy();
             expect(checkboxes.props('alignment')).toBe('horizontal');
             // eslint-disable-next-line no-magic-numbers
-            expect(wrapper.findAll(Checkbox).length).toBe(7);
+            expect(wrapper.findAllComponents(Checkbox).length).toBe(7);
         });
 
         it('render vertical', () => {
-            propsDataCheckboxVertical.isValid = true;
+            propsCheckboxVertical.isValid = true;
             let wrapper = shallowMount(Multiselect, {
-                propsData: propsDataCheckboxVertical
+                props: propsCheckboxVertical
             });
 
             let checkboxes = wrapper.findComponent(Checkboxes);
@@ -144,9 +144,9 @@ describe('Multiselect.vue', () => {
         });
 
         it('fail on invalid type (alignment)', () => {
-            propsDataCheckboxVertical.type = 'Check boxes (vulcano)';
+            propsCheckboxVertical.type = 'Check boxes (vulcano)';
             let wrapper = mount(Multiselect, {
-                propsData: propsDataCheckboxVertical
+                props: propsCheckboxVertical
             });
 
             expect(wrapper.vm.checkBoxesAlignment).toBe(null);
@@ -154,9 +154,9 @@ describe('Multiselect.vue', () => {
         });
 
         it('emits @input', () => {
-            let propsData = propsDataCheckboxVertical;
+            let props = propsCheckboxVertical;
             let wrapper = shallowMount(Multiselect, {
-                propsData
+                props
             });
 
             const testValue = ['VALUE1', 'VALUE2'];
@@ -170,28 +170,28 @@ describe('Multiselect.vue', () => {
 
     describe('listbox', () => {
         it('renders list box component', () => {
-            propsDataMultiselectListBox.isValid = true;
+            propsMultiselectListBox.isValid = true;
             let wrapper = shallowMount(Multiselect, {
-                propsData: propsDataMultiselectListBox
+                props: propsMultiselectListBox
             });
 
             expect(wrapper.findComponent(MultiselectListBox).exists()).toBeTruthy();
         });
 
         it('does not render duplicate entries', () => {
-            propsDataMultiselectListBox.possibleValueList = ['1', '2', '3', '3', '3', '4'];
+            propsMultiselectListBox.possibleValueList = ['1', '2', '3', '3', '3', '4'];
             let wrapper = mount(Multiselect, {
-                propsData: propsDataMultiselectListBox
+                props: propsMultiselectListBox
             });
             // duplicate entry will not be shown twice
-            const choicesUnique = [...new Set(propsDataMultiselectListBox.possibleValueList)].length;
+            const choicesUnique = [...new Set(propsMultiselectListBox.possibleValueList)].length;
             expect(wrapper.vm.possibleValues.length).toBe(choicesUnique);
         });
 
         it('emits @input', () => {
-            let propsData = propsDataMultiselectListBox;
+            let props = propsMultiselectListBox;
             let wrapper = shallowMount(Multiselect, {
-                propsData
+                props
             });
 
             const testValue = ['VALUE1', 'VALUE2'];
@@ -205,19 +205,19 @@ describe('Multiselect.vue', () => {
 
     describe('twinlist', () => {
         it('renders component', () => {
-            propsDataTwinlist.isValid = true;
+            propsTwinlist.isValid = true;
             let wrapper = shallowMount(Multiselect, {
-                propsData: propsDataTwinlist
+                props: propsTwinlist
             });
 
             expect(wrapper.findComponent(Twinlist).exists()).toBeTruthy();
         });
 
         it('size defaults to 0', () => {
-            propsDataTwinlist.isValid = true;
-            propsDataTwinlist.limitNumberVisOptions = false;
+            propsTwinlist.isValid = true;
+            propsTwinlist.limitNumberVisOptions = false;
             let wrapper = shallowMount(Multiselect, {
-                propsData: propsDataTwinlist
+                props: propsTwinlist
             });
 
             let rb = wrapper.findComponent(Twinlist);
@@ -225,9 +225,9 @@ describe('Multiselect.vue', () => {
         });
 
         it('emits @input', () => {
-            let propsData = propsDataTwinlist;
+            let props = propsTwinlist;
             let wrapper = shallowMount(Multiselect, {
-                propsData
+                props
             });
 
             const testValue = ['VALUE1', 'VALUE2'];

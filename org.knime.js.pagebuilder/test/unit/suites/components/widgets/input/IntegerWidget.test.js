@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import IntegerWidget from '@/components/widgets/input/IntegerWidget.vue';
@@ -8,7 +8,7 @@ describe('IntegerWidget.vue', () => {
 
     beforeEach(() => {
         mountOptions = {
-            propsData: {
+            props: {
                 nodeConfig: {
                     viewRepresentation: {
                         '@class': 'org.knime.js.base.node.base.input.integer.IntegerNodeRepresentation',
@@ -52,7 +52,7 @@ describe('IntegerWidget.vue', () => {
 
     it('passes-through all props', () => {
         let wrapper = shallowMount(IntegerWidget, mountOptions);
-        expect(wrapper.find(mountOptions.stubs.NumberWidget).vm.$attrs).toEqual(mountOptions.propsData);
+        expect(wrapper.find(mountOptions.stubs.NumberWidget).vm.$attrs).toEqual(mountOptions.props);
     });
 
     it('passes-through all listeners', () => {

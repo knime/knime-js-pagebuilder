@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
@@ -127,7 +127,7 @@ describe('WebNodeIFrame.vue', () => {
     it('renders', () => {
         wrapper = shallowMount(WebNodeIFrame, {
             ...context,
-            propsData: {
+            props: {
                 nodeId: '0:0:7'
             },
             attachToDocument: true
@@ -140,7 +140,7 @@ describe('WebNodeIFrame.vue', () => {
             let iframeConfig = {
                 attachToDocument: true,
                 ...context,
-                propsData: {
+                props: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },
@@ -171,7 +171,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(html).toMatch('<style>body { background: red; }</style>');
 
             // check if iframe resizer was also injected
-            iframeConfig.propsData.viewConfig.resizeMethod = 'viewLowestElement';
+            iframeConfig.props.viewConfig.resizeMethod = 'viewLowestElement';
             wrapper = shallowMount(WebNodeIFrame, iframeConfig);
             html = wrapper.vm.document.documentElement.innerHTML;
             expect(html).toMatch('iframeResizer.js mock');
@@ -187,7 +187,7 @@ describe('WebNodeIFrame.vue', () => {
             let iframeConfig = {
                 attachToDocument: true,
                 ...context,
-                propsData: {
+                props: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },
@@ -224,7 +224,7 @@ describe('WebNodeIFrame.vue', () => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
-                propsData: {
+                props: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },
@@ -261,7 +261,7 @@ describe('WebNodeIFrame.vue', () => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
-                propsData: {
+                props: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },
@@ -308,7 +308,7 @@ describe('WebNodeIFrame.vue', () => {
         wrapper = shallowMount(WebNodeIFrame, {
             ...context,
             attachToDocument: true,
-            propsData: {
+            props: {
                 viewConfig,
                 nodeConfig: {
                     namespace: 'knimespace'
@@ -341,7 +341,7 @@ describe('WebNodeIFrame.vue', () => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
-                propsData: {
+                props: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },
@@ -366,7 +366,7 @@ describe('WebNodeIFrame.vue', () => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
-                propsData: {
+                props: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },
@@ -393,7 +393,7 @@ describe('WebNodeIFrame.vue', () => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
-                propsData: {
+                props: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },
@@ -430,7 +430,7 @@ describe('WebNodeIFrame.vue', () => {
             let localWrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
-                propsData: {
+                props: {
                     viewConfig: { nodeID: nodeId },
                     nodeConfig: {
                         namespace: 'knimespace',
@@ -483,7 +483,7 @@ describe('WebNodeIFrame.vue', () => {
                     }
                 } }),
                 attachToDocument: true,
-                propsData: {
+                props: {
                     viewConfig: { nodeID: nodeId },
                     nodeConfig: {
                         namespace: 'knimespace',

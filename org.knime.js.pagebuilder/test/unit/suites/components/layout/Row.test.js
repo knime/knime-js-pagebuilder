@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import Row from '@/components/layout/Row.vue';
@@ -7,7 +7,7 @@ import Column from '@/components/layout/Column.vue';
 describe('Row.vue', () => {
     it('renders without classes and styles', () => {
         let wrapper = shallowMount(Row, {
-            propsData: {
+            props: {
                 rowConfig: {
                     type: 'row',
                     additionalClasses: [],
@@ -16,14 +16,14 @@ describe('Row.vue', () => {
                 }
             }
         });
-        expect(wrapper.is('div')).toBe(true);
+        expect(wrapper.element.tagName).toBe('DIV');
         expect(wrapper.attributes('class')).toEqual('row notHeadless');
-        expect(wrapper.attributes('style')).toBeUndefined();
+        expect(wrapper.attributes('style')).toBe('');
     });
 
     it('renders with classes and styles', () => {
         let wrapper = shallowMount(Row, {
-            propsData: {
+            props: {
                 rowConfig: {
                     type: 'row',
                     additionalClasses: ['class1', 'class2'],
@@ -43,7 +43,7 @@ describe('Row.vue', () => {
         ];
 
         let wrapper = shallowMount(Row, {
-            propsData: {
+            props: {
                 rowConfig: {
                     type: 'row',
                     columns
@@ -51,11 +51,10 @@ describe('Row.vue', () => {
             }
         });
 
-        const columnArray = wrapper.findAll(Column);
+        const columnArray = wrapper.findAllComponents(Column);
         expect(columnArray.length).toBe(columns.length);
         columns.forEach((column, i) => {
             let columnComponent = columnArray.at(i);
-            expect(columnComponent.is(Column)).toBe(true);
             expect(columnComponent.props('columnConfig')).toEqual(columns[i]);
         });
     });

@@ -1,14 +1,14 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import NumberWidget from '@/components/widgets/NumberWidget.vue';
 import NumberInput from 'webapps-common/ui/components/forms/NumberInput.vue';
 
 describe('NumberWidget.vue', () => {
-    let propsData;
+    let props;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 namespace: 'knimeNumberWidget',
@@ -67,7 +67,7 @@ describe('NumberWidget.vue', () => {
 
     it('renders', () => {
         let wrapper = shallowMount(NumberWidget, {
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -75,7 +75,7 @@ describe('NumberWidget.vue', () => {
 
     it('emits @updateWidget if child emits @input', () => {
         let wrapper = mount(NumberWidget, {
-            propsData
+            props
         });
 
         const testValue = '5';
@@ -84,7 +84,7 @@ describe('NumberWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsData.nodeId,
+            nodeId: props.nodeId,
             type: 'double',
             value: testValue
         });
@@ -92,7 +92,7 @@ describe('NumberWidget.vue', () => {
 
     it('\'s children will change appearance when invalid', () => {
         let wrapper = mount(NumberWidget, {
-            propsData
+            props
         });
 
         let numericInputComponent = wrapper.findComponent(NumberInput);
@@ -105,7 +105,7 @@ describe('NumberWidget.vue', () => {
 
     it('has validate logic to invalidate required values', () => {
         let wrapper = mount(NumberWidget, {
-            propsData
+            props
         });
 
         wrapper.findComponent(NumberInput).setProps({ value: null });
@@ -115,7 +115,7 @@ describe('NumberWidget.vue', () => {
 
     it('takes child validation in favor of parent validation', () => {
         let wrapper = mount(NumberWidget, {
-            propsData,
+            props,
             stubs: {
                 NumberInput: {
                     template: '<div />',
@@ -131,7 +131,7 @@ describe('NumberWidget.vue', () => {
 
     it('takes child error message over parent error message', () => {
         let wrapper = mount(NumberWidget, {
-            propsData,
+            props,
             stubs: {
                 NumberInput: {
                     template: '<div />',
@@ -150,7 +150,7 @@ describe('NumberWidget.vue', () => {
     it('has no error message when valid', () => {
         const validValue = 3;
         let wrapper = mount(NumberWidget, {
-            propsData,
+            props,
             stubs: {
                 NumberInput: {
                     template: '<div />',
@@ -165,7 +165,7 @@ describe('NumberWidget.vue', () => {
 
     it('has error message', () => {
         let wrapper = mount(NumberWidget, {
-            propsData,
+            props,
             stubs: {
                 NumberInput: {
                     template: '<div />',
@@ -180,10 +180,10 @@ describe('NumberWidget.vue', () => {
 
     it('validates min/max values', () => {
         const invalidValue = 9;
-        propsData.nodeConfig.viewRepresentation.usemin = true;
-        propsData.nodeConfig.viewRepresentation.min = 10;
+        props.nodeConfig.viewRepresentation.usemin = true;
+        props.nodeConfig.viewRepresentation.min = 10;
         let wrapper = mount(NumberWidget, {
-            propsData,
+            props,
             stubs: {
                 NumberInput: {
                     template: '<div />',

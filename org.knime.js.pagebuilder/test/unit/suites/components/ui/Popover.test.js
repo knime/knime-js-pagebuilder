@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import Popover from '@/components/ui/Popover.vue';
@@ -14,7 +14,7 @@ describe('Popover', () => {
 
     it('renders active', () => {
         let wrapper = mount(Popover, {
-            propsData: {
+            props: {
                 active: true
             }
         });
@@ -26,7 +26,7 @@ describe('Popover', () => {
 
     it('sets classes on child elements', () => {
         let wrapper = mount(Popover, {
-            propsData: {
+            props: {
                 active: true
             }
         });

@@ -1,14 +1,14 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import ListBoxInputWidget from '@/components/widgets/input/ListBoxInputWidget.vue';
 import TextArea from 'webapps-common/ui/components/forms/TextArea.vue';
 
 describe('ListBoxInputWidget.vue', () => {
-    let propsDataEmailRegexLineSplit, propsDataCharSplit, propsDataCSVSplit;
+    let propsEmailRegexLineSplit, propsCharSplit, propsCSVSplit;
 
     beforeEach(() => {
-        propsDataEmailRegexLineSplit = {
+        propsEmailRegexLineSplit = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -67,7 +67,7 @@ describe('ListBoxInputWidget.vue', () => {
             isValid: false
         };
 
-        propsDataCharSplit = {
+        propsCharSplit = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -125,7 +125,7 @@ describe('ListBoxInputWidget.vue', () => {
             isValid: false
         };
 
-        propsDataCSVSplit = {
+        propsCSVSplit = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -186,7 +186,7 @@ describe('ListBoxInputWidget.vue', () => {
 
     it('renders', () => {
         let wrapper = shallowMount(ListBoxInputWidget, {
-            propsData: propsDataEmailRegexLineSplit
+            props: propsEmailRegexLineSplit
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -195,7 +195,7 @@ describe('ListBoxInputWidget.vue', () => {
 
     it('emits @updateWidget if child emits @input', () => {
         let wrapper = mount(ListBoxInputWidget, {
-            propsData: propsDataEmailRegexLineSplit
+            props: propsEmailRegexLineSplit
         });
 
         const testValue = 'VALUE';
@@ -204,7 +204,7 @@ describe('ListBoxInputWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsDataEmailRegexLineSplit.nodeId,
+            nodeId: propsEmailRegexLineSplit.nodeId,
             type: 'string',
             value: testValue
         });
@@ -213,7 +213,7 @@ describe('ListBoxInputWidget.vue', () => {
     describe('split values', () => {
         it('will split values by char', () => {
             let widget = mount(ListBoxInputWidget, {
-                propsData: propsDataCharSplit,
+                props: propsCharSplit,
                 stubs: {
                     TextArea: {
                         template: '<div />',
@@ -229,7 +229,7 @@ describe('ListBoxInputWidget.vue', () => {
 
         it('will split values by comma (CSV)', () => {
             let widget = mount(ListBoxInputWidget, {
-                propsData: propsDataCSVSplit,
+                props: propsCSVSplit,
                 stubs: {
                     TextArea: {
                         template: '<div />',
@@ -245,7 +245,7 @@ describe('ListBoxInputWidget.vue', () => {
 
         it('will omit empty', () => {
             let widget = mount(ListBoxInputWidget, {
-                propsData: propsDataEmailRegexLineSplit,
+                props: propsEmailRegexLineSplit,
                 stubs: {
                     TextArea: {
                         template: '<div />',
@@ -263,8 +263,8 @@ describe('ListBoxInputWidget.vue', () => {
     describe('validation and errors', () => {
         it('will be invalid if widget is', () => {
             let widget = mount(ListBoxInputWidget, {
-                propsData: {
-                    ...propsDataEmailRegexLineSplit,
+                props: {
+                    ...propsEmailRegexLineSplit,
                     isValid: true
                 }
             });
@@ -277,7 +277,7 @@ describe('ListBoxInputWidget.vue', () => {
 
         it('will return invalid when the value is required but missing', () => {
             let wrapper = mount(ListBoxInputWidget, {
-                propsData: propsDataEmailRegexLineSplit
+                props: propsEmailRegexLineSplit
             });
             wrapper.findComponent(TextArea).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
@@ -293,7 +293,7 @@ describe('ListBoxInputWidget.vue', () => {
 
         it('has no error message when valid', () => {
             let wrapper = mount(ListBoxInputWidget, {
-                propsData: propsDataEmailRegexLineSplit,
+                props: propsEmailRegexLineSplit,
                 stubs: {
                     TextArea: {
                         template: '<div />',
@@ -309,7 +309,7 @@ describe('ListBoxInputWidget.vue', () => {
 
         it('has validation error message when not valid', () => {
             let wrapper = mount(ListBoxInputWidget, {
-                propsData: propsDataEmailRegexLineSplit,
+                props: propsEmailRegexLineSplit,
                 stubs: {
                     TextArea: {
                         template: '<div />',
@@ -327,7 +327,7 @@ describe('ListBoxInputWidget.vue', () => {
 
         it('has error message', () => {
             let wrapper = mount(ListBoxInputWidget, {
-                propsData: propsDataEmailRegexLineSplit,
+                props: propsEmailRegexLineSplit,
                 stubs: {
                     TextArea: {
                         template: '<div />',

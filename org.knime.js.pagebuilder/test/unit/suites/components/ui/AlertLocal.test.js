@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import AlertLocal from '@/components/ui/AlertLocal.vue';
@@ -15,7 +15,7 @@ describe('AlertLocal', () => {
 
     it('renders active', () => {
         let wrapper = mount(AlertLocal, {
-            propsData: {
+            props: {
                 active: true
             }
         });
@@ -27,7 +27,7 @@ describe('AlertLocal', () => {
 
     it('emits events to show the global alert', async () => {
         let wrapper = mount(AlertLocal, {
-            propsData: {
+            props: {
                 active: true
             }
         });

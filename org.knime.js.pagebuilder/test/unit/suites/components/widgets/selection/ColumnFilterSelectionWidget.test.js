@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
@@ -6,10 +6,10 @@ import ColumnFilterWidget from '@/components/widgets/selection/ColumnFilterSelec
 import Twinlist from 'webapps-common/ui/components/forms/Twinlist.vue';
 
 describe('ColumnFilterSelectionWidget.vue', () => {
-    let propsData;
+    let props;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 initMethodName: 'init',
@@ -99,7 +99,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
 
     it('renders', () => {
         let wrapper = shallowMount(ColumnFilterWidget, {
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -107,10 +107,10 @@ describe('ColumnFilterSelectionWidget.vue', () => {
     });
 
     it('sets default size to 0', () => {
-        propsData.isValid = true;
-        propsData.nodeConfig.viewRepresentation.limitNumberVisOptions = false;
+        props.isValid = true;
+        props.nodeConfig.viewRepresentation.limitNumberVisOptions = false;
         let wrapper = shallowMount(ColumnFilterWidget, {
-            propsData
+            props
         });
 
         let comp = wrapper.findComponent(Twinlist);
@@ -118,11 +118,11 @@ describe('ColumnFilterSelectionWidget.vue', () => {
     });
 
     it('honors size setting', () => {
-        propsData.isValid = true;
-        propsData.nodeConfig.viewRepresentation.limitNumberVisOptions = true;
-        propsData.nodeConfig.viewRepresentation.numberVisOptions = 8;
+        props.isValid = true;
+        props.nodeConfig.viewRepresentation.limitNumberVisOptions = true;
+        props.nodeConfig.viewRepresentation.numberVisOptions = 8;
         let wrapper = shallowMount(ColumnFilterWidget, {
-            propsData
+            props
         });
 
         let rb = wrapper.findComponent(Twinlist);
@@ -131,7 +131,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
 
     it('sends @updateWidget if child emits @input', () => {
         let wrapper = shallowMount(ColumnFilterWidget, {
-            propsData
+            props
         });
 
         const testValue = ['VALUE1', 'VALUE2'];
@@ -140,7 +140,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsData.nodeId,
+            nodeId: props.nodeId,
             type: 'columns',
             value: testValue
         });
@@ -148,20 +148,20 @@ describe('ColumnFilterSelectionWidget.vue', () => {
 
     describe('validation', () => {
         it('is always valid if not required', () => {
-            propsData.nodeConfig.viewRepresentation.required = false;
-            propsData.nodeConfig.viewRepresentation.currentValue.value = [];
-            propsData.nodeConfig.viewRepresentation.defaultValue.value = [];
+            props.nodeConfig.viewRepresentation.required = false;
+            props.nodeConfig.viewRepresentation.currentValue.value = [];
+            props.nodeConfig.viewRepresentation.defaultValue.value = [];
             let wrapper = shallowMount(ColumnFilterWidget, {
-                propsData
+                props
             });
 
             expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
-            propsData.nodeConfig.viewRepresentation.required = true;
+            props.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(ColumnFilterWidget, {
-                propsData,
+                props,
                 stubs: {
                     Twinlist: {
                         template: '<div />',
@@ -180,7 +180,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
         it('handles child validation', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ColumnFilterWidget, {
-                propsData,
+                props,
                 stubs: {
                     Twinlist: {
                         template: '<div />',

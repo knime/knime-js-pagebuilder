@@ -1,13 +1,13 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import ImageWidget from '@/components/widgets/output/ImageWidget.vue';
 
 describe('ImageWidget.vue', () => {
-    let propsDataSvg, propsDataPng;
+    let propsSvg, propsPng;
 
     beforeEach(() => {
-        propsDataSvg = {
+        propsSvg = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -54,7 +54,7 @@ describe('ImageWidget.vue', () => {
             nodeId: '4:0:7',
             isValid: false
         };
-        propsDataPng = {
+        propsPng = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -107,7 +107,7 @@ describe('ImageWidget.vue', () => {
     describe('svg', () => {
         it('renders with svg', () => {
             let wrapper = mount(ImageWidget, {
-                propsData: propsDataSvg
+                props: propsSvg
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.find('img').exists()).toBeFalsy();
@@ -116,10 +116,10 @@ describe('ImageWidget.vue', () => {
         });
 
         it('does adjust SVG while keeping aspect ratio with height limit', () => {
-            propsDataSvg.nodeConfig.viewRepresentation.maxHeight = 90;
-            propsDataSvg.nodeConfig.viewRepresentation.maxWidth = 300;
+            propsSvg.nodeConfig.viewRepresentation.maxHeight = 90;
+            propsSvg.nodeConfig.viewRepresentation.maxWidth = 300;
             let wrapper = mount(ImageWidget, {
-                propsData: propsDataSvg
+                props: propsSvg
             });
             let svg = wrapper.find('svg');
 
@@ -139,10 +139,10 @@ describe('ImageWidget.vue', () => {
         });
 
         it('does adjust SVG while keeping aspect ratio with width limit', () => {
-            propsDataSvg.nodeConfig.viewRepresentation.maxHeight = 400;
-            propsDataSvg.nodeConfig.viewRepresentation.maxWidth = 100;
+            propsSvg.nodeConfig.viewRepresentation.maxHeight = 400;
+            propsSvg.nodeConfig.viewRepresentation.maxWidth = 100;
             let wrapper = mount(ImageWidget, {
-                propsData: propsDataSvg
+                props: propsSvg
             });
             let svg = wrapper.find('svg');
 
@@ -162,10 +162,10 @@ describe('ImageWidget.vue', () => {
         });
 
         it('does adjust SVG size if only width limits', () => {
-            propsDataSvg.nodeConfig.viewRepresentation.maxHeight = -1;
-            propsDataSvg.nodeConfig.viewRepresentation.maxWidth = 700;
+            propsSvg.nodeConfig.viewRepresentation.maxHeight = -1;
+            propsSvg.nodeConfig.viewRepresentation.maxWidth = 700;
             let wrapper = mount(ImageWidget, {
-                propsData: propsDataSvg
+                props: propsSvg
             });
             let svg = wrapper.find('svg');
 
@@ -183,10 +183,10 @@ describe('ImageWidget.vue', () => {
         });
 
         it('does adjust SVG size if only width limits', () => {
-            propsDataSvg.nodeConfig.viewRepresentation.maxHeight = 500;
-            propsDataSvg.nodeConfig.viewRepresentation.maxWidth = -1;
+            propsSvg.nodeConfig.viewRepresentation.maxHeight = 500;
+            propsSvg.nodeConfig.viewRepresentation.maxWidth = -1;
             let wrapper = mount(ImageWidget, {
-                propsData: propsDataSvg
+                props: propsSvg
             });
             let svg = wrapper.find('svg');
 
@@ -204,10 +204,10 @@ describe('ImageWidget.vue', () => {
         });
 
         it('does not adjust SVG size if not necessary', () => {
-            propsDataSvg.nodeConfig.viewRepresentation.maxHeight = 10000;
-            propsDataSvg.nodeConfig.viewRepresentation.maxWidth = 10000;
+            propsSvg.nodeConfig.viewRepresentation.maxHeight = 10000;
+            propsSvg.nodeConfig.viewRepresentation.maxWidth = 10000;
             let wrapper = mount(ImageWidget, {
-                propsData: propsDataSvg
+                props: propsSvg
             });
             let svg = wrapper.find('svg');
 
@@ -227,7 +227,7 @@ describe('ImageWidget.vue', () => {
 
     it('renders with png', () => {
         let wrapper = mount(ImageWidget, {
-            propsData: propsDataPng
+            props: propsPng
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.find('img').exists()).toBeTruthy();
@@ -237,7 +237,7 @@ describe('ImageWidget.vue', () => {
 
     it('has no error message when valid', () => {
         let wrapper = shallowMount(ImageWidget, {
-            propsData: propsDataSvg
+            props: propsSvg
         });
 
         let validate = wrapper.vm.validate();
@@ -247,10 +247,10 @@ describe('ImageWidget.vue', () => {
     });
 
     it('has image format error message', () => {
-        propsDataSvg.isValid = false;
-        propsDataSvg.nodeConfig.viewRepresentation.imageFormat = 'XXXXXXXX';
+        propsSvg.isValid = false;
+        propsSvg.nodeConfig.viewRepresentation.imageFormat = 'XXXXXXXX';
         let wrapper = shallowMount(ImageWidget, {
-            propsData: propsDataSvg
+            props: propsSvg
         });
 
         expect(wrapper.vm.validate().errorMessage).toBe('Unsupported image format: XXXXXXXX');

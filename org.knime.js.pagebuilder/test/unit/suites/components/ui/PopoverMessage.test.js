@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import PopoverMessage from '@/components/ui/PopoverMessage.vue';
@@ -12,7 +12,7 @@ describe('PopoverMessage', () => {
 
     beforeAll(() => {
         wrapper = shallowMount(PopoverMessage, {
-            propsData: {
+            props: {
                 type: 'error',
                 title: 'Test title',
                 subtitle: 'Test subtitle',
@@ -29,7 +29,7 @@ describe('PopoverMessage', () => {
 
     it('emits close alert event', () => {
         wrapper = shallowMount(PopoverMessage, {
-            propsData: {
+            props: {
                 type: 'error',
                 title: 'Test title',
                 subtitle: 'Test subtitle',
@@ -43,7 +43,7 @@ describe('PopoverMessage', () => {
     it('copies text', () => {
         const dispatchMock = vi.fn();
         wrapper = shallowMount(PopoverMessage, {
-            propsData: {
+            props: {
                 type: 'error',
                 title: 'Test title',
                 subtitle: 'Test subtitle',
@@ -65,7 +65,7 @@ describe('PopoverMessage', () => {
 
     it('minimizes error messages', () => {
         wrapper = mount(PopoverMessage, {
-            propsData: {
+            props: {
                 type: 'warn',
                 title: 'Test title',
                 subtitle: 'Test subtitle',
@@ -74,7 +74,7 @@ describe('PopoverMessage', () => {
         });
         expect(wrapper.find('.minimize-button').exists()).toBe(false);
         wrapper = mount(PopoverMessage, {
-            propsData: {
+            props: {
                 type: 'error',
                 title: 'Test title',
                 subtitle: 'Test subtitle',
@@ -94,7 +94,7 @@ describe('PopoverMessage', () => {
 
     it('handles non-expandable messages', () => {
         wrapper = mount(PopoverMessage, {
-            propsData: {
+            props: {
                 type: 'error',
                 title: 'Test title',
                 subtitle: 'Test subtitle',
@@ -112,7 +112,7 @@ describe('PopoverMessage', () => {
 
     it('handles expandable messages', () => {
         wrapper = mount(PopoverMessage, {
-            propsData: {
+            props: {
                 type: 'error',
                 title: 'Test title',
                 subtitle: 'Test subtitle',

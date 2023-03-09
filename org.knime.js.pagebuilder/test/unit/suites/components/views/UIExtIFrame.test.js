@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import { IFrameKnimeServiceAdapter } from '@knime/ui-extension-service';
 
@@ -14,7 +14,7 @@ describe('UIExtIFrame.vue', () => {
     beforeAll(() => {
         knimeService = new IFrameKnimeServiceAdapter(extensionConfig, vi.fn());
         wrapper = shallowMount(UIExtIFrame, {
-            propsData: { resourceLocation: resourceInfo.url },
+            props: { resourceLocation: resourceInfo.url },
             provide: { getKnimeService: () => knimeService }
         });
     });

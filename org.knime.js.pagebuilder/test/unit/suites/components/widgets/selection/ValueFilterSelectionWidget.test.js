@@ -1,14 +1,14 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import ValueFilterSelectionWidget from '@/components/widgets/selection/ValueFilterSelectionWidget.vue';
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
 
 describe('ValueFilterSelectionWidget.vue', () => {
-    let propsData, propsDataColumnLocked;
+    let props, propsColumnLocked;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -89,7 +89,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
             nodeId: '3:0:52',
             isValid: false
         };
-        propsDataColumnLocked = {
+        propsColumnLocked = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -179,13 +179,13 @@ describe('ValueFilterSelectionWidget.vue', () => {
 
     it('renders all different types', () => {
         let wrapper = mount(ValueFilterSelectionWidget, {
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
 
         let wrapperLocked = mount(ValueFilterSelectionWidget, {
-            propsData: propsDataColumnLocked
+            props: propsColumnLocked
         });
         expect(wrapperLocked.html()).toBeTruthy();
         expect(wrapperLocked.isVisible()).toBeTruthy();
@@ -193,7 +193,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
 
     it('sends @updateWidget if Multiselect emits @input', () => {
         let wrapper = mount(ValueFilterSelectionWidget, {
-            propsData
+            props
         });
 
         const testValue = ['VALUE1', 'VALUE2'];
@@ -202,7 +202,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsData.nodeId,
+            nodeId: props.nodeId,
             type: 'values',
             value: testValue
         });
@@ -210,7 +210,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
 
     it('sends @updateWidget if column emits @input', () => {
         let wrapper = mount(ValueFilterSelectionWidget, {
-            propsData
+            props
         });
 
         const testValue = 'MYCOL';
@@ -219,16 +219,16 @@ describe('ValueFilterSelectionWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsData.nodeId,
+            nodeId: props.nodeId,
             type: 'column',
             value: testValue
         });
     });
 
     it('does not render duplicate entries', () => {
-        propsData.nodeConfig.viewRepresentation.possibleColumns = ['1', '2', '3', '3', '3', '4'];
+        props.nodeConfig.viewRepresentation.possibleColumns = ['1', '2', '3', '3', '3', '4'];
         let wrapper = mount(ValueFilterSelectionWidget, {
-            propsData
+            props
         });
         // duplicate column entry will not be shown twice
         // eslint-disable-next-line no-magic-numbers
@@ -237,10 +237,10 @@ describe('ValueFilterSelectionWidget.vue', () => {
 
     describe('validation', () => {
         it('is valid if not required and no selection made', () => {
-            propsData.nodeConfig.viewRepresentation.required = false;
+            props.nodeConfig.viewRepresentation.required = false;
             let wrapper = mount(ValueFilterSelectionWidget, {
-                propsData: {
-                    ...propsData,
+                props: {
+                    ...props,
                     valuePair: {
                         value: [],
                         column: 'Cluster Membership'
@@ -252,11 +252,11 @@ describe('ValueFilterSelectionWidget.vue', () => {
         });
 
         it('invalidates with unlocked column and invalid column selected', () => {
-            propsData.nodeConfig.viewRepresentation.required = true;
-            propsData.nodeConfig.viewRepresentation.lockColumn = false;
-            propsData.nodeConfig.viewRepresentation.currentValue.column = 'INVALID';
+            props.nodeConfig.viewRepresentation.required = true;
+            props.nodeConfig.viewRepresentation.lockColumn = false;
+            props.nodeConfig.viewRepresentation.currentValue.column = 'INVALID';
             let wrapper = mount(ValueFilterSelectionWidget, {
-                propsData,
+                props,
                 stubs: {
                     Multiselect: {
                         template: '<div />',
@@ -275,10 +275,10 @@ describe('ValueFilterSelectionWidget.vue', () => {
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
-            propsData.nodeConfig.viewRepresentation.required = true;
-            propsData.nodeConfig.viewRepresentation.lockColumn = true;
+            props.nodeConfig.viewRepresentation.required = true;
+            props.nodeConfig.viewRepresentation.lockColumn = true;
             let wrapper = mount(ValueFilterSelectionWidget, {
-                propsData,
+                props,
                 stubs: {
                     Multiselect: {
                         template: '<div />',
@@ -298,11 +298,11 @@ describe('ValueFilterSelectionWidget.vue', () => {
         });
 
         it('handles child validation', () => {
-            propsData.nodeConfig.viewRepresentation.required = true;
-            propsData.nodeConfig.viewRepresentation.lockColumn = true;
+            props.nodeConfig.viewRepresentation.required = true;
+            props.nodeConfig.viewRepresentation.lockColumn = true;
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ValueFilterSelectionWidget, {
-                propsData,
+                props,
                 stubs: {
                     Multiselect: {
                         template: '<div />',

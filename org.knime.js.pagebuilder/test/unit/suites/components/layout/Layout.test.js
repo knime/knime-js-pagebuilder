@@ -1,5 +1,5 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
-import Vuex from 'vuex';
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
+import Vuex, { createStore } from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import Layout from '@/components/layout/Layout.vue';
@@ -32,15 +32,18 @@ describe('Layout.vue', () => {
     });
 
     const createContext = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => {
-        let store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        let store = createStore({ modules: { pagebuilder: storeConfig } });
         store.commit('pagebuilder/setPage', {
             wizardPageContent: getWizardPageContent({ webNodes, nodeViews, webNodePageConfiguration })
         });
 
         return {
-            store,
-            localVue,
-            propsData: {
+            global: {
+                mock: {
+                    $store: store
+                }
+            },
+            props: {
                 layout: {
                     rows: [{ dummy: 'dummy' }, { foo: 'foo' }]
                 }
@@ -49,9 +52,6 @@ describe('Layout.vue', () => {
     };
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
         context = createContext();
     });
 
@@ -62,14 +62,14 @@ describe('Layout.vue', () => {
     it('renders', () => {
         const wrapper = shallowMount(Layout, context);
 
-        expect(wrapper.is('div')).toBe(true);
+        expect(wrapper.element.tagName).toBe('DIV');
         expect(wrapper.attributes('class')).toEqual('container-fluid');
     });
 
     it('renders rows', () => {
         const wrapper = shallowMount(Layout, context);
 
-        let rows = wrapper.findAll(Row);
+        let rows = wrapper.findAllComponents(Row);
         expect(rows.length).toBe(2);
         expect(rows.at(0).props().rowConfig).toEqual({ dummy: 'dummy' });
         expect(rows.at(1).props().rowConfig).toEqual({ foo: 'foo' });

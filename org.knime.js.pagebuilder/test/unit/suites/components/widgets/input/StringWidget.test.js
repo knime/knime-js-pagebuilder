@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
@@ -8,10 +8,10 @@ import InputField from 'webapps-common/ui/components/forms/InputField.vue';
 import TextArea from 'webapps-common/ui/components/forms/TextArea.vue';
 
 describe('StringWidget.vue', () => {
-    let propsDataInput, propsDateTextArea;
+    let propsInput, propsDateTextArea;
 
     beforeEach(() => {
-        propsDataInput = {
+        propsInput = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 namespace: 'knimeStringWidget',
@@ -127,7 +127,7 @@ describe('StringWidget.vue', () => {
     describe('input field', () => {
         it('renders', () => {
             let wrapper = shallowMount(StringWidget, {
-                propsData: propsDataInput
+                props: propsInput
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
@@ -136,7 +136,7 @@ describe('StringWidget.vue', () => {
 
         it('emits @updateWidget if child emits @input', () => {
             let wrapper = mount(StringWidget, {
-                propsData: propsDataInput
+                props: propsInput
             });
 
             const testValue = 'VALUE';
@@ -145,7 +145,7 @@ describe('StringWidget.vue', () => {
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataInput.nodeId,
+                nodeId: propsInput.nodeId,
                 type: 'string',
                 value: testValue
             });
@@ -153,7 +153,7 @@ describe('StringWidget.vue', () => {
 
         it('will be invalid if widget is', () => {
             let widget = mount(StringWidget, {
-                propsData: { ...propsDataInput, isValid: true }
+                props: { ...propsInput, isValid: true }
             });
 
             let textComponent = widget.findComponent(InputField);
@@ -164,9 +164,9 @@ describe('StringWidget.vue', () => {
 
         it('will return invalid when the value is required but missing', () => {
             // will only apply if no custom message is provided
-            propsDataInput.nodeConfig.viewRepresentation.errorMessage = '';
+            propsInput.nodeConfig.viewRepresentation.errorMessage = '';
             let wrapper = mount(StringWidget, {
-                propsData: propsDataInput
+                props: propsInput
             });
             wrapper.findComponent(InputField).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
@@ -178,17 +178,17 @@ describe('StringWidget.vue', () => {
 
         it('defaults regex to null', () => {
             let wrapper = mount(StringWidget, {
-                propsData: propsDataInput
+                props: propsInput
             });
             expect(wrapper.findComponent(InputField).props('pattern')).toEqual(null);
         });
 
         it('passes correct regex', () => {
             let wrapper = mount(StringWidget, {
-                propsData: { ...propsDataInput,
+                props: { ...propsInput,
                     nodeConfig: {
-                        ...propsDataInput.nodeConfig,
-                        viewRepresentation: { ...propsDataInput.nodeConfig.viewRepresentation,
+                        ...propsInput.nodeConfig,
+                        viewRepresentation: { ...propsInput.nodeConfig.viewRepresentation,
                             regex: 'test' }
                     } }
             });
@@ -199,7 +199,7 @@ describe('StringWidget.vue', () => {
     describe('text area', () => {
         it('renders', () => {
             let wrapper = shallowMount(StringWidget, {
-                propsData: propsDateTextArea
+                props: propsDateTextArea
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
@@ -208,7 +208,7 @@ describe('StringWidget.vue', () => {
 
         it('emits @updateWidget if child emits @input', () => {
             let wrapper = mount(StringWidget, {
-                propsData: propsDataInput
+                props: propsInput
             });
 
             const testValue = 'VALUE';
@@ -217,7 +217,7 @@ describe('StringWidget.vue', () => {
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-                nodeId: propsDataInput.nodeId,
+                nodeId: propsInput.nodeId,
                 type: 'string',
                 value: testValue
             });
@@ -225,7 +225,7 @@ describe('StringWidget.vue', () => {
 
         it('will be invalid if widget is', () => {
             let widget = mount(StringWidget, {
-                propsData: { ...propsDateTextArea, isValid: true }
+                props: { ...propsDateTextArea, isValid: true }
             });
 
             let textComponent = widget.findComponent(TextArea);
@@ -236,7 +236,7 @@ describe('StringWidget.vue', () => {
 
         it('will return invalid when the value is required but missing', () => {
             let wrapper = mount(StringWidget, {
-                propsData: propsDateTextArea
+                props: propsDateTextArea
             });
             wrapper.findComponent(TextArea).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
@@ -249,7 +249,7 @@ describe('StringWidget.vue', () => {
 
     it('takes child validation in favor of parent validation', async () => {
         let wrapper = mount(StringWidget, {
-            propsData: propsDataInput,
+            props: propsInput,
             stubs: {
                 InputField: {
                     template: '<div />',
@@ -265,9 +265,9 @@ describe('StringWidget.vue', () => {
     });
 
     it('takes child error message over parent error message', async () => {
-        propsDataInput.nodeConfig.viewRepresentation.errorMessage = '';
+        propsInput.nodeConfig.viewRepresentation.errorMessage = '';
         let wrapper = mount(StringWidget, {
-            propsData: propsDataInput,
+            props: propsInput,
             stubs: {
                 InputField: {
                     template: '<div />',
@@ -284,9 +284,9 @@ describe('StringWidget.vue', () => {
     });
 
     it('shows custom error Message over other messages if one is set', async () => {
-        propsDataInput.nodeConfig.viewRepresentation.errorMessage = 'custom message';
+        propsInput.nodeConfig.viewRepresentation.errorMessage = 'custom message';
         let wrapper = mount(StringWidget, {
-            propsData: propsDataInput,
+            props: propsInput,
             stubs: {
                 InputField: {
                     template: '<div />',
@@ -304,7 +304,7 @@ describe('StringWidget.vue', () => {
 
     it('has no error message when valid', async () => {
         let wrapper = mount(StringWidget, {
-            propsData: propsDataInput,
+            props: propsInput,
             stubs: {
                 InputField: {
                     template: '<div />',
@@ -321,7 +321,7 @@ describe('StringWidget.vue', () => {
 
     it('has error message', async () => {
         let wrapper = mount(StringWidget, {
-            propsData: propsDataInput,
+            props: propsInput,
             stubs: {
                 InputField: {
                     template: '<div />',

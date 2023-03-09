@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import FileDownloadWidget from '@/components/widgets/output/FileDownloadWidget.vue';
@@ -14,7 +14,7 @@ let storeConfig = {
 };
 
 describe('FileDownloadWidget.vue', () => {
-    let propsData, store, localVue;
+    let props, store, localVue;
 
     beforeEach(() => {
         // we do this before each as beforeAll the mockReturn value is always the first set and cannot be changed
@@ -26,7 +26,7 @@ describe('FileDownloadWidget.vue', () => {
             }
         });
 
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 customCSS: '',
@@ -80,7 +80,7 @@ describe('FileDownloadWidget.vue', () => {
         let wrapper = mount(FileDownloadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -96,7 +96,7 @@ describe('FileDownloadWidget.vue', () => {
         let wrapper = mount(FileDownloadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -111,7 +111,7 @@ describe('FileDownloadWidget.vue', () => {
         let wrapper = mount(FileDownloadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -119,7 +119,7 @@ describe('FileDownloadWidget.vue', () => {
         expect(validate.isValid).toBe(true);
         let fl = wrapper.findComponent(FileLink);
         expect(fl.exists()).toBeTruthy();
-        expect(fl.props('href')).toBe(`file://${propsData.nodeConfig.viewRepresentation.path}`);
+        expect(fl.props('href')).toBe(`file://${props.nodeConfig.viewRepresentation.path}`);
         delete window.KnimePageLoader;
     });
 });

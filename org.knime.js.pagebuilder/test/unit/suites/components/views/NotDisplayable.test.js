@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import NotDisplayable from '@/components/views/NotDisplayable';
 import { shallowMount } from '@vue/test-utils';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
@@ -17,7 +17,7 @@ describe('NotDisplayable.vue', () => {
 
     it('renders error message', () => {
         wrapper = shallowMount(NotDisplayable, {
-            propsData: { nodeInfo: {
+            props: { nodeInfo: {
                 nodeName: 'testName',
                 nodeErrorMessage: 'test_error'
             } }
@@ -27,7 +27,7 @@ describe('NotDisplayable.vue', () => {
 
     it('renders warn message', () => {
         wrapper = shallowMount(NotDisplayable, {
-            propsData: { nodeInfo: {
+            props: { nodeInfo: {
                 nodeName: 'testName',
                 nodeWarnMessage: 'test_warning'
             } }
@@ -37,7 +37,7 @@ describe('NotDisplayable.vue', () => {
 
     it('renders annotation', () => {
         wrapper = shallowMount(NotDisplayable, {
-            propsData: {
+            props: {
                 nodeInfo: {
                     nodeName: 'testName',
                     nodeAnnotation: 'test_annotation',

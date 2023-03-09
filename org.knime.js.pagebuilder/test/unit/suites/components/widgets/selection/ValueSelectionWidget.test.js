@@ -1,29 +1,29 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
-import propsDataColumnLockedListImport from '~/test/unit/assets/propsDataColumnLockedList';
-import propsDataRadioHorizontalImport from '~/test/unit/assets/propsDataRadioHorizontal';
-import propsDataRadioVerticalImport from '~/test/unit/assets/propsDataRadioVertical';
-import propsDataDropdownImport from '~/test/unit/assets/propsDataDropdown';
-import propsDataListImport from '~/test/unit/assets/propsDataList';
+import propsColumnLockedListImport from '~/test/unit/assets/propsColumnLockedList';
+import propsRadioHorizontalImport from '~/test/unit/assets/propsRadioHorizontal';
+import propsRadioVerticalImport from '~/test/unit/assets/propsRadioVertical';
+import propsDropdownImport from '~/test/unit/assets/propsDropdown';
+import propsListImport from '~/test/unit/assets/propsList';
 
 import ValueSelectionWidget from '@/components/widgets/selection/ValueSelectionWidget.vue';
 
 describe('ValueSelectionWidget.vue', () => {
-    let propsDataColumnLockedList, propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
+    let propsColumnLockedList, propsRadioHorizontal, propsRadioVertical, propsDropdown, propsList;
 
     beforeEach(() => {
-        propsDataColumnLockedList = JSON.parse(JSON.stringify(propsDataColumnLockedListImport));
-        propsDataRadioHorizontal = JSON.parse(JSON.stringify(propsDataRadioHorizontalImport));
-        propsDataRadioVertical = JSON.parse(JSON.stringify(propsDataRadioVerticalImport));
-        propsDataDropdown = JSON.parse(JSON.stringify(propsDataDropdownImport));
-        propsDataList = JSON.parse(JSON.stringify(propsDataListImport));
+        propsColumnLockedList = JSON.parse(JSON.stringify(propsColumnLockedListImport));
+        propsRadioHorizontal = JSON.parse(JSON.stringify(propsRadioHorizontalImport));
+        propsRadioVertical = JSON.parse(JSON.stringify(propsRadioVerticalImport));
+        propsDropdown = JSON.parse(JSON.stringify(propsDropdownImport));
+        propsList = JSON.parse(JSON.stringify(propsListImport));
     });
 
     describe('render', () => {
         it('renders as radio buttons horizontal', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioHorizontal
+                props: propsRadioHorizontal
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -32,7 +32,7 @@ describe('ValueSelectionWidget.vue', () => {
 
         it('renders as radio buttons vertical', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataRadioVertical
+                props: propsRadioVertical
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -41,7 +41,7 @@ describe('ValueSelectionWidget.vue', () => {
 
         it('renders as list', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataList
+                props: propsList
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -50,17 +50,17 @@ describe('ValueSelectionWidget.vue', () => {
 
         it('renders as dropdown', () => {
             let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataDropdown
+                props: propsDropdown
             });
 
             expect(wrapper.html()).toBeTruthy();
-            expect(wrapper.findAll(Dropdown).length).toBe(2);
+            expect(wrapper.findAllComponents(Dropdown).length).toBe(2);
             expect(wrapper.isVisible()).toBeTruthy();
         });
 
         it('renders as list with column locked', () => {
             let wrapper = shallowMount(ValueSelectionWidget, {
-                propsData: propsDataColumnLockedList
+                props: propsColumnLockedList
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -70,7 +70,7 @@ describe('ValueSelectionWidget.vue', () => {
 
     it('sends @updateWidget if SingleSelect emits @input', () => {
         let wrapper = mount(ValueSelectionWidget, {
-            propsData: propsDataRadioVertical
+            props: propsRadioVertical
         });
 
         const testValue = 'VALUE';
@@ -79,7 +79,7 @@ describe('ValueSelectionWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsDataRadioVertical.nodeId,
+            nodeId: propsRadioVertical.nodeId,
             type: 'value',
             value: testValue
         });
@@ -87,7 +87,7 @@ describe('ValueSelectionWidget.vue', () => {
 
     it('sends @updateWidget if column emits @input', () => {
         let wrapper = mount(ValueSelectionWidget, {
-            propsData: propsDataRadioVertical
+            props: propsRadioVertical
         });
 
         const testValue = 'MYCOL';
@@ -96,27 +96,27 @@ describe('ValueSelectionWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsDataRadioVertical.nodeId,
+            nodeId: propsRadioVertical.nodeId,
             type: 'column',
             value: testValue
         });
     });
 
     it('has size set', () => {
-        propsDataList.isValid = true;
-        propsDataList.nodeConfig.viewRepresentation.limitNumberVisOptions = true;
+        propsList.isValid = true;
+        propsList.nodeConfig.viewRepresentation.limitNumberVisOptions = true;
         let wrapper = mount(ValueSelectionWidget, {
-            propsData: propsDataList
+            props: propsList
         });
-        let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
+        let size = propsList.nodeConfig.viewRepresentation.numberVisOptions;
         expect(wrapper.find({ ref: 'form' }).props('numberVisOptions')).toBe(size);
     });
 
     it('does not render duplicate entries', () => {
-        propsDataDropdown.nodeConfig.viewRepresentation.possibleColumns = ['1', '2', '3', '3', '3', '4'];
+        propsDropdown.nodeConfig.viewRepresentation.possibleColumns = ['1', '2', '3', '3', '3', '4'];
 
         let wrapper = mount(ValueSelectionWidget, {
-            propsData: propsDataDropdown
+            props: propsDropdown
         });
         // duplicate column entry will not be shown twice
         // eslint-disable-next-line no-magic-numbers
@@ -125,8 +125,8 @@ describe('ValueSelectionWidget.vue', () => {
 
     it('passes isValid to component', () => {
         let wrapper = mount(ValueSelectionWidget, {
-            propsData: {
-                ...propsDataList,
+            props: {
+                ...propsList,
                 isValid: false
             }
         });
@@ -135,10 +135,10 @@ describe('ValueSelectionWidget.vue', () => {
 
     describe('validation', () => {
         it('is valid if not required and no selection made', () => {
-            propsDataList.nodeConfig.viewRepresentation.required = false;
+            propsList.nodeConfig.viewRepresentation.required = false;
             let wrapper = mount(ValueSelectionWidget, {
-                propsData: {
-                    ...propsDataList,
+                props: {
+                    ...propsList,
                     valuePair: {
                         value: '',
                         column: 'Cluster Membership'
@@ -150,11 +150,11 @@ describe('ValueSelectionWidget.vue', () => {
         });
 
         it('invalidates with unlocked column and invalid column selected', () => {
-            propsDataDropdown.nodeConfig.viewRepresentation.required = true;
-            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = false;
-            propsDataDropdown.nodeConfig.viewRepresentation.currentValue.column = 'INVALID';
+            propsDropdown.nodeConfig.viewRepresentation.required = true;
+            propsDropdown.nodeConfig.viewRepresentation.lockColumn = false;
+            propsDropdown.nodeConfig.viewRepresentation.currentValue.column = 'INVALID';
             let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataDropdown
+                props: propsDropdown
             });
             // invalid column should not display any possible or selected values
             expect(wrapper.vm.value).toStrictEqual('');
@@ -165,10 +165,10 @@ describe('ValueSelectionWidget.vue', () => {
         });
 
         it('is invalid if required and no selection was made', () => {
-            propsDataList.nodeConfig.viewRepresentation.required = true;
-            propsDataList.nodeConfig.viewRepresentation.lockColumn = true;
+            propsList.nodeConfig.viewRepresentation.required = true;
+            propsList.nodeConfig.viewRepresentation.lockColumn = true;
             let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataList
+                props: propsList
             });
             wrapper.setProps({ valuePair: {
                 value: '',
@@ -178,21 +178,21 @@ describe('ValueSelectionWidget.vue', () => {
         });
 
         it('is valid if required and a selection was made', () => {
-            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
-            propsDataDropdown.valuePair = { value: 'URI: http://cepetakagtksslf; EXT: ', column: 'UriCol' };
+            propsDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDropdown.valuePair = { value: 'URI: http://cepetakagtksslf; EXT: ', column: 'UriCol' };
             let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataDropdown
+                props: propsDropdown
             });
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
         });
 
         it('handles child validation', () => {
-            propsDataDropdown.nodeConfig.viewRepresentation.required = true;
-            propsDataDropdown.nodeConfig.viewRepresentation.lockColumn = true;
-            propsDataDropdown.valuePair = { value: 'URI: http://cepetakagtksslf; EXT: ', column: 'UriCol' };
+            propsDropdown.nodeConfig.viewRepresentation.required = true;
+            propsDropdown.nodeConfig.viewRepresentation.lockColumn = true;
+            propsDropdown.valuePair = { value: 'URI: http://cepetakagtksslf; EXT: ', column: 'UriCol' };
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ValueSelectionWidget, {
-                propsData: propsDataDropdown,
+                props: propsDropdown,
                 stubs: {
                     SingleSelect: {
                         template: '<div />',

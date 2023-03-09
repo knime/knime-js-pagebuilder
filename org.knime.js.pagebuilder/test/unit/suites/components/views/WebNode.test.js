@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import WebNode from '@/components/views/WebNode.vue';
@@ -34,7 +34,7 @@ describe('WebNode.vue', () => {
 
     it('renders views as iframes', () => {
         let wrapper = shallowMount(WebNode, {
-            propsData: getMockIFrameProps()
+            props: getMockIFrameProps()
         });
         expect(wrapper.findComponent(WebNodeIFrame).exists()).toBeTruthy();
         expect(wrapper.findComponent(Widget).exists()).toBeFalsy();
@@ -42,7 +42,7 @@ describe('WebNode.vue', () => {
 
     it('renders views as widgets', () => {
         let wrapper = shallowMount(WebNode, {
-            propsData: getMockWidgetProps()
+            props: getMockWidgetProps()
         });
         expect(wrapper.findComponent(Widget).exists()).toBeTruthy();
         expect(wrapper.findComponent(WebNodeIFrame).exists()).toBeFalsy();
@@ -50,7 +50,7 @@ describe('WebNode.vue', () => {
 
     it('increments key when nodeConfig updates', () => {
         let wrapper = shallowMount(WebNode, {
-            propsData: getMockIFrameProps()
+            props: getMockIFrameProps()
         });
         expect(wrapper.vm.nodeViewIFrameKey).toBe(0);
         let { nodeConfig } = getMockIFrameProps();
@@ -63,12 +63,12 @@ describe('WebNode.vue', () => {
         it('respects resize classes', () => {
             let mockProps = getMockIFrameProps();
             let wrapper = shallowMount(WebNode, {
-                propsData: mockProps
+                props: mockProps
             });
             expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio1by1');
             mockProps.viewConfig.resizeMethod = 'aspectRatio16by9';
             wrapper = shallowMount(WebNode, {
-                propsData: mockProps
+                props: mockProps
             });
             expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio16by9');
         });
@@ -76,7 +76,7 @@ describe('WebNode.vue', () => {
         it('renders with classes and styles', () => {
             let mockProps = getMockIFrameProps();
             let wrapper = shallowMount(WebNode, {
-                propsData: {
+                props: {
                     ...mockProps,
                     viewConfig: {
                         ...mockProps.viewConfig,
@@ -92,7 +92,7 @@ describe('WebNode.vue', () => {
         it('adds classes for min/max height & width', () => {
             let mockProps = getMockWidgetProps();
             let wrapper = shallowMount(WebNode, {
-                propsData: {
+                props: {
                     ...mockProps,
                     viewConfig: {
                         ...mockProps.viewConfig,
@@ -115,7 +115,7 @@ describe('WebNode.vue', () => {
     describe('widget type handling', () => {
         it('can detect widgets using the representation class', () => {
             let wrapper = shallowMount(WebNode, {
-                propsData: getMockWidgetProps()
+                props: getMockWidgetProps()
             });
     
             expect(wrapper.vm.isWidget).toBeTruthy();
@@ -123,7 +123,7 @@ describe('WebNode.vue', () => {
     
         it('does not detect widgets using the nodeName', () => {
             let wrapper = shallowMount(WebNode, {
-                propsData: {
+                props: {
                     ...getMockWidgetProps(),
                     nodeConfig: {
                         baz: 'qux',
@@ -145,7 +145,7 @@ describe('WebNode.vue', () => {
         it('treats widgets missing "useLegacyMode" flag as legacy', () => {
             let mockWidgetProps = getMockWidgetProps();
             let wrapper = shallowMount(WebNode, {
-                propsData: {
+                props: {
                     ...mockWidgetProps,
                     viewConfig: {
                         nodeID: mockWidgetProps.viewConfig.nodeID
@@ -157,13 +157,13 @@ describe('WebNode.vue', () => {
     
         it('can detect legacy flags', () => {
             let wrapper = shallowMount(WebNode, {
-                propsData: getMockWidgetProps(true)
+                props: getMockWidgetProps(true)
             });
     
             expect(wrapper.vm.isWidget).toBeFalsy();
             
             wrapper = shallowMount(WebNode, {
-                propsData: getMockWidgetProps()
+                props: getMockWidgetProps()
             });
             expect(wrapper.vm.isWidget).toBeTruthy();
         });
@@ -173,7 +173,7 @@ describe('WebNode.vue', () => {
             mockWidgetProps.nodeConfig.viewRepresentation['@class'] =
                 'org.knime.js.base.node.widget.reexecution.refresh.RefreshButtonWidgetViewRepresentation';
             let wrapper = shallowMount(WebNode, {
-                propsData: mockWidgetProps
+                props: mockWidgetProps
             });
     
             expect(wrapper.vm.widgetComponentName).toBeTruthy();

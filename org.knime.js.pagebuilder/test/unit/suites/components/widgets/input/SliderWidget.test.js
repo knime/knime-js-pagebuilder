@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 import Vue from 'vue';
@@ -119,7 +119,7 @@ describe('SliderWidget.vue', () => {
         isValid = true;
         wrapper = shallowMount(SliderWidget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId,
                 isValid,
@@ -236,7 +236,7 @@ describe('SliderWidget.vue', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[1] = true;
         let wrapper2 = shallowMount(SliderWidget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId,
                 isValid
@@ -251,7 +251,7 @@ describe('SliderWidget.vue', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[0] = true;
         let wrapper2 = shallowMount(SliderWidget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId,
                 isValid
@@ -267,7 +267,7 @@ describe('SliderWidget.vue', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[1] = true;
         let wrapper2 = shallowMount(SliderWidget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId,
                 isValid
@@ -280,7 +280,7 @@ describe('SliderWidget.vue', () => {
     it('correctly emits the updateWidget payload', () => {
         const wrapper2 = mount(SliderWidget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId,
                 isValid,
@@ -297,7 +297,7 @@ describe('SliderWidget.vue', () => {
     it('supports inverted process config', () => {
         const wrapper2 = mount(SliderWidget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId,
                 isValid,
@@ -313,7 +313,7 @@ describe('SliderWidget.vue', () => {
     it('has no error message when valid', async () => {
         let wrapper2 = mount(SliderWidget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId
             },
@@ -333,7 +333,7 @@ describe('SliderWidget.vue', () => {
 
     it('takes child error message over parent error message', async () => {
         let wrapper2 = mount(SliderWidget, {
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId
             },
@@ -355,7 +355,7 @@ describe('SliderWidget.vue', () => {
     it('only displays error message when invalid', async () => {
         const wrapperFull = mount(SliderWidget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId,
                 isValid,
@@ -364,7 +364,7 @@ describe('SliderWidget.vue', () => {
         });
         expect(wrapperFull.findComponent(ErrorMessage).isVisible()).toBe(true);
         let wrapper2 = mount(SliderWidget, {
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId
             },

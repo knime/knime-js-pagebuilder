@@ -1,14 +1,14 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget.vue';
 import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect.vue';
 
 describe('SingleSelectionWidget.vue', () => {
-    let propsDataRadioHorizontal, propsDataRadioVertical, propsDataDropdown, propsDataList;
+    let propsRadioHorizontal, propsRadioVertical, propsDropdown, propsList;
 
     beforeEach(() => {
-        propsDataRadioHorizontal = {
+        propsRadioHorizontal = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 nodeInfo: {
@@ -77,7 +77,7 @@ describe('SingleSelectionWidget.vue', () => {
             isValid: false
         };
 
-        propsDataRadioVertical = {
+        propsRadioVertical = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 nodeInfo: {
@@ -146,7 +146,7 @@ describe('SingleSelectionWidget.vue', () => {
             isValid: false
         };
 
-        propsDataDropdown = {
+        propsDropdown = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 nodeInfo: {
@@ -215,7 +215,7 @@ describe('SingleSelectionWidget.vue', () => {
             isValid: false
         };
 
-        propsDataList = {
+        propsList = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 nodeInfo: {
@@ -301,7 +301,7 @@ describe('SingleSelectionWidget.vue', () => {
     describe('render', () => {
         it('renders as radio buttons horizontal', () => {
             let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataRadioHorizontal
+                props: propsRadioHorizontal
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -310,7 +310,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('renders as  radio buttons vertical', () => {
             let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataRadioVertical
+                props: propsRadioVertical
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -319,7 +319,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('renders as list', () => {
             let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataList
+                props: propsList
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -328,7 +328,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         it('renders as dropdown', () => {
             let wrapper = shallowMount(SingleSelectionWidget, {
-                propsData: propsDataDropdown
+                props: propsDropdown
             });
 
             expect(wrapper.html()).toBeTruthy();
@@ -337,19 +337,19 @@ describe('SingleSelectionWidget.vue', () => {
     });
 
     it('has size set', () => {
-        propsDataList.isValid = true;
+        propsList.isValid = true;
         let wrapper = mount(SingleSelectionWidget, {
-            propsData: propsDataList
+            props: propsList
         });
-        let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
+        let size = propsList.nodeConfig.viewRepresentation.numberVisOptions;
         expect(wrapper.findComponent(SingleSelect).props('numberVisOptions')).toBe(size);
     });
 
 
     it('passes isValid to component', () => {
         let wrapper = mount(SingleSelectionWidget, {
-            propsData: {
-                ...propsDataDropdown,
+            props: {
+                ...propsDropdown,
                 isValid: false
             }
         });
@@ -358,7 +358,7 @@ describe('SingleSelectionWidget.vue', () => {
 
     it('sends @updateWidget if SingleSelect emits @input', () => {
         let wrapper = mount(SingleSelectionWidget, {
-            propsData: propsDataDropdown
+            props: propsDropdown
         });
 
         const testValue = 'VALUE';
@@ -367,7 +367,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsDataDropdown.nodeId,
+            nodeId: propsDropdown.nodeId,
             type: 'value',
             value: [testValue]
         });
@@ -375,10 +375,10 @@ describe('SingleSelectionWidget.vue', () => {
 
     describe('validation', () => {
         it('is valid if not required and no selection made', () => {
-            propsDataList.nodeConfig.viewRepresentation.required = false;
+            propsList.nodeConfig.viewRepresentation.required = false;
             let wrapper = mount(SingleSelectionWidget, {
-                propsData: {
-                    ...propsDataList,
+                props: {
+                    ...propsList,
                     valuePair: {
                         value: []
                     }
@@ -389,9 +389,9 @@ describe('SingleSelectionWidget.vue', () => {
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
-            propsDataList.nodeConfig.viewRepresentation.required = true;
+            propsList.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(SingleSelectionWidget, {
-                propsData: propsDataList,
+                props: propsList,
                 stubs: {
                     SingleSelect: {
                         template: '<div />',
@@ -408,10 +408,10 @@ describe('SingleSelectionWidget.vue', () => {
         });
 
         it('shows a different error message when no choices are available', () => {
-            propsDataList.nodeConfig.viewRepresentation.required = true;
-            propsDataList.nodeConfig.viewRepresentation.possibleChoices = [];
+            propsList.nodeConfig.viewRepresentation.required = true;
+            propsList.nodeConfig.viewRepresentation.possibleChoices = [];
             let wrapper = mount(SingleSelectionWidget, {
-                propsData: propsDataList,
+                props: propsList,
                 stubs: {
                     SingleSelect: {
                         template: '<div />'
@@ -425,7 +425,7 @@ describe('SingleSelectionWidget.vue', () => {
         it('handles child validation', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(SingleSelectionWidget, {
-                propsData: propsDataList,
+                props: propsList,
                 stubs: {
                     SingleSelect: {
                         template: '<div />',

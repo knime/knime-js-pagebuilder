@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
@@ -119,7 +119,7 @@ describe('WebNodeIFrame.vue', () => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
                 attachToDocument: true,
-                propsData: {
+                props: {
                     viewConfig: {
                         nodeID: '0:0:7'
                     },

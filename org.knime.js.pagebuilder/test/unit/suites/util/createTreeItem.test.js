@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { default as createTreeItemRecursively, checkDefaultPaths, getIcon } from '@/util/createTreeItem';
 
 describe('Tests the createTreeItem functionality', () => {

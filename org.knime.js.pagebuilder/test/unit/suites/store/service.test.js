@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';

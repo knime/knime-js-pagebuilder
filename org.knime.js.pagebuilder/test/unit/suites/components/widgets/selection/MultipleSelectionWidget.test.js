@@ -1,14 +1,14 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import MultipleSelectionWidget from '@/components/widgets/selection/MultipleSelectionWidget.vue';
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
 
 describe('MultipleSelectionWidget.vue', () => {
-    let propsDataTwinlist, propsDataCheckboxHorizontal, propsDataCheckboxVertical, propsDataMultiselectListBox;
+    let propsTwinlist, propsCheckboxHorizontal, propsCheckboxVertical, propsMultiselectListBox;
 
     beforeEach(() => {
-        propsDataTwinlist = {
+        propsTwinlist = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -82,7 +82,7 @@ describe('MultipleSelectionWidget.vue', () => {
             nodeId: '5:0:6',
             isValid: false
         };
-        propsDataMultiselectListBox = {
+        propsMultiselectListBox = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -159,7 +159,7 @@ describe('MultipleSelectionWidget.vue', () => {
             nodeId: '5:0:8',
             isValid: false
         };
-        propsDataCheckboxVertical = {
+        propsCheckboxVertical = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -234,7 +234,7 @@ describe('MultipleSelectionWidget.vue', () => {
             nodeId: '5:0:7',
             isValid: false
         };
-        propsDataCheckboxHorizontal = {
+        propsCheckboxHorizontal = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -312,34 +312,34 @@ describe('MultipleSelectionWidget.vue', () => {
 
     it('renders all different types', () => {
         let wrapper = shallowMount(MultipleSelectionWidget, {
-            propsData: propsDataTwinlist
+            props: propsTwinlist
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
 
         let wrapper2 = shallowMount(MultipleSelectionWidget, {
-            propsData: propsDataCheckboxHorizontal
+            props: propsCheckboxHorizontal
         });
         expect(wrapper2.html()).toBeTruthy();
         expect(wrapper2.isVisible()).toBeTruthy();
 
         let wrapper3 = shallowMount(MultipleSelectionWidget, {
-            propsData: propsDataCheckboxVertical
+            props: propsCheckboxVertical
         });
         expect(wrapper3.html()).toBeTruthy();
         expect(wrapper3.isVisible()).toBeTruthy();
 
         let wrapper4 = shallowMount(MultipleSelectionWidget, {
-            propsData: propsDataMultiselectListBox
+            props: propsMultiselectListBox
         });
         expect(wrapper4.html()).toBeTruthy();
         expect(wrapper4.isVisible()).toBeTruthy();
     });
 
     it('sends @updateWidget if Multiselect emits @input', () => {
-        let propsData = propsDataMultiselectListBox;
+        let props = propsMultiselectListBox;
         let wrapper = mount(MultipleSelectionWidget, {
-            propsData
+            props
         });
 
         const testValue = ['VALUE1', 'VALUE2'];
@@ -348,7 +348,7 @@ describe('MultipleSelectionWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsData.nodeId,
+            nodeId: props.nodeId,
             type: 'value',
             value: testValue
         });
@@ -356,10 +356,10 @@ describe('MultipleSelectionWidget.vue', () => {
 
     describe('validation', () => {
         it('is valid if not required and no selection made', () => {
-            propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = false;
+            propsMultiselectListBox.nodeConfig.viewRepresentation.required = false;
             let wrapper = mount(MultipleSelectionWidget, {
-                propsData: {
-                    ...propsDataMultiselectListBox,
+                props: {
+                    ...propsMultiselectListBox,
                     valuePair: {
                         value: []
                     }
@@ -370,9 +370,9 @@ describe('MultipleSelectionWidget.vue', () => {
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
-            propsDataMultiselectListBox.nodeConfig.viewRepresentation.required = true;
+            propsMultiselectListBox.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(MultipleSelectionWidget, {
-                propsData: propsDataMultiselectListBox,
+                props: propsMultiselectListBox,
                 stubs: {
                     Multiselect: {
                         template: '<div />',
@@ -391,7 +391,7 @@ describe('MultipleSelectionWidget.vue', () => {
         it('handles child validation', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(MultipleSelectionWidget, {
-                propsData: propsDataMultiselectListBox,
+                props: propsMultiselectListBox,
                 stubs: {
                     Multiselect: {
                         template: '<div />',

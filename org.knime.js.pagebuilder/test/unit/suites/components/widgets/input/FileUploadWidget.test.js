@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import FileUploadWidget from '@/components/widgets/input/FileUploadWidget.vue';
@@ -23,7 +23,7 @@ let storeConfig = {
 };
 
 describe('FileUploadWidget.vue', () => {
-    let propsData, store, localVue;
+    let props, store, localVue;
 
     beforeEach(() => {
         // we do this before each as beforeAll the mockReturn value is always the first set and cannot be changed
@@ -35,7 +35,7 @@ describe('FileUploadWidget.vue', () => {
             }
         });
 
-        propsData = {
+        props = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 customCSS: '',
@@ -85,7 +85,7 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -101,7 +101,7 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData,
+            props,
             methods: {
                 triggerInput: triggerInputMock
             }
@@ -114,7 +114,7 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
 
         expect(wrapper.vm.$data.localFileName).toEqual(null);
@@ -136,7 +136,7 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
 
         expect(wrapper.vm.$data.localFileName).toEqual(null);
@@ -150,12 +150,12 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData: {
-                ...propsData,
+            props: {
+                ...props,
                 nodeConfig: {
-                    ...propsData.nodeConfig,
+                    ...props.nodeConfig,
                     viewRepresentation: {
-                        ...propsData.nodeConfig.viewRepresentation,
+                        ...props.nodeConfig.viewRepresentation,
                         path: ''
                     }
                 }
@@ -175,7 +175,7 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
         wrapper.setData({ initialized: true });
         wrapper.vm.onChange(event);
@@ -189,12 +189,12 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData: {
-                ...propsData,
+            props: {
+                ...props,
                 nodeConfig: {
-                    ...propsData.nodeConfig,
+                    ...props.nodeConfig,
                     viewRepresentation: {
-                        ...propsData.nodeConfig.viewRepresentation,
+                        ...props.nodeConfig.viewRepresentation,
                         fileTypes: ['.pdf']
                     }
                 },
@@ -236,9 +236,9 @@ describe('FileUploadWidget.vue', () => {
         });
         wrapper.setProps({
             nodeConfig: {
-                ...propsData.nodeConfig,
+                ...props.nodeConfig,
                 viewRepresentation: {
-                    ...propsData.nodeConfig.viewRepresentation,
+                    ...props.nodeConfig.viewRepresentation,
                     fileTypes: ['.PDF']
                 }
             },
@@ -277,7 +277,7 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
         wrapper.setData({ uploadAPI: uploadErrorResourceMock });
         wrapper.vm.onChange(event);
@@ -295,7 +295,7 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
         wrapper.setData({ uploadAPI: uploadErrorResourceMock });
 
@@ -313,7 +313,7 @@ describe('FileUploadWidget.vue', () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
-            propsData
+            props
         });
         wrapper.setData({ uploadAPI: uploadResourceMock });
         wrapper.vm.onChange({

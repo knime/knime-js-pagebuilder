@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
@@ -128,7 +128,7 @@ describe('Widget.vue', () => {
         context = {
             store,
             localVue,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId
             },
@@ -148,7 +148,7 @@ describe('Widget.vue', () => {
         };
         wrapper = shallowMount(Widget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig,
                 nodeId,
                 type: 'SliderWidget'
@@ -238,7 +238,7 @@ describe('Widget.vue', () => {
         };
         let localWrapper = shallowMount(Widget, {
             ...localContext,
-            propsData: {
+            props: {
                 nodeConfig: localNodeConfig,
                 nodeId,
                 type: 'SliderWidget'
@@ -317,7 +317,7 @@ describe('Widget.vue', () => {
         let newWrapper = shallowMount(Widget, {
             store,
             localVue,
-            propsData: {
+            props: {
                 nodeConfig: {
                     nodeInfo: {
                         '@class': 'org.knime.js.core.JSONWebNodeInfo',
@@ -369,7 +369,7 @@ describe('Widget.vue', () => {
                     }
                 }
             },
-            propsData: {
+            props: {
                 nodeConfig: {
                     ...nodeConfig,
                     viewRepresentation: {
@@ -391,7 +391,7 @@ describe('Widget.vue', () => {
     it('updates values for reactive widgets with valueGetter (onChange)', async () => {
         let localWrapper = shallowMount(Widget, {
             ...context,
-            propsData: {
+            props: {
                 nodeConfig: {
                     ...nodeConfig,
                     viewRepresentation: {
@@ -428,7 +428,7 @@ describe('Widget.vue', () => {
                     }
                 }
             },
-            propsData: {
+            props: {
                 nodeConfig: {
                     ...nodeConfig,
                     viewRepresentation: {

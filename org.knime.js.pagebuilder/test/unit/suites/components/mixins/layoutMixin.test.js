@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import layoutMixin from '../../../../../src/components/mixins/layoutMixin';
 import { shallowMount } from '@vue/test-utils';
 import MockComponent from './mockComponent.vue';
@@ -8,7 +8,7 @@ describe('layoutMixin.js', () => {
     describe('test layout classes', () => {
         it('does not apply classes if no resize method is set', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                     }
                 },
@@ -19,7 +19,7 @@ describe('layoutMixin.js', () => {
 
         it('appends classes starting with aspectRatio', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'aspectRatio16by9'
                     }
@@ -31,7 +31,7 @@ describe('layoutMixin.js', () => {
 
         it('adds only classes starting with aspectRatio', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'viewLowestElement'
                     }
@@ -43,7 +43,7 @@ describe('layoutMixin.js', () => {
 
         it('appends additional classes', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'aspectRatio16by9',
                         additionalClasses: ['class1', 'class2']
@@ -58,7 +58,7 @@ describe('layoutMixin.js', () => {
     describe('test layout styles', () => {
         it('appends additional styles', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'aspectRatio16by9',
                         additionalStyles: ['testStyle', 'otherTestStyle']
@@ -71,7 +71,7 @@ describe('layoutMixin.js', () => {
 
         it('applies styles if viewLowestElement is set and it is a widget', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'viewLowestElement',
                         maxHeight: 300,
@@ -88,7 +88,7 @@ describe('layoutMixin.js', () => {
 
         it('applies styles if viewLowestElement is set and it is a ui-extension', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'viewLowestElement',
                         maxHeight: 300,
@@ -105,7 +105,7 @@ describe('layoutMixin.js', () => {
 
         it('does not apply styles if viewLowestElement is set, but it is not a widget or ui-extension', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'viewLowestElement',
                         maxHeight: 300,
@@ -121,7 +121,7 @@ describe('layoutMixin.js', () => {
 
         it('does not apply styles if viewLowestElement is not set', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'aspectRatio16by9',
                         maxHeight: 300,
@@ -137,7 +137,7 @@ describe('layoutMixin.js', () => {
 
         it('does not apply styles if they are not set', () => {
             const wrapper = shallowMount(MockComponent, {
-                propsData: {
+                props: {
                     viewConfig: {
                         resizeMethod: 'viewLowestElement'
                     }

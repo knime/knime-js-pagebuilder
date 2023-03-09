@@ -1,6 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount, mount } from '@vue/test-utils';
 
 import DialogLayout from '@/components/layout/DialogLayout.vue';
 import NodeView from '@/components/layout/NodeView.vue';
@@ -18,7 +18,7 @@ const mockAlert = {
 };
 
 describe('DialogLayout.vue', () => {
-    let localVue, context;
+    let context;
 
     const getWizardPageContent = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => ({
         webNodes: webNodes || {
@@ -42,7 +42,7 @@ describe('DialogLayout.vue', () => {
     });
 
     const createContext = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => {
-        let store = new Vuex.Store({ modules: {
+        let store = createStore({ modules: {
             pagebuilder: storeConfig,
             'pagebuilder/alert': alertStoreConfig
         } });
@@ -51,9 +51,12 @@ describe('DialogLayout.vue', () => {
         });
 
         return {
-            store,
-            localVue,
-            propsData: {
+            global: {
+                mocks: {
+                    $store: store
+                }
+            },
+            props: {
                 layout: { rows: [{ columns: [
                     {
                         content: [{
@@ -73,9 +76,6 @@ describe('DialogLayout.vue', () => {
     };
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
         context = createContext();
     });
 
@@ -86,25 +86,25 @@ describe('DialogLayout.vue', () => {
     it('renders', () => {
         const wrapper = shallowMount(DialogLayout, context);
 
-        expect(wrapper.is('div')).toBe(true);
+        expect(wrapper.element.tagName).toBe('DIV');
         expect(wrapper.attributes('class')).toEqual('layout');
         expect(wrapper.findComponent(Messages).exists()).toBeFalsy();
     });
 
     it('renders view and dialog', () => {
-        const columns = context.propsData.layout.rows[0].columns;
+        const columns = context.props.layout.rows[0].columns;
         const wrapper = mount(DialogLayout, context);
 
-        const nodeViews = wrapper.findAll(NodeView);
+        const nodeViews = wrapper.findAllComponents(NodeView);
         expect(nodeViews.length).toBe(2);
         expect(nodeViews.at(0).props().viewConfig).toEqual(columns[0].content[0]);
         expect(nodeViews.at(1).props().viewConfig).toEqual(columns[1].content[0]);
     });
 
-    it('displays Messages from the alert store', () => {
+    it('displays Messages from the alert store', async () => {
         const wrapper = shallowMount(DialogLayout, context);
         expect(wrapper.findComponent(Messages).exists()).toBeFalsy();
-        wrapper.vm.$store.dispatch('pagebuilder/alert/showAlert', mockAlert);
+        await wrapper.vm.$store.dispatch('pagebuilder/alert/showAlert', mockAlert);
         expect(wrapper.findComponent(Messages).exists()).toBeTruthy();
     });
 

@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 /* eslint-disable max-lines */
 import { mount } from '@vue/test-utils';
 
@@ -8,7 +8,7 @@ import { format, differenceInCalendarDays } from 'date-fns';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 
 describe('DateTimeWidget.vue', () => {
-    let propsDataAll, propsDataNoTimeZone, propsDataNoNowButton,
+    let propsAll, propsNoTimeZone, propsNoNowButton,
         propsUseExecTimes, propsDateNoDate, context;
 
     beforeEach(() => {
@@ -17,7 +17,7 @@ describe('DateTimeWidget.vue', () => {
             sync: false
         };
 
-        propsDataAll = {
+        propsAll = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -82,7 +82,7 @@ describe('DateTimeWidget.vue', () => {
             isValid: false
         };
 
-        propsDataAll.valuePair = propsDataAll.nodeConfig.viewRepresentation.currentValue;
+        propsAll.valuePair = propsAll.nodeConfig.viewRepresentation.currentValue;
 
         propsDateNoDate = {
             nodeConfig: {
@@ -219,7 +219,7 @@ describe('DateTimeWidget.vue', () => {
 
         propsUseExecTimes.valuePair = propsUseExecTimes.nodeConfig.viewRepresentation.currentValue;
 
-        propsDataNoTimeZone = {
+        propsNoTimeZone = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -283,9 +283,9 @@ describe('DateTimeWidget.vue', () => {
             nodeId: '2:0:29',
             isValid: false
         };
-        propsDataNoTimeZone.valuePair = propsDataNoTimeZone.nodeConfig.viewRepresentation.currentValue;
+        propsNoTimeZone.valuePair = propsNoTimeZone.nodeConfig.viewRepresentation.currentValue;
 
-        propsDataNoNowButton = {
+        propsNoNowButton = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 stylesheets: [
@@ -349,13 +349,13 @@ describe('DateTimeWidget.vue', () => {
             nodeId: '2:0:29',
             isValid: false
         };
-        propsDataNoTimeZone.valuePair = propsDataNoTimeZone.nodeConfig.viewRepresentation.currentValue;
+        propsNoTimeZone.valuePair = propsNoTimeZone.nodeConfig.viewRepresentation.currentValue;
     });
 
     describe('renders', () => {
         it('renders with all fields', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -372,7 +372,7 @@ describe('DateTimeWidget.vue', () => {
 
         it('renders without timezone', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataNoTimeZone,
+                props: propsNoTimeZone,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -389,7 +389,7 @@ describe('DateTimeWidget.vue', () => {
 
         it('renders without timezone and now button', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataNoNowButton,
+                props: propsNoNowButton,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -406,7 +406,7 @@ describe('DateTimeWidget.vue', () => {
 
         it('uses exec time as value, min and max', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsUseExecTimes,
+                props: propsUseExecTimes,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -437,7 +437,7 @@ describe('DateTimeWidget.vue', () => {
     describe('events and actions', () => {
         it('emits @updateWidget if timezone changes', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -453,7 +453,7 @@ describe('DateTimeWidget.vue', () => {
 
         it('now button sets date, time and timezone to current values and location', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -474,7 +474,7 @@ describe('DateTimeWidget.vue', () => {
 
         it('now button sets only time if date is hidden', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDateNoDate,
+                props: propsDateNoDate,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -495,7 +495,7 @@ describe('DateTimeWidget.vue', () => {
 
         it('emits @updateWidget if DateTimeInput emits @input', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -508,7 +508,7 @@ describe('DateTimeWidget.vue', () => {
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[1][0]).toStrictEqual({
-                nodeId: propsDataAll.nodeId,
+                nodeId: propsAll.nodeId,
                 update: {
                     'viewRepresentation.currentValue': {
                         datestring: testValue,
@@ -522,7 +522,7 @@ describe('DateTimeWidget.vue', () => {
     describe('methods', () => {
         it('parses knime date and timezone strings', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -535,7 +535,7 @@ describe('DateTimeWidget.vue', () => {
 
         it('parses broken knime date and timezone strings', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -548,7 +548,7 @@ describe('DateTimeWidget.vue', () => {
 
         it('formats date to expected strings', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -563,7 +563,7 @@ describe('DateTimeWidget.vue', () => {
     describe('validate', () => {
         it('is valid if valid data is given', () => {
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -578,11 +578,11 @@ describe('DateTimeWidget.vue', () => {
         });
 
         it('invalidates if min bound is not kept', () => {
-            propsDataAll.nodeConfig.viewRepresentation.usemin = true;
-            propsDataAll.nodeConfig.viewRepresentation.min = '2020-10-10T13:32:45.153[Europe/Berlin]';
-            propsDataAll.nodeConfig.viewRepresentation.usemax = false;
+            propsAll.nodeConfig.viewRepresentation.usemin = true;
+            propsAll.nodeConfig.viewRepresentation.min = '2020-10-10T13:32:45.153[Europe/Berlin]';
+            propsAll.nodeConfig.viewRepresentation.usemax = false;
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -596,11 +596,11 @@ describe('DateTimeWidget.vue', () => {
         });
 
         it('invalidates if max bound is not kept', () => {
-            propsDataAll.nodeConfig.viewRepresentation.usemax = true;
-            propsDataAll.nodeConfig.viewRepresentation.max = '2020-04-10T13:32:45.153[Europe/Berlin]';
-            propsDataAll.nodeConfig.viewRepresentation.usemin = false;
+            propsAll.nodeConfig.viewRepresentation.usemax = true;
+            propsAll.nodeConfig.viewRepresentation.max = '2020-04-10T13:32:45.153[Europe/Berlin]';
+            propsAll.nodeConfig.viewRepresentation.usemin = false;
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },
@@ -615,10 +615,10 @@ describe('DateTimeWidget.vue', () => {
 
         it('show error message if provided via prop', () => {
             const testErrorMsg = 'THIS IS A TEST';
-            propsDataAll.errorMessage = testErrorMsg;
-            propsDataAll.isValid = false;
+            propsAll.errorMessage = testErrorMsg;
+            propsAll.isValid = false;
             let wrapper = mount(DateTimeWidget, {
-                propsData: propsDataAll,
+                props: propsAll,
                 stubs: {
                     'client-only': '<div><slot /></div>'
                 },

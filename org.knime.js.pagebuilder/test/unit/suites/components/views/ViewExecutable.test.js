@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 
@@ -15,7 +15,7 @@ import { componentExtensionConfig } from '../../../assets/views/extensionConfig'
 describe('ViewExecutable.vue', () => {
     it('renders', () => {
         const wrapper = shallowMount(ViewExecutable, {
-            propsData: {
+            props: {
                 extensionConfig: { nodeInfo: { canExecute: true } }
             }
         });
@@ -28,7 +28,7 @@ describe('ViewExecutable.vue', () => {
     describe('props validation', () => {
         it('accepts a valid extensionConfig', () => {
             const wrapper = shallowMount(ViewExecutable, {
-                propsData: {
+                props: {
                     extensionConfig: {
                         nodeId: null,
                         workflowId: null,
@@ -45,7 +45,7 @@ describe('ViewExecutable.vue', () => {
 
         it('declines an invalid extensionConfig', () => {
             const wrapper = shallowMount(ViewExecutable, {
-                propsData: {
+                props: {
                     extensionConfig: {
                         nodeId: null,
                         workflowId: null,
@@ -108,11 +108,11 @@ describe('ViewExecutable.vue', () => {
         });
 
         it('shows the executing overlay', async () => {
-            let propsData = getMockComponentProps();
-            propsData.extensionConfig.nodeInfo.nodeState = 'executing';
+            let props = getMockComponentProps();
+            props.extensionConfig.nodeInfo.nodeState = 'executing';
             let wrapper = mount(ViewExecutable, {
                 ...context,
-                propsData
+                props
             });
             await wrapper.vm.executeViewSaveSettings();
             expect(wrapper.vm.isExecuting).toBeTruthy();
@@ -120,42 +120,42 @@ describe('ViewExecutable.vue', () => {
         });
 
         it('dispatches the applySettings call to the pagebuilder/service store', async () => {
-            let propsData = getMockComponentProps();
+            let props = getMockComponentProps();
             let wrapper = shallowMount(ViewExecutable, {
                 ...context,
-                propsData
+                props
             });
             await wrapper.vm.executeViewSaveSettings();
             expect(applySettingsMock).toHaveBeenCalled();
         });
 
         it('dispatches the changeNodeState call to the api store', async () => {
-            let propsData = getMockComponentProps();
+            let props = getMockComponentProps();
             let wrapper = shallowMount(ViewExecutable, {
                 ...context,
-                propsData
+                props
             });
             await wrapper.vm.executeViewSaveSettings();
             expect(changeNodeStatesMock).toHaveBeenCalled();
         });
 
         test('Save & Execute button is disabled if node cannot be executed', () => {
-            let propsData = getMockComponentProps();
-            propsData.extensionConfig.nodeInfo.canExecute = false;
+            let props = getMockComponentProps();
+            props.extensionConfig.nodeInfo.canExecute = false;
             let wrapper = shallowMount(ViewExecutable, {
                 ...context,
-                propsData
+                props
             });
             expect(wrapper.findComponent(Button).attributes().disabled).toBeTruthy();
             expect(wrapper.find('.message').text()).toContain('cannot be executed');
         });
 
         it('dispatches calls to the pagebuilder/alert store', () => {
-            let propsData = getMockComponentProps();
-            propsData.extensionConfig.nodeInfo.nodeWarnMessage = 'warning message';
+            let props = getMockComponentProps();
+            props.extensionConfig.nodeInfo.nodeWarnMessage = 'warning message';
             shallowMount(ViewExecutable, {
                 ...context,
-                propsData
+                props
             });
             expect(showAlertMock).toHaveBeenCalledWith(expect.anything(), {
                 message: 'warning message', nodeId: '0:0:7', subtitle: '', type: 'warn'

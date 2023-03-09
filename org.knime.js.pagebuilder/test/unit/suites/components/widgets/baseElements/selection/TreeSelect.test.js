@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
@@ -9,10 +9,10 @@ import customIcon from 'webapps-common/ui/assets/img/icons/activity.svg';
 import customSelectedIcon from 'webapps-common/ui/assets/img/icons/cart.svg';
 
 describe('TreeSelect.vue', () => {
-    let context, propsData;
+    let context, props;
 
     beforeEach(() => {
-        propsData = {
+        props = {
             data: [
                 {
                     text: 'Item 1',
@@ -57,7 +57,7 @@ describe('TreeSelect.vue', () => {
     it('renders', () => {
         let wrapper = mount(TreeSelect, {
             ...context,
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -66,17 +66,17 @@ describe('TreeSelect.vue', () => {
     it('renders custom icon', () => {
         let wrapper = mount(TreeSelect, {
             ...context,
-            propsData
+            props
         });
         expect(wrapper.findComponent(TreeSelectItem).find(customIcon).isVisible()).toBeTruthy();
         expect(wrapper.findComponent(TreeSelectItem).find(customSelectedIcon).exists()).toBeFalsy();
     });
 
     it('renders custom selected icon', () => {
-        propsData.data[0].selected = true;
+        props.data[0].selected = true;
         let wrapper = mount(TreeSelect, {
             ...context,
-            propsData
+            props
         });
         expect(wrapper.findComponent(TreeSelectItem).find(customIcon).exists()).toBeFalsy();
         expect(wrapper.findComponent(TreeSelectItem).find(customSelectedIcon).isVisible()).toBeTruthy();
@@ -85,7 +85,7 @@ describe('TreeSelect.vue', () => {
     it('updates text in TreeSelectItem dynamically', () => {
         let wrapper = mount(TreeSelect, {
             ...context,
-            propsData
+            props
         });
         const test = 'SOME_UNIQUE_TEST_STRING_34as834asjf';
         wrapper.vm.$props.data[0].text = test;
@@ -95,7 +95,7 @@ describe('TreeSelect.vue', () => {
     it('updates model of TreeSelectItem on data changes', () => {
         let wrapper = mount(TreeSelect, {
             ...context,
-            propsData
+            props
         });
         const item = wrapper.findComponent(TreeSelectItem);
         item.setProps({
@@ -111,105 +111,105 @@ describe('TreeSelect.vue', () => {
         it('selects item on click', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
-            expect(propsData.data[0].children[0].selected).toStrictEqual(true);
-            expect(propsData.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[0].selected).toStrictEqual(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click');
-            expect(propsData.data[0].children[0].selected).toStrictEqual(false);
-            expect(propsData.data[0].selected).toStrictEqual(true);
+            expect(props.data[0].children[0].selected).toStrictEqual(false);
+            expect(props.data[0].selected).toStrictEqual(true);
         });
 
         it('opens children on double click', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
-            expect(propsData.data[0].opened).toBe(false);
+            expect(props.data[0].opened).toBe(false);
 
             const anchors = wrapper.findAll('.tree-anchor');
             anchors.at(0).trigger('dblclick');
 
-            expect(propsData.data[0].opened).toBe(true);
+            expect(props.data[0].opened).toBe(true);
         });
 
         it('closes children on double click if open', () => {
-            propsData.data[0].opened = true;
+            props.data[0].opened = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
-            expect(propsData.data[0].opened).toBe(true);
+            expect(props.data[0].opened).toBe(true);
 
             const anchors = wrapper.findAll('.tree-anchor');
             anchors.at(0).trigger('dblclick');
 
-            expect(propsData.data[0].opened).toBe(false);
+            expect(props.data[0].opened).toBe(false);
         });
 
         it('ignores click on disabled item', () => {
-            propsData.data[0].disabled = true;
+            props.data[0].disabled = true;
 
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
-            expect(propsData.data[0].children[0].selected).toStrictEqual(true);
-            expect(propsData.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[0].selected).toStrictEqual(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click');
-            expect(propsData.data[0].children[0].selected).toStrictEqual(true);
-            expect(propsData.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[0].selected).toStrictEqual(false);
         });
 
         it('selects item on click even if multiple is active', () => {
-            propsData.multiple = true;
+            props.multiple = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
-            expect(propsData.data[0].children[0].selected).toStrictEqual(true);
-            expect(propsData.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[0].selected).toStrictEqual(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click');
-            expect(propsData.data[0].children[0].selected).toStrictEqual(false);
-            expect(propsData.data[0].selected).toStrictEqual(true);
+            expect(props.data[0].children[0].selected).toStrictEqual(false);
+            expect(props.data[0].selected).toStrictEqual(true);
         });
 
         it('adds item to selected on click if multiple selections is allowed', () => {
-            propsData.multiple = true;
+            props.multiple = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
-            expect(propsData.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].selected).toStrictEqual(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click', { ctrlKey: true });
-            expect(propsData.data[0].selected).toStrictEqual(true);
-            expect(propsData.data[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[0].selected).toStrictEqual(true);
+            expect(props.data[0].children[0].selected).toStrictEqual(true);
         });
 
         it('removes item from selected items on ctrl + click', () => {
-            propsData.multiple = true;
-            propsData.data[0].selected = true;
+            props.multiple = true;
+            props.data[0].selected = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             wrapper.findAll('.tree-anchor').at(0).trigger('click', { ctrlKey: true });
-            expect(propsData.data[0].selected).toStrictEqual(false);
-            expect(propsData.data[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toStrictEqual(true);
         });
 
         it('selects multiple items on shift + click', () => {
-            propsData.multiple = true;
+            props.multiple = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -218,18 +218,18 @@ describe('TreeSelect.vue', () => {
             anchors.at(6).trigger('click', { shiftKey: true });
 
             // 3 items are selected
-            expect(propsData.data[1].selected).toStrictEqual(true);
-            expect(propsData.data[2].selected).toStrictEqual(true);
-            expect(propsData.data[3].selected).toStrictEqual(true);
+            expect(props.data[1].selected).toStrictEqual(true);
+            expect(props.data[2].selected).toStrictEqual(true);
+            expect(props.data[3].selected).toStrictEqual(true);
             // default selection should be removed
-            expect(propsData.data[0].children[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toStrictEqual(false);
         });
 
         it('selects only clicked item if levels mismatch on shift + click', () => {
-            propsData.multiple = true;
+            props.multiple = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -237,17 +237,17 @@ describe('TreeSelect.vue', () => {
             anchors.at(4).trigger('click', {});
             anchors.at(2).trigger('click', { shiftKey: true });
 
-            expect(propsData.data[0].children[0].children[0].selected).toStrictEqual(true);
-            expect(propsData.data[1].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[1].selected).toStrictEqual(false);
             // default selection should be removed
-            expect(propsData.data[0].children[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toStrictEqual(false);
         });
 
         it('marks hovered items', () => {
-            propsData.multiple = true;
+            props.multiple = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
             const anchor = wrapper.find('.tree-anchor');
             const item = wrapper.findComponent(TreeSelectItem);
@@ -259,10 +259,10 @@ describe('TreeSelect.vue', () => {
         });
 
         it('removes keyboard navigation state on hover', () => {
-            propsData.data[0].opened = true;
+            props.data[0].opened = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -276,7 +276,7 @@ describe('TreeSelect.vue', () => {
             anchors.at(0).trigger('mouseover', {});
 
             expect(wrapper.vm.currentKeyboardNavNode.$data.isKeyNav).toBe(false);
-            expect(wrapper.findAll(TreeSelectItem).at(0).vm.$data.isHover).toStrictEqual(true);
+            expect(wrapper.findAllComponents(TreeSelectItem).at(0).vm.$data.isHover).toStrictEqual(true);
         });
     });
 
@@ -284,7 +284,7 @@ describe('TreeSelect.vue', () => {
         it('navigates up using up key', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -296,10 +296,10 @@ describe('TreeSelect.vue', () => {
         });
 
         it('navigates across levels using up key', () => {
-            propsData.data[0].opened = true;
+            props.data[0].opened = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -313,9 +313,9 @@ describe('TreeSelect.vue', () => {
         it('does not navigate down using up key if we reached the top', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
-            const items = wrapper.findAll(TreeSelectItem);
+            const items = wrapper.findAllComponents(TreeSelectItem);
 
             wrapper.setData({
                 currentKeyboardNavNode: items.at(0).vm
@@ -331,7 +331,7 @@ describe('TreeSelect.vue', () => {
         it('navigates down using down key', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -344,15 +344,15 @@ describe('TreeSelect.vue', () => {
         });
 
         it('does not navigate down using down key if we reached the end', () => {
-            propsData.data[3].children = [{
+            props.data[3].children = [{
                 value: 'lastChild',
                 text: 'Last Child'
             }];
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
-            const items = wrapper.findAll(TreeSelectItem);
+            const items = wrapper.findAllComponents(TreeSelectItem);
 
             wrapper.setData({
                 currentKeyboardNavNode: items.at(7).vm // the lastChild
@@ -366,13 +366,13 @@ describe('TreeSelect.vue', () => {
         });
 
         it('navigates across levels using down key', () => {
-            propsData.data[0].opened = true;
+            props.data[0].opened = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
-            const items = wrapper.findAll(TreeSelectItem);
+            const items = wrapper.findAllComponents(TreeSelectItem);
 
             wrapper.setData({
                 currentKeyboardNavNode: items.at(3).vm
@@ -386,10 +386,10 @@ describe('TreeSelect.vue', () => {
         });
 
         it('navigates into open tree using down key', () => {
-            propsData.data[0].opened = true;
+            props.data[0].opened = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const container = wrapper.find('.tree-container-ul');
@@ -399,10 +399,10 @@ describe('TreeSelect.vue', () => {
         });
 
         it('navigates into open tree using up key', () => {
-            propsData.data[0].opened = true;
+            props.data[0].opened = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -412,13 +412,13 @@ describe('TreeSelect.vue', () => {
             container.trigger('keydown.up');
 
             expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child2');
-            expect(wrapper.findAll(TreeSelectItem).at(4).vm.$data.isHover).toStrictEqual(false);
+            expect(wrapper.findAllComponents(TreeSelectItem).at(4).vm.$data.isHover).toStrictEqual(false);
         });
 
         it('selects item on enter key', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -431,17 +431,17 @@ describe('TreeSelect.vue', () => {
 
             container.trigger('keydown.enter');
 
-            expect(propsData.data[3].selected).toStrictEqual(true);
+            expect(props.data[3].selected).toStrictEqual(true);
 
             // last selection (click) should be removed
-            expect(propsData.data[2].selected).toStrictEqual(false);
+            expect(props.data[2].selected).toStrictEqual(false);
         });
 
         it('does not select disabled item on enter key', () => {
-            propsData.data[3].disabled = true;
+            props.data[3].disabled = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -454,17 +454,17 @@ describe('TreeSelect.vue', () => {
 
             container.trigger('keydown.enter');
 
-            expect(propsData.data[3].selected).toStrictEqual(false);
+            expect(props.data[3].selected).toStrictEqual(false);
 
             // last selection (click) still active
-            expect(propsData.data[2].selected).toStrictEqual(true);
+            expect(props.data[2].selected).toStrictEqual(true);
         });
 
         it('adds item to selected on enter + ctrl', () => {
-            propsData.multiple = true;
+            props.multiple = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -477,33 +477,33 @@ describe('TreeSelect.vue', () => {
 
             container.trigger('keydown.enter', { ctrlKey: true });
 
-            expect(propsData.data[3].selected).toStrictEqual(true);
+            expect(props.data[3].selected).toStrictEqual(true);
 
             // last selection (click) should be removed
-            expect(propsData.data[2].selected).toStrictEqual(true);
+            expect(props.data[2].selected).toStrictEqual(true);
         });
 
         it('opens children on right arrow key', () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
-            expect(propsData.data[0].opened).toBe(false);
+            expect(props.data[0].opened).toBe(false);
 
             const anchors = wrapper.findAll('.tree-anchor');
             anchors.at(0).trigger('click', {});
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.right');
 
-            expect(propsData.data[0].opened).toBe(true);
+            expect(props.data[0].opened).toBe(true);
         });
 
         it('closes children on left arrow key', () => {
-            propsData.data[0].opened = true;
+            props.data[0].opened = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const anchors = wrapper.findAll('.tree-anchor');
@@ -511,14 +511,14 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.left');
 
-            expect(propsData.data[0].opened).toBe(false);
+            expect(props.data[0].opened).toBe(false);
         });
 
         it('does not break on empty tree', () => {
-            propsData.data = [];
+            props.data = [];
             let wrapper = mount(TreeSelect, {
                 ...context,
-                propsData
+                props
             });
 
             const container = wrapper.find('.tree-container-ul');
@@ -531,10 +531,10 @@ describe('TreeSelect.vue', () => {
     });
 
     it('scrolls to element correctly', () => {
-        propsData.data = [];
+        props.data = [];
         let wrapper = shallowMount(TreeSelect, {
             ...context,
-            propsData
+            props
         });
         const scrollToElement = wrapper.vm.scrollToElement;
 

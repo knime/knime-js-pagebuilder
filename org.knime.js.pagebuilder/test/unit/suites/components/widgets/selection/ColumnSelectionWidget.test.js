@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import ColumnSelectionWidget from '@/components/widgets/selection/ColumnSelectionWidget.vue';
@@ -6,10 +6,10 @@ import SingleSelect from '@/components/widgets/baseElements/selection/SingleSele
 import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget.vue';
 
 describe('ColumnSelectionWidget.vue', () => {
-    let propsDataColumnSelectionList;
+    let propsColumnSelectionList;
 
     beforeEach(() => {
-        propsDataColumnSelectionList = {
+        propsColumnSelectionList = {
             nodeConfig: {
                 '@class': 'org.knime.js.core.JSONWebNode',
                 initMethodName: 'init',
@@ -108,7 +108,7 @@ describe('ColumnSelectionWidget.vue', () => {
 
     it('renders', () => {
         let wrapper = mount(SingleSelectionWidget, {
-            propsData: propsDataColumnSelectionList
+            props: propsColumnSelectionList
         });
 
         expect(wrapper.html()).toBeTruthy();
@@ -118,7 +118,7 @@ describe('ColumnSelectionWidget.vue', () => {
 
     it('emits @updateWidget if child emits @input', () => {
         let wrapper = mount(ColumnSelectionWidget, {
-            propsData: propsDataColumnSelectionList
+            props: propsColumnSelectionList
         });
 
         const testValue = 'VALUE';
@@ -127,27 +127,27 @@ describe('ColumnSelectionWidget.vue', () => {
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
-            nodeId: propsDataColumnSelectionList.nodeId,
+            nodeId: propsColumnSelectionList.nodeId,
             type: 'column',
             value: testValue
         });
     });
 
     it('has size set', () => {
-        propsDataColumnSelectionList.isValid = true;
+        propsColumnSelectionList.isValid = true;
         let wrapper = mount(ColumnSelectionWidget, {
-            propsData: propsDataColumnSelectionList
+            props: propsColumnSelectionList
         });
-        let size = propsDataColumnSelectionList.nodeConfig.viewRepresentation.numberVisOptions;
+        let size = propsColumnSelectionList.nodeConfig.viewRepresentation.numberVisOptions;
         expect(wrapper.findComponent(SingleSelect).props('numberVisOptions')).toBe(size);
     });
 
     describe('validation', () => {
         it('is valid if not required and no selection made', () => {
-            propsDataColumnSelectionList.nodeConfig.viewRepresentation.required = false;
+            propsColumnSelectionList.nodeConfig.viewRepresentation.required = false;
             let wrapper = mount(ColumnSelectionWidget, {
-                propsData: {
-                    ...propsDataColumnSelectionList,
+                props: {
+                    ...propsColumnSelectionList,
                     valuePair: {
                         value: []
                     }
@@ -158,9 +158,9 @@ describe('ColumnSelectionWidget.vue', () => {
         });
 
         it('is invalid/valid if required and no selection/a selection was made', () => {
-            propsDataColumnSelectionList.nodeConfig.viewRepresentation.required = true;
+            propsColumnSelectionList.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(ColumnSelectionWidget, {
-                propsData: propsDataColumnSelectionList,
+                props: propsColumnSelectionList,
                 stubs: {
                     SingleSelect: {
                         template: '<div />',
@@ -179,7 +179,7 @@ describe('ColumnSelectionWidget.vue', () => {
         it('handles child validation', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ColumnSelectionWidget, {
-                propsData: propsDataColumnSelectionList,
+                props: propsColumnSelectionList,
                 stubs: {
                     SingleSelect: {
                         template: '<div />',

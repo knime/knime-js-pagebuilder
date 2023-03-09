@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Vue from 'vue';
@@ -7,7 +7,7 @@ import FileChooserWidget from '@/components/widgets/selection/FileChooserWidget.
 import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect.vue';
 
 
-const propsDataTemplate = {
+const propsTemplate = {
     nodeConfig: {
         '@class': 'org.knime.js.core.JSONWebNode',
         viewRepresentation: {
@@ -117,22 +117,22 @@ const propsDataTemplate = {
 };
 
 describe('FileChooserWidget.vue AP', () => {
-    let propsData;
+    let props;
 
     beforeAll(() => {
         window.KnimePageLoader = {};
     });
 
     beforeEach(() => {
-        propsData = JSON.parse(JSON.stringify(propsDataTemplate));
-        propsData.nodeConfig.viewRepresentation.runningOnServer = true;
+        props = JSON.parse(JSON.stringify(propsTemplate));
+        props.nodeConfig.viewRepresentation.runningOnServer = true;
 
         window.KnimePageLoader.isRunningInWebportal = vi.fn().mockReturnValue(false);
     });
 
     it('renders', () => {
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -140,20 +140,20 @@ describe('FileChooserWidget.vue AP', () => {
 
     it('renders with null tree', () => {
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            props
         });
-        propsData.nodeConfig.viewRepresentation.tree = null;
-        wrapper.setProps(JSON.parse(JSON.stringify(propsData)));
+        props.nodeConfig.viewRepresentation.tree = null;
+        wrapper.setProps(JSON.parse(JSON.stringify(props)));
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
     it('updates tree on change of viewRepresentation', async () => {
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            props
         });
-        propsData.nodeConfig.viewRepresentation.tree = [];
-        wrapper.setProps(JSON.parse(JSON.stringify(propsData)));
+        props.nodeConfig.viewRepresentation.tree = [];
+        wrapper.setProps(JSON.parse(JSON.stringify(props)));
         await Vue.nextTick();
         expect(wrapper.vm.treeData).toStrictEqual([]);
     });
@@ -161,7 +161,7 @@ describe('FileChooserWidget.vue AP', () => {
 
     it('sends @updateWidget if TreeSelect emits @item-click event', () => {
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            props
         });
 
         const comp = wrapper.findComponent(TreeSelect);
@@ -183,27 +183,27 @@ describe('FileChooserWidget.vue AP', () => {
     });
 
     it('shows info message if tree is empty', () => {
-        propsData.nodeConfig.viewRepresentation.tree = [];
+        props.nodeConfig.viewRepresentation.tree = [];
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            props
         });
         expect(wrapper.vm.infoMessage).toStrictEqual('No items found for selection.');
         expect(wrapper.text()).toContain('No items found for selection.');
     });
 
     it('shows info message if it is not running on the server', () => {
-        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        props.nodeConfig.viewRepresentation.runningOnServer = false;
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            props
         });
         expect(wrapper.vm.infoMessage).toStrictEqual('File selection only possible on server.');
     });
 
     it('checks, that the default item is returned when run in the AP', async () => {
-        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
-        propsData.nodeConfig.viewRepresentation.tree = undefined;
+        props.nodeConfig.viewRepresentation.runningOnServer = false;
+        props.nodeConfig.viewRepresentation.tree = undefined;
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            props
         });
         await Vue.nextTick();
 
@@ -218,9 +218,9 @@ describe('FileChooserWidget.vue AP', () => {
     });
 
     it('reports as valid if info message is shown', () => {
-        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
+        props.nodeConfig.viewRepresentation.runningOnServer = false;
         let wrapper = mount(FileChooserWidget, {
-            propsData
+            props
         });
         expect(wrapper.vm.validate()).toStrictEqual({
             isValid: true,
@@ -230,7 +230,7 @@ describe('FileChooserWidget.vue AP', () => {
 });
 
 describe('FileChooserWidget.vue WebPortal', () => {
-    let propsData, store, localVue, mocks;
+    let props, store, localVue, mocks;
 
     beforeAll(() => {
         localVue = createLocalVue();
@@ -239,9 +239,9 @@ describe('FileChooserWidget.vue WebPortal', () => {
     });
 
     beforeEach(() => {
-        propsData = JSON.parse(JSON.stringify(propsDataTemplate));
-        propsData.nodeConfig.viewRepresentation.runningOnServer = false;
-        propsData.nodeConfig.viewRepresentation.tree = [];
+        props = JSON.parse(JSON.stringify(propsTemplate));
+        props.nodeConfig.viewRepresentation.runningOnServer = false;
+        props.nodeConfig.viewRepresentation.tree = [];
 
         store = new Vuex.Store({
             modules: {
@@ -323,18 +323,18 @@ describe('FileChooserWidget.vue WebPortal', () => {
 
     it('updates tree on change of viewRepresentation on new WebPortal', async () => {
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();
-        propsData.nodeConfig.viewRepresentation.tree = [];
-        wrapper.setProps(JSON.parse(JSON.stringify(propsData)));
+        props.nodeConfig.viewRepresentation.tree = [];
+        wrapper.setProps(JSON.parse(JSON.stringify(props)));
         expect(wrapper.vm.treeData).toStrictEqual([]);
     });
 
     it('shows no info message if is running on new webportal and tree is present', async () => {
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();
@@ -346,7 +346,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
     it('shows info message if it is not running on the server', () => {
         window.KnimePageLoader.isRunningInWebportal = vi.fn().mockReturnValueOnce(false);
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         expect(wrapper.vm.infoMessage).toStrictEqual('File selection only possible on server.');
@@ -355,7 +355,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
     it('reports as valid if info message is shown', () => {
         window.KnimePageLoader.isRunningInWebportal = vi.fn().mockReturnValueOnce(false);
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         expect(wrapper.vm.validate()).toStrictEqual({
@@ -367,7 +367,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
     it('fails validation if nothing is selected but selection is required', async () => {
         mocks.repoData.children[0].children[1].path = '/file_chooser_verification/directory_folder/a/customers1.csv';
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();
@@ -378,9 +378,9 @@ describe('FileChooserWidget.vue WebPortal', () => {
     });
 
     it('creates a test where nothing is selected, but selection is required and possible', async () => {
-        propsData.nodeConfig.viewRepresentation.selectDataFiles = false;
-        propsData.nodeConfig.viewRepresentation.selectWorkflows = false;
-        propsData.nodeConfig.viewRepresentation.required = true;
+        props.nodeConfig.viewRepresentation.selectDataFiles = false;
+        props.nodeConfig.viewRepresentation.selectWorkflows = false;
+        props.nodeConfig.viewRepresentation.required = true;
         mocks.repoData.children[0].children = [{
             _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
             path: '/file_chooser_verification/directory_folder/a/customers.csv',
@@ -401,7 +401,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
             owner: 'knimeadmin'
         }];
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();
@@ -412,8 +412,8 @@ describe('FileChooserWidget.vue WebPortal', () => {
     });
 
     it('creates a damaged tree', async () => {
-        propsData.nodeConfig.viewRepresentation.required = true;
-        propsData.nodeConfig.viewRepresentation.tree = [];
+        props.nodeConfig.viewRepresentation.required = true;
+        props.nodeConfig.viewRepresentation.tree = [];
         mocks.repoData.children[0].children = [{
             _class: 'com.knime.enterprise.server.rest.api.v4.repository.ent.Data',
             type: 'Data',
@@ -421,7 +421,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
             owner: 'knimeadmin'
         }];
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();
@@ -430,10 +430,10 @@ describe('FileChooserWidget.vue WebPortal', () => {
     });
 
     it('tests workflow relative paths', async () => {
-        propsData.nodeConfig.viewRepresentation.required = true;
-        propsData.nodeConfig.viewRepresentation.rootDir = 'knime://test/../test/../test.csv';
+        props.nodeConfig.viewRepresentation.required = true;
+        props.nodeConfig.viewRepresentation.rootDir = 'knime://test/../test/../test.csv';
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();
@@ -444,10 +444,10 @@ describe('FileChooserWidget.vue WebPortal', () => {
     });
 
     it('tests workflow relative paths with knime.workflow', async () => {
-        propsData.nodeConfig.viewRepresentation.required = true;
-        propsData.nodeConfig.viewRepresentation.rootDir = 'knime://knime.workflow/test/blabla';
+        props.nodeConfig.viewRepresentation.required = true;
+        props.nodeConfig.viewRepresentation.rootDir = 'knime://knime.workflow/test/blabla';
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();
@@ -458,12 +458,12 @@ describe('FileChooserWidget.vue WebPortal', () => {
     });
 
     it('tests custom mountIDs', async () => {
-        propsData.nodeConfig.viewRepresentation.required = true;
-        propsData.nodeConfig.viewRepresentation.rootDir = 'knime://knime.workflow/test/blabla';
-        propsData.nodeConfig.viewRepresentation.useDefaultMountId = false;
-        propsData.nodeConfig.viewRepresentation.customMountId = 'test://';
+        props.nodeConfig.viewRepresentation.required = true;
+        props.nodeConfig.viewRepresentation.rootDir = 'knime://knime.workflow/test/blabla';
+        props.nodeConfig.viewRepresentation.useDefaultMountId = false;
+        props.nodeConfig.viewRepresentation.customMountId = 'test://';
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();
@@ -498,7 +498,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
             }
         });
         let wrapper = mount(FileChooserWidget, {
-            propsData,
+            props,
             mocks
         });
         await Vue.nextTick();

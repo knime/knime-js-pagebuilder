@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
+import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay.vue';
@@ -6,7 +6,7 @@ import ExecutingOverlay from '@/components/ui/ExecutingOverlay.vue';
 describe('ExecutingOverlay.vue', () => {
     it('renders nothing by default', () => {
         let wrapper = shallowMount(ExecutingOverlay, {
-            propsData: {
+            props: {
                 nodeId: '007'
             }
         });
@@ -15,7 +15,7 @@ describe('ExecutingOverlay.vue', () => {
 
     it('renders overlay via prop', () => {
         let wrapper = shallowMount(ExecutingOverlay, {
-            propsData: {
+            props: {
                 nodeId: '007',
                 show: true
             }
@@ -26,7 +26,7 @@ describe('ExecutingOverlay.vue', () => {
 
     it('renders loading svg via prop after transition ending', () => {
         let wrapper = shallowMount(ExecutingOverlay, {
-            propsData: {
+            props: {
                 nodeId: '007',
                 show: true,
                 showSpinner: true
@@ -39,7 +39,7 @@ describe('ExecutingOverlay.vue', () => {
 
     it('respects a maximum calculated height for spinner', () => {
         let wrapper = shallowMount(ExecutingOverlay, {
-            propsData: {
+            props: {
                 nodeId: '007',
                 show: true,
                 showSpinner: true
