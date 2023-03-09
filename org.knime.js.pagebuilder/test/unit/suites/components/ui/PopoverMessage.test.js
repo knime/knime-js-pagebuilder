@@ -1,7 +1,7 @@
 import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
-import PopoverMessage from '~/src/components/ui/PopoverMessage.vue';
+import PopoverMessage from '@/components/ui/PopoverMessage.vue';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import Button from 'webapps-common/ui/components/Button.vue';
 
@@ -22,8 +22,8 @@ describe('PopoverMessage', () => {
     });
 
     it('renders default', () => {
-        expect(wrapper.find(Label).exists()).toBe(true);
-        expect(wrapper.find(Label).props('text')).toEqual('Test title');
+        expect(wrapper.findComponent(Label).exists()).toBe(true);
+        expect(wrapper.findComponent(Label).props('text')).toEqual('Test title');
         expect(wrapper.text()).toContain('Test message');
     });
 
@@ -36,7 +36,7 @@ describe('PopoverMessage', () => {
                 messageBody: 'Test message'
             }
         });
-        wrapper.find(Button).trigger('click');
+        wrapper.findComponent(Button).trigger('click');
         expect(wrapper.emitted('closeAlert'));
     });
 

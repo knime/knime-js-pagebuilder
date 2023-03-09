@@ -125,7 +125,7 @@ describe('Multiselect.vue', () => {
                 propsData: propsDataCheckboxHorizontal
             });
 
-            let checkboxes = wrapper.find(Checkboxes);
+            let checkboxes = wrapper.findComponent(Checkboxes);
             expect(checkboxes.exists()).toBeTruthy();
             expect(checkboxes.props('alignment')).toBe('horizontal');
             // eslint-disable-next-line no-magic-numbers
@@ -138,7 +138,7 @@ describe('Multiselect.vue', () => {
                 propsData: propsDataCheckboxVertical
             });
 
-            let checkboxes = wrapper.find(Checkboxes);
+            let checkboxes = wrapper.findComponent(Checkboxes);
             expect(checkboxes.exists()).toBeTruthy();
             expect(checkboxes.props('alignment')).toBe('vertical');
         });
@@ -150,7 +150,7 @@ describe('Multiselect.vue', () => {
             });
 
             expect(wrapper.vm.checkBoxesAlignment).toBe(null);
-            expect(wrapper.find(Checkboxes).exists()).toBe(false);
+            expect(wrapper.findComponent(Checkboxes).exists()).toBe(false);
         });
 
         it('emits @input', () => {
@@ -160,7 +160,7 @@ describe('Multiselect.vue', () => {
             });
 
             const testValue = ['VALUE1', 'VALUE2'];
-            const comp = wrapper.find(Checkboxes);
+            const comp = wrapper.findComponent(Checkboxes);
             comp.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().input).toBeTruthy();
@@ -175,7 +175,7 @@ describe('Multiselect.vue', () => {
                 propsData: propsDataMultiselectListBox
             });
 
-            expect(wrapper.find(MultiselectListBox).exists()).toBeTruthy();
+            expect(wrapper.findComponent(MultiselectListBox).exists()).toBeTruthy();
         });
 
         it('does not render duplicate entries', () => {
@@ -195,7 +195,7 @@ describe('Multiselect.vue', () => {
             });
 
             const testValue = ['VALUE1', 'VALUE2'];
-            const comp = wrapper.find(MultiselectListBox);
+            const comp = wrapper.findComponent(MultiselectListBox);
             comp.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().input).toBeTruthy();
@@ -210,7 +210,7 @@ describe('Multiselect.vue', () => {
                 propsData: propsDataTwinlist
             });
 
-            expect(wrapper.find(Twinlist).exists()).toBeTruthy();
+            expect(wrapper.findComponent(Twinlist).exists()).toBeTruthy();
         });
 
         it('size defaults to 0', () => {
@@ -220,7 +220,7 @@ describe('Multiselect.vue', () => {
                 propsData: propsDataTwinlist
             });
 
-            let rb = wrapper.find(Twinlist);
+            let rb = wrapper.findComponent(Twinlist);
             expect(rb.props('size')).toBe(0);
         });
 
@@ -231,7 +231,7 @@ describe('Multiselect.vue', () => {
             });
 
             const testValue = ['VALUE1', 'VALUE2'];
-            const comp = wrapper.find(Twinlist);
+            const comp = wrapper.findComponent(Twinlist);
             comp.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().input).toBeTruthy();

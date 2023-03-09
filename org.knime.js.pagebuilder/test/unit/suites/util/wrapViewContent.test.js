@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
-import wrapViewContent from '~/src/util/wrapViewContent';
+import wrapViewContent from '@/util/wrapViewContent';
 
 const localWrapView = item => ({
     type: 'JSONLayoutRow',

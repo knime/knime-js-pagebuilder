@@ -2,7 +2,7 @@ import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vites
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import * as interactiveConfig from '~/store/interactivity';
+import * as interactiveConfig from '@/store/interactivity';
 
 import InteractiveRangeWidget from '@/components/widgets/interactive/InteractiveRangeWidget.vue';
 import SliderWidget from '@/components/widgets/input/SliderWidget.vue';
@@ -118,7 +118,7 @@ describe('InteractiveRangeWidget.vue', () => {
             propsData
         });
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(SliderWidget)).toBeTruthy();
+        expect(wrapper.findComponent(SliderWidget)).toBeTruthy();
     });
 
     it('handles range slider (2 value) widgets', () => {
@@ -153,7 +153,7 @@ describe('InteractiveRangeWidget.vue', () => {
         const testUpdate = {
             value: [NEW_MIN, NEW_MAX]
         };
-        wrapper.find(SliderWidget).vm.$emit('updateWidget', testUpdate);
+        wrapper.findComponent(SliderWidget).vm.$emit('updateWidget', testUpdate);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -173,7 +173,7 @@ describe('InteractiveRangeWidget.vue', () => {
         const testUpdate1 = {
             value: NEW_MAX
         };
-        wrapper1.find(SliderWidget).vm.$emit('updateWidget', testUpdate1);
+        wrapper1.findComponent(SliderWidget).vm.$emit('updateWidget', testUpdate1);
         expect(wrapper1.emitted().updateWidget).toBeTruthy();
         expect(wrapper1.emitted().updateWidget[0][0]).toStrictEqual({
             callback: expect.anything(),

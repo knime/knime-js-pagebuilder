@@ -342,7 +342,7 @@ describe('SingleSelectionWidget.vue', () => {
             propsData: propsDataList
         });
         let size = propsDataList.nodeConfig.viewRepresentation.numberVisOptions;
-        expect(wrapper.find(SingleSelect).props('numberVisOptions')).toBe(size);
+        expect(wrapper.findComponent(SingleSelect).props('numberVisOptions')).toBe(size);
     });
 
 
@@ -353,7 +353,7 @@ describe('SingleSelectionWidget.vue', () => {
                 isValid: false
             }
         });
-        expect(wrapper.find(SingleSelect).props('isValid')).toBe(false);
+        expect(wrapper.findComponent(SingleSelect).props('isValid')).toBe(false);
     });
 
     it('sends @updateWidget if SingleSelect emits @input', () => {
@@ -362,7 +362,7 @@ describe('SingleSelectionWidget.vue', () => {
         });
 
         const testValue = 'VALUE';
-        const lb = wrapper.find(SingleSelect);
+        const lb = wrapper.findComponent(SingleSelect);
         lb.vm.$emit('input', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();

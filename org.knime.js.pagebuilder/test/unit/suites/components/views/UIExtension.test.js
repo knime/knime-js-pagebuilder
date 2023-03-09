@@ -4,10 +4,10 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
 vi.mock('@knime/ui-extension-service');
 
-import * as pagebuilderStoreConfig from '~/store/pagebuilder';
-import * as alertStoreConfig from '~/store/alert';
-import * as serviceStoreConfig from '~/store/service';
-import * as apiStoreConfig from '~/store/wrapperApi';
+import * as pagebuilderStoreConfig from '@/store/pagebuilder';
+import * as alertStoreConfig from '@/store/alert';
+import * as serviceStoreConfig from '@/store/service';
+import * as apiStoreConfig from '@/store/wrapperApi';
 
 import UIExtension from '@/components/views/UIExtension.vue';
 import UIExtComponent from '@/components/views/UIExtComponent.vue';
@@ -83,8 +83,8 @@ describe('UIExtension.vue', () => {
             ...context,
             propsData: getMockComponentProps()
         });
-        expect(wrapper.find(UIExtComponent).exists()).toBeTruthy();
-        expect(wrapper.find(UIExtIFrame).exists()).toBeFalsy();
+        expect(wrapper.findComponent(UIExtComponent).exists()).toBeTruthy();
+        expect(wrapper.findComponent(UIExtIFrame).exists()).toBeFalsy();
     });
 
     it('renders ui extensions as iframes', () => {
@@ -92,8 +92,8 @@ describe('UIExtension.vue', () => {
             ...context,
             propsData: getMockIFrameProps()
         });
-        expect(wrapper.find(UIExtIFrame).exists()).toBeTruthy();
-        expect(wrapper.find(UIExtComponent).exists()).toBeFalsy();
+        expect(wrapper.findComponent(UIExtIFrame).exists()).toBeTruthy();
+        expect(wrapper.findComponent(UIExtComponent).exists()).toBeFalsy();
     });
 
     it('increments key on UIExtIFrame when node info updates', () => {
@@ -102,14 +102,14 @@ describe('UIExtension.vue', () => {
             propsData: getMockIFrameProps()
         });
         const startingLocalKey = wrapper.vm.configKey;
-        const startingIFrameKey = wrapper.find(UIExtIFrame).vm.$vnode.key;
+        const startingIFrameKey = wrapper.findComponent(UIExtIFrame).vm.$vnode.key;
         expect(startingLocalKey).toBe(0);
         expect(startingIFrameKey).toBe(0);
         let { extensionConfig } = getMockIFrameProps();
         extensionConfig.resourceInfo.url = 'http://localhost:8080/your_iframe_widget.html';
         wrapper.setProps({ extensionConfig });
         expect(wrapper.vm.configKey).toBeGreaterThan(startingLocalKey);
-        expect(wrapper.find(UIExtIFrame).vm.$vnode.key).toBeGreaterThan(startingIFrameKey);
+        expect(wrapper.findComponent(UIExtIFrame).vm.$vnode.key).toBeGreaterThan(startingIFrameKey);
     });
 
     it('increments key on UIExtComponent when node info updates', () => {
@@ -118,14 +118,14 @@ describe('UIExtension.vue', () => {
             propsData: getMockComponentProps()
         });
         const startingLocalKey = wrapper.vm.configKey;
-        const startingComponentKey = wrapper.find(UIExtComponent).vm.$vnode.key;
+        const startingComponentKey = wrapper.findComponent(UIExtComponent).vm.$vnode.key;
         expect(startingLocalKey).toBe(0);
         expect(startingComponentKey).toBe(0);
         let { extensionConfig } = getMockComponentProps();
         extensionConfig.resourceInfo.url = 'http://localhost:8080/your_vue_widget.html';
         wrapper.setProps({ extensionConfig });
         expect(wrapper.vm.configKey).toBeGreaterThan(startingLocalKey);
-        expect(wrapper.find(UIExtComponent).vm.$vnode.key).toBeGreaterThan(startingComponentKey);
+        expect(wrapper.findComponent(UIExtComponent).vm.$vnode.key).toBeGreaterThan(startingComponentKey);
     });
 
     it('creates and registers a KnimeService instance during mount', () => {
@@ -266,7 +266,7 @@ describe('UIExtension.vue', () => {
             });
             let showAlertSpy = vi.spyOn(wrapper.vm, 'showAlert');
             wrapper.setData({ alert: mockErrorAlert });
-            let alertLocal = wrapper.find(AlertLocal);
+            let alertLocal = wrapper.findComponent(AlertLocal);
             expect(alertLocal.exists()).toBeTruthy();
             alertLocal.vm.$emit('showAlert');
             expect(showAlertSpy).toHaveBeenCalledWith(mockErrorAlert);
@@ -280,7 +280,7 @@ describe('UIExtension.vue', () => {
             });
             let showAlertSpy = vi.spyOn(wrapper.vm, 'showAlert');
             wrapper.setData({ alert: mockWarningAlert });
-            let warningButton = wrapper.find(WarningLocal);
+            let warningButton = wrapper.findComponent(WarningLocal);
             expect(warningButton.exists()).toBeTruthy();
             warningButton.vm.$emit('click');
             expect(showAlertSpy).toHaveBeenCalledWith(mockWarningAlert);

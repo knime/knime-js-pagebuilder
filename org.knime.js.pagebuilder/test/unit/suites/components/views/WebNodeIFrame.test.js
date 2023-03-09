@@ -508,7 +508,7 @@ describe('WebNodeIFrame.vue', () => {
                 nodeInfo: {},
                 type: 'warn'
             });
-            localWrapper.find(AlertLocal).trigger('showAlert');
+            localWrapper.findComponent(AlertLocal).trigger('showAlert');
             expect(showAlertMock).toHaveBeenCalledWith(expect.anything(), {
                 ...localWrapper.vm.alert,
                 callback: localWrapper.vm.closeAlert

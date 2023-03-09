@@ -2,7 +2,7 @@ import { expect, describe, beforeAll, beforeEach, it, vi, afterEach } from 'vite
 import Vuex from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
 
-import * as storeConfig from '~/store/dialog';
+import * as storeConfig from '@/store/dialog';
 
 describe('dialog store', () => {
     let store, localVue;

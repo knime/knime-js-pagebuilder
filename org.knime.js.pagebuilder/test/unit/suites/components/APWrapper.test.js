@@ -1,5 +1,4 @@
 import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
-import Vue from 'vue';
 import { createStore } from 'vuex';
 import { shallowMount } from '@vue/test-utils';
 
@@ -8,7 +7,7 @@ import PageBuilder from '@/components/PageBuilder.vue';
 import DebugButton from '@/components/ui/DebugButton.vue';
 import RefreshButton from '@/components/ui/RefreshButton.vue';
 
-import * as storeConfig from '~/store/pagebuilder';
+import * as storeConfig from '@/store/pagebuilder';
 
 describe('APWrapper.vue', () => {
     let context;
@@ -57,16 +56,9 @@ describe('APWrapper.vue', () => {
         vi.restoreAllMocks();
     });
 
-    it('renders empty wrapper', () => {
-        const wrapper = shallowMount(APWrapper, context);
-
-        expect(wrapper.find(PageBuilder).exists()).toBeFalsy();
-    });
-
     it('renders PageBuilder if loaded', () => {
-        Vue.component('PageBuilder', PageBuilder);
         const wrapper = shallowMount(APWrapper, context);
-        expect(wrapper.find(PageBuilder).exists()).toBeTruthy();
+        expect(wrapper.findComponent(PageBuilder).exists()).toBeTruthy();
     });
 
     describe('debug info and tooling', () => {
@@ -74,8 +66,8 @@ describe('APWrapper.vue', () => {
             expect(window.getDebugInfo).not.toBeDefined();
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toBe(null);
-            expect(wrapper.find(DebugButton).exists()).toBeFalsy();
-            expect(wrapper.find(RefreshButton).exists()).toBeFalsy();
+            expect(wrapper.findComponent(DebugButton).exists()).toBeFalsy();
+            expect(wrapper.findComponent(RefreshButton).exists()).toBeFalsy();
         });
 
         it('conditionally shows debug button', () => {
@@ -84,7 +76,7 @@ describe('APWrapper.vue', () => {
             window.getDebugInfo = debugMock;
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
-            expect(wrapper.find(DebugButton).exists()).toBeTruthy();
+            expect(wrapper.findComponent(DebugButton).exists()).toBeTruthy();
             delete window.getDebugInfo;
         });
 
@@ -94,7 +86,7 @@ describe('APWrapper.vue', () => {
             window.getDebugInfo = debugMock;
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
-            expect(wrapper.find(DebugButton).exists()).toBeFalsy();
+            expect(wrapper.findComponent(DebugButton).exists()).toBeFalsy();
             delete window.getDebugInfo;
         });
 
@@ -104,7 +96,7 @@ describe('APWrapper.vue', () => {
             window.getDebugInfo = debugMock;
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
-            expect(wrapper.find(RefreshButton).exists()).toBeTruthy();
+            expect(wrapper.findComponent(RefreshButton).exists()).toBeTruthy();
             delete window.getDebugInfo;
         });
 
@@ -115,7 +107,7 @@ describe('APWrapper.vue', () => {
             window.getDebugInfo = debugMock;
             const wrapper = shallowMount(APWrapper, context);
             expect(wrapper.vm.debugInfo).toStrictEqual(debugInfo);
-            expect(wrapper.find(DebugButton).exists()).toBeFalsy();
+            expect(wrapper.findComponent(DebugButton).exists()).toBeFalsy();
             delete window.getDebugInfo;
         });
 

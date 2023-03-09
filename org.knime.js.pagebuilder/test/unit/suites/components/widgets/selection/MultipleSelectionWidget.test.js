@@ -343,7 +343,7 @@ describe('MultipleSelectionWidget.vue', () => {
         });
 
         const testValue = ['VALUE1', 'VALUE2'];
-        const comp = wrapper.find(Multiselect);
+        const comp = wrapper.findComponent(Multiselect);
         comp.vm.$emit('input', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();

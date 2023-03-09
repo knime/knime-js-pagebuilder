@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
-import overrideRequired from '~/src/util/overrideRequired';
+import overrideRequired from '@/util/overrideRequired';
 
 describe('overrideRequired util', () => {
     it('overrides the `required` property if present in the webNodeConfig', () => {

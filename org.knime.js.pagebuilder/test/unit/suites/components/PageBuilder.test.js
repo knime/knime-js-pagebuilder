@@ -1,18 +1,16 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { expect, describe, beforeEach, it } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import PageBuilder from '@/components/PageBuilder.vue';
 import Page from '@/components/layout/Page.vue';
 import AlertGlobal from '@/components/ui/AlertGlobal.vue';
 
 describe('PageBuilder.vue', () => {
-    let store, localVue, context, page;
+    let store, context, page;
 
     beforeEach(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-        store = new Vuex.Store();
+        store = createStore();
         PageBuilder.initStore(store);
         page = {
             wizardExecutionState: 'INTERACTION_REQUIRED',
@@ -20,8 +18,11 @@ describe('PageBuilder.vue', () => {
         };
         store.commit('pagebuilder/setPage', page);
         context = {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
     });
 
@@ -35,8 +36,8 @@ describe('PageBuilder.vue', () => {
     it('renders', () => {
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.find(Page).exists()).toBeTruthy();
-        expect(wrapper.find(AlertGlobal).exists()).toBeTruthy();
+        expect(wrapper.findComponent(Page).exists()).toBeTruthy();
+        expect(wrapper.findComponent(AlertGlobal).exists()).toBeTruthy();
     });
 
     it('hide global alert when page isDialogLayout', () => {
@@ -49,8 +50,8 @@ describe('PageBuilder.vue', () => {
         store.commit('pagebuilder/setPage', localPage);
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.find(Page).exists()).toBeTruthy();
-        expect(wrapper.find(AlertGlobal).exists()).toBeFalsy();
+        expect(wrapper.findComponent(Page).exists()).toBeTruthy();
+        expect(wrapper.findComponent(AlertGlobal).exists()).toBeFalsy();
     });
 
     it('does not render Page if called with unsupported wizardExecutionState', () => {
@@ -61,6 +62,6 @@ describe('PageBuilder.vue', () => {
 
         let wrapper = shallowMount(PageBuilder, context);
 
-        expect(wrapper.find(Page).exists()).toBeFalsy();
+        expect(wrapper.findComponent(Page).exists()).toBeFalsy();
     });
 });

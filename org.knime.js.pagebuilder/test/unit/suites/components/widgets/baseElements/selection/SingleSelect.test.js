@@ -96,7 +96,7 @@ describe('SingleSelect.vue', () => {
                 propsData: propsDataRadioHorizontal
             });
 
-            let rb = wrapper.find(RadioButtons);
+            let rb = wrapper.findComponent(RadioButtons);
             expect(rb.exists()).toBe(true);
             expect(rb.props('alignment')).toBe('horizontal');
         });
@@ -108,7 +108,7 @@ describe('SingleSelect.vue', () => {
             });
 
             expect(wrapper.vm.radioButtonsAlignment).toBe(null);
-            expect(wrapper.find(RadioButtons).exists()).toBe(false);
+            expect(wrapper.findComponent(RadioButtons).exists()).toBe(false);
         });
 
         it('renders vertical', () => {
@@ -116,7 +116,7 @@ describe('SingleSelect.vue', () => {
                 propsData: propsDataRadioVertical
             });
 
-            let rb = wrapper.find(RadioButtons);
+            let rb = wrapper.findComponent(RadioButtons);
             expect(rb.exists()).toBe(true);
             expect(rb.props('alignment')).toBe('vertical');
         });
@@ -127,7 +127,7 @@ describe('SingleSelect.vue', () => {
             });
 
             const testValue = 'VALUE';
-            const lb = wrapper.find(RadioButtons);
+            const lb = wrapper.findComponent(RadioButtons);
             lb.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().input).toBeTruthy();
@@ -141,7 +141,7 @@ describe('SingleSelect.vue', () => {
                 propsData: propsDataList
             });
 
-            expect(wrapper.find(ListBox).exists()).toBe(true);
+            expect(wrapper.findComponent(ListBox).exists()).toBe(true);
         });
 
         it('has size set', () => {
@@ -150,7 +150,7 @@ describe('SingleSelect.vue', () => {
                 propsData: propsDataList
             });
             let size = propsDataList.numberVisOptions;
-            expect(wrapper.find(ListBox).props('size')).toBe(size);
+            expect(wrapper.findComponent(ListBox).props('size')).toBe(size);
         });
 
         it('does not render duplicate entries', () => {
@@ -179,7 +179,7 @@ describe('SingleSelect.vue', () => {
                     isValid: false
                 }
             });
-            expect(wrapper.find(ListBox).props('isValid')).toBe(false);
+            expect(wrapper.findComponent(ListBox).props('isValid')).toBe(false);
         });
 
         it('emits @input', () => {
@@ -188,7 +188,7 @@ describe('SingleSelect.vue', () => {
             });
 
             const testValue = 'VALUE';
-            const lb = wrapper.find(ListBox);
+            const lb = wrapper.findComponent(ListBox);
             lb.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().input).toBeTruthy();
@@ -202,7 +202,7 @@ describe('SingleSelect.vue', () => {
                 propsData: propsDataDropdown
             });
 
-            expect(wrapper.find(Dropdown).exists()).toBe(true);
+            expect(wrapper.findComponent(Dropdown).exists()).toBe(true);
         });
 
         it('passes isValid to component', () => {
@@ -212,7 +212,7 @@ describe('SingleSelect.vue', () => {
                     isValid: false
                 }
             });
-            expect(wrapper.find(Dropdown).props('isValid')).toBe(false);
+            expect(wrapper.findComponent(Dropdown).props('isValid')).toBe(false);
         });
 
         it('emits @input', () => {
@@ -221,7 +221,7 @@ describe('SingleSelect.vue', () => {
             });
 
             const testValue = 'VALUE';
-            const lb = wrapper.find(Dropdown);
+            const lb = wrapper.findComponent(Dropdown);
             lb.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().input).toBeTruthy();

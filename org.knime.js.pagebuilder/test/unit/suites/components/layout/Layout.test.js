@@ -5,7 +5,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Layout from '@/components/layout/Layout.vue';
 import Row from '@/components/layout/Row.vue';
 
-import * as storeConfig from '~/store/pagebuilder';
+import * as storeConfig from '@/store/pagebuilder';
 
 describe('Layout.vue', () => {
     let localVue, context;

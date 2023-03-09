@@ -9,8 +9,8 @@ import NotDisplayable from '@/components/views/NotDisplayable.vue';
 import ViewExecutable from '@/components/views/ViewExecutable.vue';
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay.vue';
 
-import * as pagebuilderConfig from '~/store/pagebuilder';
-import * as dialogConfig from '~/store/dialog';
+import * as pagebuilderConfig from '@/store/pagebuilder';
+import * as dialogConfig from '@/store/dialog';
 
 describe('NodeView.vue', () => {
     let localVue, context;
@@ -119,16 +119,16 @@ describe('NodeView.vue', () => {
     describe('conditional rendering', () => {
         it('renders views as WebNodes', () => {
             let wrapper = shallowMount(NodeView, { ...context, propsData: getWebNodeProps() });
-            expect(wrapper.find(WebNode).exists()).toBeTruthy();
-            expect(wrapper.find(UIExtension).exists()).toBeFalsy();
-            expect(wrapper.find(NotDisplayable).exists()).toBeFalsy();
+            expect(wrapper.findComponent(WebNode).exists()).toBeTruthy();
+            expect(wrapper.findComponent(UIExtension).exists()).toBeFalsy();
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
         });
 
         it('renders views as UI extension', () => {
             let wrapper = shallowMount(NodeView, { ...context, propsData: getUIExtProps() });
-            expect(wrapper.find(UIExtension).exists()).toBeTruthy();
-            expect(wrapper.find(WebNode).exists()).toBeFalsy();
-            expect(wrapper.find(NotDisplayable).exists()).toBeFalsy();
+            expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
+            expect(wrapper.findComponent(WebNode).exists()).toBeFalsy();
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
         });
 
         it('checks that UI extensions in single view have the singleView class', () => {
@@ -137,8 +137,8 @@ describe('NodeView.vue', () => {
             });
 
             let wrapper = shallowMount(NodeView, { ...localContext, propsData: getSingleUIExtProps() });
-            expect(wrapper.find(UIExtension).exists()).toBeTruthy();
-            expect(wrapper.find(UIExtension).classes()).toContain('single-view');
+            expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
+            expect(wrapper.findComponent(UIExtension).classes()).toContain('single-view');
         });
 
         it('Make sure single-view class is not set on preview', () => {
@@ -147,8 +147,8 @@ describe('NodeView.vue', () => {
             });
 
             let wrapper = shallowMount(NodeView, { ...localContext, propsData: getUIExtDialogProps() });
-            expect(wrapper.find(UIExtension).exists()).toBeTruthy();
-            expect(wrapper.find(UIExtension).classes()).not.toContain('single-view');
+            expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
+            expect(wrapper.findComponent(UIExtension).classes()).not.toContain('single-view');
         });
 
         it('renders not displayable web nodes', () => {
@@ -167,9 +167,9 @@ describe('NodeView.vue', () => {
 
             expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(false);
-            expect(wrapper.find(NotDisplayable).exists()).toBe(true);
-            expect(wrapper.find(NotDisplayable).props('nodeInfo')).toEqual(expectedNodeInfo);
-            expect(wrapper.find(NotDisplayable).props('nodeId')).toEqual('1:0:1:0:0:7');
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBe(true);
+            expect(wrapper.findComponent(NotDisplayable).props('nodeInfo')).toEqual(expectedNodeInfo);
+            expect(wrapper.findComponent(NotDisplayable).props('nodeId')).toEqual('1:0:1:0:0:7');
         });
 
         it('renders view executable when nodeView is not executed', () => {
@@ -193,9 +193,9 @@ describe('NodeView.vue', () => {
             expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(true);
             expect(wrapper.vm.showViewExecutable).toBe(true);
-            expect(wrapper.find(ViewExecutable).exists()).toBe(true);
-            expect(wrapper.find(NotDisplayable).exists()).toBe(false);
-            expect(wrapper.find(UIExtension).exists()).toBe(false);
+            expect(wrapper.findComponent(ViewExecutable).exists()).toBe(true);
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
+            expect(wrapper.findComponent(UIExtension).exists()).toBe(false);
         });
 
         it('renders view executable when model settings are dirty', () => {
@@ -209,18 +209,18 @@ describe('NodeView.vue', () => {
             expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(true);
             expect(wrapper.vm.showViewExecutable).toBe(false);
-            expect(wrapper.find(ViewExecutable).exists()).toBe(false);
-            expect(wrapper.find(NotDisplayable).exists()).toBe(false);
-            expect(wrapper.find(UIExtension).exists()).toBe(true);
+            expect(wrapper.findComponent(ViewExecutable).exists()).toBe(false);
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
+            expect(wrapper.findComponent(UIExtension).exists()).toBe(true);
 
             wrapper.vm.$store.dispatch('pagebuilder/dialog/dirtySettings', true);
 
             expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(true);
             expect(wrapper.vm.showViewExecutable).toBe(true);
-            expect(wrapper.find(ViewExecutable).exists()).toBe(true);
-            expect(wrapper.find(NotDisplayable).exists()).toBe(false);
-            expect(wrapper.find(UIExtension).exists()).toBe(false);
+            expect(wrapper.findComponent(ViewExecutable).exists()).toBe(true);
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
+            expect(wrapper.findComponent(UIExtension).exists()).toBe(false);
         });
 
         it('always renders the node dialog', () => {
@@ -235,9 +235,9 @@ describe('NodeView.vue', () => {
             expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(true);
             expect(wrapper.vm.showViewExecutable).toBe(false);
-            expect(wrapper.find(ViewExecutable).exists()).toBe(false);
-            expect(wrapper.find(NotDisplayable).exists()).toBe(false);
-            expect(wrapper.find(UIExtension).exists()).toBe(true);
+            expect(wrapper.findComponent(ViewExecutable).exists()).toBe(false);
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
+            expect(wrapper.findComponent(UIExtension).exists()).toBe(true);
         });
 
         it('renders notDisplayable component for UI-Extensions when in configured state on Webportal', () => {
@@ -256,7 +256,7 @@ describe('NodeView.vue', () => {
 
             expect(wrapper.vm.viewAvailable).toBe(true);
             expect(wrapper.vm.viewDisplayable).toBe(false);
-            expect(wrapper.find(NotDisplayable).exists()).toBe(true);
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBe(true);
         });
 
         it('renders nothing if no view available', () => {
@@ -267,9 +267,9 @@ describe('NodeView.vue', () => {
                 }),
                 propsData: getWebNodeProps()
             });
-            expect(wrapper.find(UIExtension).exists()).toBeFalsy();
-            expect(wrapper.find(WebNode).exists()).toBeFalsy();
-            expect(wrapper.find(NotDisplayable).exists()).toBeFalsy();
+            expect(wrapper.findComponent(UIExtension).exists()).toBeFalsy();
+            expect(wrapper.findComponent(WebNode).exists()).toBeFalsy();
+            expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
         });
     });
 
@@ -294,7 +294,7 @@ describe('NodeView.vue', () => {
             });
 
             expect(wrapper.vm.showExecutionOverlay).toBe(true);
-            expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+            expect(wrapper.findComponent(ExecutingOverlay).vm.show).toBe(true);
         });
 
         it('detects if the node is currently (re)executing via re-executing node ids', () => {
@@ -307,7 +307,7 @@ describe('NodeView.vue', () => {
             });
 
             expect(wrapper.vm.showExecutionOverlay).toBe(true);
-            expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+            expect(wrapper.findComponent(ExecutingOverlay).vm.show).toBe(true);
         });
 
         it('decides when to show a spinner on executing content via updateCount', () => {
@@ -320,13 +320,13 @@ describe('NodeView.vue', () => {
             });
 
             expect(wrapper.vm.showExecutionOverlay).toBe(true);
-            expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+            expect(wrapper.findComponent(ExecutingOverlay).vm.show).toBe(true);
             expect(wrapper.vm.showSpinner).toBe(false);
 
             localContext.store.commit('pagebuilder/setNodesReExecuting', ['1:0:1:0:0:7']);
 
             expect(wrapper.vm.showExecutionOverlay).toBe(true);
-            expect(wrapper.find(ExecutingOverlay).vm.show).toBe(true);
+            expect(wrapper.findComponent(ExecutingOverlay).vm.show).toBe(true);
             expect(wrapper.vm.showSpinner).toBe(true);
         });
     });

@@ -2,7 +2,7 @@ import { expect, describe, beforeAll, beforeEach, afterEach, it, vi } from 'vite
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import * as storeConfig from '~/store/alert';
+import * as storeConfig from '@/store/alert';
 
 describe('alert store', () => {
     let store, localVue;

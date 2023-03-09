@@ -7,10 +7,10 @@ import Popover from '@/components/ui/Popover.vue';
 describe('AlertLocal', () => {
     it('renders default inactive', () => {
         let wrapper = mount(AlertLocal);
-        expect(wrapper.find(AlertLocal).exists()).toBe(true);
-        expect(wrapper.find(Popover).exists()).toBe(true);
-        expect(wrapper.find(Popover).classes('active')).toBe(false);
-        expect(wrapper.find(Popover).props('active')).toBe(false);
+        expect(wrapper.findComponent(AlertLocal).exists()).toBe(true);
+        expect(wrapper.findComponent(Popover).exists()).toBe(true);
+        expect(wrapper.findComponent(Popover).classes('active')).toBe(false);
+        expect(wrapper.findComponent(Popover).props('active')).toBe(false);
     });
 
     it('renders active', () => {
@@ -19,10 +19,10 @@ describe('AlertLocal', () => {
                 active: true
             }
         });
-        expect(wrapper.find(AlertLocal).exists()).toBe(true);
-        expect(wrapper.find(Popover).exists()).toBe(true);
-        expect(wrapper.find(Popover).classes('active')).toBe(true);
-        expect(wrapper.find(Popover).props('active')).toBe(true);
+        expect(wrapper.findComponent(AlertLocal).exists()).toBe(true);
+        expect(wrapper.findComponent(Popover).exists()).toBe(true);
+        expect(wrapper.findComponent(Popover).classes('active')).toBe(true);
+        expect(wrapper.findComponent(Popover).props('active')).toBe(true);
     });
 
     it('emits events to show the global alert', async () => {

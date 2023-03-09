@@ -2,9 +2,9 @@ import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vites
 import Vuex from 'vuex';
 import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
 
-import * as serviceStoreConfig from '~/store/service';
-import * as apiStoreConfig from '~/store/wrapperApi';
-import * as alertStoreConfig from '~/store/alert';
+import * as serviceStoreConfig from '@/store/service';
+import * as apiStoreConfig from '@/store/wrapperApi';
+import * as alertStoreConfig from '@/store/alert';
 
 import ViewExecutable from '@/components/views/ViewExecutable.vue';
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay.vue';
@@ -20,7 +20,7 @@ describe('ViewExecutable.vue', () => {
             }
         });
         expect(wrapper.exists()).toBeTruthy();
-        const executeButton = wrapper.find(Button);
+        const executeButton = wrapper.findComponent(Button);
         expect(executeButton.exists()).toBeTruthy();
         expect(executeButton.attributes().disabled).toBeUndefined();
     });
@@ -116,7 +116,7 @@ describe('ViewExecutable.vue', () => {
             });
             await wrapper.vm.executeViewSaveSettings();
             expect(wrapper.vm.isExecuting).toBeTruthy();
-            expect(wrapper.find(ExecutingOverlay).exists()).toBeTruthy();
+            expect(wrapper.findComponent(ExecutingOverlay).exists()).toBeTruthy();
         });
 
         it('dispatches the applySettings call to the pagebuilder/service store', async () => {
@@ -146,7 +146,7 @@ describe('ViewExecutable.vue', () => {
                 ...context,
                 propsData
             });
-            expect(wrapper.find(Button).attributes().disabled).toBeTruthy();
+            expect(wrapper.findComponent(Button).attributes().disabled).toBeTruthy();
             expect(wrapper.find('.message').text()).toContain('cannot be executed');
         });
 

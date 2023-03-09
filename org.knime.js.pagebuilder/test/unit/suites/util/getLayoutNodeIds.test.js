@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
-import getLayoutNodeIds from '~/src/util/getLayoutNodeIds';
+import getLayoutNodeIds from '@/util/getLayoutNodeIds';
 
 describe('getLayoutNodeIds util', () => {
     let getPageFromRows = rows => ({ wizardPageContent: { webNodePageConfiguration: { layout: { rows } } } });

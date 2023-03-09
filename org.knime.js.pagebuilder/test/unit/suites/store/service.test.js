@@ -5,7 +5,7 @@ import { KnimeService } from '@knime/ui-extension-service';
 
 import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
 
-import * as storeConfig from '~/store/service';
+import * as storeConfig from '@/store/service';
 
 describe('service store', () => {
     let store, localVue;

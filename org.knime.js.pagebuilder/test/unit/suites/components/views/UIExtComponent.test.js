@@ -2,7 +2,7 @@ import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vites
 import Vue from 'vue';
 import { shallowMount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
-import * as loadingModule from '~/src/util/loadComponentLibrary';
+import * as loadingModule from '@/util/loadComponentLibrary';
 import { componentExtensionConfig } from '../../../assets/views/extensionConfig';
 
 import UIExtComponent from '@/components/views/UIExtComponent.vue';
@@ -27,7 +27,7 @@ describe('UIExtComponent.vue', () => {
     it('renders ui extensions as Vue components', async () => {
         window[mockComponentId] = mockComponent;
         let wrapper = await shallowMount(UIExtComponent, context);
-        expect(wrapper.find(UIExtComponent).exists()).toBeTruthy();
+        expect(wrapper.findComponent(UIExtComponent).exists()).toBeTruthy();
         expect(wrapper.find(mockComponent).exists()).toBeTruthy();
     });
 

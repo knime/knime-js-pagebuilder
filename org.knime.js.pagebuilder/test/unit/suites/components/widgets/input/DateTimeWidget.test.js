@@ -503,7 +503,7 @@ describe('DateTimeWidget.vue', () => {
             });
 
             const testValue = '2020-10-14T13:32:45.153';
-            const input = wrapper.find(DateTimeInput);
+            const input = wrapper.findComponent(DateTimeInput);
             input.vm.$emit('input', new Date(testValue));
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
@@ -625,7 +625,7 @@ describe('DateTimeWidget.vue', () => {
                 ...context
             });
 
-            expect(wrapper.find(ErrorMessage).text()).toStrictEqual(testErrorMsg);
+            expect(wrapper.findComponent(ErrorMessage).text()).toStrictEqual(testErrorMsg);
         });
     });
 });

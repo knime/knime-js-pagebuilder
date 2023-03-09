@@ -103,7 +103,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(Twinlist).exists()).toBe(true);
+        expect(wrapper.findComponent(Twinlist).exists()).toBe(true);
     });
 
     it('sets default size to 0', () => {
@@ -113,7 +113,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
             propsData
         });
 
-        let comp = wrapper.find(Twinlist);
+        let comp = wrapper.findComponent(Twinlist);
         expect(comp.props('size')).toBe(0);
     });
 
@@ -125,7 +125,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
             propsData
         });
 
-        let rb = wrapper.find(Twinlist);
+        let rb = wrapper.findComponent(Twinlist);
         expect(rb.props('size')).toBe(8);
     });
 
@@ -135,7 +135,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
         });
 
         const testValue = ['VALUE1', 'VALUE2'];
-        const comp = wrapper.find(Twinlist);
+        const comp = wrapper.findComponent(Twinlist);
         comp.vm.$emit('input', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();

@@ -32,7 +32,7 @@ describe('Slider.vue', () => {
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(VueSlider).isVisible()).toBeTruthy();
+        expect(wrapper.findComponent(VueSlider).isVisible()).toBeTruthy();
     });
 
     it('has default props', () => {
@@ -41,7 +41,7 @@ describe('Slider.vue', () => {
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(VueSlider).isVisible()).toBeTruthy();
+        expect(wrapper.findComponent(VueSlider).isVisible()).toBeTruthy();
     });
 
     it('receives onValueChange events', () => {

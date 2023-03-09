@@ -4,9 +4,9 @@ import Vuex from 'vuex';
 
 import muteConsole from '~/test/unit/test-util/muteConsole';
 
-import * as wrapperApiConfig from '~/store/wrapperApi';
-import * as pagebuilderConfig from '~/store/pagebuilder';
-import * as alertConfig from '~/store/alert';
+import * as wrapperApiConfig from '@/store/wrapperApi';
+import * as pagebuilderConfig from '@/store/pagebuilder';
+import * as alertConfig from '@/store/alert';
 import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
 
 describe('wrapper API store', () => {

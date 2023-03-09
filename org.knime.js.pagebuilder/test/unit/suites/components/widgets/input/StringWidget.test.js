@@ -131,7 +131,7 @@ describe('StringWidget.vue', () => {
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
-            expect(wrapper.find(InputField)).toBeTruthy();
+            expect(wrapper.findComponent(InputField)).toBeTruthy();
         });
 
         it('emits @updateWidget if child emits @input', () => {
@@ -140,7 +140,7 @@ describe('StringWidget.vue', () => {
             });
 
             const testValue = 'VALUE';
-            const input = wrapper.find(InputField);
+            const input = wrapper.findComponent(InputField);
             input.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
@@ -156,7 +156,7 @@ describe('StringWidget.vue', () => {
                 propsData: { ...propsDataInput, isValid: true }
             });
 
-            let textComponent = widget.find(InputField);
+            let textComponent = widget.findComponent(InputField);
             expect(textComponent.props('isValid')).toBe(true);
             widget.setProps({ isValid: false });
             expect(textComponent.props('isValid')).toBe(false);
@@ -168,11 +168,11 @@ describe('StringWidget.vue', () => {
             let wrapper = mount(StringWidget, {
                 propsData: propsDataInput
             });
-            wrapper.find(InputField).setProps({ value: '' });
+            wrapper.findComponent(InputField).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Input is required.', isValid: false }
             );
-            wrapper.find(InputField).setProps({ value: 'a' });
+            wrapper.findComponent(InputField).setProps({ value: 'a' });
             expect(wrapper.vm.validate()).toBeTruthy();
         });
 
@@ -180,7 +180,7 @@ describe('StringWidget.vue', () => {
             let wrapper = mount(StringWidget, {
                 propsData: propsDataInput
             });
-            expect(wrapper.find(InputField).props('pattern')).toEqual(null);
+            expect(wrapper.findComponent(InputField).props('pattern')).toEqual(null);
         });
 
         it('passes correct regex', () => {
@@ -192,7 +192,7 @@ describe('StringWidget.vue', () => {
                             regex: 'test' }
                     } }
             });
-            expect(wrapper.find(InputField).props('pattern')).toEqual('test');
+            expect(wrapper.findComponent(InputField).props('pattern')).toEqual('test');
         });
     });
 
@@ -203,7 +203,7 @@ describe('StringWidget.vue', () => {
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
-            expect(wrapper.find(TextArea)).toBeTruthy();
+            expect(wrapper.findComponent(TextArea)).toBeTruthy();
         });
 
         it('emits @updateWidget if child emits @input', () => {
@@ -212,7 +212,7 @@ describe('StringWidget.vue', () => {
             });
 
             const testValue = 'VALUE';
-            const input = wrapper.find(InputField);
+            const input = wrapper.findComponent(InputField);
             input.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
@@ -228,7 +228,7 @@ describe('StringWidget.vue', () => {
                 propsData: { ...propsDateTextArea, isValid: true }
             });
 
-            let textComponent = widget.find(TextArea);
+            let textComponent = widget.findComponent(TextArea);
             expect(textComponent.props('isValid')).toBe(true);
             widget.setProps({ isValid: false });
             expect(textComponent.props('isValid')).toBe(false);
@@ -238,11 +238,11 @@ describe('StringWidget.vue', () => {
             let wrapper = mount(StringWidget, {
                 propsData: propsDateTextArea
             });
-            wrapper.find(TextArea).setProps({ value: '' });
+            wrapper.findComponent(TextArea).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Input is required.', isValid: false }
             );
-            wrapper.find(TextArea).setProps({ value: 'a' });
+            wrapper.findComponent(TextArea).setProps({ value: 'a' });
             expect(wrapper.vm.validate().isValid).toBe(true);
         });
     });

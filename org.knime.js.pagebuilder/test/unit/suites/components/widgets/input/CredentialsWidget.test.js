@@ -157,7 +157,7 @@ describe('CredentialsWidget.vue', () => {
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
-            expect(wrapper.find(Fieldset)).toBeTruthy();
+            expect(wrapper.findComponent(Fieldset)).toBeTruthy();
             expect(wrapper.findAll(InputField).length).toBe(2);
         });
 
@@ -202,7 +202,7 @@ describe('CredentialsWidget.vue', () => {
             });
 
             const testValue = 'VALUE';
-            const input = wrapper.find(InputField);
+            const input = wrapper.findComponent(InputField);
             input.vm.$emit('input', testValue);
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
@@ -278,7 +278,7 @@ describe('CredentialsWidget.vue', () => {
                 propsData: { ...propsDataDefault, isValid: true }
             });
 
-            let textComponent = widget.find(InputField);
+            let textComponent = widget.findComponent(InputField);
             expect(textComponent.props('isValid')).toBe(true);
             widget.setProps({ isValid: false });
             expect(textComponent.props('isValid')).toBe(false);
@@ -372,7 +372,7 @@ describe('CredentialsWidget.vue', () => {
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: '', isValid: true }
             );
-            expect(wrapper.find(ErrorMessage).props('error'))
+            expect(wrapper.findComponent(ErrorMessage).props('error'))
                 .toEqual('KNIME Server login credentials could not be fetched!');
         });
 
@@ -396,7 +396,7 @@ describe('CredentialsWidget.vue', () => {
 
             expect(wrapper.find({ ref: 'usernameForm' }).exists()).toBe(false);
             wrapper.vm.validate();
-            expect(wrapper.find(ErrorMessage).props('error'))
+            expect(wrapper.findComponent(ErrorMessage).props('error'))
                 .toEqual('KNIME Server login credentials could not be fetched!');
         });
     });

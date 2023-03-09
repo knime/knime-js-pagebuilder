@@ -2,7 +2,7 @@ import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vites
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import * as storeConfig from '~/store/pagebuilder';
+import * as storeConfig from '@/store/pagebuilder';
 
 describe('PageBuilder store', () => {
     let store, localVue;

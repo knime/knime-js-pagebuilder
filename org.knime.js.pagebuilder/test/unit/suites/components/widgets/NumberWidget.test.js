@@ -79,7 +79,7 @@ describe('NumberWidget.vue', () => {
         });
 
         const testValue = '5';
-        const input = wrapper.find(NumberInput);
+        const input = wrapper.findComponent(NumberInput);
         input.vm.$emit('input', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
@@ -95,7 +95,7 @@ describe('NumberWidget.vue', () => {
             propsData
         });
 
-        let numericInputComponent = wrapper.find(NumberInput);
+        let numericInputComponent = wrapper.findComponent(NumberInput);
 
         wrapper.setProps({ isValid: true });
         expect(numericInputComponent.props('isValid')).toBe(true);
@@ -108,7 +108,7 @@ describe('NumberWidget.vue', () => {
             propsData
         });
 
-        wrapper.find(NumberInput).setProps({ value: null });
+        wrapper.findComponent(NumberInput).setProps({ value: null });
 
         expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Current value is not a number.', isValid: false });
     });

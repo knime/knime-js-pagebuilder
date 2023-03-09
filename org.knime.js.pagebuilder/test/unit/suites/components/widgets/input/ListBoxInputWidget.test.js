@@ -190,7 +190,7 @@ describe('ListBoxInputWidget.vue', () => {
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(TextArea)).toBeTruthy();
+        expect(wrapper.findComponent(TextArea)).toBeTruthy();
     });
 
     it('emits @updateWidget if child emits @input', () => {
@@ -199,7 +199,7 @@ describe('ListBoxInputWidget.vue', () => {
         });
 
         const testValue = 'VALUE';
-        const input = wrapper.find(TextArea);
+        const input = wrapper.findComponent(TextArea);
         input.vm.$emit('input', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
@@ -269,7 +269,7 @@ describe('ListBoxInputWidget.vue', () => {
                 }
             });
 
-            let textComponent = widget.find(TextArea);
+            let textComponent = widget.findComponent(TextArea);
             expect(textComponent.props('isValid')).toBe(true);
             widget.setProps({ isValid: false });
             expect(textComponent.props('isValid')).toBe(false);
@@ -279,14 +279,14 @@ describe('ListBoxInputWidget.vue', () => {
             let wrapper = mount(ListBoxInputWidget, {
                 propsData: propsDataEmailRegexLineSplit
             });
-            wrapper.find(TextArea).setProps({ value: '' });
+            wrapper.findComponent(TextArea).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
                 {
                     errorMessage: 'Input is required.',
                     isValid: false
                 }
             );
-            wrapper.find(TextArea).setProps({ value: 'ab@example.com' });
+            wrapper.findComponent(TextArea).setProps({ value: 'ab@example.com' });
             expect(wrapper.vm.validate().isValid).toBe(true);
         });
 

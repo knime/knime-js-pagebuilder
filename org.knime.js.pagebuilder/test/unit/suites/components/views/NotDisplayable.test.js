@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vitest';
-import NotDisplayable from '~/src/components/views/NotDisplayable';
+import NotDisplayable from '@/components/views/NotDisplayable';
 import { shallowMount } from '@vue/test-utils';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 
@@ -11,7 +11,7 @@ describe('NotDisplayable.vue', () => {
     });
 
     it('renders default', () => {
-        expect(wrapper.find(Label).props('text')).toEqual('Missing node () can’t be displayed');
+        expect(wrapper.findComponent(Label).props('text')).toEqual('Missing node () can’t be displayed');
         expect(wrapper.find('span').text()).toContain('No further information available');
     });
 
@@ -46,12 +46,12 @@ describe('NotDisplayable.vue', () => {
                 nodeId: '10.0.2'
             }
         });
-        expect(wrapper.find(Label).props('text')).toEqual('testName - test_annotation (10.0.2) can’t be displayed');
+        expect(wrapper.findComponent(Label).props('text')).toEqual('testName - test_annotation (10.0.2) can’t be displayed');
     });
 
     it('hides content via prop from parent', () => {
         wrapper.setProps({ showError: false });
-        expect(wrapper.find(Label).exists()).toBe(false);
+        expect(wrapper.findComponent(Label).exists()).toBe(false);
         expect(wrapper.find('span').exists()).toBe(false);
     });
 });

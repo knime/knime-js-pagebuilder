@@ -6,8 +6,8 @@ import DialogLayout from '@/components/layout/DialogLayout.vue';
 import NodeView from '@/components/layout/NodeView.vue';
 import Messages from 'webapps-common/ui/components/Messages.vue';
 
-import * as storeConfig from '~/store/pagebuilder';
-import * as alertStoreConfig from '~/store/alert';
+import * as storeConfig from '@/store/pagebuilder';
+import * as alertStoreConfig from '@/store/alert';
 
 const mockAlert = {
     message: '',
@@ -88,7 +88,7 @@ describe('DialogLayout.vue', () => {
 
         expect(wrapper.is('div')).toBe(true);
         expect(wrapper.attributes('class')).toEqual('layout');
-        expect(wrapper.find(Messages).exists()).toBeFalsy();
+        expect(wrapper.findComponent(Messages).exists()).toBeFalsy();
     });
 
     it('renders view and dialog', () => {
@@ -103,9 +103,9 @@ describe('DialogLayout.vue', () => {
 
     it('displays Messages from the alert store', () => {
         const wrapper = shallowMount(DialogLayout, context);
-        expect(wrapper.find(Messages).exists()).toBeFalsy();
+        expect(wrapper.findComponent(Messages).exists()).toBeFalsy();
         wrapper.vm.$store.dispatch('pagebuilder/alert/showAlert', mockAlert);
-        expect(wrapper.find(Messages).exists()).toBeTruthy();
+        expect(wrapper.findComponent(Messages).exists()).toBeTruthy();
     });
 
     it('formats alerts into the expected Messages format', () => {
@@ -125,7 +125,7 @@ describe('DialogLayout.vue', () => {
     it('closes Messages using the alert store', () => {
         const wrapper = shallowMount(DialogLayout, context);
         wrapper.vm.$store.dispatch('pagebuilder/alert/showAlert', mockAlert);
-        const messagesWrapper = wrapper.find(Messages);
+        const messagesWrapper = wrapper.findComponent(Messages);
         expect(messagesWrapper.exists()).toBeTruthy();
         const closeSpy = vi.spyOn(wrapper.vm.$store._actions['pagebuilder/alert/closeAlert'], '0');
         messagesWrapper.vm.$emit('dismiss');

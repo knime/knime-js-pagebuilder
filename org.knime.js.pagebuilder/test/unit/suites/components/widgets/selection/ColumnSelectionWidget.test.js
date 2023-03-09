@@ -113,7 +113,7 @@ describe('ColumnSelectionWidget.vue', () => {
 
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(SingleSelect).exists()).toBeTruthy();
+        expect(wrapper.findComponent(SingleSelect).exists()).toBeTruthy();
     });
 
     it('emits @updateWidget if child emits @input', () => {
@@ -139,7 +139,7 @@ describe('ColumnSelectionWidget.vue', () => {
             propsData: propsDataColumnSelectionList
         });
         let size = propsDataColumnSelectionList.nodeConfig.viewRepresentation.numberVisOptions;
-        expect(wrapper.find(SingleSelect).props('numberVisOptions')).toBe(size);
+        expect(wrapper.findComponent(SingleSelect).props('numberVisOptions')).toBe(size);
     });
 
     describe('validation', () => {

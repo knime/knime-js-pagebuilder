@@ -36,16 +36,16 @@ describe('WebNode.vue', () => {
         let wrapper = shallowMount(WebNode, {
             propsData: getMockIFrameProps()
         });
-        expect(wrapper.find(WebNodeIFrame).exists()).toBeTruthy();
-        expect(wrapper.find(Widget).exists()).toBeFalsy();
+        expect(wrapper.findComponent(WebNodeIFrame).exists()).toBeTruthy();
+        expect(wrapper.findComponent(Widget).exists()).toBeFalsy();
     });
 
     it('renders views as widgets', () => {
         let wrapper = shallowMount(WebNode, {
             propsData: getMockWidgetProps()
         });
-        expect(wrapper.find(Widget).exists()).toBeTruthy();
-        expect(wrapper.find(WebNodeIFrame).exists()).toBeFalsy();
+        expect(wrapper.findComponent(Widget).exists()).toBeTruthy();
+        expect(wrapper.findComponent(WebNodeIFrame).exists()).toBeFalsy();
     });
 
     it('increments key when nodeConfig updates', () => {

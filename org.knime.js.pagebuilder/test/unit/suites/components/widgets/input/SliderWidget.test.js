@@ -134,7 +134,7 @@ describe('SliderWidget.vue', () => {
     });
 
     it('has a Slider component', () => {
-        expect(wrapper.find(Slider)).toBeTruthy();
+        expect(wrapper.findComponent(Slider)).toBeTruthy();
     });
 
     it('has correct computed properties', () => {
@@ -287,7 +287,7 @@ describe('SliderWidget.vue', () => {
                 valuePair: nodeConfig.viewRepresentation.currentValue
             }
         });
-        wrapper2.find(Slider).vm.$emit('input', 10);
+        wrapper2.findComponent(Slider).vm.$emit('input', 10);
         const { updateWidget } = wrapper2.emitted();
         expect(updateWidget[0][0]).toBeTruthy();
         expect(updateWidget[0][0].type).toBe('double');
@@ -362,7 +362,7 @@ describe('SliderWidget.vue', () => {
                 valuePair: nodeConfig.viewRepresentation.currentValue
             }
         });
-        expect(wrapperFull.find(ErrorMessage).isVisible()).toBe(true);
+        expect(wrapperFull.findComponent(ErrorMessage).isVisible()).toBe(true);
         let wrapper2 = mount(SliderWidget, {
             propsData: {
                 nodeConfig,

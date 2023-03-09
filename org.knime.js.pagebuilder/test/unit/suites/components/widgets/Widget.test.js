@@ -6,7 +6,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Widget from '@/components/widgets/Widget.vue';
 import { getProp, setProp } from '@/util/nestedProperty';
 
-import * as storeConfig from '~/store/pagebuilder';
+import * as storeConfig from '@/store/pagebuilder';
 
 describe('Widget.vue', () => {
     let store, localVue, context, nodeConfig, wrapper;

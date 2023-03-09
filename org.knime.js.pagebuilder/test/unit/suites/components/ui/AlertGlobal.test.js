@@ -49,10 +49,10 @@ describe('AlertGlobal', () => {
     });
 
     it('renders default', () => {
-        expect(wrapper.find(AlertGlobal).exists()).toBe(true);
-        expect(wrapper.find(Popover).exists()).toBe(true);
-        expect(wrapper.find(Popover).props('active')).toBe(false);
-        expect(wrapper.find(PopoverMessage).exists()).toBe(false);
+        expect(wrapper.findComponent(AlertGlobal).exists()).toBe(true);
+        expect(wrapper.findComponent(Popover).exists()).toBe(true);
+        expect(wrapper.findComponent(Popover).props('active')).toBe(false);
+        expect(wrapper.findComponent(PopoverMessage).exists()).toBe(false);
     });
 
     it('parses alert from store', () => {
@@ -113,7 +113,7 @@ describe('AlertGlobal', () => {
         });
 
         it('does not close the alert on click away (only minimizes)', () => {
-            localWrapper.find(Popover).vm.$emit('clickAway');
+            localWrapper.findComponent(Popover).vm.$emit('clickAway');
             expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), false, undefined);
         });
     });
@@ -145,7 +145,7 @@ describe('AlertGlobal', () => {
         });
 
         it('closes the alert on click away', () => {
-            localWrapper.find(Popover).vm.$emit('clickAway');
+            localWrapper.findComponent(Popover).vm.$emit('clickAway');
             expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true, undefined);
         });
     });

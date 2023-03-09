@@ -7,7 +7,7 @@ import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vu
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import Button from 'webapps-common/ui/components/Button.vue';
 
-import * as storeConfig from '~/store/pagebuilder';
+import * as storeConfig from '@/store/pagebuilder';
 
 describe('RefreshButtonWidget.vue', () => {
     let propsData, store, localVue, context;
@@ -67,9 +67,9 @@ describe('RefreshButtonWidget.vue', () => {
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(Label).text()).toContain('Imma label!');
-        expect(wrapper.find(Label).attributes('title')).toBe('Imma description!');
-        expect(wrapper.find(Button).text()).toBe('Imma button!');
+        expect(wrapper.findComponent(Label).text()).toContain('Imma label!');
+        expect(wrapper.findComponent(Label).attributes('title')).toBe('Imma description!');
+        expect(wrapper.findComponent(Button).text()).toBe('Imma button!');
     });
 
     it('has no error message when valid', () => {
@@ -77,7 +77,7 @@ describe('RefreshButtonWidget.vue', () => {
             ...context,
             propsData
         });
-        expect(wrapper.find(ErrorMessage).text()).toBe('');
+        expect(wrapper.findComponent(ErrorMessage).text()).toBe('');
     });
 
     it('has default error message', () => {
@@ -89,12 +89,12 @@ describe('RefreshButtonWidget.vue', () => {
                 errorMessage
             }
         });
-        expect(wrapper.find(ErrorMessage).text()).toBe(errorMessage);
+        expect(wrapper.findComponent(ErrorMessage).text()).toBe(errorMessage);
     });
 
     it('emits an updateWidget event on click', () => {
         let wrapper = mount(RefreshButtonWidget, { ...context, propsData });
-        wrapper.find(Button).trigger('click');
+        wrapper.findComponent(Button).trigger('click');
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({ nodeId: '13:0:12' });
     });
 
@@ -102,6 +102,6 @@ describe('RefreshButtonWidget.vue', () => {
         let wrapper = mount(RefreshButtonWidget, { ...context, propsData });
         wrapper.vm.$store.dispatch('pagebuilder/setNodesReExecuting', ['13:0:12']);
         expect(wrapper.vm.isExecuting).toBeTruthy();
-        expect(wrapper.find(Button).attributes().disabled).toBeTruthy();
+        expect(wrapper.findComponent(Button).attributes().disabled).toBeTruthy();
     });
 });

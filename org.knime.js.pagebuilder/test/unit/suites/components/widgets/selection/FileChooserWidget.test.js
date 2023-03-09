@@ -164,7 +164,7 @@ describe('FileChooserWidget.vue AP', () => {
             propsData
         });
 
-        const comp = wrapper.find(TreeSelect);
+        const comp = wrapper.findComponent(TreeSelect);
 
         // we just use any node its not the selected one
         comp.vm.$emit('item-click', comp.vm.$children[0], comp.vm.$children[0].$data.model, {});
@@ -339,7 +339,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
         });
         await Vue.nextTick();
         expect(wrapper.vm.infoMessage).toStrictEqual(null);
-        const treeSelect = wrapper.find(TreeSelect);
+        const treeSelect = wrapper.findComponent(TreeSelect);
         expect(treeSelect.exists()).toBe(true);
     });
 

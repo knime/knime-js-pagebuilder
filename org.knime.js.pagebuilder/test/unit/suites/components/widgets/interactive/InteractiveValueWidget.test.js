@@ -2,7 +2,7 @@ import { expect, describe, beforeAll, beforeEach, afterAll, it, vi } from 'vites
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import * as interactiveConfig from '~/store/interactivity';
+import * as interactiveConfig from '@/store/interactivity';
 
 import InteractiveValueWidget from '@/components/widgets/interactive/InteractiveValueWidget.vue';
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
@@ -85,7 +85,7 @@ describe('InteractiveValueWidget.vue', () => {
                 propsData
             });
             expect(wrapper.isVisible()).toBeTruthy();
-            expect(wrapper.find(SingleSelect)).toBeTruthy();
+            expect(wrapper.findComponent(SingleSelect)).toBeTruthy();
         });
 
         it('uses correct label component', () => {
@@ -93,14 +93,14 @@ describe('InteractiveValueWidget.vue', () => {
                 ...context,
                 propsData
             });
-            expect(wrapperList.find(Label)).toBeTruthy();
+            expect(wrapperList.findComponent(Label)).toBeTruthy();
 
             propsData.nodeConfig.viewRepresentation.type = 'Checkboxes';
             let wrapperOther = mount(InteractiveValueWidget, {
                 ...context,
                 propsData
             });
-            expect(wrapperOther.find(Fieldset)).toBeTruthy();
+            expect(wrapperOther.findComponent(Fieldset)).toBeTruthy();
         });
     });
 
@@ -112,7 +112,7 @@ describe('InteractiveValueWidget.vue', () => {
                 propsData
             });
             expect(wrapper.isVisible()).toBeTruthy();
-            expect(wrapper.find(Multiselect)).toBeTruthy();
+            expect(wrapper.findComponent(Multiselect)).toBeTruthy();
         });
 
         it('uses correct label component', () => {
@@ -121,14 +121,14 @@ describe('InteractiveValueWidget.vue', () => {
                 ...context,
                 propsData
             });
-            expect(wrapperList.find(Label)).toBeTruthy();
+            expect(wrapperList.findComponent(Label)).toBeTruthy();
 
             propsData.nodeConfig.viewRepresentation.type = 'Radio buttons (vertical)';
             let wrapperOther = mount(InteractiveValueWidget, {
                 ...context,
                 propsData
             });
-            expect(wrapperOther.find(Fieldset)).toBeTruthy();
+            expect(wrapperOther.findComponent(Fieldset)).toBeTruthy();
         });
     });
 
@@ -154,7 +154,7 @@ describe('InteractiveValueWidget.vue', () => {
         });
 
         const testValue = ['VALUE2'];
-        const comp = wrapper.find(SingleSelect);
+        const comp = wrapper.findComponent(SingleSelect);
         comp.vm.$emit('input', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();

@@ -5,7 +5,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Column from '@/components/layout/Column.vue';
 import NodeView from '@/components/layout/NodeView.vue';
 
-import * as storeConfig from '~/store/pagebuilder';
+import * as storeConfig from '@/store/pagebuilder';
 // this is required because the Row component is imported asynchronously in Column, cf.
 // https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components
 const Row = {
@@ -259,11 +259,11 @@ describe('Column.vue', () => {
         context.propsData.columnConfig = { content };
         const wrapper = shallowMount(Column, context);
 
-        let view1 = wrapper.find(NodeView).element;
+        let view1 = wrapper.findComponent(NodeView).element;
 
         wrapper.setProps({ columnConfig: { content } });
 
-        let view2 = wrapper.find(NodeView).element;
+        let view2 = wrapper.findComponent(NodeView).element;
 
         expect(view1).not.toBe(view2);
     });

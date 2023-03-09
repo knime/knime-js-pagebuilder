@@ -282,7 +282,7 @@ describe('FileUploadWidget.vue', () => {
         wrapper.setData({ uploadAPI: uploadErrorResourceMock });
         wrapper.vm.onChange(event);
         await Vue.nextTick();
-        expect(wrapper.find(ErrorMessage).props('error')).toEqual('Upload failed.');
+        expect(wrapper.findComponent(ErrorMessage).props('error')).toEqual('Upload failed.');
     });
 
     it('cancels upload correctly', async () => {
@@ -304,7 +304,7 @@ describe('FileUploadWidget.vue', () => {
         wrapper.find('.upload-wrapper button').trigger('click');
         await Vue.nextTick();
         expect(cancelUploadResourceMock).toHaveBeenCalled();
-        expect(wrapper.find(ErrorMessage).props('error')).toEqual('Upload cancelled.');
+        expect(wrapper.findComponent(ErrorMessage).props('error')).toEqual('Upload cancelled.');
     });
 
     it('uploads files on the AP', (done) => {

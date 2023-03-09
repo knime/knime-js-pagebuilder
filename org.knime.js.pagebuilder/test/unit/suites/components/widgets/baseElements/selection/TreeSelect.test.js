@@ -68,8 +68,8 @@ describe('TreeSelect.vue', () => {
             ...context,
             propsData
         });
-        expect(wrapper.find(TreeSelectItem).find(customIcon).isVisible()).toBeTruthy();
-        expect(wrapper.find(TreeSelectItem).find(customSelectedIcon).exists()).toBeFalsy();
+        expect(wrapper.findComponent(TreeSelectItem).find(customIcon).isVisible()).toBeTruthy();
+        expect(wrapper.findComponent(TreeSelectItem).find(customSelectedIcon).exists()).toBeFalsy();
     });
 
     it('renders custom selected icon', () => {
@@ -78,8 +78,8 @@ describe('TreeSelect.vue', () => {
             ...context,
             propsData
         });
-        expect(wrapper.find(TreeSelectItem).find(customIcon).exists()).toBeFalsy();
-        expect(wrapper.find(TreeSelectItem).find(customSelectedIcon).isVisible()).toBeTruthy();
+        expect(wrapper.findComponent(TreeSelectItem).find(customIcon).exists()).toBeFalsy();
+        expect(wrapper.findComponent(TreeSelectItem).find(customSelectedIcon).isVisible()).toBeTruthy();
     });
 
     it('updates text in TreeSelectItem dynamically', () => {
@@ -89,7 +89,7 @@ describe('TreeSelect.vue', () => {
         });
         const test = 'SOME_UNIQUE_TEST_STRING_34as834asjf';
         wrapper.vm.$props.data[0].text = test;
-        expect(wrapper.find(TreeSelectItem).text()).toContain(test);
+        expect(wrapper.findComponent(TreeSelectItem).text()).toContain(test);
     });
 
     it('updates model of TreeSelectItem on data changes', () => {
@@ -97,7 +97,7 @@ describe('TreeSelect.vue', () => {
             ...context,
             propsData
         });
-        const item = wrapper.find(TreeSelectItem);
+        const item = wrapper.findComponent(TreeSelectItem);
         item.setProps({
             data: {
                 text: 'changed',
@@ -250,7 +250,7 @@ describe('TreeSelect.vue', () => {
                 propsData
             });
             const anchor = wrapper.find('.tree-anchor');
-            const item = wrapper.find(TreeSelectItem);
+            const item = wrapper.findComponent(TreeSelectItem);
 
             anchor.trigger('mouseover');
             expect(item.vm.$data.isHover).toBeTruthy();

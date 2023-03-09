@@ -78,7 +78,7 @@ describe('BooleanWidget.vue', () => {
             }
         });
         expect(typeof wrapper.emitted().updateWidget).toBe('undefined');
-        wrapper.find(Checkbox).vm.$emit('input', false);
+        wrapper.findComponent(Checkbox).vm.$emit('input', false);
         expect(wrapper.emitted().updateWidget).toBeTruthy();
     });
 
