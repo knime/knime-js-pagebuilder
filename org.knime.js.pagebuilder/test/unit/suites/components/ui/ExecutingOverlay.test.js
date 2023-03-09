@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import ExecutingOverlay from '@/components/ui/ExecutingOverlay.vue';
@@ -10,7 +10,7 @@ describe('ExecutingOverlay.vue', () => {
                 nodeId: '007'
             }
         });
-        expect(wrapper.html()).toBeFalsy();
+        expect(wrapper.find('div').exists()).toBeFalsy();
     });
 
     it('renders overlay via prop', () => {
@@ -20,11 +20,11 @@ describe('ExecutingOverlay.vue', () => {
                 show: true
             }
         });
-        expect(wrapper.html()).toBeTruthy();
+        expect(wrapper.find('div').exists()).toBeTruthy();
         expect(wrapper.find('svg').exists()).toBeFalsy();
     });
 
-    it('renders loading svg via prop after transition ending', () => {
+    it('renders loading svg via prop after transition ending', async () => {
         let wrapper = shallowMount(ExecutingOverlay, {
             props: {
                 nodeId: '007',
@@ -32,8 +32,8 @@ describe('ExecutingOverlay.vue', () => {
                 showSpinner: true
             }
         });
-        wrapper.vm.overlayRefAvailable = true;
-        expect(wrapper.html()).toBeTruthy();
+        await wrapper.setData({ overlayRefAvailable: true });
+        expect(wrapper.find('div').exists()).toBeTruthy();
         expect(wrapper.find('svg').exists()).toBeTruthy();
     });
 

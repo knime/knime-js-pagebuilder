@@ -1,12 +1,12 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, mount } from '@vue/test-utils';
+import { expect, describe, beforeAll, beforeEach, it, vi } from 'vitest';
+import Vuex, { createStore } from 'vuex';
+import { mount } from '@vue/test-utils';
 
 import AlertGlobal from '@/components/ui/AlertGlobal.vue';
 import Popover from '@/components/ui/Popover.vue';
 import PopoverMessage from '@/components/ui/PopoverMessage.vue';
 
-import * as storeConfig from '@/../store/alert';
+import * as storeConfig from '@/store/alert';
 
 const SAMPLE_ALERT = {
     nodeId: '1:2:3:4',
@@ -28,19 +28,20 @@ let alertStoreConfig = {
 };
 
 describe('AlertGlobal', () => {
-    let wrapper, store, localVue;
+    let wrapper, store;
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-        store = new Vuex.Store({
+        store = createStore({
             modules: {
                 'pagebuilder/alert': alertStoreConfig
             }
         });
         wrapper = mount(AlertGlobal, {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         });
     });
 
@@ -62,7 +63,7 @@ describe('AlertGlobal', () => {
         expect(wrapper.vm.alert).toStrictEqual(alertWithSubtitle);
         expect(wrapper.vm.type).toBe(SAMPLE_ALERT.type);
         expect(wrapper.vm.nodeId).toBe(SAMPLE_ALERT.nodeId);
-        expect(wrapper.vm.nodeInfo).toBe(SAMPLE_ALERT.nodeInfo);
+        expect(wrapper.vm.nodeInfo).toStrictEqual(SAMPLE_ALERT.nodeInfo);
         expect(wrapper.vm.nodeName).toBe(SAMPLE_ALERT.nodeInfo.nodeName);
         expect(wrapper.vm.title).toBe('ERROR: KNIME Node');
         expect(wrapper.vm.subtitle).toBe(subtitle);
@@ -84,25 +85,26 @@ describe('AlertGlobal', () => {
 
     it('closes alert on event', () => {
         wrapper.vm.onClose(true);
-        expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true, undefined);
+        expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true);
     });
 
     describe('error alerts', () => {
-        let localWrapper, localStore, localVueError;
+        let localWrapper;
 
         let sampleErrorMessage = JSON.parse(JSON.stringify(SAMPLE_ALERT));
 
         beforeAll(() => {
-            localVueError = createLocalVue();
-            localVueError.use(Vuex);
-            localStore = new Vuex.Store({
+            const localStore = new Vuex.Store({
                 modules: {
                     'pagebuilder/alert': alertStoreConfig
                 }
             });
             localWrapper = mount(AlertGlobal, {
-                store: localStore,
-                localVue: localVueError
+                global: {
+                    mocks: {
+                        $store: localStore
+                    }
+                }
             });
             localStore.dispatch('pagebuilder/alert/showAlert', sampleErrorMessage);
         });
@@ -114,27 +116,28 @@ describe('AlertGlobal', () => {
 
         it('does not close the alert on click away (only minimizes)', () => {
             localWrapper.findComponent(Popover).vm.$emit('clickAway');
-            expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), false, undefined);
+            expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), false);
         });
     });
 
     describe('other alert types', () => {
-        let localWrapper, localStore, localVueWarn;
+        let localWrapper;
 
         let sampleWarnMessage = JSON.parse(JSON.stringify(SAMPLE_ALERT));
         sampleWarnMessage.type = 'warn';
 
         beforeAll(() => {
-            localVueWarn = createLocalVue();
-            localVueWarn.use(Vuex);
-            localStore = new Vuex.Store({
+            const localStore = createStore({
                 modules: {
                     'pagebuilder/alert': alertStoreConfig
                 }
             });
             localWrapper = mount(AlertGlobal, {
-                store: localStore,
-                localVue: localVueWarn
+                global: {
+                    mocks: {
+                        $store: localStore
+                    }
+                }
             });
             localStore.dispatch('pagebuilder/alert/showAlert', sampleWarnMessage);
         });
@@ -146,7 +149,7 @@ describe('AlertGlobal', () => {
 
         it('closes the alert on click away', () => {
             localWrapper.findComponent(Popover).vm.$emit('clickAway');
-            expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true, undefined);
+            expect(closeAlertMock).toHaveBeenCalledWith(expect.anything(), true);
         });
     });
 });

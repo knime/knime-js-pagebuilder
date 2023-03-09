@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeAll, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import PopoverMessage from '@/components/ui/PopoverMessage.vue';
@@ -41,6 +41,7 @@ describe('PopoverMessage', () => {
     });
 
     it('copies text', () => {
+        document.execCommand = vi.fn();
         const dispatchMock = vi.fn();
         wrapper = shallowMount(PopoverMessage, {
             props: {
@@ -49,9 +50,11 @@ describe('PopoverMessage', () => {
                 subtitle: 'Test subtitle',
                 messageBody: 'Test message'
             },
-            mocks: {
-                $store: {
-                    dispatch: dispatchMock
+            global: {
+                mocks: {
+                    $store: {
+                        dispatch: dispatchMock
+                    }
                 }
             }
         });
@@ -110,7 +113,7 @@ describe('PopoverMessage', () => {
         expect(wrapper.find('.copy-button').isVisible()).toBe(true);
     });
 
-    it('handles expandable messages', () => {
+    it('handles expandable messages', async () => {
         wrapper = mount(PopoverMessage, {
             props: {
                 type: 'error',
@@ -136,14 +139,14 @@ describe('PopoverMessage', () => {
         expect(wrapper.find('.scrollable-message').isVisible()).toBe(false);
         expect(wrapper.find('.copy-button').isVisible()).toBe(false);
 
-        wrapper.find('.expand-button').trigger('click');
+        await wrapper.find('.expand-button').trigger('click');
 
         expect(wrapper.vm.expanded).toBe(true);
         expect(wrapper.classes()).toContain('expanded');
         expect(wrapper.find('.scrollable-message').isVisible()).toBe(true);
         expect(wrapper.find('.copy-button').isVisible()).toBe(true);
 
-        wrapper.find('.expand-button').trigger('click');
+        await wrapper.find('.expand-button').trigger('click');
 
         expect(wrapper.vm.expanded).toBe(false);
         expect(wrapper.classes()).not.toContain('expanded');
