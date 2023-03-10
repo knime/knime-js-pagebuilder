@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import MultipleSelectionWidget from '@/components/widgets/selection/MultipleSelectionWidget.vue';
@@ -344,7 +344,7 @@ describe('MultipleSelectionWidget.vue', () => {
 
         const testValue = ['VALUE1', 'VALUE2'];
         const comp = wrapper.findComponent(Multiselect);
-        comp.vm.$emit('input', testValue);
+        comp.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -373,12 +373,14 @@ describe('MultipleSelectionWidget.vue', () => {
             propsMultiselectListBox.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(MultipleSelectionWidget, {
                 props: propsMultiselectListBox,
-                stubs: {
-                    Multiselect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValueOnce(false)
-                                .mockReturnValueOnce(true)
+                global: {
+                    stubs: {
+                        Multiselect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValueOnce(false)
+                                    .mockReturnValueOnce(true)
+                            }
                         }
                     }
                 }
@@ -392,13 +394,15 @@ describe('MultipleSelectionWidget.vue', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(MultipleSelectionWidget, {
                 props: propsMultiselectListBox,
-                stubs: {
-                    Multiselect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValue(true),
-                            validate: vi.fn().mockReturnValueOnce(childResponse)
-                                .mockReturnValueOnce({ isValid: false })
+                global: {
+                    stubs: {
+                        Multiselect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValue(true),
+                                validate: vi.fn().mockReturnValueOnce(childResponse)
+                                    .mockReturnValueOnce({ isValid: false })
+                            }
                         }
                     }
                 }

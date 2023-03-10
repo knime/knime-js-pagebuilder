@@ -1,6 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
+import { mount, shallowMount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
 import * as interactiveConfig from '@/store/interactivity';
 
@@ -8,7 +8,7 @@ import InteractiveRangeWidget from '@/components/widgets/interactive/Interactive
 import SliderWidget from '@/components/widgets/input/SliderWidget.vue';
 
 describe('InteractiveRangeWidget.vue', () => {
-    let props, localVue, store, context;
+    let props, store, context;
 
     beforeEach(() => {
         props = {
@@ -101,14 +101,14 @@ describe('InteractiveRangeWidget.vue', () => {
             isValid: true
         };
 
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
-        store = new Vuex.Store({ modules: { 'pagebuilder/interactivity': interactiveConfig } });
+        store = createStore({ modules: { 'pagebuilder/interactivity': interactiveConfig } });
 
         context = {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
     });
 
@@ -215,7 +215,7 @@ describe('InteractiveRangeWidget.vue', () => {
                 ...context,
                 props
             });
-            vi.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => undefined);
+            vi.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => {});
             expect(wrapperBroken.vm.validate().isValid).toBe(false);
         });
     });

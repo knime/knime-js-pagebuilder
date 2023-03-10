@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import Checkbox from 'webapps-common/ui/components/forms/Checkbox.vue';
@@ -78,7 +78,7 @@ describe('BooleanWidget.vue', () => {
             }
         });
         expect(typeof wrapper.emitted().updateWidget).toBe('undefined');
-        wrapper.findComponent(Checkbox).vm.$emit('input', false);
+        wrapper.findComponent(Checkbox).vm.$emit('update:modelValue', false);
         expect(wrapper.emitted().updateWidget).toBeTruthy();
     });
 

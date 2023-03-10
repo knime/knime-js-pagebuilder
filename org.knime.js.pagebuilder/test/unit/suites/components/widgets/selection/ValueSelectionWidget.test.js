@@ -1,11 +1,11 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
-import propsColumnLockedListImport from '~/test/unit/assets/propsColumnLockedList';
-import propsRadioHorizontalImport from '~/test/unit/assets/propsRadioHorizontal';
-import propsRadioVerticalImport from '~/test/unit/assets/propsRadioVertical';
-import propsDropdownImport from '~/test/unit/assets/propsDropdown';
-import propsListImport from '~/test/unit/assets/propsList';
+import propsColumnLockedListImport from '@@/test/unit/assets/propsDataColumnLockedList';
+import propsRadioHorizontalImport from '@@/test/unit/assets/propsDataRadioHorizontal';
+import propsRadioVerticalImport from '@@/test/unit/assets/propsDataRadioVertical';
+import propsDropdownImport from '@@/test/unit/assets/propsDataDropdown';
+import propsListImport from '@@/test/unit/assets/propsDataList';
 
 import ValueSelectionWidget from '@/components/widgets/selection/ValueSelectionWidget.vue';
 
@@ -74,8 +74,8 @@ describe('ValueSelectionWidget.vue', () => {
         });
 
         const testValue = 'VALUE';
-        const lb = wrapper.find({ ref: 'form' });
-        lb.vm.$emit('input', testValue);
+        const lb = wrapper.findComponent({ ref: 'form' });
+        lb.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -91,8 +91,8 @@ describe('ValueSelectionWidget.vue', () => {
         });
 
         const testValue = 'MYCOL';
-        const lb = wrapper.find({ ref: 'column' });
-        lb.vm.$emit('input', testValue);
+        const lb = wrapper.findComponent({ ref: 'column' });
+        lb.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -109,7 +109,7 @@ describe('ValueSelectionWidget.vue', () => {
             props: propsList
         });
         let size = propsList.nodeConfig.viewRepresentation.numberVisOptions;
-        expect(wrapper.find({ ref: 'form' }).props('numberVisOptions')).toBe(size);
+        expect(wrapper.findComponent({ ref: 'form' }).props('numberVisOptions')).toBe(size);
     });
 
     it('does not render duplicate entries', () => {
@@ -130,7 +130,7 @@ describe('ValueSelectionWidget.vue', () => {
                 isValid: false
             }
         });
-        expect(wrapper.find({ ref: 'form' }).props('isValid')).toBe(false);
+        expect(wrapper.findComponent({ ref: 'form' }).props('isValid')).toBe(false);
     });
 
     describe('validation', () => {
@@ -164,7 +164,7 @@ describe('ValueSelectionWidget.vue', () => {
                 .toStrictEqual({ isValid: false, errorMessage: 'Selected column is invalid.' });
         });
 
-        it('is invalid if required and no selection was made', () => {
+        it('is invalid if required and no selection was made', async () => {
             propsList.nodeConfig.viewRepresentation.required = true;
             propsList.nodeConfig.viewRepresentation.lockColumn = true;
             let wrapper = mount(ValueSelectionWidget, {
@@ -193,12 +193,14 @@ describe('ValueSelectionWidget.vue', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ValueSelectionWidget, {
                 props: propsDropdown,
-                stubs: {
-                    SingleSelect: {
-                        template: '<div />',
-                        methods: {
-                            validate: vi.fn().mockReturnValueOnce(childResponse)
-                                .mockReturnValueOnce({ isValid: false })
+                global: {
+                    stubs: {
+                        SingleSelect: {
+                            template: '<div />',
+                            methods: {
+                                validate: vi.fn().mockReturnValueOnce(childResponse)
+                                    .mockReturnValueOnce({ isValid: false })
+                            }
                         }
                     }
                 }

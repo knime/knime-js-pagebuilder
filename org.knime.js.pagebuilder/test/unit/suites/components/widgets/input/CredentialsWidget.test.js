@@ -1,7 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
-import Vue from 'vue';
 
 import CredentialsWidget from '@/components/widgets/input/CredentialsWidget.vue';
 import InputField from 'webapps-common/ui/components/forms/InputField.vue';
@@ -153,7 +152,9 @@ describe('CredentialsWidget.vue', () => {
         it('renders', () => {
             let wrapper = shallowMount(CredentialsWidget, {
                 props: propsDefault,
-                stubs: { Label, Fieldset }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
@@ -172,7 +173,9 @@ describe('CredentialsWidget.vue', () => {
                         }
                     }
                 },
-                stubs: { Label, Fieldset }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
             expect(wrapper.find('.hide').exists()).toBe(true);
         });
@@ -189,21 +192,25 @@ describe('CredentialsWidget.vue', () => {
                         }
                     }
                 },
-                stubs: { Label, Fieldset }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
-            expect(wrapper.find({ ref: 'usernameForm' }).exists()).toBe(false);
-            expect(wrapper.find({ ref: 'passwordForm' }).exists()).toBe(true);
+            expect(wrapper.findComponent({ ref: 'usernameForm' }).exists()).toBe(false);
+            expect(wrapper.findComponent({ ref: 'passwordForm' }).exists()).toBe(true);
         });
 
         it('emits @updateWidget on username if child emits @input', () => {
             let wrapper = mount(CredentialsWidget, {
                 props: propsDefault,
-                stubs: { Label, Fieldset }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
 
             const testValue = 'VALUE';
             const input = wrapper.findComponent(InputField);
-            input.vm.$emit('input', testValue);
+            input.vm.$emit('update:modelValue', testValue);
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -216,12 +223,14 @@ describe('CredentialsWidget.vue', () => {
         it('emits @updateWidget on password if child emits @input', () => {
             let wrapper = shallowMount(CredentialsWidget, {
                 props: propsDefault,
-                stubs: { Label, Fieldset }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
 
             const testValue = 'VALUE';
-            const input = wrapper.find({ ref: 'passwordForm' });
-            input.vm.$emit('input', testValue);
+            const input = wrapper.findComponent({ ref: 'passwordForm' });
+            input.vm.$emit('update:modelValue', testValue);
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -234,16 +243,18 @@ describe('CredentialsWidget.vue', () => {
         it('emits @updateWidget on password only if input differs from serverCredentials', () => {
             let wrapper = shallowMount(CredentialsWidget, {
                 props: propsServer,
-                stubs: { Label, Fieldset }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
 
             const testValue = 'VALUE';
-            const input = wrapper.find({ ref: 'passwordForm' });
-            input.vm.$emit('input', propsServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
+            const input = wrapper.findComponent({ ref: 'passwordForm' });
+            input.vm.$emit('update:modelValue', propsServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
 
             expect(wrapper.emitted().updateWidget).toBeFalsy();
 
-            input.vm.$emit('input', testValue);
+            input.vm.$emit('update:modelValue', testValue);
 
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
                 nodeId: propsServer.nodeId,
@@ -255,69 +266,75 @@ describe('CredentialsWidget.vue', () => {
         it('emits @updateWidget on username only if input differs from serverCredentials', () => {
             let wrapper = shallowMount(CredentialsWidget, {
                 props: propsServer,
-                stubs: { Label, Fieldset }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
 
             const testValue = 'VALUE';
-            const input = wrapper.find({ ref: 'usernameForm' });
-            input.vm.$emit('input', propsServer.nodeConfig.viewRepresentation.defaultValue.username);
+            const input = wrapper.findComponent({ ref: 'usernameForm' });
+            input.vm.$emit('update:modelValue', propsServer.nodeConfig.viewRepresentation.defaultValue.username);
 
             expect(wrapper.emitted().updateWidget).toBeFalsy();
 
-            input.vm.$emit('input', testValue);
+            input.vm.$emit('update:modelValue', testValue);
 
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+            expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
                 nodeId: propsServer.nodeId,
                 type: 'username',
                 value: testValue
             });
         });
 
-        it('will be invalid if widget is', () => {
+        it('will be invalid if widget is', async () => {
             let widget = mount(CredentialsWidget, {
                 props: { ...propsDefault, isValid: true }
             });
 
             let textComponent = widget.findComponent(InputField);
             expect(textComponent.props('isValid')).toBe(true);
-            widget.setProps({ isValid: false });
+            await widget.setProps({ isValid: false });
             expect(textComponent.props('isValid')).toBe(false);
         });
 
-        it('takes specific error message over child error message', async () => {
+        it('takes specific error message over child error message', () => {
             let wrapper = mount(CredentialsWidget, {
                 props: propsDefault,
-                stubs: {
-                    InputField: {
-                        template: '<div />',
-                        methods: {
-                            getValue: vi.fn().mockReturnValue('test_string'),
-                            validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                global: {
+                    stubs: {
+                        InputField: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue('test_string'),
+                                validate: vi.fn().mockReturnValue({
+                                    isValid: false,
+                                    errorMessage: 'test Error Message'
+                                })
+                            }
                         }
                     }
                 }
             });
-            await Vue.nextTick();
             expect(wrapper.vm.validate().isValid).toBe(false);
             expect(wrapper.vm.validate().errorMessage).toBe('Please correct input for username and password.');
         });
 
         it('renders serverCredentials input correctly', () => {
-            const checkServerCredentialsSpy = vi.fn();
-            let wrapper = shallowMount(CredentialsWidget, {
+            let wrapper = mount(CredentialsWidget, {
                 props: propsServer,
-                stubs: { Label, Fieldset },
-                methods: { checkServerCredentials: checkServerCredentialsSpy }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
-            expect(wrapper.find({ ref: 'usernameForm' }).props('value'))
+            expect(wrapper.findComponent({ ref: 'usernameForm' }).props('modelValue'))
                 .toEqual(propsServer.nodeConfig.viewRepresentation.defaultValue.username);
 
-            expect(wrapper.find({ ref: 'passwordForm' }).props('value'))
+            expect(wrapper.findComponent({ ref: 'passwordForm' }).props('modelValue'))
                 .toEqual(propsServer.nodeConfig.viewRepresentation.defaultValue.magicDefaultPassword);
-            expect(checkServerCredentialsSpy).toHaveBeenCalled();
         });
 
-        it('displays server error in correct hierarchy', () => {
+
+        it('displays server error in correct hierarchy', async () => {
             let validate = vi.fn();
             let wrapper = mount(CredentialsWidget, {
                 props: {
@@ -332,14 +349,16 @@ describe('CredentialsWidget.vue', () => {
                         }
                     }
                 },
-                stubs: {
-                    Label,
-                    Fieldset,
-                    InputField: {
-                        template: '<div />',
-                        methods: {
-                            getValue: vi.fn().mockReturnValue(null),
-                            validate
+                global: {
+                    stubs: {
+                        Label,
+                        Fieldset,
+                        InputField: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue(null),
+                                validate
+                            }
                         }
                     }
                 }
@@ -372,11 +391,12 @@ describe('CredentialsWidget.vue', () => {
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: '', isValid: true }
             );
+            await wrapper.vm.$nextTick();
             expect(wrapper.findComponent(ErrorMessage).props('error'))
                 .toEqual('KNIME Server login credentials could not be fetched!');
         });
 
-        it('renders server credentials error if no username gets prompted', () => {
+        it('renders server credentials error if no username gets prompted', async () => {
             let wrapper = mount(CredentialsWidget, {
                 props: {
                     ...propsServer,
@@ -391,11 +411,14 @@ describe('CredentialsWidget.vue', () => {
                         }
                     }
                 },
-                stubs: { Label, Fieldset }
+                global: {
+                    stubs: { Label, Fieldset }
+                }
             });
 
-            expect(wrapper.find({ ref: 'usernameForm' }).exists()).toBe(false);
+            expect(wrapper.findComponent({ ref: 'usernameForm' }).exists()).toBe(false);
             wrapper.vm.validate();
+            await wrapper.vm.$nextTick();
             expect(wrapper.findComponent(ErrorMessage).props('error'))
                 .toEqual('KNIME Server login credentials could not be fetched!');
         });

@@ -1,6 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
-import { mount, shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 
 import ColumnFilterWidget from '@/components/widgets/selection/ColumnFilterSelectionWidget.vue';
 import Twinlist from 'webapps-common/ui/components/forms/Twinlist.vue';
@@ -98,7 +98,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
     });
 
     it('renders', () => {
-        let wrapper = shallowMount(ColumnFilterWidget, {
+        let wrapper = mount(ColumnFilterWidget, {
             props
         });
         expect(wrapper.html()).toBeTruthy();
@@ -109,7 +109,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
     it('sets default size to 0', () => {
         props.isValid = true;
         props.nodeConfig.viewRepresentation.limitNumberVisOptions = false;
-        let wrapper = shallowMount(ColumnFilterWidget, {
+        let wrapper = mount(ColumnFilterWidget, {
             props
         });
 
@@ -121,7 +121,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
         props.isValid = true;
         props.nodeConfig.viewRepresentation.limitNumberVisOptions = true;
         props.nodeConfig.viewRepresentation.numberVisOptions = 8;
-        let wrapper = shallowMount(ColumnFilterWidget, {
+        let wrapper = mount(ColumnFilterWidget, {
             props
         });
 
@@ -130,13 +130,13 @@ describe('ColumnFilterSelectionWidget.vue', () => {
     });
 
     it('sends @updateWidget if child emits @input', () => {
-        let wrapper = shallowMount(ColumnFilterWidget, {
+        let wrapper = mount(ColumnFilterWidget, {
             props
         });
 
         const testValue = ['VALUE1', 'VALUE2'];
         const comp = wrapper.findComponent(Twinlist);
-        comp.vm.$emit('input', testValue);
+        comp.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -151,7 +151,7 @@ describe('ColumnFilterSelectionWidget.vue', () => {
             props.nodeConfig.viewRepresentation.required = false;
             props.nodeConfig.viewRepresentation.currentValue.value = [];
             props.nodeConfig.viewRepresentation.defaultValue.value = [];
-            let wrapper = shallowMount(ColumnFilterWidget, {
+            let wrapper = mount(ColumnFilterWidget, {
                 props
             });
 
@@ -162,12 +162,14 @@ describe('ColumnFilterSelectionWidget.vue', () => {
             props.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(ColumnFilterWidget, {
                 props,
-                stubs: {
-                    Twinlist: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValueOnce(false)
-                                .mockReturnValueOnce(true)
+                global: {
+                    stubs: {
+                        Twinlist: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValueOnce(false)
+                                    .mockReturnValueOnce(true)
+                            }
                         }
                     }
                 }
@@ -181,13 +183,15 @@ describe('ColumnFilterSelectionWidget.vue', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ColumnFilterWidget, {
                 props,
-                stubs: {
-                    Twinlist: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValue(true),
-                            validate: vi.fn().mockReturnValueOnce(childResponse)
-                                .mockReturnValueOnce({ isValid: false })
+                global: {
+                    stubs: {
+                        Twinlist: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValue(true),
+                                validate: vi.fn().mockReturnValueOnce(childResponse)
+                                    .mockReturnValueOnce({ isValid: false })
+                            }
                         }
                     }
                 }

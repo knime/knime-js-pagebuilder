@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it } from 'vitest';
 /* eslint-disable max-lines */
 import { mount } from '@vue/test-utils';
 
@@ -363,11 +363,11 @@ describe('DateTimeWidget.vue', () => {
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
-            expect(wrapper.find({ ref: 'dateInput' }).isVisible()).toBeTruthy();
+            expect(wrapper.findComponent({ ref: 'dateInput' }).isVisible()).toBeTruthy();
             // timezone
-            expect(wrapper.find({ ref: 'timezone' }).isVisible()).toBeTruthy();
+            expect(wrapper.findComponent({ ref: 'timezone' }).isVisible()).toBeTruthy();
             // now button
-            expect(wrapper.find({ ref: 'nowButton' }).isVisible()).toBeTruthy();
+            expect(wrapper.findComponent({ ref: 'nowButton' }).isVisible()).toBeTruthy();
         });
 
         it('renders without timezone', () => {
@@ -380,11 +380,11 @@ describe('DateTimeWidget.vue', () => {
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
-            expect(wrapper.find({ ref: 'dateInput' }).isVisible()).toBeTruthy();
+            expect(wrapper.findComponent({ ref: 'dateInput' }).isVisible()).toBeTruthy();
             // timezone
-            expect(wrapper.find({ ref: 'timezone' }).exists()).toBeFalsy();
+            expect(wrapper.findComponent({ ref: 'timezone' }).exists()).toBeFalsy();
             // now button
-            expect(wrapper.find({ ref: 'nowButton' }).isVisible()).toBeTruthy();
+            expect(wrapper.findComponent({ ref: 'nowButton' }).isVisible()).toBeTruthy();
         });
 
         it('renders without timezone and now button', () => {
@@ -397,11 +397,11 @@ describe('DateTimeWidget.vue', () => {
             });
             expect(wrapper.html()).toBeTruthy();
             expect(wrapper.isVisible()).toBeTruthy();
-            expect(wrapper.find({ ref: 'dateInput' }).isVisible()).toBeTruthy();
+            expect(wrapper.findComponent({ ref: 'dateInput' }).isVisible()).toBeTruthy();
             // timezone
-            expect(wrapper.find({ ref: 'timezone' }).exists()).toBeFalsy();
+            expect(wrapper.findComponent({ ref: 'timezone' }).exists()).toBeFalsy();
             // now button
-            expect(wrapper.find({ ref: 'nowButton' }).exists()).toBeFalsy();
+            expect(wrapper.findComponent({ ref: 'nowButton' }).exists()).toBeFalsy();
         });
 
         it('uses exec time as value, min and max', () => {
@@ -443,8 +443,8 @@ describe('DateTimeWidget.vue', () => {
                 },
                 ...context
             });
-            const input = wrapper.find({ ref: 'timezone' });
-            input.vm.$emit('input', 'Asia/Bangkok');
+            const input = wrapper.findComponent({ ref: 'timezone' });
+            input.vm.$emit('update:modelValue', 'Asia/Bangkok');
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[1][0].update['viewRepresentation.currentValue'].zonestring)
@@ -459,7 +459,7 @@ describe('DateTimeWidget.vue', () => {
                 },
                 ...context
             });
-            const input = wrapper.find({ ref: 'nowButton' });
+            const input = wrapper.findComponent({ ref: 'nowButton' });
             input.vm.$emit('click');
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
@@ -480,7 +480,7 @@ describe('DateTimeWidget.vue', () => {
                 },
                 ...context
             });
-            const input = wrapper.find({ ref: 'nowButton' });
+            const input = wrapper.findComponent({ ref: 'nowButton' });
             input.vm.$emit('click');
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
@@ -504,7 +504,7 @@ describe('DateTimeWidget.vue', () => {
 
             const testValue = '2020-10-14T13:32:45.153';
             const input = wrapper.findComponent(DateTimeInput);
-            input.vm.$emit('input', new Date(testValue));
+            input.vm.$emit('update:modelValue', new Date(testValue));
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[1][0]).toStrictEqual({

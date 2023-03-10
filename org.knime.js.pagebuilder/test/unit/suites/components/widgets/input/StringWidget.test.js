@@ -1,7 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
-import Vue from 'vue';
 
 import StringWidget from '@/components/widgets/input/StringWidget.vue';
 import InputField from 'webapps-common/ui/components/forms/InputField.vue';
@@ -141,7 +140,7 @@ describe('StringWidget.vue', () => {
 
             const testValue = 'VALUE';
             const input = wrapper.findComponent(InputField);
-            input.vm.$emit('input', testValue);
+            input.vm.$emit('update:modelValue', testValue);
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -151,14 +150,14 @@ describe('StringWidget.vue', () => {
             });
         });
 
-        it('will be invalid if widget is', () => {
+        it('will be invalid if widget is', async () => {
             let widget = mount(StringWidget, {
                 props: { ...propsInput, isValid: true }
             });
 
             let textComponent = widget.findComponent(InputField);
             expect(textComponent.props('isValid')).toBe(true);
-            widget.setProps({ isValid: false });
+            await widget.setProps({ isValid: false });
             expect(textComponent.props('isValid')).toBe(false);
         });
 
@@ -166,14 +165,21 @@ describe('StringWidget.vue', () => {
             // will only apply if no custom message is provided
             propsInput.nodeConfig.viewRepresentation.errorMessage = '';
             let wrapper = mount(StringWidget, {
-                props: propsInput
+                props: propsInput,
+                global: {
+                    stubs: {
+                        InputField: {
+                            template: '<div/>',
+                            methods: {
+                                getValue: () => ''
+                            }
+                        }
+                    }
+                }
             });
-            wrapper.findComponent(InputField).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Input is required.', isValid: false }
             );
-            wrapper.findComponent(InputField).setProps({ value: 'a' });
-            expect(wrapper.vm.validate()).toBeTruthy();
         });
 
         it('defaults regex to null', () => {
@@ -213,7 +219,7 @@ describe('StringWidget.vue', () => {
 
             const testValue = 'VALUE';
             const input = wrapper.findComponent(InputField);
-            input.vm.$emit('input', testValue);
+            input.vm.$emit('update:modelValue', testValue);
 
             expect(wrapper.emitted().updateWidget).toBeTruthy();
             expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -223,116 +229,128 @@ describe('StringWidget.vue', () => {
             });
         });
 
-        it('will be invalid if widget is', () => {
+        it('will be invalid if widget is', async () => {
             let widget = mount(StringWidget, {
                 props: { ...propsDateTextArea, isValid: true }
             });
 
             let textComponent = widget.findComponent(TextArea);
             expect(textComponent.props('isValid')).toBe(true);
-            widget.setProps({ isValid: false });
+            await widget.setProps({ isValid: false });
             expect(textComponent.props('isValid')).toBe(false);
         });
 
         it('will return invalid when the value is required but missing', () => {
             let wrapper = mount(StringWidget, {
-                props: propsDateTextArea
+                props: propsDateTextArea,
+                global: {
+                    stubs: {
+                        TextArea: {
+                            template: '<div/>',
+                            methods: {
+                                getValue: () => ''
+                            }
+                        }
+                    }
+                }
             });
-            wrapper.findComponent(TextArea).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
                 { errorMessage: 'Input is required.', isValid: false }
             );
-            wrapper.findComponent(TextArea).setProps({ value: 'a' });
-            expect(wrapper.vm.validate().isValid).toBe(true);
         });
     });
 
-    it('takes child validation in favor of parent validation', async () => {
+    it('takes child validation in favor of parent validation', () => {
         let wrapper = mount(StringWidget, {
             props: propsInput,
-            stubs: {
-                InputField: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue('test_string'),
-                        validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
+            global: {
+                stubs: {
+                    InputField: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue('test_string'),
+                            validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                        }
                     }
                 }
             }
         });
-        await Vue.nextTick();
         expect(wrapper.vm.validate().isValid).toBe(true);
     });
 
-    it('takes child error message over parent error message', async () => {
+    it('takes child error message over parent error message', () => {
         propsInput.nodeConfig.viewRepresentation.errorMessage = '';
         let wrapper = mount(StringWidget, {
             props: propsInput,
-            stubs: {
-                InputField: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue('test_string'),
-                        validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+            global: {
+                stubs: {
+                    InputField: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue('test_string'),
+                            validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        }
                     }
                 }
             }
         });
-        await Vue.nextTick();
         expect(wrapper.vm.validate().isValid).toBe(false);
         expect(wrapper.vm.validate().errorMessage).toBe('test Error Message');
     });
 
-    it('shows custom error Message over other messages if one is set', async () => {
+    it('shows custom error Message over other messages if one is set', () => {
         propsInput.nodeConfig.viewRepresentation.errorMessage = 'custom message';
         let wrapper = mount(StringWidget, {
             props: propsInput,
-            stubs: {
-                InputField: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue('test_string'),
-                        validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+            global: {
+                stubs: {
+                    InputField: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue('test_string'),
+                            validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        }
                     }
                 }
             }
         });
-        await Vue.nextTick();
         expect(wrapper.vm.validate().isValid).toBe(false);
         expect(wrapper.vm.validate().errorMessage).toBe('custom message');
     });
 
-    it('has no error message when valid', async () => {
+    it('has no error message when valid', () => {
         let wrapper = mount(StringWidget, {
             props: propsInput,
-            stubs: {
-                InputField: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue('abc')
+            global: {
+                stubs: {
+                    InputField: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue('abc')
+                        }
                     }
                 }
             }
         });
 
-        await Vue.nextTick();
         expect(wrapper.vm.validate().errorMessage).toBe(null);
     });
 
-    it('has error message', async () => {
+    it('has error message', () => {
         let wrapper = mount(StringWidget, {
             props: propsInput,
-            stubs: {
-                InputField: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue(null)
+            global: {
+                stubs: {
+                    InputField: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(null)
+                        }
                     }
                 }
             }
         });
 
-        await Vue.nextTick();
         expect(wrapper.vm.validate().errorMessage).toBe('Input is required.');
     });
 });

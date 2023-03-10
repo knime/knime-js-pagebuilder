@@ -1,7 +1,7 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import Widget from '@/components/widgets/Widget.vue';
 import { getProp, setProp } from '@/util/nestedProperty';
@@ -9,7 +9,7 @@ import { getProp, setProp } from '@/util/nestedProperty';
 import * as storeConfig from '@/store/pagebuilder';
 
 describe('Widget.vue', () => {
-    let store, localVue, context, nodeConfig, wrapper;
+    let store, context, nodeConfig, wrapper;
 
     const nodeConfigBlueprint = {
         foo: 'bar',
@@ -100,10 +100,8 @@ describe('Widget.vue', () => {
 
     beforeEach(() => {
         nodeConfig = getNodeConfig();
-        localVue = createLocalVue();
-        localVue.use(Vuex);
 
-        store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        store = createStore({ modules: { pagebuilder: storeConfig } });
         store.registerModule('api', {
             namespaced: true,
             actions: {
@@ -126,22 +124,25 @@ describe('Widget.vue', () => {
         };
         store.commit('pagebuilder/setPage', page);
         context = {
-            store,
-            localVue,
             props: {
                 nodeConfig,
                 nodeId
             },
-            stubs: {
-                SliderWidget: {
-                    name: 'slider-widget',
-                    template: '<div />',
-                    ref: 'widget',
-                    methods: {
-                        onChange() {
-                            return true;
-                        }, // because hasValueGetter checks for it,
-                        validate: vi.fn().mockReturnValue(Promise.resolve(true))
+            global: {
+                mocks: {
+                    $store: store
+                },
+                stubs: {
+                    SliderWidget: {
+                        name: 'slider-widget',
+                        template: '<div />',
+                        ref: 'widget',
+                        methods: {
+                            onChange() {
+                                return true;
+                            }, // because hasValueGetter checks for it,
+                            validate: vi.fn().mockReturnValue(Promise.resolve(true))
+                        }
                     }
                 }
             }
@@ -151,7 +152,7 @@ describe('Widget.vue', () => {
             props: {
                 nodeConfig,
                 nodeId,
-                type: 'SliderWidget'
+                widgetName: 'SliderWidget'
             }
         });
     });
@@ -213,10 +214,8 @@ describe('Widget.vue', () => {
 
     it('calls callback after change event if provided', async () => {
         let localNodeConfig = getNodeConfig();
-        let localVue1 = createLocalVue();
-        localVue1.use(Vuex);
 
-        let localStore = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        let localStore = createStore({ modules: { pagebuilder: storeConfig } });
         let page = {
             wizardPageContent: {
                 webNodes: {
@@ -233,15 +232,23 @@ describe('Widget.vue', () => {
         };
         localStore.commit('pagebuilder/setPage', page);
         let localContext = {
-            store: localStore,
-            localVue: localVue1
+            global: {
+                mocks: {
+                    store: localStore
+                },
+                stubs: {
+                    Component: {
+                        template: '<div/>'
+                    }
+                }
+            }
         };
         let localWrapper = shallowMount(Widget, {
             ...localContext,
             props: {
                 nodeConfig: localNodeConfig,
                 nodeId,
-                type: 'SliderWidget'
+                widgetName: 'SliderWidget'
             }
         });
         let mock = vi.fn();
@@ -315,8 +322,6 @@ describe('Widget.vue', () => {
 
         let nodeId2 = 'node2';
         let newWrapper = shallowMount(Widget, {
-            store,
-            localVue,
             props: {
                 nodeConfig: {
                     nodeInfo: {
@@ -330,16 +335,21 @@ describe('Widget.vue', () => {
                     }
                 },
                 nodeId: nodeId2,
-                type: 'TextWidget'
+                widgetName: 'TextWidget'
             },
-            stubs: {
-                TextOutput: {
-                    name: 'text-output-widget',
-                    template: '<div />',
-                    ref: 'widget',
-                    methods: {
-                        validate() {
-                            return true;
+            global: {
+                mocks: {
+                    $store: store
+                },
+                stubs: {
+                    TextOutput: {
+                        name: 'text-output-widget',
+                        template: '<div />',
+                        ref: 'widget',
+                        methods: {
+                            validate() {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -359,13 +369,16 @@ describe('Widget.vue', () => {
     it('updates values for reactive widgets without valueGetter (no onChange)', async () => {
         let localWrapper = shallowMount(Widget, {
             ...context,
-            stubs: {
-                RefreshButton: {
-                    name: 'refresh',
-                    template: '<div />',
-                    ref: 'widget',
-                    methods: {
-                        validate: vi.fn().mockReturnValue(Promise.resolve(true))
+            global: {
+                ...context.global,
+                stubs: {
+                    RefreshButton: {
+                        name: 'refresh',
+                        template: '<div />',
+                        ref: 'widget',
+                        methods: {
+                            validate: vi.fn().mockReturnValue(Promise.resolve(true))
+                        }
                     }
                 }
             },
@@ -378,7 +391,7 @@ describe('Widget.vue', () => {
                     }
                 },
                 nodeId: 'id1',
-                type: 'SliderWidget'
+                widgetName: 'SliderWidget'
             }
         });
 
@@ -400,7 +413,7 @@ describe('Widget.vue', () => {
                     }
                 },
                 nodeId: 'id1',
-                type: 'SliderWidget'
+                widgetName: 'SliderWidget'
             }
         });
         let updateSpy = vi.spyOn(localWrapper.vm, 'updateWebNode').mockReturnValueOnce(true);
@@ -418,13 +431,16 @@ describe('Widget.vue', () => {
     it('triggers re-execution if widget is reactive', async () => {
         let localWrapper = shallowMount(Widget, {
             ...context,
-            stubs: {
-                RefreshButton: {
-                    name: 'refresh',
-                    template: '<div />',
-                    ref: 'widget',
-                    methods: {
-                        validate: vi.fn().mockReturnValue(Promise.resolve(true))
+            global: {
+                ...context.global,
+                stubs: {
+                    RefreshButton: {
+                        name: 'refresh',
+                        template: '<div />',
+                        ref: 'widget',
+                        methods: {
+                            validate: vi.fn().mockReturnValue(Promise.resolve(true))
+                        }
                     }
                 }
             },
@@ -437,7 +453,7 @@ describe('Widget.vue', () => {
                     }
                 },
                 nodeId: 'id1',
-                type: 'SliderWidget'
+                widgetName: 'SliderWidget'
             }
         });
 

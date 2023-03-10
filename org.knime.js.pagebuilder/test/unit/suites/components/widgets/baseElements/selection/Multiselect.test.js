@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
@@ -153,7 +153,7 @@ describe('Multiselect.vue', () => {
             expect(wrapper.findComponent(Checkboxes).exists()).toBe(false);
         });
 
-        it('emits @input', () => {
+        it('emits @update:modelValue', () => {
             let props = propsCheckboxVertical;
             let wrapper = shallowMount(Multiselect, {
                 props
@@ -161,10 +161,10 @@ describe('Multiselect.vue', () => {
 
             const testValue = ['VALUE1', 'VALUE2'];
             const comp = wrapper.findComponent(Checkboxes);
-            comp.vm.$emit('input', testValue);
+            comp.vm.$emit('update:modelValue', testValue);
 
-            expect(wrapper.emitted().input).toBeTruthy();
-            expect(wrapper.emitted().input[0][0]).toStrictEqual(testValue);
+            expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+            expect(wrapper.emitted('update:modelValue')[0][0]).toStrictEqual(testValue);
         });
     });
 
@@ -188,7 +188,7 @@ describe('Multiselect.vue', () => {
             expect(wrapper.vm.possibleValues.length).toBe(choicesUnique);
         });
 
-        it('emits @input', () => {
+        it('emits @update:modelValue', () => {
             let props = propsMultiselectListBox;
             let wrapper = shallowMount(Multiselect, {
                 props
@@ -196,10 +196,10 @@ describe('Multiselect.vue', () => {
 
             const testValue = ['VALUE1', 'VALUE2'];
             const comp = wrapper.findComponent(MultiselectListBox);
-            comp.vm.$emit('input', testValue);
+            comp.vm.$emit('update:modelValue', testValue);
 
-            expect(wrapper.emitted().input).toBeTruthy();
-            expect(wrapper.emitted().input[0][0]).toStrictEqual(testValue);
+            expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+            expect(wrapper.emitted('update:modelValue')[0][0]).toStrictEqual(testValue);
         });
     });
 
@@ -224,7 +224,7 @@ describe('Multiselect.vue', () => {
             expect(rb.props('size')).toBe(0);
         });
 
-        it('emits @input', () => {
+        it('emits @update:modelValue', () => {
             let props = propsTwinlist;
             let wrapper = shallowMount(Multiselect, {
                 props
@@ -232,10 +232,10 @@ describe('Multiselect.vue', () => {
 
             const testValue = ['VALUE1', 'VALUE2'];
             const comp = wrapper.findComponent(Twinlist);
-            comp.vm.$emit('input', testValue);
-
-            expect(wrapper.emitted().input).toBeTruthy();
-            expect(wrapper.emitted().input[0][0]).toStrictEqual(testValue);
+            comp.vm.$emit('update:modelValue', testValue);
+            
+            expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+            expect(wrapper.emitted('update:modelValue')[0][0]).toStrictEqual(testValue);
         });
     });
 });

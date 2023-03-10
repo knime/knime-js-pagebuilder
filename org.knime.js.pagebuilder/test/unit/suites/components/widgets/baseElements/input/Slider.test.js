@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import Slider from '@/components/widgets/baseElements/input/Slider.vue';
@@ -52,7 +52,7 @@ describe('Slider.vue', () => {
         let newValue = wrapper.vm.value + 1;
         wrapper.vm.$refs.slider.setValue(newValue);
 
-        expect(wrapper.emitted().input).toBeTruthy();
+        expect(wrapper.emitted('update:modelValue')).toBeTruthy();
     });
 
     it('invalidates undefined values', () => {

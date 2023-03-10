@@ -1,14 +1,13 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
-import Vue from 'vue';
 
 import SliderWidget from '@/components/widgets/input/SliderWidget.vue';
 import Slider from '@/components/widgets/baseElements/input/Slider.vue';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 
 describe('SliderWidget.vue', () => {
-    let context, nodeConfig, nodeId, isValid, wrapper;
+    let nodeConfig, nodeId, isValid, wrapper;
 
     beforeEach(() => {
         nodeConfig = {
@@ -118,7 +117,6 @@ describe('SliderWidget.vue', () => {
         nodeId = 'id1';
         isValid = true;
         wrapper = shallowMount(SliderWidget, {
-            ...context,
             props: {
                 nodeConfig,
                 nodeId,
@@ -138,8 +136,8 @@ describe('SliderWidget.vue', () => {
     });
 
     it('has correct computed properties', () => {
-        expect(wrapper.vm.viewRep).toBe(nodeConfig.viewRepresentation);
-        expect(wrapper.vm.sliderSettings).toBe(nodeConfig.viewRepresentation.sliderSettings);
+        expect(wrapper.vm.viewRep).toStrictEqual(nodeConfig.viewRepresentation);
+        expect(wrapper.vm.sliderSettings).toStrictEqual(nodeConfig.viewRepresentation.sliderSettings);
 
         // tooltip format and marks and labels tested separately
         expect(wrapper.vm.label).toBe('Testing Slider');
@@ -153,7 +151,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.connect).toBe('none');
     });
 
-    it('ignores connect settings if missing', () => {
+    it('ignores connect settings if missing', async () => {
         nodeConfig.viewRepresentation.sliderSettings.connect = null;
         await wrapper.setProps({
             nodeConfig: { ...nodeConfig }
@@ -162,7 +160,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.connect).toBe(null);
     });
 
-    it('rounds values which exceed the supported precision', () => {
+    it('rounds values which exceed the supported precision', async () => {
         nodeConfig.viewRepresentation.sliderSettings.range.min = [.000000001];
         nodeConfig.viewRepresentation.sliderSettings.range.max = [.999999999];
         await wrapper.setProps({
@@ -173,7 +171,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.max).toBe(1);
     });
 
-    it('can accept an array of values', () => {
+    it('can accept an array of values', async () => {
         await wrapper.setProps({
             valuePair: [0, 1]
         });
@@ -181,7 +179,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.value).toStrictEqual([0, 1]);
     });
 
-    it('sets height if slider is vertical', () => {
+    it('sets height if slider is vertical', async () => {
         expect(wrapper.vm.height).toBe(533);
 
         nodeConfig.viewRepresentation.sliderSettings.orientation = 'horizontal';
@@ -193,7 +191,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.height).toBe(null);
     });
 
-    it('creates tooltip formatting function if present', () => {
+    it('creates tooltip formatting function if present', async () => {
         expect(typeof wrapper.vm.tooltipFormat[0]).toBe('function');
         expect(wrapper.vm.tooltipFormat[0](1.234)).toBe('$1.23_');
 
@@ -206,7 +204,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.tooltipFormat[0](1.234, {})).toBe('1.234');
     });
 
-    it('properly disables tooltips for multiple handles', () => {
+    it('properly disables tooltips for multiple handles', async () => {
         nodeConfig.viewRepresentation.sliderSettings.tooltips = [false,
             {
                 prefix: '$',
@@ -235,7 +233,6 @@ describe('SliderWidget.vue', () => {
     it('correctly interprets the "bottom" connect configuration', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[1] = true;
         let wrapper2 = shallowMount(SliderWidget, {
-            ...context,
             props: {
                 nodeConfig,
                 nodeId,
@@ -250,7 +247,6 @@ describe('SliderWidget.vue', () => {
     it('correctly interprets the "top" connect configuration', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[0] = true;
         let wrapper2 = shallowMount(SliderWidget, {
-            ...context,
             props: {
                 nodeConfig,
                 nodeId,
@@ -266,7 +262,6 @@ describe('SliderWidget.vue', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect[0] = true;
         nodeConfig.viewRepresentation.sliderSettings.connect[1] = true;
         let wrapper2 = shallowMount(SliderWidget, {
-            ...context,
             props: {
                 nodeConfig,
                 nodeId,
@@ -279,7 +274,6 @@ describe('SliderWidget.vue', () => {
 
     it('correctly emits the updateWidget payload', () => {
         const wrapper2 = mount(SliderWidget, {
-            ...context,
             props: {
                 nodeConfig,
                 nodeId,
@@ -287,7 +281,7 @@ describe('SliderWidget.vue', () => {
                 valuePair: nodeConfig.viewRepresentation.currentValue
             }
         });
-        wrapper2.findComponent(Slider).vm.$emit('input', 10);
+        wrapper2.findComponent(Slider).vm.$emit('update:modelValue', 10);
         const { updateWidget } = wrapper2.emitted();
         expect(updateWidget[0][0]).toBeTruthy();
         expect(updateWidget[0][0].type).toBe('double');
@@ -296,7 +290,6 @@ describe('SliderWidget.vue', () => {
 
     it('supports inverted process config', () => {
         const wrapper2 = mount(SliderWidget, {
-            ...context,
             props: {
                 nodeConfig,
                 nodeId,
@@ -310,51 +303,51 @@ describe('SliderWidget.vue', () => {
         expect(p([0])).toStrictEqual([[0, 100]]);
     });
 
-    it('has no error message when valid', async () => {
+    it('has no error message when valid', () => {
         let wrapper2 = mount(SliderWidget, {
-            ...context,
             props: {
                 nodeConfig,
                 nodeId
             },
-            stubs: {
-                Slider: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue(50)
+            global: {
+                stubs: {
+                    Slider: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(50)
+                        }
                     }
                 }
             }
         });
 
-        await Vue.nextTick();
         expect(wrapper2.vm.validate().errorMessage).toBe(null);
     });
 
-    it('takes child error message over parent error message', async () => {
+    it('takes child error message over parent error message', () => {
         let wrapper2 = mount(SliderWidget, {
             props: {
                 nodeConfig,
                 nodeId
             },
-            stubs: {
-                Slider: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue(null),
-                        validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+            global: {
+                stubs: {
+                    Slider: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(null),
+                            validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        }
                     }
                 }
             }
         });
-        await Vue.nextTick();
         expect(wrapper2.vm.validate().isValid).toBe(false);
         expect(wrapper2.vm.validate().errorMessage).toBe('test Error Message');
     });
 
-    it('only displays error message when invalid', async () => {
+    it('only displays error message when invalid', () => {
         const wrapperFull = mount(SliderWidget, {
-            ...context,
             props: {
                 nodeConfig,
                 nodeId,
@@ -368,17 +361,18 @@ describe('SliderWidget.vue', () => {
                 nodeConfig,
                 nodeId
             },
-            stubs: {
-                Slider: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue(null),
-                        validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
+            global: {
+                stubs: {
+                    Slider: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(null),
+                            validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                        }
                     }
                 }
             }
         });
-        await Vue.nextTick();
         expect(wrapper2.vm.validate().isValid).toBe(false);
         expect(wrapper2.vm.validate().errorMessage).toBe('Current input is invalid.');
     });

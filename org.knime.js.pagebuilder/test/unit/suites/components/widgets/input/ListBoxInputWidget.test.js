@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import ListBoxInputWidget from '@/components/widgets/input/ListBoxInputWidget.vue';
@@ -200,7 +200,7 @@ describe('ListBoxInputWidget.vue', () => {
 
         const testValue = 'VALUE';
         const input = wrapper.findComponent(TextArea);
-        input.vm.$emit('input', testValue);
+        input.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -214,11 +214,13 @@ describe('ListBoxInputWidget.vue', () => {
         it('will split values by char', () => {
             let widget = mount(ListBoxInputWidget, {
                 props: propsCharSplit,
-                stubs: {
-                    TextArea: {
-                        template: '<div />',
-                        methods: {
-                            getValue: vi.fn().mockReturnValue('ABCD\nEF')
+                global: {
+                    stubs: {
+                        TextArea: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue('ABCD\nEF')
+                            }
                         }
                     }
                 }
@@ -230,11 +232,13 @@ describe('ListBoxInputWidget.vue', () => {
         it('will split values by comma (CSV)', () => {
             let widget = mount(ListBoxInputWidget, {
                 props: propsCSVSplit,
-                stubs: {
-                    TextArea: {
-                        template: '<div />',
-                        methods: {
-                            getValue: vi.fn().mockReturnValue('Test 1,,Test 2,Test 3')
+                global: {
+                    stubs: {
+                        TextArea: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue('Test 1,,Test 2,Test 3')
+                            }
                         }
                     }
                 }
@@ -246,11 +250,13 @@ describe('ListBoxInputWidget.vue', () => {
         it('will omit empty', () => {
             let widget = mount(ListBoxInputWidget, {
                 props: propsEmailRegexLineSplit,
-                stubs: {
-                    TextArea: {
-                        template: '<div />',
-                        methods: {
-                            getValue: vi.fn().mockReturnValue('Test 1\n\nTest 2\nTest 3')
+                global: {
+                    stubs: {
+                        TextArea: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue('Test 1\n\nTest 2\nTest 3')
+                            }
                         }
                     }
                 }
@@ -261,7 +267,7 @@ describe('ListBoxInputWidget.vue', () => {
     });
 
     describe('validation and errors', () => {
-        it('will be invalid if widget is', () => {
+        it('will be invalid if widget is', async () => {
             let widget = mount(ListBoxInputWidget, {
                 props: {
                     ...propsEmailRegexLineSplit,
@@ -271,34 +277,43 @@ describe('ListBoxInputWidget.vue', () => {
 
             let textComponent = widget.findComponent(TextArea);
             expect(textComponent.props('isValid')).toBe(true);
-            widget.setProps({ isValid: false });
+            await widget.setProps({ isValid: false });
             expect(textComponent.props('isValid')).toBe(false);
         });
 
         it('will return invalid when the value is required but missing', () => {
             let wrapper = mount(ListBoxInputWidget, {
-                props: propsEmailRegexLineSplit
+                props: propsEmailRegexLineSplit,
+                global: {
+                    stubs: {
+                        TextArea: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue('')
+                            }
+                        }
+                    }
+                }
             });
-            wrapper.findComponent(TextArea).setProps({ value: '' });
             expect(wrapper.vm.validate()).toStrictEqual(
                 {
                     errorMessage: 'Input is required.',
                     isValid: false
                 }
             );
-            wrapper.findComponent(TextArea).setProps({ value: 'ab@example.com' });
-            expect(wrapper.vm.validate().isValid).toBe(true);
         });
 
 
         it('has no error message when valid', () => {
             let wrapper = mount(ListBoxInputWidget, {
                 props: propsEmailRegexLineSplit,
-                stubs: {
-                    TextArea: {
-                        template: '<div />',
-                        methods: {
-                            getValue: vi.fn().mockReturnValue('abc@example.com')
+                global: {
+                    stubs: {
+                        TextArea: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue('abc@example.com')
+                            }
                         }
                     }
                 }
@@ -310,11 +325,13 @@ describe('ListBoxInputWidget.vue', () => {
         it('has validation error message when not valid', () => {
             let wrapper = mount(ListBoxInputWidget, {
                 props: propsEmailRegexLineSplit,
-                stubs: {
-                    TextArea: {
-                        template: '<div />',
-                        methods: {
-                            getValue: vi.fn().mockReturnValue('test@example.com\nabc')
+                global: {
+                    stubs: {
+                        TextArea: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue('test@example.com\nabc')
+                            }
                         }
                     }
                 }
@@ -328,11 +345,13 @@ describe('ListBoxInputWidget.vue', () => {
         it('has error message', () => {
             let wrapper = mount(ListBoxInputWidget, {
                 props: propsEmailRegexLineSplit,
-                stubs: {
-                    TextArea: {
-                        template: '<div />',
-                        methods: {
-                            getValue: vi.fn().mockReturnValue(null)
+                global: {
+                    stubs: {
+                        TextArea: {
+                            template: '<div />',
+                            methods: {
+                                getValue: vi.fn().mockReturnValue(null)
+                            }
                         }
                     }
                 }

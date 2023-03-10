@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import ValueFilterSelectionWidget from '@/components/widgets/selection/ValueFilterSelectionWidget.vue';
@@ -198,7 +198,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
 
         const testValue = ['VALUE1', 'VALUE2'];
         const comp = wrapper.findComponent(Multiselect);
-        comp.vm.$emit('input', testValue);
+        comp.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -214,8 +214,8 @@ describe('ValueFilterSelectionWidget.vue', () => {
         });
 
         const testValue = 'MYCOL';
-        const lb = wrapper.find({ ref: 'column' });
-        lb.vm.$emit('input', testValue);
+        const lb = wrapper.findComponent({ ref: 'column' });
+        lb.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -257,11 +257,13 @@ describe('ValueFilterSelectionWidget.vue', () => {
             props.nodeConfig.viewRepresentation.currentValue.column = 'INVALID';
             let wrapper = mount(ValueFilterSelectionWidget, {
                 props,
-                stubs: {
-                    Multiselect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValueOnce(true)
+                global: {
+                    stubs: {
+                        Multiselect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValueOnce(true)
+                            }
                         }
                     }
                 }
@@ -274,17 +276,19 @@ describe('ValueFilterSelectionWidget.vue', () => {
                 .toStrictEqual({ isValid: false, errorMessage: 'Selected column is invalid.' });
         });
 
-        it('is invalid/valid if required and no selection/a selection was made', () => {
+        it('is invalid/valid if required and no selection/a selection was made', async () => {
             props.nodeConfig.viewRepresentation.required = true;
             props.nodeConfig.viewRepresentation.lockColumn = true;
             let wrapper = mount(ValueFilterSelectionWidget, {
                 props,
-                stubs: {
-                    Multiselect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValueOnce(false)
-                                .mockReturnValueOnce(true)
+                global: {
+                    stubs: {
+                        Multiselect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValueOnce(false)
+                                    .mockReturnValueOnce(true)
+                            }
                         }
                     }
                 }
@@ -297,19 +301,21 @@ describe('ValueFilterSelectionWidget.vue', () => {
             expect(wrapper.vm.validate()).toStrictEqual({ isValid: true, errorMessage: null });
         });
 
-        it('handles child validation', () => {
+        it('handles child validation', async () => {
             props.nodeConfig.viewRepresentation.required = true;
             props.nodeConfig.viewRepresentation.lockColumn = true;
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ValueFilterSelectionWidget, {
                 props,
-                stubs: {
-                    Multiselect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValue(true),
-                            validate: vi.fn().mockReturnValueOnce(childResponse)
-                                .mockReturnValueOnce({ isValid: false })
+                global: {
+                    stubs: {
+                        Multiselect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValue(true),
+                                validate: vi.fn().mockReturnValueOnce(childResponse)
+                                    .mockReturnValueOnce({ isValid: false })
+                            }
                         }
                     }
                 }

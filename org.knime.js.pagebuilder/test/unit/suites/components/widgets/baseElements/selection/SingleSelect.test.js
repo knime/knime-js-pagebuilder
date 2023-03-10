@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect.vue';
@@ -121,17 +121,17 @@ describe('SingleSelect.vue', () => {
             expect(rb.props('alignment')).toBe('vertical');
         });
 
-        it('emits @input', () => {
+        it('emits @update:modelValue', () => {
             let wrapper = shallowMount(SingleSelect, {
                 props: propsRadioVertical
             });
 
             const testValue = 'VALUE';
             const lb = wrapper.findComponent(RadioButtons);
-            lb.vm.$emit('input', testValue);
+            lb.vm.$emit('update:modelValue', testValue);
 
-            expect(wrapper.emitted().input).toBeTruthy();
-            expect(wrapper.emitted().input[0][0]).toStrictEqual(testValue);
+            expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+            expect(wrapper.emitted('update:modelValue')[0][0]).toStrictEqual(testValue);
         });
     });
 
@@ -182,17 +182,17 @@ describe('SingleSelect.vue', () => {
             expect(wrapper.findComponent(ListBox).props('isValid')).toBe(false);
         });
 
-        it('emits @input', () => {
+        it('emits @update:modelValue', () => {
             let wrapper = shallowMount(SingleSelect, {
                 props: propsList
             });
 
             const testValue = 'VALUE';
             const lb = wrapper.findComponent(ListBox);
-            lb.vm.$emit('input', testValue);
+            lb.vm.$emit('update:modelValue', testValue);
 
-            expect(wrapper.emitted().input).toBeTruthy();
-            expect(wrapper.emitted().input[0][0]).toStrictEqual(testValue);
+            expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+            expect(wrapper.emitted('update:modelValue')[0][0]).toStrictEqual(testValue);
         });
     });
 
@@ -215,17 +215,17 @@ describe('SingleSelect.vue', () => {
             expect(wrapper.findComponent(Dropdown).props('isValid')).toBe(false);
         });
 
-        it('emits @input', () => {
+        it('emits @update:modelValue', () => {
             let wrapper = shallowMount(SingleSelect, {
                 props: propsDropdown
             });
 
             const testValue = 'VALUE';
             const lb = wrapper.findComponent(Dropdown);
-            lb.vm.$emit('input', testValue);
+            lb.vm.$emit('update:modelValue', testValue);
 
-            expect(wrapper.emitted().input).toBeTruthy();
-            expect(wrapper.emitted().input[0][0]).toStrictEqual(testValue);
+            expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+            expect(wrapper.emitted('update:modelValue')[0][0]).toStrictEqual(testValue);
         });
     });
 

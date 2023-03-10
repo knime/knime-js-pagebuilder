@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import DoubleWidget from '@/components/widgets/input/DoubleWidget.vue';
@@ -26,19 +26,19 @@ describe('DoubleWidget.vue', () => {
                 },
                 nodeId: 'id1',
                 isValid: false,
-                type: 'double'
+                type: 'double',
+                onFakeEvent: vi.fn()
             },
-            stubs: {
-                NumberWidget: {
-                    template: '<div />',
-                    methods: {
-                        validate: vi.fn(),
-                        onChange: vi.fn()
+            global: {
+                stubs: {
+                    NumberWidget: {
+                        template: '<div />',
+                        methods: {
+                            validate: vi.fn(),
+                            onChange: vi.fn()
+                        }
                     }
                 }
-            },
-            listeners: {
-                fakeEvent: vi.fn()
             }
         };
     });
@@ -47,17 +47,17 @@ describe('DoubleWidget.vue', () => {
         let wrapper = shallowMount(DoubleWidget, mountOptions);
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(mountOptions.stubs.NumberWidget).exists()).toBeTruthy();
+        expect(wrapper.findComponent(mountOptions.global.stubs.NumberWidget).exists()).toBeTruthy();
     });
 
     it('passes-through all props', () => {
         let wrapper = shallowMount(DoubleWidget, mountOptions);
-        expect(wrapper.find(mountOptions.stubs.NumberWidget).vm.$attrs).toEqual(mountOptions.props);
+        expect(wrapper.findComponent(mountOptions.global.stubs.NumberWidget).vm.$attrs).toEqual(mountOptions.props);
     });
 
     it('passes-through all listeners', () => {
         let wrapper = shallowMount(DoubleWidget, mountOptions);
-        expect(wrapper.find(mountOptions.stubs.NumberWidget).vm.$listeners).toHaveProperty('fakeEvent');
+        expect(wrapper.findComponent(mountOptions.global.stubs.NumberWidget).vm.$attrs.onFakeEvent).toBeDefined();
     });
 
     describe('passes-through methods', () => {
@@ -68,14 +68,14 @@ describe('DoubleWidget.vue', () => {
         });
 
         it('validate', () => {
-            let validate = mountOptions.stubs.NumberWidget.methods.validate;
+            let validate = mountOptions.global.stubs.NumberWidget.methods.validate;
             expect(validate).not.toBeCalled();
             wrapper.vm.validate();
             expect(validate).toBeCalled();
         });
     
         it('onChange', () => {
-            let onChange = mountOptions.stubs.NumberWidget.methods.onChange;
+            let onChange = mountOptions.global.stubs.NumberWidget.methods.onChange;
             expect(onChange).not.toBeCalled();
             wrapper.vm.onChange();
             expect(onChange).toBeCalled();

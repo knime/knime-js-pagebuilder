@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import TextWidget from '@/components/widgets/output/TextWidget.vue';

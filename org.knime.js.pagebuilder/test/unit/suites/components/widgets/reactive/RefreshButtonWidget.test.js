@@ -1,6 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, mount } from '@vue/test-utils';
+import { expect, describe, beforeAll, beforeEach, it } from 'vitest';
+import { createStore } from 'vuex';
+import { mount } from '@vue/test-utils';
 
 import RefreshButtonWidget from '@/components/widgets/reactive/RefreshButtonWidget.vue';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
@@ -10,17 +10,17 @@ import Button from 'webapps-common/ui/components/Button.vue';
 import * as storeConfig from '@/store/pagebuilder';
 
 describe('RefreshButtonWidget.vue', () => {
-    let props, store, localVue, context;
+    let props, store, context;
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
-        store = new Vuex.Store({ modules: { pagebuilder: storeConfig } });
+        store = createStore({ modules: { pagebuilder: storeConfig } });
 
         context = {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
     });
 
@@ -69,7 +69,7 @@ describe('RefreshButtonWidget.vue', () => {
         expect(wrapper.isVisible()).toBeTruthy();
         expect(wrapper.findComponent(Label).text()).toContain('Imma label!');
         expect(wrapper.findComponent(Label).attributes('title')).toBe('Imma description!');
-        expect(wrapper.findComponent(Button).text()).toBe('Imma button!');
+        expect(wrapper.find('.refresh-button').text()).toBe('Imma button!');
     });
 
     it('has no error message when valid', () => {
@@ -92,16 +92,18 @@ describe('RefreshButtonWidget.vue', () => {
         expect(wrapper.findComponent(ErrorMessage).text()).toBe(errorMessage);
     });
 
-    it('emits an updateWidget event on click', () => {
+    it('emits an updateWidget event on click', async () => {
         let wrapper = mount(RefreshButtonWidget, { ...context, props });
-        wrapper.findComponent(Button).trigger('click');
-        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({ nodeId: '13:0:12' });
+        await wrapper.find('.refresh-button').trigger('click');
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({ nodeId: '13:0:12' });
     });
 
-    it('disables the button when nodes are re-executing', () => {
+    it('disables the button when nodes are re-executing', async () => {
         let wrapper = mount(RefreshButtonWidget, { ...context, props });
+        expect(wrapper.vm.isExecuting).toBeFalsy();
         wrapper.vm.$store.dispatch('pagebuilder/setNodesReExecuting', ['13:0:12']);
         expect(wrapper.vm.isExecuting).toBeTruthy();
-        expect(wrapper.findComponent(Button).attributes().disabled).toBeTruthy();
+        await wrapper.vm.$nextTick();
+        expect(wrapper.findComponent(Button).vm.$attrs.disabled).toBeTruthy();
     });
 });

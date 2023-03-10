@@ -59,7 +59,7 @@ export default defineConfig(({ mode }) => {
             ]
         },
         test: {
-            include: ['test/**/views/**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+            include: ['test/**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
             environment: 'jsdom',
             reporters: ['default', 'junit'],
             deps: { inline: ['consola'] },

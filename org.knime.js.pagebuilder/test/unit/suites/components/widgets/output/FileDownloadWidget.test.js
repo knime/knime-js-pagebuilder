@@ -1,9 +1,9 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { createLocalVue, mount } from '@vue/test-utils';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
 
 import FileDownloadWidget from '@/components/widgets/output/FileDownloadWidget.vue';
 import FileLink from 'webapps-common/ui/components/FileLink.vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
 const downloadResourceLinkMock = vi.fn();
 
@@ -14,13 +14,11 @@ let storeConfig = {
 };
 
 describe('FileDownloadWidget.vue', () => {
-    let props, store, localVue;
+    let props, store;
 
     beforeEach(() => {
         // we do this before each as beforeAll the mockReturn value is always the first set and cannot be changed
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-        store = new Vuex.Store({
+        store = createStore({
             modules: {
                 api: storeConfig
             }
@@ -78,8 +76,11 @@ describe('FileDownloadWidget.vue', () => {
         const link = 'https://example.com/myfile';
         downloadResourceLinkMock.mockReturnValue(() => link);
         let wrapper = mount(FileDownloadWidget, {
-            store,
-            localVue,
+            global: {
+                mocks: {
+                    $store: store
+                }
+            },
             props
         });
         expect(wrapper.html()).toBeTruthy();
@@ -94,8 +95,11 @@ describe('FileDownloadWidget.vue', () => {
     it('shows error if no downloadResourceLink api is available', () => {
         downloadResourceLinkMock.mockReturnValue(null);
         let wrapper = mount(FileDownloadWidget, {
-            store,
-            localVue,
+            global: {
+                mocks: {
+                    $store: store
+                }
+            },
             props
         });
         expect(wrapper.html()).toBeTruthy();
@@ -109,8 +113,11 @@ describe('FileDownloadWidget.vue', () => {
         downloadResourceLinkMock.mockReturnValue(null);
         window.KnimePageLoader = {};
         let wrapper = mount(FileDownloadWidget, {
-            store,
-            localVue,
+            global: {
+                mocks: {
+                    $store: store
+                }
+            },
             props
         });
         expect(wrapper.html()).toBeTruthy();

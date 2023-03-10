@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it } from 'vitest';
 /* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
@@ -9,7 +9,7 @@ import customIcon from 'webapps-common/ui/assets/img/icons/activity.svg';
 import customSelectedIcon from 'webapps-common/ui/assets/img/icons/cart.svg';
 
 describe('TreeSelect.vue', () => {
-    let context, props;
+    let props;
 
     beforeEach(() => {
         props = {
@@ -55,64 +55,37 @@ describe('TreeSelect.vue', () => {
     });
 
     it('renders', () => {
-        let wrapper = mount(TreeSelect, {
-            ...context,
-            props
-        });
+        const wrapper = mount(TreeSelect, { props });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
     it('renders custom icon', () => {
-        let wrapper = mount(TreeSelect, {
-            ...context,
-            props
-        });
-        expect(wrapper.findComponent(TreeSelectItem).find(customIcon).isVisible()).toBeTruthy();
-        expect(wrapper.findComponent(TreeSelectItem).find(customSelectedIcon).exists()).toBeFalsy();
+        const wrapper = mount(TreeSelect, { props });
+        expect(wrapper.findComponent(TreeSelectItem).findComponent(customIcon).isVisible()).toBeTruthy();
+        expect(wrapper.findComponent(TreeSelectItem).findComponent(customSelectedIcon).exists()).toBeFalsy();
     });
 
     it('renders custom selected icon', () => {
-        props.data[0].selected = true;
-        let wrapper = mount(TreeSelect, {
-            ...context,
-            props
-        });
-        expect(wrapper.findComponent(TreeSelectItem).find(customIcon).exists()).toBeFalsy();
-        expect(wrapper.findComponent(TreeSelectItem).find(customSelectedIcon).isVisible()).toBeTruthy();
+        props.data[0].selected = true; const wrapper = mount(TreeSelect, { props });
+        expect(wrapper.findComponent(TreeSelectItem).findComponent(customIcon).exists()).toBeFalsy();
+        expect(wrapper.findComponent(TreeSelectItem).findComponent(customSelectedIcon).isVisible()).toBeTruthy();
     });
 
-    it('updates text in TreeSelectItem dynamically', () => {
-        let wrapper = mount(TreeSelect, {
-            ...context,
-            props
-        });
+    // TODO: Verify that merging this test with the previously next one is ok.
+    it('updates text in TreeSelectItem dynamically', async () => {
+        const wrapper = mount(TreeSelect, { props });
         const test = 'SOME_UNIQUE_TEST_STRING_34as834asjf';
         wrapper.vm.$props.data[0].text = test;
-        expect(wrapper.findComponent(TreeSelectItem).text()).toContain(test);
-    });
-
-    it('updates model of TreeSelectItem on data changes', () => {
-        let wrapper = mount(TreeSelect, {
-            ...context,
-            props
-        });
+        await wrapper.vm.$nextTick();
         const item = wrapper.findComponent(TreeSelectItem);
-        item.setProps({
-            data: {
-                text: 'changed',
-                value: 'c'
-            }
-        });
-        expect(item.vm.model.text).toStrictEqual('changed');
+        expect(item.text()).toContain(test);
+        expect(item.vm.model.text).toStrictEqual(test);
     });
 
     describe('mouse interaction', () => {
         it('selects item on click', () => {
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             expect(props.data[0].children[0].selected).toStrictEqual(true);
             expect(props.data[0].selected).toStrictEqual(false);
@@ -122,10 +95,7 @@ describe('TreeSelect.vue', () => {
         });
 
         it('opens children on double click', () => {
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             expect(props.data[0].opened).toBe(false);
 
@@ -137,10 +107,7 @@ describe('TreeSelect.vue', () => {
 
         it('closes children on double click if open', () => {
             props.data[0].opened = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             expect(props.data[0].opened).toBe(true);
 
@@ -153,10 +120,7 @@ describe('TreeSelect.vue', () => {
         it('ignores click on disabled item', () => {
             props.data[0].disabled = true;
 
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             expect(props.data[0].children[0].selected).toStrictEqual(true);
             expect(props.data[0].selected).toStrictEqual(false);
@@ -167,10 +131,7 @@ describe('TreeSelect.vue', () => {
 
         it('selects item on click even if multiple is active', () => {
             props.multiple = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             expect(props.data[0].children[0].selected).toStrictEqual(true);
             expect(props.data[0].selected).toStrictEqual(false);
@@ -181,10 +142,7 @@ describe('TreeSelect.vue', () => {
 
         it('adds item to selected on click if multiple selections is allowed', () => {
             props.multiple = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             expect(props.data[0].selected).toStrictEqual(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click', { ctrlKey: true });
@@ -195,10 +153,7 @@ describe('TreeSelect.vue', () => {
         it('removes item from selected items on ctrl + click', () => {
             props.multiple = true;
             props.data[0].selected = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             wrapper.findAll('.tree-anchor').at(0).trigger('click', { ctrlKey: true });
             expect(props.data[0].selected).toStrictEqual(false);
@@ -207,10 +162,7 @@ describe('TreeSelect.vue', () => {
 
         it('selects multiple items on shift + click', () => {
             props.multiple = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             // index is different because list contains all items also nested ones
@@ -227,10 +179,7 @@ describe('TreeSelect.vue', () => {
 
         it('selects only clicked item if levels mismatch on shift + click', () => {
             props.multiple = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             // index is different because list contains all items also nested ones
@@ -245,10 +194,7 @@ describe('TreeSelect.vue', () => {
 
         it('marks hovered items', () => {
             props.multiple = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
             const anchor = wrapper.find('.tree-anchor');
             const item = wrapper.findComponent(TreeSelectItem);
 
@@ -260,10 +206,7 @@ describe('TreeSelect.vue', () => {
 
         it('removes keyboard navigation state on hover', () => {
             props.data[0].opened = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
 
@@ -282,10 +225,7 @@ describe('TreeSelect.vue', () => {
 
     describe('keyboard interaction', () => {
         it('navigates up using up key', () => {
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             anchors.at(6).trigger('click', {});
@@ -297,10 +237,7 @@ describe('TreeSelect.vue', () => {
 
         it('navigates across levels using up key', () => {
             props.data[0].opened = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             anchors.at(2).trigger('click', {});
@@ -311,10 +248,7 @@ describe('TreeSelect.vue', () => {
         });
 
         it('does not navigate down using up key if we reached the top', async () => {
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
             const items = wrapper.findAllComponents(TreeSelectItem);
 
             await wrapper.setData({
@@ -329,10 +263,7 @@ describe('TreeSelect.vue', () => {
         });
 
         it('navigates down using down key', () => {
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             // last clicked one is starting point
@@ -348,10 +279,7 @@ describe('TreeSelect.vue', () => {
                 value: 'lastChild',
                 text: 'Last Child'
             }];
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
             const items = wrapper.findAllComponents(TreeSelectItem);
 
             await wrapper.setData({
@@ -367,10 +295,7 @@ describe('TreeSelect.vue', () => {
 
         it('navigates across levels using down key', async () => {
             props.data[0].opened = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const items = wrapper.findAllComponents(TreeSelectItem);
 
@@ -387,10 +312,7 @@ describe('TreeSelect.vue', () => {
 
         it('navigates into open tree using down key', () => {
             props.data[0].opened = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
@@ -400,10 +322,7 @@ describe('TreeSelect.vue', () => {
 
         it('navigates into open tree using up key', () => {
             props.data[0].opened = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             anchors.at(4).trigger('mouseover', {});
@@ -416,10 +335,7 @@ describe('TreeSelect.vue', () => {
         });
 
         it('selects item on enter key', () => {
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             // last clicked one is starting point
@@ -439,10 +355,7 @@ describe('TreeSelect.vue', () => {
 
         it('does not select disabled item on enter key', () => {
             props.data[3].disabled = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             // last clicked one is starting point
@@ -462,10 +375,7 @@ describe('TreeSelect.vue', () => {
 
         it('adds item to selected on enter + ctrl', () => {
             props.multiple = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             // last clicked one is starting point
@@ -484,10 +394,7 @@ describe('TreeSelect.vue', () => {
         });
 
         it('opens children on right arrow key', () => {
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             expect(props.data[0].opened).toBe(false);
 
@@ -501,10 +408,7 @@ describe('TreeSelect.vue', () => {
 
         it('closes children on left arrow key', () => {
             props.data[0].opened = true;
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const anchors = wrapper.findAll('.tree-anchor');
             anchors.at(0).trigger('click', {});
@@ -516,10 +420,7 @@ describe('TreeSelect.vue', () => {
 
         it('does not break on empty tree', () => {
             props.data = [];
-            let wrapper = mount(TreeSelect, {
-                ...context,
-                props
-            });
+            const wrapper = mount(TreeSelect, { props });
 
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.up');
@@ -531,11 +432,7 @@ describe('TreeSelect.vue', () => {
     });
 
     it('scrolls to element correctly', () => {
-        props.data = [];
-        let wrapper = shallowMount(TreeSelect, {
-            ...context,
-            props
-        });
+        props.data = []; const wrapper = shallowMount(TreeSelect, { props });
         const scrollToElement = wrapper.vm.scrollToElement;
 
         let area = {

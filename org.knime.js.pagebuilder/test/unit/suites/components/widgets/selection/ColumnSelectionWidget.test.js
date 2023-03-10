@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import ColumnSelectionWidget from '@/components/widgets/selection/ColumnSelectionWidget.vue';
@@ -122,8 +122,8 @@ describe('ColumnSelectionWidget.vue', () => {
         });
 
         const testValue = 'VALUE';
-        const lb = wrapper.find({ ref: 'form' });
-        lb.vm.$emit('input', testValue);
+        const lb = wrapper.findComponent({ ref: 'form' });
+        lb.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -161,12 +161,14 @@ describe('ColumnSelectionWidget.vue', () => {
             propsColumnSelectionList.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(ColumnSelectionWidget, {
                 props: propsColumnSelectionList,
-                stubs: {
-                    SingleSelect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValueOnce(false)
-                                .mockReturnValueOnce(true)
+                global: {
+                    stubs: {
+                        SingleSelect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValueOnce(false)
+                                    .mockReturnValueOnce(true)
+                            }
                         }
                     }
                 }
@@ -180,13 +182,15 @@ describe('ColumnSelectionWidget.vue', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(ColumnSelectionWidget, {
                 props: propsColumnSelectionList,
-                stubs: {
-                    SingleSelect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValue(true),
-                            validate: vi.fn().mockReturnValueOnce(childResponse)
-                                .mockReturnValueOnce({ isValid: false })
+                global: {
+                    stubs: {
+                        SingleSelect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValue(true),
+                                validate: vi.fn().mockReturnValueOnce(childResponse)
+                                    .mockReturnValueOnce({ isValid: false })
+                            }
                         }
                     }
                 }

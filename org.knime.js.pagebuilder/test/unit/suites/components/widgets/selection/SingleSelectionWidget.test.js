@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SingleSelectionWidget from '@/components/widgets/selection/SingleSelectionWidget.vue';
@@ -363,7 +363,7 @@ describe('SingleSelectionWidget.vue', () => {
 
         const testValue = 'VALUE';
         const lb = wrapper.findComponent(SingleSelect);
-        lb.vm.$emit('input', testValue);
+        lb.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -392,12 +392,14 @@ describe('SingleSelectionWidget.vue', () => {
             propsList.nodeConfig.viewRepresentation.required = true;
             let wrapper = mount(SingleSelectionWidget, {
                 props: propsList,
-                stubs: {
-                    SingleSelect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValueOnce(false)
-                                .mockReturnValueOnce(true)
+                global: {
+                    stubs: {
+                        SingleSelect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValueOnce(false)
+                                    .mockReturnValueOnce(true)
+                            }
                         }
                     }
                 }
@@ -412,9 +414,11 @@ describe('SingleSelectionWidget.vue', () => {
             propsList.nodeConfig.viewRepresentation.possibleChoices = [];
             let wrapper = mount(SingleSelectionWidget, {
                 props: propsList,
-                stubs: {
-                    SingleSelect: {
-                        template: '<div />'
+                global: {
+                    stubs: {
+                        SingleSelect: {
+                            template: '<div />'
+                        }
                     }
                 }
             });
@@ -426,13 +430,15 @@ describe('SingleSelectionWidget.vue', () => {
             let childResponse = { isValid: false, errorMessage: 'test Error Message' };
             let wrapper = mount(SingleSelectionWidget, {
                 props: propsList,
-                stubs: {
-                    SingleSelect: {
-                        template: '<div />',
-                        methods: {
-                            hasSelection: vi.fn().mockReturnValue(true),
-                            validate: vi.fn().mockReturnValueOnce(childResponse)
-                                .mockReturnValueOnce({ isValid: false })
+                global: {
+                    stubs: {
+                        SingleSelect: {
+                            template: '<div />',
+                            methods: {
+                                hasSelection: vi.fn().mockReturnValue(true),
+                                validate: vi.fn().mockReturnValueOnce(childResponse)
+                                    .mockReturnValueOnce({ isValid: false })
+                            }
                         }
                     }
                 }

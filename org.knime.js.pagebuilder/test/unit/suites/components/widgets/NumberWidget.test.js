@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { shallowMount, mount } from '@vue/test-utils';
 
 import NumberWidget from '@/components/widgets/NumberWidget.vue';
@@ -80,7 +80,7 @@ describe('NumberWidget.vue', () => {
 
         const testValue = '5';
         const input = wrapper.findComponent(NumberInput);
-        input.vm.$emit('input', testValue);
+        input.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -105,10 +105,18 @@ describe('NumberWidget.vue', () => {
 
     it('has validate logic to invalidate required values', () => {
         let wrapper = mount(NumberWidget, {
-            props
+            props,
+            global: {
+                stubs: {
+                    NumberInput: {
+                        template: '<div/>',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(NaN)
+                        }
+                    }
+                }
+            }
         });
-
-        wrapper.findComponent(NumberInput).setProps({ value: null });
 
         expect(wrapper.vm.validate()).toStrictEqual({ errorMessage: 'Current value is not a number.', isValid: false });
     });
@@ -116,12 +124,14 @@ describe('NumberWidget.vue', () => {
     it('takes child validation in favor of parent validation', () => {
         let wrapper = mount(NumberWidget, {
             props,
-            stubs: {
-                NumberInput: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue(null),
-                        validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
+            global: {
+                stubs: {
+                    NumberInput: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(null),
+                            validate: vi.fn().mockReturnValue({ isValid: true, errorMessage: null })
+                        }
                     }
                 }
             }
@@ -132,12 +142,14 @@ describe('NumberWidget.vue', () => {
     it('takes child error message over parent error message', () => {
         let wrapper = mount(NumberWidget, {
             props,
-            stubs: {
-                NumberInput: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue(null),
-                        validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+            global: {
+                stubs: {
+                    NumberInput: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(null),
+                            validate: vi.fn().mockReturnValue({ isValid: false, errorMessage: 'test Error Message' })
+                        }
                     }
                 }
             }
@@ -151,11 +163,13 @@ describe('NumberWidget.vue', () => {
         const validValue = 3;
         let wrapper = mount(NumberWidget, {
             props,
-            stubs: {
-                NumberInput: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue(validValue)
+            global: {
+                stubs: {
+                    NumberInput: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(validValue)
+                        }
                     }
                 }
             }
@@ -166,11 +180,13 @@ describe('NumberWidget.vue', () => {
     it('has error message', () => {
         let wrapper = mount(NumberWidget, {
             props,
-            stubs: {
-                NumberInput: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue('abc')
+            global: {
+                stubs: {
+                    NumberInput: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue('abc')
+                        }
                     }
                 }
             }
@@ -184,11 +200,13 @@ describe('NumberWidget.vue', () => {
         props.nodeConfig.viewRepresentation.min = 10;
         let wrapper = mount(NumberWidget, {
             props,
-            stubs: {
-                NumberInput: {
-                    template: '<div />',
-                    methods: {
-                        getValue: vi.fn().mockReturnValue(invalidValue)
+            global: {
+                stubs: {
+                    NumberInput: {
+                        template: '<div />',
+                        methods: {
+                            getValue: vi.fn().mockReturnValue(invalidValue)
+                        }
                     }
                 }
             }

@@ -1,12 +1,11 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { createLocalVue, mount } from '@vue/test-utils';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
 
 import FileUploadWidget from '@/components/widgets/input/FileUploadWidget.vue';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
-import Vuex from 'vuex';
-import Vue from 'vue';
+import { createStore } from 'vuex';
 
-const uploadResourceMock = vi.fn().mockReturnValue(() => ({ errorResponse: {}, response: {} }));
+const uploadResourceMock = vi.fn().mockReturnValue(() => Promise.resolve({ errorResponse: false, response: {} }));
 const cancelUploadResourceMock = vi.fn().mockReturnValue(() => {});
 const file = { size: 1000, type: 'image/png', name: 'avatar.png' };
 const event = {
@@ -23,13 +22,11 @@ let storeConfig = {
 };
 
 describe('FileUploadWidget.vue', () => {
-    let props, store, localVue;
+    let props, store;
 
     beforeEach(() => {
         // we do this before each as beforeAll the mockReturn value is always the first set and cannot be changed
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-        store = new Vuex.Store({
+        store = createStore({
             modules: {
                 api: storeConfig
             }
@@ -83,9 +80,7 @@ describe('FileUploadWidget.vue', () => {
 
     it('renders', () => {
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
-            props
+            global: { mocks: { $store: store } }, props
         });
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
@@ -97,36 +92,40 @@ describe('FileUploadWidget.vue', () => {
     });
 
     it('triggers input on click', () => {
-        const triggerInputMock = vi.fn();
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
-            props,
-            methods: {
-                triggerInput: triggerInputMock
-            }
+            global: {
+                mocks: {
+                    $store: store
+                }
+            },
+            props
+        });
+        let clicked = false;
+        wrapper.vm.$refs.input.addEventListener('click', () => {
+            clicked = true;
         });
         wrapper.find('.upload-wrapper .button').trigger('click');
-        expect(triggerInputMock).toHaveBeenCalled();
+        expect(clicked).toBeTruthy();
     });
 
-    it('uploads file correctly', () => {
+    it('uploads file correctly', async () => {
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
-            props
+            global: { mocks: { $store: store } }, props
         });
 
         expect(wrapper.vm.$data.localFileName).toEqual(null);
         wrapper.vm.onChange(event);
+        await wrapper.vm.$nextTick();
         expect(wrapper.vm.$data.localFileName).toEqual('avatar.png');
         expect(wrapper.find('.show-bar').exists()).toBe(true);
         expect(wrapper.find('.upload-wrapper p svg').exists()).toBe(false);
         wrapper.vm.setUploadProgress(2);
         expect(wrapper.find('.upload-wrapper button').text()).toEqual('Cancel');
+        await wrapper.vm.$nextTick();
         expect(wrapper.find('.progress-bar span').text()).toBe('2%');
         expect(wrapper.find('.progress-bar').attributes('style')).toBe('width: 2%;');
         wrapper.vm.setUploadProgress(100);
+        await wrapper.vm.$nextTick();
         expect(wrapper.find('.show-bar').exists()).toBe(false);
         expect(wrapper.find('.upload-wrapper p svg').exists()).toBe(true);
         expect(wrapper.find('.upload-wrapper button').text()).toEqual('Select file');
@@ -134,9 +133,7 @@ describe('FileUploadWidget.vue', () => {
 
     it('keeps current file in case upload gets canceled', () => {
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
-            props
+            global: { mocks: { $store: store } }, props
         });
 
         expect(wrapper.vm.$data.localFileName).toEqual(null);
@@ -148,8 +145,7 @@ describe('FileUploadWidget.vue', () => {
 
     it('invalidates if no input is given on second validate', () => {
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
+            global: { mocks: { $store: store } },
             props: {
                 ...props,
                 nodeConfig: {
@@ -173,8 +169,7 @@ describe('FileUploadWidget.vue', () => {
 
     it('checks if still uploading', async () => {
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
+            global: { mocks: { $store: store } },
             props
         });
         await wrapper.setData({ initialized: true });
@@ -185,10 +180,9 @@ describe('FileUploadWidget.vue', () => {
         });
     });
 
-    it('checks for wrong file extension', () => {
+    it('checks for wrong file extension', async () => {
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
+            global: { mocks: { $store: store } },
             props: {
                 ...props,
                 nodeConfig: {
@@ -200,9 +194,9 @@ describe('FileUploadWidget.vue', () => {
                 },
                 valuePair: {
                     '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
-                    fileName: '',
+                    fileName: 'avatar.pdf',
                     pathValid: false,
-                    path: '/Users/testUser/avatar.pdf'
+                    path: '/Users/s/'
                 }
             }
         });
@@ -213,9 +207,9 @@ describe('FileUploadWidget.vue', () => {
         await wrapper.setProps({
             valuePair: {
                 '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
-                fileName: '',
+                fileName: 'avatar.PDF',
                 pathValid: false,
-                path: '/Users/testUser/avatar.PDF'
+                path: '/Users/testUser/'
             }
         });
         expect(wrapper.vm.validate()).toEqual({
@@ -225,9 +219,9 @@ describe('FileUploadWidget.vue', () => {
         await wrapper.setProps({
             valuePair: {
                 '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
-                fileName: '',
+                fileName: 'avatar.png',
                 pathValid: false,
-                path: '/Users/testUser/avatar.png'
+                path: '/Users/testUser/'
             }
         });
         expect(wrapper.vm.validate()).toEqual({
@@ -244,9 +238,9 @@ describe('FileUploadWidget.vue', () => {
             },
             valuePair: {
                 '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
-                fileName: '',
+                fileName: 'avatar.pdf',
                 pathValid: false,
-                path: '/Users/testUser/avatar.pdf'
+                path: '/Users/testUser/'
             }
         });
         expect(wrapper.vm.validate()).toEqual({
@@ -256,9 +250,9 @@ describe('FileUploadWidget.vue', () => {
         await wrapper.setProps({
             valuePair: {
                 '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
-                fileName: '',
+                fileName: 'avatar.png',
                 pathValid: false,
-                path: '/Users/testUser/avatar.png'
+                path: '/Users/testUser/'
             }
         });
         expect(wrapper.vm.validate()).toEqual({
@@ -275,13 +269,12 @@ describe('FileUploadWidget.vue', () => {
         });
 
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
-            props
+            global: { mocks: { $store: store } }, props
         });
         await wrapper.setData({ uploadAPI: uploadErrorResourceMock });
         wrapper.vm.onChange(event);
-        await Vue.nextTick();
+        await wrapper.vm.$nextTick();
+        await wrapper.vm.$nextTick();
         expect(wrapper.findComponent(ErrorMessage).props('error')).toEqual('Upload failed.');
     });
 
@@ -293,16 +286,15 @@ describe('FileUploadWidget.vue', () => {
         });
 
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
-            props
+            global: { mocks: { $store: store } }, props
         });
         await wrapper.setData({ uploadAPI: uploadErrorResourceMock });
 
         wrapper.vm.onChange(event);
+        await wrapper.vm.$nextTick();
         expect(wrapper.find('.upload-wrapper button').text()).toEqual('Cancel');
         wrapper.find('.upload-wrapper button').trigger('click');
-        await Vue.nextTick();
+        await wrapper.vm.$nextTick();
         expect(cancelUploadResourceMock).toHaveBeenCalled();
         expect(wrapper.findComponent(ErrorMessage).props('error')).toEqual('Upload cancelled.');
     });
@@ -311,8 +303,7 @@ describe('FileUploadWidget.vue', () => {
         let uploadResourceMock = vi.fn();
         window.KnimePageLoader = { /* empty mock simulates AP wrapper API */ };
         let wrapper = mount(FileUploadWidget, {
-            store,
-            localVue,
+            global: { mocks: { $store: store } },
             props
         });
         await wrapper.setData({ uploadAPI: uploadResourceMock });

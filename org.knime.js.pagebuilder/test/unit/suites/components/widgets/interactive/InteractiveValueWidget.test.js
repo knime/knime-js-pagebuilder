@@ -1,6 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { createLocalVue, mount, shallowMount } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
+import { mount, shallowMount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
 import * as interactiveConfig from '@/store/interactivity';
 
@@ -11,7 +11,7 @@ import Label from 'webapps-common/ui/components/forms/Label.vue';
 import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
 
 describe('InteractiveValueWidget.vue', () => {
-    let props, localVue, store, context;
+    let props, store, context;
 
     beforeEach(() => {
         props = {
@@ -67,14 +67,14 @@ describe('InteractiveValueWidget.vue', () => {
             isValid: false
         };
 
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
-        store = new Vuex.Store({ modules: { 'pagebuilder/interactivity': interactiveConfig } });
+        store = createStore({ modules: { 'pagebuilder/interactivity': interactiveConfig } });
 
         context = {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
     });
 
@@ -148,14 +148,14 @@ describe('InteractiveValueWidget.vue', () => {
     });
 
     it('sends @updateWidget if child emits @input', () => {
-        let wrapper = shallowMount(InteractiveValueWidget, {
+        let wrapper = mount(InteractiveValueWidget, {
             ...context,
             props
         });
 
         const testValue = ['VALUE2'];
         const comp = wrapper.findComponent(SingleSelect);
-        comp.vm.$emit('input', testValue);
+        comp.vm.$emit('update:modelValue', testValue);
 
         expect(wrapper.emitted().updateWidget).toBeTruthy();
         expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
@@ -179,7 +179,7 @@ describe('InteractiveValueWidget.vue', () => {
                 ...context,
                 props
             });
-            vi.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => undefined);
+            vi.spyOn(wrapperBroken.vm, 'getValue').mockImplementation(() => {});
             expect(wrapperBroken.vm.validate().isValid).toBe(false);
         });
     });
