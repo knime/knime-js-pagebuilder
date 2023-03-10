@@ -143,7 +143,7 @@ describe('FileChooserWidget.vue AP', () => {
             props
         });
         props.nodeConfig.viewRepresentation.tree = null;
-        wrapper.setProps(JSON.parse(JSON.stringify(props)));
+        await wrapper.setProps(JSON.parse(JSON.stringify(props)));
         expect(wrapper.html()).toBeTruthy();
         expect(wrapper.isVisible()).toBeTruthy();
     });
@@ -153,7 +153,7 @@ describe('FileChooserWidget.vue AP', () => {
             props
         });
         props.nodeConfig.viewRepresentation.tree = [];
-        wrapper.setProps(JSON.parse(JSON.stringify(props)));
+        await wrapper.setProps(JSON.parse(JSON.stringify(props)));
         await Vue.nextTick();
         expect(wrapper.vm.treeData).toStrictEqual([]);
     });
@@ -328,7 +328,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
         });
         await Vue.nextTick();
         props.nodeConfig.viewRepresentation.tree = [];
-        wrapper.setProps(JSON.parse(JSON.stringify(props)));
+        await wrapper.setProps(JSON.parse(JSON.stringify(props)));
         expect(wrapper.vm.treeData).toStrictEqual([]);
     });
 

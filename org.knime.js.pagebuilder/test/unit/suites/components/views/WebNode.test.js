@@ -48,14 +48,14 @@ describe('WebNode.vue', () => {
         expect(wrapper.findComponent(WebNodeIFrame).exists()).toBeFalsy();
     });
 
-    it('increments key when nodeConfig updates', () => {
+    it('increments key when nodeConfig updates', async () => {
         let wrapper = shallowMount(WebNode, {
             props: getMockIFrameProps()
         });
         expect(wrapper.vm.nodeViewIFrameKey).toBe(0);
         let { nodeConfig } = getMockIFrameProps();
         nodeConfig.foo = 'baz';
-        wrapper.setProps({ nodeConfig });
+        await wrapper.setProps({ nodeConfig });
         expect(wrapper.vm.nodeViewIFrameKey).toBe(1);
     });
 

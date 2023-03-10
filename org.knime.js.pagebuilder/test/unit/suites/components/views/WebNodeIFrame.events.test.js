@@ -1,29 +1,26 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { expect, describe, beforeAll, beforeEach, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import WebNodeIFrame from '@/components/views/WebNodeIFrame.vue';
 
-import * as storeConfig from '@/../store/pagebuilder';
-import * as alertStoreConfig from '@/../store/alert';
+import * as storeConfig from '@/store/pagebuilder';
+import * as alertStoreConfig from '@/store/alert';
 
 // extra mock to simulate a loaded view script
-vi.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
-    foo = ['%NODEID%'];`, { virtual: true });
-vi.mock('raw-loader!./injectedScripts/viewAlertHandler.js', () => `"viewAlertHandler.js mock";
-    foo = ['%NODEID%'];`, { virtual: true });
-vi.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js mock";
-    foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`, { virtual: true });
+vi.mock('@/components/views/injectedScripts/loadErrorHandler.js?raw', () => ({ default: `"loadErrorHandler.js mock";
+    foo = ['%NODEID%'];` }), { virtual: true });
+vi.mock('@/components/views/injectedScripts/viewAlertHandler.js?raw', () => ({ default: `"viewAlertHandler.js mock";
+    foo = ['%NODEID%'];` }), { virtual: true });
+vi.mock('@/components/views/injectedScripts/scriptLoader.js?raw', () => ({ default: `"scriptLoader.js mock";
+    foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];` }), { virtual: true });
 vi.mock('iframe-resizer/js/iframeResizer');
 
 describe('WebNodeIFrame.vue', () => {
-    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
+    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, context, mockGetPublishedData,
         mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
         storeConfig.actions.setWebNodeLoading = vi.fn();
         mockGetPublishedData = vi.fn();
         interactivityConfig = {
@@ -70,7 +67,7 @@ describe('WebNodeIFrame.vue', () => {
                 getCustomSketcherPath: vi.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
         };
-        store = new Vuex.Store({
+        store = createStore({
             modules: {
                 pagebuilder: storeConfig,
                 'pagebuilder/interactivity': interactivityConfig,
@@ -102,8 +99,11 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         context = {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
         window.origin = window.location.origin;
     });
@@ -120,7 +120,7 @@ describe('WebNodeIFrame.vue', () => {
 
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
-                attachToDocument: true,
+                attachTo: document.body,
                 props: {
                     viewConfig: { nodeID: nodeId },
                     nodeConfig: {
@@ -187,8 +187,8 @@ describe('WebNodeIFrame.vue', () => {
                 namespace: 'knimespace',
                 initMethodName: 'init',
                 type: 'init',
-                viewRepresentation: {},
-                viewValue: {}
+                viewRepresentation: '{}',
+                viewValue: '{}'
             }, window.origin);
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();

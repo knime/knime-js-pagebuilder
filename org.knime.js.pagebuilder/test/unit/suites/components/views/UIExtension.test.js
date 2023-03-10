@@ -1,6 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
 vi.mock('@knime/ui-extension-service');
 
@@ -20,7 +20,7 @@ import { viewConfig } from '../../../assets/views/viewConfig';
 
 
 describe('UIExtension.vue', () => {
-    const createStore = ({
+    const createPagebuilderStore = ({
         callServiceMock = vi.fn(),
         pushNotificationMock = vi.fn(),
         registerServiceMock,
@@ -52,25 +52,35 @@ describe('UIExtension.vue', () => {
         if (deregisterServiceMock) {
             storeConfig.modules['pagebuilder/service'].actions.deregisterService = deregisterServiceMock;
         }
-        return new Vuex.Store(storeConfig);
+        return createStore(storeConfig);
     };
 
-    const getMockIFrameProps = () => ({ extensionConfig: { ...iFrameExtensionConfig }, viewConfig: { ...viewConfig } });
+    const getMockIFrameProps = () => (
+        {
+            extensionConfig: { ...iFrameExtensionConfig },
+            viewConfig: { ...viewConfig }
+        }
+    );
 
-    const getMockComponentProps = () => ({ extensionConfig: { ...componentExtensionConfig }, viewConfig: { ...viewConfig } });
+    const getMockComponentProps = () => (
+        {
+            extensionConfig: { ...componentExtensionConfig },
+            viewConfig: { ...viewConfig }
+        }
+    );
 
-    let localVue, context;
+    let context;
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
         context = {
-            store: createStore({
-                callServiceMock: vi.fn(),
-                registerServiceMock: vi.fn()
-            }),
-            localVue
+            global: {
+                mocks: {
+                    $store: createPagebuilderStore({
+                        callServiceMock: vi.fn(),
+                        registerServiceMock: vi.fn()
+                    })
+                }
+            }
         };
     });
 
@@ -96,49 +106,48 @@ describe('UIExtension.vue', () => {
         expect(wrapper.findComponent(UIExtComponent).exists()).toBeFalsy();
     });
 
-    it('increments key on UIExtIFrame when node info updates', () => {
+    it('increments key on UIExtIFrame when node info updates', async () => {
         let wrapper = shallowMount(UIExtension, {
             ...context,
             props: getMockIFrameProps()
         });
-        const startingLocalKey = wrapper.vm.configKey;
-        const startingIFrameKey = wrapper.findComponent(UIExtIFrame).vm.$vnode.key;
-        expect(startingLocalKey).toBe(0);
-        expect(startingIFrameKey).toBe(0);
+        const uiExtIFrameBefore = wrapper.findComponent(UIExtIFrame).vm;
         let { extensionConfig } = getMockIFrameProps();
         extensionConfig.resourceInfo.url = 'http://localhost:8080/your_iframe_widget.html';
-        wrapper.setProps({ extensionConfig });
-        expect(wrapper.vm.configKey).toBeGreaterThan(startingLocalKey);
-        expect(wrapper.findComponent(UIExtIFrame).vm.$vnode.key).toBeGreaterThan(startingIFrameKey);
+        
+        await wrapper.setProps({ extensionConfig });
+
+        expect(wrapper.findComponent(UIExtIFrame).vm).not.toBe(uiExtIFrameBefore);
     });
 
-    it('increments key on UIExtComponent when node info updates', () => {
+    it('increments key on UIExtComponent when node info updates', async () => {
         let wrapper = shallowMount(UIExtension, {
             ...context,
             props: getMockComponentProps()
         });
-        const startingLocalKey = wrapper.vm.configKey;
-        const startingComponentKey = wrapper.findComponent(UIExtComponent).vm.$vnode.key;
-        expect(startingLocalKey).toBe(0);
-        expect(startingComponentKey).toBe(0);
+        const uiExtComponentBefore = wrapper.findComponent(UIExtComponent).vm;
         let { extensionConfig } = getMockComponentProps();
         extensionConfig.resourceInfo.url = 'http://localhost:8080/your_vue_widget.html';
-        wrapper.setProps({ extensionConfig });
-        expect(wrapper.vm.configKey).toBeGreaterThan(startingLocalKey);
-        expect(wrapper.findComponent(UIExtComponent).vm.$vnode.key).toBeGreaterThan(startingComponentKey);
+        
+        await wrapper.setProps({ extensionConfig });
+
+        expect(wrapper.findComponent(UIExtComponent).vm).not.toBe(uiExtComponentBefore);
     });
 
     it('creates and registers a KnimeService instance during mount', () => {
         let registerServiceMock = vi.fn();
         let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
-            localVue,
-            store: createStore({ registerServiceMock }),
+            global: {
+                mocks: {
+                    $store: createPagebuilderStore({ registerServiceMock })
+                }
+            },
             props
         });
         expect(registerServiceMock).toHaveBeenCalledWith(expect.anything(), {
             service: expect.any(KnimeService)
-        }, expect.undefined);
+        });
         expect(KnimeService).toBeCalledWith(
             props.extensionConfig,
             wrapper.vm.callService,
@@ -150,21 +159,27 @@ describe('UIExtension.vue', () => {
         let pushNotificationMock = vi.fn();
         let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
-            localVue,
-            store: createStore({ pushNotificationMock }),
+            global: {
+                mocks: {
+                    $store: createPagebuilderStore({ pushNotificationMock })
+                }
+            },
             props
         });
         let notification = { agent: '007' };
         await wrapper.vm.pushNotification(notification);
-        expect(pushNotificationMock).toHaveBeenCalledWith(expect.anything(), notification, expect.undefined);
+        expect(pushNotificationMock).toHaveBeenCalledWith(expect.anything(), notification);
     });
 
     it('dispatches service calls to the api store', async () => {
         let callServiceMock = vi.fn();
         let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
-            localVue,
-            store: createStore({ callServiceMock }),
+            global: {
+                mocks: {
+                    $store: createPagebuilderStore({ callServiceMock })
+                }
+            },
             props
         });
         let requestParams = { agent: '007' };
@@ -176,7 +191,7 @@ describe('UIExtension.vue', () => {
             nodeService,
             serviceRequest,
             requestParams
-        }, expect.undefined);
+        });
     });
 
     describe('handling messages', () => {
@@ -186,8 +201,11 @@ describe('UIExtension.vue', () => {
             let pushNotificationMock = vi.fn();
             let props = getMockComponentProps();
             let wrapper = shallowMount(UIExtension, {
-                localVue,
-                store: createStore({ pushNotificationMock }),
+                global: {
+                    mocks: {
+                        $store: createPagebuilderStore({ pushNotificationMock })
+                    }
+                },
                 props
             });
             let handleAlertSpy = vi.spyOn(wrapper.vm, 'handleAlert');
@@ -198,7 +216,6 @@ describe('UIExtension.vue', () => {
         });
 
         it('displays alerts via extensionConfig', () => {
-            let handleAlertMock = vi.fn();
             const message = 'test error';
             let props = {
                 ...getMockComponentProps(),
@@ -210,15 +227,12 @@ describe('UIExtension.vue', () => {
                     }
                 }
             };
-            shallowMount(UIExtension, {
+            const wrapper = shallowMount(UIExtension, {
                 ...context,
-                localVue,
-                props,
-                methods: { handleAlert: handleAlertMock }
+                props
             });
             const expectedAlert = { message, type: 'error', subtitle: '', nodeId: props.extensionConfig.nodeId };
-            
-            expect(handleAlertMock).toHaveBeenCalledWith(expectedAlert);
+            expect(wrapper.vm.alert).toStrictEqual(expectedAlert);
         });
 
         it('sets alerts locally', () => {
@@ -246,53 +260,53 @@ describe('UIExtension.vue', () => {
             expect(wrapper.vm.alert).toBeFalsy();
         });
 
-        it('removes local alerts', () => {
+        it('removes local alerts', async () => {
             let wrapper = shallowMount(UIExtension, {
                 ...context,
                 props: getMockComponentProps()
             });
-            wrapper.setData({ alert: mockAlert });
+            await wrapper.setData({ alert: mockAlert });
             wrapper.vm.closeAlert(true);
             expect(wrapper.vm.alert).toBeFalsy();
         });
     });
 
     describe('displaying messages', () => {
-        it('displays error alerts', () => {
+        it('displays error alerts', async () => {
             let mockErrorAlert = { message: 'Shaken not stirred.', type: 'error' };
             let wrapper = shallowMount(UIExtension, {
                 ...context,
                 props: getMockComponentProps()
             });
             let showAlertSpy = vi.spyOn(wrapper.vm, 'showAlert');
-            wrapper.setData({ alert: mockErrorAlert });
+            await wrapper.setData({ alert: mockErrorAlert });
             let alertLocal = wrapper.findComponent(AlertLocal);
             expect(alertLocal.exists()).toBeTruthy();
             alertLocal.vm.$emit('showAlert');
             expect(showAlertSpy).toHaveBeenCalledWith(mockErrorAlert);
         });
 
-        it('displays warning alerts', () => {
+        it('displays warning alerts', async () => {
             let mockWarningAlert = { message: 'Bond, James Bond.', type: 'warn' };
             let wrapper = shallowMount(UIExtension, {
                 ...context,
                 props: getMockComponentProps()
             });
             let showAlertSpy = vi.spyOn(wrapper.vm, 'showAlert');
-            wrapper.setData({ alert: mockWarningAlert });
+            await wrapper.setData({ alert: mockWarningAlert });
             let warningButton = wrapper.findComponent(WarningLocal);
             expect(warningButton.exists()).toBeTruthy();
             warningButton.vm.$emit('click');
             expect(showAlertSpy).toHaveBeenCalledWith(mockWarningAlert);
         });
 
-        it('clears alerts', () => {
+        it('clears alerts', async () => {
             let mockWarningAlert = { message: 'M' };
             let wrapper = shallowMount(UIExtension, {
                 ...context,
                 props: getMockComponentProps()
             });
-            wrapper.setData({ alert: mockWarningAlert });
+            await wrapper.setData({ alert: mockWarningAlert });
             expect(wrapper.vm.alert).toStrictEqual(mockWarningAlert);
             wrapper.vm.closeAlert();
             // expect nothing
@@ -302,19 +316,22 @@ describe('UIExtension.vue', () => {
         });
     });
 
-    it('deregisters a KnimeService instance during destroy', () => {
+    it('deregisters a KnimeService instance during unmount', () => {
         let deregisterServiceMock = vi.fn();
         let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
-            localVue,
-            store: createStore({ deregisterServiceMock }),
+            global: {
+                mocks: {
+                    $store: createPagebuilderStore({ deregisterServiceMock })
+                }
+            },
             props
         });
         expect(deregisterServiceMock).not.toHaveBeenCalled();
-        wrapper.destroy();
+        wrapper.unmount();
         expect(deregisterServiceMock).toHaveBeenCalledWith(expect.anything(), {
             service: expect.any(KnimeService)
-        }, expect.undefined);
+        });
     });
 
     describe('styling', () => {
@@ -334,7 +351,6 @@ describe('UIExtension.vue', () => {
         });
 
         it('renders with classes and styles', () => {
-            let mockProps = getMockIFrameProps();
             let wrapper = shallowMount(UIExtension, {
                 ...context,
                 props: {

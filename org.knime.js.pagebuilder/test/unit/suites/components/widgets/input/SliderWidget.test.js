@@ -155,7 +155,7 @@ describe('SliderWidget.vue', () => {
 
     it('ignores connect settings if missing', () => {
         nodeConfig.viewRepresentation.sliderSettings.connect = null;
-        wrapper.setProps({
+        await wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
 
@@ -165,7 +165,7 @@ describe('SliderWidget.vue', () => {
     it('rounds values which exceed the supported precision', () => {
         nodeConfig.viewRepresentation.sliderSettings.range.min = [.000000001];
         nodeConfig.viewRepresentation.sliderSettings.range.max = [.999999999];
-        wrapper.setProps({
+        await wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
 
@@ -174,7 +174,7 @@ describe('SliderWidget.vue', () => {
     });
 
     it('can accept an array of values', () => {
-        wrapper.setProps({
+        await wrapper.setProps({
             valuePair: [0, 1]
         });
 
@@ -186,7 +186,7 @@ describe('SliderWidget.vue', () => {
 
         nodeConfig.viewRepresentation.sliderSettings.orientation = 'horizontal';
 
-        wrapper.setProps({
+        await wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
 
@@ -198,7 +198,7 @@ describe('SliderWidget.vue', () => {
         expect(wrapper.vm.tooltipFormat[0](1.234)).toBe('$1.23_');
 
         nodeConfig.viewRepresentation.sliderSettings.tooltips = [true];
-        wrapper.setProps({
+        await wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
 
@@ -217,7 +217,7 @@ describe('SliderWidget.vue', () => {
                 mark: '.',
                 negativeBefore: '-'
             }];
-        wrapper.setProps({
+        await wrapper.setProps({
             nodeConfig: { ...nodeConfig }
         });
         expect(wrapper.vm.tooltips).toStrictEqual([{ tooltip: 'none' }, { tooltip: 'always' }]);

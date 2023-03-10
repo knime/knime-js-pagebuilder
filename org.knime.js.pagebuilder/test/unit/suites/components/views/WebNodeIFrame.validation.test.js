@@ -1,11 +1,11 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { expect, describe, beforeAll, beforeEach, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import WebNodeIFrame from '@/components/views/WebNodeIFrame.vue';
 
-import * as storeConfig from '@/../store/pagebuilder';
-import * as alertStoreConfig from '@/../store/alert';
+import * as storeConfig from '@/store/pagebuilder';
+import * as alertStoreConfig from '@/store/alert';
 
 // extra mock to simulate a loaded view script
 vi.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
@@ -17,13 +17,10 @@ vi.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js 
 vi.mock('iframe-resizer/js/iframeResizer');
 
 describe('WebNodeIFrame.vue', () => {
-    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
+    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, context, mockGetPublishedData,
         mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
         storeConfig.actions.setWebNodeLoading = vi.fn();
         mockGetPublishedData = vi.fn();
         interactivityConfig = {
@@ -70,7 +67,7 @@ describe('WebNodeIFrame.vue', () => {
                 getCustomSketcherPath: vi.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
         };
-        store = new Vuex.Store({
+        store = createStore({
             modules: {
                 pagebuilder: storeConfig,
                 'pagebuilder/interactivity': interactivityConfig,
@@ -102,8 +99,11 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         context = {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
         window.origin = window.location.origin;
     });
@@ -118,7 +118,7 @@ describe('WebNodeIFrame.vue', () => {
         beforeEach(() => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
-                attachToDocument: true,
+                attachTo: document.body,
                 props: {
                     viewConfig: {
                         nodeID: '0:0:7'
@@ -163,7 +163,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'View validation failed.',
-                nodeInfo: undefined,
+                nodeInfo: expect.undefined,
                 type: 'error'
             });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
@@ -177,7 +177,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'View is not responding.',
-                nodeInfo: undefined,
+                nodeInfo: expect.undefined,
                 type: 'error'
             });
             return expect(valuePromise).resolves.toStrictEqual({ nodeId: '0:0:7', isValid: false });
@@ -191,7 +191,7 @@ describe('WebNodeIFrame.vue', () => {
         beforeEach(() => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
-                attachToDocument: true,
+                attachTo: document.body,
                 props: {
                     viewConfig: { nodeID: '0:0:7' },
                     nodeConfig: {
@@ -226,7 +226,7 @@ describe('WebNodeIFrame.vue', () => {
             return expect(validatePromise).resolves.toStrictEqual(true);
         });
 
-        it('catches errors from within view thrown while setting message', async (done) => {
+        it('catches errors from within view thrown while setting message', async () => {
             let valuePromise = wrapper.vm.setValidationError('test').catch(e => e);
             wrapper.vm.messageFromIframe({
                 origin: window.origin,
@@ -235,13 +235,12 @@ describe('WebNodeIFrame.vue', () => {
             expect(wrapper.vm.alert).toStrictEqual({
                 level: 'error',
                 message: 'Error',
-                nodeInfo: undefined,
+                nodeInfo: expect.undefined,
                 type: 'error'
             });
             let response = await Promise.resolve(valuePromise);
             expect(response instanceof Error).toBe(true);
             expect(response.message).toBe('Error');
-            done();
         });
     });
 });

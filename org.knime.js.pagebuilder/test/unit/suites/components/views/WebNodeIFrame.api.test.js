@@ -1,11 +1,11 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { expect, describe, beforeEach, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import WebNodeIFrame from '@/components/views/WebNodeIFrame.vue';
 
-import * as storeConfig from '@/../store/pagebuilder';
-import * as alertStoreConfig from '@/../store/alert';
+import * as storeConfig from '@/store/pagebuilder';
+import * as alertStoreConfig from '@/store/alert';
 
 // extra mock to simulate a loaded view script
 vi.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
@@ -17,13 +17,10 @@ vi.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js 
 vi.mock('iframe-resizer/js/iframeResizer');
 
 describe('WebNodeIFrame.vue', () => {
-    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
+    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, context, mockGetPublishedData,
         mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
-    beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
+    beforeEach(() => {
         storeConfig.actions.setWebNodeLoading = vi.fn();
         mockGetPublishedData = vi.fn();
         interactivityConfig = {
@@ -70,7 +67,7 @@ describe('WebNodeIFrame.vue', () => {
                 getCustomSketcherPath: vi.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
         };
-        store = new Vuex.Store({
+        store = createStore({
             modules: {
                 pagebuilder: storeConfig,
                 'pagebuilder/interactivity': interactivityConfig,
@@ -102,8 +99,11 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         context = {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
     });
 
@@ -123,7 +123,7 @@ describe('WebNodeIFrame.vue', () => {
         removeValueGetter = vi.fn();
         removeValidationErrorSetter = vi.fn();
 
-        methodsStore = new Vuex.Store({
+        methodsStore = createStore({
             modules: {
                 pagebuilder: {
                     namespaced: true,
@@ -168,9 +168,12 @@ describe('WebNodeIFrame.vue', () => {
         let nodeId = '0:0:7';
 
         wrapper = shallowMount(WebNodeIFrame, {
-            store: methodsStore,
-            localVue,
-            attachToDocument: true,
+            global: {
+                mocks: {
+                    $store: methodsStore
+                }
+            },
+            attachTo: document.body,
             props: {
                 viewConfig: { nodeID: nodeId },
                 nodeConfig: {},
@@ -179,20 +182,17 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         expect(addValidator).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, validator: wrapper.vm.validate }, undefined);
+            { nodeId, validator: wrapper.vm.validate });
         expect(addValueGetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, valueGetter: wrapper.vm.getValue }, undefined);
+            { nodeId, valueGetter: wrapper.vm.getValue });
         expect(addValidationErrorSetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId, errorSetter: wrapper.vm.setValidationError }, undefined);
+            { nodeId, errorSetter: wrapper.vm.setValidationError });
 
-        wrapper.destroy();
+        wrapper.unmount();
 
-        expect(removeValidator).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, undefined);
-        expect(removeValueGetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, undefined);
-        expect(removeValidationErrorSetter).toHaveBeenCalledWith(expect.anything(),
-            { nodeId }, undefined);
+        expect(removeValidator).toHaveBeenCalledWith(expect.anything(), { nodeId });
+        expect(removeValueGetter).toHaveBeenCalledWith(expect.anything(), { nodeId });
+        expect(removeValidationErrorSetter).toHaveBeenCalledWith(expect.anything(), { nodeId });
     });
 
 
@@ -217,7 +217,7 @@ describe('WebNodeIFrame.vue', () => {
                     }
                 }
             };
-            let localStore = new Vuex.Store({
+            let localStore = createStore({
                 modules: {
                     pagebuilder: storeConfig,
                     'pagebuilder/interactivity': interactivityConfig,
@@ -252,12 +252,15 @@ describe('WebNodeIFrame.vue', () => {
             });
 
             let localContext = {
-                store: localStore,
-                localVue
+                global: {
+                    mocks: {
+                        $store: localStore
+                    }
+                }
             };
             return shallowMount(WebNodeIFrame, {
                 ...localContext,
-                attachToDocument: true,
+                attachTo: document.body,
                 props: {
                     viewConfig: {
                         nodeID: '0:0:7'
@@ -270,7 +273,7 @@ describe('WebNodeIFrame.vue', () => {
         beforeEach(() => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
-                attachToDocument: true,
+                attachTo: document.body,
                 props: {
                     viewConfig: {
                         nodeID: '0:0:7'
@@ -299,7 +302,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(window.KnimePageBuilderAPI.currentJobId).not.toBeDefined();
             expect(wrapper.vm.currentJobId).not.toBeDefined();
             expect(window.KnimePageBuilderAPI.teardown(wrapper.currentJobId)).toBe(false);
-            wrapper.destroy();
+            wrapper.unmount();
             expect(window.KnimePageBuilderAPI).toBeDefined();
         });
 
@@ -310,7 +313,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
             expect(localWrapper.vm.currentJobId).toBe(jobId);
             expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
-            localWrapper.destroy();
+            localWrapper.unmount();
             expect(window.KnimePageBuilderAPI).toBeDefined();
         });
 
@@ -327,7 +330,7 @@ describe('WebNodeIFrame.vue', () => {
 
             expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
             expect(localWrapper.vm.currentJobId).toBe(jobId2);
-            localWrapper.destroy();
+            localWrapper.unmount();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
 
@@ -344,7 +347,7 @@ describe('WebNodeIFrame.vue', () => {
 
             expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
             expect(localWrapper.vm.currentJobId).toBe(jobId2);
-            localWrapper.destroy();
+            localWrapper.unmount();
             expect(window.KnimePageBuilderAPI).not.toBeDefined();
         });
 

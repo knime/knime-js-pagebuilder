@@ -171,13 +171,13 @@ describe('FileUploadWidget.vue', () => {
         });
     });
 
-    it('checks if still uploading', () => {
+    it('checks if still uploading', async () => {
         let wrapper = mount(FileUploadWidget, {
             store,
             localVue,
             props
         });
-        wrapper.setData({ initialized: true });
+        await wrapper.setData({ initialized: true });
         wrapper.vm.onChange(event);
         expect(wrapper.vm.validate()).toEqual({
             errorMessage: 'Upload still in progress.',
@@ -210,7 +210,7 @@ describe('FileUploadWidget.vue', () => {
             errorMessage: null,
             isValid: true
         });
-        wrapper.setProps({
+        await wrapper.setProps({
             valuePair: {
                 '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
                 fileName: '',
@@ -222,7 +222,7 @@ describe('FileUploadWidget.vue', () => {
             errorMessage: null,
             isValid: true
         });
-        wrapper.setProps({
+        await wrapper.setProps({
             valuePair: {
                 '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
                 fileName: '',
@@ -234,7 +234,7 @@ describe('FileUploadWidget.vue', () => {
             errorMessage: 'The type of the selected file does not match the allowed file types (.pdf).',
             isValid: false
         });
-        wrapper.setProps({
+        await wrapper.setProps({
             nodeConfig: {
                 ...props.nodeConfig,
                 viewRepresentation: {
@@ -253,7 +253,7 @@ describe('FileUploadWidget.vue', () => {
             errorMessage: null,
             isValid: true
         });
-        wrapper.setProps({
+        await wrapper.setProps({
             valuePair: {
                 '@class': 'org.knime.js.base.node.base.input.fileupload.FileUploadNodeValue',
                 fileName: '',
@@ -279,7 +279,7 @@ describe('FileUploadWidget.vue', () => {
             localVue,
             props
         });
-        wrapper.setData({ uploadAPI: uploadErrorResourceMock });
+        await wrapper.setData({ uploadAPI: uploadErrorResourceMock });
         wrapper.vm.onChange(event);
         await Vue.nextTick();
         expect(wrapper.findComponent(ErrorMessage).props('error')).toEqual('Upload failed.');
@@ -297,7 +297,7 @@ describe('FileUploadWidget.vue', () => {
             localVue,
             props
         });
-        wrapper.setData({ uploadAPI: uploadErrorResourceMock });
+        await wrapper.setData({ uploadAPI: uploadErrorResourceMock });
 
         wrapper.vm.onChange(event);
         expect(wrapper.find('.upload-wrapper button').text()).toEqual('Cancel');
@@ -307,7 +307,7 @@ describe('FileUploadWidget.vue', () => {
         expect(wrapper.findComponent(ErrorMessage).props('error')).toEqual('Upload cancelled.');
     });
 
-    it('uploads files on the AP', (done) => {
+    it('uploads files on the AP', async (done) => {
         let uploadResourceMock = vi.fn();
         window.KnimePageLoader = { /* empty mock simulates AP wrapper API */ };
         let wrapper = mount(FileUploadWidget, {
@@ -315,7 +315,7 @@ describe('FileUploadWidget.vue', () => {
             localVue,
             props
         });
-        wrapper.setData({ uploadAPI: uploadResourceMock });
+        await wrapper.setData({ uploadAPI: uploadResourceMock });
         wrapper.vm.onChange({
             target: {
                 files: [new File([new Blob(['testing'], { type: 'application/pdf' })], 'test')]

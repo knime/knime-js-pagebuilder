@@ -310,14 +310,14 @@ describe('TreeSelect.vue', () => {
             expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child1');
         });
 
-        it('does not navigate down using up key if we reached the top', () => {
+        it('does not navigate down using up key if we reached the top', async () => {
             let wrapper = mount(TreeSelect, {
                 ...context,
                 props
             });
             const items = wrapper.findAllComponents(TreeSelectItem);
 
-            wrapper.setData({
+            await wrapper.setData({
                 currentKeyboardNavNode: items.at(0).vm
             });
             expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item1');
@@ -343,7 +343,7 @@ describe('TreeSelect.vue', () => {
             expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
         });
 
-        it('does not navigate down using down key if we reached the end', () => {
+        it('does not navigate down using down key if we reached the end', async () => {
             props.data[3].children = [{
                 value: 'lastChild',
                 text: 'Last Child'
@@ -354,7 +354,7 @@ describe('TreeSelect.vue', () => {
             });
             const items = wrapper.findAllComponents(TreeSelectItem);
 
-            wrapper.setData({
+            await wrapper.setData({
                 currentKeyboardNavNode: items.at(7).vm // the lastChild
             });
             expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('lastChild');
@@ -365,7 +365,7 @@ describe('TreeSelect.vue', () => {
             expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('lastChild');
         });
 
-        it('navigates across levels using down key', () => {
+        it('navigates across levels using down key', async () => {
             props.data[0].opened = true;
             let wrapper = mount(TreeSelect, {
                 ...context,
@@ -374,7 +374,7 @@ describe('TreeSelect.vue', () => {
 
             const items = wrapper.findAllComponents(TreeSelectItem);
 
-            wrapper.setData({
+            await wrapper.setData({
                 currentKeyboardNavNode: items.at(3).vm
             });
             expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child2');

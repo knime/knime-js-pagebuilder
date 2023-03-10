@@ -289,7 +289,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
                     }
                 }
             });
-            wrapper.setProps({ valuePair: {
+            await wrapper.setProps({ valuePair: {
                 value: [],
                 column: 'Cluster Membership'
             } });
@@ -314,7 +314,7 @@ describe('ValueFilterSelectionWidget.vue', () => {
                     }
                 }
             });
-            wrapper.setProps({ valuePair: {
+            await wrapper.setProps({ valuePair: {
                 value: [],
                 column: 'Cluster Membership'
             } });

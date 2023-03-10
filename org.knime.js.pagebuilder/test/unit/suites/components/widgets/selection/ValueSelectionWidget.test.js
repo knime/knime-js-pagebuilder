@@ -170,7 +170,7 @@ describe('ValueSelectionWidget.vue', () => {
             let wrapper = mount(ValueSelectionWidget, {
                 props: propsList
             });
-            wrapper.setProps({ valuePair: {
+            await wrapper.setProps({ valuePair: {
                 value: '',
                 column: 'Cluster Membership'
             } });

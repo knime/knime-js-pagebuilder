@@ -88,7 +88,7 @@ describe('PopoverMessage', () => {
         expect(minimizeButton.exists()).toBe(true);
         minimizeButton.trigger('click');
         expect(wrapper.emitted('closeAlert'));
-        wrapper.setProps({ type: 'info' });
+        await wrapper.setProps({ type: 'info' });
         minimizeButton = wrapper.find('.minimize-button');
         expect(minimizeButton.exists()).toBe(true);
         minimizeButton.trigger('click');

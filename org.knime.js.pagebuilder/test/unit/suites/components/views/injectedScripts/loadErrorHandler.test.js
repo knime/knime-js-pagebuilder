@@ -1,15 +1,8 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import fs from 'fs';
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
+import loadErrorHandlerSrc from '@/components/views/injectedScripts/loadErrorHandler?raw';
 
 describe('load error handler', () => {
-    let loadErrorHandlerSrc;
-
     beforeAll(() => {
-        const instrumenter = require('istanbul-lib-instrument').createInstrumenter();
-        const filename = require.resolve('@/components/views/injectedScripts/loadErrorHandler');
-        // trick taken from https://jasonstitt.com/istanbul-cover-eval to allow coverage in evaluated src
-        loadErrorHandlerSrc = instrumenter.instrumentSync(fs.readFileSync(filename, 'utf-8'), filename);
-
         vi.spyOn(window, 'postMessage').mockImplementation(() => {});
     });
 

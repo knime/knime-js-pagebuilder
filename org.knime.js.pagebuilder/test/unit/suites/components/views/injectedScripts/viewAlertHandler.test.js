@@ -1,15 +1,8 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import fs from 'fs';
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
+import viewAlertHandlerSrc from '@/components/views/injectedScripts/viewAlertHandler?raw';
 
 describe('view alert handler', () => {
-    let viewAlertHandlerSrc;
-
     beforeAll(() => {
-        const instrumenter = require('istanbul-lib-instrument').createInstrumenter();
-        const filename = require.resolve('@/components/views/injectedScripts/viewAlertHandler');
-        // trick taken from https://jasonstitt.com/istanbul-cover-eval to allow coverage in evaluated src
-        viewAlertHandlerSrc = instrumenter.instrumentSync(fs.readFileSync(filename, 'utf-8'), filename);
-
         vi.spyOn(window, 'postMessage').mockImplementation(() => {});
     });
 

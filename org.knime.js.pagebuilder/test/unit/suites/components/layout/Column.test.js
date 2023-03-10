@@ -269,7 +269,7 @@ describe('Column.vue', () => {
     });
 
     it('always re-renders NodeView components', async () => {
-        // this is important so the iframe of NodeViewIFrame gets destroyed and re-created correctly
+        // this is important so the iframe of NodeViewIFrame gets unmounted and re-created correctly
             
         let content = [{
             type: 'view',

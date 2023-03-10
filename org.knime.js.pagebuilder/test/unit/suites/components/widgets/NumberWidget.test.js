@@ -90,16 +90,16 @@ describe('NumberWidget.vue', () => {
         });
     });
 
-    it('\'s children will change appearance when invalid', () => {
+    it('\'s children will change appearance when invalid', async () => {
         let wrapper = mount(NumberWidget, {
             props
         });
 
         let numericInputComponent = wrapper.findComponent(NumberInput);
 
-        wrapper.setProps({ isValid: true });
+        await wrapper.setProps({ isValid: true });
         expect(numericInputComponent.props('isValid')).toBe(true);
-        wrapper.setProps({ isValid: false });
+        await wrapper.setProps({ isValid: false });
         expect(numericInputComponent.props('isValid')).toBe(false);
     });
 

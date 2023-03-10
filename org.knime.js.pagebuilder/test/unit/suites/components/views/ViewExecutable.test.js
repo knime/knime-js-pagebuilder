@@ -1,6 +1,6 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount, mount } from '@vue/test-utils';
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount, mount } from '@vue/test-utils';
 
 import * as serviceStoreConfig from '@/store/service';
 import * as apiStoreConfig from '@/store/wrapperApi';
@@ -22,7 +22,7 @@ describe('ViewExecutable.vue', () => {
         expect(wrapper.exists()).toBeTruthy();
         const executeButton = wrapper.findComponent(Button);
         expect(executeButton.exists()).toBeTruthy();
-        expect(executeButton.attributes().disabled).toBeUndefined();
+        expect(executeButton.attributes().disabled).toBe('false');
     });
 
     describe('props validation', () => {
@@ -66,40 +66,40 @@ describe('ViewExecutable.vue', () => {
 
     describe('Save & Execute on Button Click', () => {
         const getMockComponentProps = () => ({ extensionConfig: { ...componentExtensionConfig } });
-        let localVue, context, applySettingsMock, changeNodeStatesMock, showAlertMock;
+        let context, applySettingsMock, changeNodeStatesMock, showAlertMock;
 
         beforeAll(() => {
             applySettingsMock = vi.fn();
             changeNodeStatesMock = vi.fn();
             showAlertMock = vi.fn();
 
-            localVue = createLocalVue();
-            localVue.use(Vuex);
-
             context = {
-                store: new Vuex.Store({
-                    modules: {
-                        'pagebuilder/dialog': {
-                            ...serviceStoreConfig,
-                            actions: {
-                                callApplySettings: applySettingsMock
+                global: {
+                    mocks: {
+                        $store: createStore({
+                            modules: {
+                                'pagebuilder/dialog': {
+                                    ...serviceStoreConfig,
+                                    actions: {
+                                        callApplySettings: applySettingsMock
+                                    }
+                                },
+                                api: {
+                                    ...apiStoreConfig,
+                                    actions: {
+                                        changeNodeStates: changeNodeStatesMock
+                                    }
+                                },
+                                'pagebuilder/alert': {
+                                    ...alertStoreConfig,
+                                    actions: {
+                                        showAlert: showAlertMock
+                                    }
+                                }
                             }
-                        },
-                        api: {
-                            ...apiStoreConfig,
-                            actions: {
-                                changeNodeStates: changeNodeStatesMock
-                            }
-                        },
-                        'pagebuilder/alert': {
-                            ...alertStoreConfig,
-                            actions: {
-                                showAlert: showAlertMock
-                            }
-                        }
+                        })
                     }
-                }),
-                localVue
+                }
             };
         });
 
@@ -139,7 +139,7 @@ describe('ViewExecutable.vue', () => {
             expect(changeNodeStatesMock).toHaveBeenCalled();
         });
 
-        test('Save & Execute button is disabled if node cannot be executed', () => {
+        it('Save & Execute button is disabled if node cannot be executed', () => {
             let props = getMockComponentProps();
             props.extensionConfig.nodeInfo.canExecute = false;
             let wrapper = shallowMount(ViewExecutable, {
@@ -159,7 +159,7 @@ describe('ViewExecutable.vue', () => {
             });
             expect(showAlertMock).toHaveBeenCalledWith(expect.anything(), {
                 message: 'warning message', nodeId: '0:0:7', subtitle: '', type: 'warn'
-            }, undefined);
+            });
         });
     });
 });

@@ -1,5 +1,7 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
+import messageListenerSrc from '@/components/views/injectedScripts/messageListener?raw';
 
+// TODO: Change the timeout-tests to not depend on how many other tests are executed at the same time
 describe('message listener', () => {
     const nodeId = '0.0.7';
 
@@ -11,12 +13,11 @@ describe('message listener', () => {
             data,
             origin: origin || '%ORIGIN%'
         });
-        event.initEvent('message', false, false);
         window.dispatchEvent(event);
     };
 
     beforeAll(() => {
-        require('@/components/views/injectedScripts/messageListener');
+        eval(messageListenerSrc);
     });
 
     afterEach(() => {
@@ -29,8 +30,8 @@ describe('message listener', () => {
             nodeId,
             namespace: 'com.example',
             initMethodName: 'initView',
-            viewRepresentation: 'rep',
-            viewValue: 'val'
+            viewRepresentation: JSON.stringify('rep'),
+            viewValue: JSON.stringify('val')
         };
 
         let spy = vi.fn();
@@ -48,8 +49,8 @@ describe('message listener', () => {
             nodeId,
             namespace: 'com.example',
             initMethodName: 'init',
-            viewValue: {},
-            viewRepresentation: {}
+            viewValue: '{}',
+            viewRepresentation: '{}'
         };
 
         let errorSpy = vi.fn(() => {
@@ -80,8 +81,8 @@ describe('message listener', () => {
             nodeId,
             namespace: 'com.example',
             initMethodName: 'DNE',
-            viewValue: {},
-            viewRepresentation: {}
+            viewValue: '{}',
+            viewRepresentation: '{}'
         };
 
         let errorSpy = vi.fn();
@@ -379,8 +380,8 @@ describe('message listener', () => {
             nodeId,
             namespace: 'com.example',
             initMethodName: 'initView',
-            viewRepresentation: 'rep',
-            viewValue: 'val'
+            viewRepresentation: JSON.stringify('rep'),
+            viewValue: JSON.stringify('val')
         };
 
         let spy = vi.fn();

@@ -1,6 +1,6 @@
 import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
-import Vuex, { createStore } from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import Layout from '@/components/layout/Layout.vue';
 import Row from '@/components/layout/Row.vue';
@@ -8,7 +8,7 @@ import Row from '@/components/layout/Row.vue';
 import * as storeConfig from '@/store/pagebuilder';
 
 describe('Layout.vue', () => {
-    let localVue, context;
+    let context;
 
     const getWizardPageContent = ({ webNodes, nodeViews, webNodePageConfiguration } = {}) => ({
         webNodes: webNodes || {

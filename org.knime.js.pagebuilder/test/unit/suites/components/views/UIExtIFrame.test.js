@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import { IFrameKnimeServiceAdapter } from '@knime/ui-extension-service';
 
@@ -15,7 +15,9 @@ describe('UIExtIFrame.vue', () => {
         knimeService = new IFrameKnimeServiceAdapter(extensionConfig, vi.fn());
         wrapper = shallowMount(UIExtIFrame, {
             props: { resourceLocation: resourceInfo.url },
-            provide: { getKnimeService: () => knimeService }
+            global: {
+                provide: { getKnimeService: () => knimeService }
+            }
         });
     });
 
@@ -30,9 +32,9 @@ describe('UIExtIFrame.vue', () => {
         expect(iFrameWrapper.attributes('src')).toBe(resourceInfo.url);
     });
 
-    it('destroys knime service before component destroy', () => {
+    it('unmounts knime service before component unmount', () => {
         let destroySpy = vi.spyOn(knimeService, 'destroy');
-        wrapper.destroy();
+        wrapper.unmount();
         expect(destroySpy).toHaveBeenCalled();
     });
 });

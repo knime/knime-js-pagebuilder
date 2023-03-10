@@ -1,5 +1,5 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import NotDisplayable from '@/components/views/NotDisplayable';
+import { expect, describe, beforeAll, it } from 'vitest';
+import NotDisplayable from '@/components/views/NotDisplayable.vue';
 import { shallowMount } from '@vue/test-utils';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 
@@ -46,11 +46,12 @@ describe('NotDisplayable.vue', () => {
                 nodeId: '10.0.2'
             }
         });
-        expect(wrapper.findComponent(Label).props('text')).toEqual('testName - test_annotation (10.0.2) can’t be displayed');
+        expect(wrapper.findComponent(Label).props('text'))
+            .toEqual('testName - test_annotation (10.0.2) can’t be displayed');
     });
 
-    it('hides content via prop from parent', () => {
-        wrapper.setProps({ showError: false });
+    it('hides content via prop from parent', async () => {
+        await wrapper.setProps({ showError: false });
         expect(wrapper.findComponent(Label).exists()).toBe(false);
         expect(wrapper.find('span').exists()).toBe(false);
     });

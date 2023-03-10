@@ -1,11 +1,11 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { expect, describe, beforeAll, beforeEach, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
+import { shallowMount } from '@vue/test-utils';
 
 import WebNodeIFrame from '@/components/views/WebNodeIFrame.vue';
 
-import * as storeConfig from '@/../store/pagebuilder';
-import * as alertStoreConfig from '@/../store/alert';
+import * as storeConfig from '@/store/pagebuilder';
+import * as alertStoreConfig from '@/store/alert';
 
 // extra mock to simulate a loaded view script
 vi.mock('raw-loader!./injectedScripts/loadErrorHandler.js', () => `"loadErrorHandler.js mock";
@@ -21,9 +21,6 @@ describe('WebNodeIFrame.vue', () => {
         mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-
         storeConfig.actions.setWebNodeLoading = vi.fn();
         mockGetPublishedData = vi.fn();
         interactivityConfig = {
@@ -70,7 +67,7 @@ describe('WebNodeIFrame.vue', () => {
                 getCustomSketcherPath: vi.fn().mockReturnValue('sample/sketcher/path/sketcher.html')
             }
         };
-        store = new Vuex.Store({
+        store = createStore({
             modules: {
                 pagebuilder: storeConfig,
                 'pagebuilder/interactivity': interactivityConfig,
@@ -102,8 +99,11 @@ describe('WebNodeIFrame.vue', () => {
         });
 
         context = {
-            store,
-            localVue
+            global: {
+                mocks: {
+                    $store: store
+                }
+            }
         };
         window.origin = window.location.origin;
     });
@@ -118,7 +118,7 @@ describe('WebNodeIFrame.vue', () => {
         beforeEach(() => {
             wrapper = shallowMount(WebNodeIFrame, {
                 ...context,
-                attachToDocument: true,
+                attachTo: document.body,
                 props: {
                     viewConfig: {
                         nodeID: '0:0:7'
