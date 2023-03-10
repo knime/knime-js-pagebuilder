@@ -1,20 +1,16 @@
 import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
 import { createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
+import Vuex, { createStore } from 'vuex';
 
 import * as storeConfig from '@/store/interactivity';
 
 describe('Interactivity store', () => {
-    let store, localVue;
+    let store;
     const subscriberId = 'selection-0.0.9';
 
-    beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-    });
 
     beforeEach(() => {
-        store = new Vuex.Store(storeConfig);
+        store = createStore(storeConfig);
         vi.resetAllMocks();
     });
 

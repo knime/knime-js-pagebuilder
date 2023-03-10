@@ -94,7 +94,7 @@ describe('AlertGlobal', () => {
         let sampleErrorMessage = JSON.parse(JSON.stringify(SAMPLE_ALERT));
 
         beforeAll(() => {
-            const localStore = new Vuex.Store({
+            const localStore = createStore({
                 modules: {
                     'pagebuilder/alert': alertStoreConfig
                 }

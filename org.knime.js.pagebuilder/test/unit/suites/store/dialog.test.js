@@ -1,19 +1,14 @@
 import { expect, describe, beforeAll, beforeEach, it, vi, afterEach } from 'vitest';
-import Vuex from 'vuex';
+import Vuex, { createStore } from 'vuex';
 import { createLocalVue } from '@vue/test-utils';
 
 import * as storeConfig from '@/store/dialog';
 
 describe('dialog store', () => {
-    let store, localVue;
-
-    beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-    });
+    let store;
 
     beforeEach(() => {
-        store = new Vuex.Store(storeConfig);
+        store = createStore(storeConfig);
         vi.resetAllMocks();
     });
 

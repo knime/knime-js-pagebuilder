@@ -209,12 +209,16 @@ export const actions = {
     async singleRPC(_, { rpcConfig }) {
         let result, error;
         if (typeof window.jsonrpc === 'function') {
+            console.log('hier');
             // SWT browser communication (request-response)
             try {
                 consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
                 ({ result, error } = JSON.parse(window.jsonrpc(JSON.stringify(rpcConfig))));
+
+                console.log('hier');
             } catch (err) {
                 error = err;
+                console.log('error', error);
             }
         } else if (window.EquoCommService) {
             // CEF browser communication (request-response)

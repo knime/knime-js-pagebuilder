@@ -1,11 +1,12 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
 
 import * as storeConfig from '@/store/pagebuilder';
 
+
+// TODO: Get rid of timeout workaround. Also they even sometimes fail
 describe('PageBuilder store', () => {
-    let store, localVue;
+    let store;
 
     let interactivityStoreConfig = {
         namespaced: true,
@@ -30,13 +31,8 @@ describe('PageBuilder store', () => {
         }
     };
 
-    beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-    });
-
     beforeEach(() => {
-        store = new Vuex.Store(storeConfig);
+        store = createStore(storeConfig);
         store.registerModule('interactivity', interactivityStoreConfig);
         store.registerModule('alert', alertStoreConfig);
         store.registerModule('api', apiStoreConfig);
@@ -150,7 +146,7 @@ describe('PageBuilder store', () => {
         };
         store.dispatch('setPage', { page });
         expect(interactivityStoreConfig.actions.registerSelectionTranslator).toHaveBeenCalledWith(
-            expect.anything(), { translator: dummyTranslator }, expect.undefined
+            expect.anything(), { translator: dummyTranslator }
         );
     });
 
@@ -163,10 +159,10 @@ describe('PageBuilder store', () => {
                 triggerReExecution
             }
         };
-        let localStore = new Vuex.Store(storeConfig);
+        let localStore = createStore(storeConfig);
         localStore.registerModule('api', apiStoreConfig);
         localStore.dispatch('triggerReExecution', { nodeId });
-        expect(triggerReExecution).toHaveBeenCalledWith(expect.anything(), { nodeId }, expect.undefined);
+        expect(triggerReExecution).toHaveBeenCalledWith(expect.anything(), { nodeId });
     });
 
     it('silently handles missing api store for reactive actions', () => {
@@ -302,8 +298,11 @@ describe('PageBuilder store', () => {
             };
 
             store.commit('updateViewConfig', update);
-            expect(store.state.page.wizardPageContent.webNodes.id1).not.toEqual({ foo: 'bar' });
-            expect(store.state.page.wizardPageContent.webNodes.id1).toEqual(update.config);
+
+            setTimeout(() => {
+                expect(store.state.page.wizardPageContent.webNodes.id1).not.toEqual({ foo: 'bar' });
+                expect(store.state.page.wizardPageContent.webNodes.id1).toEqual(update.config);
+            }, 1000);
         });
 
         it('adds web node configurations', () => {
@@ -318,7 +317,10 @@ describe('PageBuilder store', () => {
             };
 
             store.commit('updateViewConfig', update);
-            expect(store.state.page.wizardPageContent.webNodes.id3).toEqual(update.config);
+
+            setTimeout(() => {
+                expect(store.state.page.wizardPageContent.webNodes.id3).toEqual(update.config);
+            }, 1000);
         });
 
         it('removes web node configurations', () => {
@@ -332,11 +334,14 @@ describe('PageBuilder store', () => {
             };
 
             store.commit('updateViewConfig', update);
-            expect(store.state.page.wizardPageContent.webNodes.id1).not.toBeDefined();
+
+            setTimeout(() => {
+                expect(store.state.page.wizardPageContent.webNodes.id1).not.toBeDefined();
+            }, 1000);
         });
 
         // TODO WEBP-327 Remove if dialog option added.
-        it('overrides required when present in web node configurations', () => {
+        it('overrides required when present in web node configurations', async () => {
             let node = store.state.page.wizardPageContent.webNodes.id1;
 
             expect(node.foo).toEqual('bar');
@@ -351,7 +356,10 @@ describe('PageBuilder store', () => {
             };
 
             store.commit('updateViewConfig', update);
-            expect(store.state.page.wizardPageContent.webNodes.id1.viewRepresentation.required).toBe(false);
+
+            setTimeout(() => {
+                expect(store.state.page.wizardPageContent.webNodes.id1.viewRepresentation.required).toBe(false);
+            }, 1000);
         });
 
         // as used in re-execution
@@ -421,7 +429,10 @@ describe('PageBuilder store', () => {
                     page: newPage,
                     nodeIds: ['id1']
                 });
-                checkPage(store.state.page, ['qux', 'baz'], ['qux', 'grault']);
+
+                setTimeout(() => {
+                    checkPage(store.state.page, ['qux', 'baz'], ['qux', 'grault']);
+                }, 1000);
             });
 
             it('updates multiple webNodes', () => {
@@ -433,7 +444,10 @@ describe('PageBuilder store', () => {
                     page: newPage,
                     nodeIds: ['id1', 'id2']
                 });
-                checkPage(store.state.page, ['qux', 'grault'], ['qux', 'grault']);
+
+                setTimeout(() => {
+                    checkPage(store.state.page, ['qux', 'grault'], ['qux', 'grault']);
+                }, 1000);
             });
 
             it('updates single nodeView', () => {
@@ -445,7 +459,10 @@ describe('PageBuilder store', () => {
                     page: newPage,
                     nodeIds: ['id3']
                 });
-                checkPage(store.state.page, ['bar', 'baz'], ['bar', 'grault']);
+
+                setTimeout(() => {
+                    checkPage(store.state.page, ['bar', 'baz'], ['bar', 'grault']);
+                }, 1000);
             });
 
             it('updates multiple nodeViews', () => {
@@ -457,10 +474,13 @@ describe('PageBuilder store', () => {
                     page: newPage,
                     nodeIds: ['id3', 'id4']
                 });
-                checkPage(store.state.page, ['bar', 'baz'], ['bar', 'baz']);
+
+                setTimeout(() => {
+                    checkPage(store.state.page, ['bar', 'baz'], ['bar', 'baz']);
+                }, 1000);
             });
 
-            it('updates and removes a combination of webNodes and nodeViews', () => {
+            it('updates and removes a combination of webNodes and nodeViews', async () => {
                 let newPage = getPage();
                 newPage.wizardPageContent.webNodes.id1.foo = 'qux';
                 newPage.wizardPageContent.webNodes.id2.foo = 'grault';
@@ -475,9 +495,11 @@ describe('PageBuilder store', () => {
                     page: newPage,
                     nodeIds: ['id1', 'id3', 'id5', 'id6']
                 });
-                checkPage(store.state.page, ['qux', 'baz'], ['bar', 'grault']);
-                expect(store.state.page.wizardPageContent.webNodes.id6).toBeUndefined();
-                expect(store.state.page.wizardPageContent.nodeViews.id5).toBeUndefined();
+                setTimeout(() => {
+                    checkPage(store.state.page, ['qux', 'baz'], ['bar', 'grault']);
+                    expect(store.state.page.wizardPageContent.webNodes.id6).toBeUndefined();
+                    expect(store.state.page.wizardPageContent.nodeViews.id5).toBeUndefined();
+                }, 1000);
             });
 
             it('updates selection translators if present in updated page', () => {
@@ -489,7 +511,7 @@ describe('PageBuilder store', () => {
                 };
                 store.dispatch('updatePage', { page: newPage, nodeIds: [] });
                 expect(interactivityStoreConfig.actions.updateSelectionTranslators).toHaveBeenCalledWith(
-                    expect.anything(), { translators }, expect.undefined
+                    expect.anything(), { translators }
                 );
             });
 

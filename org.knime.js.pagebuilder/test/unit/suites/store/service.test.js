@@ -1,6 +1,5 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import Vuex from 'vuex';
-import { createLocalVue } from '@vue/test-utils';
+import { expect, describe, beforeEach, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
 import { KnimeService } from '@knime/ui-extension-service';
 
 import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
@@ -8,15 +7,10 @@ import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
 import * as storeConfig from '@/store/service';
 
 describe('service store', () => {
-    let store, localVue;
-
-    beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-    });
+    let store;
 
     beforeEach(() => {
-        store = new Vuex.Store(storeConfig);
+        store = createStore(storeConfig);
         vi.resetAllMocks();
     });
 
@@ -34,7 +28,7 @@ describe('service store', () => {
         it('registers a service', async () => {
             const service = new KnimeService(iFrameExtensionConfig, vi.fn());
             await store.dispatch('registerService', { service });
-            expect(store.state.services[service.serviceId]).toBe(service);
+            expect(store.state.services[service.serviceId]).toStrictEqual(service);
         });
     
         it('dispatches push notifications', async () => {
@@ -49,7 +43,7 @@ describe('service store', () => {
         it('deregisters a service', async () => {
             const service = new KnimeService(iFrameExtensionConfig, vi.fn());
             await store.dispatch('registerService', { service });
-            expect(store.state.services[service.serviceId]).toBe(service);
+            expect(store.state.services[service.serviceId]).toStrictEqual(service);
             await store.dispatch('deregisterService', { service });
             expect(store.state.services[service.serviceId]).toBeUndefined();
         });

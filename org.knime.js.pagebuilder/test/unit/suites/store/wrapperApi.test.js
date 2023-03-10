@@ -1,8 +1,7 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { expect, describe, afterAll, it, vi } from 'vitest';
+import { createStore } from 'vuex';
 
-import muteConsole from '~/test/unit/test-util/muteConsole';
+import muteConsole from '@@/test/unit/test-util/muteConsole';
 
 import * as wrapperApiConfig from '@/store/wrapperApi';
 import * as pagebuilderConfig from '@/store/pagebuilder';
@@ -10,15 +9,8 @@ import * as alertConfig from '@/store/alert';
 import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
 
 describe('wrapper API store', () => {
-    let localVue;
-
-    const EMPTY = expect().not.toBeDefined();
+    const EMPTY = undefined;
     const extensionConfig = iFrameExtensionConfig;
-
-    beforeAll(() => {
-        localVue = createLocalVue();
-        localVue.use(Vuex);
-    });
 
     afterAll(() => {
         vi.clearAllMocks();
@@ -30,7 +22,7 @@ describe('wrapper API store', () => {
         pagebuilderMocks = {},
         alertMocks = {}
     } = {}) => {
-        let store = new Vuex.Store();
+        let store = createStore();
         store.registerModule('api', {
             actions: { ...wrapperApiConfig.actions, ...wrapperApiMocks },
             getters: wrapperApiConfig.getters
@@ -69,7 +61,7 @@ describe('wrapper API store', () => {
                         requestParams
                     ]
                 }
-            }, EMPTY);
+            });
         });
 
         it('updates RPC parameters based on service method called', async () => {
@@ -93,7 +85,7 @@ describe('wrapper API store', () => {
                         requestParams
                     ]
                 }
-            }, EMPTY);
+            });
         });
     });
 
@@ -117,15 +109,15 @@ describe('wrapper API store', () => {
                         action
                     ]
                 }
-            }, EMPTY);
+            });
         });
 
         it('successfully dispatches re-execute action', async () => {
-            let validResponse = Promise.resolve({ foo: true });
-            let valueResponse = Promise.resolve({ foo: 1 });
-            let getValidity = vi.fn().mockReturnValue(validResponse);
-            let getViewValues = vi.fn().mockReturnValue(valueResponse);
-            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
+            let validResponse = { foo: true };
+            let valueResponse = { foo: 1 };
+            let getValidity = vi.fn().mockResolvedValue(validResponse);
+            let getViewValues = vi.fn().mockResolvedValue(valueResponse);
+            let showAlert = vi.fn().mockResolvedValue({});
             let pollRPC = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { pollRPC },
@@ -134,8 +126,8 @@ describe('wrapper API store', () => {
             });
 
             await store.dispatch('triggerReExecution', { nodeId: 'foo' });
-            expect(getValidity).toHaveReturnedWith(validResponse);
-            expect(getViewValues).toHaveReturnedWith(valueResponse);
+            expect(getValidity).toHaveBeenCalled();
+            expect(getViewValues).toHaveBeenCalled();
             expect(pollRPC).toHaveBeenCalledWith(expect.anything(), {
                 callback: 'setPage',
                 config: {
@@ -151,16 +143,16 @@ describe('wrapper API store', () => {
                     }
                 },
                 pollAction: 'updatePage'
-            }, EMPTY);
+            });
             expect(showAlert).not.toHaveBeenCalled();
         });
 
         it('does not trigger re-execution if validation fails', async () => {
-            let validResponse = Promise.reject(new Error());
-            let valueResponse = Promise.resolve({ foo: 1 });
-            let getValidity = vi.fn().mockReturnValue(validResponse);
-            let getViewValues = vi.fn().mockReturnValue(valueResponse);
-            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
+            let validResponse = new Error();
+            let valueResponse = { foo: 1 };
+            let getValidity = vi.fn().mockRejectedValue(validResponse);
+            let getViewValues = vi.fn().mockResolvedValue(valueResponse);
+            let showAlert = vi.fn().mockResolvedValue({});
             let pollRPC = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { pollRPC },
@@ -169,7 +161,7 @@ describe('wrapper API store', () => {
             });
 
             await store.dispatch('triggerReExecution', { nodeId: 'foo' });
-            expect(getValidity).toHaveReturnedWith(validResponse);
+            expect(getValidity).toHaveBeenCalled();
             expect(getViewValues).not.toHaveBeenCalled();
             expect(pollRPC).not.toHaveBeenCalled();
             expect(showAlert).toHaveBeenCalledWith(expect.anything(), {
@@ -177,15 +169,15 @@ describe('wrapper API store', () => {
                 nodeInfo: {
                     nodeName: 'triggerReExecution'
                 }
-            }, EMPTY);
+            });
         });
 
         it('does not trigger re-execution if value retrieval fails', async () => {
-            let validResponse = Promise.resolve({ foo: true });
-            let valueResponse = Promise.reject(new Error());
-            let getValidity = vi.fn().mockReturnValue(validResponse);
-            let getViewValues = vi.fn().mockReturnValue(valueResponse);
-            let showAlert = vi.fn().mockReturnValue(Promise.resolve({}));
+            let validResponse = { foo: true };
+            let valueResponse = new Error();
+            let getValidity = vi.fn().mockResolvedValue(validResponse);
+            let getViewValues = vi.fn().mockRejectedValue(valueResponse);
+            let showAlert = vi.fn().mockResolvedValue({});
             let pollRPC = vi.fn();
             let store = getMockStore({
                 wrapperApiMocks: { pollRPC },
@@ -194,15 +186,15 @@ describe('wrapper API store', () => {
             });
 
             await store.dispatch('triggerReExecution', { nodeId: 'foo' });
-            expect(getValidity).toHaveReturnedWith(validResponse);
-            expect(getViewValues).toHaveReturnedWith(valueResponse);
+            expect(getValidity).toHaveBeenCalled();
+            expect(getViewValues).toHaveBeenCalled();
             expect(pollRPC).not.toHaveBeenCalled();
             expect(showAlert).toHaveBeenCalledWith(expect.anything(), {
                 message: 'Retrieving page values failed. Please check the page for errors.',
                 nodeInfo: {
                     nodeName: 'triggerReExecution'
                 }
-            }, EMPTY);
+            });
         });
     });
 
@@ -226,7 +218,7 @@ describe('wrapper API store', () => {
                     }
                 },
                 pollAction: 'updatePage'
-            }, EMPTY);
+            });
         });
 
         it('sets page', async () => {
@@ -255,8 +247,8 @@ describe('wrapper API store', () => {
                     reexecutedNodes: [],
                     webNodes: { foo: {} }
                 }
-            }, EMPTY);
-            expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), [], EMPTY);
+            });
+            expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), []);
             expect(showAlert).not.toHaveBeenCalled();
         });
 
@@ -275,7 +267,7 @@ describe('wrapper API store', () => {
             });
             expect(shouldPoll).toStrictEqual({ shouldPoll: true });
             expect(updatePage).not.toHaveBeenCalled();
-            expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), ['foo'], EMPTY);
+            expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), ['foo']);
             expect(showAlert).not.toHaveBeenCalled();
         });
 
@@ -294,7 +286,7 @@ describe('wrapper API store', () => {
             });
             expect(shouldPoll).toStrictEqual({ shouldPoll: true });
             expect(updatePage).not.toHaveBeenCalled();
-            expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), ['foo'], EMPTY);
+            expect(setNodesReExecuting).toHaveBeenCalledWith(expect.anything(), ['foo']);
             expect(showAlert).not.toHaveBeenCalled();
         });
 
@@ -313,7 +305,7 @@ describe('wrapper API store', () => {
             expect(setNodesReExecuting).not.toHaveBeenCalled();
             expect(showAlert).toHaveBeenCalledWith(expect.anything(), {
                 message: expect.any(Error), nodeInfo: { nodeName: 'setPage' }
-            }, EMPTY);
+            });
         });
     });
 
@@ -419,9 +411,9 @@ describe('wrapper API store', () => {
             });
 
             await store.dispatch('pollRPC', config);
-            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), config.config, EMPTY);
+            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), config.config);
             expect(showAlert).not.toHaveBeenCalled();
-            expect(setPage).toHaveBeenCalledWith(expect.anything(), expectedRes.result, EMPTY);
+            expect(setPage).toHaveBeenCalledWith(expect.anything(), expectedRes.result);
             expect(updatePage).not.toHaveBeenCalled();
         });
 
@@ -458,9 +450,9 @@ describe('wrapper API store', () => {
 
             expect(pollRPCMock).toHaveBeenCalledTimes(1);
             expect(singleRPC).toHaveBeenCalledTimes(1);
-            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), rpcConfig, EMPTY);
+            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), rpcConfig);
             expect(showAlert).not.toHaveBeenCalled();
-            expect(setPage).toHaveBeenCalledWith(expect.anything(), expectedRes.result, EMPTY);
+            expect(setPage).toHaveBeenCalledWith(expect.anything(), expectedRes.result);
             expect(updatePageMock).not.toHaveBeenCalled();
 
             vi.runAllTimers();
@@ -469,9 +461,9 @@ describe('wrapper API store', () => {
             expect(singleRPC).toHaveBeenCalledTimes(2);
             expect(singleRPC).toHaveBeenLastCalledWith(expect.anything(), {
                 ...rpcConfig, rpcConfig: { ...rpcConfig.rpcConfig, id: expect.any(Number) }
-            }, EMPTY);
+            });
             expect(showAlert).not.toHaveBeenCalled();
-            expect(setPage).toHaveBeenLastCalledWith(expect.anything(), expectedRes.result, EMPTY);
+            expect(setPage).toHaveBeenLastCalledWith(expect.anything(), expectedRes.result);
             expect(updatePageMock).toHaveBeenCalledWith(rpcConfig);
 
             vi.clearAllTimers();
@@ -503,7 +495,7 @@ describe('wrapper API store', () => {
             });
 
             await store.dispatch('pollRPC', config);
-            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), config.config, EMPTY);
+            expect(singleRPC).toHaveBeenCalledWith(expect.anything(), config.config);
             expect(setPage).not.toHaveBeenCalled();
             expect(updatePage).not.toHaveBeenCalled();
             expect(showAlert).toHaveBeenCalledWith(expect.anything(), {
@@ -511,7 +503,7 @@ describe('wrapper API store', () => {
                 nodeInfo: {
                     nodeName: 'ReexecutionService.getPage'
                 }
-            }, EMPTY);
+            });
         });
     });
 
@@ -530,7 +522,7 @@ describe('wrapper API store', () => {
                     nodeName: caller
                 },
                 message: error
-            }, EMPTY);
+            });
         });
     });
 

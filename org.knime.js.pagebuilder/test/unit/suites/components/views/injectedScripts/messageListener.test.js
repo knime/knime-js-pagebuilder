@@ -72,7 +72,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles invalid "init" method', (done) => {
@@ -103,7 +103,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('retrieves a view value', (done) => {
@@ -134,7 +134,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles errors in the "getValue" method', (done) => {
@@ -165,7 +165,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles invalid "getValue" method', (done) => {
@@ -194,7 +194,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles "validate" method', (done) => {
@@ -222,7 +222,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles errors in the "validate" method', (done) => {
@@ -253,7 +253,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles invalid/missing "validate" methods', (done) => {
@@ -279,7 +279,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles the "setValidationError" message', (done) => {
@@ -309,7 +309,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles errors in the "setValidationError" method', (done) => {
@@ -341,7 +341,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('handles invalid/missing "setValidationError" method', (done) => {
@@ -371,7 +371,7 @@ describe('message listener', () => {
             '%ORIGIN%');
             delete window['com.example'];
             done();
-        }, 10); // eslint-disable-line no-magic-numbers
+        }, 1000); // eslint-disable-line no-magic-numbers
     });
 
     it('ignores irrelevant messages', () => {

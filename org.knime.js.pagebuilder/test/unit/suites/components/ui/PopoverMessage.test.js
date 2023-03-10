@@ -66,7 +66,7 @@ describe('PopoverMessage', () => {
         }, { root: true });
     });
 
-    it('minimizes error messages', () => {
+    it('minimizes error messages', async () => {
         wrapper = mount(PopoverMessage, {
             props: {
                 type: 'warn',

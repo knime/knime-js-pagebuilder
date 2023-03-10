@@ -234,7 +234,7 @@ describe('Widget.vue', () => {
         let localContext = {
             global: {
                 mocks: {
-                    store: localStore
+                    $store: localStore
                 },
                 stubs: {
                     Component: {
