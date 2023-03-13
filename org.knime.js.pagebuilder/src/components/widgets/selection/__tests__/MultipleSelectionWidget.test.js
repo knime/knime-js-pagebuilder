@@ -5,7 +5,7 @@ import MultipleSelectionWidget from '@/components/widgets/selection/MultipleSele
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
 
 describe('MultipleSelectionWidget.vue', () => {
-    let propsTwinlist, propsCheckboxHorizontal, propsCheckboxVertical, propsMultiselectListBox;
+    let propsTwinlist, propsCheckboxHorizontal, propsCheckboxVertical, propsMultiselectListBox, propsComboBox;
 
     beforeEach(() => {
         propsTwinlist = {
@@ -308,6 +308,80 @@ describe('MultipleSelectionWidget.vue', () => {
             nodeId: '5:0:9',
             isValid: false
         };
+        propsComboBox = {
+            nodeConfig: {
+                '@class': 'org.knime.js.core.JSONWebNode',
+                stylesheets: [
+                    '/js-lib/font-awesome/4_7_0/css/font-awesome.min.css',
+                    '/js-lib/knime/service/knime.css',
+                    '/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css',
+                    '/org/knime/js/base/util/quickform/quickformStyles.css'
+                ],
+                nodeInfo: {
+                    '@class': 'org.knime.js.core.JSONWebNodeInfo',
+                    nodeAnnotation: '',
+                    nodeName: 'Multiple Selection Widget',
+                    nodeState: 'executed',
+                    displayPossible: true,
+                    nodeErrorMessage: null,
+                    nodeWarnMessage: null
+                },
+                javascriptLibraries: [
+                    '/js-lib/knime/service/knime_service_1_0_0.js',
+                    '/js-lib/jQuery/jquery-1.11.0.min.js',
+                    '/js-lib/knime/knime_twinlist_1_0_0.js',
+                    '/org/knime/js/base/dialog/selection/multiple/CheckBoxesMultipleSelections.js',
+                    '/org/knime/js/base/dialog/selection/multiple/ListMultipleSelections.js',
+                    '/org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js',
+                    '/js-lib/jQueryUI/min/ui/jquery-ui.min.js',
+                    '/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js',
+                    '/org/knime/js/base/node/widget/selection/multiple/multipleSelectionWidget.js'
+                ],
+                getViewValueMethodName: 'value',
+                namespace: 'knimeMultipleSelectionWidget',
+                viewRepresentation: {
+                    '@class': 'org.knime.js.base.node.widget.selection.multiple.MultipleSelectionWidgetRepresentation',
+                    label: 'Label ComboBox',
+                    description: 'Enter Description',
+                    required: true,
+                    defaultValue: {
+                        '@class':
+                            'org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue',
+                        value: [
+                            'CBH 1',
+                            'CBH 4'
+                        ]
+                    },
+                    currentValue: {
+                        '@class':
+                            'org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue',
+                        value: [
+                            'CBH 1',
+                            'CBH 4'
+                        ]
+                    },
+                    possibleChoices: [
+                        'CBH 1',
+                        'CBH 2',
+                        'CBH 3',
+                        'CBH 4',
+                        'CBH 5',
+                        'CBH 6',
+                        'CBH 7'
+                    ],
+                    type: 'ComboBox',
+                    limitNumberVisOptions: false,
+                    numberVisOptions: 10
+                },
+                viewValue: null,
+                customCSS: '',
+                initMethodName: 'init',
+                validateMethodName: 'validate',
+                setValidationErrorMethodName: 'setValidationErrorMessage'
+            },
+            nodeId: '5:0:10',
+            isValid: false
+        };
     });
 
     it('renders all different types', () => {
@@ -334,6 +408,12 @@ describe('MultipleSelectionWidget.vue', () => {
         });
         expect(wrapper4.html()).toBeTruthy();
         expect(wrapper4.isVisible()).toBeTruthy();
+
+        const wrapper5 = shallowMount(MultipleSelectionWidget, {
+            props: propsComboBox
+        });
+        expect(wrapper5.html()).toBeTruthy();
+        expect(wrapper5.isVisible()).toBeTruthy();
     });
 
     it('sends @updateWidget if Multiselect emits @input', () => {

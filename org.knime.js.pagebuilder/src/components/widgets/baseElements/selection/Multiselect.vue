@@ -2,6 +2,7 @@
 import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox.vue';
 import Twinlist from 'webapps-common/ui/components/forms/Twinlist.vue';
 import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes.vue';
+import ComboBox from 'webapps-common/ui/components/forms/ComboBox.vue';
 
 /**
  * Multiselect Component
@@ -16,6 +17,7 @@ import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes.vue';
 export default {
     components: {
         Checkboxes,
+        ComboBox,
         MultiselectListBox,
         Twinlist
     },
@@ -29,7 +31,7 @@ export default {
             default: null
         },
         /**
-         * @values List, Twinlist, Check boxes (horizontal), Check boxes (vertical)
+         * @values List, Twinlist, Check boxes (horizontal), Check boxes (vertical), ComboBox
          */
         type: {
             default: 'List',
@@ -52,6 +54,10 @@ export default {
         numberVisOptions: {
             type: Number,
             default: 0
+        },
+        triggerReExecution: {
+            type: Boolean,
+            default: false
         },
         description: {
             type: String,
@@ -83,6 +89,9 @@ export default {
         isCheckboxes() {
             return this.type === 'Check boxes (horizontal)' ||
                 this.type === 'Check boxes (vertical)';
+        },
+        isComboBox() {
+            return this.type === 'ComboBox';
         },
         checkBoxesAlignment() {
             if (this.type === 'Check boxes (vertical)') {
@@ -158,6 +167,19 @@ export default {
       :is-valid="isValid"
       :title="description"
       @update:model-value="onChange"
+    />
+    <ComboBox
+      v-if="isComboBox"
+      :id="id"
+      ref="form"
+      :initial-selected-ids="modelValue"
+      :size-visible-options="maxVisibleListEntries"
+      :aria-label="label"
+      :possible-values="possibleValues"
+      :close-dropdown-on-selection="triggerReExecution"
+      :is-valid="isValid"
+      :title="description"
+      @update:selected-ids="onChange"
     />
   </div>
 </template>

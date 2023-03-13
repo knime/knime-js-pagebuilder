@@ -6,10 +6,11 @@ import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes.vue';
 import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox.vue';
 import Twinlist from 'webapps-common/ui/components/forms/Twinlist.vue';
 import Checkbox from 'webapps-common/ui/components/forms/Checkbox.vue';
+import ComboBox from 'webapps-common/ui/components/forms/ComboBox.vue';
 
 
 describe('Multiselect.vue', () => {
-    let propsTwinlist, propsCheckboxHorizontal, propsCheckboxVertical, propsMultiselectListBox;
+    let propsTwinlist, propsCheckboxHorizontal, propsCheckboxVertical, propsMultiselectListBox, propsComboBox;
 
     beforeEach(() => {
         propsTwinlist = {
@@ -90,6 +91,25 @@ describe('Multiselect.vue', () => {
             numberVisOptions: 10,
             isValid: false
         };
+        propsComboBox = {
+            value: [
+                'CoB 1',
+                'CoB 4'
+            ],
+            possibleValueList: [
+                'CoB 1',
+                'CoB 2',
+                'CoB 3',
+                'CoB 4',
+                'CoB 5',
+                'CoB 6',
+                'CoB 7'
+            ],
+            type: 'ComboBox',
+            limitNumberVisOptions: false,
+            numberVisOptions: 10,
+            isValid: false
+        };
     });
 
     it('renders all different types', () => {
@@ -116,6 +136,12 @@ describe('Multiselect.vue', () => {
         });
         expect(wrapper4.html()).toBeTruthy();
         expect(wrapper4.isVisible()).toBeTruthy();
+
+        const wrapper5 = shallowMount(Multiselect, {
+            props: propsComboBox
+        });
+        expect(wrapper5.html()).toBeTruthy();
+        expect(wrapper5.isVisible()).toBeTruthy();
     });
 
     describe('checkboxes', () => {
@@ -149,7 +175,7 @@ describe('Multiselect.vue', () => {
                 props: propsCheckboxVertical
             });
 
-            expect(wrapper.vm.checkBoxesAlignment).toBe(null);
+            expect(wrapper.vm.checkBoxesAlignment).toBeNull();
             expect(wrapper.findComponent(Checkboxes).exists()).toBe(false);
         });
 
@@ -236,6 +262,17 @@ describe('Multiselect.vue', () => {
             
             expect(wrapper.emitted('update:modelValue')).toBeTruthy();
             expect(wrapper.emitted('update:modelValue')[0][0]).toStrictEqual(testValue);
+        });
+    });
+
+    describe('comboBox', () => {
+        it('renders combobox component', () => {
+            propsComboBox.isValid = true;
+            let wrapper = shallowMount(Multiselect, {
+                props: propsComboBox
+            });
+
+            expect(wrapper.findComponent(ComboBox).exists()).toBeTruthy();
         });
     });
 });
