@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import AlertLocal from '@/components/ui/AlertLocal.vue';
@@ -31,9 +31,9 @@ describe('AlertLocal', () => {
                 active: true
             }
         });
-        expect(wrapper.emitted().showAlert).toBeFalsy();
+        expect(wrapper.emitted('showAlert')).toBeFalsy();
         wrapper.find('.error-wrapper').trigger('click');
         await wrapper.vm.$nextTick();
-        expect(wrapper.emitted().showAlert).toBeTruthy();
+        expect(wrapper.emitted('showAlert')).toBeTruthy();
     });
 });

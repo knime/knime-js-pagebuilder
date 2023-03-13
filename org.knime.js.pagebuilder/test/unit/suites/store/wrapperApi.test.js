@@ -9,7 +9,7 @@ import * as alertConfig from '@/store/alert';
 import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
 
 describe('wrapper API store', () => {
-    const EMPTY = undefined;
+    const EMPTY = expect.undefined;
     const extensionConfig = iFrameExtensionConfig;
 
     afterAll(() => {
@@ -344,7 +344,7 @@ describe('wrapper API store', () => {
             expect(jsonrpcMock).toHaveBeenCalledWith(JSON.stringify(rpcConfig));
             expect(res).toStrictEqual({ ...expected, error: EMPTY });
 
-            window.jsonrpc = undefined;
+            delete window.jsonrpc;
             const sendMock = vi.fn().mockReturnValue(expected);
             window.EquoCommService = {
                 send: sendMock
@@ -374,15 +374,15 @@ describe('wrapper API store', () => {
             expect(res).toStrictEqual({ error: expect.any(Error), result: EMPTY });
             expect(res.error.toString()).toContain(expectedError);
 
-            window.jsonrpc = undefined;
+            delete window.jsonrpc;
             window.EquoCommService = {
                 send: rpcMock
             };
             window.cefBrowserInstanceId = 1234;
             const res2 = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
             expect(rpcMock).toHaveBeenCalledWith('org.knime.js.cef.jsonrpc#1234', JSON.stringify(rpcConfig));
-            expect(res).toStrictEqual({ error: expect.any(Error), result: EMPTY });
-            expect(res.error.toString()).toContain(expectedError);
+            expect(res2).toStrictEqual({ error: expect.any(Error), result: EMPTY });
+            expect(res2.error.toString()).toContain(expectedError);
         });
 
         it('handles RPC polling with resolution after single call', async () => {

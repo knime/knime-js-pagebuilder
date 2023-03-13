@@ -1,5 +1,5 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { default as createTreeItemRecursively, checkDefaultPaths, getIcon } from '@/util/createTreeItem';
+import { checkDefaultPaths, default as createTreeItemRecursively, getIcon } from '@/util/createTreeItem';
+import { describe, expect, it } from 'vitest';
 
 describe('Tests the createTreeItem functionality', () => {
     it('tests the creation of a empty tree object', () => {
@@ -14,7 +14,7 @@ describe('Tests the createTreeItem functionality', () => {
 
         expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toEqual({
             children: [],
-            id: undefined,
+            id: expect.undefined,
             state: {
                 disabled: false,
                 opened: false,

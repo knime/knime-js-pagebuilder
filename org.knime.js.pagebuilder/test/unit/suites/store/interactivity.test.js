@@ -1,6 +1,5 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { createLocalVue } from '@vue/test-utils';
-import Vuex, { createStore } from 'vuex';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { createStore } from 'vuex';
 
 import * as storeConfig from '@/store/interactivity';
 

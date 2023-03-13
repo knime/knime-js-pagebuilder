@@ -1,6 +1,6 @@
 /* global jsonrpc */
 // eslint-disable-next-line no-unused-vars
-import { KnimeUtils, KnimeTypes } from '@knime/ui-extension-service';
+import { KnimeTypes, KnimeUtils } from '@knime/ui-extension-service';
 const { createJsonRpcRequest } = KnimeUtils;
 
 export const namespaced = true;
@@ -209,16 +209,12 @@ export const actions = {
     async singleRPC(_, { rpcConfig }) {
         let result, error;
         if (typeof window.jsonrpc === 'function') {
-            console.log('hier');
             // SWT browser communication (request-response)
             try {
                 consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
                 ({ result, error } = JSON.parse(window.jsonrpc(JSON.stringify(rpcConfig))));
-
-                console.log('hier');
             } catch (err) {
                 error = err;
-                console.log('error', error);
             }
         } else if (window.EquoCommService) {
             // CEF browser communication (request-response)

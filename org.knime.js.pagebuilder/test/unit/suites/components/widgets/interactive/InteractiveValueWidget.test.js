@@ -157,8 +157,8 @@ describe('InteractiveValueWidget.vue', () => {
         const comp = wrapper.findComponent(SingleSelect);
         comp.vm.$emit('update:modelValue', testValue);
 
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+        expect(wrapper.emitted('updateWidget')).toBeTruthy();
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
             callback: expect.anything(),
             nodeId: props.nodeId,
             update: {

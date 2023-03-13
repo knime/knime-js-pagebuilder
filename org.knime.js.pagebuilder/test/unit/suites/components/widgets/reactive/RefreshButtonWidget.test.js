@@ -104,6 +104,7 @@ describe('RefreshButtonWidget.vue', () => {
         wrapper.vm.$store.dispatch('pagebuilder/setNodesReExecuting', ['13:0:12']);
         expect(wrapper.vm.isExecuting).toBeTruthy();
         await wrapper.vm.$nextTick();
+        // TODO: Investigate further why it is no longer possible to directly test the attribute instead.
         expect(wrapper.findComponent(Button).vm.$attrs.disabled).toBeTruthy();
     });
 });

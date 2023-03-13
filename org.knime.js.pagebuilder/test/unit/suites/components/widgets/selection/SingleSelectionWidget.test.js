@@ -365,8 +365,8 @@ describe('SingleSelectionWidget.vue', () => {
         const lb = wrapper.findComponent(SingleSelect);
         lb.vm.$emit('update:modelValue', testValue);
 
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+        expect(wrapper.emitted('updateWidget')).toBeTruthy();
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
             nodeId: propsDropdown.nodeId,
             type: 'value',
             value: [testValue]

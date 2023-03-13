@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import overrideRequired from '@/util/overrideRequired';
 
 describe('overrideRequired util', () => {
@@ -30,6 +30,6 @@ describe('overrideRequired util', () => {
 
     it('handles missing or null configs', () => {
         expect(overrideRequired(null)).toBe(null);
-        expect(overrideRequired(undefined)).not.toBeDefined();
+        expect(overrideRequired(expect.undefined)).not.toBeDefined();
     });
 });

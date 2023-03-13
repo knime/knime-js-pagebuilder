@@ -155,8 +155,8 @@ describe('InteractiveRangeWidget.vue', () => {
         };
         wrapper.findComponent(SliderWidget).vm.$emit('updateWidget', testUpdate);
 
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+        expect(wrapper.emitted('updateWidget')).toBeTruthy();
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
             callback: expect.anything(),
             nodeId: props.nodeId,
             update: {
@@ -174,8 +174,8 @@ describe('InteractiveRangeWidget.vue', () => {
             value: NEW_MAX
         };
         wrapper1.findComponent(SliderWidget).vm.$emit('updateWidget', testUpdate1);
-        expect(wrapper1.emitted().updateWidget).toBeTruthy();
-        expect(wrapper1.emitted().updateWidget[0][0]).toStrictEqual({
+        expect(wrapper1.emitted('updateWidget')).toBeTruthy();
+        expect(wrapper1.emitted('updateWidget')[0][0]).toStrictEqual({
             callback: expect.anything(),
             nodeId: props.nodeId,
             update: {

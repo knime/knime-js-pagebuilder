@@ -1,7 +1,7 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 /* eslint-disable no-magic-numbers */
-import { getFileExtension, trimSchema, normalizeArray,
-    normalizePath, resolveWorkflowRelativePath, getRootPath, getNameFromPath } from '@/util/fileUtils';
+import { getFileExtension, getNameFromPath, getRootPath, normalizeArray,
+    normalizePath, resolveWorkflowRelativePath, trimSchema } from '@/util/fileUtils';
 
 describe('getFileExtension function', () => {
     it('extracts file extensions', () => {
@@ -28,7 +28,7 @@ describe('getFileExtension function', () => {
         expect(getFileExtension(nullFile)).toEqual('');
         expect(getFileExtension(numberFile)).toEqual('');
         expect(getFileExtension(booleanFile)).toEqual('');
-        expect(getFileExtension(undefined)).toEqual('');
+        expect(getFileExtension(expect.undefined)).toEqual('');
     });
 });
 
@@ -54,7 +54,7 @@ describe('trimSchema function', () => {
 
         expect(trimSchema(empty, knimeSchema)).toEqual(empty);
         expect(trimSchema(nullPath, knimeSchema)).toEqual(empty);
-        expect(trimSchema(undefined, knimeSchema)).toEqual(empty);
+        expect(trimSchema(expect.undefined, knimeSchema)).toEqual(empty);
 
         expect(trimSchema(regularPath, emptySchema)).toEqual(empty);
     });

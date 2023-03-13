@@ -200,8 +200,8 @@ describe('ValueFilterSelectionWidget.vue', () => {
         const comp = wrapper.findComponent(Multiselect);
         comp.vm.$emit('update:modelValue', testValue);
 
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+        expect(wrapper.emitted('updateWidget')).toBeTruthy();
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
             nodeId: props.nodeId,
             type: 'values',
             value: testValue
@@ -217,8 +217,8 @@ describe('ValueFilterSelectionWidget.vue', () => {
         const lb = wrapper.findComponent({ ref: 'column' });
         lb.vm.$emit('update:modelValue', testValue);
 
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+        expect(wrapper.emitted('updateWidget')).toBeTruthy();
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
             nodeId: props.nodeId,
             type: 'column',
             value: testValue

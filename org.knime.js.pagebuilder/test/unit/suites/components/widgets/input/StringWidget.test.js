@@ -142,8 +142,8 @@ describe('StringWidget.vue', () => {
             const input = wrapper.findComponent(InputField);
             input.vm.$emit('update:modelValue', testValue);
 
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+            expect(wrapper.emitted('updateWidget')).toBeTruthy();
+            expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
                 nodeId: propsInput.nodeId,
                 type: 'string',
                 value: testValue
@@ -221,8 +221,8 @@ describe('StringWidget.vue', () => {
             const input = wrapper.findComponent(InputField);
             input.vm.$emit('update:modelValue', testValue);
 
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+            expect(wrapper.emitted('updateWidget')).toBeTruthy();
+            expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
                 nodeId: propsInput.nodeId,
                 type: 'string',
                 value: testValue

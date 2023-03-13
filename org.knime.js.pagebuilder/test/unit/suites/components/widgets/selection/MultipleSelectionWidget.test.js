@@ -346,8 +346,8 @@ describe('MultipleSelectionWidget.vue', () => {
         const comp = wrapper.findComponent(Multiselect);
         comp.vm.$emit('update:modelValue', testValue);
 
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+        expect(wrapper.emitted('updateWidget')).toBeTruthy();
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
             nodeId: props.nodeId,
             type: 'value',
             value: testValue

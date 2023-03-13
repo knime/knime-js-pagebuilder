@@ -77,9 +77,9 @@ describe('BooleanWidget.vue', () => {
                 $el: mockChild
             }
         });
-        expect(typeof wrapper.emitted().updateWidget).toBe('undefined');
+        expect(typeof wrapper.emitted('updateWidget')).toBe('undefined');
         wrapper.findComponent(Checkbox).vm.$emit('update:modelValue', false);
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
+        expect(wrapper.emitted('updateWidget')).toBeTruthy();
     });
 
     describe('validation', () => {

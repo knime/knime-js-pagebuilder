@@ -315,7 +315,7 @@ describe('FileUploadWidget.vue', () => {
         // File operations needs non-zero time to complete (more than a tick).
         setTimeout(() => {
             expect(uploadResourceMock).not.toHaveBeenCalled();
-            expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+            expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
                 nodeId: '5:0:22',
                 type: 'path',
                 update: {

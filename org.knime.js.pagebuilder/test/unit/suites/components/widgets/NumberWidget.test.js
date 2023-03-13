@@ -82,8 +82,8 @@ describe('NumberWidget.vue', () => {
         const input = wrapper.findComponent(NumberInput);
         input.vm.$emit('update:modelValue', testValue);
 
-        expect(wrapper.emitted().updateWidget).toBeTruthy();
-        expect(wrapper.emitted().updateWidget[0][0]).toStrictEqual({
+        expect(wrapper.emitted('updateWidget')).toBeTruthy();
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
             nodeId: props.nodeId,
             type: 'double',
             value: testValue

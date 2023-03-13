@@ -428,8 +428,8 @@ describe('DateTimeWidget.vue', () => {
             expect(wrapper.vm.dateObject).toStrictEqual(wrapper.vm.minDate);
             expect(wrapper.vm.dateObject).toStrictEqual(wrapper.vm.maxDate);
 
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[0][0].update['viewRepresentation.currentValue'].zonestring)
+            expect(wrapper.emitted('updateWidget')).toBeTruthy();
+            expect(wrapper.emitted('updateWidget')[0][0].update['viewRepresentation.currentValue'].zonestring)
                 .toStrictEqual('Europe/Berlin');
         });
     });
@@ -446,8 +446,8 @@ describe('DateTimeWidget.vue', () => {
             const input = wrapper.findComponent({ ref: 'timezone' });
             input.vm.$emit('update:modelValue', 'Asia/Bangkok');
 
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[1][0].update['viewRepresentation.currentValue'].zonestring)
+            expect(wrapper.emitted('updateWidget')).toBeTruthy();
+            expect(wrapper.emitted('updateWidget')[1][0].update['viewRepresentation.currentValue'].zonestring)
                 .toStrictEqual('Asia/Bangkok');
         });
 
@@ -462,8 +462,8 @@ describe('DateTimeWidget.vue', () => {
             const input = wrapper.findComponent({ ref: 'nowButton' });
             input.vm.$emit('click');
 
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            const eventData = wrapper.emitted().updateWidget[1][0].update['viewRepresentation.currentValue'];
+            expect(wrapper.emitted('updateWidget')).toBeTruthy();
+            const eventData = wrapper.emitted('updateWidget')[1][0].update['viewRepresentation.currentValue'];
 
             const compareDateFormat = 'yyyy-MM-dd';
             expect(format(new Date(eventData.datestring), compareDateFormat))
@@ -483,8 +483,8 @@ describe('DateTimeWidget.vue', () => {
             const input = wrapper.findComponent({ ref: 'nowButton' });
             input.vm.$emit('click');
 
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            const eventData = wrapper.emitted().updateWidget[1][0].update['viewRepresentation.currentValue'];
+            expect(wrapper.emitted('updateWidget')).toBeTruthy();
+            const eventData = wrapper.emitted('updateWidget')[1][0].update['viewRepresentation.currentValue'];
             // time is changed
             const compareDateFormat = 'HH:mm';
             expect(format(new Date(eventData.datestring), compareDateFormat))
@@ -506,8 +506,8 @@ describe('DateTimeWidget.vue', () => {
             const input = wrapper.findComponent(DateTimeInput);
             input.vm.$emit('update:modelValue', new Date(testValue));
 
-            expect(wrapper.emitted().updateWidget).toBeTruthy();
-            expect(wrapper.emitted().updateWidget[1][0]).toStrictEqual({
+            expect(wrapper.emitted('updateWidget')).toBeTruthy();
+            expect(wrapper.emitted('updateWidget')[1][0]).toStrictEqual({
                 nodeId: propsAll.nodeId,
                 update: {
                     'viewRepresentation.currentValue': {

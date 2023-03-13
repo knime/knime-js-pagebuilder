@@ -1,7 +1,7 @@
 import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
 import messageListenerSrc from '@/components/views/injectedScripts/messageListener?raw';
 
-// TODO: Change the timeout-tests to not depend on how many other tests are executed at the same time
+// TODO:!! Change the timeout-tests to not depend on how many other tests are executed at the same time
 describe('message listener', () => {
     const nodeId = '0.0.7';
 
