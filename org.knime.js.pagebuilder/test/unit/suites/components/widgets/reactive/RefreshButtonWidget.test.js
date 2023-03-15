@@ -1,13 +1,11 @@
 import { expect, describe, beforeAll, beforeEach, it } from 'vitest';
 import { createStore } from 'vuex';
 import { mount } from '@vue/test-utils';
-
 import RefreshButtonWidget from '@/components/widgets/reactive/RefreshButtonWidget.vue';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
-import Button from 'webapps-common/ui/components/Button.vue';
-
 import * as storeConfig from '@/store/pagebuilder';
+import BaseButton from '@@/webapps-common/ui/components/BaseButton.vue';
 
 describe('RefreshButtonWidget.vue', () => {
     let props, store, context;
@@ -104,7 +102,6 @@ describe('RefreshButtonWidget.vue', () => {
         wrapper.vm.$store.dispatch('pagebuilder/setNodesReExecuting', ['13:0:12']);
         expect(wrapper.vm.isExecuting).toBeTruthy();
         await wrapper.vm.$nextTick();
-        // TODO: Investigate further why it is no longer possible to directly test the attribute instead.
-        expect(wrapper.findComponent(Button).vm.$attrs.disabled).toBeTruthy();
+        expect(wrapper.findComponent(BaseButton).props('disabled')).toBeTruthy();
     });
 });

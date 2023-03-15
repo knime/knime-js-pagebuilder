@@ -65,7 +65,7 @@ export default {
       primary
       compact
       class="refresh-button"
-      :disabled="isExecuting"
+      :disabled="Boolean(isExecuting)"
       @click="onClick"
     >
       {{ viewRep.buttonText }}
