@@ -153,8 +153,8 @@ export default {
          * @param {Array} children
          * @returns {Array}
          */
-        filterForTreeSelectItems(children = []) {
-            return children.filter(x => x.$options.name === 'TreeSelectItem');
+        filterForTreeSelectItems(children) {
+            return children?.filter(x => x.$options.name === 'TreeSelectItem') || [];
         },
         moveKeyBoardFocus(delta) {
             let up = delta < 0;
