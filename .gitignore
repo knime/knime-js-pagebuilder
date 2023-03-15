@@ -6,3 +6,4 @@ target/
 */dist/
 *.DS_Store
 **/CHANGELOG.md
+.idea
