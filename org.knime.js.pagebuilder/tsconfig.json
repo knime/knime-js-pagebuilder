@@ -5,6 +5,9 @@
     "src/**/*",
     "src/**/*.vue"
   ],
+  "exclude": [
+    "**/__tests__/*"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

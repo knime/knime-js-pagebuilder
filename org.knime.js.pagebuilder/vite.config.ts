@@ -59,7 +59,8 @@ export default defineConfig(({ mode }) => {
             ]
         },
         test: {
-            include: ['test/**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+            include: ['**/__tests__/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+            exclude: ['**/node_modules/**', '**/dist/**', 'webapps-common/**'],
             environment: 'jsdom',
             reporters: ['default', 'junit'],
             deps: { inline: ['consola'] },
