@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import layoutMixin from '../../../../../src/components/mixins/layoutMixin';
+import layoutMixin from '../layoutMixin';
 import { shallowMount } from '@vue/test-utils';
 import MockComponent from './mockComponent.vue';
 
