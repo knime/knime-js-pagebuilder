@@ -2,7 +2,7 @@ import { expect, describe, beforeEach, afterEach, it, vi } from 'vitest';
 import { createStore } from 'vuex';
 import { KnimeService } from '@knime/ui-extension-service';
 
-import { iFrameExtensionConfig } from '../../assets/views/extensionConfig';
+import { iFrameExtensionConfig } from '../../../test/unit/assets/views/extensionConfig';
 
 import * as storeConfig from '@/store/service';
 
