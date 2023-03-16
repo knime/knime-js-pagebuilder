@@ -53,7 +53,8 @@ export default {
         return {
             configKey: 0,
             knimeService: null,
-            alert: null
+            alert: null,
+            isWidget: false
         };
     },
     computed: {
