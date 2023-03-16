@@ -15,8 +15,8 @@ import UIExtIFrame from '@/components/views/UIExtIFrame.vue';
 import AlertLocal from '@/components/ui/AlertLocal.vue';
 import WarningLocal from '@/components/ui/WarningLocal.vue';
 
-import { iFrameExtensionConfig, componentExtensionConfig } from '../../../assets/views/extensionConfig';
-import { viewConfig } from '../../../assets/views/viewConfig';
+import { iFrameExtensionConfig, componentExtensionConfig } from '../../../../test/unit/assets/views/extensionConfig';
+import { viewConfig } from '../../../../test/unit/assets/views/viewConfig';
 
 
 describe('UIExtension.vue', () => {
