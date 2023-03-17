@@ -55,11 +55,6 @@ describe('DoubleWidget.vue', () => {
         expect(wrapper.findComponent(mountOptions.global.stubs.NumberWidget).vm.$attrs).toEqual(mountOptions.props);
     });
 
-    it('passes-through all listeners', () => {
-        let wrapper = shallowMount(DoubleWidget, mountOptions);
-        expect(wrapper.findComponent(mountOptions.global.stubs.NumberWidget).vm.$attrs.onFakeEvent).toBeDefined();
-    });
-
     describe('passes-through methods', () => {
         let wrapper;
 

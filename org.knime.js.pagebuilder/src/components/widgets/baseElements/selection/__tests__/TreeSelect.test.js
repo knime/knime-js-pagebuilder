@@ -72,7 +72,6 @@ describe('TreeSelect.vue', () => {
         expect(wrapper.findComponent(TreeSelectItem).findComponent(customSelectedIcon).isVisible()).toBeTruthy();
     });
 
-    // TODO: Verify that merging this test with the previously next one is ok.
     it('updates text in TreeSelectItem dynamically', async () => {
         const wrapper = mount(TreeSelect, { props });
         const test = 'SOME_UNIQUE_TEST_STRING_34as834asjf';
