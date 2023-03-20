@@ -59,7 +59,7 @@ export default defineConfig(({ mode }) => {
             ]
         },
         test: {
-            include: ['**/__tests__/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+            include: ['src/**/__tests__/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
             exclude: ['**/node_modules/**', '**/dist/**', 'webapps-common/**'],
             environment: 'jsdom',
             reporters: ['default', 'junit'],
@@ -70,7 +70,7 @@ export default defineConfig(({ mode }) => {
             coverage: {
                 all: true,
                 exclude: [
-                    'coverage/**', 'dist/**', 'webapps-common/**', 'lib/**', '**/*.d.ts', '**/__tests__/**',
+                    'coverage/**', 'dist/**', 'webapps-common/**', 'lib/**', '**/*.d.ts', 'src/**/__tests__/**',
                     'src/dev/**', '**/{vite,vitest,postcss}.config.{js,cjs,mjs,ts}',
                     '**/.{eslint,prettier,stylelint}rc.{js,cjs,yml}', 'webpack/**'
                 ]
