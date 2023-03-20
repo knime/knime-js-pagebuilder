@@ -43,7 +43,7 @@ export default {
             return this.nodeConfig.viewRepresentation;
         },
         isExecuting() {
-            return this.nodesReExecuting?.length || null;
+            return Boolean(this.nodesReExecuting?.length);
         }
     },
     methods: {
@@ -65,7 +65,7 @@ export default {
       primary
       compact
       class="refresh-button"
-      :disabled="Boolean(isExecuting)"
+      :disabled="isExecuting"
       @click="onClick"
     >
       {{ viewRep.buttonText }}
