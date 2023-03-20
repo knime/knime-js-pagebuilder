@@ -4,7 +4,7 @@ import { createStore } from 'vuex';
 import * as storeConfig from '@/store/pagebuilder';
 
 
-// TODO: HUB-4622 Get rid of timeout workaround. Also they even sometimes fail
+// TODO UIEXT-218: Get rid of timeout workaround. Also they even sometimes fail
 describe('PageBuilder store', () => {
     let store;
 

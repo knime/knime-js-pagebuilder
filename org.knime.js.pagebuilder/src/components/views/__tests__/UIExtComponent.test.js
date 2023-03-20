@@ -27,7 +27,7 @@ describe('UIExtComponent.vue', () => {
         delete window[mockComponentId];
     });
 
-    // TODO: HUB-4622 Check if this test is still necessary with vue3
+    // TODO UIEXT-218: Check if this test is still necessary with vue3
     it.skip('renders ui extensions as Vue components', () => {
         window[mockComponentId] = mockComponent;
         let wrapper = shallowMount(UIExtComponent, context);
@@ -35,7 +35,7 @@ describe('UIExtComponent.vue', () => {
         expect(wrapper.findComponent(mockComponent).exists()).toBeTruthy();
     });
 
-    // TODO: HUB-4622 Check if this test is still necessary with vue3
+    // TODO UIEXT-218: Check if this test is still necessary with vue3
     it.skip('skips loading a component library which is already loaded', () => {
         window[mockComponentId] = mockComponent;
         let loadComponentSpy = vi.spyOn(loadingModule, 'loadComponentLibrary');
