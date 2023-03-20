@@ -70,7 +70,8 @@ export default defineConfig(({ mode }) => {
                 all: true,
                 exclude: [
                     'coverage/**', 'dist/**', 'webapps-common/**', 'lib/**', '**/*.d.ts', '**/__tests__/**',
-                    '**/{vite,vitest,postcss}.config.{js,cjs,mjs,ts}', '**/.{eslint,prettier,stylelint}rc.{js,cjs,yml}'
+                    'src/dev/**', '**/{vite,vitest,postcss}.config.{js,cjs,mjs,ts}',
+                    '**/.{eslint,prettier,stylelint}rc.{js,cjs,yml}', 'webpack/**'
                 ]
             },
             outputFile: {
