@@ -65,7 +65,7 @@ export default defineConfig(({ mode }) => {
             reporters: ['default', 'junit'],
             deps: { inline: ['consola'] },
             setupFiles: [
-                fileURLToPath(new URL('test-setup/vitest.setup.js', import.meta.url))
+                fileURLToPath(new URL('vitest.setup.js', import.meta.url))
             ],
             coverage: {
                 all: true,
