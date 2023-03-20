@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import { shallowMount, mount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
 import * as loadingModule from 'webapps-common/ui/util/loadComponentLibrary';
-import { componentExtensionConfig } from '../../../../test/unit/assets/views/extensionConfig';
+import { componentExtensionConfig } from '@@/test/assets/views/extensionConfig';
 
 import UIExtComponent from '@/components/views/UIExtComponent.vue';
 

@@ -1,9 +1,8 @@
 import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import { IFrameKnimeServiceAdapter } from '@knime/ui-extension-service';
-
 import UIExtIFrame from '@/components/views/UIExtIFrame.vue';
-import { iFrameExtensionConfig } from '../../../../test/unit/assets/views/extensionConfig';
+import { iFrameExtensionConfig } from '@@/test/assets/views/extensionConfig';
 
 describe('UIExtIFrame.vue', () => {
     const extensionConfig = iFrameExtensionConfig;

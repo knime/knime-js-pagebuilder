@@ -1,12 +1,10 @@
 import { expect, describe, afterAll, it, vi } from 'vitest';
 import { createStore } from 'vuex';
-
-import muteConsole from '@@/test/unit/test-util/muteConsole';
-
+import muteConsole from '@@/test/test-util/muteConsole';
 import * as wrapperApiConfig from '@/store/wrapperApi';
 import * as pagebuilderConfig from '@/store/pagebuilder';
 import * as alertConfig from '@/store/alert';
-import { iFrameExtensionConfig } from '../../../test/unit/assets/views/extensionConfig';
+import { iFrameExtensionConfig } from '@@/test/assets/views/extensionConfig';
 
 describe('wrapper API store', () => {
     const EMPTY = expect.undefined;

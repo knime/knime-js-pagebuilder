@@ -3,20 +3,17 @@ import { createStore } from 'vuex';
 import { shallowMount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
 vi.mock('@knime/ui-extension-service');
-
 import * as pagebuilderStoreConfig from '@/store/pagebuilder';
 import * as alertStoreConfig from '@/store/alert';
 import * as serviceStoreConfig from '@/store/service';
 import * as apiStoreConfig from '@/store/wrapperApi';
-
 import UIExtension from '@/components/views/UIExtension.vue';
 import UIExtComponent from '@/components/views/UIExtComponent.vue';
 import UIExtIFrame from '@/components/views/UIExtIFrame.vue';
 import AlertLocal from '@/components/ui/AlertLocal.vue';
 import WarningLocal from '@/components/ui/WarningLocal.vue';
-
-import { iFrameExtensionConfig, componentExtensionConfig } from '../../../../test/unit/assets/views/extensionConfig';
-import { viewConfig } from '../../../../test/unit/assets/views/viewConfig';
+import { iFrameExtensionConfig, componentExtensionConfig } from '@@/test/assets/views/extensionConfig';
+import { viewConfig } from '@@/test/assets/views/viewConfig';
 
 
 describe('UIExtension.vue', () => {
