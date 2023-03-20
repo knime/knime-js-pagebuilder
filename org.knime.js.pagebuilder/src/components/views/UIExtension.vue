@@ -72,12 +72,15 @@ export default {
         },
         displayWarning() {
             return this.alert?.type === 'warn';
+        },
+        isWidget() {
+            return false;
         }
     },
     watch: {
         extensionConfig() {
             this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
-            
+
             this.initKnimeService();
             this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrames and UIExtComponents
         }
