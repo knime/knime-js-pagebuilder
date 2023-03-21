@@ -76,6 +76,7 @@ export default defineConfig(({ mode }) => {
                 ]
             },
             outputFile: {
+                // TODO: UIEXT-218: Add a bitbucket-pipelines.yml file similar to other repos
                 junit: 'test-results/junit.xml' // needed for Bitbucket Pipeline, see https://support.atlassian.com/bitbucket-cloud/docs/test-reporting-in-pipelines/
             }
         },
