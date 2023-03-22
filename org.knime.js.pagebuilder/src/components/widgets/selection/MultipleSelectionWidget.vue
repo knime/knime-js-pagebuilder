@@ -107,7 +107,7 @@ export default {
         :number-vis-options="viewRep.numberVisOptions"
         :limit-number-vis-options="viewRep.limitNumberVisOptions"
         :possible-value-list="viewRep.possibleChoices"
-        :trigger-re-execution="viewRep.triggerReExecution"
+        :is-re-execution-widget="viewRep.triggerReExecution"
         :is-valid="isValid"
         :description="description"
         :label="label"

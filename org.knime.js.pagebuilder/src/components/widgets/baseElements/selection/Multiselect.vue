@@ -55,7 +55,7 @@ export default {
             type: Number,
             default: 0
         },
-        triggerReExecution: {
+        isReExecutionWidget: {
             type: Boolean,
             default: false
         },
@@ -176,7 +176,7 @@ export default {
       :size-visible-options="maxVisibleListEntries"
       :aria-label="label"
       :possible-values="possibleValues"
-      :close-dropdown-on-selection="triggerReExecution"
+      :close-dropdown-on-selection="isReExecutionWidget"
       :is-valid="isValid"
       :title="description"
       @update:selected-ids="onChange"

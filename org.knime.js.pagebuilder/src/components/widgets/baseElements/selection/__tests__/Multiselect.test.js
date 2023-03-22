@@ -93,17 +93,17 @@ describe('Multiselect.vue', () => {
         };
         propsComboBox = {
             value: [
-                'CoB 1',
-                'CoB 4'
+                'ComboBox 1',
+                'ComboBox 4'
             ],
             possibleValueList: [
-                'CoB 1',
-                'CoB 2',
-                'CoB 3',
-                'CoB 4',
-                'CoB 5',
-                'CoB 6',
-                'CoB 7'
+                'ComboBox 1',
+                'ComboBox 2',
+                'ComboBox 3',
+                'ComboBox 4',
+                'ComboBox 5',
+                'ComboBox 6',
+                'ComboBox 7'
             ],
             type: 'ComboBox',
             limitNumberVisOptions: false,
@@ -271,7 +271,6 @@ describe('Multiselect.vue', () => {
             let wrapper = shallowMount(Multiselect, {
                 props: propsComboBox
             });
-
             expect(wrapper.findComponent(ComboBox).exists()).toBeTruthy();
         });
     });

@@ -586,7 +586,7 @@
             "SomeReallyReallyLongValueThatsImportant7",
             "SomeReallyReallyLongValueThatsImportant8",
             "SomeReallyReallyLongValueThatsImportant9",
-            "1SomeReallyReallyLongValueThatsImportant0"
+            "SomeReallyReallyLongValueThatsImportant10"
           ],
           "type": "List",
           "limitNumberVisOptions": false,
@@ -686,7 +686,7 @@
             "SomeReallyReallyLongValueThatsImportant7",
             "SomeReallyReallyLongValueThatsImportant8",
             "SomeReallyReallyLongValueThatsImportant9",
-            "1SomeReallyReallyLongValueThatsImportant0"
+            "SomeReallyReallyLongValueThatsImportant10"
           ],
           "type": "Twinlist",
           "limitNumberVisOptions": false,
@@ -736,7 +736,7 @@
             "SomeReallyReallyLongValueThatsImportant7",
             "SomeReallyReallyLongValueThatsImportant8",
             "SomeReallyReallyLongValueThatsImportant9",
-            "1SomeReallyReallyLongValueThatsImportant0"
+            "SomeReallyReallyLongValueThatsImportant10"
           ],
           "type": "Twinlist",
           "limitNumberVisOptions": true,
@@ -886,7 +886,7 @@
             "SomeReallyReallyLongValueThatsImportant7",
             "SomeReallyReallyLongValueThatsImportant8",
             "SomeReallyReallyLongValueThatsImportant9",
-            "1SomeReallyReallyLongValueThatsImportant0"
+            "SomeReallyReallyLongValueThatsImportant10"
           ],
           "type": "Check boxes (vertical)",
           "limitNumberVisOptions": false,
@@ -1036,7 +1036,7 @@
             "SomeReallyReallyLongValueThatsImportant7",
             "SomeReallyReallyLongValueThatsImportant8",
             "SomeReallyReallyLongValueThatsImportant9",
-            "1SomeReallyReallyLongValueThatsImportant0"
+            "SomeReallyReallyLongValueThatsImportant10"
           ],
           "type": "Check boxes (horizontal)",
           "limitNumberVisOptions": false,
@@ -1136,7 +1136,7 @@
             "SomeReallyReallyLongValueThatsImportant7",
             "SomeReallyReallyLongValueThatsImportant8",
             "SomeReallyReallyLongValueThatsImportant9",
-            "1SomeReallyReallyLongValueThatsImportant0"
+            "SomeReallyReallyLongValueThatsImportant10"
           ],
           "type": "List",
           "limitNumberVisOptions": true,
@@ -1186,7 +1186,7 @@
             "SomeReallyReallyLongValueThatsImportant7",
             "SomeReallyReallyLongValueThatsImportant8",
             "SomeReallyReallyLongValueThatsImportant9",
-            "1SomeReallyReallyLongValueThatsImportant0"
+            "SomeReallyReallyLongValueThatsImportant10"
           ],
           "type": "ComboBox",
           "limitNumberVisOptions": false,
@@ -1236,7 +1236,7 @@
             "SomeReallyReallyLongValueThatsImportant7",
             "SomeReallyReallyLongValueThatsImportant8",
             "SomeReallyReallyLongValueThatsImportant9",
-            "1SomeReallyReallyLongValueThatsImportant0"
+            "SomeReallyReallyLongValueThatsImportant10"
           ],
           "type": "ComboBox",
           "limitNumberVisOptions": true,

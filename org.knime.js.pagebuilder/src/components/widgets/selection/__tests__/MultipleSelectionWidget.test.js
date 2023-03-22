@@ -348,26 +348,26 @@ describe('MultipleSelectionWidget.vue', () => {
                         '@class':
                             'org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue',
                         value: [
-                            'CBH 1',
-                            'CBH 4'
+                            'ComboBox 1',
+                            'ComboBox 4'
                         ]
                     },
                     currentValue: {
                         '@class':
                             'org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue',
                         value: [
-                            'CBH 1',
-                            'CBH 4'
+                            'ComboBox 1',
+                            'ComboBox 4'
                         ]
                     },
                     possibleChoices: [
-                        'CBH 1',
-                        'CBH 2',
-                        'CBH 3',
-                        'CBH 4',
-                        'CBH 5',
-                        'CBH 6',
-                        'CBH 7'
+                        'ComboBox 1',
+                        'ComboBox 2',
+                        'ComboBox 3',
+                        'ComboBox 4',
+                        'ComboBox 5',
+                        'ComboBox 6',
+                        'ComboBox 7'
                     ],
                     type: 'ComboBox',
                     limitNumberVisOptions: false,
