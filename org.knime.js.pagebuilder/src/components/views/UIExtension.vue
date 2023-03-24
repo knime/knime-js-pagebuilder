@@ -105,9 +105,10 @@ export default {
                 this.callService,
                 this.pushNotification
             );
-            if (this.extensionConfig?.imageGeneration === true) {
+            if (this.extensionConfig?.generatedImageActionId) {
+                const actionId = this.extensionConfig.generatedImageActionId;
                 knimeService.registerImageGeneratedCallback(
-                    generatedImage => window.EquoCommService.send('generatedImage', generatedImage)
+                    generatedImage => window.EquoCommService.send(actionId, generatedImage)
                 );
             }
             this.knimeService = markRaw(knimeService);

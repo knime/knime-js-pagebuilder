@@ -82,7 +82,7 @@ export default {
             return this.nodeInfo?.nodeState === 'executed';
         },
         isImageGeneration() {
-            return this.isUIExtension && this.uiExtensionConfig?.imageGeneration === true;
+            return this.isUIExtension && this.uiExtensionConfig?.generatedImageActionId;
         },
         viewAvailable() {
             // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
@@ -98,8 +98,8 @@ export default {
             return this.nodeInfo?.displayPossible;
         },
         showViewExecutable() {
-            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings)
-                && !this.isImageGeneration;
+            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings) &&
+                !this.isImageGeneration;
         },
         showExecutionOverlay() {
             /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this
