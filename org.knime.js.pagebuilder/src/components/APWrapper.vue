@@ -20,8 +20,8 @@ export default {
         debugPort() {
             return this.debugInfo?.remoteDebuggingPort;
         },
-        isNotHeadless() {
-            return !window.headless;
+        isHeadless() {
+            return Boolean(window.headless);
         }
     },
     created() {
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <template>
-  <div :class="[ 'apWrapper', {notHeadless: isNotHeadless }]">
+  <div :class="[ 'ap-wrapper', {headless: isHeadless }]">
     <PageBuilder />
     <template v-if="debugPort">
       <DebugButton :debug-port="debugPort" />
@@ -54,7 +54,7 @@ export default {
 @import url("webapps-common/ui/css/basics");
 @import url("webapps-common/ui/css/fonts");
 
-.apWrapper.notHeadless {
+.ap-wrapper:not(.headless) {
   padding: 0 15px; /* simulate reduced WebPortal margins */
 }
 </style>

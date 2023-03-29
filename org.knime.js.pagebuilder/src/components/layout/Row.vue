@@ -31,7 +31,10 @@ export default {
             return this.rowConfig.columns;
         },
         classes() {
-            let classes = !Boolean(window.headless) ? ['row', 'notHeadless'] : ['row'];
+            let classes = ['row'];
+            if (window.headless) {
+                classes.push('headless');
+            }
             if (Array.isArray(this.rowConfig.additionalClasses)) {
                 classes = classes.concat(this.rowConfig.additionalClasses);
             }
@@ -65,7 +68,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
 
-  &.notHeadless {
+  &:not(.headless) {
     margin-right: -15px;
     margin-left: -15px;
   }

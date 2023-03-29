@@ -17,7 +17,7 @@ describe('Row.vue', () => {
             }
         });
         expect(wrapper.element.tagName).toBe('DIV');
-        expect(wrapper.attributes('class')).toBe('row notHeadless');
+        expect(wrapper.attributes('class')).toBe('row');
         expect(wrapper.attributes('style')).toBe('');
     });
 
@@ -32,8 +32,20 @@ describe('Row.vue', () => {
                 }
             }
         });
-        expect(wrapper.attributes('class')).toBe('row notHeadless class1 class2');
+        expect(wrapper.attributes('class')).toBe('row class1 class2');
         expect(wrapper.attributes('style')).toBe('color: red; border: 1px solid green;');
+    });
+
+
+    it('renders headless class', () => {
+        let wrapper = shallowMount(Row);
+        expect(wrapper.classes()).not.toContain('headless');
+
+        window.headless = true;
+        wrapper = shallowMount(Row);
+        expect(wrapper.classes()).toContain('headless');
+
+        delete window.headless;
     });
 
     it('renders columns', () => {
