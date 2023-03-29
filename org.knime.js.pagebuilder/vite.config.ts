@@ -60,7 +60,7 @@ export default defineConfig(({ mode }) => {
         },
         test: {
             include: ['src/**/__tests__/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-            exclude: ['**/node_modules/**', '**/dist/**', 'webapps-common/**'],
+            exclude: ['**/node_modules/**', '**/dist/**', '**/dist-vue2/**', 'webapps-common/**'],
             environment: 'jsdom',
             reporters: ['default', 'junit'],
             deps: { inline: ['consola'] },
@@ -70,9 +70,10 @@ export default defineConfig(({ mode }) => {
             coverage: {
                 all: true,
                 exclude: [
-                    'coverage/**', 'dist/**', 'webapps-common/**', 'lib/**', '**/*.d.ts', 'src/**/__tests__/**',
+                    'coverage/**', 'dist/**', 'dist-vue2/**', 'webapps-common/**', 'lib/**', '**/*.d.ts',
+                    'src/**/__tests__/**',
                     'src/dev/**', '**/{vite,vitest,postcss}.config.{js,cjs,mjs,ts}',
-                    '**/.{eslint,prettier,stylelint}rc.{js,cjs,yml}', 'webpack/**'
+                    '**/.{eslint,prettier,stylelint}rc.{js,cjs,yml}'
                 ]
             },
             outputFile: {
