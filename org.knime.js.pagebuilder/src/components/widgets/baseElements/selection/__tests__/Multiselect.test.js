@@ -1,4 +1,4 @@
-import { expect, describe, beforeEach, it } from 'vitest';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
 
 import Multiselect from '@/components/widgets/baseElements/selection/Multiselect.vue';
@@ -7,6 +7,7 @@ import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectLi
 import Twinlist from 'webapps-common/ui/components/forms/Twinlist.vue';
 import Checkbox from 'webapps-common/ui/components/forms/Checkbox.vue';
 import ComboBox from 'webapps-common/ui/components/forms/ComboBox.vue';
+import MultiselectWebappsCommon from 'webapps-common/ui/components/forms/Multiselect.vue';
 
 
 describe('Multiselect.vue', () => {
@@ -108,6 +109,7 @@ describe('Multiselect.vue', () => {
             type: 'ComboBox',
             limitNumberVisOptions: false,
             numberVisOptions: 10,
+            isReExecutionWidget: false,
             isValid: false
         };
     });
@@ -268,10 +270,23 @@ describe('Multiselect.vue', () => {
     describe('comboBox', () => {
         it('renders combobox component', () => {
             propsComboBox.isValid = true;
-            let wrapper = shallowMount(Multiselect, {
+            const wrapper = shallowMount(Multiselect, {
                 props: propsComboBox
             });
             expect(wrapper.findComponent(ComboBox).exists()).toBeTruthy();
+        });
+
+        it('closes the options after selection when it is a re-execution widget', async () => {
+            propsComboBox.isReExecutionWidget = true;
+            const wrapper = mount(Multiselect, {
+                props: propsComboBox
+            });
+            const closeOptionsMock = vi.spyOn(wrapper.findComponent(MultiselectWebappsCommon).vm, 'closeOptions');
+            await wrapper.findComponent(ComboBox).find('.search-input').trigger('focus');
+            expect(wrapper.findComponent(MultiselectWebappsCommon).vm.showOptions).toBeTruthy();
+            await wrapper.findComponent(MultiselectWebappsCommon).vm.onUpdateModelValue('test2', true);
+            expect(wrapper.findComponent(MultiselectWebappsCommon).vm.showOptions).toBeFalsy();
+            expect(closeOptionsMock).toHaveBeenCalled();
         });
     });
 });
