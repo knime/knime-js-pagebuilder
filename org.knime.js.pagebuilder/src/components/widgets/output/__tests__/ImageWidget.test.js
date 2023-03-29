@@ -182,7 +182,7 @@ describe('ImageWidget.vue', () => {
             expect(preserveAspectRatio).toBe('xMinYMin meet');
         });
 
-        it('does adjust SVG size if only width limits', () => {
+        it('does adjust SVG size if only height limits', () => {
             propsSvg.nodeConfig.viewRepresentation.maxHeight = 500;
             propsSvg.nodeConfig.viewRepresentation.maxWidth = -1;
             let wrapper = mount(ImageWidget, {

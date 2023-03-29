@@ -267,7 +267,7 @@ export const actions = {
         commit('removeValidator', nodeId);
     },
 
-    async getValidity({ state, dispatch }) {
+    async getValidity({ state }) {
         let validityPromises = Object.values(state.pageValidators)
             .map(validator => validator());
         let validity = await Promise.all(validityPromises)
@@ -301,7 +301,7 @@ export const actions = {
                 setValidationErrorPromises.push(state.pageValidationErrorSetters[nodeId](errorMessage));
             }
         }
-        return Promise.all(setValidationErrorPromises).then(res => true).catch(e => false);
+        return Promise.all(setValidationErrorPromises).then(() => true).catch(() => false);
     },
 
     triggerReExecution({ dispatch }, { nodeId }) {

@@ -1,4 +1,3 @@
-/* global jsonrpc */
 import { KnimeUtils } from '@knime/ui-extension-service';
 const { createJsonRpcRequest } = KnimeUtils;
 
@@ -76,7 +75,7 @@ export const actions = {
         consola.debug('WrapperAPI store: trigger re-execution');
         /* CLIENT (View/Widget) VALIDATION */
         let validPage = await dispatch('pagebuilder/getValidity', null, { root: true })
-            .then((res, err) => {
+            .then((res) => {
                 let isValid = false;
                 let viewValidities = Object.values(res);
                 if (viewValidities || viewValidities.length > 0) {
@@ -84,7 +83,7 @@ export const actions = {
                 }
                 return isValid;
             })
-            .catch(e => false);
+            .catch(() => false);
 
         if (!validPage) {
             dispatch('handleError', {
@@ -95,7 +94,7 @@ export const actions = {
         }
 
         /* VALUE AND PAGE RETRIEVAL */
-        let viewValues = await dispatch('pagebuilder/getViewValues', null, { root: true }).catch(e => false);
+        let viewValues = await dispatch('pagebuilder/getViewValues', null, { root: true }).catch(() => false);
         if (!viewValues) {
             dispatch('handleError', {
                 caller: 'triggerReExecution',

@@ -341,7 +341,7 @@ describe('PageBuilder store', () => {
         });
 
         // TODO WEBP-327 Remove if dialog option added.
-        it('overrides required when present in web node configurations', async () => {
+        it('overrides required when present in web node configurations', () => {
             let node = store.state.page.wizardPageContent.webNodes.id1;
 
             expect(node.foo).toBe('bar');
@@ -480,7 +480,7 @@ describe('PageBuilder store', () => {
                 }, 1000);
             });
 
-            it('updates and removes a combination of webNodes and nodeViews', async () => {
+            it('updates and removes a combination of webNodes and nodeViews', () => {
                 let newPage = getPage();
                 newPage.wizardPageContent.webNodes.id1.foo = 'qux';
                 newPage.wizardPageContent.webNodes.id2.foo = 'grault';
