@@ -7,7 +7,8 @@ module.exports = {
         consola: true
     },
     ignorePatterns: [
-        'mocks/'
+        'mocks/',
+        'dist-vue2/'
     ],
     settings: {
         'import/resolver': {

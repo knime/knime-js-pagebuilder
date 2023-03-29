@@ -17,7 +17,7 @@ vi.mock('raw-loader!./injectedScripts/scriptLoader.js', () => `"scriptLoader.js 
 vi.mock('iframe-resizer/js/iframeResizer');
 
 describe('WebNodeIFrame.vue', () => {
-    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, localVue, context, mockGetPublishedData,
+    let interactivityConfig, apiConfig, wizardConfig, settingsConfig, store, context, mockGetPublishedData,
         mockGetUser, mockGetRepository, mockGetDownloadLink, mockGetUploadLink, mockUpload;
 
     beforeAll(() => {
@@ -112,7 +112,7 @@ describe('WebNodeIFrame.vue', () => {
         vi.restoreAllMocks();
     });
 
-    describe('Interactivity', () => {
+    describe('interactivity', () => {
         let wrapper;
 
         beforeEach(() => {

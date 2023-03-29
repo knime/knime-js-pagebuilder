@@ -381,7 +381,7 @@ describe('WebNodeIFrame.vue', () => {
         });
     });
 
-    describe('WebNodeIFrame alerts', () => {
+    describe('webNodeIFrame alerts', () => {
         let nodeId = '0:0:7';
 
         it('manages its own alert state', () => {
@@ -407,7 +407,7 @@ describe('WebNodeIFrame.vue', () => {
                 level: 'error'
             };
 
-            expect(localWrapper.vm.alert).toBe(null);
+            expect(localWrapper.vm.alert).toBeNull();
             expect(localWrapper.vm.displayAlert).toBe(false);
             localWrapper.vm.handleAlert(alertData);
             expect(localWrapper.vm.alert).toStrictEqual({
@@ -418,7 +418,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(localWrapper.vm.displayAlert).toBe(true);
             localWrapper.vm.closeAlert(true);
             expect(localWrapper.vm.displayAlert).toBe(false);
-            expect(localWrapper.vm.alert).toBe(null);
+            expect(localWrapper.vm.alert).toBeNull();
             localWrapper.unmount();
         });
 

@@ -73,7 +73,7 @@ describe('Column.vue', () => {
     it('renders without classes and styles', () => {
         const wrapper = shallowMount(Column, context);
         expect(wrapper.element.tagName).toBe('DIV');
-        expect(wrapper.attributes('class')).toEqual('col col-6 col-padding');
+        expect(wrapper.attributes('class')).toBe('col col-6 col-padding');
         expect(wrapper.attributes('style')).toBe('');
     });
 
@@ -81,8 +81,8 @@ describe('Column.vue', () => {
         context.props.columnConfig.additionalClasses = ['class1', 'class2'];
         context.props.columnConfig.additionalStyles = ['color: red;', 'border: 1px solid green;'];
         const wrapper = shallowMount(Column, context);
-        expect(wrapper.attributes('class')).toEqual('col col-6 class1 class2 col-padding');
-        expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
+        expect(wrapper.attributes('class')).toBe('col col-6 class1 class2 col-padding');
+        expect(wrapper.attributes('style')).toBe('color: red; border: 1px solid green;');
     });
 
     it('renders responsive grid classes', () => {
@@ -96,13 +96,13 @@ describe('Column.vue', () => {
         };
         const wrapper = shallowMount(Column, context);
         expect(wrapper.attributes('class'))
-            .toEqual('col col-12 col-sm-8 col-md-11 col-lg-10 col-xl-9 class1 class2 col-padding');
+            .toBe('col col-12 col-sm-8 col-md-11 col-lg-10 col-xl-9 class1 class2 col-padding');
     });
 
     it('renders default responsive grid class if no width defined', () => {
         context.props.columnConfig = {};
         const wrapper = shallowMount(Column, context);
-        expect(wrapper.attributes('class')).toEqual('col col-12 col-padding');
+        expect(wrapper.attributes('class')).toBe('col col-12 col-padding');
     });
 
     it('renders views', () => {

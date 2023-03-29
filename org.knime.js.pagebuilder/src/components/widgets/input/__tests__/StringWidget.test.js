@@ -186,7 +186,7 @@ describe('StringWidget.vue', () => {
             let wrapper = mount(StringWidget, {
                 props: propsInput
             });
-            expect(wrapper.findComponent(InputField).props('pattern')).toEqual(null);
+            expect(wrapper.findComponent(InputField).props('pattern')).toBeNull();
         });
 
         it('passes correct regex', () => {
@@ -198,7 +198,7 @@ describe('StringWidget.vue', () => {
                             regex: 'test' }
                     } }
             });
-            expect(wrapper.findComponent(InputField).props('pattern')).toEqual('test');
+            expect(wrapper.findComponent(InputField).props('pattern')).toBe('test');
         });
     });
 
@@ -333,7 +333,7 @@ describe('StringWidget.vue', () => {
             }
         });
 
-        expect(wrapper.vm.validate().errorMessage).toBe(null);
+        expect(wrapper.vm.validate().errorMessage).toBeNull();
     });
 
     it('has error message', () => {

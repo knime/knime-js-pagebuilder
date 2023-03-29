@@ -63,7 +63,7 @@ describe('Layout.vue', () => {
         const wrapper = shallowMount(Layout, context);
 
         expect(wrapper.element.tagName).toBe('DIV');
-        expect(wrapper.attributes('class')).toEqual('container-fluid');
+        expect(wrapper.attributes('class')).toBe('container-fluid');
     });
 
     it('renders rows', () => {

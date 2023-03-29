@@ -86,11 +86,11 @@ describe('TreeSelect.vue', () => {
         it('selects item on click', () => {
             const wrapper = mount(TreeSelect, { props });
 
-            expect(props.data[0].children[0].selected).toStrictEqual(true);
-            expect(props.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toBe(true);
+            expect(props.data[0].selected).toBe(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click');
-            expect(props.data[0].children[0].selected).toStrictEqual(false);
-            expect(props.data[0].selected).toStrictEqual(true);
+            expect(props.data[0].children[0].selected).toBe(false);
+            expect(props.data[0].selected).toBe(true);
         });
 
         it('opens children on double click', () => {
@@ -121,32 +121,32 @@ describe('TreeSelect.vue', () => {
 
             const wrapper = mount(TreeSelect, { props });
 
-            expect(props.data[0].children[0].selected).toStrictEqual(true);
-            expect(props.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toBe(true);
+            expect(props.data[0].selected).toBe(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click');
-            expect(props.data[0].children[0].selected).toStrictEqual(true);
-            expect(props.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toBe(true);
+            expect(props.data[0].selected).toBe(false);
         });
 
         it('selects item on click even if multiple is active', () => {
             props.multiple = true;
             const wrapper = mount(TreeSelect, { props });
 
-            expect(props.data[0].children[0].selected).toStrictEqual(true);
-            expect(props.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toBe(true);
+            expect(props.data[0].selected).toBe(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click');
-            expect(props.data[0].children[0].selected).toStrictEqual(false);
-            expect(props.data[0].selected).toStrictEqual(true);
+            expect(props.data[0].children[0].selected).toBe(false);
+            expect(props.data[0].selected).toBe(true);
         });
 
         it('adds item to selected on click if multiple selections is allowed', () => {
             props.multiple = true;
             const wrapper = mount(TreeSelect, { props });
 
-            expect(props.data[0].selected).toStrictEqual(false);
+            expect(props.data[0].selected).toBe(false);
             wrapper.findAll('.tree-anchor').at(0).trigger('click', { ctrlKey: true });
-            expect(props.data[0].selected).toStrictEqual(true);
-            expect(props.data[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[0].selected).toBe(true);
+            expect(props.data[0].children[0].selected).toBe(true);
         });
 
         it('removes item from selected items on ctrl + click', () => {
@@ -155,8 +155,8 @@ describe('TreeSelect.vue', () => {
             const wrapper = mount(TreeSelect, { props });
 
             wrapper.findAll('.tree-anchor').at(0).trigger('click', { ctrlKey: true });
-            expect(props.data[0].selected).toStrictEqual(false);
-            expect(props.data[0].children[0].selected).toStrictEqual(true);
+            expect(props.data[0].selected).toBe(false);
+            expect(props.data[0].children[0].selected).toBe(true);
         });
 
         it('selects multiple items on shift + click', () => {
@@ -169,11 +169,11 @@ describe('TreeSelect.vue', () => {
             anchors.at(6).trigger('click', { shiftKey: true });
 
             // 3 items are selected
-            expect(props.data[1].selected).toStrictEqual(true);
-            expect(props.data[2].selected).toStrictEqual(true);
-            expect(props.data[3].selected).toStrictEqual(true);
+            expect(props.data[1].selected).toBe(true);
+            expect(props.data[2].selected).toBe(true);
+            expect(props.data[3].selected).toBe(true);
             // default selection should be removed
-            expect(props.data[0].children[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toBe(false);
         });
 
         it('selects only clicked item if levels mismatch on shift + click', () => {
@@ -185,10 +185,10 @@ describe('TreeSelect.vue', () => {
             anchors.at(4).trigger('click', {});
             anchors.at(2).trigger('click', { shiftKey: true });
 
-            expect(props.data[0].children[0].children[0].selected).toStrictEqual(true);
-            expect(props.data[1].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].children[0].selected).toBe(true);
+            expect(props.data[1].selected).toBe(false);
             // default selection should be removed
-            expect(props.data[0].children[0].selected).toStrictEqual(false);
+            expect(props.data[0].children[0].selected).toBe(false);
         });
 
         it('marks hovered items', () => {
@@ -218,7 +218,7 @@ describe('TreeSelect.vue', () => {
             anchors.at(0).trigger('mouseover', {});
 
             expect(wrapper.vm.currentKeyboardNavNode.$data.isKeyNav).toBe(false);
-            expect(wrapper.findAllComponents(TreeSelectItem).at(0).vm.$data.isHover).toStrictEqual(true);
+            expect(wrapper.findAllComponents(TreeSelectItem).at(0).vm.$data.isHover).toBe(true);
         });
     });
 
@@ -231,7 +231,7 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.up');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item3');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('item3');
         });
 
         it('navigates across levels using up key', () => {
@@ -243,7 +243,7 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.up');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child1');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('child1');
         });
 
         it('does not navigate down using up key if we reached the top', async () => {
@@ -253,12 +253,12 @@ describe('TreeSelect.vue', () => {
             await wrapper.setData({
                 currentKeyboardNavNode: items.at(0).vm
             });
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item1');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('item1');
 
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.up');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item1');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('item1');
         });
 
         it('navigates down using down key', () => {
@@ -270,7 +270,7 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('item4');
         });
 
         it('does not navigate down using down key if we reached the end', async () => {
@@ -284,12 +284,12 @@ describe('TreeSelect.vue', () => {
             await wrapper.setData({
                 currentKeyboardNavNode: items.at(7).vm // the lastChild
             });
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('lastChild');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('lastChild');
 
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('lastChild');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('lastChild');
         });
 
         it('navigates across levels using down key', async () => {
@@ -301,12 +301,12 @@ describe('TreeSelect.vue', () => {
             await wrapper.setData({
                 currentKeyboardNavNode: items.at(3).vm
             });
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child2');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('child2');
 
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item2');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('item2');
         });
 
         it('navigates into open tree using down key', () => {
@@ -316,7 +316,7 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child1');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('child1');
         });
 
         it('navigates into open tree using up key', () => {
@@ -329,8 +329,8 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.up');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('child2');
-            expect(wrapper.findAllComponents(TreeSelectItem).at(4).vm.$data.isHover).toStrictEqual(false);
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('child2');
+            expect(wrapper.findAllComponents(TreeSelectItem).at(4).vm.$data.isHover).toBe(false);
         });
 
         it('selects item on enter key', () => {
@@ -342,14 +342,14 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('item4');
 
             container.trigger('keydown.enter');
 
-            expect(props.data[3].selected).toStrictEqual(true);
+            expect(props.data[3].selected).toBe(true);
 
             // last selection (click) should be removed
-            expect(props.data[2].selected).toStrictEqual(false);
+            expect(props.data[2].selected).toBe(false);
         });
 
         it('does not select disabled item on enter key', () => {
@@ -362,14 +362,14 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('item4');
 
             container.trigger('keydown.enter');
 
-            expect(props.data[3].selected).toStrictEqual(false);
+            expect(props.data[3].selected).toBe(false);
 
             // last selection (click) still active
-            expect(props.data[2].selected).toStrictEqual(true);
+            expect(props.data[2].selected).toBe(true);
         });
 
         it('adds item to selected on enter + ctrl', () => {
@@ -382,14 +382,14 @@ describe('TreeSelect.vue', () => {
             const container = wrapper.find('.tree-container-ul');
             container.trigger('keydown.down');
 
-            expect(wrapper.vm.currentKeyboardNavNode.model.value).toStrictEqual('item4');
+            expect(wrapper.vm.currentKeyboardNavNode.model.value).toBe('item4');
 
             container.trigger('keydown.enter', { ctrlKey: true });
 
-            expect(props.data[3].selected).toStrictEqual(true);
+            expect(props.data[3].selected).toBe(true);
 
             // last selection (click) should be removed
-            expect(props.data[2].selected).toStrictEqual(true);
+            expect(props.data[2].selected).toBe(true);
         });
 
         it('opens children on right arrow key', () => {

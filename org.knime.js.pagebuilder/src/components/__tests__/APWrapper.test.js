@@ -63,9 +63,9 @@ describe('APWrapper.vue', () => {
 
     describe('debug info and tooling', () => {
         it('hides debug/refresh buttons by default (without debug info)', () => {
-            expect(window.getDebugInfo).not.toBeDefined();
+            expect(window.getDebugInfo).toBeUndefined();
             const wrapper = shallowMount(APWrapper, context);
-            expect(wrapper.vm.debugInfo).toBe(null);
+            expect(wrapper.vm.debugInfo).toBeNull();
             expect(wrapper.findComponent(DebugButton).exists()).toBeFalsy();
             expect(wrapper.findComponent(RefreshButton).exists()).toBeFalsy();
         });
@@ -120,7 +120,7 @@ describe('APWrapper.vue', () => {
             expect(() => {
                 wrapper = shallowMount(APWrapper, context);
             }).not.toThrow();
-            expect(wrapper.vm.debugInfo).toBe(null);
+            expect(wrapper.vm.debugInfo).toBeNull();
             delete window.getDebugInfo;
         });
     });

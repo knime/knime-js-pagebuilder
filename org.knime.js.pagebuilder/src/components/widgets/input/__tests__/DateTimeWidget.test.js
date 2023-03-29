@@ -430,7 +430,7 @@ describe('DateTimeWidget.vue', () => {
 
             expect(wrapper.emitted('updateWidget')).toBeTruthy();
             expect(wrapper.emitted('updateWidget')[0][0].update['viewRepresentation.currentValue'].zonestring)
-                .toStrictEqual('Europe/Berlin');
+                .toBe('Europe/Berlin');
         });
     });
 
@@ -448,7 +448,7 @@ describe('DateTimeWidget.vue', () => {
 
             expect(wrapper.emitted('updateWidget')).toBeTruthy();
             expect(wrapper.emitted('updateWidget')[1][0].update['viewRepresentation.currentValue'].zonestring)
-                .toStrictEqual('Asia/Bangkok');
+                .toBe('Asia/Bangkok');
         });
 
         it('now button sets date, time and timezone to current values and location', () => {

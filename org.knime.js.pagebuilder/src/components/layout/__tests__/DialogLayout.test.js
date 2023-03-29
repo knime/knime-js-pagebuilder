@@ -87,7 +87,7 @@ describe('DialogLayout.vue', () => {
         const wrapper = shallowMount(DialogLayout, context);
 
         expect(wrapper.element.tagName).toBe('DIV');
-        expect(wrapper.attributes('class')).toEqual('layout');
+        expect(wrapper.attributes('class')).toBe('layout');
         expect(wrapper.findComponent(Messages).exists()).toBeFalsy();
     });
 

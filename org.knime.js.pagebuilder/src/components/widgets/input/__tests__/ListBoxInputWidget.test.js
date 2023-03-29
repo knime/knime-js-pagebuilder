@@ -319,7 +319,7 @@ describe('ListBoxInputWidget.vue', () => {
                 }
             });
 
-            expect(wrapper.vm.validate().errorMessage).toBe(null);
+            expect(wrapper.vm.validate().errorMessage).toBeNull();
         });
 
         it('has validation error message when not valid', () => {

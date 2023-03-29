@@ -394,7 +394,7 @@ describe('CredentialsWidget.vue', () => {
             );
             await wrapper.vm.$nextTick();
             expect(wrapper.findComponent(ErrorMessage).props('error'))
-                .toEqual('KNIME Server login credentials could not be fetched!');
+                .toBe('KNIME Server login credentials could not be fetched!');
         });
 
         it('renders server credentials error if no username gets prompted', async () => {
@@ -421,7 +421,7 @@ describe('CredentialsWidget.vue', () => {
             wrapper.vm.validate();
             await wrapper.vm.$nextTick();
             expect(wrapper.findComponent(ErrorMessage).props('error'))
-                .toEqual('KNIME Server login credentials could not be fetched!');
+                .toBe('KNIME Server login credentials could not be fetched!');
         });
     });
 });

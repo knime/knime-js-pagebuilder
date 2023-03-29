@@ -11,11 +11,11 @@ describe('getFileExtension function', () => {
         const longFileExtension = 'hello.fooBarFoobarTestExt';
         const shortFileExtension = 'hello.a';
 
-        expect(getFileExtension(file)).toEqual('txt');
-        expect(getFileExtension(path)).toEqual('txt');
-        expect(getFileExtension(windowsPath)).toEqual('txt');
-        expect(getFileExtension(longFileExtension)).toEqual('fooBarFoobarTestExt');
-        expect(getFileExtension(shortFileExtension)).toEqual('a');
+        expect(getFileExtension(file)).toBe('txt');
+        expect(getFileExtension(path)).toBe('txt');
+        expect(getFileExtension(windowsPath)).toBe('txt');
+        expect(getFileExtension(longFileExtension)).toBe('fooBarFoobarTestExt');
+        expect(getFileExtension(shortFileExtension)).toBe('a');
     });
 
     it('handles invalid parameters', () => {
@@ -24,11 +24,11 @@ describe('getFileExtension function', () => {
         const numberFile = 10;
         const booleanFile = false;
 
-        expect(getFileExtension(empty)).toEqual('');
-        expect(getFileExtension(nullFile)).toEqual('');
-        expect(getFileExtension(numberFile)).toEqual('');
-        expect(getFileExtension(booleanFile)).toEqual('');
-        expect(getFileExtension(expect.undefined)).toEqual('');
+        expect(getFileExtension(empty)).toBe('');
+        expect(getFileExtension(nullFile)).toBe('');
+        expect(getFileExtension(numberFile)).toBe('');
+        expect(getFileExtension(booleanFile)).toBe('');
+        expect(getFileExtension(expect.undefined)).toBe('');
     });
 });
 
@@ -41,9 +41,9 @@ describe('trimSchema function', () => {
         const mountpointRelativePath = 'knime://LOCAL/test';
         const endingWithSlash = 'knime://knime.workflow/test/';
 
-        expect(trimSchema(workflowRelativePath, knimeSchema)).toEqual('/test');
-        expect(trimSchema(mountpointRelativePath, knimeSchema)).toEqual('/test');
-        expect(trimSchema(endingWithSlash, knimeSchema)).toEqual('/test');
+        expect(trimSchema(workflowRelativePath, knimeSchema)).toBe('/test');
+        expect(trimSchema(mountpointRelativePath, knimeSchema)).toBe('/test');
+        expect(trimSchema(endingWithSlash, knimeSchema)).toBe('/test');
     });
 
     it('handles invalid parameters', () => {
@@ -87,9 +87,9 @@ describe('getRootPath functionality', () => {
         const regularPath = '/test/test.csv';
         const pathWithoutLeadingSlash = 'test/test.csv';
 
-        expect(normalizePath(empty)).toEqual('/');
-        expect(normalizePath(regularPath)).toEqual('/test/test.csv');
-        expect(normalizePath(pathWithoutLeadingSlash)).toEqual('/test/test.csv');
+        expect(normalizePath(empty)).toBe('/');
+        expect(normalizePath(regularPath)).toBe('/test/test.csv');
+        expect(normalizePath(pathWithoutLeadingSlash)).toBe('/test/test.csv');
     });
 
     it('test resolveWorkflowRelativePath function', () => {
@@ -98,11 +98,11 @@ describe('getRootPath functionality', () => {
         const workflowPath = '/someWorkflowFolder/someWorkflow';
         const workflowPathWithSlash = '/someWorkflowFolder/someWorkflow/';
 
-        expect(resolveWorkflowRelativePath(empty, empty)).toEqual('');
+        expect(resolveWorkflowRelativePath(empty, empty)).toBe('');
         expect(resolveWorkflowRelativePath(regularPath, workflowPath))
-            .toEqual('/someWorkflowFolder/someWorkflow/test/test.csv');
+            .toBe('/someWorkflowFolder/someWorkflow/test/test.csv');
         expect(resolveWorkflowRelativePath(regularPath, workflowPathWithSlash))
-            .toEqual('/someWorkflowFolder/someWorkflow/test/test.csv');
+            .toBe('/someWorkflowFolder/someWorkflow/test/test.csv');
     });
 
     it('resolves workflow relative paths', () => {
@@ -110,9 +110,9 @@ describe('getRootPath functionality', () => {
         const parentPath = `${SCHEMA_PART}${WORKFLOW_RELATIVE}/../test/test.csv`;
         const parentParentPath = `${SCHEMA_PART}${WORKFLOW_RELATIVE}/../../test/test.csv`;
         
-        expect(getRootPath(regularPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toEqual('/testWorkflow/test/test.csv');
-        expect(getRootPath(parentPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toEqual('/test/test.csv');
-        expect(getRootPath(parentParentPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toEqual('/../test/test.csv');
+        expect(getRootPath(regularPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toBe('/testWorkflow/test/test.csv');
+        expect(getRootPath(parentPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toBe('/test/test.csv');
+        expect(getRootPath(parentParentPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toBe('/../test/test.csv');
     });
 
     it('handles special workflow relative paths', () => {
@@ -121,9 +121,9 @@ describe('getRootPath functionality', () => {
         const currentFolderPath = `${SCHEMA_PART}${WORKFLOW_RELATIVE}/./test.csv`;
 
         expect(getRootPath(empty, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toEqual(empty);
-        expect(getRootPath(SCHEMA_PART, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toEqual('/');
-        expect(getRootPath(doubleSlashPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toEqual('/testWorkflow/test.csv');
-        expect(getRootPath(currentFolderPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toEqual('/testWorkflow/test.csv');
+        expect(getRootPath(SCHEMA_PART, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toBe('/');
+        expect(getRootPath(doubleSlashPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toBe('/testWorkflow/test.csv');
+        expect(getRootPath(currentFolderPath, SCHEMA_PART, SCHEMA, WORKFLOW_PATH)).toBe('/testWorkflow/test.csv');
     });
 
     it('resolves mountpoint relative paths', () => {
@@ -131,9 +131,9 @@ describe('getRootPath functionality', () => {
         const parentPath = `${SCHEMA_PART}${MOUNTPOINT_RELATIVE}/../test/test.csv`;
         const customMountpointPath = `${SCHEMA_PART}LOCAL/test/test.csv`;
         
-        expect(getRootPath(regularPath, SCHEMA_PART, SCHEMA)).toEqual('/test/test.csv');
-        expect(getRootPath(parentPath, SCHEMA_PART, SCHEMA)).toEqual('/../test/test.csv');
-        expect(getRootPath(customMountpointPath, SCHEMA_PART, SCHEMA)).toEqual('/test/test.csv');
+        expect(getRootPath(regularPath, SCHEMA_PART, SCHEMA)).toBe('/test/test.csv');
+        expect(getRootPath(parentPath, SCHEMA_PART, SCHEMA)).toBe('/../test/test.csv');
+        expect(getRootPath(customMountpointPath, SCHEMA_PART, SCHEMA)).toBe('/test/test.csv');
     });
 
     it('handles special mountpoint relative paths', () => {
@@ -142,9 +142,9 @@ describe('getRootPath functionality', () => {
         const currentFolderPath = `${SCHEMA_PART}${MOUNTPOINT_RELATIVE}/./test.csv`;
 
         expect(getRootPath(empty, SCHEMA_PART, SCHEMA)).toEqual(empty);
-        expect(getRootPath(SCHEMA_PART, SCHEMA_PART, SCHEMA)).toEqual('/');
-        expect(getRootPath(doubleSlashPath, SCHEMA_PART, SCHEMA)).toEqual('/test.csv');
-        expect(getRootPath(currentFolderPath, SCHEMA_PART, SCHEMA)).toEqual('/test.csv');
+        expect(getRootPath(SCHEMA_PART, SCHEMA_PART, SCHEMA)).toBe('/');
+        expect(getRootPath(doubleSlashPath, SCHEMA_PART, SCHEMA)).toBe('/test.csv');
+        expect(getRootPath(currentFolderPath, SCHEMA_PART, SCHEMA)).toBe('/test.csv');
     });
 
     it('test getNameFromPath function', () => {
@@ -154,11 +154,11 @@ describe('getRootPath functionality', () => {
         const workflowPathWithSlash = '/someWorkflowFolder/someWorkflow/';
         const windowsPath = '\\Special\\windows\\path\\to\\file.txt';
 
-        expect(getNameFromPath(empty)).toEqual('');
-        expect(getNameFromPath(regularPath)).toEqual('test.csv');
-        expect(getNameFromPath(workflowPath)).toEqual('someWorkflow');
-        expect(getNameFromPath(workflowPathWithSlash)).toEqual('');
-        expect(getNameFromPath(windowsPath)).toEqual('file.txt');
+        expect(getNameFromPath(empty)).toBe('');
+        expect(getNameFromPath(regularPath)).toBe('test.csv');
+        expect(getNameFromPath(workflowPath)).toBe('someWorkflow');
+        expect(getNameFromPath(workflowPathWithSlash)).toBe('');
+        expect(getNameFromPath(windowsPath)).toBe('file.txt');
     });
 });
 

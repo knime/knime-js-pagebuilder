@@ -1,6 +1,5 @@
-import { expect, describe, beforeAll, beforeEach, afterEach, it, vi } from 'vitest';
-import { createLocalVue } from '@vue/test-utils';
-import Vuex, { createStore } from 'vuex';
+import { expect, describe, beforeEach, afterEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
 
 import * as storeConfig from '@/store/alert';
 
@@ -67,8 +66,8 @@ describe('alert store', () => {
         });
 
         it('returns null if there is not an alert', () => {
-            expect(store.state.alert).toBe(null);
-            expect(store.getters.alertAsMessage).toBe(null);
+            expect(store.state.alert).toBeNull();
+            expect(store.getters.alertAsMessage).toBeNull();
         });
 
         it('creates an empty message if alert is empty', () => {

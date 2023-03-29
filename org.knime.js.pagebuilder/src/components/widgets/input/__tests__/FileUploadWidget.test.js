@@ -88,7 +88,7 @@ describe('FileUploadWidget.vue', () => {
         expect(uploadResourceMock).toBeCalled();
         expect(wrapper.find('.show-bar').exists()).toBe(false);
         expect(wrapper.find('.vertical').exists()).toBe(false);
-        expect(wrapper.find('p').text()).toEqual('No file selected.');
+        expect(wrapper.find('p').text()).toBe('No file selected.');
     });
 
     it('triggers input on click', () => {
@@ -113,14 +113,14 @@ describe('FileUploadWidget.vue', () => {
             global: { mocks: { $store: store } }, props
         });
 
-        expect(wrapper.vm.$data.localFileName).toEqual(null);
+        expect(wrapper.vm.$data.localFileName).toBeNull();
         wrapper.vm.onChange(event);
         await wrapper.vm.$nextTick();
-        expect(wrapper.vm.$data.localFileName).toEqual('avatar.png');
+        expect(wrapper.vm.$data.localFileName).toBe('avatar.png');
         expect(wrapper.find('.show-bar').exists()).toBe(true);
         expect(wrapper.find('.upload-wrapper p svg').exists()).toBe(false);
         wrapper.vm.setUploadProgress(2);
-        expect(wrapper.find('.upload-wrapper button').text()).toEqual('Cancel');
+        expect(wrapper.find('.upload-wrapper button').text()).toBe('Cancel');
         await wrapper.vm.$nextTick();
         expect(wrapper.find('.progress-bar span').text()).toBe('2%');
         expect(wrapper.find('.progress-bar').attributes('style')).toBe('width: 2%;');
@@ -128,7 +128,7 @@ describe('FileUploadWidget.vue', () => {
         await wrapper.vm.$nextTick();
         expect(wrapper.find('.show-bar').exists()).toBe(false);
         expect(wrapper.find('.upload-wrapper p svg').exists()).toBe(true);
-        expect(wrapper.find('.upload-wrapper button').text()).toEqual('Select file');
+        expect(wrapper.find('.upload-wrapper button').text()).toBe('Select file');
     });
 
     it('keeps current file in case upload gets canceled', () => {
@@ -136,11 +136,11 @@ describe('FileUploadWidget.vue', () => {
             global: { mocks: { $store: store } }, props
         });
 
-        expect(wrapper.vm.$data.localFileName).toEqual(null);
+        expect(wrapper.vm.$data.localFileName).toBeNull();
         wrapper.vm.onChange(event);
-        expect(wrapper.vm.$data.localFileName).toEqual('avatar.png');
+        expect(wrapper.vm.$data.localFileName).toBe('avatar.png');
         wrapper.vm.onChange({});
-        expect(wrapper.vm.$data.localFileName).toEqual('avatar.png');
+        expect(wrapper.vm.$data.localFileName).toBe('avatar.png');
     });
 
     it('invalidates if no input is given on second validate', () => {
@@ -275,7 +275,7 @@ describe('FileUploadWidget.vue', () => {
         wrapper.vm.onChange(event);
         await wrapper.vm.$nextTick();
         await wrapper.vm.$nextTick();
-        expect(wrapper.findComponent(ErrorMessage).props('error')).toEqual('Upload failed.');
+        expect(wrapper.findComponent(ErrorMessage).props('error')).toBe('Upload failed.');
     });
 
     it('cancels upload correctly', async () => {
@@ -292,11 +292,11 @@ describe('FileUploadWidget.vue', () => {
 
         wrapper.vm.onChange(event);
         await wrapper.vm.$nextTick();
-        expect(wrapper.find('.upload-wrapper button').text()).toEqual('Cancel');
+        expect(wrapper.find('.upload-wrapper button').text()).toBe('Cancel');
         wrapper.find('.upload-wrapper button').trigger('click');
         await wrapper.vm.$nextTick();
         expect(cancelUploadResourceMock).toHaveBeenCalled();
-        expect(wrapper.findComponent(ErrorMessage).props('error')).toEqual('Upload cancelled.');
+        expect(wrapper.findComponent(ErrorMessage).props('error')).toBe('Upload cancelled.');
     });
 
     it('uploads files on the AP', async (done) => {

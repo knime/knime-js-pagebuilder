@@ -196,7 +196,7 @@ describe('WebNodeIFrame.vue', () => {
     });
 
 
-    describe('PageBuilder API', () => {
+    describe('pageBuilder API', () => {
         let wrapper;
 
         let createLocalWrapper = (jobId) => {
@@ -299,8 +299,8 @@ describe('WebNodeIFrame.vue', () => {
 
         it('registers but doesn\'t unregister global PageBuilder API in the AP', () => {
             expect(window.KnimePageBuilderAPI).toBeDefined();
-            expect(window.KnimePageBuilderAPI.currentJobId).not.toBeDefined();
-            expect(wrapper.vm.currentJobId).not.toBeDefined();
+            expect(window.KnimePageBuilderAPI.currentJobId).toBeUndefined();
+            expect(wrapper.vm.currentJobId).toBeUndefined();
             expect(window.KnimePageBuilderAPI.teardown(wrapper.currentJobId)).toBe(false);
             wrapper.unmount();
             expect(window.KnimePageBuilderAPI).toBeDefined();
@@ -331,7 +331,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
             expect(localWrapper.vm.currentJobId).toBe(jobId2);
             localWrapper.unmount();
-            expect(window.KnimePageBuilderAPI).not.toBeDefined();
+            expect(window.KnimePageBuilderAPI).toBeUndefined();
         });
 
         it('registers & unregisters global PageBuilder API when JobID changes to null from navigation', () => {
@@ -348,7 +348,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
             expect(localWrapper.vm.currentJobId).toBe(jobId2);
             localWrapper.unmount();
-            expect(window.KnimePageBuilderAPI).not.toBeDefined();
+            expect(window.KnimePageBuilderAPI).toBeUndefined();
         });
 
         it('getPublishedData calls interactivity store', () => {
@@ -360,12 +360,12 @@ describe('WebNodeIFrame.vue', () => {
 
         it('getDefaultMountId calls settings store', () => {
             let id = window.KnimePageBuilderAPI.getDefaultMountId();
-            expect(id).toEqual('MOUNTIE');
+            expect(id).toBe('MOUNTIE');
         });
 
         it('getWorkflow calls wizardExecution store', () => {
             let workflow = window.KnimePageBuilderAPI.getWorkflow();
-            expect(workflow).toEqual('/some/path');
+            expect(workflow).toBe('/some/path');
         });
 
         it('getRepository calls api store', () => {
@@ -399,7 +399,7 @@ describe('WebNodeIFrame.vue', () => {
 
         it('getCustomSketcherPath calls settings store', () => {
             let path = window.KnimePageBuilderAPI.getCustomSketcherPath();
-            expect(path).toEqual('sample/sketcher/path/sketcher.html');
+            expect(path).toBe('sample/sketcher/path/sketcher.html');
         });
     });
 });

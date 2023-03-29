@@ -17,7 +17,7 @@ describe('Row.vue', () => {
             }
         });
         expect(wrapper.element.tagName).toBe('DIV');
-        expect(wrapper.attributes('class')).toEqual('row notHeadless');
+        expect(wrapper.attributes('class')).toBe('row notHeadless');
         expect(wrapper.attributes('style')).toBe('');
     });
 
@@ -32,8 +32,8 @@ describe('Row.vue', () => {
                 }
             }
         });
-        expect(wrapper.attributes('class')).toEqual('row notHeadless class1 class2');
-        expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
+        expect(wrapper.attributes('class')).toBe('row notHeadless class1 class2');
+        expect(wrapper.attributes('style')).toBe('color: red; border: 1px solid green;');
     });
 
     it('renders columns', () => {

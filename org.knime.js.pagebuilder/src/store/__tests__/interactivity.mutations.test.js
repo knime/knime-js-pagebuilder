@@ -18,7 +18,7 @@ describe('Interactivity store', () => {
         expect(store.state).toEqual({});
         let payload = { id: subscriberId, callback: vi.fn() };
         store.commit('addSubscriber', payload);
-        expect(store.state[payload.id].subscribers.length).toEqual(1);
+        expect(store.state[payload.id].subscribers.length).toBe(1);
         expect(store.state[payload.id].subscribers[0]).toEqual({
             callback: payload.callback
         });
@@ -28,7 +28,7 @@ describe('Interactivity store', () => {
         // subscriber with same id added
         let payload2 = { id: subscriberId, callback: vi.fn(), elementFilter: ['dummy'] };
         store.commit('addSubscriber', payload2);
-        expect(store.state[payload2.id].subscribers.length).toEqual(2);
+        expect(store.state[payload2.id].subscribers.length).toBe(2);
         expect(store.state[payload2.id].subscribers[1]).toEqual({
             callback: payload2.callback,
             filterIds: payload2.elementFilter
@@ -50,7 +50,7 @@ describe('Interactivity store', () => {
         };
         store.commit('updateSubscriber', { id, callback: vi.fn(), isTranslator: true, clear: true });
         expect(store.state[id].subscribers).toHaveLength(2);
-        expect(store.state[id].subscribers[0].isTranslator).not.toBeDefined();
+        expect(store.state[id].subscribers[0].isTranslator).toBeUndefined();
         expect(store.state[id].subscribers[1].callback).not.toEqual(callback);
     });
 
@@ -74,17 +74,17 @@ describe('Interactivity store', () => {
         expect(store.state).toEqual({});
         let payload = { id: subscriberId, callback: vi.fn() };
         store.commit('addSubscriber', payload);
-        expect(store.state[payload.id].subscribers.length).toEqual(1);
+        expect(store.state[payload.id].subscribers.length).toBe(1);
         expect(store.state[payload.id].subscribers[0]).toEqual({
             callback: payload.callback
         });
         store.commit('addSubscriber', payload);
-        expect(store.state[payload.id].subscribers.length).toEqual(2);
+        expect(store.state[payload.id].subscribers.length).toBe(2);
         expect(store.state[payload.id].subscribers[1]).toEqual({
             callback: payload.callback
         });
         store.commit('removeSubscriber', payload);
-        expect(store.state[payload.id].subscribers.length).toEqual(1);
+        expect(store.state[payload.id].subscribers.length).toBe(1);
         expect(store.state[payload.id].subscribers[0]).toEqual({
             callback: payload.callback
         });
@@ -96,17 +96,17 @@ describe('Interactivity store', () => {
         expect(store.state).toEqual({});
         let dataPayload = { id: subscriberId, data: 'dummyData' };
         store.commit('updateData', dataPayload);
-        expect(store.state[dataPayload.id].subscribers.length).toEqual(0);
+        expect(store.state[dataPayload.id].subscribers.length).toBe(0);
 
         let payload = { id: subscriberId, callback: vi.fn() };
         store.commit('addSubscriber', payload);
-        expect(store.state[payload.id].subscribers.length).toEqual(1);
+        expect(store.state[payload.id].subscribers.length).toBe(1);
         expect(store.state[payload.id].subscribers[0]).toEqual({
             callback: payload.callback
         });
         store.commit('removeSubscriber', payload);
         expect(store.state[payload.id].subscribers).toBeDefined();
-        expect(store.state[payload.id].subscribers.length).toEqual(0);
+        expect(store.state[payload.id].subscribers.length).toBe(0);
     });
 
     it('update data', () => {

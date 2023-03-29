@@ -309,7 +309,7 @@ describe('UIExtension.vue', () => {
             // expect nothing
             expect(wrapper.vm.alert).toStrictEqual(mockWarningAlert);
             wrapper.vm.closeAlert(true);
-            expect(wrapper.vm.alert).toBe(null);
+            expect(wrapper.vm.alert).toBeNull();
         });
     });
 
@@ -338,13 +338,13 @@ describe('UIExtension.vue', () => {
                 ...context,
                 props: getMockIFrameProps()
             });
-            expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio1by1');
+            expect(wrapper.find('div').attributes('class')).toBe('aspectRatio1by1');
             viewConfig.resizeMethod = 'aspectRatio16by9';
             wrapper = shallowMount(UIExtension, {
                 ...context,
                 props: getMockIFrameProps()
             });
-            expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio16by9');
+            expect(wrapper.find('div').attributes('class')).toBe('aspectRatio16by9');
         });
 
         it('renders with classes and styles', () => {
@@ -359,8 +359,8 @@ describe('UIExtension.vue', () => {
                     }
                 }
             });
-            expect(wrapper.attributes('class')).toEqual('aspectRatio1by1 class1 class2');
-            expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
+            expect(wrapper.attributes('class')).toBe('aspectRatio1by1 class1 class2');
+            expect(wrapper.attributes('style')).toBe('color: red; border: 1px solid green;');
         });
 
         it('adds classes for min/max height & width', () => {
@@ -379,7 +379,7 @@ describe('UIExtension.vue', () => {
                     }
                 }
             });
-            expect(wrapper.attributes('class')).toEqual('class1 class2');
+            expect(wrapper.attributes('class')).toBe('class1 class2');
             expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green; max-height: 200px;' +
                 ' max-width: 200px; min-height: 100px; min-width: 100px;');
         });

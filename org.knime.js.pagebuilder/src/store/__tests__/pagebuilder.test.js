@@ -40,7 +40,7 @@ describe('PageBuilder store', () => {
     });
 
     it('creates an empty store', () => {
-        expect(store.state.page).toBe(null);
+        expect(store.state.page).toBeNull();
         expect(store.state.resourceBaseUrl).toBe('');
         expect(store.state.pageValidators).toEqual({});
         expect(store.state.pageValueGetters).toEqual({});
@@ -200,7 +200,7 @@ describe('PageBuilder store', () => {
             let valueGetter = function () {
                 return Promise.resolve('foo');
             };
-            expect(store.state.pageValueGetters[nodeId]).not.toBeDefined();
+            expect(store.state.pageValueGetters[nodeId]).toBeUndefined();
             store.dispatch('addValueGetter', { nodeId, valueGetter });
             expect(store.state.pageValueGetters[nodeId]).toEqual(valueGetter);
         });
@@ -213,7 +213,7 @@ describe('PageBuilder store', () => {
             store.dispatch('addValueGetter', { nodeId, valueGetter });
             expect(store.state.pageValueGetters[nodeId]).toEqual(valueGetter);
             store.dispatch('removeValueGetter', { nodeId });
-            expect(store.state.pageValueGetters[nodeId]).not.toBeDefined();
+            expect(store.state.pageValueGetters[nodeId]).toBeUndefined();
         });
 
         it('allows getting view values via action', async () => {
@@ -270,7 +270,7 @@ describe('PageBuilder store', () => {
         it('prevents value modification with invalid keys', () => {
             let node = store.state.page.wizardPageContent.webNodes.id1;
 
-            expect(node.foo).toEqual('bar');
+            expect(node.foo).toBe('bar');
 
             let update = {
                 nodeId: 'id1',
@@ -287,7 +287,7 @@ describe('PageBuilder store', () => {
         it('replaces web node configurations', () => {
             let node = store.state.page.wizardPageContent.webNodes.id1;
 
-            expect(node.foo).toEqual('bar');
+            expect(node.foo).toBe('bar');
 
             let update = {
                 nodeId: 'id1',
@@ -306,7 +306,7 @@ describe('PageBuilder store', () => {
         });
 
         it('adds web node configurations', () => {
-            expect(store.state.page.wizardPageContent.webNodes.id3).not.toBeDefined();
+            expect(store.state.page.wizardPageContent.webNodes.id3).toBeUndefined();
 
             let update = {
                 nodeId: 'id3',
@@ -326,7 +326,7 @@ describe('PageBuilder store', () => {
         it('removes web node configurations', () => {
             let node = store.state.page.wizardPageContent.webNodes.id1;
 
-            expect(node.foo).toEqual('bar');
+            expect(node.foo).toBe('bar');
 
             let update = {
                 nodeId: 'id1',
@@ -336,7 +336,7 @@ describe('PageBuilder store', () => {
             store.commit('updateViewConfig', update);
 
             setTimeout(() => {
-                expect(store.state.page.wizardPageContent.webNodes.id1).not.toBeDefined();
+                expect(store.state.page.wizardPageContent.webNodes.id1).toBeUndefined();
             }, 1000);
         });
 
@@ -344,7 +344,7 @@ describe('PageBuilder store', () => {
         it('overrides required when present in web node configurations', async () => {
             let node = store.state.page.wizardPageContent.webNodes.id1;
 
-            expect(node.foo).toEqual('bar');
+            expect(node.foo).toBe('bar');
 
             let update = {
                 nodeId: 'id1',
@@ -541,7 +541,7 @@ describe('PageBuilder store', () => {
             let validator = function () {
                 return Promise.resolve(true);
             };
-            expect(store.state.pageValidators[nodeId]).not.toBeDefined();
+            expect(store.state.pageValidators[nodeId]).toBeUndefined();
             store.dispatch('addValidator', { nodeId, validator });
             expect(store.state.pageValidators[nodeId]).toEqual(validator);
         });
@@ -554,7 +554,7 @@ describe('PageBuilder store', () => {
             store.dispatch('addValidator', { nodeId, validator });
             expect(store.state.pageValidators[nodeId]).toEqual(validator);
             store.dispatch('removeValidator', { nodeId });
-            expect(store.state.pageValidators[nodeId]).not.toBeDefined();
+            expect(store.state.pageValidators[nodeId]).toBeUndefined();
         });
 
         it('allows validating page via action', async () => {

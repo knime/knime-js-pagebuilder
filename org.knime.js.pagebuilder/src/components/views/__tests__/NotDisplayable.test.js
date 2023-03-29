@@ -11,7 +11,7 @@ describe('NotDisplayable.vue', () => {
     });
 
     it('renders default', () => {
-        expect(wrapper.findComponent(Label).props('text')).toEqual('Missing node () can’t be displayed');
+        expect(wrapper.findComponent(Label).props('text')).toBe('Missing node () can’t be displayed');
         expect(wrapper.find('span').text()).toContain('No further information available');
     });
 
@@ -47,7 +47,7 @@ describe('NotDisplayable.vue', () => {
             }
         });
         expect(wrapper.findComponent(Label).props('text'))
-            .toEqual('testName - test_annotation (10.0.2) can’t be displayed');
+            .toBe('testName - test_annotation (10.0.2) can’t be displayed');
     });
 
     it('hides content via prop from parent', async () => {

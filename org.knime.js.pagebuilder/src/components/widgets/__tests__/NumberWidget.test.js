@@ -174,7 +174,7 @@ describe('NumberWidget.vue', () => {
                 }
             }
         });
-        expect(wrapper.vm.validate().errorMessage).toBe(null);
+        expect(wrapper.vm.validate().errorMessage).toBeNull();
     });
 
     it('has error message', () => {

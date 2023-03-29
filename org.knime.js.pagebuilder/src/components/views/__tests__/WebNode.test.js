@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 
 import WebNode from '@/components/views/WebNode.vue';
@@ -65,12 +65,12 @@ describe('WebNode.vue', () => {
             let wrapper = shallowMount(WebNode, {
                 props: mockProps
             });
-            expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio1by1');
+            expect(wrapper.find('div').attributes('class')).toBe('aspectRatio1by1');
             mockProps.viewConfig.resizeMethod = 'aspectRatio16by9';
             wrapper = shallowMount(WebNode, {
                 props: mockProps
             });
-            expect(wrapper.find('div').attributes('class')).toEqual('aspectRatio16by9');
+            expect(wrapper.find('div').attributes('class')).toBe('aspectRatio16by9');
         });
 
         it('renders with classes and styles', () => {
@@ -85,8 +85,8 @@ describe('WebNode.vue', () => {
                     }
                 }
             });
-            expect(wrapper.attributes('class')).toEqual('aspectRatio1by1 class1 class2');
-            expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
+            expect(wrapper.attributes('class')).toBe('aspectRatio1by1 class1 class2');
+            expect(wrapper.attributes('style')).toBe('color: red; border: 1px solid green;');
         });
     
         it('adds classes for min/max height & width', () => {
@@ -106,7 +106,7 @@ describe('WebNode.vue', () => {
                     }
                 }
             });
-            expect(wrapper.attributes('class')).toEqual('class1 class2');
+            expect(wrapper.attributes('class')).toBe('class1 class2');
             expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green; max-height: 200px;' +
                 ' max-width: 200px; min-height: 100px; min-width: 100px;');
         });
@@ -138,7 +138,7 @@ describe('WebNode.vue', () => {
                 }
             });
     
-            expect(wrapper.vm.widgetComponentName).not.toBeDefined();
+            expect(wrapper.vm.widgetComponentName).toBeUndefined();
             expect(wrapper.vm.isWidget).toBeFalsy();
         });
     

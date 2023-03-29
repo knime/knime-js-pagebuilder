@@ -190,7 +190,7 @@ describe('FileChooserWidget.vue AP', () => {
         let wrapper = mount(FileChooserWidget, {
             props
         });
-        expect(wrapper.vm.infoMessage).toStrictEqual('No items found for selection.');
+        expect(wrapper.vm.infoMessage).toBe('No items found for selection.');
         expect(wrapper.text()).toContain('No items found for selection.');
     });
 
@@ -199,7 +199,7 @@ describe('FileChooserWidget.vue AP', () => {
         let wrapper = mount(FileChooserWidget, {
             props
         });
-        expect(wrapper.vm.infoMessage).toStrictEqual('File selection only possible on server.');
+        expect(wrapper.vm.infoMessage).toBe('File selection only possible on server.');
     });
 
     it('checks, that the default item is returned when run in the AP', () => {
@@ -339,7 +339,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
         });
         await wrapper.vm.$nextTick();
         await wrapper.vm.$nextTick();
-        expect(wrapper.vm.infoMessage).toStrictEqual(null);
+        expect(wrapper.vm.infoMessage).toBeNull();
         const treeSelect = wrapper.findComponent(TreeSelect);
         expect(treeSelect.exists()).toBe(true);
     });
@@ -350,7 +350,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
             props,
             global: { mocks }
         });
-        expect(wrapper.vm.infoMessage).toStrictEqual('File selection only possible on server.');
+        expect(wrapper.vm.infoMessage).toBe('File selection only possible on server.');
     });
 
     it('reports as valid if info message is shown', () => {
@@ -427,7 +427,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
         });
         await wrapper.vm.$nextTick();
         await wrapper.vm.$nextTick();
-        expect(wrapper.vm.infoMessage).toStrictEqual('No items found for selection.');
+        expect(wrapper.vm.infoMessage).toBe('No items found for selection.');
         expect(wrapper.text()).toContain('No items found for selection.');
     });
 
@@ -505,7 +505,7 @@ describe('FileChooserWidget.vue WebPortal', () => {
         });
         await wrapper.vm.$nextTick();
         await wrapper.vm.$nextTick();
-        expect(wrapper.vm.infoMessage).toStrictEqual('No items found for selection.');
+        expect(wrapper.vm.infoMessage).toBe('No items found for selection.');
         expect(wrapper.text()).toContain('No items found for selection.');
     });
 });

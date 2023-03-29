@@ -307,7 +307,7 @@ describe('wrapper API store', () => {
         });
     });
 
-    describe('RPC', () => {
+    describe('rpc', () => {
         it('returns error if no global RPC exists', async () => {
             let rpcConfig = {
                 id: 0,

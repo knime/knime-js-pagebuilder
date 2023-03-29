@@ -29,7 +29,7 @@ describe('overrideRequired util', () => {
     });
 
     it('handles missing or null configs', () => {
-        expect(overrideRequired(null)).toBe(null);
-        expect(overrideRequired(expect.undefined)).not.toBeDefined();
+        expect(overrideRequired(null)).toBeNull();
+        expect(overrideRequired(expect.undefined)).toBeUndefined();
     });
 });

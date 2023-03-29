@@ -223,7 +223,7 @@ describe('WebNodeIFrame.vue', () => {
                 origin: window.origin,
                 data: { nodeId: '0:0:7', type: 'setValidationError', isValid: false }
             });
-            return expect(validatePromise).resolves.toStrictEqual(true);
+            return expect(validatePromise).resolves.toBe(true);
         });
 
         it('catches errors from within view thrown while setting message', async () => {

@@ -39,6 +39,6 @@ const layoutMixin = {
             return style.join(';').replace(/;;/g, ';');
         }
     }
-}
+};
 
 export default layoutMixin;

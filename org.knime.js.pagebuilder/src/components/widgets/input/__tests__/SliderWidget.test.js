@@ -157,7 +157,7 @@ describe('SliderWidget.vue', () => {
             nodeConfig: { ...nodeConfig }
         });
 
-        expect(wrapper.vm.connect).toBe(null);
+        expect(wrapper.vm.connect).toBeNull();
     });
 
     it('rounds values which exceed the supported precision', async () => {
@@ -188,7 +188,7 @@ describe('SliderWidget.vue', () => {
             nodeConfig: { ...nodeConfig }
         });
 
-        expect(wrapper.vm.height).toBe(null);
+        expect(wrapper.vm.height).toBeNull();
     });
 
     it('creates tooltip formatting function if present', async () => {
@@ -321,7 +321,7 @@ describe('SliderWidget.vue', () => {
             }
         });
 
-        expect(wrapper2.vm.validate().errorMessage).toBe(null);
+        expect(wrapper2.vm.validate().errorMessage).toBeNull();
     });
 
     it('takes child error message over parent error message', () => {

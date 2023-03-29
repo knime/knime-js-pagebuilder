@@ -61,7 +61,7 @@ describe('ViewExecutable.vue', () => {
         });
     });
 
-    describe('Save & Execute on Button Click', () => {
+    describe('save & execute on button click', () => {
         const getMockComponentProps = () => ({ extensionConfig: { ...componentExtensionConfig } });
         let context, applySettingsMock, changeNodeStatesMock, showAlertMock;
 
@@ -136,7 +136,7 @@ describe('ViewExecutable.vue', () => {
             expect(changeNodeStatesMock).toHaveBeenCalled();
         });
 
-        it('Save & Execute button is disabled if node cannot be executed', () => {
+        it('save & Execute button is disabled if node cannot be executed', () => {
             let props = getMockComponentProps();
             props.extensionConfig.nodeInfo.canExecute = false;
             let wrapper = shallowMount(ViewExecutable, {

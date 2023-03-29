@@ -115,7 +115,7 @@ if (typeof KnimePageLoader === 'undefined') {
                     }
                     return parsedValues;
                 })
-                .catch(e => {
+                .catch(() => {
                     if (typeof retrieveCurrentValueFromView === 'function') {
                         retrieveCurrentValueFromView(JSON.stringify({}));
                     }
@@ -136,7 +136,7 @@ if (typeof KnimePageLoader === 'undefined') {
                     }
                     return isValid;
                 })
-                .catch(e => {
+                .catch(() => {
                     if (typeof validateCurrentValueInView === 'function') {
                         validateCurrentValueInView(Boolean(false));
                     }

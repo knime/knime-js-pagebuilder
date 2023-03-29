@@ -1,6 +1,5 @@
 /* global jsonrpc */
-// eslint-disable-next-line no-unused-vars
-import { KnimeTypes, KnimeUtils } from '@knime/ui-extension-service';
+import { KnimeUtils } from '@knime/ui-extension-service';
 const { createJsonRpcRequest } = KnimeUtils;
 
 export const namespaced = true;

@@ -154,7 +154,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.alert).toBe(null);
+            expect(wrapper.vm.alert).toBeNull();
             // missing origin
             messageEvent = { data: { nodeId } };
             wrapper.vm.messageFromIframe(messageEvent);
@@ -162,7 +162,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.alert).toBe(null);
+            expect(wrapper.vm.alert).toBeNull();
             // mismatched nodeId
             messageEvent = { data: { nodeId: 'other:node' } };
             wrapper.vm.messageFromIframe(messageEvent);
@@ -170,7 +170,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.alert).toBe(null);
+            expect(wrapper.vm.alert).toBeNull();
         });
 
         it('handles load events', () => {
@@ -193,7 +193,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.alert).toBe(null);
+            expect(wrapper.vm.alert).toBeNull();
         });
 
         it('handles validate events', () => {
@@ -209,7 +209,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(validateCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'validate' });
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.alert).toBe(null);
+            expect(wrapper.vm.alert).toBeNull();
         });
 
         it('handles getValue events', () => {
@@ -225,7 +225,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'getValue' });
             expect(setValidationErrorCallbackMock).not.toHaveBeenCalled();
-            expect(wrapper.vm.alert).toBe(null);
+            expect(wrapper.vm.alert).toBeNull();
         });
 
         it('handles setValidationError events', () => {
@@ -241,7 +241,7 @@ describe('WebNodeIFrame.vue', () => {
             expect(validateCallbackMock).not.toHaveBeenCalled();
             expect(getValueCallbackMock).not.toHaveBeenCalled();
             expect(setValidationErrorCallbackMock).toHaveBeenCalledWith({ nodeId, type: 'setValidationError' });
-            expect(wrapper.vm.alert).toBe(null);
+            expect(wrapper.vm.alert).toBeNull();
         });
 
         it('handles alert events', () => {

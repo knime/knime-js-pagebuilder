@@ -113,7 +113,7 @@ describe('NodeView.vue', () => {
             }
         });
 
-        expect(wrapper.vm.nodeId).toEqual('1:0:1:0:0:7');
+        expect(wrapper.vm.nodeId).toBe('1:0:1:0:0:7');
     });
 
     describe('conditional rendering', () => {
@@ -141,7 +141,7 @@ describe('NodeView.vue', () => {
             expect(wrapper.findComponent(UIExtension).classes()).toContain('single-view');
         });
 
-        it('Make sure single-view class is not set on preview', () => {
+        it(`doesn't set single-view class on preview`, () => {
             let localContext = createContext({
                 nodeViews: { VIEW: mockNodeViewConfig, DIALOG: mockNodeDialogConfig }
             });
@@ -169,7 +169,7 @@ describe('NodeView.vue', () => {
             expect(wrapper.vm.viewDisplayable).toBe(false);
             expect(wrapper.findComponent(NotDisplayable).exists()).toBe(true);
             expect(wrapper.findComponent(NotDisplayable).props('nodeInfo')).toEqual(expectedNodeInfo);
-            expect(wrapper.findComponent(NotDisplayable).props('nodeId')).toEqual('1:0:1:0:0:7');
+            expect(wrapper.findComponent(NotDisplayable).props('nodeId')).toBe('1:0:1:0:0:7');
         });
 
         it('renders view executable when nodeView is not executed', () => {

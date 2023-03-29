@@ -27,7 +27,7 @@ describe('nestedProperty.js', () => {
 
         it('returns null for missing keys', () => {
             let value = getProp(testObject, 'prop2.someMissingValue.0.someValue');
-            expect(value).toBe(null);
+            expect(value).toBeNull();
         });
     });
 

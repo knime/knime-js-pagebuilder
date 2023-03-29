@@ -90,7 +90,7 @@ describe('TextWidget.vue', () => {
             props
         });
 
-        expect(wrapper.vm.errorMessage).toBe(null);
+        expect(wrapper.vm.errorMessage).toBeNull();
     });
 
     it('has default error message', () => {

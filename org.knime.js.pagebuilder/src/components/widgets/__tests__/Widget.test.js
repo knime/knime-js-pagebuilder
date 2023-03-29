@@ -202,14 +202,14 @@ describe('Widget.vue', () => {
 
     it('updates objects inside arrays in the store', () => {
         let nodeId = 'SINGLE';
-        expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toEqual(0);
+        expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toBe(0);
         wrapper.vm.publishUpdate({
             nodeId,
             update: {
                 'filters.0.test': 1
             }
         });
-        expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toEqual(1);
+        expect(wrapper.vm.$store.state.pagebuilder.page.wizardPageContent.webNodes.SINGLE.filters[0].test).toBe(1);
     });
 
     it('calls callback after change event if provided', async () => {

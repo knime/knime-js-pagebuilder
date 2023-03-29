@@ -1,6 +1,5 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
-import { createLocalVue } from '@vue/test-utils';
-import Vuex, { createStore } from 'vuex';
+import { expect, describe, beforeEach, it, vi } from 'vitest';
+import { createStore } from 'vuex';
 
 import * as storeConfig from '@/store/interactivity';
 
@@ -28,7 +27,7 @@ describe('Interactivity store', () => {
         it('allows adding a subscriber without elementFilter', () => {
             let payload = { id: subscriberId, callback: vi.fn() };
             store.dispatch('subscribe', payload);
-            expect(store.state[payload.id].subscribers.length).toEqual(1);
+            expect(store.state[payload.id].subscribers.length).toBe(1);
             expect(store.state[payload.id].subscribers[0]).toEqual({
                 callback: payload.callback,
                 filterIds: payload.elementFilter
@@ -40,7 +39,7 @@ describe('Interactivity store', () => {
         it('allows adding a subscriber with elementFilter', () => {
             let payload = { id: subscriberId, callback: vi.fn(), elementFilter: [2] };
             store.dispatch('subscribe', payload);
-            expect(store.state[payload.id].subscribers.length).toEqual(1);
+            expect(store.state[payload.id].subscribers.length).toBe(1);
             expect(store.state[payload.id].subscribers[0]).toEqual({
                 callback: payload.callback,
                 filterIds: payload.elementFilter
@@ -52,7 +51,7 @@ describe('Interactivity store', () => {
         it('informs callback of current state when subscribing', () => {
             let payload = { id: dataId, callback: vi.fn() };
             store.dispatch('subscribe', payload);
-            expect(store.state[payload.id].subscribers.length).toEqual(1);
+            expect(store.state[payload.id].subscribers.length).toBe(1);
             expect(store.state[payload.id].subscribers[0]).toEqual({
                 callback: payload.callback,
                 filterIds: payload.elementFilter
@@ -70,15 +69,15 @@ describe('Interactivity store', () => {
 
         it('allows removing a subscriber', () => {
             store.commit('addSubscriber', payload);
-            expect(store.state[payload.id].subscribers.length).toEqual(1);
+            expect(store.state[payload.id].subscribers.length).toBe(1);
 
             store.dispatch('unsubscribe', payload);
-            expect(store.state[payload.id]).not.toBeDefined();
+            expect(store.state[payload.id]).toBeUndefined();
         });
 
         it('allows removing non-existing subscriber', () => {
             store.dispatch('unsubscribe', payload);
-            expect(store.state[payload.id]).not.toBeDefined();
+            expect(store.state[payload.id]).toBeUndefined();
         });
     });
 
@@ -88,7 +87,7 @@ describe('Interactivity store', () => {
         const payload = { id, data: { id: filterId, data: 42 }, callback: vi.fn() };
 
         it('adds a filter if it hasn\'t been added', () => {
-            expect(store.state[payload.id]).not.toBeDefined();
+            expect(store.state[payload.id]).toBeUndefined();
             store.dispatch('updateFilter', payload);
             expect(store.state[payload.id].data).toStrictEqual({
                 elements: [{
@@ -250,7 +249,7 @@ describe('Interactivity store', () => {
                     }
                 };
                 store.dispatch('publish', payload);
-                expect(store.state[publishId]).not.toBeDefined();
+                expect(store.state[publishId]).toBeUndefined();
             });
 
             it('adds rows', () => {
@@ -373,7 +372,7 @@ describe('Interactivity store', () => {
             });
 
             it('creates element on new id', () => {
-                expect(store.state[publishId]).not.toBeDefined();
+                expect(store.state[publishId]).toBeUndefined();
                 let payload = { id: publishId, data: minimalData };
                 store.dispatch('publish', payload);
                 expect(store.state[publishId]).toBeDefined();

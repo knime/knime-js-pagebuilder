@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, beforeEach, afterAll, afterEach, it, vi } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import Popover from '@/components/ui/Popover.vue';

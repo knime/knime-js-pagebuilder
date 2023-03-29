@@ -66,7 +66,7 @@ describe('layoutMixin.js', () => {
                 },
                 mixins: [layoutMixin]
             });
-            expect(wrapper.vm.layoutStyle).toEqual('testStyle;otherTestStyle');
+            expect(wrapper.vm.layoutStyle).toBe('testStyle;otherTestStyle');
         });
 
         it('applies styles if viewLowestElement is set and it is a widget', () => {
@@ -83,7 +83,7 @@ describe('layoutMixin.js', () => {
                 },
                 mixins: [layoutMixin]
             });
-            expect(wrapper.vm.layoutStyle).toEqual('max-height:300px;max-width:300px;min-height:100px;min-width:100px');
+            expect(wrapper.vm.layoutStyle).toBe('max-height:300px;max-width:300px;min-height:100px;min-width:100px');
         });
 
         it('applies styles if viewLowestElement is set and it is a ui-extension', () => {
@@ -100,7 +100,7 @@ describe('layoutMixin.js', () => {
                 },
                 mixins: [layoutMixin]
             });
-            expect(wrapper.vm.layoutStyle).toEqual('max-height:300px;max-width:300px;min-height:100px;min-width:100px');
+            expect(wrapper.vm.layoutStyle).toBe('max-height:300px;max-width:300px;min-height:100px;min-width:100px');
         });
 
         it('does not apply styles if viewLowestElement is set, but it is not a widget or ui-extension', () => {
@@ -116,7 +116,7 @@ describe('layoutMixin.js', () => {
                 },
                 mixins: [layoutMixin]
             });
-            expect(wrapper.vm.layoutStyle).toEqual('');
+            expect(wrapper.vm.layoutStyle).toBe('');
         });
 
         it('does not apply styles if viewLowestElement is not set', () => {
@@ -132,7 +132,7 @@ describe('layoutMixin.js', () => {
                 },
                 mixins: [layoutMixin]
             });
-            expect(wrapper.vm.layoutStyle).toEqual('');
+            expect(wrapper.vm.layoutStyle).toBe('');
         });
 
         it('does not apply styles if they are not set', () => {
@@ -144,7 +144,7 @@ describe('layoutMixin.js', () => {
                 },
                 mixins: [layoutMixin]
             });
-            expect(wrapper.vm.layoutStyle).toEqual('');
+            expect(wrapper.vm.layoutStyle).toBe('');
         });
     });
 });

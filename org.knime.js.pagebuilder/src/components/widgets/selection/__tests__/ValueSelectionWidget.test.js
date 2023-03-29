@@ -156,7 +156,7 @@ describe('ValueSelectionWidget.vue', () => {
                 props: propsDropdown
             });
             // invalid column should not display any possible or selected values
-            expect(wrapper.vm.value).toStrictEqual('');
+            expect(wrapper.vm.value).toBe('');
             expect(wrapper.vm.possibleValueList).toStrictEqual([]);
             // it should return the correct invalid response for validation
             expect(wrapper.vm.validate())

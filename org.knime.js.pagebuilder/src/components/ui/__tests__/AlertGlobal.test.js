@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, it, vi } from 'vitest';
-import Vuex, { createStore } from 'vuex';
+import { createStore } from 'vuex';
 import { mount } from '@vue/test-utils';
 
 import AlertGlobal from '@/components/ui/AlertGlobal.vue';

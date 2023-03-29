@@ -78,7 +78,7 @@ describe('InteractiveValueWidget.vue', () => {
         };
     });
 
-    describe('SingleSelect components', () => {
+    describe('singleSelect components', () => {
         it('renders SingleSelect', () => {
             let wrapper = mount(InteractiveValueWidget, {
                 ...context,
@@ -104,7 +104,7 @@ describe('InteractiveValueWidget.vue', () => {
         });
     });
 
-    describe('Multiselect components', () => {
+    describe('multiselect components', () => {
         it('renders Multiselect', () => {
             props.nodeConfig.viewRepresentation.multipleValues = true;
             let wrapper = mount(InteractiveValueWidget, {

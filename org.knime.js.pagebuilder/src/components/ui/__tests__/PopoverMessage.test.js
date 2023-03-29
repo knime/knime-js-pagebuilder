@@ -23,7 +23,7 @@ describe('PopoverMessage', () => {
 
     it('renders default', () => {
         expect(wrapper.findComponent(Label).exists()).toBe(true);
-        expect(wrapper.findComponent(Label).props('text')).toEqual('Test title');
+        expect(wrapper.findComponent(Label).props('text')).toBe('Test title');
         expect(wrapper.text()).toContain('Test message');
     });
 

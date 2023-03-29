@@ -243,7 +243,7 @@ describe('ImageWidget.vue', () => {
         let validate = wrapper.vm.validate();
 
         expect(validate.isValid).toBe(true);
-        expect(validate.errorMessage).toBe(null);
+        expect(validate.errorMessage).toBeNull();
     });
 
     it('has image format error message', () => {

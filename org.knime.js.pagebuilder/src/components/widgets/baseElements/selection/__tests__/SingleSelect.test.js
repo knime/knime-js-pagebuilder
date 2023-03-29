@@ -107,7 +107,7 @@ describe('SingleSelect.vue', () => {
                 props: propsRadioHorizontal
             });
 
-            expect(wrapper.vm.radioButtonsAlignment).toBe(null);
+            expect(wrapper.vm.radioButtonsAlignment).toBeNull();
             expect(wrapper.findComponent(RadioButtons).exists()).toBe(false);
         });
 

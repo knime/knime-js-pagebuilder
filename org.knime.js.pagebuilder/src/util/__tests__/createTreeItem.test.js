@@ -65,7 +65,7 @@ describe('Tests the createTreeItem functionality', () => {
             fileTypes: ['.foo']
         };
 
-        expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toEqual(null);
+        expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toBeNull();
     });
 
     it('tests the creation of a flat tree with only one folder', () => {
@@ -109,7 +109,7 @@ describe('Tests the createTreeItem functionality', () => {
             fileTypes: ['.foo']
         };
 
-        expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toEqual(null);
+        expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toBeNull();
     });
 
     it('tests that a folder is created with a nested folder and select folders disabled', () => {
@@ -167,7 +167,7 @@ describe('Tests the createTreeItem functionality', () => {
             fileTypes: ['.foo']
         };
 
-        expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toEqual(null);
+        expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toBeNull();
     });
 
     it('tests that no file is created if no file does not match the allowed files', () => {
@@ -184,7 +184,7 @@ describe('Tests the createTreeItem functionality', () => {
             fileTypes: ['.foo']
         };
 
-        expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toEqual(null);
+        expect(createTreeItemRecursively(flatRepositoryItem, defaultPaths, viewRep)).toBeNull();
     });
 
     it('tests that a file is created if there are no allowed files given', () => {
@@ -277,10 +277,10 @@ describe('Tests the createTreeItem functionality', () => {
         const nullEnding = null;
         const empty = '';
 
-        expect(getIcon(csvEnding)).toEqual('csvIcon');
-        expect(getIcon(nonExistingIcon)).toEqual('fileIcon');
-        expect(getIcon(nullEnding)).toEqual('fileIcon');
-        expect(getIcon(empty)).toEqual('fileIcon');
+        expect(getIcon(csvEnding)).toBe('csvIcon');
+        expect(getIcon(nonExistingIcon)).toBe('fileIcon');
+        expect(getIcon(nullEnding)).toBe('fileIcon');
+        expect(getIcon(empty)).toBe('fileIcon');
     });
 
     it('tests that it does nothing if the default path does not match', () => {
@@ -294,9 +294,9 @@ describe('Tests the createTreeItem functionality', () => {
             }
         };
         checkDefaultPaths(singleDefaultPath, treeItem);
-        expect(treeItem.state.selected).toEqual(false);
-        expect(treeItem.state.opened).toEqual(false);
-        expect(treeItem.state.disabled).toEqual(false);
+        expect(treeItem.state.selected).toBe(false);
+        expect(treeItem.state.opened).toBe(false);
+        expect(treeItem.state.disabled).toBe(false);
     });
 
     it('tests the file tree is opened if it is on a default path', () => {
@@ -310,8 +310,8 @@ describe('Tests the createTreeItem functionality', () => {
             }
         };
         checkDefaultPaths(singleDefaultPath, treeItem);
-        expect(treeItem.state.selected).toEqual(false);
-        expect(treeItem.state.opened).toEqual(true);
+        expect(treeItem.state.selected).toBe(false);
+        expect(treeItem.state.opened).toBe(true);
     });
 
     it('tests the file tree is selected if it matches a default path', () => {
@@ -325,8 +325,8 @@ describe('Tests the createTreeItem functionality', () => {
             }
         };
         checkDefaultPaths(singleDefaultPath, treeItem);
-        expect(treeItem.state.selected).toEqual(true);
-        expect(treeItem.state.opened).toEqual(false);
+        expect(treeItem.state.selected).toBe(true);
+        expect(treeItem.state.opened).toBe(false);
     });
 });
 
