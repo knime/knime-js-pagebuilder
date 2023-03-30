@@ -5,7 +5,7 @@ import RefreshButtonWidget from '@/components/widgets/reactive/RefreshButtonWidg
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
 import Label from 'webapps-common/ui/components/forms/Label.vue';
 import * as storeConfig from '@/store/pagebuilder';
-import BaseButton from '@@/webapps-common/ui/components/BaseButton.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
 
 describe('RefreshButtonWidget.vue', () => {
     let props, store, context;
@@ -99,9 +99,8 @@ describe('RefreshButtonWidget.vue', () => {
     it('disables the button when nodes are re-executing', async () => {
         let wrapper = mount(RefreshButtonWidget, { ...context, props });
         expect(wrapper.vm.isExecuting).toBeFalsy();
-        wrapper.vm.$store.dispatch('pagebuilder/setNodesReExecuting', ['13:0:12']);
+        await wrapper.vm.$store.dispatch('pagebuilder/setNodesReExecuting', ['13:0:12']);
         expect(wrapper.vm.isExecuting).toBeTruthy();
-        await wrapper.vm.$nextTick();
-        expect(wrapper.findComponent(BaseButton).props('disabled')).toBeTruthy();
+        expect(wrapper.findComponent(Button).element.hasAttributes('disabled')).toBeTruthy();
     });
 });

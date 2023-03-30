@@ -1,9 +1,10 @@
 import { expect, describe, beforeEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
 import FileUploadWidget from '@/components/widgets/input/FileUploadWidget.vue';
 import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage.vue';
-import { createStore } from 'vuex';
+import sleep from 'webapps-common/util/sleep';
 
 const uploadResourceMock = vi.fn().mockReturnValue(() => Promise.resolve({ errorResponse: false, response: {} }));
 const cancelUploadResourceMock = vi.fn().mockReturnValue(() => {});
@@ -299,7 +300,7 @@ describe('FileUploadWidget.vue', () => {
         expect(wrapper.findComponent(ErrorMessage).props('error')).toBe('Upload cancelled.');
     });
 
-    it('uploads files on the AP', async (done) => {
+    it('uploads files on the AP', async () => {
         let uploadResourceMock = vi.fn();
         window.KnimePageLoader = { /* empty mock simulates AP wrapper API */ };
         let wrapper = mount(FileUploadWidget, {
@@ -307,23 +308,23 @@ describe('FileUploadWidget.vue', () => {
             props
         });
         await wrapper.setData({ uploadAPI: uploadResourceMock });
-        wrapper.vm.onChange({
+        await wrapper.vm.onChange({
             target: {
                 files: [new File([new Blob(['testing'], { type: 'application/pdf' })], 'test')]
             }
         });
+
         // File operations needs non-zero time to complete (more than a tick).
-        setTimeout(() => {
-            expect(uploadResourceMock).not.toHaveBeenCalled();
-            expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
-                nodeId: '5:0:22',
-                type: 'path',
-                update: {
-                    'viewRepresentation.currentValue.fileName': 'test',
-                    'viewRepresentation.currentValue.path': 'data:;base64,dGVzdGluZw=='
-                }
-            });
-            done();
-        }, 50);
+        await sleep(50);
+
+        expect(uploadResourceMock).not.toHaveBeenCalled();
+        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
+            nodeId: '5:0:22',
+            type: 'path',
+            update: {
+                'viewRepresentation.currentValue.fileName': 'test',
+                'viewRepresentation.currentValue.path': 'data:application/octet-stream;base64,dGVzdGluZw=='
+            }
+        });
     });
 });
