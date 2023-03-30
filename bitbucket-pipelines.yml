@@ -15,7 +15,7 @@ definitions:
           - npm run build
           - npm run audit
         artifacts:
-          - dist/**
+          - org.knime.js.pagebuilder/dist/**
 
 pipelines:
   pull-requests:
