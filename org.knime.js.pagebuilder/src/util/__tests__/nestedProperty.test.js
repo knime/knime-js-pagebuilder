@@ -1,5 +1,4 @@
 import { expect, describe, it } from 'vitest';
-/* eslint-disable no-magic-numbers */
 import { getProp, setProp } from '@/util/nestedProperty';
 
 describe('nestedProperty.js', () => {

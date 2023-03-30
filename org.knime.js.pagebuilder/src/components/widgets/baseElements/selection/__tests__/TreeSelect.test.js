@@ -1,5 +1,4 @@
 import { expect, describe, beforeEach, it } from 'vitest';
-/* eslint-disable no-magic-numbers */
 import { mount, shallowMount } from '@vue/test-utils';
 
 import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect.vue';

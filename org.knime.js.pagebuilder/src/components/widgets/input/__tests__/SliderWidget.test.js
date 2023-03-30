@@ -1,5 +1,4 @@
 import { expect, describe, beforeEach, it, vi } from 'vitest';
-/* eslint-disable no-magic-numbers */
 import { shallowMount, mount } from '@vue/test-utils';
 
 import SliderWidget from '@/components/widgets/input/SliderWidget.vue';

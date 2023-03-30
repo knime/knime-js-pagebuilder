@@ -66,7 +66,6 @@ describe('Interactivity store', () => {
             ]
         };
         store.commit('updateSubscriber', { id, callback: vi.fn(), isTranslator: true });
-        // eslint-disable-next-line no-magic-numbers
         expect(store.state[id].subscribers).toHaveLength(4);
     });
 

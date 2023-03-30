@@ -231,7 +231,6 @@ describe('ValueFilterSelectionWidget.vue', () => {
             props
         });
         // duplicate column entry will not be shown twice
-        // eslint-disable-next-line no-magic-numbers
         expect(wrapper.vm.possibleColumns.length).toBe(4);
     });
 

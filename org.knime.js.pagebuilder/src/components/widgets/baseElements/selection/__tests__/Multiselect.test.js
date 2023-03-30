@@ -156,7 +156,6 @@ describe('Multiselect.vue', () => {
             let checkboxes = wrapper.findComponent(Checkboxes);
             expect(checkboxes.exists()).toBeTruthy();
             expect(checkboxes.props('alignment')).toBe('horizontal');
-            // eslint-disable-next-line no-magic-numbers
             expect(wrapper.findAllComponents(Checkbox).length).toBe(7);
         });
 

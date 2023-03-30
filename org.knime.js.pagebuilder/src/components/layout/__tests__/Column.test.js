@@ -212,7 +212,6 @@ describe('Column.vue', () => {
             wrapper.find('div').findAll('div')
         ];
         expect(views.length).toBe(0);
-        // eslint-disable-next-line no-magic-numbers
         expect(rows.length).toBe(3);
         expect(rows.at(0).props('rowConfig')).toEqual({ type: 'row', dummy: 'dummy' });
         expect(rows.at(1).props('rowConfig')).toEqual({ type: 'row', foo: 'bar' });

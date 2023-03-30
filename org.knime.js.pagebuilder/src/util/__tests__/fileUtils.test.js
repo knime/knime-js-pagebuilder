@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-/* eslint-disable no-magic-numbers */
 import { getFileExtension, getNameFromPath, getRootPath, normalizeArray,
     normalizePath, resolveWorkflowRelativePath, trimSchema } from '@/util/fileUtils';
 

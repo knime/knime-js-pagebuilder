@@ -197,9 +197,7 @@ describe('InteractiveRangeWidget.vue', () => {
         let currentValue = wrapper.vm.getValue();
         expect(currentValue.filter.columns[0].maximum < originalMaximum).toBe(true);
         expect(currentValue.filter.columns[0].minimum > originalMinimum).toBe(true);
-        // eslint-disable-next-line no-magic-numbers
         expect(currentValue.filter.columns[0].maximum).toBe(.9876543);
-        // eslint-disable-next-line no-magic-numbers
         expect(currentValue.filter.columns[0].minimum).toBe(.0123457);
     });
 

@@ -1,5 +1,4 @@
 import { expect, describe, beforeEach, it, vi } from 'vitest';
-/* eslint-disable no-magic-numbers */
 import { createStore } from 'vuex';
 import { shallowMount } from '@vue/test-utils';
 

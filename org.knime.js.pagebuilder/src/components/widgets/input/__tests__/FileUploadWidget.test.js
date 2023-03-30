@@ -324,7 +324,6 @@ describe('FileUploadWidget.vue', () => {
                 }
             });
             done();
-        // eslint-disable-next-line no-magic-numbers
         }, 50);
     });
 });

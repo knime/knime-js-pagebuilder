@@ -1,5 +1,4 @@
 import { expect, describe, beforeEach, it, vi } from 'vitest';
-/* eslint-disable no-magic-numbers */
 import { mount } from '@vue/test-utils';
 
 import ColumnFilterWidget from '@/components/widgets/selection/ColumnFilterSelectionWidget.vue';

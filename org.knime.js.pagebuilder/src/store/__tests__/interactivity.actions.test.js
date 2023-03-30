@@ -206,7 +206,6 @@ describe('Interactivity store', () => {
                         throw new Error('No iframe found.');
                     } };
                 store.commit('addSubscriber', invalidPayload);
-                // eslint-disable-next-line no-magic-numbers
                 expect(store.state[publishId].subscribers.length).toBe(3);
                 let payload = { id: publishId, data: minimalData };
                 store.dispatch('publish', payload);
