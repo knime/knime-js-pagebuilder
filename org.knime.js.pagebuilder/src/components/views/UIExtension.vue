@@ -72,9 +72,6 @@ export default {
         },
         displayWarning() {
             return this.alert?.type === 'warn';
-        },
-        isWidget() {
-            return false;
         }
     },
     watch: {
