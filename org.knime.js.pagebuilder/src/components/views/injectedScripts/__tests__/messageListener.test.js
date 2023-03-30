@@ -1,4 +1,6 @@
 import { expect, describe, beforeAll, afterEach, it, vi } from 'vitest';
+import sleep from 'webapps-common/util/sleep';
+
 import messageListenerSrc from '@/components/views/injectedScripts/messageListener?raw';
 
 // TODO UIEXT-218: Change the timeout-tests to not depend on how many other tests are executed at the same time
@@ -43,7 +45,7 @@ describe('message listener', () => {
         delete window['com.example'];
     });
 
-    it('handles errors in the "init" method', (done) => {
+    it('handles errors in the "init" method', async () => {
         let data = {
             type: 'init',
             nodeId,
@@ -62,20 +64,19 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(errorSpy).toHaveBeenCalledWith({}, {});
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                error: 'View initialization failed: Error: test',
-                isValid: false,
-                nodeId: '0.0.7',
-                type: 'init'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            error: 'View initialization failed: Error: test',
+            isValid: false,
+            nodeId: '0.0.7',
+            type: 'init'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles invalid "init" method', (done) => {
+    it('handles invalid "init" method', async () => {
         let data = {
             type: 'init',
             nodeId,
@@ -93,20 +94,18 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(errorSpy).not.toHaveBeenCalled();
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                error: 'Init method not present in view.',
-                isValid: false,
-                nodeId: '0.0.7',
-                type: 'init'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            error: 'Init method not present in view.',
+            isValid: false,
+            nodeId: '0.0.7',
+            type: 'init'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('retrieves a view value', (done) => {
+    it('retrieves a view value', async () => {
         let data = {
             type: 'getValue',
             nodeId,
@@ -123,21 +122,19 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(spy).toHaveBeenCalled();
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                nodeId: '0.0.7',
-                type: 'getValue',
-                value: {
-                    integer: 42
-                }
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            nodeId: '0.0.7',
+            type: 'getValue',
+            value: {
+                integer: 42
+            }
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles errors in the "getValue" method', (done) => {
+    it('handles errors in the "getValue" method', async () => {
         let data = {
             type: 'getValue',
             nodeId,
@@ -155,20 +152,18 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(errorSpy).toHaveBeenCalled();
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                error: 'Value could not be retrieved from view: Error',
-                isValid: false,
-                nodeId: '0.0.7',
-                type: 'getValue'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            error: 'Value could not be retrieved from view: Error',
+            isValid: false,
+            nodeId: '0.0.7',
+            type: 'getValue'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles invalid "getValue" method', (done) => {
+    it('handles invalid "getValue" method', async () => {
         let data = {
             type: 'getValue',
             nodeId,
@@ -184,20 +179,18 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(errorSpy).not.toHaveBeenCalled();
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                error: 'Value method not present in view.',
-                isValid: false,
-                nodeId: '0.0.7',
-                type: 'getValue'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            error: 'Value method not present in view.',
+            isValid: false,
+            nodeId: '0.0.7',
+            type: 'getValue'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles "validate" method', (done) => {
+    it('handles "validate" method', async () => {
         let data = {
             type: 'validate',
             nodeId,
@@ -213,19 +206,17 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(spy).toHaveBeenCalled();
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                isValid: true,
-                nodeId: '0.0.7',
-                type: 'validate'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            isValid: true,
+            nodeId: '0.0.7',
+            type: 'validate'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles errors in the "validate" method', (done) => {
+    it('handles errors in the "validate" method', async () => {
         let data = {
             type: 'validate',
             nodeId,
@@ -243,20 +234,19 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(errorSpy).toHaveBeenCalled();
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                error: 'View could not be validated: Error: test',
-                isValid: false,
-                nodeId: '0.0.7',
-                type: 'validate'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            error: 'View could not be validated: Error: test',
+            isValid: false,
+            nodeId: '0.0.7',
+            type: 'validate'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles invalid/missing "validate" methods', (done) => {
+    it('handles invalid/missing "validate" methods', async () => {
         let data = {
             type: 'validate',
             nodeId,
@@ -270,19 +260,17 @@ describe('message listener', () => {
 
         postMessage(data);
 
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                isValid: true,
-                nodeId: '0.0.7',
-                type: 'validate'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            isValid: true,
+            nodeId: '0.0.7',
+            type: 'validate'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles the "setValidationError" message', (done) => {
+    it('handles the "setValidationError" message', async () => {
         let data = {
             type: 'setValidationError',
             nodeId,
@@ -298,21 +286,19 @@ describe('message listener', () => {
         postMessage(data);
         expect(setValidationErrorMock).toHaveBeenCalled();
 
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                errorMessage: 'test',
-                namespace: 'com.example',
-                setValidationErrorMethodName: 'setValidationError',
-                nodeId: '0.0.7',
-                type: 'setValidationError'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            errorMessage: 'test',
+            namespace: 'com.example',
+            setValidationErrorMethodName: 'setValidationError',
+            nodeId: '0.0.7',
+            type: 'setValidationError'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles errors in the "setValidationError" method', (done) => {
+    it('handles errors in the "setValidationError" method', async () => {
         let data = {
             type: 'setValidationError',
             nodeId,
@@ -331,20 +317,18 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(errorSpy).toHaveBeenCalledWith('test');
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                error: 'View error message could not be set: Error: test',
-                isValid: false,
-                nodeId: '0.0.7',
-                type: 'setValidationError'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            error: 'View error message could not be set: Error: test',
+            isValid: false,
+            nodeId: '0.0.7',
+            type: 'setValidationError'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
-    it('handles invalid/missing "setValidationError" method', (done) => {
+    it('handles invalid/missing "setValidationError" method', async () => {
         let data = {
             type: 'setValidationError',
             nodeId,
@@ -361,17 +345,15 @@ describe('message listener', () => {
         postMessage(data);
 
         expect(errorSpy).not.toHaveBeenCalled();
-        setTimeout(() => {
-            expect(messageSpy).toHaveBeenCalledWith({
-                error: 'View error message could not be set: Method does not exist.',
-                isValid: false,
-                nodeId: '0.0.7',
-                type: 'setValidationError'
-            },
-            '%ORIGIN%');
-            delete window['com.example'];
-            done();
-        }, 1000);
+        await sleep(10);
+        expect(messageSpy).toHaveBeenCalledWith({
+            error: 'View error message could not be set: Method does not exist.',
+            isValid: false,
+            nodeId: '0.0.7',
+            type: 'setValidationError'
+        },
+        '%ORIGIN%');
+        delete window['com.example'];
     });
 
     it('ignores irrelevant messages', () => {

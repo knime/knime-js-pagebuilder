@@ -32,7 +32,7 @@
     "webapps-common": "file:webapps-common"
   },
   "devDependencies": {
-    "@knime/eslint-config": "7.1.5",
+    "@knime/eslint-config": "7.1.6",
     "@types/node": "18.14.2",
     "@vitejs/plugin-vue": "4.0.0",
     "@vitest/coverage-c8": "0.29.3",
