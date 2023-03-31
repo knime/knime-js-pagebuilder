@@ -22,5 +22,5 @@ pipelines:
     '**':
       - step: *lint-test-build
   branches:
-    master:
+    '{master,releases/*}':
       - step: *lint-test-build
