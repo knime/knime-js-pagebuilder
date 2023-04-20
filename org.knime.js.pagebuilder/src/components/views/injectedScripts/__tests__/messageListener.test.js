@@ -3,7 +3,6 @@ import sleep from 'webapps-common/util/sleep';
 
 import messageListenerSrc from '@/components/views/injectedScripts/messageListener?raw';
 
-// TODO UIEXT-218: Change the timeout-tests to not depend on how many other tests are executed at the same time
 describe('message listener', () => {
     const nodeId = '0.0.7';
 
