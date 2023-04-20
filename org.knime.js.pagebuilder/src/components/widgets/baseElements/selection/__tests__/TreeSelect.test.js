@@ -1,5 +1,6 @@
 import { expect, describe, beforeEach, it } from 'vitest';
 import { mount, shallowMount } from '@vue/test-utils';
+import { markRaw } from 'vue';
 
 import TreeSelect from '@/components/widgets/baseElements/selection/TreeSelect.vue';
 import TreeSelectItem from '@/components/widgets/baseElements/selection/TreeSelectItem.vue';
@@ -17,8 +18,8 @@ describe('TreeSelect.vue', () => {
                     text: 'Item 1',
                     value: 'item1',
                     userData: 1,
-                    icon: customIcon,
-                    selectedIcon: customSelectedIcon,
+                    icon: markRaw(customIcon),
+                    selectedIcon: markRaw(customSelectedIcon),
                     children: [
                         {
                             text: 'Child 1',
