@@ -29,13 +29,13 @@ describe('service store', () => {
             expect(store.state.services[service.serviceId]).toStrictEqual(service);
         });
     
-        it('dispatches push notifications', async () => {
+        it('dispatches push events', async () => {
             const service = new KnimeService(iFrameExtensionConfig, vi.fn());
             await store.dispatch('registerService', { service });
-            let onRPCNotificationSpy = vi.spyOn(service, 'onServiceNotification');
+            let onEventSpy = vi.spyOn(service, 'onServiceEvent');
             let mockEvent = { payload: 'message' };
-            await store.dispatch('pushNotification', { event: mockEvent });
-            expect(onRPCNotificationSpy).toHaveBeenCalledWith(mockEvent);
+            await store.dispatch('pushEvent', { event: mockEvent });
+            expect(onEventSpy).toHaveBeenCalledWith(mockEvent);
         });
 
         it('deregisters a service', async () => {

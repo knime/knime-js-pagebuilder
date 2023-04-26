@@ -28,17 +28,17 @@ let store = createStore({
 app.use(store);
 app.mount('#app');
 
-const dispatchJsonrpcNotification = function (jsonrpcNotification) {
-    const parsedNotification = JSON.parse(jsonrpcNotification);
-    const { method, params } = parsedNotification;
-    if (method === 'NodeViewStateEvent') {
+const dispatchEvent = function (event) {
+    const parsedEvent = JSON.parse(event);
+    const { eventType, payload } = event;
+    if (eventType === 'NodeViewStateEvent') {
         // Updating the view config has multiple purposes (see ViewExecutable):
         // * displaying the actual view if the node is successfully executed
         // * removing the execution overlay in case the node configuration failed (due to invalid model settings)
         // * show possible error/warning messages in the view (e.g., when the node configuration failed)
-        store.dispatch('pagebuilder/updateNodeViewConfig', { nodeView: params[0].nodeView });
+        store.dispatch('pagebuilder/updateNodeViewConfig', { nodeView: payload.nodeView });
     } else {
-        store.dispatch('pagebuilder/service/pushNotification', { event: parsedNotification });
+        store.dispatch('pagebuilder/service/pushEvent', { parsedEvent });
     }
 };
 
@@ -90,14 +90,13 @@ if (typeof KnimePageLoader === 'undefined') {
             if (window.EquoCommService) {
                 // CEF browser communication (push events)
                 window.EquoCommService.on(
-                    `org.knime.js.cef.jsonrpcNotification#${window.cefBrowserInstanceId}`,
-                    jsonrpcNotification => dispatchJsonrpcNotification(jsonrpcNotification),
+                    `org.knime.js.cef.event#${window.cefBrowserInstanceId}`, dispatchEvent,
                     // eslint-disable-next-line no-console
                     e => console.error(e)
                 );
             } else if (typeof window.jsonrpcNotification === 'undefined') {
                 // SWT browser communication (push events)
-                window.jsonrpcNotification = dispatchJsonrpcNotification;
+                window.jsonrpcNotification = dispatchEvent;
             }
         };
 

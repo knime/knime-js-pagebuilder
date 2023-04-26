@@ -19,7 +19,7 @@ import { viewConfig } from '@@/test/assets/views/viewConfig';
 describe('UIExtension.vue', () => {
     const createPagebuilderStore = ({
         callServiceMock = vi.fn(),
-        pushNotificationMock = vi.fn(),
+        pushEventMock = vi.fn(),
         registerServiceMock,
         deregisterServiceMock
     }) => {
@@ -31,7 +31,7 @@ describe('UIExtension.vue', () => {
                     ...serviceStoreConfig,
                     actions: {
                         ...serviceStoreConfig.actions,
-                        pushNotification: pushNotificationMock
+                        pushEvent: pushEventMock
                     }
                 },
                 api: {
@@ -148,24 +148,24 @@ describe('UIExtension.vue', () => {
         expect(KnimeService).toBeCalledWith(
             props.extensionConfig,
             wrapper.vm.callService,
-            wrapper.vm.pushNotification
+            wrapper.vm.pushEvent
         );
     });
 
-    it('pushes service notifications via the pagebuilder store', async () => {
-        let pushNotificationMock = vi.fn();
+    it('pushes service event via the pagebuilder store', async () => {
+        let pushEventMock = vi.fn();
         let props = getMockComponentProps();
         let wrapper = shallowMount(UIExtension, {
             global: {
                 mocks: {
-                    $store: createPagebuilderStore({ pushNotificationMock })
+                    $store: createPagebuilderStore({ pushEventMock })
                 }
             },
             props
         });
-        let notification = { agent: '007' };
-        await wrapper.vm.pushNotification(notification);
-        expect(pushNotificationMock).toHaveBeenCalledWith(expect.anything(), notification);
+        let event = { agent: '007' };
+        await wrapper.vm.pushEvent(event);
+        expect(pushEventMock).toHaveBeenCalledWith(expect.anything(), event);
     });
 
     it('dispatches service calls to the api store', async () => {
@@ -194,21 +194,21 @@ describe('UIExtension.vue', () => {
     describe('handling messages', () => {
         const mockAlert = { message: 'Shaken not stirred.' };
 
-        it('displays alerts via push notification', async () => {
-            let pushNotificationMock = vi.fn();
+        it('displays alerts via push event', async () => {
+            let pushEventMock = vi.fn();
             let props = getMockComponentProps();
             let wrapper = shallowMount(UIExtension, {
                 global: {
                     mocks: {
-                        $store: createPagebuilderStore({ pushNotificationMock })
+                        $store: createPagebuilderStore({ pushEventMock })
                     }
                 },
                 props
             });
             let handleAlertSpy = vi.spyOn(wrapper.vm, 'handleAlert');
-            let notification = { type: 'alert', alert: mockAlert };
-            await wrapper.vm.pushNotification(notification);
-            expect(pushNotificationMock).not.toHaveBeenCalled();
+            let event = { type: 'alert', alert: mockAlert };
+            await wrapper.vm.pushEvent(event);
+            expect(pushEventMock).not.toHaveBeenCalled();
             expect(handleAlertSpy).toHaveBeenCalledWith(mockAlert);
         });
 

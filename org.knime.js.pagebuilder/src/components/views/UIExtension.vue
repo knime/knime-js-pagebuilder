@@ -100,7 +100,7 @@ export default {
             let knimeService = new ServiceConstructor(
                 toRaw(this.extensionConfig),
                 this.callService,
-                this.pushNotification
+                this.pushEvent
             );
             if (this.extensionConfig?.generatedImageActionId) {
                 const actionId = this.extensionConfig.generatedImageActionId;
@@ -119,11 +119,11 @@ export default {
                 requestParams
             });
         },
-        pushNotification(notification) {
-            if (notification?.type === 'alert') {
-                return this.handleAlert(notification.alert);
+        pushEvent(event) {
+            if (event?.type === 'alert') {
+                return this.handleAlert(event.alert);
             }
-            return this.$store.dispatch('pagebuilder/service/pushNotification', notification);
+            return this.$store.dispatch('pagebuilder/service/pushEvent', event);
         },
         handleAlert(alert) {
             if (this.isDialogLayout) {

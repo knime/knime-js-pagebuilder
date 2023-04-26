@@ -61,18 +61,18 @@ export const actions = {
     },
 
     /**
-     * Dispatches a notification to all globally registered services via their defined callbacks. Optionally,
-     * a service id for the calling service can be provided to exclude that service from receiving the notification.
+     * Dispatches an event to all globally registered services via their defined callbacks. Optionally,
+     * a service id for the calling service can be provided to exclude that service from receiving the event.
      *
      * @param {Object} context - Vuex context.
      * @param {Object} params - action config.
-     * @param {Notification} param.event - the event to broadcast.
+     * @param {Event} param.event - the event to broadcast.
      * @param {string} [param.callerId] - optional service id of the calling service which should be skipped.
-     * @returns {Promise<any>[]} a collection of Promise resolutions for registered notification callbacks.
+     * @returns {Promise<any>[]} a collection of Promise resolutions for registered event callbacks.
      */
-    pushNotification({ state }, { event, callerId }) {
+    pushEvent({ state }, { event, callerId }) {
         return Promise.all(Object.values(state.services).filter(service => service.serviceId !== callerId).map(
-            (service) => service.onServiceNotification(event)
+            (service) => service.onServiceEvent(event)
         ));
     }
 };
