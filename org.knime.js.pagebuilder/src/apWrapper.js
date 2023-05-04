@@ -30,7 +30,7 @@ app.mount('#app');
 
 const dispatchEvent = function (event) {
     const parsedEvent = JSON.parse(event);
-    const { eventType, payload } = event;
+    const { eventType, payload } = parsedEvent;
     if (eventType === 'NodeViewStateEvent') {
         // Updating the view config has multiple purposes (see ViewExecutable):
         // * displaying the actual view if the node is successfully executed
@@ -38,7 +38,7 @@ const dispatchEvent = function (event) {
         // * show possible error/warning messages in the view (e.g., when the node configuration failed)
         store.dispatch('pagebuilder/updateNodeViewConfig', { nodeView: payload.nodeView });
     } else {
-        store.dispatch('pagebuilder/service/pushEvent', { parsedEvent });
+        store.dispatch('pagebuilder/service/pushEvent', { event: parsedEvent });
     }
 };
 
