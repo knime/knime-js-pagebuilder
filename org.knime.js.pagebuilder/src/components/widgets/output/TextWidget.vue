@@ -109,6 +109,7 @@ export default {
 <template>
   <div :title="description">
     <Label
+      v-if="label"
       :text="label"
     />
     <!-- eslint-disable vue/no-v-text-v-html-on-component -->
@@ -125,7 +126,10 @@ export default {
       class="multiline"
       v-html="value"
     />
-    <ErrorMessage :error="errorMessage" />
+    <ErrorMessage
+      v-if="errorMessage"
+      :error="errorMessage"
+    />
   </div>
 </template>
 
