@@ -8,6 +8,8 @@ const layoutMixin = {
             // add aspect ratio sizing classes;
             if (this.resizeMethod.startsWith('aspectRatio')) {
                 classes.push(this.resizeMethod);
+            } else if (this.resizeMethod.startsWith('view')) {
+                classes.push('fill-container');
             }
             if (Array.isArray(this.viewConfig.additionalClasses)) {
                 classes = classes.concat(this.viewConfig.additionalClasses);
