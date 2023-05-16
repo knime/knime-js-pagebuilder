@@ -29,7 +29,7 @@ describe('layoutMixin.js', () => {
             expect(wrapper.vm.layoutClasses).toEqual(['aspectRatio16by9']);
         });
 
-        it('adds only classes starting with aspectRatio', () => {
+        it('adds fill-container class if resize method is auto', () => {
             const wrapper = shallowMount(MockComponent, {
                 propsData: {
                     viewConfig: {
@@ -38,7 +38,7 @@ describe('layoutMixin.js', () => {
                 },
                 mixins: [layoutMixin]
             });
-            expect(wrapper.vm.layoutClasses).toEqual([]);
+            expect(wrapper.vm.layoutClasses).toEqual(['fill-container']);
         });
 
         it('appends additional classes', () => {

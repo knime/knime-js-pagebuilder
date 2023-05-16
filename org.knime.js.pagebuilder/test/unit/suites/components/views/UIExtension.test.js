@@ -54,9 +54,9 @@ describe('UIExtension.vue', () => {
         return new Vuex.Store(storeConfig);
     };
 
-    const getMockIFrameProps = () => ({ extensionConfig: { ...iFrameExtensionConfig }, viewConfig: { ...viewConfig} });
+    const getMockIFrameProps = () => ({ extensionConfig: { ...iFrameExtensionConfig }, viewConfig: { ...viewConfig } });
 
-    const getMockComponentProps = () => ({extensionConfig: { ...componentExtensionConfig }, viewConfig: { ...viewConfig} });
+    const getMockComponentProps = () => ({ extensionConfig: { ...componentExtensionConfig }, viewConfig: { ...viewConfig } });
 
     let localVue, context;
 
@@ -318,7 +318,7 @@ describe('UIExtension.vue', () => {
 
     describe('styling', () => {
         it('respects resize classes', () => {
-            viewConfig.resizeMethod = 'aspectRatio1by1'
+            viewConfig.resizeMethod = 'aspectRatio1by1';
             let wrapper = shallowMount(UIExtension, {
                 ...context,
                 propsData: getMockIFrameProps()
@@ -348,6 +348,7 @@ describe('UIExtension.vue', () => {
             expect(wrapper.attributes('class')).toEqual('aspectRatio1by1 class1 class2');
             expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green;');
         });
+
         it('adds classes for min/max height & width', () => {
             let wrapper = shallowMount(UIExtension, {
                 ...context,
@@ -364,7 +365,7 @@ describe('UIExtension.vue', () => {
                     }
                 }
             });
-            expect(wrapper.attributes('class')).toEqual('class1 class2');
+            expect(wrapper.attributes('class')).toBe('fill-container class1 class2');
             expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green; max-height: 200px;' +
                 ' max-width: 200px; min-height: 100px; min-width: 100px;');
         });
