@@ -145,11 +145,11 @@ describe('NodeView.vue', () => {
                 nodeViews: { '1:0:1:0:0:9': mockNodeViewConfig }
             });
 
-            let wrapper = shallowMount(NodeView, { ...localContext, props: getUIExtProps() });
-            expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
-            expect(wrapper.findComponent(UIExtension).classes()).not.toContain('view-and-dialog');
-            expect(wrapper.findComponent(UIExtension).classes()).not.toContain('single-view');
-            expect(wrapper.findComponent(UIExtension).classes()).not.toContain('single-dialog');
+            let wrapper = shallowMount(NodeView, { ...localContext, propsData: getUIExtProps() });
+            expect(wrapper.find(UIExtension).exists()).toBeTruthy();
+            expect(wrapper.find(UIExtension).classes()).not.toContain('view-and-dialog');
+            expect(wrapper.find(UIExtension).classes()).not.toContain('single-view');
+            expect(wrapper.find(UIExtension).classes()).not.toContain('single-dialog');
         });
 
         it(`doesn't set single-view class on preview`, () => {
