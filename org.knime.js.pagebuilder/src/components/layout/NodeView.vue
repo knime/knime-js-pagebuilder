@@ -78,8 +78,8 @@ export default {
         isSingleView() {
             return this.isUIExtension && this.nodeId === 'SINGLE';
         },
-        isConfigured() {
-            return this.nodeInfo?.nodeState === 'configured';
+        isInComponentView() {
+            return this.nodeId !== 'SINGLE' && this.nodeId !== 'DIALOG' && this.nodeId !== 'VIEW';
         },
         isExecuted() {
             return this.nodeInfo?.nodeState === 'executed';
@@ -142,7 +142,7 @@ export default {
         :class="{
           'single-view': isSingleView,
           'single-dialog': isNodeDialog && isSingleView,
-          'view-and-dialog': !isNodeDialog && !isSingleView
+          'view-and-dialog': !isNodeDialog && !isSingleView && !isInComponentView
         }"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
