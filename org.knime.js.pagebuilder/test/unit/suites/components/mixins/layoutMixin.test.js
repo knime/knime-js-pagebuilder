@@ -4,7 +4,6 @@ import MockComponent from './mockComponent.vue';
 
 
 describe('layoutMixin.js', () => {
-
     describe('test layout classes', () => {
         it('does not apply classes if no resize method is set', () => {
             const wrapper = shallowMount(MockComponent, {
@@ -96,7 +95,7 @@ describe('layoutMixin.js', () => {
                         minHeight: 100,
                         minWidth: 100
                     },
-                    extensionConfig: {name: 'test'}
+                    extensionConfig: { name: 'test' }
                 },
                 mixins: [layoutMixin]
             });

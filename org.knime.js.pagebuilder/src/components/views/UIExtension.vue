@@ -21,6 +21,7 @@ export default {
         AlertLocal,
         WarningLocal
     },
+    mixins: [layoutMixin],
     // using provide/inject instead of a prop to pass the knimeService to the children because
     // 1) we don't want reactivity in this case
     // 2) any deeply nested child of the UIComponent can get access to knimeService if needed
@@ -30,7 +31,6 @@ export default {
         getKnimeService.bind(this);
         return { getKnimeService };
     },
-    mixins: [layoutMixin],
     props: {
         extensionConfig: {
             default: () => ({}),
@@ -46,7 +46,7 @@ export default {
         /**
          * View configuration, mainly layout and sizing options
          */
-         viewConfig: {
+        viewConfig: {
             default: () => ({}),
             type: Object
         }
@@ -186,6 +186,6 @@ export default {
 }
 
 .fill-container {
-    height: 100%;
+  height: 100%;
 }
 </style>

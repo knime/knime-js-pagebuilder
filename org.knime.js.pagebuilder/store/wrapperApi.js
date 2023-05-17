@@ -1,4 +1,3 @@
-/* global jsonrpc */
 // eslint-disable-next-line no-unused-vars
 import { KnimeUtils, KnimeTypes } from '@knime/ui-extension-service';
 const { createJsonRpcRequest } = KnimeUtils;
@@ -177,7 +176,7 @@ export const actions = {
                     resetNodes.filter(id => !reExecutedNodes.includes(id)),
                     { root: true }
                 );
-                return { shouldPoll: true }
+                return { shouldPoll: true };
             } else {
                 throw new Error('No updates were provided for the page');
             }

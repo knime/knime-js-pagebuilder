@@ -355,7 +355,7 @@ describe('wrapper API store', () => {
             const sendMock = jest.fn().mockReturnValue(expected);
             window.EquoCommService = {
                 send: sendMock
-            }
+            };
             window.cefBrowserInstanceId = 1234;
             const res2 = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
             expect(sendMock).toHaveBeenCalledWith('org.knime.js.cef.jsonrpc#1234', JSON.stringify(rpcConfig));
@@ -384,9 +384,9 @@ describe('wrapper API store', () => {
             window.jsonrpc = undefined;
             window.EquoCommService = {
                 send: rpcMock
-            }
+            };
             window.cefBrowserInstanceId = 1234;
-            const res2 = await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
+            await store.dispatch('singleRPC', { nodeId: 'foo', rpcConfig });
             expect(rpcMock).toHaveBeenCalledWith('org.knime.js.cef.jsonrpc#1234', JSON.stringify(rpcConfig));
             expect(res).toStrictEqual({ error: expect.any(Error), result: EMPTY });
             expect(res.error.toString()).toContain(expectedError);

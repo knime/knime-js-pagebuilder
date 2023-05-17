@@ -16,7 +16,7 @@ module.exports = {
         '\\.(jpg|webp)': '<rootDir>/test/unit/jest-file-loader'
     },
     transformIgnorePatterns: [
-        "node_modules/(?!@knime/ui-extension-service)" // not needed anymore when updating Node/jest
+        'node_modules/(?!@knime/ui-extension-service)' // not needed anymore when updating Node/jest
     ],
     moduleNameMapper: {
         '\\.(jpg|png)\\?(jpg|webp)': '<rootDir>/test/unit/assets/stub.$2',

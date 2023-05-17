@@ -333,7 +333,6 @@ describe('UIExtension.vue', () => {
         });
 
         it('renders with classes and styles', () => {
-            let mockProps = getMockIFrameProps();
             let wrapper = shallowMount(UIExtension, {
                 ...context,
                 propsData: {

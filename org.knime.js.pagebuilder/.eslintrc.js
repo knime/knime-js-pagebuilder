@@ -7,7 +7,8 @@ module.exports = {
         'no-global-assign': ['error', {
             // `require` is needed for the esm module
             exceptions: ['require']
-        }]
+        }],
+        'import/extensions': 'off'
     },
     overrides: [
         {

@@ -1,27 +1,27 @@
 <template>
-    <div class="test"></div>
-  </template>
+  <div class="test" />
+</template>
   
-  <script>
-  /**
+<script>
+/**
    * Return a component to be used as dummy in order
    * to mock things like mixins.
    */
-  export default {
-    name: "MockComponent",
+export default {
+    name: 'MockComponent',
     props: {
-      viewConfig: {
+        viewConfig: {
             default: () => ({}),
             type: Object
-      },
-      isWidget: {
-          default: false,
-          type: Boolean
-      },
-      extensionConfig: {
-          default: () => null,
-          type: Object
-      }
+        },
+        isWidget: {
+            default: false,
+            type: Boolean
+        },
+        extensionConfig: {
+            default: () => null,
+            type: Object
+        }
     }
-  };
-  </script>
+};
+</script>
