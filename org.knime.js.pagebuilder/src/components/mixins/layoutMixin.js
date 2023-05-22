@@ -5,6 +5,7 @@ const layoutMixin = {
         },
         layoutClasses() {
             let classes = [];
+            classes.push('reporting-replaceable');
             // add aspect ratio sizing classes;
             if (this.resizeMethod.startsWith('aspectRatio')) {
                 classes.push(this.resizeMethod);

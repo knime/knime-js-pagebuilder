@@ -44,7 +44,7 @@ export default {
         }
     },
     computed: {
-        ...mapState('pagebuilder', ['page', 'isDialogLayout']),
+        ...mapState('pagebuilder', ['page', 'isDialogLayout', 'isReporting']),
         ...mapState('pagebuilder/dialog', ['dirtyModelSettings']),
         ...mapGetters('pagebuilder', ['nodesReExecuting', 'reExecutionUpdates']),
         pageIdPrefix() {

@@ -47,7 +47,7 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" id="knime-layout">
     <Row
       v-for="(row, index) in layout.rows"
       :key="index"

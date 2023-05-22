@@ -58,7 +58,7 @@ export default {
         };
     },
     computed: {
-        ...mapState('pagebuilder', ['isDialogLayout']),
+        ...mapState('pagebuilder', ['page', 'isDialogLayout', 'isReporting']),
         isUIExtComponent() {
             return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
         },
@@ -72,6 +72,13 @@ export default {
         },
         displayWarning() {
             return this.alert?.type === 'warn';
+        },
+        pageIdPrefix() {
+            return this.page?.wizardPageContent?.webNodePageConfiguration
+                ?.projectRelativePageIDSuffix;
+        },
+        nodeId() {
+            return this.pageIdPrefix ? `${this.pageIdPrefix}:${this.viewConfig.nodeID}` : this.viewConfig.nodeID;
         }
     },
     watch: {
@@ -102,11 +109,20 @@ export default {
                 this.callService,
                 this.pushEvent
             );
-            if (this.extensionConfig?.generatedImageActionId) {
-                const actionId = this.extensionConfig.generatedImageActionId;
+            if (!this.isUIExtComponent && this.isReporting) {
+                //const actionId = this.extensionConfig.generatedImageActionId;
+                this.extensionConfig.generatedImageActionId = 'dummy';
+                this.$store.commit('pagebuilder/addImageGenerationWaiting', {
+                    nodeId: this.nodeId
+                });
                 knimeService.registerImageGeneratedCallback(
-                    generatedImage => window.EquoCommService.send(actionId, generatedImage)
+                    generatedImage => this.$store.dispatch('pagebuilder/setReportingContent', { 
+                        nodeId: this.nodeId, 
+                        reportingContent: `<img src="${generatedImage}" />`
+                    })
+                    //generatedImage => window.EquoCommService.send(actionId, generatedImage)
                 );
+
             }
             this.knimeService = markRaw(knimeService);
             this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
