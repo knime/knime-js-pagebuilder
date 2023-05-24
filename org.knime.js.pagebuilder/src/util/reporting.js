@@ -8,9 +8,13 @@ const generateReportLayout = (reportingContent) => {
         }
     });
     let report = '';
-    document.querySelectorAll('head style').forEach(style => {
-        report += style.outerHTML;
-    });
+    for (const sheet of document.styleSheets) {
+        report += '<style>';
+        for (const rule of sheet.cssRules) {
+            report += rule.cssText;
+        }
+        report += '</style>\n';
+    }
     report += layout.outerHTML;
     return report;
 }
