@@ -109,20 +109,21 @@ export default {
                 this.callService,
                 this.pushEvent
             );
-            if (!this.isUIExtComponent && this.isReporting) {
-                //const actionId = this.extensionConfig.generatedImageActionId;
+            if (this.isReporting) {
+                // const actionId = this.extensionConfig.generatedImageActionId;
                 this.extensionConfig.generatedImageActionId = 'dummy';
                 this.$store.commit('pagebuilder/addImageGenerationWaiting', {
                     nodeId: this.nodeId
                 });
-                knimeService.registerImageGeneratedCallback(
-                    generatedImage => this.$store.dispatch('pagebuilder/setReportingContent', { 
-                        nodeId: this.nodeId, 
-                        reportingContent: `<img src="${generatedImage}" />`
-                    })
-                    //generatedImage => window.EquoCommService.send(actionId, generatedImage)
-                );
-
+                if (!this.isUIExtComponent) {
+                    knimeService.registerImageGeneratedCallback(
+                        generatedImage => this.$store.dispatch('pagebuilder/setReportingContent', {
+                            nodeId: this.nodeId,
+                            reportingContent: `<img src="${generatedImage}" />`
+                        })
+                    // generatedImage => window.EquoCommService.send(actionId, generatedImage)
+                    );
+                }
             }
             this.knimeService = markRaw(knimeService);
             this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
