@@ -10,7 +10,7 @@ definitions:
           - git submodule update --init --recursive
           - cd org.knime.js.pagebuilder
           - npm ci
-          - npm run ci:lint
+          - npm run ci:lint-format
           - npm run coverage
           - npm run build
           - npm run audit

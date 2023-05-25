@@ -62,6 +62,14 @@ This does not create an app on its own, only the library for usage in [WebPortal
 and re-builds the library on source file change. The web portal page then needs to be manually refreshed.
 -->
 
+### Git hooks
+
+When committing your changes, a couple of commit hooks will run via [husky].
+
+- `pre-commit` hook to lint and format the changes in your stage zone (via [lintstaged])
+- `prepare-commit-msg` hook to format your commit message to conform with the required format by KNIME. In order for this to work you must set environment variables with your Atlassian email and API token. Refer to [scripts/README.md](scripts/README.md) for more information.
+
+
 ### Testing
 
 #### Running unit tests
@@ -254,3 +262,5 @@ let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
 [jest]: https://jestjs.io/en
 [LCOV]: https://github.com/linux-test-project/lcov
 [Clover]: http://openclover.org/
+[husky]: https://www.npmjs.com/package/husky
+[lintstaged]: https://github.com/okonet/lint-staged

@@ -1,0 +1,7 @@
+package-lock.json
+webapps-common
+coverage
+dist
+dist-vue2
+test-results
+**/opensourcecredits/used-packages.json
