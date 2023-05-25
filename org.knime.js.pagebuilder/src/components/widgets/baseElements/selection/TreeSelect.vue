@@ -1,5 +1,5 @@
 <script>
-import TreeSelectItem from './TreeSelectItem';
+import TreeSelectItem from './TreeSelectItem.vue';
 
 let ITEM_ID = 0;
 
@@ -37,6 +37,7 @@ export default {
             default: true
         }
     },
+    emits: ['item-click', 'item-toggle'],
     data() {
         return {
             lastClickedNode: null,
@@ -74,8 +75,8 @@ export default {
         },
         handleRecursionNodeChildren(node, func) {
             if (func(node) !== false) {
-                if (node.$children?.length > 0) {
-                    for (let childNode of node.$children) {
+                if (node.$refs.children?.length > 0) {
+                    for (let childNode of node.$refs.children) {
                         if (!childNode.disabled) {
                             this.handleRecursionNodeChildren(childNode, func);
                         }
@@ -92,7 +93,7 @@ export default {
             if (this.multiple) {
                 if (e.shiftKey) {
                     if (oNode.$parent === this.lastClickedNode?.$parent) {
-                        let currentLevel = oNode.$parent.$children;
+                        let currentLevel = oNode.$parent.$refs.children;
                         let firstIndex = currentLevel.findIndex(v => v === this.lastClickedNode);
                         let secondIndex = currentLevel.findIndex(v => v === oNode);
                         this.runInSection(currentLevel, firstIndex, secondIndex, node => {
@@ -133,7 +134,7 @@ export default {
             }
         },
         nextNode(startNode, delta) {
-            let siblings = this.filterForTreeSelectItems(startNode.$parent.$children);
+            let siblings = this.filterForTreeSelectItems(startNode.$parent.$refs.children);
             let currentIndex = siblings.findIndex(v => v === startNode);
             let nextIndex = currentIndex + delta;
             // next item is either the parent (if index underflow)
@@ -147,19 +148,19 @@ export default {
             });
         },
         /**
-         * Remove all non TreeSelectItems from $children array; not recursive
+         * Remove all non TreeSelectItems from children array; not recursive
          *
-         * @param {Array} $children
+         * @param {Array} children
          * @returns {Array}
          */
-        filterForTreeSelectItems($children) {
-            return $children.filter(x => x.$options.name === 'TreeSelectItem');
+        filterForTreeSelectItems(children) {
+            return children?.filter(x => x.$options.name === 'TreeSelectItem') || [];
         },
         moveKeyBoardFocus(delta) {
             let up = delta < 0;
             let down = !up;
             if (this.currentKeyboardNavNode === null) {
-                const directTreeItems = this.filterForTreeSelectItems(this.$children);
+                const directTreeItems = this.filterForTreeSelectItems(this.$refs.children);
                 if (directTreeItems.length === 0) {
                     return; // end here - nothing to navigate
                 }
@@ -171,12 +172,12 @@ export default {
             if (this.currentKeyboardNavNode.model.children.length > 0 &&
                 this.currentKeyboardNavNode.model.opened && down) {
                 // use first item of children (we go down)
-                nextKeyboardNavNode = this.filterForTreeSelectItems(this.currentKeyboardNavNode.$children)[0];
+                nextKeyboardNavNode = this.filterForTreeSelectItems(this.currentKeyboardNavNode.$refs.children)[0];
             } else {
                 // next node (on current level)
                 nextKeyboardNavNode = this.nextNode(this.currentKeyboardNavNode, delta);
             }
-            // handle out of bounds of $children
+            // handle out of bounds of $refs.children
             let childArrayOutOfBounds = nextKeyboardNavNode === null;
             if (childArrayOutOfBounds) {
                 if (!this.currentKeyboardNavNode.$parent.model) {
@@ -196,7 +197,7 @@ export default {
             // we go up to an open node (so go the last child of that node) if we did not change level
             if (nextKeyboardNavNode.model.opened && up && !childArrayOutOfBounds) {
                 // use last item of children (we go up)
-                const nextTreeItems = this.filterForTreeSelectItems(nextKeyboardNavNode.$children);
+                const nextTreeItems = this.filterForTreeSelectItems(nextKeyboardNavNode.$refs.children);
                 nextKeyboardNavNode = nextTreeItems[nextTreeItems.length - 1];
             }
 
@@ -292,6 +293,7 @@ export default {
         <TreeSelectItem
           v-for="(child, index) in data"
           :key="index"
+          ref="children"
           :data="child"
           :allow-transition="allowTransition"
           :height="itemHeight"
@@ -316,7 +318,7 @@ export default {
   border: none;
 
   &.invalid::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 3px;
     left: 0;
@@ -354,12 +356,12 @@ export default {
   display: inline-block;
   min-width: 100%;
 
-  & >>> .tree-anchor,
-  & >>> .tree-icon {
+  & :deep(.tree-anchor),
+  & :deep(.tree-icon) {
     position: relative;
   }
 
-  & >>> .tree-wholerow {
+  & :deep(.tree-wholerow) {
     width: 100%;
     position: absolute;
     left: 0;

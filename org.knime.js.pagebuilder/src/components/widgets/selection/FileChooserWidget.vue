@@ -1,15 +1,16 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import TreeSelect from '../baseElements/selection/TreeSelect';
+import { markRaw, shallowRef } from 'vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import TreeSelect from '../baseElements/selection/TreeSelect.vue';
 
-import fileIcon from '~/webapps-common/ui/assets/img/icons/file-text.svg?inline';
-import cogIcon from '~/webapps-common/ui/assets/img/icons/cog.svg?inline';
-import workflowIcon from '~/webapps-common/ui/assets/img/icons/workflow.svg?inline';
-import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
+import fileIcon from 'webapps-common/ui/assets/img/icons/file-text.svg';
+import cogIcon from 'webapps-common/ui/assets/img/icons/cog.svg';
+import workflowIcon from 'webapps-common/ui/assets/img/icons/workflow.svg';
+import folderIcon from 'webapps-common/ui/assets/img/icons/folder.svg';
 
-import { trimSchema as utilTrimSchema, getRootPath as utilGetRootPath } from '~/src/util/fileUtils';
-import { default as utilCreateTreeItem } from '~/src/util/createTreeItem';
+import { trimSchema as utilTrimSchema, getRootPath as utilGetRootPath } from '../../../util/fileUtils';
+import { default as utilCreateTreeItem } from '../../../util/createTreeItem';
 
 const DATA_TYPE = 'items';
 const SCHEMA = 'knime';
@@ -54,6 +55,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     data() {
         return {
             repositoryAPI: null,
@@ -101,7 +103,7 @@ export default {
 
             return rootPath || rootDir;
         },
-        // Checks if the current execution environment is the new WebPortal.
+        // Checks if the current execution environment is not the AP .
         runningInWebPortal() {
             return !window.KnimePageLoader || window.KnimePageLoader?.isRunningInWebportal();
         },
@@ -125,18 +127,21 @@ export default {
     },
     methods: {
         async requestRepository(rootPath) {
-            let { response, errorResponse } = await this.repositoryAPI({
-                path: rootPath,
-                filter: null
-            });
-            const defaultPaths = this.defaultPaths;
-            this.dataReady = true;
-            if (errorResponse) {
+            try {
+                let { response, errorResponse } = await this.repositoryAPI({
+                    path: rootPath
+                });
+                const defaultPaths = this.defaultPaths;
+                this.dataReady = true;
+                if (errorResponse) {
+                    return null;
+                }
+                if (response) {
+                    this.setRepository(response, defaultPaths);
+                    this.onChange();
+                }
+            } catch (err) {
                 return null;
-            }
-            if (response) {
-                this.setRepository(response, defaultPaths);
-                this.onChange();
             }
             return null;
         },
@@ -175,20 +180,20 @@ export default {
         },
         transformTreeItem(item) {
             const state = item.state || {};
-            return {
+            return markRaw({
                 text: item.text,
                 value: item.text,
                 opened: Boolean(state.opened),
                 selected: Boolean(state.selected),
                 disabled: Boolean(state.disabled),
-                icon: item.icon || this.iconForItem(item),
-                selectedIcon: item.children ? '' : cogIcon,
+                icon: shallowRef(item.icon || this.iconForItem(item)),
+                selectedIcon: item.children ? '' : shallowRef(cogIcon),
                 userData: {
                     path: item.id,
                     type: item.type
                 },
                 children: item.children?.map(child => this.transformTreeItem(child)) || []
-            };
+            });
         },
         /**
          * Generate a items value from the treeData.
@@ -226,11 +231,11 @@ export default {
             };
             this.$emit('updateWidget', changeEventObj);
         },
-        checkMountId() {
+        async checkMountId() {
             // determine path prefix from mountId
             let mountId = this.viewRep.customMountId;
             if (this.viewRep.useDefaultMountId) {
-                mountId = this.$store.state.settings.defaultMountId;
+                mountId = await this.$store.getters['api/defaultMountId'];
             }
             if (mountId) {
                 this.prefix = SCHEMA_PART + mountId;

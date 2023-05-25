@@ -1,5 +1,5 @@
 <script>
-import SliderWidget from '@/components/widgets/input/SliderWidget';
+import SliderWidget from '../input/SliderWidget.vue';
 
 const DATA_TYPE = 'double';
 const UPDATE_KEY_MIN = 'viewValue.filter.columns.0.minimum';
@@ -37,8 +37,15 @@ export default {
         errorMessage: {
             type: String,
             default: null
+        },
+        valuePair: {
+            default: () => ({
+                [DATA_TYPE]: 0
+            }),
+            type: [Object, Array]
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewValue() {
             return this.nodeConfig.viewValue;
@@ -133,6 +140,6 @@ export default {
     v-bind="$props"
     :value-pair="value"
     :invert-process="invertProcess"
-    @updateWidget="onChange"
+    @update-widget="onChange"
   />
 </template>

@@ -487,25 +487,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:10": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -580,25 +565,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": " .knime-qf-title { color: blue !important; }",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:21": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -668,25 +638,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:11": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -765,25 +720,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:22": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -861,25 +801,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:23": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -966,25 +891,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:13": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -1068,25 +978,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:14": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -1165,25 +1060,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:15": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -1269,25 +1149,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:17": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -1365,25 +1230,10 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:19": {
         "@class": "org.knime.js.core.JSONWebNode",
@@ -1452,48 +1302,18 @@
         },
         "initMethodName": "init",
         "getViewValueMethodName": "value",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
+        "javascriptLibraries": [],
         "viewValue": null,
         "customCSS": "",
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ]
+        "stylesheets": []
       },
       "5:0:24": {
         "@class": "org.knime.js.core.JSONWebNode",
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",

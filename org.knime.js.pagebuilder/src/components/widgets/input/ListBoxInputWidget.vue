@@ -1,7 +1,7 @@
 <script>
-import TextArea from '~/webapps-common/ui/components/forms/TextArea';
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
+import TextArea from 'webapps-common/ui/components/forms/TextArea.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 
 const DATA_TYPE = 'string';
 
@@ -46,6 +46,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -138,7 +139,7 @@ export default {
 </script>
 
 <template>
-  <div class="listBoxInput">
+  <div class="list-box-input">
     <Label
       :text="label"
     >
@@ -146,12 +147,12 @@ export default {
         <TextArea
           :id="labelForId"
           ref="form"
-          :value="value"
+          :model-value="value"
           :cols="20"
           :rows="numberVisOptions"
           :is-valid="isValid"
           :title="description"
-          @input="onChange"
+          @update:model-value="onChange"
         />
         <ErrorMessage :error="errorMessage" />
       </template>
@@ -160,13 +161,13 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.listBoxInput {
-  & >>> textarea {
+.list-box-input {
+  & :deep(textarea) {
     width: 100%;
     max-width: 100%;
   }
 
-  & >>> label {
+  & :deep(label) {
     cursor: pointer;
   }
 }

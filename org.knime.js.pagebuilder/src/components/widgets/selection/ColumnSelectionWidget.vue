@@ -1,8 +1,8 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
+import SingleSelect from '../baseElements/selection/SingleSelect.vue';
 
 const DATA_TYPE_KEY = 'column';
 
@@ -47,6 +47,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -102,7 +103,7 @@ export default {
       <SingleSelect
         :id="labelForId"
         ref="form"
-        :value="value"
+        :model-value="value"
         :type="viewRep.type"
         :number-vis-options="viewRep.numberVisOptions"
         :limit-number-vis-options="viewRep.limitNumberVisOptions"
@@ -110,7 +111,7 @@ export default {
         :title="description"
         :possible-value-list="viewRep.possibleColumns"
         :label="label"
-        @input="onChange"
+        @update:model-value="onChange"
       />
       <ErrorMessage :error="errorMessage" />
     </template>

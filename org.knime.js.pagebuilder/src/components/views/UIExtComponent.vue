@@ -1,7 +1,5 @@
 <script>
-import { loadComponentLibrary } from '~/src/util/loadComponentLibrary';
-
-const DEFAULT_DIALOG_NAMESPACE_ID = 'DefaultNodeDialog';
+import { loadAsyncComponent } from 'webapps-common/ui/util/loadComponentLibrary';
 
 export default {
     components: {
@@ -14,11 +12,6 @@ export default {
             type: String,
             required: true
         }
-    },
-    data() {
-        return {
-            componentLoaded: false
-        };
     },
     computed: {
         knimeService() {
@@ -38,27 +31,18 @@ export default {
          * @returns {string} - unique id for the resource registered to this node.
          */
         componentId() {
-            if (this.extensionConfig?.extensionType === 'dialog') {
-                return DEFAULT_DIALOG_NAMESPACE_ID;
-            }
             return this.resourceInfo?.id;
         }
     },
-    async created() {
-        // check if component library needs to be loaded or if it was already loaded before
-        if (!window[this.componentId]) {
-            await loadComponentLibrary(window, this.resourceLocation, this.componentId);
-        }
-        // register the component locally
-        this.$options.components[this.componentId] = window[this.componentId];
-        this.componentLoaded = true;
+    created() {
+        this.$options.components[this.componentId] = loadAsyncComponent({
+            resourceLocation: this.resourceLocation,
+            componentName: this.componentId
+        });
     }
 };
 </script>
 
 <template>
-  <component
-    :is="componentId"
-    v-if="componentLoaded"
-  />
+  <component :is="componentId" />
 </template>

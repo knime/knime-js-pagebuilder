@@ -1,7 +1,8 @@
 <script>
 import { mapState } from 'vuex';
+import { defineAsyncComponent } from 'vue';
 import wrapViewContent from '../../util/wrapViewContent';
-import NodeView from './NodeView';
+import NodeView from './NodeView.vue';
 
 const maxGridWidth = 12;
 
@@ -42,8 +43,8 @@ const maxGridWidth = 12;
 export default {
     components: {
         NodeView,
-        // https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components
-        Row: () => import('./Row')
+        // TODO check if this is the best way to handle circular components in Vue3
+        Row: defineAsyncComponent(() => import('./Row.vue'))
     },
     props: {
         /**
@@ -119,20 +120,20 @@ export default {
       />
       <Row
         v-else-if="item.type === 'row' || item.type === 'JSONLayoutRow'"
-        :key="index"
+        :key="index + '-' + item.type + '-1'"
         :row-config="item"
       />
       <template v-else-if="(item.type === 'nestedLayout' || item.type === 'JSONNestedLayout') && item.layout">
         <Row
           v-for="(row, rowIndex) in item.layout.rows"
-          :key="index + '-' + rowIndex"
+          :key="index + '-' + rowIndex + '-2'"
           :row-config="row"
         />
       </template>
       <!-- eslint-disable vue/no-v-html  -->
       <div
         v-else-if="item.type === 'html' || item.type === 'JSONLayoutHTMLContent'"
-        :key="index"
+        :key="index + '-' + item.type + '-3'"
         v-html="item.value"
       />
     </template>

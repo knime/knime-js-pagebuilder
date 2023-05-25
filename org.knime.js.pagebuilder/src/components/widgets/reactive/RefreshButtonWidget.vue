@@ -1,9 +1,9 @@
 <script>
 import { mapState } from 'vuex';
 
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import Button from '~/webapps-common/ui/components/Button';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
 
 /**
  * Refresh button widget.
@@ -36,13 +36,14 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         ...mapState('pagebuilder', ['nodesReExecuting']),
         viewRep() {
             return this.nodeConfig.viewRepresentation;
         },
         isExecuting() {
-            return this.nodesReExecuting?.length || null;
+            return Boolean(this.nodesReExecuting?.length);
         }
     },
     methods: {

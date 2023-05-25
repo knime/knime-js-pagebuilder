@@ -1,8 +1,8 @@
 <script>
-import Fieldset from '~/webapps-common/ui/components/forms/Fieldset';
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import InputField from '~/webapps-common/ui/components/forms/InputField';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import InputField from 'webapps-common/ui/components/forms/InputField.vue';
 
 const SERVER_ERROR_MESSAGE = 'KNIME Server login credentials could not be fetched!';
 const DEFAULT_ERROR_MESSAGE = 'Please correct input for ';
@@ -42,6 +42,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     data() {
         return {
             serverCredentialsFetchError: false,
@@ -142,21 +143,21 @@ export default {
   >
     <Label
       v-if="promptUsername"
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       class="label"
       text="User"
     >
       <InputField
         :id="labelForId"
         ref="usernameForm"
-        :value="value.username"
+        :model-value="value.username"
         :is-valid="isValid"
         :title="description"
-        @input="onUsernameChange"
+        @update:model-value="onUsernameChange"
       />
     </Label>
     <Label
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       class="label"
       text="Password"
     >
@@ -164,10 +165,10 @@ export default {
         :id="labelForId"
         ref="passwordForm"
         type="password"
-        :value="value.magicDefaultPassword"
+        :model-value="value.magicDefaultPassword"
         :is-valid="isValid"
         :title="description"
-        @input="onPasswordChange"
+        @update:model-value="onPasswordChange"
       />
     </Label>
     <ErrorMessage
@@ -178,7 +179,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.hide >>> *:not(:last-child) {
+.hide :deep(*:not(:last-child)) {
   display: none;
 }
 </style>

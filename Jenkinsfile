@@ -1,6 +1,6 @@
 #!groovy
 
-def BN = (BRANCH_NAME == 'master' || BRANCH_NAME.startsWith('releases/')) ? BRANCH_NAME : 'releases/2022-12'
+def BN = (BRANCH_NAME == 'master' || BRANCH_NAME.startsWith('releases/')) ? BRANCH_NAME : 'releases/2023-07'
 
 library "knime-pipeline@$BN"
 
@@ -11,12 +11,14 @@ properties([
 ])
 
 try {
-    node('maven && java11') {
+    node('maven && java17') {
         knimetools.defaultTychoBuild(updateSiteProject: 'org.knime.update.js.pagebuilder', disableOWASP: true)
         
-        junit '**/coverage/junit.xml'
-        knimetools.processAuditResults()
+        // disabled; tests will move to Bitbucket Pipelines
+        //junit '**/coverage/junit.xml'
+        //knimetools.processAuditResults()
         
+        /*
         stage('Sonarqube analysis') {
             withCredentials([usernamePassword(credentialsId: 'ARTIFACTORY_CREDENTIALS', passwordVariable: 'ARTIFACTORY_PASSWORD', usernameVariable: 'ARTIFACTORY_LOGIN')]) {
                 withSonarQubeEnv('Sonarcloud') {
@@ -29,6 +31,7 @@ try {
                 }
             }
         }
+        */
     }
 } catch (ex) {
     currentBuild.result = 'FAILURE'

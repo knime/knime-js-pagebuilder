@@ -1,11 +1,11 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import DateTimeInput from '~/webapps-common/ui/components/forms/DateTimeInput';
-import Dropdown from '~/webapps-common/ui/components/forms/Dropdown';
-import Button from '~/webapps-common/ui/components/Button';
-import updateTime from '~/webapps-common/util/updateTime';
-import getLocalTimeZone from '~/webapps-common/util/localTimezone';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import DateTimeInput from 'webapps-common/ui/components/forms/DateTimeInput.vue';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
+import updateTime from 'webapps-common/util/updateTime';
+import getLocalTimeZone from 'webapps-common/util/localTimezone';
 
 import { format, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
@@ -50,6 +50,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     data() {
         return {
             // tz database timezones (e.g. Europe/Berlin)
@@ -210,14 +211,14 @@ export default {
 
 <template>
   <Label
-    v-slot="{ labelForId }"
+    #default="{ labelForId }"
     class="date-time-label"
     :text="label"
   >
     <DateTimeInput
       :id="labelForId"
       ref="dateInput"
-      :value="dateObject"
+      :model-value="dateObject"
       :required="viewRep.required"
       :min="minDate"
       :max="maxDate"
@@ -227,17 +228,17 @@ export default {
       :show-milliseconds="showMilliseconds"
       :is-valid="isValid"
       :timezone="showZone ? timezone : localTimeZone"
-      @input="onDateChange"
+      @update:model-value="onDateChange"
     />
     <div class="zone-wrapper">
       <Dropdown
         v-if="showZone"
         ref="timezone"
         aria-label="Timezone"
-        :value="timezone"
+        :model-value="timezone"
         class="timezone"
         :possible-values="possibleTimeZones"
-        @input="onTimezoneChange"
+        @update:model-value="onTimezoneChange"
       />
       <Button
         v-if="showNowButton"
@@ -258,7 +259,7 @@ export default {
 .date-time-label {
   /* remove the 10px label margin - they are provided by DateTimeInput which is required to have working
   wrapping with margin */
-  & >>> label {
+  & :deep(label) {
     margin-bottom: 0;
   }
 

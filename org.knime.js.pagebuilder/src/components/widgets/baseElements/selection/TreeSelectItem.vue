@@ -1,10 +1,10 @@
 <script>
-import itemIcon from '~/webapps-common/ui/assets/img/icons/file-question.svg?inline';
-import folderIcon from '~/webapps-common/ui/assets/img/icons/folder.svg?inline';
-import arrowNextIcon from '~/webapps-common/ui/assets/img/icons/arrow-next.svg?inline';
-import fileIcon from '~/webapps-common/ui/assets/img/icons/file-text.svg?inline';
+import itemIcon from 'webapps-common/ui/assets/img/icons/file-question.svg';
+import folderIcon from 'webapps-common/ui/assets/img/icons/folder.svg';
+import arrowNextIcon from 'webapps-common/ui/assets/img/icons/arrow-next.svg';
+import fileIcon from 'webapps-common/ui/assets/img/icons/file-text.svg';
 
-import { icons } from '~/webapps-common/ui/util/fileTypeIcons';
+import { icons } from 'webapps-common/ui/util/fileTypeIcons';
 
 const TREE_OPEN_TRANSITION_TIME = 300; // ms
 
@@ -159,8 +159,8 @@ export default {
                 let length = 0;
                 let childHeight = 0;
                 if (this.model.opened) {
-                    length = this.$children.length;
-                    for (let children of this.$children) {
+                    length = this.$refs.children.length;
+                    for (let children of this.$refs.children) {
                         childHeight += children.maxHeight;
                     }
                 }
@@ -233,6 +233,7 @@ export default {
       <TreeSelectItem
         v-for="(child, index) in model.children"
         :key="index"
+        ref="children"
         :data="child"
         :allow-transition="allowTransition"
         :height="height"

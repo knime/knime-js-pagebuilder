@@ -17,7 +17,7 @@ export default {
         this.knimeService.updateEventListener();
         this.knimeService.setIFrameWindow(this.$refs.iframe.contentWindow);
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.knimeService.destroy();
     }
 };
@@ -36,5 +36,6 @@ iframe {
   width: 100%;
   height: 100%;
   border: none;
+  display: block;
 }
 </style>

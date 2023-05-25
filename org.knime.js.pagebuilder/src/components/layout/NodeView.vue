@@ -1,11 +1,11 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 
-import WebNode from '~/src/components/views/WebNode';
-import UIExtension from '~/src/components/views/UIExtension';
-import ViewExecutable from '~/src/components/views/ViewExecutable';
-import NotDisplayable from '~/src/components/views/NotDisplayable';
-import ExecutingOverlay from '~/src/components/ui/ExecutingOverlay';
+import WebNode from '../views/WebNode.vue';
+import UIExtension from '../views/UIExtension.vue';
+import ViewExecutable from '../views/ViewExecutable.vue';
+import NotDisplayable from '../views/NotDisplayable.vue';
+import ExecutingOverlay from '../ui/ExecutingOverlay.vue';
 
 /**
  * A node-level member of the layout tree, this component is responsible for shared functionality
@@ -78,11 +78,14 @@ export default {
         isSingleView() {
             return this.isUIExtension && this.nodeId === 'SINGLE';
         },
-        isConfigured() {
-            return this.nodeInfo?.nodeState === 'configured';
+        isInComponentView() {
+            return this.nodeId !== 'SINGLE' && this.nodeId !== 'DIALOG' && this.nodeId !== 'VIEW';
         },
         isExecuted() {
             return this.nodeInfo?.nodeState === 'executed';
+        },
+        isImageGeneration() {
+            return this.isUIExtension && this.uiExtensionConfig?.generatedImageActionId;
         },
         viewAvailable() {
             // if the user removes a node that has already been part of a layout, then KNIME Analytics Platform does not
@@ -91,14 +94,15 @@ export default {
         },
         viewDisplayable() {
             if (this.isUIExtension) {
-                return this.isExecuted || this.isDialogLayout || this.isNodeDialog;
+                return this.isExecuted || this.isImageGeneration || this.isDialogLayout || this.isNodeDialog;
             }
             // a node can be available but not displayable
             // in that case we simply display a corresponding message to show that the node is not displayable
             return this.nodeInfo?.displayPossible;
         },
         showViewExecutable() {
-            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings);
+            return this.isUIExtension && !this.isNodeDialog && (!this.isExecuted || this.dirtyModelSettings) &&
+                !this.isImageGeneration;
         },
         showExecutionOverlay() {
             /* we do not update the webNode during "proper" re-execution, but if refresh/reload happens during this
@@ -142,7 +146,7 @@ export default {
         :class="{
           'single-view': isSingleView,
           'single-dialog': isNodeDialog && isSingleView,
-          'view-and-dialog': !isNodeDialog && !isSingleView
+          'view-and-dialog': !isNodeDialog && !isSingleView && !isInComponentView
         }"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"

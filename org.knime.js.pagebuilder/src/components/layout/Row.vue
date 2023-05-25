@@ -1,5 +1,5 @@
 <script>
-import Column from './Column';
+import Column from './Column.vue';
 
 /**
  * Row container (part of a page layout)
@@ -32,6 +32,9 @@ export default {
         },
         classes() {
             let classes = ['row'];
+            if (window.headless) {
+                classes.push('headless');
+            }
             if (Array.isArray(this.rowConfig.additionalClasses)) {
                 classes = classes.concat(this.rowConfig.additionalClasses);
             }

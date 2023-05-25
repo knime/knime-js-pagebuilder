@@ -1,16 +1,16 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import Button from '~/webapps-common/ui/components/Button';
-import FunctionButton from '~/webapps-common/ui/components/FunctionButton';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
+import FunctionButton from 'webapps-common/ui/components/FunctionButton.vue';
 
-import SignWarningIcon from '~/webapps-common/ui/assets/img/icons/sign-warning.svg?inline';
-import CircleWarningIcon from '~/webapps-common/ui/assets/img/icons/circle-warning.svg?inline';
-import CircleMinus from '~/webapps-common/ui/assets/img/icons/circle-minus.svg?inline';
-import CloseIcon from '~/webapps-common/ui/assets/img/icons/close.svg?inline';
-import DropdownIcon from '~/webapps-common/ui/assets/img/icons/arrow-dropdown.svg?inline';
-import CopyIcon from '~/webapps-common/ui/assets/img/icons/copy.svg?inline';
+import SignWarningIcon from 'webapps-common/ui/assets/img/icons/sign-warning.svg';
+import CircleWarningIcon from 'webapps-common/ui/assets/img/icons/circle-warning.svg';
+import CircleMinus from 'webapps-common/ui/assets/img/icons/circle-minus.svg';
+import CloseIcon from 'webapps-common/ui/assets/img/icons/close.svg';
+import DropdownIcon from 'webapps-common/ui/assets/img/icons/arrow-dropdown.svg';
+import CopyIcon from 'webapps-common/ui/assets/img/icons/copy.svg';
 
-import { copyText } from '~/webapps-common/util/copyText';
+import { copyText } from 'webapps-common/util/copyText';
 
 // Arbitrary length limit to determine if messages should be expandable or displayed initially.
 const MAX_EXPANDED_MESSAGE_LENGTH = 280;
@@ -59,6 +59,7 @@ export default {
             default: ''
         }
     },
+    emits: ['closeAlert'],
     data() {
         return {
             messageExpanded: false
@@ -118,6 +119,7 @@ export default {
         :is="type === 'error' ? 'SignWarningIcon' : 'CircleWarningIcon'"
         class="icon warn-icon"
       />
+
       <Label
         :text="title"
         class="label"
@@ -203,15 +205,15 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px 0 rgb(0 0 0 / 50%);
 
   & header {
     position: relative;
     padding: 8px 80px 8px 50px;
 
-    & .label >>> label.label-text {
+    & .label :deep(label.label-text) {
       color: white;
-      margin: 6px 0 4px 0;
+      margin: 6px 0 4px;
       line-height: 24px;
       max-width: 100%;
       text-overflow: ellipsis;
@@ -300,7 +302,7 @@ export default {
     max-height: 75%;
     transition: max-height 0.3s ease-out;
 
-    & .expand-button >>> svg {
+    & .expand-button :deep(svg) {
       transform: scaleY(-1);
     }
 
@@ -358,7 +360,7 @@ export default {
         color: var(--theme-button-function-foreground-color-hover);
         background-color: var(--theme-button-function-background-color-hover);
 
-        & >>> svg {
+        & :deep(svg) {
           stroke: var(--theme-button-function-foreground-color-hover);
         }
       }
@@ -367,7 +369,7 @@ export default {
         color: var(--theme-button-function-foreground-color-focus);
         background-color: var(--theme-button-function-background-color-focus);
 
-        & >>> svg {
+        & :deep(svg) {
           stroke: var(--theme-button-function-foreground-color-focus);
         }
       }

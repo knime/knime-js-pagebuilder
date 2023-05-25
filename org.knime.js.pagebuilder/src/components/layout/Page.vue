@@ -1,7 +1,7 @@
 <script>
 import { mapState } from 'vuex';
-import Layout from './Layout';
-import DialogLayout from './DialogLayout';
+import Layout from './Layout.vue';
+import DialogLayout from './DialogLayout.vue';
 
 export default {
     name: 'Page',

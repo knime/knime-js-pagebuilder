@@ -1,10 +1,10 @@
 <script>
-import filesize from 'filesize';
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import Button from '~/webapps-common/ui/components/Button';
-import { getFileExtension } from '~/src/util/fileUtils';
-import CircleCheckIcon from '~/webapps-common/ui/assets/img/icons/circle-check.svg?inline';
+import { partial } from 'filesize';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Button from 'webapps-common/ui/components/Button.vue';
+import { getFileExtension } from '../../../util/fileUtils';
+import CircleCheckIcon from 'webapps-common/ui/assets/img/icons/circle-check.svg';
 
 const DATA_TYPE = 'path';
 /**
@@ -57,6 +57,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     data() {
         return {
             uploadAPI: null,
@@ -94,7 +95,7 @@ export default {
             if (!this.localFileSize) {
                 return null;
             }
-            let parsedSize = filesize.partial({
+            let parsedSize = partial({
                 output: 'object'
             })(this.localFileSize);
             return parsedSize;
@@ -171,9 +172,9 @@ export default {
             if (!this.uploadAPI) {
                 return { isValid };
             }
-            if (this.fileTypes?.length && this.path) {
+            if (this.fileTypes?.length && this.fileName) {
                 isValid = this.fileTypes?.map(type => type?.toLowerCase())
-                    .includes(`.${getFileExtension(this.path)?.toLowerCase()}`);
+                    .includes(`.${getFileExtension(this.fileName)?.toLowerCase()}`);
                 if (!isValid) {
                     errorMessage = `The type of the selected file does not match the allowed file ` +
                         `types (${this.fileTypes.join(', ')}).`;
@@ -239,7 +240,7 @@ export default {
         ref="input"
         type="file"
         :accept="fileTypes.join(',')"
-        @input="onChange"
+        @change="onChange"
       >
       <div
         :class="['progress-bar-wrapper', {'show-bar': uploading}]"
@@ -306,7 +307,7 @@ input {
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 50%;

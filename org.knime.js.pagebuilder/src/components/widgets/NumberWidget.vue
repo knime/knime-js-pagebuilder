@@ -1,7 +1,7 @@
 <script>
-import NumberInput from 'webapps-common/ui/components/forms/NumberInput';
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from './baseElements/text/ErrorMessage';
+import NumberInput from 'webapps-common/ui/components/forms/NumberInput.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from './baseElements/text/ErrorMessage.vue';
 
 /**
  * Reusable base implementation of the Number Input Widget. Used by DoubleWidget and IntegerWidget.
@@ -62,6 +62,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -118,19 +119,19 @@ export default {
 <template>
   <div>
     <Label
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       :text="label"
     >
       <NumberInput
         :id="labelForId"
         ref="form"
         :type="type"
-        :value="value"
+        :model-value="value"
         :min="min"
         :max="max"
         :is-valid="isValid"
         :title="description"
-        @input="onChange"
+        @update:model-value="onChange"
       />
     </Label>
     <ErrorMessage :error="errorMessage" />
@@ -138,7 +139,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
->>> label {
+:deep(label) {
   cursor: pointer;
 }
 </style>

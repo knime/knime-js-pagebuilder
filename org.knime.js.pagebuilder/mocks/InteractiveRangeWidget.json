@@ -164,18 +164,8 @@
           "nodeWarnMessage": null,
           "nodeName": "Interactive Range Slider Filter Widget"
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "namespace": "knimeQuickformFilterSlider",
         "viewRepresentation": {
@@ -266,18 +256,8 @@
           "nodeWarnMessage": null,
           "nodeName": "Interactive Range Slider Filter Widget"
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "namespace": "knimeQuickformFilterSlider",
         "viewRepresentation": {
@@ -368,18 +348,8 @@
           "nodeWarnMessage": null,
           "nodeName": "Interactive Range Slider Filter Widget"
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/quickform/filter/definition/slider/SliderFilter.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/quickform/filter/definition/slider/slider.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "namespace": "knimeQuickformFilterSlider",
         "viewRepresentation": {
@@ -466,23 +436,8 @@
           "nodeWarnMessage": null,
           "nodeName": "Slider Widget"
         },
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/js-lib/wNumb/wNumb.js",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.js",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css",
-          "/js-lib/noUiSlider/12_1_0/nouislider.min.css",
-          "/org/knime/js/base/node/widget/input/slider/sliderWidget.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "setValidationErrorMethodName": "setValidationErrorMessage",
         "namespace": "knimeSliderWidget",
         "viewRepresentation": {

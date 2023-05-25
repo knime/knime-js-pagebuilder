@@ -1,12 +1,12 @@
 <script>
 import { mapState } from 'vuex';
-import * as pagebuilderStoreConfig from '~/store/pagebuilder';
-import * as interactivityStoreConfig from '~/store/interactivity';
-import * as alertStoreConfig from '~/store/alert';
-import * as serviceStoreConfig from '~/store/service';
-import * as dialogStoreConfig from '~/store/dialog';
-import Page from '~/src/components/layout/Page';
-import AlertGlobal from '~/src/components/ui/AlertGlobal';
+import * as pagebuilderStoreConfig from '../store/pagebuilder';
+import * as interactivityStoreConfig from '../store/interactivity';
+import * as alertStoreConfig from '../store/alert';
+import * as serviceStoreConfig from '../store/service';
+import * as dialogStoreConfig from '../store/dialog';
+import Page from './layout/Page.vue';
+import AlertGlobal from './ui/AlertGlobal.vue';
 
 export default {
     components: {

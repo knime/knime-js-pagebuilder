@@ -1,7 +1,7 @@
 <script>
-import WebNodeIFrame from './WebNodeIFrame';
-import Widget from '~/src/components/widgets/Widget';
-import { classToComponentMap, legacyExclusions } from '~/src/components/widgets/widgets.config';
+import WebNodeIFrame from './WebNodeIFrame.vue';
+import Widget from '../widgets/Widget.vue';
+import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config';
 import layoutMixin from '../mixins/layoutMixin';
 
 /**
@@ -10,6 +10,7 @@ import layoutMixin from '../mixins/layoutMixin';
  * additional styles). Also detects changes to it's configuration and increments a local counter to help with re-
  * renders of iframe-based components.
  */
+
 export default {
     components: {
         WebNodeIFrame,
@@ -53,6 +54,7 @@ export default {
             return this.nodeConfig?.nodeInfo?.nodeState;
         },
         legacyModeDisabled() {
+            // TODO HUB-3311 remove legacy mode
             // only return true if legacy flag *explicitly* set to false; default workflows with unset legacy flag to
             // use legacy mode
             return this.viewConfig.useLegacyMode === false;
@@ -63,8 +65,8 @@ export default {
             return { ...classToComponentMap, ...legacyExclusions }[this.nodeConfig?.viewRepresentation?.['@class']];
         },
         isWidget() {
-            return legacyExclusions[this.nodeConfig?.viewRepresentation?.['@class']] ||
-                (this.legacyModeDisabled && this.widgetComponentName);
+            return Boolean(legacyExclusions[this.nodeConfig?.viewRepresentation?.['@class']] ||
+                (this.legacyModeDisabled && this.widgetComponentName));
         }
     },
     watch: {
@@ -82,7 +84,7 @@ export default {
   >
     <Widget
       v-if="isWidget"
-      :type="widgetComponentName"
+      :widget-name="widgetComponentName"
       :node-config="nodeConfig"
       :node-id="nodeId"
     />
@@ -95,5 +97,5 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import '../mixins/layoutMixin.css';
+@import url('../mixins/layoutMixin.css');
 </style>

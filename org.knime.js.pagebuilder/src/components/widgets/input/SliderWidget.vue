@@ -1,9 +1,9 @@
 <script>
-import Slider from '../baseElements/input/Slider';
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import formatTooltip from '@/util/tooltipFormatter';
-import { createTicks } from '@/util/widgetUtil/slider/tickUtil';
+import Slider from '../baseElements/input/Slider.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import formatTooltip from '../../../util/tooltipFormatter';
+import { createTicks } from '../../../util/widgetUtil/slider/tickUtil';
 
 const DATA_TYPE = 'double';
 const MINIMUM_SLIDER_STEP = .0000001;
@@ -81,6 +81,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -284,7 +285,7 @@ export default {
 <template>
   <div>
     <Label
-      v-slot="{ labelForId }"
+      #default="{ labelForId }"
       :text="label"
       :class="[`slider-${sliderSettings.orientation}-label`,
                { 'tooltip-label': tooltips }]"
@@ -294,7 +295,7 @@ export default {
         ref="form"
         :minimum="min"
         :maximum="max"
-        :value="value"
+        :model-value="value"
         :process="process"
         :is-valid="isValid"
         :direction="direction"
@@ -306,7 +307,7 @@ export default {
         :connect="connect"
         :class="[`slider-${sliderSettings.orientation}`,
                  {'tooltip-slider': tooltips }]"
-        @input="onChange"
+        @update:model-value="onChange"
       />
       <ErrorMessage
         :error="errorMessage"
@@ -319,10 +320,7 @@ export default {
 
 <style lang="postcss" scoped>
 .slider-horizontal {
-  padding-top: 10px;
-  padding-right: 15px;
-  padding-bottom: 25px;
-  padding-left: 15px;
+  padding: 10px 15px 25px;
 }
 
 .slider-horizontal.tooltip-slider {
@@ -332,10 +330,7 @@ export default {
 }
 
 .slider-vertical {
-  padding-top: 10px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+  padding: 10px 20px 10px 10px;
 }
 
 .slider-vertical.tooltip-slider {

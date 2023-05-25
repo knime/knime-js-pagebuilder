@@ -1,9 +1,9 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '@/components/widgets/baseElements/text/ErrorMessage';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
+import SingleSelect from '../baseElements/selection/SingleSelect.vue';
+import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
 
 const VALUE_KEY_NAME = 'value';
 const COLUMN_KEY_NAME = 'column';
@@ -53,6 +53,7 @@ export default {
             type: String
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -140,17 +141,17 @@ export default {
     <template #default="mainLabel">
       <Label
         v-if="!isColumnLocked"
-        v-slot="columnLabel"
+        #default="columnLabel"
         text="Column"
       >
         <Dropdown
           :id="columnLabel.labelForId"
           ref="column"
-          :value="column"
+          :model-value="column"
           :is-valid="isColumnValid"
           aria-label="Column"
           :possible-values="possibleColumns"
-          @input="onColumnChange"
+          @update:model-value="onColumnChange"
         />
       </Label>
       <Label
@@ -161,7 +162,7 @@ export default {
       <SingleSelect
         :id="mainLabel.labelForId"
         ref="form"
-        :value="value"
+        :model-value="value"
         :type="viewRep.type"
         :number-vis-options="viewRep.numberVisOptions"
         :limit-number-vis-options="viewRep.limitNumberVisOptions"
@@ -169,7 +170,7 @@ export default {
         :title="description"
         :possible-value-list="possibleValueList"
         :label="label"
-        @input="onChange"
+        @update:model-value="onChange"
       />
       <ErrorMessage :error="errorMessage" />
     </template>

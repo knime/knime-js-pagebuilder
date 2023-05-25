@@ -1,8 +1,8 @@
 <script>
-import InputField from '~/webapps-common/ui/components/forms/InputField';
-import TextArea from '~/webapps-common/ui/components/forms/TextArea';
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
+import InputField from 'webapps-common/ui/components/forms/InputField.vue';
+import TextArea from 'webapps-common/ui/components/forms/TextArea.vue';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 
 const DATA_TYPE = 'string';
 
@@ -52,6 +52,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -115,7 +116,7 @@ export default {
 
 <template>
   <Label
-    v-slot="{ labelForId }"
+    #default="{ labelForId }"
     class="label"
     :text="label"
   >
@@ -123,22 +124,22 @@ export default {
       v-if="isMultiLine"
       :id="labelForId"
       ref="form"
-      :value="value"
+      :model-value="value"
       :cols="multiColumns"
       :rows="multiRows"
       :is-valid="isValid"
       :title="description"
-      @input="onChange"
+      @update:model-value="onChange"
     />
     <InputField
       v-else
       :id="labelForId"
       ref="form"
-      :value="value"
+      :model-value="value"
       :is-valid="isValid"
       :title="description"
       :pattern="regex"
-      @input="onChange"
+      @update:model-value="onChange"
     />
     <ErrorMessage :error="errorMessage" />
   </Label>
@@ -148,8 +149,8 @@ export default {
 .label {
   max-width: 100%;
 
-  & >>> textarea,
-  & >>> label {
+  & :deep(textarea),
+  & :deep(label) {
     cursor: pointer;
     max-width: 100%;
   }

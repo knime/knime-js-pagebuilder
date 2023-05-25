@@ -1,18 +1,17 @@
 <script>
+import { markRaw, toRaw } from 'vue';
 import { mapState } from 'vuex';
 import { KnimeService, IFrameKnimeServiceAdapter } from '@knime/ui-extension-service';
-import UIExtComponent from '~/src/components/views/UIExtComponent';
-import UIExtIFrame from '~/src/components/views/UIExtIFrame';
-import AlertLocal from '~/src/components/ui/AlertLocal';
-import WarningLocal from '~/src/components/ui/WarningLocal';
-
-import muteReactivity from '~/src/util/muteReactivity';
+import UIExtComponent from './UIExtComponent.vue';
+import UIExtIFrame from './UIExtIFrame.vue';
+import AlertLocal from '../ui/AlertLocal.vue';
+import WarningLocal from '../ui/WarningLocal.vue';
 import layoutMixin from '../mixins/layoutMixin';
 
 /**
- * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-
- * based). Also detects changes to it's configuration and increments a local counter to help with re-renders of
- * iframe-based components.
+ * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
+ * Also detects changes to it's configuration and increments a local counter to help with re-renders of iframe-based
+ * components.
  */
 export default {
     components: {
@@ -21,16 +20,15 @@ export default {
         AlertLocal,
         WarningLocal
     },
+    mixins: [layoutMixin],
     // using provide/inject instead of a prop to pass the knimeService to the children because
     // 1) we don't want reactivity in this case
     // 2) any deeply nested child of the UIComponent can get access to knimeService if needed
     provide() {
         this.initKnimeService();
         const getKnimeService = () => this.knimeService;
-        getKnimeService.bind(this);
         return { getKnimeService };
     },
-    mixins: [layoutMixin],
     props: {
         extensionConfig: {
             default: () => ({}),
@@ -46,7 +44,7 @@ export default {
         /**
          * View configuration, mainly layout and sizing options
          */
-         viewConfig: {
+        viewConfig: {
             default: () => ({}),
             type: Object
         }
@@ -55,7 +53,8 @@ export default {
         return {
             configKey: 0,
             knimeService: null,
-            alert: null
+            alert: null,
+            isWidget: false
         };
     },
     computed: {
@@ -78,11 +77,12 @@ export default {
     watch: {
         extensionConfig() {
             this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
+
             this.initKnimeService();
             this.configKey += 1; // needed to force a complete re-rendering of UIExtIFrames and UIExtComponents
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.$store.dispatch('pagebuilder/service/deregisterService', { service: this.knimeService });
     },
     mounted() {
@@ -97,24 +97,33 @@ export default {
     methods: {
         initKnimeService() {
             const ServiceConstructor = this.isUIExtComponent ? KnimeService : IFrameKnimeServiceAdapter;
-            let knimeService = new ServiceConstructor(this.extensionConfig, this.callService, this.pushNotification);
-            muteReactivity({ target: knimeService, nonReactiveKeys: ['iFrameWindow'] });
-            this.knimeService = knimeService;
+            let knimeService = new ServiceConstructor(
+                toRaw(this.extensionConfig),
+                this.callService,
+                this.pushEvent
+            );
+            if (this.extensionConfig?.generatedImageActionId) {
+                const actionId = this.extensionConfig.generatedImageActionId;
+                knimeService.registerImageGeneratedCallback(
+                    generatedImage => window.EquoCommService.send(actionId, generatedImage)
+                );
+            }
+            this.knimeService = markRaw(knimeService);
             this.$store.dispatch('pagebuilder/service/registerService', { service: this.knimeService });
         },
         callService(nodeService, serviceRequest, requestParams) {
             return this.$store.dispatch('api/callService', {
-                extensionConfig: this.extensionConfig,
+                extensionConfig: toRaw(this.extensionConfig),
                 nodeService,
                 serviceRequest,
                 requestParams
             });
         },
-        pushNotification(notification) {
-            if (notification?.type === 'alert') {
-                return this.handleAlert(notification.alert);
+        pushEvent(event) {
+            if (event?.type === 'alert') {
+                return this.handleAlert(event.alert);
             }
-            return this.$store.dispatch('pagebuilder/service/pushNotification', notification);
+            return this.$store.dispatch('pagebuilder/service/pushEvent', event);
         },
         handleAlert(alert) {
             if (this.isDialogLayout) {
@@ -155,18 +164,18 @@ export default {
   >
     <UIExtComponent
       v-if="isUIExtComponent"
-      :key="configKey"
+      :key="configKey + '-1'"
       :resource-location="resourceLocation"
     />
     <UIExtIFrame
       v-else
-      :key="configKey"
+      :key="configKey + '-2'"
       :resource-location="resourceLocation"
     />
     <AlertLocal
       v-if="displayError"
       active
-      @showAlert="showAlert(alert)"
+      @show-alert="showAlert(alert)"
     />
     <WarningLocal
       v-if="displayWarning"
@@ -177,11 +186,15 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import '../mixins/layoutMixin.css';
+@import url('../mixins/layoutMixin.css');
 
 .local-warning {
   position: absolute;
   bottom: 0;
   top: unset;
+}
+
+.fill-container {
+    height: 100%;
 }
 </style>

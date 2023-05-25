@@ -1,5 +1,5 @@
 <script>
-import NumberWidget from '../NumberWidget';
+import NumberWidget from '../NumberWidget.vue';
 
 /**
  * This is the implementation of the Integer Input Widget. This component relies
@@ -22,9 +22,8 @@ export default {
 
 <template>
   <NumberWidget
+    v-bind="$attrs"
     ref="widget"
     type="integer"
-    v-bind="$attrs"
-    v-on="$listeners"
   />
 </template>

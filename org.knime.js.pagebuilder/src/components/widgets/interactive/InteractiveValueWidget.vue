@@ -1,9 +1,9 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
-import SingleSelect from '@/components/widgets/baseElements/selection/SingleSelect';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
+import Multiselect from '../baseElements/selection/Multiselect.vue';
+import SingleSelect from '../baseElements/selection/SingleSelect.vue';
 
 const UPDATE_KEY = 'viewValue.filter.columns.0.values';
 
@@ -44,6 +44,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -127,14 +128,14 @@ export default {
     <Component
       :is="formComponentType"
       ref="form"
-      :value="value"
+      :model-value="value"
       :type="viewRep.type"
       :number-vis-options="viewRep.numberVisOptions"
       :limit-number-vis-options="viewRep.limitNumberVisOptions"
       :possible-value-list="viewRep.possibleValues"
       :is-valid="isValid"
       :label="label"
-      @input="onChange"
+      @update:model-value="onChange"
     />
     <ErrorMessage :error="errorMessage" />
   </Component>

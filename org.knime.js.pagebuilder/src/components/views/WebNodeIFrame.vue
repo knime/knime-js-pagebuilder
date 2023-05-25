@@ -1,13 +1,15 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
-import AlertLocal from '~/src/components/ui/AlertLocal';
+import AlertLocal from '../ui/AlertLocal.vue';
 import { iframeResizer } from 'iframe-resizer';
 
-import scriptLoaderSrc from 'raw-loader!./injectedScripts/scriptLoader.js';
-import messageListenerSrc from 'raw-loader!./injectedScripts/messageListener.js';
-import iframeResizerContentSrc from 'raw-loader!iframe-resizer/js/iframeResizer.contentWindow.js';
-import loadingErrorHandlerSrc from 'raw-loader!./injectedScripts/loadErrorHandler.js';
-import viewAlertHandlerSrc from 'raw-loader!./injectedScripts/viewAlertHandler.js';
+/* eslint-disable import/extensions */
+import scriptLoaderSrc from './injectedScripts/scriptLoader.js?raw';
+import messageListenerSrc from './injectedScripts/messageListener.js?raw';
+import iframeResizerContentSrc from 'iframe-resizer/js/iframeResizer.contentWindow.js?raw';
+import loadingErrorHandlerSrc from './injectedScripts/loadErrorHandler.js?raw';
+import viewAlertHandlerSrc from './injectedScripts/viewAlertHandler.js?raw';
+/* eslint-enable import/extensions */
 
 const valueGetterTimeout = 30000; // ms
 const validatorTimeout = 5000; // ms
@@ -56,7 +58,10 @@ export default {
     },
     computed: {
         ...mapState('pagebuilder', ['page']),
-        ...mapGetters('wizardExecution', ['currentJobId']), // Expected values include null (no job) or undefined (AP execution).
+        ...mapGetters({
+            currentJobId: 'wizardExecution/currentJobId', // Expected values include null (no job) or undefined (AP execution).
+            authParameter: 'oauth/authParameter'
+        }),
         iframeId() {
             // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
             return this.nodeId && `node-${this.nodeId.replace(/(:)/g, '-')}`;
@@ -96,6 +101,9 @@ export default {
     },
 
     mounted() {
+        if (this.autoHeight) {
+            this.initIFrameResize();
+        }
         this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: true });
         window.addEventListener('message', this.messageFromIframe);
 
@@ -112,7 +120,7 @@ export default {
         // This global API should only be used/extended for cases where window.postMessage can't be used
         // due to the need of an immediate return value.
         let getPublishedDataFunc = this.$store.getters['pagebuilder/interactivity/getPublishedData'];
-        // TODO: AP-18040 update the settings store with deafaultMoundId getters
+        // TODO: AP-18040 update the settings store with defaultMountId getters
         let storeSettings = this.$store.state.settings;
         let workflowPath = this.$store.getters['wizardExecution/workflowPath'];
         let getRepositoryFunc = this.$store.getters['api/repository'];
@@ -193,7 +201,7 @@ export default {
         }
     },
 
-    beforeDestroy() {
+    beforeUnmount() {
         window.removeEventListener('message', this.messageFromIframe);
         this.$store.dispatch('pagebuilder/removeValidator', { nodeId: this.nodeId });
         this.$store.dispatch('pagebuilder/removeValueGetter', { nodeId: this.nodeId });
@@ -211,10 +219,9 @@ export default {
          */
         injectContent() {
             const resourceBaseUrl = this.$store.state.pagebuilder.resourceBaseUrl;
-            const accessToken = this.$store.state.settings?.['knime:access_token'];
-
-            let styles = this.computeStyles(resourceBaseUrl, accessToken);
-            let scripts = this.computeScripts(resourceBaseUrl, accessToken);
+            
+            let styles = this.computeStyles(resourceBaseUrl);
+            let scripts = this.computeScripts(resourceBaseUrl);
 
             // runtime/script injection error handling
             let loadingErrorHandler = `<script>${loadingErrorHandlerSrc
@@ -267,16 +274,15 @@ export default {
         /**
          * Helper method that computes the required `<style>` elements that should be injected into the iframe
          * @param {String} resourceBaseUrl Base URL from store
-         * @param {String} [accessToken] An optional JWT access token used to authenticate resource requests
          * @returns {String}
          */
-        computeStyles(resourceBaseUrl, accessToken) {
+        computeStyles(resourceBaseUrl) {
             // stylesheets from the node view itself
             let styles = this.nodeStylesheets.map(
                 style => {
                     let href = `${resourceBaseUrl}${encodeURI(style)}`;
-                    if (accessToken) {
-                        href += `?knime:access_token=${accessToken}`;
+                    if (this.accessToken) {
+                        href += `?${this.authParameter}=${this.accessToken}`;
                     }
                     return `<link type="text/css" rel="stylesheet" href="${href}">`;
                 }
@@ -303,7 +309,7 @@ export default {
                 lib => {
                     let src = `${resourceBaseUrl}${lib}`;
                     if (accessToken) {
-                        src += `?knime:access_token=${accessToken}`;
+                        src += `?${this.authParameter}=${accessToken}`;
                     }
                     return `<script src="${src}" 
                         onload="knimeLoader(true)" 
@@ -324,52 +330,50 @@ export default {
         },
 
         initIFrameResize() {
-            if (this.autoHeight) {
-                // apply a default tolerance of 5px to avoid unnecessary screen flicker
-                const defaultResizeTolerance = 5;
-                const defaultResizeMethod = 'lowestElement';
-                let conf = this.viewConfig;
+            // apply a default tolerance of 5px to avoid unnecessary screen flicker
+            const defaultResizeTolerance = 5;
+            const defaultResizeMethod = 'lowestElement';
+            let conf = this.viewConfig;
 
-                // strip prefix from resize method to determine heightCalculationMethod
-                let prefix = 'view'.length;
-                let method = defaultResizeMethod;
-                if (conf.resizeMethod) {
-                    method = conf.resizeMethod.substring(prefix, prefix + 1).toLowerCase() +
-                        conf.resizeMethod.substring(prefix + 1);
-                }
-                // special case, this used a different resize method for IE, but is not supported anymore
-                if (method === 'lowestElementIEMax') {
-                    method = defaultResizeMethod;
-                }
-
-                // populate settings object
-                let resizeSettings = {
-                    log: false,
-                    checkOrigin: [window.origin],
-                    resizeFrom: 'child',
-                    warningTimeout: 0, // suppress warning
-
-                    autoResize: conf.autoResize,
-                    scrolling: conf.scrolling,
-                    heightCalculationMethod: method,
-                    sizeHeight: conf.sizeHeight,
-                    tolerance: conf.resizeTolerance || defaultResizeTolerance
-                };
-                if (conf.minWidth) {
-                    resizeSettings.minWidth = conf.minWidth;
-                }
-                if (conf.maxWidth) {
-                    resizeSettings.maxWidth = conf.maxWidth;
-                }
-                if (conf.minHeight) {
-                    resizeSettings.minHeight = conf.minHeight;
-                }
-                if (conf.maxHeight) {
-                    resizeSettings.maxHeight = conf.maxHeight;
-                }
-
-                iframeResizer(resizeSettings, this.$refs.iframe);
+            // strip prefix from resize method to determine heightCalculationMethod
+            let prefix = 'view'.length;
+            let method = defaultResizeMethod;
+            if (conf.resizeMethod) {
+                method = conf.resizeMethod.substring(prefix, prefix + 1).toLowerCase() +
+                    conf.resizeMethod.substring(prefix + 1);
             }
+            // special case, this used a different resize method for IE, but is not supported anymore
+            if (method === 'lowestElementIEMax') {
+                method = defaultResizeMethod;
+            }
+
+            // populate settings object
+            let resizeSettings = {
+                log: false,
+                checkOrigin: [window.origin],
+                resizeFrom: 'child',
+                warningTimeout: 0, // suppress warning
+
+                autoResize: conf.autoResize,
+                scrolling: conf.scrolling,
+                heightCalculationMethod: method,
+                sizeHeight: conf.sizeHeight,
+                tolerance: conf.resizeTolerance || defaultResizeTolerance
+            };
+            if (conf.minWidth) {
+                resizeSettings.minWidth = conf.minWidth;
+            }
+            if (conf.maxWidth) {
+                resizeSettings.maxWidth = conf.maxWidth;
+            }
+            if (conf.minHeight) {
+                resizeSettings.minHeight = conf.minHeight;
+            }
+            if (conf.maxHeight) {
+                resizeSettings.maxHeight = conf.maxHeight;
+            }
+
+            iframeResizer(resizeSettings, this.$refs.iframe);
         },
 
         messageFromIframe(event) {
@@ -391,8 +395,8 @@ export default {
                     nodeId: this.nodeId,
                     namespace: this.nodeConfig.namespace,
                     initMethodName: this.nodeConfig.initMethodName,
-                    viewRepresentation: this.nodeConfig.viewRepresentation,
-                    viewValue: this.nodeConfig.viewValue,
+                    viewRepresentation: JSON.stringify(this.nodeConfig.viewRepresentation),
+                    viewValue: JSON.stringify(this.nodeConfig.viewValue),
                     type: 'init'
                 }, this.origin);
                 this.$store.dispatch('pagebuilder/setWebNodeLoading', { nodeId: this.nodeId, loading: false });
@@ -410,7 +414,7 @@ export default {
         },
 
         validate() {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 this.validateCallback = ({ isValid }) => {
                     if (!isValid) {
                         this.setLocalError('View validation failed.');
@@ -551,7 +555,7 @@ export default {
                 nodeId: this.nodeId,
                 type: 'interactivityEvent',
                 id,
-                payload
+                payload: JSON.parse(JSON.stringify(payload)) // copy object to avoid serialization errors
             };
             this.document.defaultView.postMessage(data, this.origin);
         },
@@ -590,11 +594,10 @@ export default {
       :id="iframeId"
       ref="iframe"
       :class="classes"
-      @load="initIFrameResize"
     />
     <AlertLocal
       :active="displayAlert"
-      @showAlert="showAlert"
+      @show-alert="showAlert"
     />
   </div>
 </template>

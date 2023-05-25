@@ -808,22 +808,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -880,22 +866,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -952,22 +924,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -1024,22 +982,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -1096,22 +1040,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -1168,22 +1098,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -1240,22 +1156,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -1718,22 +1620,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -2196,22 +2084,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -2674,22 +2548,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -2746,22 +2606,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -3224,22 +3070,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -3296,22 +3128,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -3774,22 +3592,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -3846,22 +3650,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -4324,22 +4114,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -4396,22 +4172,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -4874,22 +4636,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -5352,22 +5100,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -5830,22 +5564,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -6308,22 +6028,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -6380,22 +6086,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -6858,22 +6550,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",
@@ -6930,22 +6608,8 @@
         "initMethodName": "init",
         "validateMethodName": "validate",
         "setValidationErrorMethodName": "setValidationErrorMessage",
-        "javascriptLibraries": [
-          "/js-lib/knime/service/knime_service_1_0_0.js",
-          "/js-lib/jQuery/jquery-1.11.0.min.js",
-          "/org/knime/js/base/dialog/selection/single/DropdownSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/ListSingleSelection.js",
-          "/org/knime/js/base/dialog/selection/single/RadioButtonSingleSelection.js",
-          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
-          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
-          "/org/knime/js/base/node/widget/selection/value/valueSelectionWidget.js"
-        ],
-        "stylesheets": [
-          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
-          "/js-lib/knime/service/knime.css",
-          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
-          "/org/knime/js/base/util/quickform/quickformStyles.css"
-        ],
+        "javascriptLibraries": [],
+        "stylesheets": [],
         "getViewValueMethodName": "value",
         "nodeInfo": {
           "@class": "org.knime.js.core.JSONWebNodeInfo",

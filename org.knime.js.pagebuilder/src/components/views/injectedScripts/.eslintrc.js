@@ -1,4 +1,10 @@
 module.exports = {
     root: true,
-    extends: ['../../../../webapps-common/lint/.eslintrc-legacy.js']
+    extends: ['@knime/eslint-config/legacy'],
+    overrides: [
+        {
+            files: ['__tests__/**'],
+            extends: ['@knime/eslint-config/vue3-typescript', '@knime/eslint-config/vitest']
+        }
+    ]
 };

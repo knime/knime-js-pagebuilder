@@ -1,7 +1,8 @@
 <script>
-import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox';
-import Twinlist from 'webapps-common/ui/components/forms/Twinlist';
-import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
+import MultiselectListBox from 'webapps-common/ui/components/forms/MultiselectListBox.vue';
+import Twinlist from 'webapps-common/ui/components/forms/Twinlist.vue';
+import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes.vue';
+import ComboBox from 'webapps-common/ui/components/forms/ComboBox.vue';
 
 /**
  * Multiselect Component
@@ -16,6 +17,7 @@ import Checkboxes from 'webapps-common/ui/components/forms/Checkboxes';
 export default {
     components: {
         Checkboxes,
+        ComboBox,
         MultiselectListBox,
         Twinlist
     },
@@ -29,7 +31,7 @@ export default {
             default: null
         },
         /**
-         * @values List, Twinlist, Check boxes (horizontal), Check boxes (vertical)
+         * @values List, Twinlist, Check boxes (horizontal), Check boxes (vertical), ComboBox
          */
         type: {
             default: 'List',
@@ -53,6 +55,10 @@ export default {
             type: Number,
             default: 0
         },
+        isReExecutionWidget: {
+            type: Boolean,
+            default: false
+        },
         description: {
             type: String,
             default: ''
@@ -61,11 +67,12 @@ export default {
             type: String,
             default: ''
         },
-        value: {
+        modelValue: {
             type: Array,
             default: () => []
         }
     },
+    emits: ['update:modelValue'],
     computed: {
         maxVisibleListEntries() {
             if (this.limitNumberVisOptions) {
@@ -82,6 +89,9 @@ export default {
         isCheckboxes() {
             return this.type === 'Check boxes (horizontal)' ||
                 this.type === 'Check boxes (vertical)';
+        },
+        isComboBox() {
+            return this.type === 'ComboBox';
         },
         checkBoxesAlignment() {
             if (this.type === 'Check boxes (vertical)') {
@@ -100,8 +110,8 @@ export default {
         }
     },
     methods: {
-        onInput(value) {
-            this.$emit('input', value);
+        onChange(value) {
+            this.$emit('update:modelValue', value);
         },
         hasSelection() {
             return this.$refs.form.hasSelection();
@@ -125,38 +135,51 @@ export default {
       v-if="isCheckboxes"
       :id="id"
       ref="form"
-      :value="value"
+      :model-value="modelValue"
       :alignment="checkBoxesAlignment"
       :aria-label="label"
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
     />
     <Twinlist
       v-if="isTwinlist"
       :id="id"
       ref="form"
-      :value="value"
+      :model-value="modelValue"
       :size="maxVisibleListEntries"
       left-label="Excludes"
       right-label="Includes"
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
     />
     <MultiselectListBox
       v-if="isList"
       :id="id"
       ref="form"
-      :value="value"
+      :model-value="modelValue"
       :size="maxVisibleListEntries"
       :aria-label="label"
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
-      @input="onInput"
+      @update:model-value="onChange"
+    />
+    <ComboBox
+      v-if="isComboBox"
+      :id="id"
+      ref="form"
+      :initial-selected-ids="modelValue"
+      :size-visible-options="maxVisibleListEntries"
+      :aria-label="label"
+      :possible-values="possibleValues"
+      :close-dropdown-on-selection="isReExecutionWidget"
+      :is-valid="isValid"
+      :title="description"
+      @update:selected-ids="onChange"
     />
   </div>
 </template>

@@ -1,32 +1,38 @@
 <script>
 import { mapActions } from 'vuex';
+
 // input widgets
-import BooleanWidget from './input/BooleanWidget';
-import IntegerWidget from './input/IntegerWidget';
-import DoubleWidget from './input/DoubleWidget';
-import StringWidget from './input/StringWidget';
-import SliderWidget from './input/SliderWidget';
-import ListBoxInputWidget from './input/ListBoxInputWidget';
-import CredentialsWidget from './input/CredentialsWidget';
-import DateTimeWidget from './input/DateTimeWidget';
-import FileUploadWidget from './input/FileUploadWidget';
+import BooleanWidget from './input/BooleanWidget.vue';
+import CredentialsWidget from './input/CredentialsWidget.vue';
+import DateTimeWidget from './input/DateTimeWidget.vue';
+import DoubleWidget from './input/DoubleWidget.vue';
+import FileUploadWidget from './input/FileUploadWidget.vue';
+import IntegerWidget from './input/IntegerWidget.vue';
+import ListBoxInputWidget from './input/ListBoxInputWidget.vue';
+import SliderWidget from './input/SliderWidget.vue';
+import StringWidget from './input/StringWidget.vue';
+
 // selection widgets
-import SingleSelectionWidget from './selection/SingleSelectionWidget';
-import MultipleSelectionWidget from './selection/MultipleSelectionWidget';
-import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget';
-import ColumnSelectionWidget from './selection/ColumnSelectionWidget';
-import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget';
-import ValueSelectionWidget from './selection/ValueSelectionWidget';
-import FileChooserWidget from './selection/FileChooserWidget';
+import ColumnFilterSelectionWidget from './selection/ColumnFilterSelectionWidget.vue';
+import ColumnSelectionWidget from './selection/ColumnSelectionWidget.vue';
+import FileChooserWidget from './selection/FileChooserWidget.vue';
+import MultipleSelectionWidget from './selection/MultipleSelectionWidget.vue';
+import SingleSelectionWidget from './selection/SingleSelectionWidget.vue';
+import ValueFilterSelectionWidget from './selection/ValueFilterSelectionWidget.vue';
+import ValueSelectionWidget from './selection/ValueSelectionWidget.vue';
+
 // output widgets
-import TextWidget from './output/TextWidget';
-import ImageWidget from './output/ImageWidget';
-import FileDownloadWidget from './output/FileDownloadWidget';
+import FileDownloadWidget from './output/FileDownloadWidget.vue';
+import ImageWidget from './output/ImageWidget.vue';
+import TextWidget from './output/TextWidget.vue';
+
 // interactive widgets
-import InteractiveValueWidget from './interactive/InteractiveValueWidget';
-import InteractiveRangeWidget from './interactive/InteractiveRangeWidget';
+import InteractiveRangeWidget from './interactive/InteractiveRangeWidget.vue';
+import InteractiveValueWidget from './interactive/InteractiveValueWidget.vue';
+
 // reactive widgets
-import RefreshButtonWidget from './reactive/RefreshButtonWidget';
+import RefreshButtonWidget from './reactive/RefreshButtonWidget.vue';
+
 
 /**
  * A Widget node view. This top level component sits at
@@ -59,29 +65,29 @@ export default {
     components: {
         // input widgets
         BooleanWidget,
-        IntegerWidget,
-        DoubleWidget,
-        StringWidget,
-        SliderWidget,
-        ListBoxInputWidget,
         CredentialsWidget,
         DateTimeWidget,
+        DoubleWidget,
         FileUploadWidget,
+        IntegerWidget,
+        ListBoxInputWidget,
+        SliderWidget,
+        StringWidget,
         // selection widgets
-        SingleSelectionWidget,
-        MultipleSelectionWidget,
         ColumnFilterSelectionWidget,
         ColumnSelectionWidget,
+        FileChooserWidget,
+        MultipleSelectionWidget,
+        SingleSelectionWidget,
         ValueFilterSelectionWidget,
         ValueSelectionWidget,
-        FileChooserWidget,
         // output widgets
-        TextWidget,
-        ImageWidget,
         FileDownloadWidget,
+        ImageWidget,
+        TextWidget,
         // interactive widgets
-        InteractiveValueWidget,
         InteractiveRangeWidget,
+        InteractiveValueWidget,
         // reactive widgets
         RefreshButtonWidget
     },
@@ -110,11 +116,11 @@ export default {
         /**
          * The Vue Widget Component name as mapped to the node settings.
          */
-        type: {
+        widgetName: {
             required: true,
             type: String,
-            validator(nodeId) {
-                return nodeId !== '';
+            validator(widgetName) {
+                return widgetName !== '';
             }
         }
     },
@@ -164,7 +170,7 @@ export default {
         }
     },
     async mounted() {
-        // TODO WEBP-182 File Upload Vue Widget should be required; WEBP-327 Remove if dialog option added.
+        // TODO AP-19689 Remove if 'required' functionality implemented
         if (this.nodeConfig.viewRepresentation.required) {
             this.updateWebNode({
                 nodeId: this.nodeId,
@@ -188,7 +194,7 @@ export default {
             await this.validate();
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (this.hasValidationErrorMessage) {
             this.$store.dispatch('pagebuilder/removeValidationErrorSetter', {
                 nodeId: this.nodeId
@@ -236,7 +242,7 @@ export default {
             });
         },
         validate() {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 let isValid = true;
                 let errorMessage = null;
                 try {
@@ -252,7 +258,7 @@ export default {
             });
         },
         setValidationError(errMsg) {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 this.serverValidationErrorMessage = errMsg;
                 this.isValid = false;
                 resolve();
@@ -269,13 +275,13 @@ export default {
 <template>
   <div class="widget">
     <Component
-      :is="type"
+      :is="widgetName"
       ref="widget"
       v-bind="$props"
       :is-valid="isValid"
       :value-pair="valuePair"
       :error-message="serverValidationErrorMessage || errorMessage"
-      @updateWidget="publishUpdate"
+      @update-widget="publishUpdate"
     />
   </div>
 </template>

@@ -32,7 +32,9 @@
         if (data.type === 'init') {
             if (window[namespace] && typeof window[namespace][data.initMethodName] === 'function') {
                 try {
-                    window[namespace][data.initMethodName](data.viewRepresentation, data.viewValue);
+                    var viewRepresentation = JSON.parse(data.viewRepresentation);
+                    var viewValue = JSON.parse(data.viewValue);
+                    window[namespace][data.initMethodName](viewRepresentation, viewValue);
                 } catch (err) {
                     postErrorResponse(data.type, 'View initialization failed: ' + err);
                 }

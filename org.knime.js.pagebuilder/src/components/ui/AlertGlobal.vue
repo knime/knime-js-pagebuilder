@@ -1,7 +1,7 @@
 <script>
 import { mapState } from 'vuex';
-import Popover from './Popover';
-import PopoverMessage from './PopoverMessage';
+import Popover from './Popover.vue';
+import PopoverMessage from './PopoverMessage.vue';
 
 /**
  * This is the PageBuilder top level alert/error management component. It relies on the global alert store and
@@ -73,7 +73,7 @@ export default {
     class="container"
     :active="Boolean(alert)"
     :level="'global'"
-    @clickAway="onClose(!isError)"
+    @click-away="onClose(!isError)"
   >
     <template #popoverContent>
       <PopoverMessage
@@ -81,7 +81,7 @@ export default {
         :title="title"
         :subtitle="subtitle"
         :message-body="messageText"
-        @closeAlert="remove => onClose(remove)"
+        @close-alert="onClose"
       >
         <template #messageBodyHeader>
           <span v-if="isError">

@@ -1,8 +1,8 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset';
-import Multiselect from '@/components/widgets/baseElements/selection/Multiselect';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
+import Multiselect from '../baseElements/selection/Multiselect.vue';
 
 const DATA_TYPE = 'value';
 
@@ -48,6 +48,7 @@ export default {
             default: null
         }
     },
+    emits: ['updateWidget'],
     computed: {
         viewRep() {
             return this.nodeConfig.viewRepresentation;
@@ -101,15 +102,16 @@ export default {
       <Multiselect
         :id="labelForId"
         ref="form"
-        :value="value"
+        :model-value="value"
         :type="viewRep.type"
         :number-vis-options="viewRep.numberVisOptions"
         :limit-number-vis-options="viewRep.limitNumberVisOptions"
         :possible-value-list="viewRep.possibleChoices"
+        :is-re-execution-widget="viewRep.triggerReExecution"
         :is-valid="isValid"
         :description="description"
         :label="label"
-        @input="onChange"
+        @update:model-value="onChange"
       />
       <ErrorMessage :error="errorMessage" />
     </template>

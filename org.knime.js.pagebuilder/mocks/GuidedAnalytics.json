@@ -5907,14 +5907,14 @@
       "237:0:232": {
         "@class": "org.knime.js.core.JSONWebNode",
         "viewRepresentation": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputRepresentation",
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputRepresentation",
           "textFormat": "Html",
           "text": "\n<!-- Latest compiled and minified CSS -->\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\">\n\n<h1>ABC Analysis</h1>\n<h3>Review and select Parts to Set Inventory Goals</h3>\n<div>The ABC analysis is an inventory categorization method. \nIt provides a mechanism for identifying items that will have a significant impact on overall inventory cost, while also providing a mechanism for identifying different categories of stock that will require different management and controls.\n</div>\n\n<div>Clusters are based on inventory value = unit cost * quantity. <span title=\"Inventory - is the quantity of selected parts in the inventory.\n\nInventory value - is the financial value of selected parts in the inventory.\n\nAvg days to sell - how long does it take to turn inventory into consumption or sales.\n\nLead time mean - average number of days needed for ordered parts to be delivered from the supplier to the warehouse.\n\nExcess stock value - financial value, difference of inventory value and safety stock value. \n\nSafety stock - the quantity of parts needed to service the orders from the customers given a service level target, predicted consumption and replenishment statistics.\n\nSafety stock value - financial value of safety stock.\n\nInventory turn - illustrates how many times the inventory is sold/consumed and replaced in a selected period of time. \n\">  <span style=\"cursor: pointer; color: steelblue;\">Definition of metrics</span> is available here (hover please). </span> </div>\n\n<br/>",
           "description": "Enter Description",
           "label": ""
         },
         "viewValue": {
-          "@class": "org.knime.js.base.node.output.text.TextOutputValue"
+          "@class": "org.knime.js.base.node.widget.output.text.TextOutputValue"
         },
         "customCSS": "",
         "initMethodName": "init",

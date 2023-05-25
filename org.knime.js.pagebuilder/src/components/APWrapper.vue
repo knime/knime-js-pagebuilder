@@ -1,43 +1,46 @@
 <script>
-import Vue from 'vue';
 import { mapState } from 'vuex';
-import DebugButton from '~/src/components/ui/DebugButton';
-import RefreshButton from '~/src/components/ui/RefreshButton';
+import PageBuilder from './PageBuilder.vue';
+import DebugButton from './ui/DebugButton.vue';
+import RefreshButton from './ui/RefreshButton.vue';
 
 export default {
     components: {
-        // PageBuilder,
+        PageBuilder,
         RefreshButton,
         DebugButton
     },
+    data() {
+        return {
+            debugInfo: null
+        };
+    },
     computed: {
         ...mapState('pagebuilder', ['isDialogLayout']),
-        /* Checks if pageBuilderLoader middleware was successful */
-        pageBuilderLoaded() {
-            return Boolean(Vue.component('PageBuilder'));
-        },
-        debugInfo() {
-            let debugInfo = null;
-            if (window.getDebugInfo) {
-                try {
-                    debugInfo = JSON.parse(window.getDebugInfo());
-                } catch (err) {
-                    // eslint-disable-next-line no-console
-                    console.debug('Debug information present but unable to load.');
-                }
-            }
-            return debugInfo;
-        },
         debugPort() {
             return this.debugInfo?.remoteDebuggingPort;
+        },
+        isHeadless() {
+            return Boolean(window.headless);
         }
+    },
+    created() {
+        if (window.getDebugInfo) {
+            try {
+                this.debugInfo = JSON.parse(window.getDebugInfo());
+            } catch (err) {
+                consola.debug('Debug information present but unable to load.');
+            }
+        }
+
+        PageBuilder.initStore(this.$store);
     }
 };
 </script>
 
 <template>
-  <div>
-    <PageBuilder v-if="pageBuilderLoaded" />
+  <div :class="[ 'ap-wrapper', {headless: isHeadless }]">
+    <PageBuilder />
     <template v-if="debugPort">
       <DebugButton :debug-port="debugPort" />
       <RefreshButton v-if="debugInfo.refreshRequired" />

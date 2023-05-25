@@ -1,5 +1,5 @@
 <script>
-import Row from './Row';
+import Row from './Row.vue';
 
 /**
  * Layout container for combining multiple views to one page
@@ -62,9 +62,9 @@ export default {
   width: 100%;
 
   &,
-  & >>> *,
-  & >>> *::before,
-  & >>> *::after {
+  & :deep(*),
+  & :deep(*::before),
+  & :deep(*::after) {
     box-sizing: border-box;
   }
 }

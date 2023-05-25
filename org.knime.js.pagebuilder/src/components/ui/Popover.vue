@@ -38,6 +38,7 @@ export default {
             default: 'error'
         }
     },
+    emits: ['clickAway'],
     methods: {
         /**
          * Detects any clicks on the overlay, allowing the popover to be dismissed without having to click a
@@ -187,7 +188,7 @@ export default {
     z-index: 3;
   }
 
-  & >>> div:first-child {
+  & :deep(div:first-child) {
     pointer-events: all;
   }
 }

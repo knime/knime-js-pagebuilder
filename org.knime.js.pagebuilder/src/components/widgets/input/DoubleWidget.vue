@@ -1,5 +1,5 @@
 <script>
-import NumberWidget from '../NumberWidget';
+import NumberWidget from '../NumberWidget.vue';
 
 /**
  * This is the implementation of the Double Input Widget. This component relies
@@ -23,9 +23,8 @@ export default {
 <template>
   <!-- https://learn-vuejs.github.io/vue-patterns/patterns/#passing-props-listeners -->
   <NumberWidget
+    v-bind="$attrs"
     ref="widget"
     type="double"
-    v-bind="$attrs"
-    v-on="$listeners"
   />
 </template>

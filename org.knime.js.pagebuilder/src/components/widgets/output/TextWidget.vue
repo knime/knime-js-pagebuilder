@@ -1,7 +1,7 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
-import { getProp } from '@/util/nestedProperty';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import { getProp } from '../../../util/nestedProperty';
 
 const DEFAULT_VALUE_KEY = 'viewRepresentation.text';
 
@@ -111,6 +111,7 @@ export default {
     <Label
       :text="label"
     />
+    <!-- eslint-disable vue/no-v-text-v-html-on-component -->
     <Component
       :is="elementType"
       v-if="elementType"

@@ -1,6 +1,6 @@
 <script>
-import Label from '~/webapps-common/ui/components/forms/Label';
-import ErrorMessage from '../baseElements/text/ErrorMessage';
+import Label from 'webapps-common/ui/components/forms/Label.vue';
+import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
 
 /**
  * This is the Image Output widget. It supports SVG and PNG image formats.
@@ -130,7 +130,7 @@ export default {
 
 <template>
   <div
-    class="imageOutput"
+    class="image-output"
     :title="description"
   >
     <Label
@@ -153,7 +153,7 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-.imageOutput {
+.image-output {
   & > img {
     display: block;
   }
