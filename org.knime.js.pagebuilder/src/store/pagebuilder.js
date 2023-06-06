@@ -101,7 +101,7 @@ export const mutations = {
         // Otherwise, replace webNodes entirely
         consola.debug('pagebuilder/updateWebNode replacing web node content.');
         // TODO WEBP-327 Remove `overrideRequired` if dialog option added.
-        state.page.wizardPageContent[viewType].nodeId = overrideRequired(config);
+        state.page.wizardPageContent[viewType][nodeId] = overrideRequired(config);
     },
 
     setWebNodeLoading(state, { nodeId, loading }) {
