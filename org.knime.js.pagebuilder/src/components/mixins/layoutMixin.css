@@ -9,3 +9,7 @@
 .aspectRatio1by1 {
   aspect-ratio: 1 / 1;
 }
+
+.fill-container {
+  height: 100%;
+}

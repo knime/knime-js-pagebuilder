@@ -111,17 +111,14 @@ export default {
             );
             if (this.isReporting) {
                 // const actionId = this.extensionConfig.generatedImageActionId;
+                // TODO remove once action is coming from backend
                 this.extensionConfig.generatedImageActionId = 'dummy';
-                this.$store.commit('pagebuilder/addImageGenerationWaiting', {
-                    nodeId: this.nodeId
-                });
                 if (!this.isUIExtComponent) {
                     knimeService.registerImageGeneratedCallback(
                         generatedImage => this.$store.dispatch('pagebuilder/setReportingContent', {
                             nodeId: this.nodeId,
                             reportingContent: `<img src="${generatedImage}" />`
                         })
-                    // generatedImage => window.EquoCommService.send(actionId, generatedImage)
                     );
                 }
             }
@@ -182,6 +179,7 @@ export default {
     <UIExtComponent
       v-if="isUIExtComponent"
       :key="configKey + '-1'"
+      :node-id="nodeId"
       :resource-location="resourceLocation"
     />
     <UIExtIFrame

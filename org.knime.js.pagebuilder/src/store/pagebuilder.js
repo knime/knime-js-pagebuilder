@@ -46,7 +46,7 @@ export const mutations = {
             state.pageValueGetters = {};
         }
         state.isDialogLayout = Boolean(page?.wizardPageContent?.nodeViews?.DIALOG);
-        state.isReporting = true; // TODO: enable: Boolean(page?.wizardPageContent?.webNodePageConfiguration?.isReporting);
+        state.isReporting = Boolean(page?.wizardPageContent?.webNodePageConfiguration?.isReporting);
         state.isWebNode = Boolean(webNodes && Object.keys(webNodes).length);
     },
     /**
@@ -165,15 +165,26 @@ export const mutations = {
     setReportingContent(state, { nodeId, reportingContent }) {
         state.reportingContent[nodeId] = reportingContent;
     },
+    // TODO rethink renaming
     addImageGenerationWaiting(state, { nodeId }) {
         state.imageGenerationWaiting.push(nodeId);
     }
 };
 
 export const actions = {
-    setPage({ commit, dispatch }, { page }) {
+    setPage({ state, commit, dispatch }, { page }) {
         consola.trace('PageBuilder: Set page via action: ', page);
+        // register all possible reporting content
         commit('setPage', page);
+        if (state.isReporting) {
+            commit('addImageGenerationWaiting', { nodeId: 'layout' });
+            Object.keys(page?.wizardPageContent?.webNodes).forEach(nodeId => {
+                commit('addImageGenerationWaiting', { nodeId });
+            });
+            Object.keys(page?.wizardPageContent?.nodeViews).forEach(nodeId => {
+                commit('addImageGenerationWaiting', { nodeId });
+            });
+        }
 
         // clear any potential previous interactivity states
         dispatch('interactivity/clear');
@@ -335,13 +346,12 @@ export const actions = {
 
     setReportingContent({ state, commit }, { nodeId, reportingContent }) {
         commit('setReportingContent', { nodeId, reportingContent });
-        state.imageGenerationWaiting.splice(state.imageGenerationWaiting.indexOf(nodeId), 1); //TODO error handling
+        state.imageGenerationWaiting.splice(state.imageGenerationWaiting.indexOf(nodeId), 1); // TODO error handling
         if (state.imageGenerationWaiting.length === 0) {
             const actionId = 'temporaryActionIdForCompositeViewReportGeneration';
             let report = generateReportLayout(state.reportingContent);
-            report = unescape(encodeURIComponent(report))
+            report = decodeURIComponent(encodeURIComponent(report));
             window.EquoCommService.send(actionId, report);
-            consola.warn('Sending report', actionId);
         }
     }
 };

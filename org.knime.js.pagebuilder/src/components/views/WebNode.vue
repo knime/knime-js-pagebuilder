@@ -1,8 +1,10 @@
 <script>
+import { mapState } from 'vuex';
 import WebNodeIFrame from './WebNodeIFrame.vue';
 import Widget from '../widgets/Widget.vue';
 import { classToComponentMap, legacyExclusions } from '../widgets/widgets.config';
 import layoutMixin from '../mixins/layoutMixin';
+import NotDisplayable from './NotDisplayable.vue';
 
 /**
  * Wrapper for a WebNode based visualization implementation or a Widget. Determines the type of component to render,
@@ -14,7 +16,8 @@ import layoutMixin from '../mixins/layoutMixin';
 export default {
     components: {
         WebNodeIFrame,
-        Widget
+        Widget,
+        NotDisplayable
     },
     mixins: [layoutMixin],
     props: {
@@ -50,6 +53,7 @@ export default {
         };
     },
     computed: {
+        ...mapState('pagebuilder', ['isReporting']),
         nodeState() {
             return this.nodeConfig?.nodeInfo?.nodeState;
         },
@@ -73,6 +77,11 @@ export default {
         nodeConfig() {
             this.nodeViewIFrameKey += 1;
         }
+    },
+    mounted() {
+        if (this.isReporting) {
+            this.$store.dispatch('pagebuilder/setReportingContent', { nodeId: this.nodeId });
+        }
     }
 };
 </script>
@@ -82,8 +91,12 @@ export default {
     :class="layoutClasses"
     :style="layoutStyle"
   >
+    <NotDisplayable
+      v-if="isReporting"
+      not-supported
+    />
     <Widget
-      v-if="isWidget"
+      v-else-if="isWidget"
       :widget-name="widgetComponentName"
       :node-config="nodeConfig"
       :node-id="nodeId"
