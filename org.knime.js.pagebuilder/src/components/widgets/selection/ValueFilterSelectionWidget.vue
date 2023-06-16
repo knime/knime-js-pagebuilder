@@ -137,6 +137,7 @@ export default {
     <Label
       v-if="!isColumnLocked"
       text="Column"
+      large
     >
       <template #default="{ labelForId }">
         <Dropdown
@@ -154,6 +155,7 @@ export default {
     <Component
       :is="isList ? 'Label' : 'Fieldset'"
       :text="isColumnLocked ? label : 'Value'"
+      large
     >
       <template #default="{ labelForId }">
         <Multiselect

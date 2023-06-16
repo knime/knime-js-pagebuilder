@@ -142,6 +142,7 @@ export default {
   <div class="list-box-input">
     <Label
       :text="label"
+      large
     >
       <template #default="{ labelForId }">
         <TextArea

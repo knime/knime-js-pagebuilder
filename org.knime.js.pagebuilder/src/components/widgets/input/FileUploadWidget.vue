@@ -212,7 +212,10 @@ export default {
     :class="alignment"
     :title="description"
   >
-    <Label :text="label">
+    <Label
+      :text="label"
+      large
+    >
       <div class="upload-wrapper">
         <Button
           v-if="!uploading"

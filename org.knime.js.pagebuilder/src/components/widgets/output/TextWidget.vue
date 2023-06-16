@@ -110,6 +110,7 @@ export default {
   <div :title="description">
     <Label
       :text="label"
+      large
     />
     <!-- eslint-disable vue/no-v-text-v-html-on-component -->
     <Component

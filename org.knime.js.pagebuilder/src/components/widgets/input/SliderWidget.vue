@@ -289,6 +289,7 @@ export default {
       :text="label"
       :class="[`slider-${sliderSettings.orientation}-label`,
                { 'tooltip-label': tooltips }]"
+      large
     >
       <Slider
         :id="labelForId"

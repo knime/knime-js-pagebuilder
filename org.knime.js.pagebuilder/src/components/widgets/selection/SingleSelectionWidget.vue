@@ -102,6 +102,7 @@ export default {
   <Component
     :is="isRadioButtons ? 'Fieldset' : 'Label'"
     :text="label"
+    large
   >
     <template #default="{ labelForId }">
       <SingleSelect

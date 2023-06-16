@@ -135,6 +135,7 @@ export default {
   >
     <Label
       :text="label"
+      large
     />
     <!-- eslint-disable vue/no-v-html -->
     <div

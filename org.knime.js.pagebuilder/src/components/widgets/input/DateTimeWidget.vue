@@ -214,6 +214,7 @@ export default {
     #default="{ labelForId }"
     class="date-time-label"
     :text="label"
+    large
   >
     <DateTimeInput
       :id="labelForId"

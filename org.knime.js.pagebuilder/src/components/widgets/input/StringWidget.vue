@@ -119,6 +119,7 @@ export default {
     #default="{ labelForId }"
     class="label"
     :text="label"
+    large
   >
     <TextArea
       v-if="isMultiLine"

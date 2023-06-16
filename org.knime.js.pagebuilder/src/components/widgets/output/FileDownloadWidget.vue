@@ -96,6 +96,7 @@ export default {
   <div :title="description">
     <Label
       :text="label"
+      large
     />
     <FileLink
       v-if="link != null"

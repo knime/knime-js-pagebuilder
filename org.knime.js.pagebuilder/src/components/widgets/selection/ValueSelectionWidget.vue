@@ -137,12 +137,14 @@ export default {
     :is="isColumnLocked && !isRadioButtons ? 'Label' : 'Fieldset'"
     :text="label"
     class="fieldset"
+    large
   >
     <template #default="mainLabel">
       <Label
         v-if="!isColumnLocked"
         #default="columnLabel"
         text="Column"
+        large
       >
         <Dropdown
           :id="columnLabel.labelForId"
@@ -158,6 +160,7 @@ export default {
         v-if="!isColumnLocked"
         :generate-id="false"
         text="Value"
+        large
       />
       <SingleSelect
         :id="mainLabel.labelForId"

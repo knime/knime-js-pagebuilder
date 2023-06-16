@@ -146,6 +146,7 @@ export default {
       #default="{ labelForId }"
       class="label"
       text="User"
+      large
     >
       <InputField
         :id="labelForId"
@@ -160,6 +161,7 @@ export default {
       #default="{ labelForId }"
       class="label"
       text="Password"
+      large
     >
       <InputField
         :id="labelForId"

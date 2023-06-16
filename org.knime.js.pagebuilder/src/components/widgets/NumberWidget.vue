@@ -121,6 +121,7 @@ export default {
     <Label
       #default="{ labelForId }"
       :text="label"
+      large
     >
       <NumberInput
         :id="labelForId"
