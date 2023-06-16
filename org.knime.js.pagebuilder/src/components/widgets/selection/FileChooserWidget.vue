@@ -273,6 +273,7 @@ export default {
   <Label
     v-if="showWidget"
     :text="label"
+    large
   >
     <template #default="{ labelForId }">
       <div

@@ -123,6 +123,7 @@ export default {
       <Label
         :text="title"
         class="label"
+        large
       />
       <Button
         v-if="type !== 'warn'"

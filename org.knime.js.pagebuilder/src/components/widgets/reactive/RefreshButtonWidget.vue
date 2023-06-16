@@ -60,6 +60,7 @@ export default {
   <Label
     :text="viewRep.label"
     :title="viewRep.description"
+    large
   >
     <Button
       primary

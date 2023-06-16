@@ -46,7 +46,10 @@ export default {
   <div>
     <template v-if="showError">
       <SignWarningIcon class="icon" />
-      <Label :text="text" />
+      <Label
+        :text="text"
+        large
+      />
       <span v-if="hasErrorMessage">
         Error message on node: {{ nodeInfo.nodeErrorMessage }}
       </span>
