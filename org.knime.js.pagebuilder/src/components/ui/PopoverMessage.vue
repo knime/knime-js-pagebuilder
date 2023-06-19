@@ -202,10 +202,7 @@ export default {
   transition: max-height 0.3s ease-in;
   margin: auto 25%;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   box-shadow: 0 0 20px 0 rgb(0 0 0 / 50%);
 
   & header {
