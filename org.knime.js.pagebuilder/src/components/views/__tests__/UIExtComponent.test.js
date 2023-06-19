@@ -1,19 +1,25 @@
 import { expect, describe, afterEach, it, vi } from 'vitest';
 import { defineComponent } from 'vue';
+import { createStore } from 'vuex';
 import { shallowMount, mount } from '@vue/test-utils';
 import { KnimeService } from '@knime/ui-extension-service';
 import * as loadingModule from 'webapps-common/ui/util/loadComponentLibrary';
 import { componentExtensionConfig } from '@@/test/assets/views/extensionConfig';
 
 import UIExtComponent from '@/components/views/UIExtComponent.vue';
+import * as storeConfig from '@/store/pagebuilder';
 
 describe('UIExtComponent.vue', () => {
     const extensionConfig = componentExtensionConfig;
     const { resourceInfo } = extensionConfig;
+    const store = createStore({ modules: { pagebuilder: storeConfig } });
     const context = {
         props: { resourceLocation: resourceInfo.url },
         global: {
-            provide: { getKnimeService: () => new KnimeService(extensionConfig, vi.fn()) }
+            provide: { getKnimeService: () => new KnimeService(extensionConfig, vi.fn()) },
+            mocks: {
+                $store: store
+            }
         }
     };
     const mockComponentId = resourceInfo.id;

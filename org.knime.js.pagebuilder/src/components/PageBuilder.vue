@@ -21,7 +21,7 @@ export default {
         store.registerModule('pagebuilder/dialog', dialogStoreConfig);
     },
     computed: {
-        ...mapState('pagebuilder', ['isDialogLayout']),
+        ...mapState('pagebuilder', ['isDialogLayout', 'isReporting']),
         hasPage() {
             let page = this.$store.state.pagebuilder.page;
             return Boolean(page?.wizardPageContent);
@@ -33,6 +33,6 @@ export default {
 <template>
   <div>
     <Page v-if="hasPage" />
-    <AlertGlobal v-if="!isDialogLayout" />
+    <AlertGlobal v-if="!isDialogLayout && !isReporting" />
   </div>
 </template>

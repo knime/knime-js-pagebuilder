@@ -19,7 +19,12 @@ export default {
         showError: {
             type: Boolean,
             default: true
+        },
+        notSupported: {
+            type: Boolean,
+            default: false
         }
+
     },
     computed: {
         nodeAnnotation() {
@@ -43,8 +48,13 @@ export default {
 </script>
 
 <template>
-  <div>
-    <template v-if="showError">
+  <div :class="{'not-supported': notSupported}">
+    <template v-if="notSupported">
+      <span>
+        This view is currently not supported.
+      </span>
+    </template>
+    <template v-else-if="showError">
       <SignWarningIcon class="icon" />
       <Label
         :text="text"
@@ -69,6 +79,10 @@ div {
   border: 2px solid var(--knime-porcelain);
   padding: 18px 18px 18px 56px;
   font-size: 16px;
+
+  &.not-supported {
+    height: 100%;
+  }
 }
 
 .icon {

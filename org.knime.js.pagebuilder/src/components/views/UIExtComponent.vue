@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import { loadAsyncComponent } from 'webapps-common/ui/util/loadComponentLibrary';
 
 export default {
@@ -11,9 +12,15 @@ export default {
             default: null,
             type: String,
             required: true
+        },
+        nodeId: {
+            default: null,
+            type: String,
+            required: true
         }
     },
     computed: {
+        ...mapState('pagebuilder', ['isReporting']),
         knimeService() {
             return this.getKnimeService();
         },
@@ -39,6 +46,12 @@ export default {
             resourceLocation: this.resourceLocation,
             componentName: this.componentId
         });
+    },
+    // TODO once table respects reporting and text view too
+    mounted() {
+        if (this.isReporting) {
+            this.$store.dispatch('pagebuilder/setReportingContent', { nodeId: this.nodeId });
+        }
     }
 };
 </script>

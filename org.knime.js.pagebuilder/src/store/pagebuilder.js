@@ -1,12 +1,14 @@
 import { setProp } from '../util/nestedProperty';
 import overrideRequired from '../util/overrideRequired';
 import getLayoutNodeIds from '../util/getLayoutNodeIds';
+import { generateReportLayout } from '../util/reporting';
 
 export const namespaced = true;
 
 export const state = () => ({
     page: null,
     isDialogLayout: false,
+    isReporting: false,
     isWebNode: false,
     resourceBaseUrl: '',
     webNodesLoading: [],
@@ -14,7 +16,10 @@ export const state = () => ({
     pageValidators: {},
     pageValidationErrorSetters: {},
     nodesReExecuting: [],
-    reExecutionUpdates: 0
+    reExecutionUpdates: 0,
+
+    reportingContent: {},
+    imageGenerationWaiting: []
 });
 
 // TODO: WEBP-791 remove single-property getters
@@ -33,12 +38,15 @@ export const mutations = {
      */
     setPage(state, page) {
         state.page = page;
+        state.reportingContent = {};
+        state.imageGenerationWaiting = [];
         const webNodes = page?.wizardPageContent?.webNodes;
         if (typeof webNodes === 'object') {
             state.pageValidators = {};
             state.pageValueGetters = {};
         }
         state.isDialogLayout = Boolean(page?.wizardPageContent?.nodeViews?.DIALOG);
+        state.isReporting = Boolean(page?.wizardPageContent?.webNodePageConfiguration?.isReporting);
         state.isWebNode = Boolean(webNodes && Object.keys(webNodes).length);
     },
     /**
@@ -152,13 +160,31 @@ export const mutations = {
             state.nodesReExecuting = nodesReExecuting;
         }
         state.reExecutionUpdates = nodesReExecuting?.length ? state.reExecutionUpdates + 1 : 0;
+    },
+
+    setReportingContent(state, { nodeId, reportingContent }) {
+        state.reportingContent[nodeId] = reportingContent;
+    },
+    // TODO rethink renaming
+    addImageGenerationWaiting(state, { nodeId }) {
+        state.imageGenerationWaiting.push(nodeId);
     }
 };
 
 export const actions = {
-    setPage({ commit, dispatch }, { page }) {
+    setPage({ state, commit, dispatch }, { page }) {
         consola.trace('PageBuilder: Set page via action: ', page);
+        // register all possible reporting content
         commit('setPage', page);
+        if (state.isReporting) {
+            commit('addImageGenerationWaiting', { nodeId: 'layout' });
+            Object.keys(page?.wizardPageContent?.webNodes).forEach(nodeId => {
+                commit('addImageGenerationWaiting', { nodeId });
+            });
+            Object.keys(page?.wizardPageContent?.nodeViews).forEach(nodeId => {
+                commit('addImageGenerationWaiting', { nodeId });
+            });
+        }
 
         // clear any potential previous interactivity states
         dispatch('interactivity/clear');
@@ -316,5 +342,16 @@ export const actions = {
     setNodesReExecuting({ commit }, nodesReExecuting) {
         consola.debug('PageBuilder: setting re-executing nodes via action: ', nodesReExecuting);
         commit('setNodesReExecuting', nodesReExecuting);
+    },
+
+    setReportingContent({ state, commit }, { nodeId, reportingContent }) {
+        commit('setReportingContent', { nodeId, reportingContent });
+        state.imageGenerationWaiting.splice(state.imageGenerationWaiting.indexOf(nodeId), 1); // TODO error handling
+        if (state.imageGenerationWaiting.length === 0) {
+            const actionId = 'temporaryActionIdForCompositeViewReportGeneration';
+            let report = generateReportLayout(state.reportingContent);
+            report = decodeURIComponent(encodeURIComponent(report));
+            window.EquoCommService.send(actionId, report);
+        }
     }
 };

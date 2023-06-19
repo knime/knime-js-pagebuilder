@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import Row from './Row.vue';
 
 /**
@@ -42,12 +43,24 @@ export default {
                 return true;
             }
         }
+    },
+    computed: {
+        ...mapState('pagebuilder', ['isReporting'])
+    },
+    mounted() {
+        if (this.isReporting) {
+            // notify store that layout is rendered for report generation
+            this.$store.dispatch('pagebuilder/setReportingContent', { nodeId: 'layout' });
+        }
     }
 };
 </script>
 
 <template>
-  <div class="container-fluid">
+  <div
+    id="knime-layout"
+    class="container-fluid"
+  >
     <Row
       v-for="(row, index) in layout.rows"
       :key="index"

@@ -58,7 +58,7 @@ export default {
         };
     },
     computed: {
-        ...mapState('pagebuilder', ['isDialogLayout']),
+        ...mapState('pagebuilder', ['page', 'isDialogLayout', 'isReporting']),
         isUIExtComponent() {
             return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
         },
@@ -72,6 +72,13 @@ export default {
         },
         displayWarning() {
             return this.alert?.type === 'warn';
+        },
+        pageIdPrefix() {
+            return this.page?.wizardPageContent?.webNodePageConfiguration
+                ?.projectRelativePageIDSuffix;
+        },
+        nodeId() {
+            return this.pageIdPrefix ? `${this.pageIdPrefix}:${this.viewConfig.nodeID}` : this.viewConfig.nodeID;
         }
     },
     watch: {
@@ -102,7 +109,20 @@ export default {
                 this.callService,
                 this.pushEvent
             );
-            if (this.extensionConfig?.generatedImageActionId) {
+            if (this.isReporting) {
+                // const actionId = this.extensionConfig.generatedImageActionId;
+                // TODO remove once action is coming from backend
+                // eslint-disable-next-line vue/no-mutating-props
+                this.extensionConfig.generatedImageActionId = 'dummy';
+                if (!this.isUIExtComponent) {
+                    knimeService.registerImageGeneratedCallback(
+                        generatedImage => this.$store.dispatch('pagebuilder/setReportingContent', {
+                            nodeId: this.nodeId,
+                            reportingContent: `<img src="${generatedImage}" />`
+                        })
+                    );
+                }
+            } else if (this.extensionConfig?.generatedImageActionId) {
                 const actionId = this.extensionConfig.generatedImageActionId;
                 knimeService.registerImageGeneratedCallback(
                     generatedImage => window.EquoCommService.send(actionId, generatedImage)
@@ -165,6 +185,7 @@ export default {
     <UIExtComponent
       v-if="isUIExtComponent"
       :key="configKey + '-1'"
+      :node-id="nodeId"
       :resource-location="resourceLocation"
     />
     <UIExtIFrame
