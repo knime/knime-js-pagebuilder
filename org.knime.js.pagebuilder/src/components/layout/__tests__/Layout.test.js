@@ -39,7 +39,7 @@ describe('Layout.vue', () => {
 
         return {
             global: {
-                mock: {
+                mocks: {
                     $store: store
                 }
             },

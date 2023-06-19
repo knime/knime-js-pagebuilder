@@ -112,6 +112,7 @@ export default {
             if (this.isReporting) {
                 // const actionId = this.extensionConfig.generatedImageActionId;
                 // TODO remove once action is coming from backend
+                // eslint-disable-next-line vue/no-mutating-props
                 this.extensionConfig.generatedImageActionId = 'dummy';
                 if (!this.isUIExtComponent) {
                     knimeService.registerImageGeneratedCallback(

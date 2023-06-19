@@ -48,7 +48,7 @@ export default {
 </script>
 
 <template>
-  <div :class="{notSupported}">
+  <div :class="{'not-supported': notSupported}">
     <template v-if="notSupported">
       <span>
         This view is currently not supported.
@@ -77,7 +77,7 @@ div {
   padding: 18px 18px 18px 56px;
   font-size: 16px;
 
-  &.notSupported {
+  &.not-supported {
     height: 100%;
   }
 }
