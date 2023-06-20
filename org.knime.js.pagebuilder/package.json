@@ -26,7 +26,7 @@
     "consola": "2.15.3",
     "iframe-resizer": "4.2.10",
     "mime": "3.0.0",
-    "vue": "3.2.47",
+    "vue": "3.3.4",
     "vue-slider-component": "4.1.0-beta.7",
     "vuex": "4.1.0",
     "webapps-common": "file:webapps-common"
