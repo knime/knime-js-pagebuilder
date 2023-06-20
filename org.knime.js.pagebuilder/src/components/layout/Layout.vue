@@ -56,6 +56,7 @@ export default {
 };
 </script>
 
+<!-- knime-layout is used to extract the structure of the page for the report generation -->
 <template>
   <div
     id="knime-layout"

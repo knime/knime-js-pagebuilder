@@ -214,8 +214,4 @@ export default {
   bottom: 0;
   top: unset;
 }
-
-.fill-container {
-    height: 100%;
-}
 </style>
