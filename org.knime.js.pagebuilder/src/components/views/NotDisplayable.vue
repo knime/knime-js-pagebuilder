@@ -51,7 +51,7 @@ export default {
   <div :class="{'not-supported': notSupported}">
     <template v-if="notSupported">
       <span>
-        This view is currently not supported.
+        This view is not supported.
       </span>
     </template>
     <template v-else-if="showError">
