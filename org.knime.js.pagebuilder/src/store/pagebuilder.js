@@ -9,6 +9,7 @@ export const state = () => ({
     page: null,
     isDialogLayout: false,
     isReporting: false,
+    generatedReportActionId: null,
     isWebNode: false,
     resourceBaseUrl: '',
     webNodesLoading: [],
@@ -46,7 +47,8 @@ export const mutations = {
             state.pageValueGetters = {};
         }
         state.isDialogLayout = Boolean(page?.wizardPageContent?.nodeViews?.DIALOG);
-        state.isReporting = Boolean(page?.wizardPageContent?.webNodePageConfiguration?.isReporting);
+        state.generatedReportActionId = page?.wizardPageContent?.webNodePageConfiguration?.generatedReportActionId;
+        state.isReporting = Boolean(state.generatedReportActionId);
         state.isWebNode = Boolean(webNodes && Object.keys(webNodes).length);
     },
     /**
@@ -348,10 +350,9 @@ export const actions = {
         commit('setReportingContent', { nodeId, reportingContent });
         state.imageGenerationWaiting.splice(state.imageGenerationWaiting.indexOf(nodeId), 1); // TODO error handling
         if (state.imageGenerationWaiting.length === 0) {
-            const actionId = 'temporaryActionIdForCompositeViewReportGeneration';
             let report = generateReportLayout(state.reportingContent);
             report = decodeURIComponent(encodeURIComponent(report));
-            window.EquoCommService.send(actionId, report);
+            window.EquoCommService.send(state.generatedReportActionId, report);
         }
     }
 };
