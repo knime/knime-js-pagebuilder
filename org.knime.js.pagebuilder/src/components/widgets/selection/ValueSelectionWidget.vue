@@ -137,7 +137,7 @@ export default {
     :is="isColumnLocked && !isRadioButtons ? 'Label' : 'Fieldset'"
     :text="label"
     class="fieldset"
-    large
+    :large="isColumnLocked && !isRadioButtons"
   >
     <template #default="mainLabel">
       <Label

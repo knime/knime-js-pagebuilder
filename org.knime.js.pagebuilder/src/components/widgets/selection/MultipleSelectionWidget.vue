@@ -97,7 +97,7 @@ export default {
   <Component
     :is="isList ? 'Label' : 'Fieldset'"
     :text="label"
-    large
+    :large="isList"
   >
     <template #default="{ labelForId }">
       <Multiselect

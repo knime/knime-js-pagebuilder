@@ -155,7 +155,7 @@ export default {
     <Component
       :is="isList ? 'Label' : 'Fieldset'"
       :text="isColumnLocked ? label : 'Value'"
-      large
+      :large="isList"
     >
       <template #default="{ labelForId }">
         <Multiselect
