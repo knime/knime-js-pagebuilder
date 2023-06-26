@@ -221,7 +221,7 @@ export default {
   max-width: 100%;
 }
 
-@media (min-width: 576px) {
+@media (width >= 576px) {
   .col-sm-1 {
     flex: 0 0 calc(100% / 12);
     max-width: calc(100% / 12);
@@ -283,7 +283,7 @@ export default {
   }
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .col-md-1 {
     flex: 0 0 calc(100% / 12);
     max-width: calc(100% / 12);
@@ -345,7 +345,7 @@ export default {
   }
 }
 
-@media (min-width: 992px) {
+@media (width >= 992px) {
   .col-lg-1 {
     flex: 0 0 calc(100% / 12);
     max-width: calc(100% / 12);
@@ -407,7 +407,7 @@ export default {
   }
 }
 
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   .col-xl-1 {
     flex: 0 0 calc(100% / 12);
     max-width: calc(100% / 12);
