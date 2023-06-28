@@ -46,12 +46,6 @@ export default {
             resourceLocation: this.resourceLocation,
             componentName: this.componentId
         });
-    },
-    // TODO once table respects reporting and text view too
-    mounted() {
-        if (this.isReporting) {
-            this.$store.dispatch('pagebuilder/setReportingContent', { nodeId: this.nodeId });
-        }
     }
 };
 </script>
