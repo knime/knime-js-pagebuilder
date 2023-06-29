@@ -118,7 +118,7 @@ export default {
                     knimeService.registerImageGeneratedCallback(
                         generatedImage => this.$store.dispatch('pagebuilder/setReportingContent', {
                             nodeId: this.nodeId,
-                            reportingContent: `<img src="${generatedImage}" />`
+                            reportingContent: `<img style="width:${this.$el.offsetWidth}px" src="${generatedImage}" />`
                         })
                     );
                 }
