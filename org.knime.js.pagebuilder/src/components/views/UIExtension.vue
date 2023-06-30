@@ -113,7 +113,7 @@ export default {
                 // const actionId = this.extensionConfig.generatedImageActionId;
                 // TODO remove once action is coming from backend
                 // eslint-disable-next-line vue/no-mutating-props
-                this.extensionConfig.generatedImageActionId = 'dummy';
+                this.extensionConfig.generatedImageActionId = 'generatingReportContent';
                 if (!this.isUIExtComponent) {
                     knimeService.registerImageGeneratedCallback(
                         generatedImage => this.$store.dispatch('pagebuilder/setReportingContent', {
