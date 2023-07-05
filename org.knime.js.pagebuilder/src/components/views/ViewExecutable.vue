@@ -52,6 +52,12 @@ export default {
                 extensionConfig: this.extensionConfig,
                 action: 'execute'
             });
+            /**
+             * TODO: UIEXT-1074: Rethink if this is necessary. We need this for now as otherwise
+             * the ViewExecutable will stay forever in the NodeView. This currently leads to the bug
+             * that dirtySettings calls during execution are overwritten here.
+             */
+            this.$store.dispatch('pagebuilder/dialog/cleanSettings');
         },
         showAlert() {
             const nodeInfo = this.extensionConfig.nodeInfo;
