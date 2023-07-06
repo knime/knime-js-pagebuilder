@@ -119,6 +119,10 @@ export default {
     bottom: 0;
     z-index: 10;
 
+    :deep(section .grid-container) {
+      padding: 0 15px;
+    }
+
     & :deep(.panel) {
       padding-left: 25%;
       margin-left: -25%;
