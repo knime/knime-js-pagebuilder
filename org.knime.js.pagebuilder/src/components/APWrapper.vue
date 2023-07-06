@@ -16,12 +16,16 @@ export default {
         };
     },
     computed: {
-        ...mapState('pagebuilder', ['isDialogLayout']),
+        ...mapState('pagebuilder', ['isDialogLayout', 'isReporting']),
         debugPort() {
             return this.debugInfo?.remoteDebuggingPort;
         },
-        isHeadless() {
-            return Boolean(window.headless);
+        classes() {
+            let classes = ['ap-wrapper'];
+            if (window.headless || this.isReporting) {
+                classes.push('headless');
+            }
+            return classes;
         }
     },
     created() {
@@ -39,7 +43,7 @@ export default {
 </script>
 
 <template>
-  <div :class="[ 'ap-wrapper', {headless: isHeadless }]">
+  <div :class="classes">
     <PageBuilder />
     <template v-if="debugPort">
       <DebugButton :debug-port="debugPort" />
