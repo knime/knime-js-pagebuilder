@@ -51,5 +51,14 @@ export default {
 </script>
 
 <template>
-  <component :is="componentId" />
+  <component
+    :is="componentId"
+    class="ui-ext-component"
+  />
 </template>
+
+<style scoped>
+.ui-ext-component {
+    overflow: hidden;
+}
+</style>
