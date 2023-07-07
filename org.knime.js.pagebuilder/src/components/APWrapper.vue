@@ -57,6 +57,7 @@ export default {
 @import url("webapps-common/ui/css/variables");
 @import url("webapps-common/ui/css/basics");
 @import url("webapps-common/ui/css/fonts");
+@import url("webapps-common/ui/css/grid");
 
 .ap-wrapper:not(.headless) {
   padding: 0 15px; /* simulate reduced WebPortal margins */
