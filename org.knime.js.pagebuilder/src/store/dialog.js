@@ -4,6 +4,7 @@ export const state = () => ({
   applySettings: null,
   dirtySettings: false,
   dirtyModelSettings: false,
+  settingsOnClean: null,
 });
 
 export const mutations = {
@@ -14,9 +15,10 @@ export const mutations = {
     }
   },
 
-  cleanSettings(state) {
+  cleanSettings(state, currentSettings) {
     state.dirtySettings = false;
     state.dirtyModelSettings = false;
+    state.settingsOnClean = currentSettings;
   },
 
   /**
@@ -36,8 +38,8 @@ export const actions = {
     commit("dirtySettings", isModelSetting);
   },
 
-  cleanSettings({ commit }) {
-    commit("cleanSettings");
+  cleanSettings({ commit }, currentSettings) {
+    commit("cleanSettings", currentSettings);
   },
 
   /**

@@ -69,6 +69,7 @@ export default {
   },
   computed: {
     ...mapState("pagebuilder", ["page", "isDialogLayout", "isReporting"]),
+    ...mapState("pagebuilder/dialog", ["settingsOnClean"]),
     isUIExtComponent() {
       return this.extensionConfig?.resourceInfo?.type === "VUE_COMPONENT_LIB";
     },
@@ -128,8 +129,12 @@ export default {
       const ServiceConstructor = this.isUIExtComponent
         ? KnimeService
         : IFrameKnimeServiceAdapter;
+      const extensionConfig = {
+        ...toRaw(this.extensionConfig),
+        initialDialogState: toRaw(this.settingsOnClean),
+      };
       let knimeService = new ServiceConstructor(
-        toRaw(this.extensionConfig),
+        extensionConfig,
         this.callService,
         this.pushEvent,
       );

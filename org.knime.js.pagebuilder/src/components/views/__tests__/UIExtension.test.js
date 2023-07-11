@@ -7,6 +7,7 @@ import * as pagebuilderStoreConfig from "@/store/pagebuilder";
 import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
+import * as dialogStoreConfig from "@/store/dialog";
 import UIExtension from "@/components/views/UIExtension.vue";
 import UIExtComponent from "@/components/views/UIExtComponent.vue";
 import UIExtIFrame from "@/components/views/UIExtIFrame.vue";
@@ -25,6 +26,7 @@ describe("UIExtension.vue", () => {
     registerServiceMock,
     deregisterServiceMock,
     setReportingContentMock = vi.fn(),
+    settingsOnClean,
   }) => {
     let storeConfig = {
       modules: {
@@ -36,6 +38,13 @@ describe("UIExtension.vue", () => {
           },
         },
         "pagebuilder/alert": alertStoreConfig,
+        "pagebuilder/dialog": {
+          ...dialogStoreConfig,
+          state: {
+            ...dialogStoreConfig.state,
+            settingsOnClean,
+          },
+        },
         "pagebuilder/service": {
           ...serviceStoreConfig,
           actions: {
@@ -163,6 +172,26 @@ describe("UIExtension.vue", () => {
     });
     expect(KnimeService).toBeCalledWith(
       props.extensionConfig,
+      wrapper.vm.callService,
+      wrapper.vm.pushEvent,
+    );
+  });
+
+  it("supplies KnimeService instance with dialog data if they are present", () => {
+    let props = getMockComponentProps();
+    const initialDialogState = { foo: "bar" };
+    let wrapper = shallowMount(UIExtension, {
+      global: {
+        mocks: {
+          $store: createPagebuilderStore({
+            settingsOnClean: initialDialogState,
+          }),
+        },
+      },
+      props,
+    });
+    expect(KnimeService).toBeCalledWith(
+      { ...props.extensionConfig, initialDialogState },
       wrapper.vm.callService,
       wrapper.vm.pushEvent,
     );

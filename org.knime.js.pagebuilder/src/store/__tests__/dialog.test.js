@@ -20,6 +20,7 @@ describe("dialog store", () => {
       applySettings: null,
       dirtySettings: false,
       dirtyModelSettings: false,
+      settingsOnClean: null,
     });
   });
 
@@ -41,9 +42,11 @@ describe("dialog store", () => {
     });
 
     it("cleans all settings", async () => {
-      await store.dispatch("cleanSettings");
+      const settingsOnClean = { foo: "bar" };
+      await store.dispatch("cleanSettings", settingsOnClean);
       expect(store.state.dirtySettings).toBe(false);
       expect(store.state.dirtyModelSettings).toBe(false);
+      expect(store.state.settingsOnClean).toStrictEqual(settingsOnClean);
     });
 
     it("sets the applySettings method", async () => {
