@@ -62,6 +62,9 @@ export default {
         isUIExtComponent() {
             return this.extensionConfig?.resourceInfo?.type === 'VUE_COMPONENT_LIB';
         },
+        isPythonView() {
+            return this.extensionConfig?.nodeInfo?.name === 'Python View';
+        },
         resourceLocation() {
             return this.$store.getters['api/uiExtResourceLocation']({
                 resourceInfo: this.extensionConfig?.resourceInfo
@@ -121,6 +124,12 @@ export default {
                             reportingContent: `<img style="width:${this.$el.offsetWidth}px" src="${generatedImage}" />`
                         })
                     );
+                }
+                if (this.isPythonView) {
+                    this.$store.dispatch('pagebuilder/setReportingContent', {
+                        nodeId: this.nodeId,
+                        reportingContent: null
+                    });
                 }
             } else if (this.extensionConfig?.generatedImageActionId) {
                 const actionId = this.extensionConfig.generatedImageActionId;
@@ -182,27 +191,33 @@ export default {
     :class="layoutClasses"
     :style="layoutStyle"
   >
-    <UIExtComponent
-      v-if="isUIExtComponent"
-      :key="configKey + '-1'"
-      :node-id="nodeId"
-      :resource-location="resourceLocation"
+    <NotDisplayable
+      v-if="isReporting && isPythonView"
+      not-supported
     />
-    <UIExtIFrame
-      v-else
-      :key="configKey + '-2'"
-      :resource-location="resourceLocation"
-    />
-    <AlertLocal
-      v-if="displayError"
-      active
-      @show-alert="showAlert(alert)"
-    />
-    <WarningLocal
-      v-if="displayWarning"
-      class="local-warning"
-      @click="showAlert(alert)"
-    />
+    <template v-else>
+        <UIExtComponent
+        v-if="isUIExtComponent"
+        :key="configKey + '-1'"
+        :node-id="nodeId"
+        :resource-location="resourceLocation"
+        />
+        <UIExtIFrame
+        v-else
+        :key="configKey + '-2'"
+        :resource-location="resourceLocation"
+        />
+        <AlertLocal
+        v-if="displayError"
+        active
+        @show-alert="showAlert(alert)"
+        />
+        <WarningLocal
+        v-if="displayWarning"
+        class="local-warning"
+        @click="showAlert(alert)"
+        />
+    </template>
   </div>
 </template>
 
