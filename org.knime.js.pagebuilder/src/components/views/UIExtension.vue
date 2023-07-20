@@ -169,6 +169,12 @@ export default {
       if (event?.type === "alert") {
         return this.handleAlert(event.alert);
       }
+      if (event?.type === "reportingContent") {
+        return this.$store.dispatch("pagebuilder/setReportingContent", {
+          nodeId: this.nodeId,
+          reportingContent: event.reportingContent,
+        });
+      }
       return this.$store.dispatch("pagebuilder/service/pushEvent", event);
     },
     handleAlert(alert) {
