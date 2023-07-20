@@ -48,6 +48,11 @@ describe("UIExtension.vue", () => {
           actions: {
             callService: callServiceMock,
           },
+          getters: {
+            ...apiStoreConfig.getters,
+            uiExtResourceLocation: () => () =>
+              "http://localhost:8080/your_resource.html",
+          },
           namespaced: true,
         },
       },
