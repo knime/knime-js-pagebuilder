@@ -154,12 +154,10 @@ describe("NumberWidget.vue", () => {
             template: "<div />",
             methods: {
               getValue: vi.fn().mockReturnValue(null),
-              validate: vi
-                .fn()
-                .mockReturnValue({
-                  isValid: false,
-                  errorMessage: "test Error Message",
-                }),
+              validate: vi.fn().mockReturnValue({
+                isValid: false,
+                errorMessage: "test Error Message",
+              }),
             },
           },
         },
