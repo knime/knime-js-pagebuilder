@@ -1,65 +1,69 @@
 <script>
-
 const MAX_SPINNER_HEIGHT = 40; // px
 /**
  * Animation overlay for individual nodes or widgets while they are re-executing.
  */
 export default {
-    props: {
-        show: {
-            type: Boolean,
-            default: false
-        },
-        showSpinner: {
-            type: Boolean,
-            default: false
-        },
-        useCssTransition: {
-            type: Boolean,
-            default: true
-        }
+  props: {
+    show: {
+      type: Boolean,
+      default: false,
     },
-    data() {
-        return {
-            overlayRefAvailable: false,
-            SVG_STROKE_PIXEL_OFFSET: 3 // px
-        };
+    showSpinner: {
+      type: Boolean,
+      default: false,
     },
-    computed: {
-        spinnerHeight() {
-            return this.showSpinner ? this.getSpinnerHeight() : 0;
-        },
-        circleRadius() {
-            return Math.max((this.spinnerHeight / 2) - this.SVG_STROKE_PIXEL_OFFSET, 0);
-        },
-        svgLeft() {
-            return this.showSpinner ? this.getHalfOverlayWidth() : 0;
-        },
-        svgTop() {
-            return this.showSpinner ? this.getHalfOverlayHeight() : 0;
-        },
-        svgStyle() {
-            return `height:${this.spinnerHeight}px;` +
-                `width:${this.spinnerHeight}px;` +
-                `top:${this.svgTop - (this.spinnerHeight / 2)}px;` +
-                `left:${this.svgLeft - (this.spinnerHeight / 2)}px;`;
-        },
-        spinnerStyle() {
-            return `transform-origin: ${this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET}px` +
-                ` ${this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET}px 0;`;
-        }
+    useCssTransition: {
+      type: Boolean,
+      default: true,
     },
-    methods: {
-        getSpinnerHeight() {
-            return Math.min(this.getHalfOverlayHeight(), MAX_SPINNER_HEIGHT);
-        },
-        getHalfOverlayWidth() {
-            return this.$refs.overlay?.offsetWidth / 2 || 0;
-        },
-        getHalfOverlayHeight() {
-            return this.$refs.overlay?.offsetHeight / 2 || 0;
-        }
-    }
+  },
+  data() {
+    return {
+      overlayRefAvailable: false,
+      SVG_STROKE_PIXEL_OFFSET: 3, // px
+    };
+  },
+  computed: {
+    spinnerHeight() {
+      return this.showSpinner ? this.getSpinnerHeight() : 0;
+    },
+    circleRadius() {
+      return Math.max(this.spinnerHeight / 2 - this.SVG_STROKE_PIXEL_OFFSET, 0);
+    },
+    svgLeft() {
+      return this.showSpinner ? this.getHalfOverlayWidth() : 0;
+    },
+    svgTop() {
+      return this.showSpinner ? this.getHalfOverlayHeight() : 0;
+    },
+    svgStyle() {
+      return (
+        `height:${this.spinnerHeight}px;` +
+        `width:${this.spinnerHeight}px;` +
+        `top:${this.svgTop - this.spinnerHeight / 2}px;` +
+        `left:${this.svgLeft - this.spinnerHeight / 2}px;`
+      );
+    },
+    spinnerStyle() {
+      return (
+        `transform-origin: ${
+          this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET
+        }px` + ` ${this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET}px 0;`
+      );
+    },
+  },
+  methods: {
+    getSpinnerHeight() {
+      return Math.min(this.getHalfOverlayHeight(), MAX_SPINNER_HEIGHT);
+    },
+    getHalfOverlayWidth() {
+      return this.$refs.overlay?.offsetWidth / 2 || 0;
+    },
+    getHalfOverlayHeight() {
+      return this.$refs.overlay?.offsetHeight / 2 || 0;
+    },
+  },
 };
 </script>
 
@@ -144,5 +148,4 @@ div {
   pointer-events: all;
   top: 0;
 }
-
 </style>

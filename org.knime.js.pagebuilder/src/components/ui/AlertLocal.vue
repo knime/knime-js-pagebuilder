@@ -1,6 +1,6 @@
 <script>
-import Popover from './Popover.vue';
-import SignWarningIcon from 'webapps-common/ui/assets/img/icons/sign-warning.svg';
+import Popover from "./Popover.vue";
+import SignWarningIcon from "webapps-common/ui/assets/img/icons/sign-warning.svg";
 
 /**
  * This is the local alert/error management component created for use with the NodeViewIFrame. Its main use is to
@@ -10,28 +10,28 @@ import SignWarningIcon from 'webapps-common/ui/assets/img/icons/sign-warning.svg
  * this component is active for proper display.
  */
 export default {
-    components: {
-        Popover,
-        SignWarningIcon
+  components: {
+    Popover,
+    SignWarningIcon,
+  },
+  props: {
+    active: {
+      type: Boolean,
+      default: false,
     },
-    props: {
-        active: {
-            type: Boolean,
-            default: false
-        }
+  },
+  emits: ["showAlert"],
+  methods: {
+    /**
+     * Emits an event when the popover icon is clicked to allow the parent component to display more information.
+     *
+     * @emits {showAlert}
+     * @returns {undefined}
+     */
+    showAlert() {
+      this.$emit("showAlert");
     },
-    emits: ['showAlert'],
-    methods: {
-        /**
-         * Emits an event when the popover icon is clicked to allow the parent component to display more information.
-         *
-         * @emits {showAlert}
-         * @returns {undefined}
-         */
-        showAlert() {
-            this.$emit('showAlert');
-        }
-    }
+  },
 };
 </script>
 

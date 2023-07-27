@@ -86,7 +86,7 @@
       "selectionTranslators": null,
       "version": "4.5.0-nightly"
     },
-    "webNodes": { },
+    "webNodes": {},
     "nodeViews": {
       "1:0:2": {
         "nodeId": "1:0:2",

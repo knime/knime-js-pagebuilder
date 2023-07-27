@@ -847,9 +847,7 @@
           "type": "List",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -904,9 +902,7 @@
           "type": "Dropdown",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -961,9 +957,7 @@
           "type": "Radio buttons (horizontal)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -1018,9 +1012,7 @@
           "type": "List",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -1075,9 +1067,7 @@
           "type": "Radio buttons (horizontal)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -1132,9 +1122,7 @@
           "type": "Radio buttons (vertical)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -1179,10 +1167,7 @@
           "columnType": "All",
           "lockColumn": false,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -1642,10 +1627,7 @@
           "columnType": "All",
           "lockColumn": false,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -2105,10 +2087,7 @@
           "columnType": "All",
           "lockColumn": false,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -2578,9 +2557,7 @@
           "type": "List",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -2625,10 +2602,7 @@
           "columnType": "All",
           "lockColumn": true,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -3098,9 +3072,7 @@
           "type": "Radio buttons (horizontal)",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -3145,10 +3117,7 @@
           "columnType": "All",
           "lockColumn": false,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -3618,9 +3587,7 @@
           "type": "List",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -3665,10 +3632,7 @@
           "columnType": "All",
           "lockColumn": true,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -4138,9 +4102,7 @@
           "type": "Radio buttons (horizontal)",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -4185,10 +4147,7 @@
           "columnType": "All",
           "lockColumn": false,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -4648,10 +4607,7 @@
           "columnType": "All",
           "lockColumn": false,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -5111,10 +5067,7 @@
           "columnType": "All",
           "lockColumn": true,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -5574,10 +5527,7 @@
           "columnType": "All",
           "lockColumn": false,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -6047,9 +5997,7 @@
           "type": "Dropdown",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -6094,10 +6042,7 @@
           "columnType": "All",
           "lockColumn": true,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",
@@ -6567,9 +6512,7 @@
           "type": "Radio buttons (vertical)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.selection.value.ValueSelectionNodeValue",
@@ -6614,10 +6557,7 @@
           "columnType": "All",
           "lockColumn": true,
           "possibleValues": {
-            "BooleanCol": [
-              "true",
-              "false"
-            ],
+            "BooleanCol": ["true", "false"],
             "LongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnNameLongStringColumnName": [
               "semicolon;semicolon",
               "backslash\bakslash",

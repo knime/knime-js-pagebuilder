@@ -1,2 +1,2 @@
-import PageBuilder from './components/PageBuilder.vue';
+import PageBuilder from "./components/PageBuilder.vue";
 export { PageBuilder };

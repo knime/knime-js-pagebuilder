@@ -414,17 +414,13 @@
       "blackBoard": null,
       "selectionTranslators": [
         {
-          "targetIDs": [
-            "d42bc59c-83ba-4829-9571-c23d1f522876"
-          ],
+          "targetIDs": ["d42bc59c-83ba-4829-9571-c23d1f522876"],
           "sourceID": "cfb7c556-6014-4af2-ab51-7f7fe7f6db21",
           "mapping": null,
           "forward": false
         },
         {
-          "targetIDs": [
-            "d42bc59c-83ba-4829-9571-c23d1f522876"
-          ],
+          "targetIDs": ["d42bc59c-83ba-4829-9571-c23d1f522876"],
           "sourceID": "cfb7c556-6014-4af2-ab51-7f7fe7f6db21",
           "mapping": null,
           "forward": false
@@ -451,23 +447,14 @@
           "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
-            "connect": [
-              false,
-              false
-            ],
+            "connect": [false, false],
             "direction": "ltr",
             "orientation": "horizontal",
             "range": {
-              "min": [
-                0.001
-              ],
-              "max": [
-                1
-              ]
+              "min": [0.001],
+              "max": [1]
             },
-            "start": [
-              0.5
-            ]
+            "start": [0.5]
           },
           "useCustomMax": false,
           "useCustomMin": false,
@@ -511,10 +498,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "step": 0.1,
-            "connect": [
-              true,
-              true
-            ],
+            "connect": [true, true],
             "tooltips": [
               {
                 "negative": "-",
@@ -536,16 +520,10 @@
             "direction": "ltr",
             "orientation": "horizontal",
             "range": {
-              "min": [
-                0
-              ],
-              "max": [
-                10
-              ]
+              "min": [0],
+              "max": [10]
             },
-            "start": [
-              5
-            ]
+            "start": [5]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -588,13 +566,8 @@
           "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
-            "connect": [
-              true,
-              false
-            ],
-            "tooltips": [
-              true
-            ],
+            "connect": [true, false],
+            "tooltips": [true],
             "pips": {
               "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
               "format": {
@@ -609,16 +582,10 @@
             "direction": "ltr",
             "orientation": "vertical",
             "range": {
-              "min": [
-                0
-              ],
-              "max": [
-                100
-              ]
+              "min": [0],
+              "max": [100]
             },
-            "start": [
-              50
-            ]
+            "start": [50]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -662,10 +629,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "step": 0.1,
-            "connect": [
-              true,
-              true
-            ],
+            "connect": [true, true],
             "tooltips": [
               {
                 "negative": "-",
@@ -682,25 +646,17 @@
                 "mark": "."
               },
               "mode": "count",
-              "values": [
-                5
-              ],
+              "values": [5],
               "stepped": true,
               "density": 3
             },
             "direction": "ltr",
             "orientation": "vertical",
             "range": {
-              "min": [
-                0
-              ],
-              "max": [
-                10
-              ]
+              "min": [0],
+              "max": [10]
             },
-            "start": [
-              5
-            ]
+            "start": [5]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -743,10 +699,7 @@
           "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
-            "connect": [
-              false,
-              true
-            ],
+            "connect": [false, true],
             "tooltips": [
               {
                 "negative": "-",
@@ -763,25 +716,17 @@
                 "mark": "."
               },
               "mode": "count",
-              "values": [
-                10
-              ],
+              "values": [10],
               "stepped": false,
               "density": 3
             },
             "direction": "rtl",
             "orientation": "vertical",
             "range": {
-              "min": [
-                0
-              ],
-              "max": [
-                100
-              ]
+              "min": [0],
+              "max": [100]
             },
-            "start": [
-              50
-            ]
+            "start": [50]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -824,10 +769,7 @@
           "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
-            "connect": [
-              false,
-              true
-            ],
+            "connect": [false, true],
             "tooltips": [
               {
                 "prefix": "$",
@@ -849,29 +791,17 @@
                 "mark": ","
               },
               "mode": "positions",
-              "values": [
-                0,
-                15,
-                50,
-                85,
-                100
-              ],
+              "values": [0, 15, 50, 85, 100],
               "stepped": false,
               "density": 3
             },
             "direction": "ltr",
             "orientation": "vertical",
             "range": {
-              "min": [
-                50
-              ],
-              "max": [
-                50.1
-              ]
+              "min": [50],
+              "max": [50.1]
             },
-            "start": [
-              50.05
-            ]
+            "start": [50.05]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -914,10 +844,7 @@
           "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
-            "connect": [
-              true,
-              true
-            ],
+            "connect": [true, true],
             "tooltips": [
               {
                 "prefix": "$",
@@ -938,27 +865,17 @@
                 "mark": "."
               },
               "mode": "values",
-              "values": [
-                10,
-                17,
-                21
-              ],
+              "values": [10, 17, 21],
               "stepped": true,
               "density": 3
             },
             "direction": "rtl",
             "orientation": "horizontal",
             "range": {
-              "min": [
-                5
-              ],
-              "max": [
-                25
-              ]
+              "min": [5],
+              "max": [25]
             },
-            "start": [
-              5
-            ]
+            "start": [5]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -1002,10 +919,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "step": 5,
-            "connect": [
-              true,
-              true
-            ],
+            "connect": [true, true],
             "tooltips": [
               {
                 "prefix": "$",
@@ -1031,16 +945,10 @@
             "direction": "rtl",
             "orientation": "vertical",
             "range": {
-              "min": [
-                5
-              ],
-              "max": [
-                25
-              ]
+              "min": [5],
+              "max": [25]
             },
-            "start": [
-              5
-            ]
+            "start": [5]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -1083,10 +991,7 @@
           "@class": "org.knime.js.base.node.widget.input.slider.SliderWidgetNodeRepresentation",
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
-            "connect": [
-              false,
-              false
-            ],
+            "connect": [false, false],
             "tooltips": [
               {
                 "prefix": "$",
@@ -1107,29 +1012,17 @@
                 "mark": "."
               },
               "mode": "positions",
-              "values": [
-                0,
-                25,
-                50,
-                75,
-                100
-              ],
+              "values": [0, 25, 50, 75, 100],
               "stepped": false,
               "density": 3
             },
             "direction": "ltr",
             "orientation": "vertical",
             "range": {
-              "min": [
-                5
-              ],
-              "max": [
-                25
-              ]
+              "min": [5],
+              "max": [25]
             },
-            "start": [
-              5
-            ]
+            "start": [5]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -1173,10 +1066,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "step": 20,
-            "connect": [
-              true,
-              false
-            ],
+            "connect": [true, false],
             "tooltips": [
               {
                 "prefix": "$",
@@ -1201,16 +1091,10 @@
             "direction": "rtl",
             "orientation": "horizontal",
             "range": {
-              "min": [
-                10
-              ],
-              "max": [
-                110
-              ]
+              "min": [10],
+              "max": [110]
             },
-            "start": [
-              15
-            ]
+            "start": [15]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -1254,10 +1138,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "step": 100,
-            "connect": [
-              true,
-              false
-            ],
+            "connect": [true, false],
             "pips": {
               "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
               "format": {
@@ -1273,16 +1154,10 @@
             "direction": "ltr",
             "orientation": "horizontal",
             "range": {
-              "min": [
-                0
-              ],
-              "max": [
-                1000
-              ]
+              "min": [0],
+              "max": [1000]
             },
-            "start": [
-              50
-            ]
+            "start": [50]
           },
           "useCustomMax": true,
           "useCustomMin": true,
@@ -1329,24 +1204,13 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "direction": "ltr",
-            "start": [
-              0.5
-            ],
+            "start": [0.5],
             "range": {
-              "min": [
-                0
-              ],
-              "max": [
-                1
-              ]
+              "min": [0],
+              "max": [1]
             },
-            "connect": [
-              true,
-              false
-            ],
-            "tooltips": [
-              true
-            ],
+            "connect": [true, false],
+            "tooltips": [true],
             "pips": {
               "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
               "density": 5,

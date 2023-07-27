@@ -408,17 +408,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
-            "columns": [
-              "Universe_0_0",
-              "Universe_1_0"
-            ]
+            "columns": ["Universe_0_0", "Universe_1_0"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
-            "columns": [
-              "Universe_0_99",
-              "Universe_1_0"
-            ]
+            "columns": ["Universe_0_99", "Universe_1_0"]
           },
           "possibleColumns": [
             "Universe_0_0",
@@ -433,10 +427,7 @@
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
-          "columns": [
-            "Universe_0_0",
-            "Universe_1_0"
-          ]
+          "columns": ["Universe_0_0", "Universe_1_0"]
         },
         "customCSS": "",
         "namespace": "knimeColumnFilterWidget"
@@ -531,15 +522,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
-            "columns": [
-              "Cluster Membership"
-            ]
+            "columns": ["Cluster Membership"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
-            "columns": [
-              "Cluster Membership"
-            ]
+            "columns": ["Cluster Membership"]
           },
           "possibleColumns": [
             "Universe_0_0",
@@ -554,9 +541,7 @@
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.base.filter.column.ColumnFilterNodeValue",
-          "columns": [
-            "Cluster Membership"
-          ]
+          "columns": ["Cluster Membership"]
         },
         "customCSS": "",
         "namespace": "knimeColumnFilterWidget"

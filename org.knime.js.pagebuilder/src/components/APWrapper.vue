@@ -1,44 +1,44 @@
 <script>
-import { mapState } from 'vuex';
-import PageBuilder from './PageBuilder.vue';
-import DebugButton from './ui/DebugButton.vue';
-import RefreshButton from './ui/RefreshButton.vue';
+import { mapState } from "vuex";
+import PageBuilder from "./PageBuilder.vue";
+import DebugButton from "./ui/DebugButton.vue";
+import RefreshButton from "./ui/RefreshButton.vue";
 
 export default {
-    components: {
-        PageBuilder,
-        RefreshButton,
-        DebugButton
+  components: {
+    PageBuilder,
+    RefreshButton,
+    DebugButton,
+  },
+  data() {
+    return {
+      debugInfo: null,
+    };
+  },
+  computed: {
+    ...mapState("pagebuilder", ["isDialogLayout", "isReporting"]),
+    debugPort() {
+      return this.debugInfo?.remoteDebuggingPort;
     },
-    data() {
-        return {
-            debugInfo: null
-        };
+    classes() {
+      let classes = ["ap-wrapper"];
+      if (window.headless || this.isReporting) {
+        classes.push("headless");
+      }
+      return classes;
     },
-    computed: {
-        ...mapState('pagebuilder', ['isDialogLayout', 'isReporting']),
-        debugPort() {
-            return this.debugInfo?.remoteDebuggingPort;
-        },
-        classes() {
-            let classes = ['ap-wrapper'];
-            if (window.headless || this.isReporting) {
-                classes.push('headless');
-            }
-            return classes;
-        }
-    },
-    created() {
-        if (window.getDebugInfo) {
-            try {
-                this.debugInfo = JSON.parse(window.getDebugInfo());
-            } catch (err) {
-                consola.debug('Debug information present but unable to load.');
-            }
-        }
-
-        PageBuilder.initStore(this.$store);
+  },
+  created() {
+    if (window.getDebugInfo) {
+      try {
+        this.debugInfo = JSON.parse(window.getDebugInfo());
+      } catch (err) {
+        consola.debug("Debug information present but unable to load.");
+      }
     }
+
+    PageBuilder.initStore(this.$store);
+  },
 };
 </script>
 

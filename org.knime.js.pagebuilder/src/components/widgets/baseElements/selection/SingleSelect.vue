@@ -1,7 +1,7 @@
 <script>
-import RadioButtons from 'webapps-common/ui/components/forms/RadioButtons.vue';
-import ListBox from 'webapps-common/ui/components/forms/ListBox.vue';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
+import RadioButtons from "webapps-common/ui/components/forms/RadioButtons.vue";
+import ListBox from "webapps-common/ui/components/forms/ListBox.vue";
+import Dropdown from "webapps-common/ui/components/forms/Dropdown.vue";
 
 /**
  * SingleSelect Component
@@ -13,118 +13,120 @@ import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
  * and can be used in the same way as any of it's children components (RadioButtons, Dropdown, ListBox).
  */
 export default {
-    components: {
-        ListBox,
-        Dropdown,
-        RadioButtons
+  components: {
+    ListBox,
+    Dropdown,
+    RadioButtons,
+  },
+  props: {
+    isValid: {
+      default: true,
+      type: Boolean,
     },
-    props: {
-        isValid: {
-            default: true,
-            type: Boolean
-        },
-        id: {
-            type: String,
-            default: null
-        },
-        /**
-         * @values List, Dropdown, Radio buttons (horizontal), Radio buttons (vertical)
-         */
-        type: {
-            default: 'List',
-            type: String
-        },
-        /**
-         * List of possible values. Each item is used as text and id
-         */
-        possibleValueList: {
-            type: Array,
-            default: () => [],
-            validator(values) {
-                return Array.isArray(values);
-            }
-        },
-        limitNumberVisOptions: {
-            type: Boolean,
-            default: false
-        },
-        numberVisOptions: {
-            type: Number,
-            default: 0
-        },
-        description: {
-            type: String,
-            default: ''
-        },
-        label: {
-            type: String,
-            default: ''
-        },
-        modelValue: {
-            type: String,
-            default: () => ''
-        }
+    id: {
+      type: String,
+      default: null,
     },
-    emits: ['update:modelValue'],
-    data() {
-        return {
-            customValidationErrorMessage: null
-        };
+    /**
+     * @values List, Dropdown, Radio buttons (horizontal), Radio buttons (vertical)
+     */
+    type: {
+      default: "List",
+      type: String,
     },
-    computed: {
-        possibleChoices() {
-            // remove duplicate elements (as they cause key problems); id must be unique
-            return [...new Set(this.possibleValueList)].map((x) => ({
-                id: x,
-                text: x
-            }));
-        },
-        maxVisibleListEntries() {
-            if (this.limitNumberVisOptions) {
-                return this.numberVisOptions;
-            }
-            return 0;
-        },
-        isList() {
-            return this.type === 'List';
-        },
-        isDropdown() {
-            return this.type === 'Dropdown';
-        },
-        isRadioButtons() {
-            return this.type === 'Radio buttons (vertical)' ||
-                this.type === 'Radio buttons (horizontal)';
-        },
-        radioButtonsAlignment() {
-            if (this.type === 'Radio buttons (vertical)') {
-                return 'vertical';
-            } else if (this.type === 'Radio buttons (horizontal)') {
-                return 'horizontal';
-            }
-            return null;
-        }
+    /**
+     * List of possible values. Each item is used as text and id
+     */
+    possibleValueList: {
+      type: Array,
+      default: () => [],
+      validator(values) {
+        return Array.isArray(values);
+      },
     },
-    methods: {
-        onChange(value) {
-            this.$emit('update:modelValue', value);
-        },
-        /**
-         * Has a selection?
-         * @returns {boolean}
-         */
-        hasSelection() {
-            return this.$refs.form.hasSelection();
-        },
-        /**
-         * Validation
-         * @returns {Object}
-         */
-        validate() {
-            return typeof this.$refs.form.validate === 'function'
-                ? this.$refs.form.validate()
-                : { isValid: true };
-        }
-    }
+    limitNumberVisOptions: {
+      type: Boolean,
+      default: false,
+    },
+    numberVisOptions: {
+      type: Number,
+      default: 0,
+    },
+    description: {
+      type: String,
+      default: "",
+    },
+    label: {
+      type: String,
+      default: "",
+    },
+    modelValue: {
+      type: String,
+      default: () => "",
+    },
+  },
+  emits: ["update:modelValue"],
+  data() {
+    return {
+      customValidationErrorMessage: null,
+    };
+  },
+  computed: {
+    possibleChoices() {
+      // remove duplicate elements (as they cause key problems); id must be unique
+      return [...new Set(this.possibleValueList)].map((x) => ({
+        id: x,
+        text: x,
+      }));
+    },
+    maxVisibleListEntries() {
+      if (this.limitNumberVisOptions) {
+        return this.numberVisOptions;
+      }
+      return 0;
+    },
+    isList() {
+      return this.type === "List";
+    },
+    isDropdown() {
+      return this.type === "Dropdown";
+    },
+    isRadioButtons() {
+      return (
+        this.type === "Radio buttons (vertical)" ||
+        this.type === "Radio buttons (horizontal)"
+      );
+    },
+    radioButtonsAlignment() {
+      if (this.type === "Radio buttons (vertical)") {
+        return "vertical";
+      } else if (this.type === "Radio buttons (horizontal)") {
+        return "horizontal";
+      }
+      return null;
+    },
+  },
+  methods: {
+    onChange(value) {
+      this.$emit("update:modelValue", value);
+    },
+    /**
+     * Has a selection?
+     * @returns {boolean}
+     */
+    hasSelection() {
+      return this.$refs.form.hasSelection();
+    },
+    /**
+     * Validation
+     * @returns {Object}
+     */
+    validate() {
+      return typeof this.$refs.form.validate === "function"
+        ? this.$refs.form.validate()
+        : { isValid: true };
+    },
+  },
 };
 </script>
 

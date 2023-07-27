@@ -9,71 +9,61 @@
  * content; allowing the parent component to minimize or remove the popover as needed.
  */
 export default {
-    props: {
-        /**
-         * Controls the locality of the popover. `global` creates a sticky, fullscreen popover for the entire
-         * application. 'local' creates an overlay which is the full size of the parent container.
-         *
-         * @values global, local (default)
-         */
-        level: {
-            type: String,
-            default: 'local'
-        },
-        /**
-         * Opens and closes the alert from the parent.
-         */
-        active: {
-            type: Boolean,
-            default: false
-        },
-        /**
-         * Controls the transparent background color of the overlay. `error` creates a red-tinted, transparent
-         * background. Other values will use a light-gray tint.
-         *
-         * @values error (default), <anything else>
-         */
-        type: {
-            type: String,
-            default: 'error'
-        }
+  props: {
+    /**
+     * Controls the locality of the popover. `global` creates a sticky, fullscreen popover for the entire
+     * application. 'local' creates an overlay which is the full size of the parent container.
+     *
+     * @values global, local (default)
+     */
+    level: {
+      type: String,
+      default: "local",
     },
-    emits: ['clickAway'],
-    methods: {
-        /**
-         * Detects any clicks on the overlay, allowing the popover to be dismissed without having to click a
-         * specific button or control.
-         *
-         * @param {Object} e - the browser mouse event.
-         * @emits {clickAway} - can be used by parent to close the popover.
-         * @returns {undefined}
-         */
-        onClickAway(e) {
-            if (e.target === this.$refs.overlay) {
-                this.$emit('clickAway');
-            }
-        }
-    }
+    /**
+     * Opens and closes the alert from the parent.
+     */
+    active: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Controls the transparent background color of the overlay. `error` creates a red-tinted, transparent
+     * background. Other values will use a light-gray tint.
+     *
+     * @values error (default), <anything else>
+     */
+    type: {
+      type: String,
+      default: "error",
+    },
+  },
+  emits: ["clickAway"],
+  methods: {
+    /**
+     * Detects any clicks on the overlay, allowing the popover to be dismissed without having to click a
+     * specific button or control.
+     *
+     * @param {Object} e - the browser mouse event.
+     * @emits {clickAway} - can be used by parent to close the popover.
+     * @returns {undefined}
+     */
+    onClickAway(e) {
+      if (e.target === this.$refs.overlay) {
+        this.$emit("clickAway");
+      }
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    :class="['container', level, type, { active }]"
-    @click="onClickAway"
-  >
+  <div :class="['container', level, type, { active }]" @click="onClickAway">
     <transition name="fade">
-      <div
-        v-if="active"
-        ref="overlay"
-        :class="['overlay', level, type]"
-      />
+      <div v-if="active" ref="overlay" :class="['overlay', level, type]" />
     </transition>
     <transition name="slide-fade">
-      <div
-        v-if="active"
-        :class="['alert-body', level]"
-      >
+      <div v-if="active" :class="['alert-body', level]">
         <slot name="popoverContent" />
       </div>
     </transition>

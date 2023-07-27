@@ -3,6 +3,7 @@
 This repository contains the frontend components of the PageBuilder based on the [Vue] JavaScript framework and is used for layouting and rendering KNIME's JavaScript-based visualizations.
 
 It has two build outputs:
+
 - regular Vue app which is used in KNIME Analytics Platform
 - [Vue library] which is used in KNIME Analytics Platform Modern UI and KNIME Data Apps running in Hub Execution Webapp
 
@@ -10,9 +11,10 @@ It has two build outputs:
 
 ### Prerequisites
 
-* Install [Node.js][node], see version in [package.json](package.json).
+- Install [Node.js][node], see version in [package.json](package.json).
 
 Pull the contained [git submodules](https://stackoverflow.com/a/4438292/5134084) with
+
 ```sh
 git submodule update --init
 ```
@@ -25,7 +27,6 @@ npm i
 
 and then use the following commands.
 
-
 ### Launch development server
 
 ```sh
@@ -36,15 +37,16 @@ npm run dev
 
 Browse to the dev server URL provided by the command above to get a standalone development environment with mocked pages (see [/mocks](/mocks) directory).
 
-
 #### Development integration with KNIME Analytics Platform (classic UI)
 
 1. add the Java project of this repository to Eclipse
 2. add following to the run configuration in Eclipse
+
 ```
 -Dorg.knime.ui.dev.pagebuilder.url=http://localhost:5173/apWrapper.html
 -Dchromium.remote_debugging_port=8888
 ```
+
 4. start Analytics Platform from Eclipse
 5. now open a single or composite node view
 
@@ -69,10 +71,10 @@ When committing your changes, a couple of commit hooks will run via [husky].
 - `pre-commit` hook to lint and format the changes in your stage zone (via [lintstaged])
 - `prepare-commit-msg` hook to format your commit message to conform with the required format by KNIME. In order for this to work you must set environment variables with your Atlassian email and API token. Refer to [scripts/README.md](scripts/README.md) for more information.
 
-
 ### Testing
 
 #### Running unit tests
+
 This project contains unit tests written with [jest].
 They are run with
 
@@ -91,7 +93,6 @@ npm run coverage
 
 The output can be found in the `coverage` folder. It contains a browseable html report as well as raw coverage data in
 [LCOV] and [Clover] format, which can be used in analysis software (SonarQube, Jenkins, …).
-
 
 ### Running security audit
 
@@ -117,7 +118,7 @@ mvn clean install
 
 The PageBuilder can be used in Vue/Nuxt apps like a regular Vue component.
 In the KNIME WebPortal the built version is loaded during runtime via HTTP.
- 
+
 Integrating the source as a Git submodule and building it with the embedding app also works.
 
 ### Requirements
@@ -138,42 +139,43 @@ For example, in a Nuxt app, the following middleware registers the `PageBuilder`
 the PageBuilder store:
 
 ```js
-import Vue from 'vue';
-import { pagebuilderURL } from '~/app.config';
-import PageBuilderError from '~/components/PageBuilderError';
+import Vue from "vue";
+import { pagebuilderURL } from "~/app.config";
+import PageBuilderError from "~/components/PageBuilderError";
 
 export default async function ({ app }) {
-    if (window['knime-pagebuilder']) {
-        return;
-    }
+  if (window["knime-pagebuilder"]) {
+    return;
+  }
 
-    consola.trace(`Loading PageBuilder from ${pagebuilderURL}`);
-    try {
-        let PageBuilder = await new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.async = true;
-            script.addEventListener('load', () => {
-                let componentConfig = window['knime-pagebuilder'];
-                if (componentConfig) {
-                    resolve(componentConfig);
-                } else {
-                    reject(new Error('PageBuilder script invalid'));
-                }
-            });
-            script.addEventListener('error', () => {
-                reject(new Error('PageBuilder script loading failed'));
-            });
-            script.src = pagebuilderURL;
-            document.head.appendChild(script);
-        });
-        PageBuilder.initStore(app.store);
-        Vue.component('PageBuilder', PageBuilder);
-    } catch (e) {
-        consola.error('Loading of PageBuilder failed');
-        Vue.component('PageBuilder', PageBuilderError);
-    }
+  consola.trace(`Loading PageBuilder from ${pagebuilderURL}`);
+  try {
+    let PageBuilder = await new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.async = true;
+      script.addEventListener("load", () => {
+        let componentConfig = window["knime-pagebuilder"];
+        if (componentConfig) {
+          resolve(componentConfig);
+        } else {
+          reject(new Error("PageBuilder script invalid"));
+        }
+      });
+      script.addEventListener("error", () => {
+        reject(new Error("PageBuilder script loading failed"));
+      });
+      script.src = pagebuilderURL;
+      document.head.appendChild(script);
+    });
+    PageBuilder.initStore(app.store);
+    Vue.component("PageBuilder", PageBuilder);
+  } catch (e) {
+    consola.error("Loading of PageBuilder failed");
+    Vue.component("PageBuilder", PageBuilderError);
+  }
 }
 ```
+
 Then the component can be used in templates:
 
 ```xml
@@ -183,9 +185,9 @@ Then the component can be used in templates:
 ```
 
 ### API
+
 The component provides a store module namespaced as `pagebuilder`. Currently, there is only inbound communication, e.g.
 the embedding app calls store actions of the PageBuilder.
-
 
 #### Inbound
 
@@ -197,24 +199,28 @@ Sets the current page object required to render a page.
 
 ###### Parameters:
 
-* `{ page }`  
+- `{ page }`  
   Page configuration as provided by the Gateway API
 
 ###### Example:
 
 ```js
-this.$store.dispatch('pagebuilder/setPage', {
-    page: {
-        hasPreviousPage: true,
-        nodeMessages: {},
-        wizardExecutionState: 'INTERACTION_REQUIRED',
-        wizardPageContent: {
-            '@class': 'org.knime.js.core.JSONWebNodePage',
-            webNodePageConfiguration: { /* … */ },
-            webNodes: { /* … */ },
-            version: '1.2.3.4'
-        }
-    }
+this.$store.dispatch("pagebuilder/setPage", {
+  page: {
+    hasPreviousPage: true,
+    nodeMessages: {},
+    wizardExecutionState: "INTERACTION_REQUIRED",
+    wizardPageContent: {
+      "@class": "org.knime.js.core.JSONWebNodePage",
+      webNodePageConfiguration: {
+        /* … */
+      },
+      webNodes: {
+        /* … */
+      },
+      version: "1.2.3.4",
+    },
+  },
 });
 ```
 
@@ -223,18 +229,19 @@ this.$store.dispatch('pagebuilder/setPage', {
 Provide the base URL for resources that get injected into iframes.
 
 Since the pagebuilder can run under different root URLs it needs to know the baseURL. This will be concatenated with the
-resource paths of the JS views’ `javascriptLibraries` and `stylesheets` items. 
+resource paths of the JS views’ `javascriptLibraries` and `stylesheets` items.
 
 ###### Parameters:
 
-* `{ resourceBaseUrl }`  
+- `{ resourceBaseUrl }`  
   Should be an absolute URL.
 
 ###### Example:
 
 ```js
-this.$store.dispatch('pagebuilder/setResourceBaseUrl', {
-    resourceBaseUrl: 'https://knime.example/knime/webportal/rest/v4/get-resources-dummypath'
+this.$store.dispatch("pagebuilder/setResourceBaseUrl", {
+  resourceBaseUrl:
+    "https://knime.example/knime/webportal/rest/v4/get-resources-dummypath",
 });
 ```
 
@@ -249,12 +256,12 @@ none
 ###### Example:
 
 ```js
-let viewValues = await this.$store.dispatch('pagebuilder/getViewValues');
+let viewValues = await this.$store.dispatch("pagebuilder/getViewValues");
 ```
 
 # Join the Community!
-* [KNIME Forum](https://forum.knime.com/)
 
+- [KNIME Forum](https://forum.knime.com/)
 
 [Vue]: https://vuejs.org/
 [node]: https://knime-com.atlassian.net/wiki/spaces/SPECS/pages/905281540/Node.js+Installation

@@ -1,12 +1,12 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label.vue';
-import Dropdown from 'webapps-common/ui/components/forms/Dropdown.vue';
-import Multiselect from '../baseElements/selection/Multiselect.vue';
-import Fieldset from 'webapps-common/ui/components/forms/Fieldset.vue';
-import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
+import Label from "webapps-common/ui/components/forms/Label.vue";
+import Dropdown from "webapps-common/ui/components/forms/Dropdown.vue";
+import Multiselect from "../baseElements/selection/Multiselect.vue";
+import Fieldset from "webapps-common/ui/components/forms/Fieldset.vue";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
-const VALUE_KEY_NAME = 'values';
-const COLUMN_KEY_NAME = 'column';
+const VALUE_KEY_NAME = "values";
+const COLUMN_KEY_NAME = "column";
 
 /**
  * Value Filter Selection Widget
@@ -16,116 +16,119 @@ const COLUMN_KEY_NAME = 'column';
  *
  */
 export default {
-    components: {
-        Multiselect,
-        Dropdown,
-        Label,
-        Fieldset,
-        ErrorMessage
+  components: {
+    Multiselect,
+    Dropdown,
+    Label,
+    Fieldset,
+    ErrorMessage,
+  },
+  props: {
+    nodeConfig: {
+      required: true,
+      type: Object,
+      validator(obj) {
+        return obj.nodeInfo;
+      },
     },
-    props: {
-        nodeConfig: {
-            required: true,
-            type: Object,
-            validator(obj) {
-                return obj.nodeInfo;
-            }
-        },
-        nodeId: {
-            required: true,
-            type: String,
-            validator(nodeId) {
-                return nodeId !== '';
-            }
-        },
-        isValid: {
-            default: true,
-            type: Boolean
-        },
-        valuePair: {
-            default: () => ({
-                [COLUMN_KEY_NAME]: '',
-                [VALUE_KEY_NAME]: []
-            }),
-            type: Object
-        },
-        errorMessage: {
-            type: String,
-            default: null
-        }
+    nodeId: {
+      required: true,
+      type: String,
+      validator(nodeId) {
+        return nodeId !== "";
+      },
     },
-    emits: ['updateWidget'],
-    computed: {
-        viewRep() {
-            return this.nodeConfig.viewRepresentation;
-        },
-        label() {
-            return this.viewRep.label;
-        },
-        possibleValues() {
-            return this.isColumnValid ? this.viewRep.possibleValues[this.column] : [];
-        },
-        description() {
-            return this.viewRep.description || null;
-        },
-        value() {
-            return this.isColumnValid ? this.valuePair[VALUE_KEY_NAME] : [];
-        },
-        column() {
-            return this.valuePair[COLUMN_KEY_NAME];
-        },
-        possibleColumns() {
-            return [...new Set(this.viewRep.possibleColumns)].map((x) => ({
-                id: x,
-                text: x
-            }));
-        },
-        isColumnLocked() {
-            return this.viewRep.lockColumn;
-        },
-        isColumnValid() {
-            return this.viewRep.possibleColumns.includes(this.column);
-        },
-        isList() {
-            return this.viewRep.type === 'List';
-        }
+    isValid: {
+      default: true,
+      type: Boolean,
     },
-    methods: {
-        onChange(value) {
-            const changeEventObj = {
-                nodeId: this.nodeId,
-                type: VALUE_KEY_NAME,
-                value
-            };
-            this.$emit('updateWidget', changeEventObj);
-        },
-        onColumnChange(value) {
-            const changeEventObj = {
-                nodeId: this.nodeId,
-                type: COLUMN_KEY_NAME,
-                value
-            };
-            this.$emit('updateWidget', changeEventObj);
-        },
-        validate() {
-            let isValid = true;
-            let errorMessage;
-            if (this.viewRep.required && !this.$refs.form.hasSelection()) {
-                isValid = false;
-                errorMessage = 'Selection is required.';
-            }
-            if (!this.isColumnValid) {
-                isValid = false;
-                errorMessage = 'Selected column is invalid.';
-            }
-            if (typeof this.$refs.form.validate === 'function') {
-                let validateEvent = this.$refs.form.validate();
-                isValid = Boolean(validateEvent.isValid && isValid);
-                errorMessage = validateEvent.errorMessage || errorMessage || 'Selection is invalid or missing.';
-            }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
-        }
-    }
+    valuePair: {
+      default: () => ({
+        [COLUMN_KEY_NAME]: "",
+        [VALUE_KEY_NAME]: [],
+      }),
+      type: Object,
+    },
+    errorMessage: {
+      type: String,
+      default: null,
+    },
+  },
+  emits: ["updateWidget"],
+  computed: {
+    viewRep() {
+      return this.nodeConfig.viewRepresentation;
+    },
+    label() {
+      return this.viewRep.label;
+    },
+    possibleValues() {
+      return this.isColumnValid ? this.viewRep.possibleValues[this.column] : [];
+    },
+    description() {
+      return this.viewRep.description || null;
+    },
+    value() {
+      return this.isColumnValid ? this.valuePair[VALUE_KEY_NAME] : [];
+    },
+    column() {
+      return this.valuePair[COLUMN_KEY_NAME];
+    },
+    possibleColumns() {
+      return [...new Set(this.viewRep.possibleColumns)].map((x) => ({
+        id: x,
+        text: x,
+      }));
+    },
+    isColumnLocked() {
+      return this.viewRep.lockColumn;
+    },
+    isColumnValid() {
+      return this.viewRep.possibleColumns.includes(this.column);
+    },
+    isList() {
+      return this.viewRep.type === "List";
+    },
+  },
+  methods: {
+    onChange(value) {
+      const changeEventObj = {
+        nodeId: this.nodeId,
+        type: VALUE_KEY_NAME,
+        value,
+      };
+      this.$emit("updateWidget", changeEventObj);
+    },
+    onColumnChange(value) {
+      const changeEventObj = {
+        nodeId: this.nodeId,
+        type: COLUMN_KEY_NAME,
+        value,
+      };
+      this.$emit("updateWidget", changeEventObj);
+    },
+    validate() {
+      let isValid = true;
+      let errorMessage;
+      if (this.viewRep.required && !this.$refs.form.hasSelection()) {
+        isValid = false;
+        errorMessage = "Selection is required.";
+      }
+      if (!this.isColumnValid) {
+        isValid = false;
+        errorMessage = "Selected column is invalid.";
+      }
+      if (typeof this.$refs.form.validate === "function") {
+        let validateEvent = this.$refs.form.validate();
+        isValid = Boolean(validateEvent.isValid && isValid);
+        errorMessage =
+          validateEvent.errorMessage ||
+          errorMessage ||
+          "Selection is invalid or missing.";
+      }
+      return { isValid, errorMessage: isValid ? null : errorMessage };
+    },
+  },
 };
 </script>
 
@@ -134,11 +137,7 @@ export default {
     :is="isColumnLocked ? 'div' : 'Fieldset'"
     :text="isColumnLocked ? null : label"
   >
-    <Label
-      v-if="!isColumnLocked"
-      text="Column"
-      large
-    >
+    <Label v-if="!isColumnLocked" text="Column" large>
       <template #default="{ labelForId }">
         <Dropdown
           v-if="!isColumnLocked"

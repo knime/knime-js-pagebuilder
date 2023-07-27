@@ -132,17 +132,13 @@
       "blackBoard": null,
       "selectionTranslators": [
         {
-          "targetIDs": [
-            "fe84d58d-4801-4422-8e9f-44c5cab8deee"
-          ],
+          "targetIDs": ["fe84d58d-4801-4422-8e9f-44c5cab8deee"],
           "sourceID": "40d472cb-4e2b-4cee-b695-d52ff01bec2a",
           "forward": false,
           "mapping": null
         },
         {
-          "targetIDs": [
-            "fe84d58d-4801-4422-8e9f-44c5cab8deee"
-          ],
+          "targetIDs": ["fe84d58d-4801-4422-8e9f-44c5cab8deee"],
           "sourceID": "40d472cb-4e2b-4cee-b695-d52ff01bec2a",
           "forward": false,
           "mapping": null
@@ -178,23 +174,12 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "behaviour": "drag-tap",
-            "fix": [
-              true,
-              false,
-              false
-            ],
+            "fix": [true, false, false],
             "range": {
-              "min": [
-                0.001010167098195791
-              ],
-              "max": [
-                0.9997572421887096
-              ]
+              "min": [0.001010167098195791],
+              "max": [0.9997572421887096]
             },
-            "start": [
-              0.001010167098195791,
-              0.9997572421887096
-            ],
+            "start": [0.001010167098195791, 0.9997572421887096],
             "pips": {
               "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
               "density": 3,
@@ -270,23 +255,12 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "behaviour": "drag-tap",
-            "fix": [
-              false,
-              false,
-              true
-            ],
+            "fix": [false, false, true],
             "range": {
-              "min": [
-                0.001010167098195791
-              ],
-              "max": [
-                0.9997572421887096
-              ]
+              "min": [0.001010167098195791],
+              "max": [0.9997572421887096]
             },
-            "start": [
-              0.001010167098195791,
-              0.9997572421887096
-            ],
+            "start": [0.001010167098195791, 0.9997572421887096],
             "pips": {
               "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
               "density": 3,
@@ -362,23 +336,12 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "behaviour": "drag-tap",
-            "fix": [
-              false,
-              true,
-              false
-            ],
+            "fix": [false, true, false],
             "range": {
-              "min": [
-                0.001010167098195791
-              ],
-              "max": [
-                0.9997572421887096
-              ]
+              "min": [0.001010167098195791],
+              "max": [0.9997572421887096]
             },
-            "start": [
-              0.001010167098195791,
-              0.9997572421887096
-            ],
+            "start": [0.001010167098195791, 0.9997572421887096],
             "pips": {
               "@class": "org.knime.js.core.settings.slider.SliderPipsSettings",
               "density": 3,
@@ -445,22 +408,13 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "range": {
-              "min": [
-                0
-              ],
-              "max": [
-                100
-              ]
+              "min": [0],
+              "max": [100]
             },
-            "start": [
-              50
-            ],
+            "start": [50],
             "direction": "ltr",
             "orientation": "horizontal",
-            "connect": [
-              false,
-              false
-            ]
+            "connect": [false, false]
           },
           "useCustomMin": true,
           "useCustomMax": true,

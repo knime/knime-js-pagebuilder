@@ -3,17 +3,17 @@
  * Default error message for widgets.
  */
 export default {
-    props: {
-        error: {
-            default: null,
-            type: String
-        }
-    }
+  props: {
+    error: {
+      default: null,
+      type: String,
+    },
+  },
 };
 </script>
 
 <template>
-  <span>{{ error || '' }}</span>
+  <span>{{ error || "" }}</span>
 </template>
 
 <style lang="postcss" scoped>

@@ -1,8 +1,8 @@
 <script>
-import VueSlider from 'vue-slider-component';
+import VueSlider from "vue-slider-component";
 
-const DEFAULT_SLIDER_VALUE = .5;
-const DEFAULT_STEP_SIZE = .1;
+const DEFAULT_SLIDER_VALUE = 0.5;
+const DEFAULT_STEP_SIZE = 0.1;
 const DEFAULT_HEIGHT = 20;
 
 /**
@@ -10,101 +10,101 @@ const DEFAULT_HEIGHT = 20;
  * @see https://github.com/NightCatSama/vue-slider-component
  */
 export default {
-    components: {
-        VueSlider
+  components: {
+    VueSlider,
+  },
+  props: {
+    modelValue: {
+      default: DEFAULT_SLIDER_VALUE,
+      type: [Number, Array],
     },
-    props: {
-        modelValue: {
-            default: DEFAULT_SLIDER_VALUE,
-            type: [Number, Array]
-        },
-        maximum: {
-            default: 1,
-            type: Number
-        },
-        minimum: {
-            default: 0,
-            type: Number
-        },
-        isValid: {
-            default: true,
-            type: Boolean
-        },
-        direction: {
-            default: 'ltr',
-            type: String
-        },
-        stepSize: {
-            default: DEFAULT_STEP_SIZE,
-            type: Number
-        },
-        height: {
-            default: DEFAULT_HEIGHT,
-            type: Number
-        },
-        tooltips: {
-            default: () => [{ tooltip: 'always' }],
-            type: Array
-        },
-        tooltipFormat: {
-            default: () => [x => `${x}`],
-            type: Array
-        },
-        marks: {
-            default: () => ({}),
-            type: Object
-        },
-        process: {
-            type: [Boolean, Function],
-            default: true
-        },
-        connect: {
-            default: 'both',
-            type: String
-        },
-        dragOnClick: {
-            default: false,
-            type: Boolean
-        },
-        contained: {
-            default: false,
-            type: Boolean
-        }
+    maximum: {
+      default: 1,
+      type: Number,
     },
-    emits: ['update:modelValue'],
-    methods: {
-        getValue() {
-            return this.$refs.slider.getValue();
-        },
-        onChange() {
-            this.$emit('update:modelValue', this.getValue());
-        },
-        validate() {
-            let value = this.getValue();
-            let errorMessage;
-            let isValid = true;
-            if (this.minimum >= this.maximum || this.maximum <= this.minimum) {
-                errorMessage = 'Specified range is not valid.';
-                isValid = false;
-            }
-            if (typeof value !== 'number') {
-                errorMessage = 'Value is not a number.';
-                isValid = false;
-            }
-            if (value < this.minimum || value > this.maximum) {
-                errorMessage = 'Value is not inside the valid range.';
-                isValid = false;
-            }
-            return { isValid, errorMessage: isValid ? null : errorMessage };
-        }
-    }
+    minimum: {
+      default: 0,
+      type: Number,
+    },
+    isValid: {
+      default: true,
+      type: Boolean,
+    },
+    direction: {
+      default: "ltr",
+      type: String,
+    },
+    stepSize: {
+      default: DEFAULT_STEP_SIZE,
+      type: Number,
+    },
+    height: {
+      default: DEFAULT_HEIGHT,
+      type: Number,
+    },
+    tooltips: {
+      default: () => [{ tooltip: "always" }],
+      type: Array,
+    },
+    tooltipFormat: {
+      default: () => [(x) => `${x}`],
+      type: Array,
+    },
+    marks: {
+      default: () => ({}),
+      type: Object,
+    },
+    process: {
+      type: [Boolean, Function],
+      default: true,
+    },
+    connect: {
+      default: "both",
+      type: String,
+    },
+    dragOnClick: {
+      default: false,
+      type: Boolean,
+    },
+    contained: {
+      default: false,
+      type: Boolean,
+    },
+  },
+  emits: ["update:modelValue"],
+  methods: {
+    getValue() {
+      return this.$refs.slider.getValue();
+    },
+    onChange() {
+      this.$emit("update:modelValue", this.getValue());
+    },
+    validate() {
+      let value = this.getValue();
+      let errorMessage;
+      let isValid = true;
+      if (this.minimum >= this.maximum || this.maximum <= this.minimum) {
+        errorMessage = "Specified range is not valid.";
+        isValid = false;
+      }
+      if (typeof value !== "number") {
+        errorMessage = "Value is not a number.";
+        isValid = false;
+      }
+      if (value < this.minimum || value > this.maximum) {
+        errorMessage = "Value is not inside the valid range.";
+        isValid = false;
+      }
+      return { isValid, errorMessage: isValid ? null : errorMessage };
+    },
+  },
 };
 </script>
 
 <template>
   <div class="slider-container">
     <div
-      v-for="(v, i) in (modelValue.length ? modelValue : [modelValue])"
+      v-for="(v, i) in modelValue.length ? modelValue : [modelValue]"
       :key="i"
       class="slider-focusable"
       tabindex="0"
@@ -264,7 +264,9 @@ export default {
 
   & :deep(.vue-slider-dot:hover) {
     border-color: var(--theme-slider-border-color-hover);
-    background-color: var(--theme-slider-foreground-color-hover); /* transparency not working here */
+    background-color: var(
+      --theme-slider-foreground-color-hover
+    ); /* transparency not working here */
   }
 
   & :deep(.vue-slider-ttb .vue-slider-dot),

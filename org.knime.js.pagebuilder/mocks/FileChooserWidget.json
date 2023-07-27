@@ -4548,9 +4548,7 @@
           "useDefaultMountId": true,
           "customMountId": "",
           "rootDir": "/",
-          "fileTypes": [
-            ".csv"
-          ],
+          "fileTypes": [".csv"],
           "multipleSelection": true,
           "errorMessage": "",
           "tree": [

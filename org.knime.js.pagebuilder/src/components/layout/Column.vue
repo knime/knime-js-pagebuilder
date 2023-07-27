@@ -1,8 +1,8 @@
 <script>
-import { mapState } from 'vuex';
-import { defineAsyncComponent } from 'vue';
-import wrapViewContent from '../../util/wrapViewContent';
-import NodeView from './NodeView.vue';
+import { mapState } from "vuex";
+import { defineAsyncComponent } from "vue";
+import wrapViewContent from "../../util/wrapViewContent";
+import NodeView from "./NodeView.vue";
 
 const maxGridWidth = 12;
 
@@ -41,76 +41,75 @@ const maxGridWidth = 12;
  *
  */
 export default {
-    components: {
-        NodeView,
-        // TODO check if this is the best way to handle circular components in Vue3
-        Row: defineAsyncComponent(() => import('./Row.vue'))
-    },
-    props: {
-        /**
-         * Column configuration as received from the REST API
-         */
-        columnConfig: {
-            default: () => ({}),
-            type: Object,
-            validate(columnConfig) {
-                if (typeof columnConfig !== 'object') {
-                    return false;
-                }
-                if (!columnConfig.hasOwnProperty('content')) {
-                    return false;
-                }
-                return true;
-            }
+  components: {
+    NodeView,
+    // TODO check if this is the best way to handle circular components in Vue3
+    Row: defineAsyncComponent(() => import("./Row.vue")),
+  },
+  props: {
+    /**
+     * Column configuration as received from the REST API
+     */
+    columnConfig: {
+      default: () => ({}),
+      type: Object,
+      validate(columnConfig) {
+        if (typeof columnConfig !== "object") {
+          return false;
         }
-    },
-    computed: {
-        ...mapState('pagebuilder', ['isWebNode']),
-        content() {
-            return wrapViewContent(this.columnConfig.content);
-        },
-        classes() {
-            let classes = ['col'];
-
-            let hasSize = false;
-            ['XS', 'SM', 'MD', 'LG', 'XL'].forEach((size, i) => {
-                const sizeDefinition = this.columnConfig[`width${size}`];
-                if (sizeDefinition > 0 && sizeDefinition <= maxGridWidth) {
-                    hasSize = true;
-                    const modifier = i ? `-${size.toLowerCase()}` : ''; // mobile first: 'XS' is the default
-                    classes.push(`col${modifier}-${sizeDefinition}`);
-                }
-            });
-
-            if (!hasSize) {
-                classes.push('col-12'); // default if no width defined
-            }
-
-            if (Array.isArray(this.columnConfig.additionalClasses)) {
-                classes = classes.concat(this.columnConfig.additionalClasses);
-            }
-
-            if (this.isWebNode) {
-                classes.push('col-padding');
-            }
-
-            return classes;
-        },
-        styles() {
-            if (Array.isArray(this.columnConfig.additionalStyles)) {
-                return this.columnConfig.additionalStyles.join('; ').replace(/;;/g, ';');
-            }
-            return null;
+        if (!columnConfig.hasOwnProperty("content")) {
+          return false;
         }
-    }
+        return true;
+      },
+    },
+  },
+  computed: {
+    ...mapState("pagebuilder", ["isWebNode"]),
+    content() {
+      return wrapViewContent(this.columnConfig.content);
+    },
+    classes() {
+      let classes = ["col"];
+
+      let hasSize = false;
+      ["XS", "SM", "MD", "LG", "XL"].forEach((size, i) => {
+        const sizeDefinition = this.columnConfig[`width${size}`];
+        if (sizeDefinition > 0 && sizeDefinition <= maxGridWidth) {
+          hasSize = true;
+          const modifier = i ? `-${size.toLowerCase()}` : ""; // mobile first: 'XS' is the default
+          classes.push(`col${modifier}-${sizeDefinition}`);
+        }
+      });
+
+      if (!hasSize) {
+        classes.push("col-12"); // default if no width defined
+      }
+
+      if (Array.isArray(this.columnConfig.additionalClasses)) {
+        classes = classes.concat(this.columnConfig.additionalClasses);
+      }
+
+      if (this.isWebNode) {
+        classes.push("col-padding");
+      }
+
+      return classes;
+    },
+    styles() {
+      if (Array.isArray(this.columnConfig.additionalStyles)) {
+        return this.columnConfig.additionalStyles
+          .join("; ")
+          .replace(/;;/g, ";");
+      }
+      return null;
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    :class="classes"
-    :style="styles"
-  >
+  <div :class="classes" :style="styles">
     <template v-for="(item, index) in content">
       <!-- :key with timestamp to force the IFrame to be re-rendered; TODO WEBP-538 might slow down widgets -->
       <NodeView
@@ -123,7 +122,12 @@ export default {
         :key="index + '-' + item.type + '-1'"
         :row-config="item"
       />
-      <template v-else-if="(item.type === 'nestedLayout' || item.type === 'JSONNestedLayout') && item.layout">
+      <template
+        v-else-if="
+          (item.type === 'nestedLayout' || item.type === 'JSONNestedLayout') &&
+          item.layout
+        "
+      >
         <Row
           v-for="(row, rowIndex) in item.layout.rows"
           :key="index + '-' + rowIndex + '-2'"
@@ -132,7 +136,9 @@ export default {
       </template>
       <!-- eslint-disable vue/no-v-html  -->
       <div
-        v-else-if="item.type === 'html' || item.type === 'JSONLayoutHTMLContent'"
+        v-else-if="
+          item.type === 'html' || item.type === 'JSONLayoutHTMLContent'
+        "
         :key="index + '-' + item.type + '-3'"
         v-html="item.value"
       />

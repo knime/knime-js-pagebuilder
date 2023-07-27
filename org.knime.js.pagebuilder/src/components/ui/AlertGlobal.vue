@@ -1,7 +1,7 @@
 <script>
-import { mapState } from 'vuex';
-import Popover from './Popover.vue';
-import PopoverMessage from './PopoverMessage.vue';
+import { mapState } from "vuex";
+import Popover from "./Popover.vue";
+import PopoverMessage from "./PopoverMessage.vue";
 
 /**
  * This is the PageBuilder top level alert/error management component. It relies on the global alert store and
@@ -10,61 +10,65 @@ import PopoverMessage from './PopoverMessage.vue';
  * message.
  */
 export default {
-    components: {
-        Popover,
-        PopoverMessage
+  components: {
+    Popover,
+    PopoverMessage,
+  },
+  computed: {
+    ...mapState("pagebuilder/alert", ["alert"]),
+    /*
+     * Controls the message content and @see PopoverMessage styling.
+     *
+     * @values warn, error (default)
+     */
+    type() {
+      return this.alert?.type || "error";
     },
-    computed: {
-        ...mapState('pagebuilder/alert', ['alert']),
-        /*
-         * Controls the message content and @see PopoverMessage styling.
-         *
-         * @values warn, error (default)
-         */
-        type() {
-            return this.alert?.type || 'error';
-        },
-        isError() {
-            return this.type === 'error';
-        },
-        nodeId() {
-            return this.alert?.nodeId || '';
-        },
-        nodeInfo() {
-            return this.alert?.nodeInfo || {};
-        },
-        nodeName() {
-            return this.nodeInfo.nodeName || 'Missing node';
-        },
-        title() {
-            return `${this.isError ? 'ERROR' : 'WARNING'}: ${this.nodeName}`;
-        },
-        subtitle() {
-            if (this.alert?.subtitle && this.alert?.message) {
-                return this.alert.subtitle;
-            }
-            return this.isError ? 'Sorry, a problem occurred:' : 'Message(s) on node:';
-        },
-        messageText() {
-            return this.alert?.message ||
-              this.alert?.subtitle ||
-              'No further information available. Please check the workflow configuration.';
-        }
+    isError() {
+      return this.type === "error";
     },
-    methods: {
-        /**
-         * Event handler for closing the global alert from the alert store. This method takes a parameter passed to
-         * the callback function of the global alert which can be used to conditionally clear the notification
-         * locally. This enables different behavior e.g. when the user clicks the 'close' button (requesting a true
-         * alert dismissal) vs. a click-away or 'minimize' event (where the user just wants to hide the alert).
-         *
-         * @param {Boolean} remove - the parameter passed to the alert callback function.
-         * @returns {undefined}
-         */
-        onClose(remove) {
-            this.$store.dispatch('pagebuilder/alert/closeAlert', remove);
-        }
-    }
+    nodeId() {
+      return this.alert?.nodeId || "";
+    },
+    nodeInfo() {
+      return this.alert?.nodeInfo || {};
+    },
+    nodeName() {
+      return this.nodeInfo.nodeName || "Missing node";
+    },
+    title() {
+      return `${this.isError ? "ERROR" : "WARNING"}: ${this.nodeName}`;
+    },
+    subtitle() {
+      if (this.alert?.subtitle && this.alert?.message) {
+        return this.alert.subtitle;
+      }
+      return this.isError
+        ? "Sorry, a problem occurred:"
+        : "Message(s) on node:";
+    },
+    messageText() {
+      return (
+        this.alert?.message ||
+        this.alert?.subtitle ||
+        "No further information available. Please check the workflow configuration."
+      );
+    },
+  },
+  methods: {
+    /**
+     * Event handler for closing the global alert from the alert store. This method takes a parameter passed to
+     * the callback function of the global alert which can be used to conditionally clear the notification
+     * locally. This enables different behavior e.g. when the user clicks the 'close' button (requesting a true
+     * alert dismissal) vs. a click-away or 'minimize' event (where the user just wants to hide the alert).
+     *
+     * @param {Boolean} remove - the parameter passed to the alert callback function.
+     * @returns {undefined}
+     */
+    onClose(remove) {
+      this.$store.dispatch("pagebuilder/alert/closeAlert", remove);
+    },
+  },
 };
 </script>
 
@@ -87,7 +91,13 @@ export default {
           <span v-if="isError">
             <!-- This "header" is shown inside the expandable message body above the main content of the message. -->
             <span class="info-header">Node:</span>
-            {{ `${nodeId} ${nodeInfo.nodeAnnotation ? '(' + nodeInfo.nodeAnnotation + ')' : ''}\n` }}
+            {{
+              `${nodeId} ${
+                nodeInfo.nodeAnnotation
+                  ? "(" + nodeInfo.nodeAnnotation + ")"
+                  : ""
+              }\n`
+            }}
             <span class="info-header">Message:</span>
           </span>
         </template>

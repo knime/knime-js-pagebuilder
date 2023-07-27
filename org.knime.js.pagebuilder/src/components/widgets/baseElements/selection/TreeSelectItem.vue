@@ -1,10 +1,10 @@
 <script>
-import itemIcon from 'webapps-common/ui/assets/img/icons/file-question.svg';
-import folderIcon from 'webapps-common/ui/assets/img/icons/folder.svg';
-import arrowNextIcon from 'webapps-common/ui/assets/img/icons/arrow-next.svg';
-import fileIcon from 'webapps-common/ui/assets/img/icons/file-text.svg';
+import itemIcon from "webapps-common/ui/assets/img/icons/file-question.svg";
+import folderIcon from "webapps-common/ui/assets/img/icons/folder.svg";
+import arrowNextIcon from "webapps-common/ui/assets/img/icons/arrow-next.svg";
+import fileIcon from "webapps-common/ui/assets/img/icons/file-text.svg";
 
-import { icons } from 'webapps-common/ui/util/fileTypeIcons';
+import { icons } from "webapps-common/ui/util/fileTypeIcons";
 
 const TREE_OPEN_TRANSITION_TIME = 300; // ms
 
@@ -13,177 +13,180 @@ const TREE_OPEN_TRANSITION_TIME = 300; // ms
  * context. It provides the recursive rendering.
  */
 export default {
-    // name is required for recursion
-    name: 'TreeSelectItem',
-    components: {
-        itemIcon,
-        folderIcon,
-        fileIcon,
-        arrowNextIcon,
-        ...icons
+  // name is required for recursion
+  name: "TreeSelectItem",
+  components: {
+    itemIcon,
+    folderIcon,
+    fileIcon,
+    arrowNextIcon,
+    ...icons,
+  },
+  props: {
+    data: {
+      type: Object,
+      required: true,
     },
-    props: {
-        data: {
-            type: Object,
-            required: true
-        },
-        allowTransition: {
-            type: Boolean,
-            default: true
-        },
-        height: {
-            type: Number,
-            default: 22
-        },
-        parentItem: {
-            type: Array,
-            required: true
-        },
-        onItemClick: {
-            type: Function,
-            default: () => false
-        },
-        onHoverItem: {
-            type: Function,
-            default: () => false
-        },
-        onItemToggle: {
-            type: Function,
-            default: () => false
+    allowTransition: {
+      type: Boolean,
+      default: true,
+    },
+    height: {
+      type: Number,
+      default: 22,
+    },
+    parentItem: {
+      type: Array,
+      required: true,
+    },
+    onItemClick: {
+      type: Function,
+      default: () => false,
+    },
+    onHoverItem: {
+      type: Function,
+      default: () => false,
+    },
+    onItemToggle: {
+      type: Function,
+      default: () => false,
+    },
+  },
+  data() {
+    return {
+      isHover: false,
+      isKeyNav: false,
+      model: this.data,
+      maxHeight: 0,
+    };
+  },
+  computed: {
+    isFolder() {
+      return this.model.children?.length;
+    },
+    classes() {
+      return [
+        "tree-node",
+        { "tree-open": this.model.opened },
+        { "tree-closed": !this.model.opened },
+        { "tree-leaf": !this.isFolder },
+      ];
+    },
+    anchorClasses() {
+      return [
+        "tree-anchor",
+        { "tree-disabled": this.model.disabled },
+        { "tree-selected": this.model.selected },
+        { "tree-hovered": this.isHover || this.isKeyNav },
+      ];
+    },
+    wholeRowClasses() {
+      return [
+        { "tree-wholerow": this.isWholeRow },
+        { "tree-wholerow-selected": this.model.selected },
+        { "tree-wholerow-hovered": this.isHover || this.isKeyNav },
+      ];
+    },
+    treeOclClasses() {
+      return [
+        "tree-icon",
+        "tree-ocl",
+        { "tree-ocl-selected": this.model.selected },
+        { "tree-ocl-hovered": this.isHover || this.isKeyNav },
+      ];
+    },
+    cssVars() {
+      // css variables for js -> css
+      return {
+        "--height": `${this.height}px`,
+      };
+    },
+    isWholeRow() {
+      if (typeof this.$parent.model === "undefined") {
+        return true;
+      } else {
+        return this.$parent.model.opened === true;
+      }
+    },
+    groupStyle() {
+      return {
+        position: this.model.opened ? "" : "relative",
+        "max-height": this.allowTransition ? `${this.maxHeight}px` : "",
+        "transition-duration": this.allowTransition
+          ? // eslint-disable-next-line no-magic-numbers
+            `${
+              Math.ceil(this.model.children.length / 100) *
+              TREE_OPEN_TRANSITION_TIME
+            }ms`
+          : "",
+        "transition-property": this.allowTransition ? "max-height" : "",
+        display: this.allowTransition || this.model.opened ? "block" : "none",
+      };
+    },
+    icon() {
+      if (this.model.icon) {
+        if (this.model.selected && this.model.selectedIcon) {
+          return this.model.selectedIcon;
         }
+        return this.model.icon;
+      } else {
+        // default icons
+        return this.isFolder ? folderIcon : itemIcon;
+      }
     },
-    data() {
-        return {
-            isHover: false,
-            isKeyNav: false,
-            model: this.data,
-            maxHeight: 0
-        };
+  },
+  watch: {
+    data(newValue) {
+      this.model = newValue;
     },
-    computed: {
-        isFolder() {
-            return this.model.children?.length;
-        },
-        classes() {
-            return [
-                'tree-node',
-                { 'tree-open': this.model.opened },
-                { 'tree-closed': !this.model.opened },
-                { 'tree-leaf': !this.isFolder }
-            ];
-        },
-        anchorClasses() {
-            return [
-                'tree-anchor',
-                { 'tree-disabled': this.model.disabled },
-                { 'tree-selected': this.model.selected },
-                { 'tree-hovered': this.isHover || this.isKeyNav }
-            ];
-        },
-        wholeRowClasses() {
-            return [
-                { 'tree-wholerow': this.isWholeRow },
-                { 'tree-wholerow-selected': this.model.selected },
-                { 'tree-wholerow-hovered': this.isHover || this.isKeyNav }
-            ];
-        },
-        treeOclClasses() {
-            return [
-                'tree-icon',
-                'tree-ocl',
-                { 'tree-ocl-selected': this.model.selected },
-                { 'tree-ocl-hovered': this.isHover || this.isKeyNav }
-            ];
-        },
-        cssVars() {
-            // css variables for js -> css
-            return {
-                '--height': `${this.height}px`
-            };
-        },
-        isWholeRow() {
-            if (typeof this.$parent.model === 'undefined') {
-                return true;
-            } else {
-                return this.$parent.model.opened === true;
-            }
-        },
-        groupStyle() {
-            return {
-                position: this.model.opened ? '' : 'relative',
-                'max-height': this.allowTransition ? `${this.maxHeight}px` : '',
-                'transition-duration': this.allowTransition
-                    // eslint-disable-next-line no-magic-numbers
-                    ? `${Math.ceil(this.model.children.length / 100) * TREE_OPEN_TRANSITION_TIME}ms`
-                    : '',
-                'transition-property': this.allowTransition ? 'max-height' : '',
-                display: this.allowTransition || this.model.opened ? 'block' : 'none'
-            };
-        },
-        icon() {
-            if (this.model.icon) {
-                if (this.model.selected && this.model.selectedIcon) {
-                    return this.model.selectedIcon;
-                }
-                return this.model.icon;
-            } else {
-                // default icons
-                return this.isFolder ? folderIcon : itemIcon;
-            }
-        }
-    },
-    watch: {
-        data(newValue) {
-            this.model = newValue;
-        },
-        'model.opened': {
-            handler() {
-                this.onItemToggle(this, this.model);
-                this.handleGroupMaxHeight();
-            },
-            deep: true
-        }
-    },
-    mounted() {
+    "model.opened": {
+      handler() {
+        this.onItemToggle(this, this.model);
         this.handleGroupMaxHeight();
+      },
+      deep: true,
     },
-    methods: {
-        handleItemToggle() {
-            if (this.isFolder) {
-                this.model.opened = !this.model.opened;
-                this.onItemToggle(this, this.model);
-            }
-        },
-        handleGroupMaxHeight() {
-            if (this.allowTransition) {
-                let length = 0;
-                let childHeight = 0;
-                if (this.model.opened) {
-                    length = this.$refs.children.length;
-                    for (let children of this.$refs.children) {
-                        childHeight += children.maxHeight;
-                    }
-                }
-                this.maxHeight = length * this.height + childHeight;
-                if (this.$parent.$options.name === 'TreeSelectItem') {
-                    this.$parent.handleGroupMaxHeight();
-                }
-            }
-        },
-        handleItemClick(e) {
-            if (this.model.disabled) {
-                return;
-            }
-            this.onItemClick(this, this.model, e);
-        },
-        handleMouseOver(e) {
-            this.isHover = true;
-            this.onHoverItem(this, this.model, e);
-        },
-        handleMouseOut() {
-            this.isHover = false;
+  },
+  mounted() {
+    this.handleGroupMaxHeight();
+  },
+  methods: {
+    handleItemToggle() {
+      if (this.isFolder) {
+        this.model.opened = !this.model.opened;
+        this.onItemToggle(this, this.model);
+      }
+    },
+    handleGroupMaxHeight() {
+      if (this.allowTransition) {
+        let length = 0;
+        let childHeight = 0;
+        if (this.model.opened) {
+          length = this.$refs.children.length;
+          for (let children of this.$refs.children) {
+            childHeight += children.maxHeight;
+          }
         }
-    }
+        this.maxHeight = length * this.height + childHeight;
+        if (this.$parent.$options.name === "TreeSelectItem") {
+          this.$parent.handleGroupMaxHeight();
+        }
+      }
+    },
+    handleItemClick(e) {
+      if (this.model.disabled) {
+        return;
+      }
+      this.onItemClick(this, this.model, e);
+    },
+    handleMouseOver(e) {
+      this.isHover = true;
+      this.onHoverItem(this, this.model, e);
+    },
+    handleMouseOut() {
+      this.isHover = false;
+    },
+  },
 };
 </script>
 
@@ -194,18 +197,10 @@ export default {
     role="treeitem"
     :aria-expanded="isFolder ? String(Boolean(model.opened)) : null"
   >
-    <div
-      v-if="isWholeRow"
-      role="presentation"
-      :class="wholeRowClasses"
-    >
+    <div v-if="isWholeRow" role="presentation" :class="wholeRowClasses">
       &nbsp;
     </div>
-    <i
-      :class="treeOclClasses"
-      role="presentation"
-      @click="handleItemToggle"
-    >
+    <i :class="treeOclClasses" role="presentation" @click="handleItemToggle">
       <arrowNextIcon v-if="isFolder" />
     </i>
     <div
@@ -215,10 +210,7 @@ export default {
       @mouseover="handleMouseOver"
       @mouseout="handleMouseOut"
     >
-      <i
-        class="tree-icon"
-        role="presentation"
-      >
+      <i class="tree-icon" role="presentation">
         <Component :is="icon" />
       </i>
       <span :title="model.text">{{ model.text }}</span>

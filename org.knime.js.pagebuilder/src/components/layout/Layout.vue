@@ -1,6 +1,6 @@
 <script>
-import { mapState } from 'vuex';
-import Row from './Row.vue';
+import { mapState } from "vuex";
+import Row from "./Row.vue";
 
 /**
  * Layout container for combining multiple views to one page
@@ -23,45 +23,44 @@ import Row from './Row.vue';
     +------------------------------------------+
  */
 export default {
-    components: {
-        Row
-    },
-    props: {
-        /**
-         * Layout configuration as received from the REST API
-         */
-        layout: {
-            default: () => ({}),
-            type: Object,
-            validate(rowConfig) {
-                if (typeof rowConfig !== 'object') {
-                    return false;
-                }
-                if (!rowConfig.hasOwnProperty('rows')) {
-                    return false;
-                }
-                return true;
-            }
+  components: {
+    Row,
+  },
+  props: {
+    /**
+     * Layout configuration as received from the REST API
+     */
+    layout: {
+      default: () => ({}),
+      type: Object,
+      validate(rowConfig) {
+        if (typeof rowConfig !== "object") {
+          return false;
         }
-    },
-    computed: {
-        ...mapState('pagebuilder', ['isReporting'])
-    },
-    mounted() {
-        if (this.isReporting) {
-            // notify store that layout is rendered for report generation
-            this.$store.dispatch('pagebuilder/setReportingContent', { nodeId: 'layout' });
+        if (!rowConfig.hasOwnProperty("rows")) {
+          return false;
         }
+        return true;
+      },
+    },
+  },
+  computed: {
+    ...mapState("pagebuilder", ["isReporting"]),
+  },
+  mounted() {
+    if (this.isReporting) {
+      // notify store that layout is rendered for report generation
+      this.$store.dispatch("pagebuilder/setReportingContent", {
+        nodeId: "layout",
+      });
     }
+  },
 };
 </script>
 
 <!-- knime-layout is used to extract the structure of the page for the report generation -->
 <template>
-  <div
-    id="knime-layout"
-    class="container-fluid"
-  >
+  <div id="knime-layout" class="container-fluid">
     <Row
       v-for="(row, index) in layout.rows"
       :key="index"

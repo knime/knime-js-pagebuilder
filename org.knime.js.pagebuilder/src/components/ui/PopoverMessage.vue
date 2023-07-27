@@ -1,16 +1,16 @@
 <script>
-import Label from 'webapps-common/ui/components/forms/Label.vue';
-import Button from 'webapps-common/ui/components/Button.vue';
-import FunctionButton from 'webapps-common/ui/components/FunctionButton.vue';
+import Label from "webapps-common/ui/components/forms/Label.vue";
+import Button from "webapps-common/ui/components/Button.vue";
+import FunctionButton from "webapps-common/ui/components/FunctionButton.vue";
 
-import SignWarningIcon from 'webapps-common/ui/assets/img/icons/sign-warning.svg';
-import CircleWarningIcon from 'webapps-common/ui/assets/img/icons/circle-warning.svg';
-import CircleMinus from 'webapps-common/ui/assets/img/icons/circle-minus.svg';
-import CloseIcon from 'webapps-common/ui/assets/img/icons/close.svg';
-import DropdownIcon from 'webapps-common/ui/assets/img/icons/arrow-dropdown.svg';
-import CopyIcon from 'webapps-common/ui/assets/img/icons/copy.svg';
+import SignWarningIcon from "webapps-common/ui/assets/img/icons/sign-warning.svg";
+import CircleWarningIcon from "webapps-common/ui/assets/img/icons/circle-warning.svg";
+import CircleMinus from "webapps-common/ui/assets/img/icons/circle-minus.svg";
+import CloseIcon from "webapps-common/ui/assets/img/icons/close.svg";
+import DropdownIcon from "webapps-common/ui/assets/img/icons/arrow-dropdown.svg";
+import CopyIcon from "webapps-common/ui/assets/img/icons/copy.svg";
 
-import { copyText } from 'webapps-common/util/copyText';
+import { copyText } from "webapps-common/util/copyText";
 
 // Arbitrary length limit to determine if messages should be expandable or displayed initially.
 const MAX_EXPANDED_MESSAGE_LENGTH = 280;
@@ -25,106 +25,106 @@ const MAX_EXPANDED_MESSAGE_LENGTH = 280;
  *  @value warn - warn icon, orange color scheme, pre-expanded message body (expansion disabled), no minimize button.
  */
 export default {
-    components: {
-        Label,
-        Button,
-        FunctionButton,
-        SignWarningIcon,
-        CircleWarningIcon,
-        CircleMinus,
-        CloseIcon,
-        DropdownIcon,
-        CopyIcon
+  components: {
+    Label,
+    Button,
+    FunctionButton,
+    SignWarningIcon,
+    CircleWarningIcon,
+    CircleMinus,
+    CloseIcon,
+    DropdownIcon,
+    CopyIcon,
+  },
+  props: {
+    /*
+     * Controls the styling and default functionality.
+     *
+     * @values warn/info, error (default)
+     */
+    type: {
+      type: String,
+      default: "error",
     },
-    props: {
-        /*
-         * Controls the styling and default functionality.
-         *
-         * @values warn/info, error (default)
-         */
-        type: {
-            type: String,
-            default: 'error'
-        },
-        title: {
-            type: String,
-            default: ''
-        },
-        subtitle: {
-            type: String,
-            default: ''
-        },
-        messageBody: {
-            type: String,
-            default: ''
-        }
+    title: {
+      type: String,
+      default: "",
     },
-    emits: ['closeAlert'],
-    data() {
-        return {
-            messageExpanded: false
-        };
+    subtitle: {
+      type: String,
+      default: "",
     },
-    computed: {
-        /**
-         * @returns {Boolean} - if the message should be expandable or if it's short enough to be pre-expanded.
-         */
-        expandable() {
-            return this.messageBody?.length > MAX_EXPANDED_MESSAGE_LENGTH;
-        },
-        expanded() {
-            return !this.expandable || this.messageExpanded;
-        }
+    messageBody: {
+      type: String,
+      default: "",
     },
-    methods: {
-        /**
-         * Event handler for closing/minimizing the alert.
-         *
-         * @param {Boolean} remove - if the close button was used (instead of minimize).
-         * @emits {closeAlert} - the event which the parent should use to close/deactivate the alert.
-         * @returns {undefined}
-         */
-        onClose(remove) {
-            this.$emit('closeAlert', remove);
+  },
+  emits: ["closeAlert"],
+  data() {
+    return {
+      messageExpanded: false,
+    };
+  },
+  computed: {
+    /**
+     * @returns {Boolean} - if the message should be expandable or if it's short enough to be pre-expanded.
+     */
+    expandable() {
+      return this.messageBody?.length > MAX_EXPANDED_MESSAGE_LENGTH;
+    },
+    expanded() {
+      return !this.expandable || this.messageExpanded;
+    },
+  },
+  methods: {
+    /**
+     * Event handler for closing/minimizing the alert.
+     *
+     * @param {Boolean} remove - if the close button was used (instead of minimize).
+     * @emits {closeAlert} - the event which the parent should use to close/deactivate the alert.
+     * @returns {undefined}
+     */
+    onClose(remove) {
+      this.$emit("closeAlert", remove);
+    },
+    /**
+     * Event handler for expanding message of the alert.
+     *
+     * @returns {undefined}
+     */
+    expandMessage() {
+      this.messageExpanded = !this.messageExpanded;
+    },
+    /**
+     * Event handler for copying the text of the alert. Issues toast for successful copying of text.
+     *
+     * @returns {undefined}
+     */
+    copyText() {
+      copyText(this.$refs.messageContent.textContent);
+      this.$store.dispatch(
+        "notification/show",
+        {
+          message: "Text copied!",
+          type: "success",
+          autoRemove: true,
         },
-        /**
-         * Event handler for expanding message of the alert.
-         *
-         * @returns {undefined}
-         */
-        expandMessage() {
-            this.messageExpanded = !this.messageExpanded;
-        },
-        /**
-         * Event handler for copying the text of the alert. Issues toast for successful copying of text.
-         *
-         * @returns {undefined}
-         */
-        copyText() {
-            copyText(this.$refs.messageContent.textContent);
-            this.$store.dispatch('notification/show', {
-                message: 'Text copied!',
-                type: 'success',
-                autoRemove: true
-            }, { root: true });
-        }
-    }
+        { root: true },
+      );
+    },
+  },
 };
 </script>
 
 <template>
-  <div :class="['pop-over',{ expanded, expandable }, type]">
+  <div :class="['pop-over', { expanded, expandable }, type]">
     <header>
       <Component
         :is="type === 'error' ? 'SignWarningIcon' : 'CircleWarningIcon'"
         class="icon warn-icon"
       />
 
-      <Label
-        :text="title"
-        class="label"
-        large
-      />
+      <Label :text="title" class="label" large />
       <Button
         v-if="type !== 'warn'"
         title="Minimize"
@@ -133,25 +133,15 @@ export default {
       >
         <CircleMinus class="icon minimize-icon" />
       </Button>
-      <Button
-        title="Close"
-        class="close-button"
-        @click="onClose(true)"
-      >
+      <Button title="Close" class="close-button" @click="onClose(true)">
         <CloseIcon class="icon" />
       </Button>
     </header>
-    <div
-      v-if="messageBody"
-      class="message-body"
-    >
+    <div v-if="messageBody" class="message-body">
       <div class="expand-controls">
         <span>{{ subtitle }}</span>
-        <span
-          v-if="expandable"
-          class="expand-text"
-        >
-          (See {{ expanded ? 'less' : 'more' }})
+        <span v-if="expandable" class="expand-text">
+          (See {{ expanded ? "less" : "more" }})
           <Button
             class="expand-button"
             title="Show more"
@@ -162,11 +152,7 @@ export default {
         </span>
       </div>
       <transition name="message-fade">
-        <div
-          v-show="expanded"
-          ref="messageContent"
-          class="scrollable-message"
-        >
+        <div v-show="expanded" ref="messageContent" class="scrollable-message">
           <slot name="messageBodyHeader" />
           <span class="message-block">
             {{ messageBody }}

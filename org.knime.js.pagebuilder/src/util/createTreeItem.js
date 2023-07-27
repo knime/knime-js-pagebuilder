@@ -1,28 +1,24 @@
-import * as icons from 'webapps-common/ui/util/fileTypeIcons';
-import { getFileExtension, getNameFromPath } from './fileUtils';
+import * as icons from "webapps-common/ui/util/fileTypeIcons";
+import { getFileExtension, getNameFromPath } from "./fileUtils";
 
 let getIcon, createTreeItemRecursively, checkDefaultPaths;
 
 const SERVER_ITEM_TYPE = {
-    WORKFLOW: 'Workflow',
-    WORKFLOW_GROUP: 'WorkflowGroup',
-    DATA: 'Data'
+  WORKFLOW: "Workflow",
+  WORKFLOW_GROUP: "WorkflowGroup",
+  DATA: "Data",
 };
 const WIDGET_ITEM_TYPE = {
-    WORKFLOW: 'WORKFLOW',
-    DIR: 'DIRECTORY',
-    DATA: 'DATA',
-    UNKNOWN: 'UNKNOWN'
+  WORKFLOW: "WORKFLOW",
+  DIR: "DIRECTORY",
+  DATA: "DATA",
+  UNKNOWN: "UNKNOWN",
 };
 
-export default (repositoryItem, defaultPaths, viewRep) => createTreeItemRecursively(
-    repositoryItem, defaultPaths, viewRep
-);
+export default (repositoryItem, defaultPaths, viewRep) =>
+  createTreeItemRecursively(repositoryItem, defaultPaths, viewRep);
 
-export {
-    checkDefaultPaths,
-    getIcon
-};
+export { checkDefaultPaths, getIcon };
 
 /**
  * This function is called recursive to build up the file tree
@@ -32,73 +28,75 @@ export {
  * @returns {Object} the created tree
  */
 createTreeItemRecursively = (repositoryItem, defaultPaths, viewRep) => {
-    let treeItem = {
-        id: repositoryItem.path,
-        text: getNameFromPath(repositoryItem.path),
-        state: {
-            opened: false,
-            disabled: false,
-            selected: false
-        },
-        children: []
-    };
-    
-    // set type and icons
-    if (repositoryItem.type === SERVER_ITEM_TYPE.WORKFLOW) {
-        // return if workflows cannot be selected
-        if (!viewRep.selectWorkflows) {
-            return null;
-        }
-        treeItem.type = WIDGET_ITEM_TYPE.WORKFLOW;
-    } else if (repositoryItem.type === SERVER_ITEM_TYPE.WORKFLOW_GROUP) {
-        // set folder disabled if it cannot be selected
-        treeItem.type = WIDGET_ITEM_TYPE.DIR;
-        if (!viewRep.selectDirectories) {
-            treeItem.state.disabled = true;
-        }
-    } else if (repositoryItem.type === SERVER_ITEM_TYPE.DATA) {
-        // return if files are not allowed to be selected
-        if (!viewRep.selectDataFiles) {
-            return null;
-        }
+  let treeItem = {
+    id: repositoryItem.path,
+    text: getNameFromPath(repositoryItem.path),
+    state: {
+      opened: false,
+      disabled: false,
+      selected: false,
+    },
+    children: [],
+  };
 
-        let fileEnding = getFileExtension(treeItem.id);
-
-        // check if file type is allowed
-        if (viewRep.fileTypes && viewRep.fileTypes.length > 0) {
-            // checks if the file ending exists in the viewRep allowed file endings
-            let allowedFileEnding = viewRep.fileTypes.includes(`.${fileEnding.toLowerCase()}`);
-            if (!allowedFileEnding) {
-                return null;
-            }
-        }
-        
-        treeItem.type = WIDGET_ITEM_TYPE.DATA;
-
-        // set custom icon if possible
-        treeItem.icon = getIcon(fileEnding);
+  // set type and icons
+  if (repositoryItem.type === SERVER_ITEM_TYPE.WORKFLOW) {
+    // return if workflows cannot be selected
+    if (!viewRep.selectWorkflows) {
+      return null;
+    }
+    treeItem.type = WIDGET_ITEM_TYPE.WORKFLOW;
+  } else if (repositoryItem.type === SERVER_ITEM_TYPE.WORKFLOW_GROUP) {
+    // set folder disabled if it cannot be selected
+    treeItem.type = WIDGET_ITEM_TYPE.DIR;
+    if (!viewRep.selectDirectories) {
+      treeItem.state.disabled = true;
+    }
+  } else if (repositoryItem.type === SERVER_ITEM_TYPE.DATA) {
+    // return if files are not allowed to be selected
+    if (!viewRep.selectDataFiles) {
+      return null;
     }
 
-    checkDefaultPaths(defaultPaths, treeItem);
-    
-    // resolve children
-    if (treeItem.type === WIDGET_ITEM_TYPE.DIR) {
-        if (repositoryItem.children) {
-            repositoryItem.children.forEach((child) => {
-                let childItem = createTreeItemRecursively(child, defaultPaths, viewRep);
-                if (childItem) {
-                    treeItem.children.push(childItem);
-                }
-            });
-        }
-        
-        // remove empty directories if directories can't be selected
-        if (!treeItem.children?.length && !viewRep.selectDirectories) {
-            return null;
-        }
+    let fileEnding = getFileExtension(treeItem.id);
+
+    // check if file type is allowed
+    if (viewRep.fileTypes && viewRep.fileTypes.length > 0) {
+      // checks if the file ending exists in the viewRep allowed file endings
+      let allowedFileEnding = viewRep.fileTypes.includes(
+        `.${fileEnding.toLowerCase()}`,
+      );
+      if (!allowedFileEnding) {
+        return null;
+      }
     }
 
-    return treeItem;
+    treeItem.type = WIDGET_ITEM_TYPE.DATA;
+
+    // set custom icon if possible
+    treeItem.icon = getIcon(fileEnding);
+  }
+
+  checkDefaultPaths(defaultPaths, treeItem);
+
+  // resolve children
+  if (treeItem.type === WIDGET_ITEM_TYPE.DIR) {
+    if (repositoryItem.children) {
+      repositoryItem.children.forEach((child) => {
+        let childItem = createTreeItemRecursively(child, defaultPaths, viewRep);
+        if (childItem) {
+          treeItem.children.push(childItem);
+        }
+      });
+    }
+
+    // remove empty directories if directories can't be selected
+    if (!treeItem.children?.length && !viewRep.selectDirectories) {
+      return null;
+    }
+  }
+
+  return treeItem;
 };
 
 /**
@@ -109,18 +107,18 @@ createTreeItemRecursively = (repositoryItem, defaultPaths, viewRep) => {
  * @returns {void} - nothing
  */
 checkDefaultPaths = (defaultPaths, treeItem) => {
-    // set selection if default paths match
-    if (defaultPaths?.length) {
-        defaultPaths.forEach((defaultPath) => {
-            if (defaultPath?.startsWith(treeItem.id)) {
-                treeItem.state.opened = true;
-                if (defaultPath === treeItem.id && !treeItem.state.disabled) {
-                    treeItem.state.opened = false;
-                    treeItem.state.selected = true;
-                }
-            }
-        });
-    }
+  // set selection if default paths match
+  if (defaultPaths?.length) {
+    defaultPaths.forEach((defaultPath) => {
+      if (defaultPath?.startsWith(treeItem.id)) {
+        treeItem.state.opened = true;
+        if (defaultPath === treeItem.id && !treeItem.state.disabled) {
+          treeItem.state.opened = false;
+          treeItem.state.selected = true;
+        }
+      }
+    });
+  }
 };
 
 /**
@@ -129,8 +127,6 @@ checkDefaultPaths = (defaultPaths, treeItem) => {
  * @returns {String} returns either the icon name or a default file icon name if the icon is not present
  */
 getIcon = (fileEnding) => {
-    let candidate = `${fileEnding}Icon`;
-    return icons.isIconExisting(candidate)
-        ? candidate
-        : `fileIcon`;
+  let candidate = `${fileEnding}Icon`;
+  return icons.isIconExisting(candidate) ? candidate : `fileIcon`;
 };

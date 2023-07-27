@@ -5,18 +5,18 @@
  * @param {Object} item - the content item to wrap inside an empty container JSON configuration.
  * @returns {Object} - the wrapped layout container configuration containing the original item.
  */
-const wrapView = item => ({
-    type: 'JSONLayoutRow',
-    additionalStyles: [],
-    additionalClasses: [],
-    columns: [
-        {
-            content: [item],
-            widthXS: 12,
-            additionalStyles: [],
-            additionalClasses: []
-        }
-    ]
+const wrapView = (item) => ({
+  type: "JSONLayoutRow",
+  additionalStyles: [],
+  additionalClasses: [],
+  columns: [
+    {
+      content: [item],
+      widthXS: 12,
+      additionalStyles: [],
+      additionalClasses: [],
+    },
+  ],
 });
 
 /**
@@ -30,8 +30,10 @@ const wrapView = item => ({
  *      there were multiple views at the top level.
  */
 export default (content = []) => {
-    let wrappedColumn = content.map(item => item.type === 'view' || item.type === 'JSONLayoutViewContent'
-        ? wrapView(item)
-        : item);
-    return wrappedColumn.length < 2 ? content : wrappedColumn;
+  let wrappedColumn = content.map((item) =>
+    item.type === "view" || item.type === "JSONLayoutViewContent"
+      ? wrapView(item)
+      : item,
+  );
+  return wrappedColumn.length < 2 ? content : wrappedColumn;
 };

@@ -249,12 +249,7 @@
             "pathValid": false,
             "path": ""
           },
-          "fileTypes": [
-            ".csv|.docx|.xlsx",
-            ".csv",
-            ".docx",
-            ".xlsx"
-          ],
+          "fileTypes": [".csv|.docx|.xlsx", ".csv", ".docx", ".xlsx"],
           "errorMessage": "",
           "disableOutput": true
         },
@@ -301,9 +296,7 @@
             "pathValid": false,
             "path": ""
           },
-          "fileTypes": [
-            ".pdf"
-          ],
+          "fileTypes": [".pdf"],
           "errorMessage": "",
           "disableOutput": true
         },

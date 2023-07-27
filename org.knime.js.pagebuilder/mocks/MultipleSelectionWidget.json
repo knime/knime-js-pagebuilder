@@ -626,18 +626,7 @@
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
             "value": []
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "",
-            "",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "4", "", "", "7", "8", "9", "10"],
           "type": "List",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -776,18 +765,7 @@
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
             "value": []
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "",
-            "",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "4", "", "", "7", "8", "9", "10"],
           "type": "Twinlist",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5
@@ -826,18 +804,7 @@
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
             "value": []
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "",
-            "",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "4", "", "", "7", "8", "9", "10"],
           "type": "Check boxes (vertical)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -926,18 +893,7 @@
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
             "value": []
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "",
-            "",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "4", "", "", "7", "8", "9", "10"],
           "type": "Twinlist",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -976,18 +932,7 @@
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
             "value": []
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "",
-            "",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "4", "", "", "7", "8", "9", "10"],
           "type": "Check boxes (horizontal)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -1076,18 +1021,7 @@
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
             "value": []
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "",
-            "",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "4", "", "", "7", "8", "9", "10"],
           "type": "List",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5
@@ -1276,18 +1210,7 @@
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
             "value": []
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "",
-            "",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "4", "", "", "7", "8", "9", "10"],
           "type": "ComboBox",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -1326,18 +1249,7 @@
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
             "value": []
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "",
-            "",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "4", "", "", "7", "8", "9", "10"],
           "type": "ComboBox",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5

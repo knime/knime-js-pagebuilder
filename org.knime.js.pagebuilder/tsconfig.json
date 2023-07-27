@@ -1,25 +1,13 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": [
-    "env.d.ts",
-    "src/**/*",
-    "src/**/*.vue"
-  ],
-  "exclude": [
-    "src/**/__tests__/*"
-  ],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@@/*": [
-        "./*"
-      ],
-      "vue-slider-component": [
-        "./src/vue-slider-component.d.ts"
-      ]
+      "@/*": ["./src/*"],
+      "@@/*": ["./*"],
+      "vue-slider-component": ["./src/vue-slider-component.d.ts"]
     },
     "allowJs": true,
     "jsx": "preserve"

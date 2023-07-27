@@ -1,22 +1,17 @@
 <script>
-import FunctionButton from 'webapps-common/ui/components/FunctionButton.vue';
-import WarningIcon from 'webapps-common/ui/assets/img/icons/circle-warning.svg';
+import FunctionButton from "webapps-common/ui/components/FunctionButton.vue";
+import WarningIcon from "webapps-common/ui/assets/img/icons/circle-warning.svg";
 
 export default {
-    components: {
-        FunctionButton,
-        WarningIcon
-    }
+  components: {
+    FunctionButton,
+    WarningIcon,
+  },
 };
 </script>
 
 <template>
-  <FunctionButton
-    v-bind="$attrs"
-    primary
-    class="button"
-    title="Show messages"
-  >
+  <FunctionButton v-bind="$attrs" primary class="button" title="Show messages">
     <WarningIcon />
   </FunctionButton>
 </template>

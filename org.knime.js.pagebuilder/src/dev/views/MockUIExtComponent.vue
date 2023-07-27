@@ -1,13 +1,12 @@
 <script>
-
 export default {
-    props: {
-        knimeService: {
-            type: Object,
-            required: false,
-            default: null
-        }
-    }
+  props: {
+    knimeService: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+  },
 };
 </script>
 
@@ -27,4 +26,3 @@ div {
   font-weight: bold;
 }
 </style>
-

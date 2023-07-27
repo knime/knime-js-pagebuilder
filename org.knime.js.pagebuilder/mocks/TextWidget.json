@@ -210,17 +210,13 @@
         {
           "forward": false,
           "mapping": null,
-          "targetIDs": [
-            "4dee82b2-e2b5-469f-bf23-c6a78285aa0f"
-          ],
+          "targetIDs": ["4dee82b2-e2b5-469f-bf23-c6a78285aa0f"],
           "sourceID": "cff259b3-c388-48b0-a242-727202dc3982"
         },
         {
           "forward": false,
           "mapping": null,
-          "targetIDs": [
-            "4dee82b2-e2b5-469f-bf23-c6a78285aa0f"
-          ],
+          "targetIDs": ["4dee82b2-e2b5-469f-bf23-c6a78285aa0f"],
           "sourceID": "cff259b3-c388-48b0-a242-727202dc3982"
         }
       ],

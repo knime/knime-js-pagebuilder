@@ -7,8 +7,8 @@
  * @returns {Object} the webNode to update.
  */
 export default (webNode) => {
-    if (webNode?.viewRepresentation?.required) {
-        webNode.viewRepresentation.required = false;
-    }
-    return webNode;
+  if (webNode?.viewRepresentation?.required) {
+    webNode.viewRepresentation.required = false;
+  }
+  return webNode;
 };

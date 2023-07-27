@@ -735,17 +735,13 @@
       "selectionTranslators": [
         {
           "mapping": null,
-          "targetIDs": [
-            "046b7eb5-e668-4f6b-8637-80e179ef6713"
-          ],
+          "targetIDs": ["046b7eb5-e668-4f6b-8637-80e179ef6713"],
           "sourceID": "cbeca630-c222-4955-a85e-a9668c8665a5",
           "forward": false
         },
         {
           "mapping": null,
-          "targetIDs": [
-            "046b7eb5-e668-4f6b-8637-80e179ef6713"
-          ],
+          "targetIDs": ["046b7eb5-e668-4f6b-8637-80e179ef6713"],
           "sourceID": "cbeca630-c222-4955-a85e-a9668c8665a5",
           "forward": false
         }
@@ -783,9 +779,7 @@
           "type": "Dropdown",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.quickform.selection.value.ValueSelectionQuickFormValue",
@@ -1104,9 +1098,7 @@
           "type": "Twinlist",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.quickform.filter.value.ValueFilterQuickFormValue",
@@ -1173,12 +1165,7 @@
             "columns": [
               {
                 "type": "nominal",
-                "values": [
-                  "Cluster_0",
-                  "Cluster_1",
-                  "Cluster_2",
-                  "Cluster_3"
-                ],
+                "values": ["Cluster_0", "Cluster_1", "Cluster_2", "Cluster_3"],
                 "columnName": "Cluster Membership"
               }
             ],
@@ -1252,9 +1239,7 @@
           "type": "Dropdown",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10,
-          "possibleColumns": [
-            "Cluster Membership"
-          ]
+          "possibleColumns": ["Cluster Membership"]
         },
         "viewValue": {
           "@class": "org.knime.js.base.node.quickform.selection.value.ValueSelectionQuickFormValue",
@@ -1303,15 +1288,7 @@
             {
               "spec": {
                 "@class": "org.knime.js.core.JSONDataTableSpec",
-                "possibleValues": [
-                  null,
-                  null,
-                  null,
-                  null,
-                  [
-                    "Cluster_0"
-                  ]
-                ],
+                "possibleValues": [null, null, null, null, ["Cluster_0"]],
                 "colNames": [
                   "Universe_0_0",
                   "Universe_0_1",
@@ -1349,20 +1326,8 @@
                   "#404040"
                 ],
                 "rowSizeValues": null,
-                "containsMissingValues": [
-                  false,
-                  false,
-                  false,
-                  false,
-                  false
-                ],
-                "colTypes": [
-                  "number",
-                  "number",
-                  "number",
-                  "number",
-                  "string"
-                ],
+                "containsMissingValues": [false, false, false, false, false],
+                "colTypes": ["number", "number", "number", "number", "string"],
                 "knimeTypes": [
                   "Number (double)",
                   "Number (double)",
@@ -1374,13 +1339,7 @@
                 "extensionTypes": [],
                 "extensionNames": [],
                 "colorModels": [],
-                "filterIds": [
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ]
+                "filterIds": [null, null, null, null, null]
               },
               "filtered": false,
               "fragmentFirstRowIndex": 0,
@@ -1493,9 +1452,7 @@
               ]
             }
           ],
-          "tableIds": [
-            null
-          ],
+          "tableIds": [null],
           "warnMessage": "One or more of the columns chosen are duplicated. This may affect the initial appearance of the view. If this was unintentional, please be sure to change the node settings either in the configuration dialog or in the view itself.\nOnly the first 10 rows are displayed.",
           "binaryFiles": {},
           "jsDependencies": [
@@ -1504,9 +1461,7 @@
               "local": true,
               "usesDefine": false,
               "exports": "moment",
-              "dependencies": [
-                "moment_locales_2_17"
-              ],
+              "dependencies": ["moment_locales_2_17"],
               "name": "Moment"
             },
             {
@@ -2527,22 +2482,13 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "range": {
-              "min": [
-                0.0
-              ],
-              "max": [
-                100.0
-              ]
+              "min": [0.0],
+              "max": [100.0]
             },
-            "start": [
-              50.0
-            ],
+            "start": [50.0],
             "orientation": "horizontal",
             "direction": "ltr",
-            "connect": [
-              false,
-              false
-            ]
+            "connect": [false, false]
           }
         },
         "viewValue": {
@@ -2594,17 +2540,10 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "range": {
-              "min": [
-                0.0
-              ],
-              "max": [
-                0.999
-              ]
+              "min": [0.0],
+              "max": [0.999]
             },
-            "start": [
-              0.0,
-              0.999
-            ],
+            "start": [0.0, 0.999],
             "behaviour": "drag-tap",
             "orientation": "horizontal",
             "direction": "ltr",
@@ -2631,11 +2570,7 @@
                 "negative": "-"
               }
             ],
-            "fix": [
-              false,
-              true,
-              false
-            ]
+            "fix": [false, true, false]
           }
         },
         "viewValue": {
@@ -2648,7 +2583,7 @@
                 "minimumInclusive": true,
                 "maximumInclusive": true,
                 "maximum": 0.9993849706529441,
-                "minimum": 2.968693375858811E-4,
+                "minimum": 2.968693375858811e-4,
                 "columnName": "Universe_1_1"
               }
             ],

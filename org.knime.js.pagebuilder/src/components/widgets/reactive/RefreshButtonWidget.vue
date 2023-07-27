@@ -1,9 +1,9 @@
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
-import Label from 'webapps-common/ui/components/forms/Label.vue';
-import ErrorMessage from '../baseElements/text/ErrorMessage.vue';
-import Button from 'webapps-common/ui/components/Button.vue';
+import Label from "webapps-common/ui/components/forms/Label.vue";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
+import Button from "webapps-common/ui/components/Button.vue";
 
 /**
  * Refresh button widget.
@@ -11,57 +11,53 @@ import Button from 'webapps-common/ui/components/Button.vue';
  * @emits updateWidget event to trigger a partial re-execution of the component.
  */
 export default {
-    components: {
-        Button,
-        Label,
-        ErrorMessage
+  components: {
+    Button,
+    Label,
+    ErrorMessage,
+  },
+  props: {
+    nodeConfig: {
+      required: true,
+      type: Object,
+      validator(obj) {
+        return obj.nodeInfo;
+      },
     },
-    props: {
-        nodeConfig: {
-            required: true,
-            type: Object,
-            validator(obj) {
-                return obj.nodeInfo;
-            }
-        },
-        nodeId: {
-            required: true,
-            type: String,
-            validator(nodeId) {
-                return nodeId !== '';
-            }
-        },
-        errorMessage: {
-            type: String,
-            default: null
-        }
+    nodeId: {
+      required: true,
+      type: String,
+      validator(nodeId) {
+        return nodeId !== "";
+      },
     },
-    emits: ['updateWidget'],
-    computed: {
-        ...mapState('pagebuilder', ['nodesReExecuting']),
-        viewRep() {
-            return this.nodeConfig.viewRepresentation;
-        },
-        isExecuting() {
-            return Boolean(this.nodesReExecuting?.length);
-        }
+    errorMessage: {
+      type: String,
+      default: null,
     },
-    methods: {
-        onClick() {
-            this.$emit('updateWidget', {
-                nodeId: this.nodeId
-            });
-        }
-    }
+  },
+  emits: ["updateWidget"],
+  computed: {
+    ...mapState("pagebuilder", ["nodesReExecuting"]),
+    viewRep() {
+      return this.nodeConfig.viewRepresentation;
+    },
+    isExecuting() {
+      return Boolean(this.nodesReExecuting?.length);
+    },
+  },
+  methods: {
+    onClick() {
+      this.$emit("updateWidget", {
+        nodeId: this.nodeId,
+      });
+    },
+  },
 };
 </script>
 
 <template>
-  <Label
-    :text="viewRep.label"
-    :title="viewRep.description"
-    large
-  >
+  <Label :text="viewRep.label" :title="viewRep.description" large>
     <Button
       primary
       compact

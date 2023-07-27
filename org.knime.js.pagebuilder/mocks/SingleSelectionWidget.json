@@ -623,15 +623,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "possibleChoices": [
             "someReallyLongButImportantValue1",
@@ -677,28 +673,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "List",
           "limitNumberVisOptions": false,
           "numberVisOptions": 5
@@ -731,28 +712,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "Radio buttons (horizontal)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -785,15 +751,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "possibleChoices": [
             "someReallyLongButImportantValue1",
@@ -839,15 +801,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "possibleChoices": [
             "someReallyLongButImportantValue1",
@@ -893,28 +851,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "Radio buttons (vertical)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -947,28 +890,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "Dropdown",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -1001,15 +929,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "possibleChoices": [
             "someReallyLongButImportantValue1",
@@ -1055,28 +979,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "List",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5
@@ -1109,15 +1018,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "possibleChoices": [
             "someReallyLongButImportantValue1",
@@ -1163,28 +1068,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "Radio buttons (horizontal)",
           "limitNumberVisOptions": true,
           "numberVisOptions": 5
@@ -1217,15 +1107,11 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "someReallyLongButImportantValue1"
-            ]
+            "value": ["someReallyLongButImportantValue1"]
           },
           "possibleChoices": [
             "someReallyLongButImportantValue1",
@@ -1271,28 +1157,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "thisValueDoesntExist"
-            ]
+            "value": ["thisValueDoesntExist"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "Dropdown",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -1325,28 +1196,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              ""
-            ]
+            "value": [""]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "Dropdown",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -1379,28 +1235,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "invalid"
-            ]
+            "value": ["invalid"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "Radio buttons (horizontal)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -1433,28 +1274,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              ""
-            ]
+            "value": [""]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "Radio buttons (horizontal)",
           "limitNumberVisOptions": false,
           "numberVisOptions": 10
@@ -1487,28 +1313,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "invalid"
-            ]
+            "value": ["invalid"]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "List",
           "limitNumberVisOptions": false,
           "numberVisOptions": 5
@@ -1541,28 +1352,13 @@
           "required": true,
           "defaultValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              "1"
-            ]
+            "value": ["1"]
           },
           "currentValue": {
             "@class": "org.knime.js.base.node.base.selection.singleMultiple.SingleMultipleSelectionNodeValue",
-            "value": [
-              ""
-            ]
+            "value": [""]
           },
-          "possibleChoices": [
-            "1",
-            "2",
-            "3",
-            "",
-            "",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
-          ],
+          "possibleChoices": ["1", "2", "3", "", "", "6", "7", "8", "9", "10"],
           "type": "List",
           "limitNumberVisOptions": false,
           "numberVisOptions": 5

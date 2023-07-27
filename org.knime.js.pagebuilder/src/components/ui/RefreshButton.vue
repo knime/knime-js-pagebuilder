@@ -1,36 +1,31 @@
 <script>
-import { mapState } from 'vuex';
-import FunctionButton from 'webapps-common/ui/components/FunctionButton.vue';
-import RefreshIcon from 'webapps-common/ui/assets/img/icons/load.svg';
+import { mapState } from "vuex";
+import FunctionButton from "webapps-common/ui/components/FunctionButton.vue";
+import RefreshIcon from "webapps-common/ui/assets/img/icons/load.svg";
 
 export default {
-    components: {
-        FunctionButton,
-        RefreshIcon
+  components: {
+    FunctionButton,
+    RefreshIcon,
+  },
+  computed: {
+    ...mapState("pagebuilder", ["isDialogLayout"]),
+  },
+  methods: {
+    refresh() {
+      if (window.reloadCEFWindow) {
+        window.reloadCEFWindow();
+      } else {
+        // eslint-disable-next-line no-console
+        console.warn("No 'reloadCEFWindow'-browser function available");
+      }
     },
-    computed: {
-        ...mapState('pagebuilder', ['isDialogLayout'])
-    },
-    methods: {
-        refresh() {
-            if (window.reloadCEFWindow) {
-                window.reloadCEFWindow();
-            } else {
-                // eslint-disable-next-line no-console
-                console.warn("No 'reloadCEFWindow'-browser function available");
-            }
-        }
-    }
+  },
 };
 </script>
 
 <template>
-  <FunctionButton
-    primary
-    class="button"
-    title="Refresh"
-    @click="refresh"
-  >
+  <FunctionButton primary class="button" title="Refresh" @click="refresh">
     <RefreshIcon />
   </FunctionButton>
 </template>
@@ -42,4 +37,3 @@ export default {
   left: 50px;
 }
 </style>
-

@@ -1,91 +1,102 @@
 <script>
-import Button from 'webapps-common/ui/components/Button.vue';
-import ExecutingOverlay from '../ui/ExecutingOverlay.vue';
-import ExecutableImage from '../../assets/executable-plot.svg';
+import Button from "webapps-common/ui/components/Button.vue";
+import ExecutingOverlay from "../ui/ExecutingOverlay.vue";
+import ExecutableImage from "../../assets/executable-plot.svg";
 
 /**
  * Stylized overlay displayed in the Dialog-Preview when the node is not executed or requires
  * re-execution. Displays a button to trigger the execution of the underlying node.
  */
 export default {
-    components: {
-        Button,
-        ExecutingOverlay,
-        ExecutableImage
-    },
-    props: {
-        extensionConfig: {
-            default: () => ({}),
-            type: Object,
-            validate(extensionConfig) {
-                if (typeof extensionConfig !== 'object' || Array.isArray(extensionConfig)) {
-                    return false;
-                }
-                const requiredProperties = ['nodeId', 'workflowId', 'projectId', 'nodeInfo'];
-                return requiredProperties.every(key => extensionConfig.hasOwnProperty(key));
-            }
+  components: {
+    Button,
+    ExecutingOverlay,
+    ExecutableImage,
+  },
+  props: {
+    extensionConfig: {
+      default: () => ({}),
+      type: Object,
+      validate(extensionConfig) {
+        if (
+          typeof extensionConfig !== "object" ||
+          Array.isArray(extensionConfig)
+        ) {
+          return false;
         }
+        const requiredProperties = [
+          "nodeId",
+          "workflowId",
+          "projectId",
+          "nodeInfo",
+        ];
+        return requiredProperties.every((key) =>
+          extensionConfig.hasOwnProperty(key),
+        );
+      },
     },
-    computed: {
-        canExecute() {
-            return this.extensionConfig.nodeInfo.canExecute !== false;
-        },
-        isExecuting() {
-            return this.extensionConfig.nodeInfo.nodeState === 'executing';
-        }
+  },
+  computed: {
+    canExecute() {
+      return this.extensionConfig.nodeInfo.canExecute !== false;
     },
-    watch: {
-        'extensionConfig.nodeInfo': {
-            handler() {
-                this.showAlert();
-            },
-            deep: true
-        }
+    isExecuting() {
+      return this.extensionConfig.nodeInfo.nodeState === "executing";
     },
-    mounted() {
+  },
+  watch: {
+    "extensionConfig.nodeInfo": {
+      handler() {
         this.showAlert();
+      },
+      deep: true,
     },
-    methods: {
-        async executeViewSaveSettings() {
-            await this.$store.dispatch('pagebuilder/dialog/callApplySettings');
-            await this.$store.dispatch('api/changeNodeStates', {
-                extensionConfig: this.extensionConfig,
-                action: 'execute'
-            });
-            /**
-             * TODO: UIEXT-1074: Rethink if this is necessary. We need this for now as otherwise
-             * the ViewExecutable will stay forever in the NodeView. This currently leads to the bug
-             * that dirtySettings calls during execution are overwritten here.
-             */
-            this.$store.dispatch('pagebuilder/dialog/cleanSettings');
-        },
-        showAlert() {
-            const nodeInfo = this.extensionConfig.nodeInfo;
-            const alertMessage = nodeInfo?.nodeErrorMessage || nodeInfo?.nodeWarnMessage;
-            if (alertMessage) {
-                const isError = nodeInfo?.nodeErrorMessage;
-                const nodeId = this.extensionConfig.nodeId;
-                const alert = { message: alertMessage, type: isError ? 'error' : 'warn', subtitle: '', nodeId };
-                this.$store.dispatch('pagebuilder/alert/showAlert', alert);
-            }
-        }
-    }
+  },
+  mounted() {
+    this.showAlert();
+  },
+  methods: {
+    async executeViewSaveSettings() {
+      await this.$store.dispatch("pagebuilder/dialog/callApplySettings");
+      await this.$store.dispatch("api/changeNodeStates", {
+        extensionConfig: this.extensionConfig,
+        action: "execute",
+      });
+      /**
+       * TODO: UIEXT-1074: Rethink if this is necessary. We need this for now as otherwise
+       * the ViewExecutable will stay forever in the NodeView. This currently leads to the bug
+       * that dirtySettings calls during execution are overwritten here.
+       */
+      this.$store.dispatch("pagebuilder/dialog/cleanSettings");
+    },
+    showAlert() {
+      const nodeInfo = this.extensionConfig.nodeInfo;
+      const alertMessage =
+        nodeInfo?.nodeErrorMessage || nodeInfo?.nodeWarnMessage;
+      if (alertMessage) {
+        const isError = nodeInfo?.nodeErrorMessage;
+        const nodeId = this.extensionConfig.nodeId;
+        const alert = {
+          message: alertMessage,
+          type: isError ? "error" : "warn",
+          subtitle: "",
+          nodeId,
+        };
+        this.$store.dispatch("pagebuilder/alert/showAlert", alert);
+      }
+    },
+  },
 };
 </script>
 
 <template>
   <div class="view-container">
-    <p
-      v-if="canExecute"
-      class="message"
-    >
+    <p v-if="canExecute" class="message">
       Please execute the node to see the preview.
     </p>
-    <p
-      v-else
-      class="message"
-    >
-      Node cannot be executed in order to show the preview. Please check the workflow.
+    <p v-else class="message">
+      Node cannot be executed in order to show the preview. Please check the
+      workflow.
     </p>
     <ExecutableImage />
     <Button

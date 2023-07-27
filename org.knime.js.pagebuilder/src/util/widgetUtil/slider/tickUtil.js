@@ -1,5 +1,5 @@
-import formatTooltip from '../../tooltipFormatter';
-import { createSubTicks } from './subTickUtil';
+import formatTooltip from "../../tooltipFormatter";
+import { createSubTicks } from "./subTickUtil";
 
 /**
  * This utility function provides the functionality for the
@@ -37,70 +37,71 @@ import { createSubTicks } from './subTickUtil';
  *          labelled and formatted ticks for the slider.
  */
 export const createTicks = (tickConfig) => {
-    const { config, min, max, direction, stepSize, hasSteps } = tickConfig;
-    let markConfig = {};
-    const orderedValues = new Set([min]);
-    if (config) {
-        switch (config.mode) {
-            case 'steps':
-            case 'count': {
-                const MAX_AUTO_GEN_TICKS = 10000;
-                const DEFAULT_DENSITY = 3;
-                let step = config.mode === 'steps'
-                    ? Number(stepSize)
-                    : (max - min) / config.values[0];
-                /*
+  const { config, min, max, direction, stepSize, hasSteps } = tickConfig;
+  let markConfig = {};
+  const orderedValues = new Set([min]);
+  if (config) {
+    switch (config.mode) {
+      case "steps":
+      case "count": {
+        const MAX_AUTO_GEN_TICKS = 10000;
+        const DEFAULT_DENSITY = 3;
+        let step =
+          config.mode === "steps"
+            ? Number(stepSize)
+            : (max - min) / config.values[0];
+        /*
                 Prevent people from crashing the browser by trying to use too many
                 steps. Default to using density which provides a reasonable number
                 of unlabeled ticks.
             */
-                if ((max - min) / step > MAX_AUTO_GEN_TICKS) {
-                    config.density = config.density || DEFAULT_DENSITY;
-                    break;
-                }
-                for (let i = 0; i < (max - min) / step; i++) {
-                    let val = min + step * i;
-                    markConfig[val] = formatTooltip(val, config.format);
-                    orderedValues.add(val);
-                }
-                markConfig[max] = formatTooltip(max, config.format);
-                break;
-            }
-            case 'values': {
-                config.values.forEach((val) => {
-                    markConfig[val] = formatTooltip(val, config.format);
-                    orderedValues.add(val);
-                });
-                break;
-            }
-            case 'range':
-                markConfig[min] = formatTooltip(min, config.format);
-                markConfig[max] = formatTooltip(max, config.format);
-                break;
-            case 'positions': {
-                config.values.forEach((val) => {
-                    let range = max - min;
-                    let key = range * (val / 100) + min;
-                    if (min <= key && key <= max) {
-                        markConfig[key] = formatTooltip(key, config.format);
-                        orderedValues.add(key);
-                    }
-                });
-                break;
-            }
-            default:
-          // nothing
+        if ((max - min) / step > MAX_AUTO_GEN_TICKS) {
+          config.density = config.density || DEFAULT_DENSITY;
+          break;
         }
-        const subTickConfig = {
-            min,
-            max,
-            direction,
-            density: config.density,
-            hasSteps,
-            mode: config.mode
-        };
-        orderedValues.add(max);
-        createSubTicks(markConfig, orderedValues, subTickConfig);
+        for (let i = 0; i < (max - min) / step; i++) {
+          let val = min + step * i;
+          markConfig[val] = formatTooltip(val, config.format);
+          orderedValues.add(val);
+        }
+        markConfig[max] = formatTooltip(max, config.format);
+        break;
+      }
+      case "values": {
+        config.values.forEach((val) => {
+          markConfig[val] = formatTooltip(val, config.format);
+          orderedValues.add(val);
+        });
+        break;
+      }
+      case "range":
+        markConfig[min] = formatTooltip(min, config.format);
+        markConfig[max] = formatTooltip(max, config.format);
+        break;
+      case "positions": {
+        config.values.forEach((val) => {
+          let range = max - min;
+          let key = range * (val / 100) + min;
+          if (min <= key && key <= max) {
+            markConfig[key] = formatTooltip(key, config.format);
+            orderedValues.add(key);
+          }
+        });
+        break;
+      }
+      default:
+      // nothing
     }
-    return markConfig;
+    const subTickConfig = {
+      min,
+      max,
+      direction,
+      density: config.density,
+      hasSteps,
+      mode: config.mode,
+    };
+    orderedValues.add(max);
+    createSubTicks(markConfig, orderedValues, subTickConfig);
+  }
+  return markConfig;
 };

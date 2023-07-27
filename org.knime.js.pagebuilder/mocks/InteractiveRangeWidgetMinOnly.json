@@ -176,11 +176,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "direction": "ltr",
-            "fix": [
-              false,
-              false,
-              true
-            ],
+            "fix": [false, false, true],
             "behaviour": "drag-tap",
             "tooltips": [
               {
@@ -206,18 +202,11 @@
               "mode": "range"
             },
             "range": {
-              "min": [
-                0.00159738970649137
-              ],
-              "max": [
-                0.9999115415093852
-              ]
+              "min": [0.00159738970649137],
+              "max": [0.9999115415093852]
             },
             "orientation": "horizontal",
-            "start": [
-              0.00159738970649137,
-              0.9999115415093852
-            ]
+            "start": [0.00159738970649137, 0.9999115415093852]
           }
         },
         "viewValue": {
@@ -278,11 +267,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "direction": "ltr",
-            "fix": [
-              false,
-              false,
-              true
-            ],
+            "fix": [false, false, true],
             "behaviour": "drag-tap",
             "tooltips": [
               {
@@ -308,18 +293,11 @@
               "mode": "range"
             },
             "range": {
-              "min": [
-                2.5676921454276247E-5
-              ],
-              "max": [
-                0.999498745920199
-              ]
+              "min": [2.5676921454276247e-5],
+              "max": [0.999498745920199]
             },
             "orientation": "vertical",
-            "start": [
-              2.5676921454276247E-5,
-              0.999498745920199
-            ]
+            "start": [2.5676921454276247e-5, 0.999498745920199]
           }
         },
         "viewValue": {
@@ -332,7 +310,7 @@
                 "maximumInclusive": true,
                 "minimumInclusive": true,
                 "maximum": "Infinity",
-                "minimum": 2.5676921454276247E-5,
+                "minimum": 2.5676921454276247e-5,
                 "columnName": "Universe_0_1"
               }
             ],
@@ -380,11 +358,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "direction": "rtl",
-            "fix": [
-              false,
-              false,
-              true
-            ],
+            "fix": [false, false, true],
             "behaviour": "drag-tap",
             "tooltips": [
               {
@@ -410,18 +384,11 @@
               "mode": "range"
             },
             "range": {
-              "min": [
-                2.5676921454276247E-5
-              ],
-              "max": [
-                0.999498745920199
-              ]
+              "min": [2.5676921454276247e-5],
+              "max": [0.999498745920199]
             },
             "orientation": "vertical",
-            "start": [
-              2.5676921454276247E-5,
-              0.999498745920199
-            ]
+            "start": [2.5676921454276247e-5, 0.999498745920199]
           }
         },
         "viewValue": {
@@ -434,7 +401,7 @@
                 "maximumInclusive": true,
                 "minimumInclusive": true,
                 "maximum": "Infinity",
-                "minimum": 2.5676921454276247E-5,
+                "minimum": 2.5676921454276247e-5,
                 "columnName": "Universe_0_1"
               }
             ],
@@ -482,11 +449,7 @@
           "sliderSettings": {
             "@class": "org.knime.js.core.settings.slider.SliderSettings",
             "direction": "rtl",
-            "fix": [
-              false,
-              false,
-              true
-            ],
+            "fix": [false, false, true],
             "behaviour": "drag-tap",
             "tooltips": [
               {
@@ -512,18 +475,11 @@
               "mode": "range"
             },
             "range": {
-              "min": [
-                0.00159738970649137
-              ],
-              "max": [
-                0.9999115415093852
-              ]
+              "min": [0.00159738970649137],
+              "max": [0.9999115415093852]
             },
             "orientation": "horizontal",
-            "start": [
-              0.00159738970649137,
-              0.9999115415093852
-            ]
+            "start": [0.00159738970649137, 0.9999115415093852]
           }
         },
         "viewValue": {

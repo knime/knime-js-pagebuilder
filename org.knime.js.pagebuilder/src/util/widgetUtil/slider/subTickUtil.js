@@ -15,18 +15,16 @@ const SUBTICK_INTERVAL_BUFFER_FACTOR = 1.5;
  * @returns {Object} tick - the tick object.
  */
 const newTick = (length, direction) => {
-    const styleKey = direction.includes('b')
-        ? 'width'
-        : 'height';
-    return {
-        label: '',
-        style: {
-            [styleKey]: `${length}px !important`
-        },
-        labelStyle: {
-            display: 'none'
-        }
-    };
+  const styleKey = direction.includes("b") ? "width" : "height";
+  return {
+    label: "",
+    style: {
+      [styleKey]: `${length}px !important`,
+    },
+    labelStyle: {
+      display: "none",
+    },
+  };
 };
 
 /**
@@ -44,18 +42,18 @@ const newTick = (length, direction) => {
  * @returns {Number} length - the appropriate length(px) for the tick.
  */
 const getTickSize = (ind, numTick) => {
-    switch (true) {
-        case ind === 0:
-        case ind === numTick:
-        case numTick % 2 === 0:
-            return DEFAULT_KNIME_TICK_LENGTH;
-        case Math.ceil(numTick / 2) === ind:
-            return DEFAULT_KNIME_MEDIAN_TICK_LENGTH;
-        case ind % 2 === 0:
-            return DEFAULT_KNIME_EXT_SUB_TICK_LENGTH;
-        default:
-            return DEFAULT_KNIME_TICK_LENGTH;
-    }
+  switch (true) {
+    case ind === 0:
+    case ind === numTick:
+    case numTick % 2 === 0:
+      return DEFAULT_KNIME_TICK_LENGTH;
+    case Math.ceil(numTick / 2) === ind:
+      return DEFAULT_KNIME_MEDIAN_TICK_LENGTH;
+    case ind % 2 === 0:
+      return DEFAULT_KNIME_EXT_SUB_TICK_LENGTH;
+    default:
+      return DEFAULT_KNIME_TICK_LENGTH;
+  }
 };
 
 /**
@@ -87,25 +85,25 @@ const getTickSize = (ind, numTick) => {
  *          preferred tick density total calculated by the calling function.
  */
 const addSubInterval = (tickObj, intervalConfig) => {
-    const { prevValue, diff, direction, densitySize } = intervalConfig;
-    // the ideal number of steps for this sub-interval, rounded down
-    // to account for the beginning tick.
-    let subSteps = Math.floor(diff.value / densitySize);
-    // size of the substep.
-    let stepSize = diff.value / subSteps;
-    // skipping the first subtick (which is the previously labeled tick)
-    // add the subticks to the tick object if they don't already exist.
-    for (let i = 1; i < subSteps; i++) {
-        let val = prevValue + stepSize * i;
-        // calculate tick size to give the slider a more polished look.
-        let tickSize = getTickSize(i, subSteps - 1);
-        if (typeof tickObj[val] === 'undefined') {
-            tickObj[val] = newTick(tickSize, direction);
-        }
+  const { prevValue, diff, direction, densitySize } = intervalConfig;
+  // the ideal number of steps for this sub-interval, rounded down
+  // to account for the beginning tick.
+  let subSteps = Math.floor(diff.value / densitySize);
+  // size of the substep.
+  let stepSize = diff.value / subSteps;
+  // skipping the first subtick (which is the previously labeled tick)
+  // add the subticks to the tick object if they don't already exist.
+  for (let i = 1; i < subSteps; i++) {
+    let val = prevValue + stepSize * i;
+    // calculate tick size to give the slider a more polished look.
+    let tickSize = getTickSize(i, subSteps - 1);
+    if (typeof tickObj[val] === "undefined") {
+      tickObj[val] = newTick(tickSize, direction);
     }
-    // return the number of subSteps added to be accounted for by the
-    // tick count for the entire slider.
-    return subSteps;
+  }
+  // return the number of subSteps added to be accounted for by the
+  // tick count for the entire slider.
+  return subSteps;
 };
 
 /**
@@ -130,68 +128,69 @@ const addSubInterval = (tickObj, intervalConfig) => {
  *          provided tickObj.
  */
 export const createSubTicks = (tickObj, vals, subTickConfig) => {
-    const { min, max, direction, density, hasSteps, mode } = subTickConfig;
-    // if the user requested ticks via density
-    if (density) {
-        // if stepping is disabled, but pips is set to steps
-        // expected behavior (as found in AP) is to show min
-        // & max labels
-        if (!hasSteps && mode === 'steps') {
-            tickObj[min] = min.toString();
-            tickObj[max] = max.toString();
-        }
-        // if the user has an empty slider (no labels) but
-        // indicated they want ticks via the density option,
-        // add master ticks for the min and max values.
-        if (!tickObj[min]) {
-            tickObj[min] = newTick(DEFAULT_KNIME_MIN_MAX_TICK_LENGTH, direction);
-        }
-        if (!tickObj[max]) {
-            tickObj[max] = newTick(DEFAULT_KNIME_MIN_MAX_TICK_LENGTH, direction);
-        }
-        // get an array of all the numeric values of the ticks as the
-        // sit on the slider (even unlabeled sliders will have min
-        // and max in this array).
-        const labelValues = Array.from(vals);
-        // calculate the preferred number of steps.
-        let numSteps = 100 / density;
-        // find what the total number of steps would be if preferred
-        // steps all have space.
-        let allSteps = numSteps + labelValues.length;
-        // calculate the ideal distance between ticks to perfectly
-        // match the user preference.
-        const densitySize = (max - min) / numSteps;
-        // create a collection of the distance between all of the
-        // existing labels on the slider.
-        // eslint-disable-next-line arrow-body-style
-        const diffArr = labelValues.reduce((acc, val, ind, arr) => {
-            return ind < labelValues.length - 1
-                ? [...acc, arr[ind + 1] - val]
-                : acc;
-        }, []);
-        // track the label index.
-        let currLabelInd = 0;
-        // get the iterator for the values
-        let diffIterator = diffArr[Symbol.iterator]();
-        // format the configuration needed by the sub-tick function
-        let intervalConfig = {
-            prevValue: labelValues[currLabelInd],
-            diff: diffIterator.next(),
-            direction,
-            densitySize
-        };
-        // as long as there are still fewer total ticks on the slider
-        // than preferred ticks as calculated using density and there
-        // are still intervals into which we can place subticks, then
-        // keep adding subticks.
-        do {
-            if (intervalConfig.diff.value > densitySize * SUBTICK_INTERVAL_BUFFER_FACTOR) {
-                allSteps -= addSubInterval(tickObj, intervalConfig);
-            }
-            allSteps--;
-            currLabelInd++;
-            intervalConfig.prevValue = labelValues[currLabelInd];
-            intervalConfig.diff = diffIterator.next();
-        } while (allSteps > 0 && !intervalConfig.diff.done);
+  const { min, max, direction, density, hasSteps, mode } = subTickConfig;
+  // if the user requested ticks via density
+  if (density) {
+    // if stepping is disabled, but pips is set to steps
+    // expected behavior (as found in AP) is to show min
+    // & max labels
+    if (!hasSteps && mode === "steps") {
+      tickObj[min] = min.toString();
+      tickObj[max] = max.toString();
     }
+    // if the user has an empty slider (no labels) but
+    // indicated they want ticks via the density option,
+    // add master ticks for the min and max values.
+    if (!tickObj[min]) {
+      tickObj[min] = newTick(DEFAULT_KNIME_MIN_MAX_TICK_LENGTH, direction);
+    }
+    if (!tickObj[max]) {
+      tickObj[max] = newTick(DEFAULT_KNIME_MIN_MAX_TICK_LENGTH, direction);
+    }
+    // get an array of all the numeric values of the ticks as the
+    // sit on the slider (even unlabeled sliders will have min
+    // and max in this array).
+    const labelValues = Array.from(vals);
+    // calculate the preferred number of steps.
+    let numSteps = 100 / density;
+    // find what the total number of steps would be if preferred
+    // steps all have space.
+    let allSteps = numSteps + labelValues.length;
+    // calculate the ideal distance between ticks to perfectly
+    // match the user preference.
+    const densitySize = (max - min) / numSteps;
+    // create a collection of the distance between all of the
+    // existing labels on the slider.
+    // eslint-disable-next-line arrow-body-style
+    const diffArr = labelValues.reduce((acc, val, ind, arr) => {
+      return ind < labelValues.length - 1 ? [...acc, arr[ind + 1] - val] : acc;
+    }, []);
+    // track the label index.
+    let currLabelInd = 0;
+    // get the iterator for the values
+    let diffIterator = diffArr[Symbol.iterator]();
+    // format the configuration needed by the sub-tick function
+    let intervalConfig = {
+      prevValue: labelValues[currLabelInd],
+      diff: diffIterator.next(),
+      direction,
+      densitySize,
+    };
+    // as long as there are still fewer total ticks on the slider
+    // than preferred ticks as calculated using density and there
+    // are still intervals into which we can place subticks, then
+    // keep adding subticks.
+    do {
+      if (
+        intervalConfig.diff.value >
+        densitySize * SUBTICK_INTERVAL_BUFFER_FACTOR
+      ) {
+        allSteps -= addSubInterval(tickObj, intervalConfig);
+      }
+      allSteps--;
+      currLabelInd++;
+      intervalConfig.prevValue = labelValues[currLabelInd];
+      intervalConfig.diff = diffIterator.next();
+    } while (allSteps > 0 && !intervalConfig.diff.done);
+  }
 };

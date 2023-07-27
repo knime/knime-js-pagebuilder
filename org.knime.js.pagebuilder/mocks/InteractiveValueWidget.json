@@ -273,9 +273,7 @@
             "columns": [
               {
                 "type": "nominal",
-                "values": [
-                  "Cluster_0"
-                ],
+                "values": ["Cluster_0"],
                 "columnName": "Cluster Membership"
               }
             ],
@@ -328,12 +326,7 @@
             "columns": [
               {
                 "type": "nominal",
-                "values": [
-                  "Cluster_0",
-                  "Cluster_1",
-                  "Cluster_2",
-                  "Cluster_3"
-                ],
+                "values": ["Cluster_0", "Cluster_1", "Cluster_2", "Cluster_3"],
                 "columnName": "Cluster Membership"
               }
             ],
@@ -386,12 +379,7 @@
             "columns": [
               {
                 "type": "nominal",
-                "values": [
-                  "Cluster_0",
-                  "Cluster_1",
-                  "Cluster_2",
-                  "Cluster_3"
-                ],
+                "values": ["Cluster_0", "Cluster_1", "Cluster_2", "Cluster_3"],
                 "columnName": "Cluster Membership"
               }
             ],
@@ -444,9 +432,7 @@
             "columns": [
               {
                 "type": "nominal",
-                "values": [
-                  "Cluster_0"
-                ],
+                "values": ["Cluster_0"],
                 "columnName": "Cluster Membership"
               }
             ],
@@ -499,12 +485,7 @@
             "columns": [
               {
                 "type": "nominal",
-                "values": [
-                  "Cluster_0",
-                  "Cluster_1",
-                  "Cluster_2",
-                  "Cluster_3"
-                ],
+                "values": ["Cluster_0", "Cluster_1", "Cluster_2", "Cluster_3"],
                 "columnName": "Cluster Membership"
               }
             ],
@@ -557,9 +538,7 @@
             "columns": [
               {
                 "type": "nominal",
-                "values": [
-                  "Cluster_0"
-                ],
+                "values": ["Cluster_0"],
                 "columnName": "Cluster Membership"
               }
             ],

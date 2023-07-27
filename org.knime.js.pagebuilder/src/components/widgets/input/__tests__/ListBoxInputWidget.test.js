@@ -1,363 +1,387 @@
-import { expect, describe, beforeEach, it, vi } from 'vitest';
-import { shallowMount, mount } from '@vue/test-utils';
+import { expect, describe, beforeEach, it, vi } from "vitest";
+import { shallowMount, mount } from "@vue/test-utils";
 
-import ListBoxInputWidget from '@/components/widgets/input/ListBoxInputWidget.vue';
-import TextArea from 'webapps-common/ui/components/forms/TextArea.vue';
+import ListBoxInputWidget from "@/components/widgets/input/ListBoxInputWidget.vue";
+import TextArea from "webapps-common/ui/components/forms/TextArea.vue";
 
-describe('ListBoxInputWidget.vue', () => {
-    let propsEmailRegexLineSplit, propsCharSplit, propsCSVSplit;
+describe("ListBoxInputWidget.vue", () => {
+  let propsEmailRegexLineSplit, propsCharSplit, propsCSVSplit;
 
-    beforeEach(() => {
-        propsEmailRegexLineSplit = {
-            nodeConfig: {
-                '@class': 'org.knime.js.core.JSONWebNode',
-                stylesheets: [
-                    '/js-lib/font-awesome/4_7_0/css/font-awesome.min.css',
-                    '/js-lib/knime/service/knime.css',
-                    '/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css',
-                    '/org/knime/js/base/util/quickform/quickformStyles.css'
-                ],
-                viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation',
-                    label: 'Default with Email Regex (5 default values)',
-                    description: 'Enter Description',
-                    required: true,
-                    defaultValue: {
-                        '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeValue',
-                        string: 'Test1\ntest2\ntest3\ntest4\ntest5'
-                    },
-                    currentValue: {
-                        '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeValue',
-                        string: 'Test1\ntest2\ntest3\ntest4\ntest5'
-                    },
-                    // eslint-disable-next-line max-len
-                    regex: '^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$',
-                    errormessage: 'The given input \'?\' is not a valid email address',
-                    separator: '\\n',
-                    separateeachcharacter: false,
-                    omitempty: true,
-                    separatorregex: '\\n',
-                    numberVisOptions: 5
-                },
-                viewValue: null,
-                initMethodName: 'init',
-                validateMethodName: 'validate',
-                setValidationErrorMethodName: 'setValidationErrorMessage',
-                getViewValueMethodName: 'value',
-                nodeInfo: {
-                    '@class': 'org.knime.js.core.JSONWebNodeInfo',
-                    nodeState: 'executed',
-                    nodeErrorMessage: null,
-                    nodeWarnMessage: null,
-                    displayPossible: true,
-                    nodeName: 'List Box Widget',
-                    nodeAnnotation: ''
-                },
-                javascriptLibraries: [
-                    '/js-lib/knime/service/knime_service_1_0_0.js',
-                    '/js-lib/jQuery/jquery-1.11.0.min.js',
-                    '/js-lib/jQueryUI/min/ui/jquery-ui.min.js',
-                    '/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js',
-                    '/org/knime/js/base/node/widget/input/listbox/listBoxWidget.js'
-                ],
-                customCSS: '',
-                namespace: 'knimeListBoxWidget'
+  beforeEach(() => {
+    propsEmailRegexLineSplit = {
+      nodeConfig: {
+        "@class": "org.knime.js.core.JSONWebNode",
+        stylesheets: [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css",
+        ],
+        viewRepresentation: {
+          "@class":
+            "org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation",
+          label: "Default with Email Regex (5 default values)",
+          description: "Enter Description",
+          required: true,
+          defaultValue: {
+            "@class":
+              "org.knime.js.base.node.base.input.listbox.ListBoxNodeValue",
+            string: "Test1\ntest2\ntest3\ntest4\ntest5",
+          },
+          currentValue: {
+            "@class":
+              "org.knime.js.base.node.base.input.listbox.ListBoxNodeValue",
+            string: "Test1\ntest2\ntest3\ntest4\ntest5",
+          },
+          // eslint-disable-next-line max-len
+          regex:
+            "^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$",
+          errormessage: "The given input '?' is not a valid email address",
+          separator: "\\n",
+          separateeachcharacter: false,
+          omitempty: true,
+          separatorregex: "\\n",
+          numberVisOptions: 5,
+        },
+        viewValue: null,
+        initMethodName: "init",
+        validateMethodName: "validate",
+        setValidationErrorMethodName: "setValidationErrorMessage",
+        getViewValueMethodName: "value",
+        nodeInfo: {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          nodeState: "executed",
+          nodeErrorMessage: null,
+          nodeWarnMessage: null,
+          displayPossible: true,
+          nodeName: "List Box Widget",
+          nodeAnnotation: "",
+        },
+        javascriptLibraries: [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/listbox/listBoxWidget.js",
+        ],
+        customCSS: "",
+        namespace: "knimeListBoxWidget",
+      },
+      nodeId: "2:0:14",
+      isValid: false,
+    };
+
+    propsCharSplit = {
+      nodeConfig: {
+        "@class": "org.knime.js.core.JSONWebNode",
+        stylesheets: [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css",
+        ],
+        viewRepresentation: {
+          "@class":
+            "org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation",
+          label: "Split by Char (limit 5)",
+          description: "Enter Description",
+          required: true,
+          defaultValue: {
+            "@class":
+              "org.knime.js.base.node.base.input.listbox.ListBoxNodeValue",
+            string: "ABCD\nEFG",
+          },
+          currentValue: {
+            "@class":
+              "org.knime.js.base.node.base.input.listbox.ListBoxNodeValue",
+            string: "ABCD\nEFG",
+          },
+          regex: "",
+          errormessage: "",
+          separator: ",",
+          separateeachcharacter: true,
+          omitempty: true,
+          separatorregex: "",
+          numberVisOptions: 5,
+        },
+        viewValue: null,
+        initMethodName: "init",
+        validateMethodName: "validate",
+        setValidationErrorMethodName: "setValidationErrorMessage",
+        getViewValueMethodName: "value",
+        nodeInfo: {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          nodeState: "executed",
+          nodeErrorMessage: null,
+          nodeWarnMessage: null,
+          displayPossible: true,
+          nodeName: "List Box Widget",
+          nodeAnnotation: "",
+        },
+        javascriptLibraries: [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/listbox/listBoxWidget.js",
+        ],
+        customCSS: "",
+        namespace: "knimeListBoxWidget",
+      },
+      nodeId: "2:0:15",
+      isValid: false,
+    };
+
+    propsCSVSplit = {
+      nodeConfig: {
+        "@class": "org.knime.js.core.JSONWebNode",
+        stylesheets: [
+          "/js-lib/font-awesome/4_7_0/css/font-awesome.min.css",
+          "/js-lib/knime/service/knime.css",
+          "/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css",
+          "/org/knime/js/base/util/quickform/quickformStyles.css",
+        ],
+        viewRepresentation: {
+          "@class":
+            "org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation",
+          label: "Split by comma (limit 16)",
+          description: "Enter Description",
+          required: true,
+          defaultValue: {
+            "@class":
+              "org.knime.js.base.node.base.input.listbox.ListBoxNodeValue",
+            string: "Test 1,Test 2,Test3",
+          },
+          currentValue: {
+            "@class":
+              "org.knime.js.base.node.base.input.listbox.ListBoxNodeValue",
+            string: "Test 1,Test 2,Test3",
+          },
+          regex: "",
+          errormessage: "",
+          separator: ",",
+          separateeachcharacter: false,
+          omitempty: false,
+          separatorregex: "",
+          numberVisOptions: 16,
+        },
+        viewValue: null,
+        initMethodName: "init",
+        validateMethodName: "validate",
+        setValidationErrorMethodName: "setValidationErrorMessage",
+        getViewValueMethodName: "value",
+        nodeInfo: {
+          "@class": "org.knime.js.core.JSONWebNodeInfo",
+          nodeState: "executed",
+          nodeErrorMessage: null,
+          nodeWarnMessage: null,
+          displayPossible: true,
+          nodeName: "List Box Widget",
+          nodeAnnotation: "",
+        },
+        javascriptLibraries: [
+          "/js-lib/knime/service/knime_service_1_0_0.js",
+          "/js-lib/jQuery/jquery-1.11.0.min.js",
+          "/js-lib/jQueryUI/min/ui/jquery-ui.min.js",
+          "/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js",
+          "/org/knime/js/base/node/widget/input/listbox/listBoxWidget.js",
+        ],
+        customCSS: "",
+        namespace: "knimeListBoxWidget",
+      },
+      nodeId: "2:0:16",
+      isValid: false,
+    };
+  });
+
+  it("renders", () => {
+    let wrapper = shallowMount(ListBoxInputWidget, {
+      props: propsEmailRegexLineSplit,
+    });
+    expect(wrapper.html()).toBeTruthy();
+    expect(wrapper.isVisible()).toBeTruthy();
+    expect(wrapper.findComponent(TextArea)).toBeTruthy();
+  });
+
+  it("emits @updateWidget if child emits @input", () => {
+    let wrapper = mount(ListBoxInputWidget, {
+      props: propsEmailRegexLineSplit,
+    });
+
+    const testValue = "VALUE";
+    const input = wrapper.findComponent(TextArea);
+    input.vm.$emit("update:modelValue", testValue);
+
+    expect(wrapper.emitted("updateWidget")).toBeTruthy();
+    expect(wrapper.emitted("updateWidget")[0][0]).toStrictEqual({
+      nodeId: propsEmailRegexLineSplit.nodeId,
+      type: "string",
+      value: testValue,
+    });
+  });
+
+  describe("split values", () => {
+    it("will split values by char", () => {
+      let widget = mount(ListBoxInputWidget, {
+        props: propsCharSplit,
+        global: {
+          stubs: {
+            TextArea: {
+              template: "<div />",
+              methods: {
+                getValue: vi.fn().mockReturnValue("ABCD\nEF"),
+              },
             },
-            nodeId: '2:0:14',
-            isValid: false
-        };
+          },
+        },
+      });
 
-        propsCharSplit = {
-            nodeConfig: {
-                '@class': 'org.knime.js.core.JSONWebNode',
-                stylesheets: [
-                    '/js-lib/font-awesome/4_7_0/css/font-awesome.min.css',
-                    '/js-lib/knime/service/knime.css',
-                    '/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css',
-                    '/org/knime/js/base/util/quickform/quickformStyles.css'
-                ],
-                viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation',
-                    label: 'Split by Char (limit 5)',
-                    description: 'Enter Description',
-                    required: true,
-                    defaultValue: {
-                        '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeValue',
-                        string: 'ABCD\nEFG'
-                    },
-                    currentValue: {
-                        '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeValue',
-                        string: 'ABCD\nEFG'
-                    },
-                    regex: '',
-                    errormessage: '',
-                    separator: ',',
-                    separateeachcharacter: true,
-                    omitempty: true,
-                    separatorregex: '',
-                    numberVisOptions: 5
-                },
-                viewValue: null,
-                initMethodName: 'init',
-                validateMethodName: 'validate',
-                setValidationErrorMethodName: 'setValidationErrorMessage',
-                getViewValueMethodName: 'value',
-                nodeInfo: {
-                    '@class': 'org.knime.js.core.JSONWebNodeInfo',
-                    nodeState: 'executed',
-                    nodeErrorMessage: null,
-                    nodeWarnMessage: null,
-                    displayPossible: true,
-                    nodeName: 'List Box Widget',
-                    nodeAnnotation: ''
-                },
-                javascriptLibraries: [
-                    '/js-lib/knime/service/knime_service_1_0_0.js',
-                    '/js-lib/jQuery/jquery-1.11.0.min.js',
-                    '/js-lib/jQueryUI/min/ui/jquery-ui.min.js',
-                    '/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js',
-                    '/org/knime/js/base/node/widget/input/listbox/listBoxWidget.js'
-                ],
-                customCSS: '',
-                namespace: 'knimeListBoxWidget'
+      expect(widget.vm.getSplitValues()).toStrictEqual([
+        "A",
+        "B",
+        "C",
+        "D",
+        "\n",
+        "E",
+        "F",
+      ]);
+    });
+
+    it("will split values by comma (CSV)", () => {
+      let widget = mount(ListBoxInputWidget, {
+        props: propsCSVSplit,
+        global: {
+          stubs: {
+            TextArea: {
+              template: "<div />",
+              methods: {
+                getValue: vi.fn().mockReturnValue("Test 1,,Test 2,Test 3"),
+              },
             },
-            nodeId: '2:0:15',
-            isValid: false
-        };
+          },
+        },
+      });
 
-        propsCSVSplit = {
-            nodeConfig: {
-                '@class': 'org.knime.js.core.JSONWebNode',
-                stylesheets: [
-                    '/js-lib/font-awesome/4_7_0/css/font-awesome.min.css',
-                    '/js-lib/knime/service/knime.css',
-                    '/js-lib/jQueryUI/min/themes/base/jquery-ui.min.css',
-                    '/org/knime/js/base/util/quickform/quickformStyles.css'
-                ],
-                viewRepresentation: {
-                    '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeRepresentation',
-                    label: 'Split by comma (limit 16)',
-                    description: 'Enter Description',
-                    required: true,
-                    defaultValue: {
-                        '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeValue',
-                        string: 'Test 1,Test 2,Test3'
-                    },
-                    currentValue: {
-                        '@class': 'org.knime.js.base.node.base.input.listbox.ListBoxNodeValue',
-                        string: 'Test 1,Test 2,Test3'
-                    },
-                    regex: '',
-                    errormessage: '',
-                    separator: ',',
-                    separateeachcharacter: false,
-                    omitempty: false,
-                    separatorregex: '',
-                    numberVisOptions: 16
-                },
-                viewValue: null,
-                initMethodName: 'init',
-                validateMethodName: 'validate',
-                setValidationErrorMethodName: 'setValidationErrorMessage',
-                getViewValueMethodName: 'value',
-                nodeInfo: {
-                    '@class': 'org.knime.js.core.JSONWebNodeInfo',
-                    nodeState: 'executed',
-                    nodeErrorMessage: null,
-                    nodeWarnMessage: null,
-                    displayPossible: true,
-                    nodeName: 'List Box Widget',
-                    nodeAnnotation: ''
-                },
-                javascriptLibraries: [
-                    '/js-lib/knime/service/knime_service_1_0_0.js',
-                    '/js-lib/jQuery/jquery-1.11.0.min.js',
-                    '/js-lib/jQueryUI/min/ui/jquery-ui.min.js',
-                    '/org/knime/js/base/util/quickform/knime_quickform_utils_1_0_0.js',
-                    '/org/knime/js/base/node/widget/input/listbox/listBoxWidget.js'
-                ],
-                customCSS: '',
-                namespace: 'knimeListBoxWidget'
+      expect(widget.vm.getSplitValues()).toStrictEqual([
+        "Test 1",
+        "",
+        "Test 2",
+        "Test 3",
+      ]);
+    });
+
+    it("will omit empty", () => {
+      let widget = mount(ListBoxInputWidget, {
+        props: propsEmailRegexLineSplit,
+        global: {
+          stubs: {
+            TextArea: {
+              template: "<div />",
+              methods: {
+                getValue: vi.fn().mockReturnValue("Test 1\n\nTest 2\nTest 3"),
+              },
             },
-            nodeId: '2:0:16',
-            isValid: false
-        };
+          },
+        },
+      });
+
+      expect(widget.vm.getSplitValues()).toStrictEqual([
+        "Test 1",
+        "Test 2",
+        "Test 3",
+      ]);
+    });
+  });
+
+  describe("validation and errors", () => {
+    it("will be invalid if widget is", async () => {
+      let widget = mount(ListBoxInputWidget, {
+        props: {
+          ...propsEmailRegexLineSplit,
+          isValid: true,
+        },
+      });
+
+      let textComponent = widget.findComponent(TextArea);
+      expect(textComponent.props("isValid")).toBe(true);
+      await widget.setProps({ isValid: false });
+      expect(textComponent.props("isValid")).toBe(false);
     });
 
-    it('renders', () => {
-        let wrapper = shallowMount(ListBoxInputWidget, {
-            props: propsEmailRegexLineSplit
-        });
-        expect(wrapper.html()).toBeTruthy();
-        expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.findComponent(TextArea)).toBeTruthy();
+    it("will return invalid when the value is required but missing", () => {
+      let wrapper = mount(ListBoxInputWidget, {
+        props: propsEmailRegexLineSplit,
+        global: {
+          stubs: {
+            TextArea: {
+              template: "<div />",
+              methods: {
+                getValue: vi.fn().mockReturnValue(""),
+              },
+            },
+          },
+        },
+      });
+      expect(wrapper.vm.validate()).toStrictEqual({
+        errorMessage: "Input is required.",
+        isValid: false,
+      });
     });
 
-    it('emits @updateWidget if child emits @input', () => {
-        let wrapper = mount(ListBoxInputWidget, {
-            props: propsEmailRegexLineSplit
-        });
+    it("has no error message when valid", () => {
+      let wrapper = mount(ListBoxInputWidget, {
+        props: propsEmailRegexLineSplit,
+        global: {
+          stubs: {
+            TextArea: {
+              template: "<div />",
+              methods: {
+                getValue: vi.fn().mockReturnValue("abc@example.com"),
+              },
+            },
+          },
+        },
+      });
 
-        const testValue = 'VALUE';
-        const input = wrapper.findComponent(TextArea);
-        input.vm.$emit('update:modelValue', testValue);
-
-        expect(wrapper.emitted('updateWidget')).toBeTruthy();
-        expect(wrapper.emitted('updateWidget')[0][0]).toStrictEqual({
-            nodeId: propsEmailRegexLineSplit.nodeId,
-            type: 'string',
-            value: testValue
-        });
+      expect(wrapper.vm.validate().errorMessage).toBeNull();
     });
 
-    describe('split values', () => {
-        it('will split values by char', () => {
-            let widget = mount(ListBoxInputWidget, {
-                props: propsCharSplit,
-                global: {
-                    stubs: {
-                        TextArea: {
-                            template: '<div />',
-                            methods: {
-                                getValue: vi.fn().mockReturnValue('ABCD\nEF')
-                            }
-                        }
-                    }
-                }
-            });
+    it("has validation error message when not valid", () => {
+      let wrapper = mount(ListBoxInputWidget, {
+        props: propsEmailRegexLineSplit,
+        global: {
+          stubs: {
+            TextArea: {
+              template: "<div />",
+              methods: {
+                getValue: vi.fn().mockReturnValue("test@example.com\nabc"),
+              },
+            },
+          },
+        },
+      });
 
-            expect(widget.vm.getSplitValues()).toStrictEqual(['A', 'B', 'C', 'D', '\n', 'E', 'F']);
-        });
-
-        it('will split values by comma (CSV)', () => {
-            let widget = mount(ListBoxInputWidget, {
-                props: propsCSVSplit,
-                global: {
-                    stubs: {
-                        TextArea: {
-                            template: '<div />',
-                            methods: {
-                                getValue: vi.fn().mockReturnValue('Test 1,,Test 2,Test 3')
-                            }
-                        }
-                    }
-                }
-            });
-
-            expect(widget.vm.getSplitValues()).toStrictEqual(['Test 1', '', 'Test 2', 'Test 3']);
-        });
-
-        it('will omit empty', () => {
-            let widget = mount(ListBoxInputWidget, {
-                props: propsEmailRegexLineSplit,
-                global: {
-                    stubs: {
-                        TextArea: {
-                            template: '<div />',
-                            methods: {
-                                getValue: vi.fn().mockReturnValue('Test 1\n\nTest 2\nTest 3')
-                            }
-                        }
-                    }
-                }
-            });
-
-            expect(widget.vm.getSplitValues()).toStrictEqual(['Test 1', 'Test 2', 'Test 3']);
-        });
+      expect(wrapper.vm.validate().errorMessage).toBe(
+        "Value 2 is not valid. The given input 'abc' is not a valid email address",
+      );
     });
 
-    describe('validation and errors', () => {
-        it('will be invalid if widget is', async () => {
-            let widget = mount(ListBoxInputWidget, {
-                props: {
-                    ...propsEmailRegexLineSplit,
-                    isValid: true
-                }
-            });
+    it("has error message", () => {
+      let wrapper = mount(ListBoxInputWidget, {
+        props: propsEmailRegexLineSplit,
+        global: {
+          stubs: {
+            TextArea: {
+              template: "<div />",
+              methods: {
+                getValue: vi.fn().mockReturnValue(null),
+              },
+            },
+          },
+        },
+      });
 
-            let textComponent = widget.findComponent(TextArea);
-            expect(textComponent.props('isValid')).toBe(true);
-            await widget.setProps({ isValid: false });
-            expect(textComponent.props('isValid')).toBe(false);
-        });
-
-        it('will return invalid when the value is required but missing', () => {
-            let wrapper = mount(ListBoxInputWidget, {
-                props: propsEmailRegexLineSplit,
-                global: {
-                    stubs: {
-                        TextArea: {
-                            template: '<div />',
-                            methods: {
-                                getValue: vi.fn().mockReturnValue('')
-                            }
-                        }
-                    }
-                }
-            });
-            expect(wrapper.vm.validate()).toStrictEqual(
-                {
-                    errorMessage: 'Input is required.',
-                    isValid: false
-                }
-            );
-        });
-
-
-        it('has no error message when valid', () => {
-            let wrapper = mount(ListBoxInputWidget, {
-                props: propsEmailRegexLineSplit,
-                global: {
-                    stubs: {
-                        TextArea: {
-                            template: '<div />',
-                            methods: {
-                                getValue: vi.fn().mockReturnValue('abc@example.com')
-                            }
-                        }
-                    }
-                }
-            });
-
-            expect(wrapper.vm.validate().errorMessage).toBeNull();
-        });
-
-        it('has validation error message when not valid', () => {
-            let wrapper = mount(ListBoxInputWidget, {
-                props: propsEmailRegexLineSplit,
-                global: {
-                    stubs: {
-                        TextArea: {
-                            template: '<div />',
-                            methods: {
-                                getValue: vi.fn().mockReturnValue('test@example.com\nabc')
-                            }
-                        }
-                    }
-                }
-            });
-
-            expect(wrapper.vm.validate().errorMessage).toBe(
-                'Value 2 is not valid. The given input \'abc\' is not a valid email address'
-            );
-        });
-
-        it('has error message', () => {
-            let wrapper = mount(ListBoxInputWidget, {
-                props: propsEmailRegexLineSplit,
-                global: {
-                    stubs: {
-                        TextArea: {
-                            template: '<div />',
-                            methods: {
-                                getValue: vi.fn().mockReturnValue(null)
-                            }
-                        }
-                    }
-                }
-            });
-
-            expect(wrapper.vm.validate().errorMessage).toBe('Input is required.');
-        });
+      expect(wrapper.vm.validate().errorMessage).toBe("Input is required.");
     });
+  });
 });

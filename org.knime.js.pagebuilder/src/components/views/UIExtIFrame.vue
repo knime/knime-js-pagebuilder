@@ -1,25 +1,25 @@
 <script>
 export default {
-    inject: ['getKnimeService'],
-    props: {
-        resourceLocation: {
-            default: null,
-            type: String,
-            required: true
-        }
+  inject: ["getKnimeService"],
+  props: {
+    resourceLocation: {
+      default: null,
+      type: String,
+      required: true,
     },
-    computed: {
-        knimeService() {
-            return this.getKnimeService();
-        }
+  },
+  computed: {
+    knimeService() {
+      return this.getKnimeService();
     },
-    mounted() {
-        this.knimeService.updateEventListener();
-        this.knimeService.setIFrameWindow(this.$refs.iframe.contentWindow);
-    },
-    beforeUnmount() {
-        this.knimeService.destroy();
-    }
+  },
+  mounted() {
+    this.knimeService.updateEventListener();
+    this.knimeService.setIFrameWindow(this.$refs.iframe.contentWindow);
+  },
+  beforeUnmount() {
+    this.knimeService.destroy();
+  },
 };
 </script>
 

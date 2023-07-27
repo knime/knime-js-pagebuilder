@@ -237,9 +237,7 @@
           "forward": false,
           "sourceID": "7a2916de-ee07-433a-b8ed-87c1485d0a15",
           "mapping": null,
-          "targetIDs": [
-            "1e68e76e-7cdf-4755-9acb-e7f18a3e5526"
-          ]
+          "targetIDs": ["1e68e76e-7cdf-4755-9acb-e7f18a3e5526"]
         }
       ],
       "version": "4.1.0.qualifier"
@@ -808,12 +806,7 @@
                 null,
                 null,
                 null,
-                [
-                  "Cluster_1",
-                  "Cluster_0",
-                  "Cluster_2",
-                  "Cluster_3"
-                ]
+                ["Cluster_1", "Cluster_0", "Cluster_2", "Cluster_3"]
               ],
               "numColumns": 5,
               "knimeTypes": [
@@ -877,22 +870,11 @@
                 "#404040",
                 "#56B4E9"
               ],
-              "colTypes": [
-                "number",
-                "number",
-                "number",
-                "number",
-                "string"
-              ],
+              "colTypes": ["number", "number", "number", "number", "string"],
               "colorModels": [
                 {
                   "type": "nominal",
-                  "colors": [
-                    "#E69F00",
-                    "#56B4E9",
-                    "#009E73",
-                    "#404040"
-                  ],
+                  "colors": ["#E69F00", "#56B4E9", "#009E73", "#404040"],
                   "labels": [
                     "Cluster_0",
                     "Cluster_1",
@@ -925,20 +907,8 @@
                 "Cluster_3"
               ],
               "rowSizeValues": null,
-              "filterIds": [
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "containsMissingValues": [
-                false,
-                false,
-                false,
-                false,
-                false
-              ],
+              "filterIds": [null, null, null, null, null],
+              "containsMissingValues": [false, false, false, false, false],
               "numExtensions": 0,
               "extensionTypes": [],
               "extensionNames": []
@@ -963,12 +933,7 @@
           "enableLazyLoading": false,
           "initialPageSize": 10,
           "enablePageSizeChange": true,
-          "allowedPageSizes": [
-            10,
-            25,
-            50,
-            100
-          ],
+          "allowedPageSizes": [10, 25, 50, 100],
           "enableJumpToPage": false,
           "displayRowColors": true,
           "displayRowIds": true,
@@ -1637,15 +1602,8 @@
                 null,
                 null,
                 null,
-                [
-                  "Cluster_1",
-                  "Cluster_0",
-                  "Cluster_2",
-                  "Cluster_3"
-                ],
-                [
-                  false
-                ]
+                ["Cluster_1", "Cluster_0", "Cluster_2", "Cluster_3"],
+                [false]
               ],
               "numColumns": 6,
               "knimeTypes": [
@@ -1721,12 +1679,7 @@
               "colorModels": [
                 {
                   "type": "nominal",
-                  "colors": [
-                    "#E69F00",
-                    "#56B4E9",
-                    "#009E73",
-                    "#404040"
-                  ],
+                  "colors": ["#E69F00", "#56B4E9", "#009E73", "#404040"],
                   "labels": [
                     "Cluster_0",
                     "Cluster_1",
@@ -1762,14 +1715,7 @@
                 false
               ],
               "rowSizeValues": null,
-              "filterIds": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
+              "filterIds": [null, null, null, null, null, null],
               "containsMissingValues": [
                 false,
                 false,
@@ -1802,12 +1748,7 @@
           "enableLazyLoading": false,
           "initialPageSize": 10,
           "enablePageSizeChange": true,
-          "allowedPageSizes": [
-            10,
-            25,
-            50,
-            100
-          ],
+          "allowedPageSizes": [10, 25, 50, 100],
           "enableJumpToPage": false,
           "displayRowColors": true,
           "displayRowIds": true,
@@ -2432,12 +2373,7 @@
                   null,
                   null,
                   null,
-                  [
-                    "Cluster_1",
-                    "Cluster_0",
-                    "Cluster_2",
-                    "Cluster_3"
-                  ]
+                  ["Cluster_1", "Cluster_0", "Cluster_2", "Cluster_3"]
                 ],
                 "numColumns": 5,
                 "knimeTypes": [
@@ -2501,22 +2437,11 @@
                   "#404040",
                   "#56B4E9"
                 ],
-                "colTypes": [
-                  "number",
-                  "number",
-                  "number",
-                  "number",
-                  "string"
-                ],
+                "colTypes": ["number", "number", "number", "number", "string"],
                 "colorModels": [
                   {
                     "type": "nominal",
-                    "colors": [
-                      "#E69F00",
-                      "#56B4E9",
-                      "#009E73",
-                      "#404040"
-                    ],
+                    "colors": ["#E69F00", "#56B4E9", "#009E73", "#404040"],
                     "labels": [
                       "Cluster_0",
                       "Cluster_1",
@@ -2549,20 +2474,8 @@
                   "Cluster_3"
                 ],
                 "rowSizeValues": null,
-                "filterIds": [
-                  null,
-                  null,
-                  null,
-                  null,
-                  null
-                ],
-                "containsMissingValues": [
-                  false,
-                  false,
-                  false,
-                  false,
-                  false
-                ],
+                "filterIds": [null, null, null, null, null],
+                "containsMissingValues": [false, false, false, false, false],
                 "numExtensions": 0,
                 "extensionTypes": [],
                 "extensionNames": []
@@ -2575,9 +2488,7 @@
               "id": "1e68e76e-7cdf-4755-9acb-e7f18a3e5526"
             }
           ],
-          "tableIds": [
-            null
-          ],
+          "tableIds": [null],
           "warnMessage": "",
           "jsNamespace": "parallelcoords_namespace",
           "jsDependencies": [
@@ -2593,10 +2504,7 @@
               "path": "org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
               "local": true,
               "exports": null,
-              "dependencies": [
-                "jQuery_1.11.0",
-                "KnimeTwinlist_1.0.0"
-              ],
+              "dependencies": ["jQuery_1.11.0", "KnimeTwinlist_1.0.0"],
               "usesDefine": false,
               "name": "MultipleSelections"
             },
@@ -2604,10 +2512,7 @@
               "path": "org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
               "local": true,
               "exports": null,
-              "dependencies": [
-                "jQuery_1.11.0",
-                "KnimeTwinlist_1.0.0"
-              ],
+              "dependencies": ["jQuery_1.11.0", "KnimeTwinlist_1.0.0"],
               "usesDefine": false,
               "name": "MultipleSelections"
             },
@@ -2615,10 +2520,7 @@
               "path": "org/knime/js/base/dialog/selection/multiple/TwinlistMultipleSelections.js",
               "local": true,
               "exports": null,
-              "dependencies": [
-                "jQuery_1.11.0",
-                "KnimeTwinlist_1.0.0"
-              ],
+              "dependencies": ["jQuery_1.11.0", "KnimeTwinlist_1.0.0"],
               "usesDefine": false,
               "name": "MultipleSelections"
             },
@@ -2634,9 +2536,7 @@
               "path": "js-lib/knime/knime_twinlist_1_0_0.js",
               "local": true,
               "exports": null,
-              "dependencies": [
-                "jQuery_1.11.0"
-              ],
+              "dependencies": ["jQuery_1.11.0"],
               "usesDefine": false,
               "name": "KnimeTwinlist_1.0.0"
             },

@@ -1,43 +1,45 @@
-import { expect, describe, it } from 'vitest';
-import { mount } from '@vue/test-utils';
+import { expect, describe, it } from "vitest";
+import { mount } from "@vue/test-utils";
 
-import Popover from '@/components/ui/Popover.vue';
+import Popover from "@/components/ui/Popover.vue";
 
-describe('Popover', () => {
-    it('renders default inactive', () => {
-        let wrapper = mount(Popover);
-        expect(wrapper.vm.level).toBe('local');
-        expect(wrapper.vm.active).toBe(false);
-        expect(wrapper.vm.type).toBe('error');
-        expect(wrapper.find('.container').classes('active')).toBe(false);
+describe("Popover", () => {
+  it("renders default inactive", () => {
+    let wrapper = mount(Popover);
+    expect(wrapper.vm.level).toBe("local");
+    expect(wrapper.vm.active).toBe(false);
+    expect(wrapper.vm.type).toBe("error");
+    expect(wrapper.find(".container").classes("active")).toBe(false);
+  });
+
+  it("renders active", () => {
+    let wrapper = mount(Popover, {
+      props: {
+        active: true,
+      },
     });
+    expect(wrapper.vm.level).toBe("local");
+    expect(wrapper.vm.active).toBe(true);
+    expect(wrapper.vm.type).toBe("error");
+    expect(wrapper.find(".container").classes("active")).toBe(true);
+  });
 
-    it('renders active', () => {
-        let wrapper = mount(Popover, {
-            props: {
-                active: true
-            }
-        });
-        expect(wrapper.vm.level).toBe('local');
-        expect(wrapper.vm.active).toBe(true);
-        expect(wrapper.vm.type).toBe('error');
-        expect(wrapper.find('.container').classes('active')).toBe(true);
+  it("sets classes on child elements", () => {
+    let wrapper = mount(Popover, {
+      props: {
+        active: true,
+      },
     });
-
-    it('sets classes on child elements', () => {
-        let wrapper = mount(Popover, {
-            props: {
-                active: true
-            }
-        });
-        expect(wrapper.vm.level).toBe('local');
-        expect(wrapper.vm.active).toBe(true);
-        expect(wrapper.vm.type).toBe('error');
-        let container = wrapper.find('.container');
-        expect(container.exists()).toBe(true);
-        expect(container.classes()).toEqual(expect.arrayContaining(['local', 'error', 'active']));
-        let overlay = wrapper.find('.overlay');
-        expect(overlay.exists()).toBe(true);
-        expect(container.classes()).toEqual(expect.arrayContaining(['local']));
-    });
+    expect(wrapper.vm.level).toBe("local");
+    expect(wrapper.vm.active).toBe(true);
+    expect(wrapper.vm.type).toBe("error");
+    let container = wrapper.find(".container");
+    expect(container.exists()).toBe(true);
+    expect(container.classes()).toEqual(
+      expect.arrayContaining(["local", "error", "active"]),
+    );
+    let overlay = wrapper.find(".overlay");
+    expect(overlay.exists()).toBe(true);
+    expect(container.classes()).toEqual(expect.arrayContaining(["local"]));
+  });
 });
