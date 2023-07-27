@@ -188,7 +188,7 @@ describe("NodeView.vue", () => {
       );
     });
 
-    it(`doesn't set single-view class on preview`, () => {
+    it("doesn't set single-view class on preview", () => {
       let localContext = createContext({
         nodeViews: { VIEW: mockNodeViewConfig, DIALOG: mockNodeDialogConfig },
       });

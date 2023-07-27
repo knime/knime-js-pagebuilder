@@ -219,7 +219,7 @@ describe("WebNodeIFrame.vue", () => {
           'onload="knimeLoader(true)" onerror="knimeLoader(false)"',
       );
       expect(html).toMatch(
-        `knimeService.resourceBaseUrl = 'http://baseurl.test.example/';`,
+        "knimeService.resourceBaseUrl = 'http://baseurl.test.example/';",
       );
       expect(html).toMatch(
         '<link type="text/css" rel="stylesheet" href="http://baseurl.test.example/bla.css">',

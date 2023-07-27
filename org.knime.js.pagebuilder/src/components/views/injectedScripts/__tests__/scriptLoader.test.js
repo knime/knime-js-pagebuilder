@@ -18,7 +18,7 @@ describe("script loader", () => {
 
   it("handles success", () => {
     expect(window.postMessage).not.toHaveBeenCalled();
-    eval(knimeLoaderSrc.replace("'%LIBCOUNT%'", 2));
+    eval(knimeLoaderSrc.replace('"%LIBCOUNT%"', 2));
 
     window.knimeLoader(true);
     window["%NAMESPACE%"] = { fakeView: true };
@@ -33,7 +33,7 @@ describe("script loader", () => {
 
   it("handles load errors", () => {
     const message = "Script could not be loaded";
-    eval(knimeLoaderSrc.replace("'%LIBCOUNT%'", 100));
+    eval(knimeLoaderSrc.replace('"%LIBCOUNT%"', 100));
 
     window.knimeLoader(true);
     expect(() => window.knimeLoader(false)).toThrowError(new Error(message));
@@ -50,7 +50,7 @@ describe("script loader", () => {
 
   it("handles successful load with missing view", () => {
     const message = "No view found under namespace %NAMESPACE%";
-    eval(knimeLoaderSrc.replace("'%LIBCOUNT%'", 2));
+    eval(knimeLoaderSrc.replace('"%LIBCOUNT%"', 2));
 
     window.knimeLoader(true);
     expect(() => window.knimeLoader(true)).toThrowError(
@@ -69,7 +69,7 @@ describe("script loader", () => {
 
   it("handles empty script list", () => {
     expect(window.postMessage).not.toHaveBeenCalled();
-    eval(knimeLoaderSrc.replace("'%LIBCOUNT%'", 0));
+    eval(knimeLoaderSrc.replace('"%LIBCOUNT%"', 0));
 
     expect(window.postMessage).toHaveBeenCalledWith(
       { nodeId: "%NODEID%", type: "load" },

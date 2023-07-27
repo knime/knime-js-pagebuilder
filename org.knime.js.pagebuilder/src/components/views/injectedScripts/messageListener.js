@@ -1,33 +1,33 @@
 /* eslint-disable complexity */
 (function () {
-  var messageFromParent = function (event) {
+  let messageFromParent = function (event) {
     if (!event || !event.origin) {
       return;
     }
-    var origin = "%ORIGIN%";
-    var data = event.data;
-    var originMatch =
+    let origin = "%ORIGIN%";
+    let data = event.data;
+    let originMatch =
       event.origin === origin ||
       event.origin === "*" ||
       event.origin.indexOf("file:") >= 0;
     if (!originMatch || !data) {
       return;
     }
-    var namespace = data.namespace;
-    var nodeId = data.nodeId;
-    var postMessageOrigin = origin;
+    let namespace = data.namespace;
+    let nodeId = data.nodeId;
+    let postMessageOrigin = origin;
     if (!postMessageOrigin || postMessageOrigin.indexOf("file:") > -1) {
       postMessageOrigin = "*";
     }
-    var postMessageResponse = function (resp) {
+    let postMessageResponse = function (resp) {
       resp.nodeId = nodeId;
       parent.postMessage(resp, postMessageOrigin);
     };
-    var postErrorResponse = function (type, errMsg) {
-      var resp = {
+    let postErrorResponse = function (type, errMsg) {
+      let resp = {
         isValid: false,
-        nodeId: nodeId,
-        type: type,
+        nodeId,
+        type,
         error: errMsg,
       };
       parent.postMessage(resp, postMessageOrigin);
@@ -38,17 +38,17 @@
         typeof window[namespace][data.initMethodName] === "function"
       ) {
         try {
-          var viewRepresentation = JSON.parse(data.viewRepresentation);
-          var viewValue = JSON.parse(data.viewValue);
+          let viewRepresentation = JSON.parse(data.viewRepresentation);
+          let viewValue = JSON.parse(data.viewValue);
           window[namespace][data.initMethodName](viewRepresentation, viewValue);
         } catch (err) {
-          postErrorResponse(data.type, "View initialization failed: " + err);
+          postErrorResponse(data.type, `View initialization failed: ${err}`);
         }
       } else {
         postErrorResponse(data.type, "Init method not present in view.");
       }
     } else if (data.type === "validate") {
-      var validResp = {
+      let validResp = {
         isValid: true,
         type: "validate",
       };
@@ -61,7 +61,7 @@
           validResp.isValid = window[namespace][data.validateMethodName]();
           postMessageResponse(validResp);
         } catch (err) {
-          postErrorResponse(data.type, "View could not be validated: " + err);
+          postErrorResponse(data.type, `View could not be validated: ${err}`);
         }
       } else {
         postMessageResponse(validResp);
@@ -79,14 +79,14 @@
         } catch (err) {
           postErrorResponse(
             data.type,
-            "Value could not be retrieved from view: " + err,
+            `Value could not be retrieved from view: ${err}`,
           );
         }
       } else {
         postErrorResponse(data.type, "Value method not present in view.");
       }
     } else if (data.type === "setValidationError") {
-      var errorMessagePrefix = "View error message could not be set: ";
+      let errorMessagePrefix = "View error message could not be set: ";
       // optional method; some views don't have (i.e. some quickforms)
       if (
         window[namespace] &&
@@ -104,7 +104,7 @@
       } else {
         postErrorResponse(
           data.type,
-          errorMessagePrefix + "Method does not exist.",
+          `${errorMessagePrefix}Method does not exist.`,
         );
       }
     }

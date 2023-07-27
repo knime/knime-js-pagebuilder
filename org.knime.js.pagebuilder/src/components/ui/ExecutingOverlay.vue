@@ -46,11 +46,8 @@ export default {
       );
     },
     spinnerStyle() {
-      return (
-        `transform-origin: ${
-          this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET
-        }px` + ` ${this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET}px 0;`
-      );
+      const offset = this.circleRadius + this.SVG_STROKE_PIXEL_OFFSET;
+      return `transform-origin: ${offset}px ${offset}px 0;`;
     },
   },
   methods: {

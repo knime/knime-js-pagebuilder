@@ -1,16 +1,16 @@
 window.alert = (function () {
-  var origin = "%ORIGIN%";
-  var nodeId = "%NODEID%";
+  let origin = "%ORIGIN%";
+  let nodeId = "%NODEID%";
   return function (msg) {
-    var loadingErrRegExp = new this.RegExp(/error/gim);
-    var postResponse = function (message, level) {
-      var resp = {
-        nodeId: nodeId,
+    let loadingErrRegExp = new this.RegExp(/error/gim);
+    let postResponse = function (message, level) {
+      let resp = {
+        nodeId,
         type: "alert",
-        message: message,
-        level: level,
+        message,
+        level,
       };
-      var postMessageOrigin = origin;
+      let postMessageOrigin = origin;
       if (!postMessageOrigin || postMessageOrigin.indexOf("file:") > -1) {
         postMessageOrigin = "*";
       }

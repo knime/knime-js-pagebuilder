@@ -69,7 +69,7 @@ describe("getRootPath functionality", () => {
   const SCHEMA = "knime";
   const SCHEMA_PART = `${SCHEMA}://`;
   const WORKFLOW_RELATIVE = "knime.workflow";
-  const WORKFLOW_PATH = `/testWorkflow`;
+  const WORKFLOW_PATH = "/testWorkflow";
   const MOUNTPOINT_RELATIVE = "knime.mountpoint";
 
   it("test normalizeArray function", () => {

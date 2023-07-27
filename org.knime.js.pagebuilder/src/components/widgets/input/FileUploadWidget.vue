@@ -104,7 +104,7 @@ export default {
     },
     progressStyle() {
       return isNaN(this.uploadProgress)
-        ? `width:0%;`
+        ? "width:0%;"
         : `width:${this.uploadProgress}%;`;
     },
   },
@@ -184,7 +184,7 @@ export default {
           .includes(`.${getFileExtension(this.fileName)?.toLowerCase()}`);
         if (!isValid) {
           errorMessage =
-            `The type of the selected file does not match the allowed file ` +
+            "The type of the selected file does not match the allowed file " +
             `types (${this.fileTypes.join(", ")}).`;
         }
       }

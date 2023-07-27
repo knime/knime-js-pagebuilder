@@ -1,16 +1,16 @@
 window.onerror = (function () {
-  var origin = "%ORIGIN%";
-  var nodeId = "%NODEID%";
+  let origin = "%ORIGIN%";
+  let nodeId = "%NODEID%";
   return function (msg) {
-    var loadingErrRegExp = new this.RegExp(/load timeout/gim);
-    var postErrorResponse = function (errMsg) {
-      var resp = {
-        nodeId: nodeId,
+    let loadingErrRegExp = new this.RegExp(/load timeout/gim);
+    let postErrorResponse = function (errMsg) {
+      let resp = {
+        nodeId,
         type: "error",
         isValid: false,
         error: errMsg,
       };
-      var postMessageOrigin = origin;
+      let postMessageOrigin = origin;
       if (!postMessageOrigin || postMessageOrigin.indexOf("file:") > -1) {
         postMessageOrigin = "*";
       }

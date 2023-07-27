@@ -128,5 +128,5 @@ checkDefaultPaths = (defaultPaths, treeItem) => {
  */
 getIcon = (fileEnding) => {
   let candidate = `${fileEnding}Icon`;
-  return icons.isIconExisting(candidate) ? candidate : `fileIcon`;
+  return icons.isIconExisting(candidate) ? candidate : "fileIcon";
 };

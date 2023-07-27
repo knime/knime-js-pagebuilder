@@ -514,7 +514,7 @@ describe("DateTimeWidget.vue", () => {
       );
       // eslint-disable-next-line new-cap
       expect(eventData.zonestring).toStrictEqual(
-        Intl.DateTimeFormat().resolvedOptions().timeZone,
+        new Intl.DateTimeFormat().resolvedOptions().timeZone,
       );
     });
 

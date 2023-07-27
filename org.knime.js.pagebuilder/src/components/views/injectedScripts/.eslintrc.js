@@ -1,6 +1,9 @@
 module.exports = {
   root: true,
-  extends: ["@knime/eslint-config/legacy"],
+  extends: ["@knime/eslint-config/base"],
+  env: {
+    browser: true,
+  },
   overrides: [
     {
       files: ["__tests__/**"],

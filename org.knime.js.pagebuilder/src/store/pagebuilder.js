@@ -108,7 +108,7 @@ export const mutations = {
           // catch deep Object modification errors
           consola.error(
             `WebNode[type: ${type}, id: ${nodeId}]: Value not updated ` +
-              `because the provided key was invalid. Key:`,
+              "because the provided key was invalid. Key:",
             key,
           );
         }
@@ -383,7 +383,7 @@ export const actions = {
       consola.debug(`Pagebuilder: re-execution triggered by node ${nodeId}`);
       dispatch("api/triggerReExecution", { nodeId }, { root: true });
     } catch (e) {
-      consola.debug(`Pagebuilder: re-execution failed.`);
+      consola.debug("Pagebuilder: re-execution failed.");
     }
   },
 

@@ -271,8 +271,8 @@ export default {
 
       // iframe resizer content window script
       let iframeResizerContent = this.autoHeight
-        ? `<script>${iframeResizerContentSrc}<\/script>`
-        : ""; // eslint-disable-line no-useless-escape
+        ? `<script>${iframeResizerContentSrc}<\/script>` // eslint-disable-line no-useless-escape
+        : "";
 
       this.document.write(`<!doctype html>
                 <html lang="en-US">
@@ -564,7 +564,7 @@ export default {
       let interactivityType = event.data.type;
       switch (interactivityType) {
         case "interactivitySubscribe":
-          consola.trace(`subscribe to event`, this.nodeId, event.data);
+          consola.trace("subscribe to event", this.nodeId, event.data);
           this.$store.dispatch("pagebuilder/interactivity/subscribe", {
             id: event.data.id,
             callback: this.interactivityInformIframe,
@@ -572,14 +572,14 @@ export default {
           });
           break;
         case "interactivityUnsubscribe":
-          consola.trace(`unsubscribe from event`, this.nodeId, event.data);
+          consola.trace("unsubscribe from event", this.nodeId, event.data);
           this.$store.dispatch("pagebuilder/interactivity/unsubscribe", {
             id: event.data.id,
             callback: this.interactivityInformIframe,
           });
           break;
         case "interactivityPublish":
-          consola.trace(`publish event called`, this.nodeId, event.data);
+          consola.trace("publish event called", this.nodeId, event.data);
           this.$store.dispatch("pagebuilder/interactivity/publish", {
             id: event.data.id,
             data: event.data.payload,
@@ -587,7 +587,7 @@ export default {
           });
           break;
         case "interactivityRegisterSelectionTranslator":
-          consola.trace(`interactivityRegisterSelectionTranslator`);
+          consola.trace("interactivityRegisterSelectionTranslator");
           this.$store.dispatch(
             "pagebuilder/interactivity/registerSelectionTranslator",
             {
