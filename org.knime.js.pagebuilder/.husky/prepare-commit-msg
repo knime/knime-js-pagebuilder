@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-cd org.knime.js.pagebuilder && npm exec knime-eslint-config-prepare-commit-msg "$@"
+./org.knime.js.pagebuilder/node_modules/.bin/knime-eslint-config-prepare-commit-msg "$@"
