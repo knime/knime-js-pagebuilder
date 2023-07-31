@@ -69,7 +69,7 @@ and re-builds the library on source file change. The web portal page then needs 
 When committing your changes, a couple of commit hooks will run via [husky].
 
 - `pre-commit` hook to lint and format the changes in your stage zone (via [lintstaged])
-- `prepare-commit-msg` hook to format your commit message to conform with the required format by KNIME. In order for this to work you must set environment variables with your Atlassian email and API token. Refer to [scripts/README.md](scripts/README.md) for more information.
+- `prepare-commit-msg` hook to format your commit message to conform with the required format by KNIME. In order for this to work you must set environment variables with your Atlassian email and API token. Refer to `@knime/eslint-config/scripts/README.md` for more information.
 
 ### Testing
 
