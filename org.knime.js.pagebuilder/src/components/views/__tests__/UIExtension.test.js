@@ -21,11 +21,18 @@ describe('UIExtension.vue', () => {
         callServiceMock = vi.fn(),
         pushEventMock = vi.fn(),
         registerServiceMock,
-        deregisterServiceMock
+        deregisterServiceMock,
+        setReportingContentMock = vi.fn()
     }) => {
         let storeConfig = {
             modules: {
-                pagebuilder: pagebuilderStoreConfig,
+                pagebuilder: {
+                    ...pagebuilderStoreConfig,
+                    actions: {
+                        ...pagebuilderStoreConfig.actions,
+                        setReportingContent: setReportingContentMock,
+                    },
+                },
                 'pagebuilder/alert': alertStoreConfig,
                 'pagebuilder/service': {
                     ...serviceStoreConfig,
@@ -382,6 +389,26 @@ describe('UIExtension.vue', () => {
             expect(wrapper.attributes('class')).toBe('fill-container class1 class2');
             expect(wrapper.attributes('style')).toEqual('color: red; border: 1px solid green; max-height: 200px;' +
                 ' max-width: 200px; min-height: 100px; min-width: 100px;');
+        });
+
+        it('sets reporting content via push event', async () => {
+            let setReportingContentMock = vi.fn();
+            let props = getMockComponentProps();
+            let wrapper = shallowMount(UIExtension, {
+                global: {
+                    mocks: {
+                        $store: createPagebuilderStore({ setReportingContentMock }),
+                    },
+                },
+                props,
+            });
+            const reportingContent = '<div>reporting content</div>';
+            let event = { type: 'reportingContent', reportingContent };
+            await wrapper.vm.pushEvent(event);
+            expect(setReportingContentMock).toHaveBeenCalledWith(expect.anything(), {
+                reportingContent,
+                nodeId: wrapper.vm.nodeId,
+            });
         });
     });
 });
