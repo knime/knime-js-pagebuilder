@@ -30,8 +30,8 @@ describe('UIExtension.vue', () => {
                     ...pagebuilderStoreConfig,
                     actions: {
                         ...pagebuilderStoreConfig.actions,
-                        setReportingContent: setReportingContentMock,
-                    },
+                        setReportingContent: setReportingContentMock
+                    }
                 },
                 'pagebuilder/alert': alertStoreConfig,
                 'pagebuilder/service': {
@@ -48,7 +48,7 @@ describe('UIExtension.vue', () => {
                     },
                     getters: {
                         ...apiStoreConfig.getters,
-                        uiExtResourceLocation: () => () => 'http://localhost:8080/your_resource.html',
+                        uiExtResourceLocation: () => () => 'http://localhost:8080/your_resource.html'
                     },
                     namespaced: true
                 }
@@ -401,17 +401,17 @@ describe('UIExtension.vue', () => {
             let wrapper = shallowMount(UIExtension, {
                 global: {
                     mocks: {
-                        $store: createPagebuilderStore({ setReportingContentMock }),
-                    },
+                        $store: createPagebuilderStore({ setReportingContentMock })
+                    }
                 },
-                props,
+                props
             });
             const reportingContent = '<div>reporting content</div>';
             let event = { type: 'reportingContent', reportingContent };
             await wrapper.vm.pushEvent(event);
             expect(setReportingContentMock).toHaveBeenCalledWith(expect.anything(), {
                 reportingContent,
-                nodeId: wrapper.vm.nodeId,
+                nodeId: wrapper.vm.nodeId
             });
         });
     });

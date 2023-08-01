@@ -146,7 +146,7 @@ export default {
             if (event?.type === 'reportingContent') {
                 return this.$store.dispatch('pagebuilder/setReportingContent', {
                     nodeId: this.nodeId,
-                    reportingContent: event.reportingContent,
+                    reportingContent: event.reportingContent
                 });
             }
             return this.$store.dispatch('pagebuilder/service/pushEvent', event);
