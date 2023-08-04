@@ -247,25 +247,25 @@ export default {
 
       // runtime/script injection error handling
       let loadingErrorHandler = `<script>${loadingErrorHandlerSrc
-        .replace("'%ORIGIN%'", JSON.stringify(this.origin))
-        .replace("'%NODEID%'", JSON.stringify(this.nodeId))}<\/script>`; // eslint-disable-line no-useless-escape
+        .replace('"%ORIGIN%"', JSON.stringify(this.origin))
+        .replace('"%NODEID%"', JSON.stringify(this.nodeId))}<\/script>`; // eslint-disable-line no-useless-escape
 
       // view alert override
       let viewAlertHandler = `<script>${viewAlertHandlerSrc
-        .replace("'%ORIGIN%'", JSON.stringify(this.origin))
-        .replace("'%NODEID%'", JSON.stringify(this.nodeId))}<\/script>`; // eslint-disable-line no-useless-escape
+        .replace('"%ORIGIN%"', JSON.stringify(this.origin))
+        .replace('"%NODEID%"', JSON.stringify(this.nodeId))}<\/script>`; // eslint-disable-line no-useless-escape
 
       // script loader
       let scriptLoader = `<script>${scriptLoaderSrc
-        .replace("'%RESOURCEBASEURL%'", JSON.stringify(resourceBaseUrl))
-        .replace("'%ORIGIN%'", JSON.stringify(this.origin))
-        .replace("'%NAMESPACE%'", JSON.stringify(this.nodeConfig.namespace))
-        .replace("'%NODEID%'", JSON.stringify(this.nodeId))
-        .replace("'%LIBCOUNT%'", this.nodeJsLibs.length)}<\/script>`; // eslint-disable-line no-useless-escape
+        .replace('"%RESOURCEBASEURL%"', JSON.stringify(resourceBaseUrl))
+        .replace('"%ORIGIN%"', JSON.stringify(this.origin))
+        .replace('"%NAMESPACE%"', JSON.stringify(this.nodeConfig.namespace))
+        .replace('"%NODEID%"', JSON.stringify(this.nodeId))
+        .replace('"%LIBCOUNT%"', this.nodeJsLibs.length)}<\/script>`; // eslint-disable-line no-useless-escape
 
       // postMessage receiver
       let messageListener = `<script>${messageListenerSrc.replace(
-        "'%ORIGIN%'",
+        '"%ORIGIN%"',
         JSON.stringify(this.origin),
       )}<\/script>`; // eslint-disable-line no-useless-escape
 
