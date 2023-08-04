@@ -14,7 +14,7 @@ vi.mock(
   "@/components/views/injectedScripts/loadErrorHandler.js?raw",
   () => ({
     default: `"loadErrorHandler.js mock";
-    foo = ['%NODEID%'];`,
+    foo = ["%NODEID%"];`,
   }),
   { virtual: true },
 );
@@ -22,7 +22,7 @@ vi.mock(
   "@/components/views/injectedScripts/viewAlertHandler.js?raw",
   () => ({
     default: `"viewAlertHandler.js mock";
-    foo = ['%NODEID%'];`,
+    foo = ["%NODEID%"];`,
   }),
   { virtual: true },
 );
@@ -30,7 +30,7 @@ vi.mock(
   "@/components/views/injectedScripts/scriptLoader.js?raw",
   () => ({
     default: `"scriptLoader.js mock";
-    foo = ['%RESOURCEBASEURL%', '%ORIGIN%', '%NAMESPACE%', '%NODEID%', '%LIBCOUNT%'];`,
+    foo = ["%RESOURCEBASEURL%", "%ORIGIN%", "%NAMESPACE%", "%NODEID%", "%LIBCOUNT%"];`,
   }),
   { virtual: true },
 );
