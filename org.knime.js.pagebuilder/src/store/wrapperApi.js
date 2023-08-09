@@ -253,9 +253,11 @@ export const actions = {
       // CEF browser communication (request-response)
       try {
         consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
-        ({ result, error } = await window.EquoCommService.send(
-          `org.knime.js.cef.jsonrpc#${window.cefBrowserInstanceId}`,
-          JSON.stringify(rpcConfig),
+        ({ result, error } = JSON.parse(
+          await window.EquoCommService.send(
+            `org.knime.js.cef.jsonrpc#${window.cefBrowserInstanceId}`,
+            JSON.stringify(rpcConfig),
+          ),
         ));
       } catch (err) {
         error = err;
