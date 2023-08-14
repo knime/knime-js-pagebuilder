@@ -131,7 +131,7 @@ export default {
         : IFrameKnimeServiceAdapter;
       const extensionConfig = {
         ...toRaw(this.extensionConfig),
-        initialDialogState: toRaw(this.settingsOnClean),
+        dialogSettings: toRaw(this.settingsOnClean),
       };
       let knimeService = new ServiceConstructor(
         extensionConfig,

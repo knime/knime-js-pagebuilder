@@ -179,19 +179,19 @@ describe("UIExtension.vue", () => {
 
   it("supplies KnimeService instance with dialog data if they are present", () => {
     let props = getMockComponentProps();
-    const initialDialogState = { foo: "bar" };
+    const dialogSettings = { foo: "bar" };
     let wrapper = shallowMount(UIExtension, {
       global: {
         mocks: {
           $store: createPagebuilderStore({
-            settingsOnClean: initialDialogState,
+            settingsOnClean: dialogSettings,
           }),
         },
       },
       props,
     });
     expect(KnimeService).toBeCalledWith(
-      { ...props.extensionConfig, initialDialogState },
+      { ...props.extensionConfig, dialogSettings },
       wrapper.vm.callService,
       wrapper.vm.pushEvent,
     );
