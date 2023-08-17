@@ -61,5 +61,7 @@ export default {
 
 .ap-wrapper:not(.headless) {
   padding: 0 15px; /* simulate reduced WebPortal margins */
+  max-height: 100vh;
+  scrollbar-gutter: stable;
 }
 </style>
