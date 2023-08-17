@@ -135,4 +135,28 @@ describe("FileDownloadWidget.vue", () => {
     );
     delete window.KnimePageLoader;
   });
+
+  it("uses a baseUrl when one is set in the representation", () => {
+    downloadResourceLinkMock.mockReturnValue(null);
+    window.KnimePageLoader = {};
+    props.nodeConfig.viewRepresentation.baseUrl = "http://some.base.url";
+    let wrapper = mount(FileDownloadWidget, {
+      global: {
+        mocks: {
+          $store: store,
+        },
+      },
+      props,
+    });
+    expect(wrapper.html()).toBeTruthy();
+    expect(wrapper.isVisible()).toBeTruthy();
+    const validate = wrapper.vm.validate();
+    expect(validate.isValid).toBe(true);
+    let fl = wrapper.findComponent(FileLink);
+    expect(fl.exists()).toBeTruthy();
+    expect(fl.props("href")).toBe(
+      `http://some.base.url${props.nodeConfig.viewRepresentation.path}`,
+    );
+    delete window.KnimePageLoader;
+  });
 });
