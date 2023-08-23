@@ -343,7 +343,7 @@ describe('wrapper API store', () => {
             expect(res).toStrictEqual({ ...expected, error: EMPTY });
 
             delete window.jsonrpc;
-            const sendMock = vi.fn().mockReturnValue(expected);
+            const sendMock = vi.fn().mockReturnValue(JSON.stringify(expected));
             window.EquoCommService = {
                 send: sendMock
             };
