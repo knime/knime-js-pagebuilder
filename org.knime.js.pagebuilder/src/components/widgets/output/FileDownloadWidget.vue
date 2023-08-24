@@ -64,8 +64,8 @@ export default {
     },
     link() {
       if (this.runningInAPWrapper) {
-        return this.viewRep.baseUrl
-          ? `${this.viewRep.baseUrl}${this.viewRep.path}`
+        return this.viewRep.url
+          ? this.viewRep.url
           : `file://${this.viewRep.path}`;
       }
       let getDownloadLinkFunc = this.$store.getters["api/downloadResourceLink"];

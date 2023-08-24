@@ -136,10 +136,10 @@ describe("FileDownloadWidget.vue", () => {
     delete window.KnimePageLoader;
   });
 
-  it("uses a baseUrl when one is set in the representation", () => {
+  it("uses a url when one is set in the representation", () => {
     downloadResourceLinkMock.mockReturnValue(null);
     window.KnimePageLoader = {};
-    props.nodeConfig.viewRepresentation.baseUrl = "http://some.base.url";
+    props.nodeConfig.viewRepresentation.url = "http://some.url";
     let wrapper = mount(FileDownloadWidget, {
       global: {
         mocks: {
@@ -154,9 +154,7 @@ describe("FileDownloadWidget.vue", () => {
     expect(validate.isValid).toBe(true);
     let fl = wrapper.findComponent(FileLink);
     expect(fl.exists()).toBeTruthy();
-    expect(fl.props("href")).toBe(
-      `http://some.base.url${props.nodeConfig.viewRepresentation.path}`,
-    );
+    expect(fl.props("href")).toBe("http://some.url");
     delete window.KnimePageLoader;
   });
 });
