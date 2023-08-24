@@ -4,6 +4,7 @@ import { mapState } from "vuex";
 import {
   KnimeService,
   IFrameKnimeServiceAdapter,
+JsonDataService,
 } from "@knime/ui-extension-service";
 import UIExtComponent from "./UIExtComponent.vue";
 import UIExtIFrame from "./UIExtIFrame.vue";
@@ -135,8 +136,23 @@ export default {
       };
       let knimeService = new ServiceConstructor(
         extensionConfig,
-        this.callService,
-        this.pushEvent,
+        new KnimeService() {
+          data(extensionType) {
+            if(extensionType === "port") {
+              API:callPortDataServcie
+            } 
+            backend call
+          },
+          updateSelection(selectionMode, selection) {
+            // ...
+            API.node.updateSelection()
+          }
+          blub(),
+          pushEvent() {
+
+          }
+        }
+        
       );
       if (this.isReporting) {
         if (!this.isUIExtComponent) {
