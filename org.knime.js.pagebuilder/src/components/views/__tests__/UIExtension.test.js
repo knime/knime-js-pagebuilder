@@ -13,6 +13,7 @@ import UIExtComponent from "@/components/views/UIExtComponent.vue";
 import UIExtIFrame from "@/components/views/UIExtIFrame.vue";
 import AlertLocal from "@/components/ui/AlertLocal.vue";
 import WarningLocal from "@/components/ui/WarningLocal.vue";
+import NotDisplayable from "@/components/views/NotDisplayable.vue";
 import {
   iFrameExtensionConfig,
   componentExtensionConfig,
@@ -27,11 +28,16 @@ describe("UIExtension.vue", () => {
     deregisterServiceMock,
     setReportingContentMock = vi.fn(),
     settingsOnClean,
+    isReporting = false,
   }) => {
     let storeConfig = {
       modules: {
         pagebuilder: {
           ...pagebuilderStoreConfig,
+          state: {
+            ...pagebuilderStoreConfig.state,
+            isReporting,
+          },
           actions: {
             ...pagebuilderStoreConfig.actions,
             setReportingContent: setReportingContentMock,
@@ -463,6 +469,54 @@ describe("UIExtension.vue", () => {
         reportingContent,
         nodeId: wrapper.vm.nodeId,
       });
+    });
+
+    it("shows a 'not supported' label if a report is rendered but the ui-extension doesn't support it", () => {
+      let setReportingContentMock = vi.fn();
+      let props = getMockComponentProps();
+      props.extensionConfig.generatedImageActionId = null;
+      let wrapper = shallowMount(UIExtension, {
+        global: {
+          mocks: {
+            $store: createPagebuilderStore({
+              isReporting: true,
+              setReportingContentMock,
+            }),
+          },
+        },
+        props,
+      });
+
+      expect(wrapper.findComponent(NotDisplayable).exists()).toBeTruthy();
+      expect(wrapper.findComponent(UIExtComponent).exists()).toBeFalsy();
+      expect(wrapper.findComponent(UIExtIFrame).exists()).toBeFalsy();
+      expect(wrapper.findComponent(AlertLocal).exists()).toBeFalsy();
+      expect(wrapper.findComponent(WarningLocal).exists()).toBeFalsy();
+      expect(setReportingContentMock).toHaveBeenCalledWith(expect.anything(), {
+        nodeId: wrapper.vm.nodeId,
+      });
+    });
+
+    it("renders the ui-extension if a report is rendered and the ui-extension supports it", () => {
+      let setReportingContentMock = vi.fn();
+      let props = getMockComponentProps();
+      props.extensionConfig.generatedImageActionId = "blub";
+      let wrapper = shallowMount(UIExtension, {
+        global: {
+          mocks: {
+            $store: createPagebuilderStore({
+              isReporting: true,
+              setReportingContentMock,
+            }),
+          },
+        },
+        props,
+      });
+
+      expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
+      expect(wrapper.findComponent(UIExtComponent).exists()).toBeTruthy();
+      expect(wrapper.findComponent(UIExtIFrame).exists()).toBeFalsy();
+      expect(setReportingContentMock).toHaveBeenCalledTimes(0);
     });
   });
 });

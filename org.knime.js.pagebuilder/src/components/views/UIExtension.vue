@@ -10,6 +10,7 @@ import UIExtIFrame from "./UIExtIFrame.vue";
 import AlertLocal from "../ui/AlertLocal.vue";
 import WarningLocal from "../ui/WarningLocal.vue";
 import layoutMixin from "../mixins/layoutMixin";
+import NotDisplayable from "./NotDisplayable.vue";
 
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
@@ -22,6 +23,7 @@ export default {
     UIExtIFrame,
     AlertLocal,
     WarningLocal,
+    NotDisplayable,
   },
   mixins: [layoutMixin],
   // using provide/inject instead of a prop to pass the knimeService to the children because
@@ -93,6 +95,11 @@ export default {
         ? `${this.pageIdPrefix}:${this.viewConfig.nodeID}`
         : this.viewConfig.nodeID;
     },
+    isReportingButDoesNotSupportReporting() {
+      return (
+        this.isReporting && this.extensionConfig.generatedImageActionId === null
+      );
+    },
   },
   watch: {
     extensionConfig() {
@@ -121,6 +128,11 @@ export default {
         type: isError ? "error" : "warn",
         subtitle: "",
         nodeId,
+      });
+    }
+    if (this.isReportingButDoesNotSupportReporting) {
+      this.$store.dispatch("pagebuilder/setReportingContent", {
+        nodeId: this.nodeId,
       });
     }
   },
@@ -214,7 +226,8 @@ export default {
 </script>
 
 <template>
-  <div :class="layoutClasses" :style="layoutStyle">
+  <NotDisplayable v-if="isReportingButDoesNotSupportReporting" not-supported />
+  <div v-else :class="layoutClasses" :style="layoutStyle">
     <UIExtComponent
       v-if="isUIExtComponent"
       :key="configKey + '-1'"
