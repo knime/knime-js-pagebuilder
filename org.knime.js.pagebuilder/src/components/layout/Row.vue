@@ -64,10 +64,5 @@ export default {
 .row {
   display: flex;
   flex-wrap: wrap;
-
-  &:not(.headless) {
-    margin-right: -15px;
-    margin-left: -15px;
-  }
 }
 </style>

@@ -165,7 +165,6 @@ export default {
         :view-config="viewConfig"
         :class="{
           'single-view': isSingleView,
-          'single-dialog': isNodeDialog && isSingleView,
           'view-and-dialog':
             !isNodeDialog && !isSingleView && !isInComponentView,
         }"
@@ -188,13 +187,6 @@ export default {
 
 .single-view {
   height: 100vh;
-}
-
-/* TODO UIEXT-310 get rid of this once we removed the margin in the APWrapper component
-    15px are coming from APWrapper.vue and 12px from the parent Row */
-.single-dialog {
-  margin-left: -27px;
-  margin-right: -27px;
 }
 
 .view-and-dialog {

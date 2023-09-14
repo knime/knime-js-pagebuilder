@@ -90,10 +90,6 @@ export default {
         classes = classes.concat(this.columnConfig.additionalClasses);
       }
 
-      if (this.isWebNode) {
-        classes.push("col-padding");
-      }
-
       return classes;
     },
     styles() {
@@ -159,11 +155,6 @@ export default {
   & > * {
     flex: 0 0 auto;
   }
-}
-
-.col-padding {
-  padding-right: 15px;
-  padding-left: 15px;
 }
 
 /* compatible with Bootstrap 4 grid */
