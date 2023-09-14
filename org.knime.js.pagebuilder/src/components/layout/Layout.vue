@@ -45,7 +45,10 @@ export default {
     },
   },
   computed: {
-    ...mapState("pagebuilder", ["isReporting"]),
+    ...mapState("pagebuilder", ["isReporting", "isDataApp"]),
+    dataApp() {
+      return true;
+    },
   },
   mounted() {
     if (this.isReporting) {
@@ -60,7 +63,10 @@ export default {
 
 <!-- knime-layout is used to extract the structure of the page for the report generation -->
 <template>
-  <div id="knime-layout" class="container-fluid">
+  <div
+    id="knime-layout"
+    :class="['container-fluid', { 'data-app': isDataApp }]"
+  >
     <Row
       v-for="(row, index) in layout.rows"
       :key="index"
@@ -80,5 +86,9 @@ export default {
   & :deep(*::after) {
     box-sizing: border-box;
   }
+}
+
+.data-app {
+  padding: 0 calc(15px + var(--grid-gap-width));
 }
 </style>

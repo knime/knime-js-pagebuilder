@@ -85,7 +85,7 @@ describe("Column.vue", () => {
   it("renders without classes and styles", () => {
     const wrapper = shallowMount(Column, context);
     expect(wrapper.element.tagName).toBe("DIV");
-    expect(wrapper.attributes("class")).toBe("col col-6 col-padding");
+    expect(wrapper.attributes("class")).toBe("col col-6 data-app");
     expect(wrapper.attributes("style")).toBe("");
   });
 
@@ -97,7 +97,7 @@ describe("Column.vue", () => {
     ];
     const wrapper = shallowMount(Column, context);
     expect(wrapper.attributes("class")).toBe(
-      "col col-6 class1 class2 col-padding",
+      "col col-6 class1 class2 data-app",
     );
     expect(wrapper.attributes("style")).toBe(
       "color: red; border: 1px solid green;",
@@ -115,14 +115,14 @@ describe("Column.vue", () => {
     };
     const wrapper = shallowMount(Column, context);
     expect(wrapper.attributes("class")).toBe(
-      "col col-12 col-sm-8 col-md-11 col-lg-10 col-xl-9 class1 class2 col-padding",
+      "col col-12 col-sm-8 col-md-11 col-lg-10 col-xl-9 class1 class2 data-app",
     );
   });
 
   it("renders default responsive grid class if no width defined", () => {
     context.props.columnConfig = {};
     const wrapper = shallowMount(Column, context);
-    expect(wrapper.attributes("class")).toBe("col col-12 col-padding");
+    expect(wrapper.attributes("class")).toBe("col col-12 data-app");
   });
 
   it("renders views", () => {
@@ -349,12 +349,12 @@ describe("Column.vue", () => {
 
   it("always renders column without col padding if no web node is present", () => {
     const wizardPageContent = getWizardPageContent();
-    wizardPageContent.nodeViews = { SINGLE: {} };
-    wizardPageContent.webNodes = {};
+    wizardPageContent.nodeViews = {};
+    wizardPageContent.webNodes = { SINGLE: {} };
     context.global.mocks.$store.commit("pagebuilder/setPage", {
       wizardPageContent,
     });
     const wrapper = shallowMount(Column, context);
-    expect(wrapper.attributes("class").includes("col-padding")).toBeFalsy();
+    expect(wrapper.attributes("class").includes("data-app")).toBeFalsy();
   });
 });

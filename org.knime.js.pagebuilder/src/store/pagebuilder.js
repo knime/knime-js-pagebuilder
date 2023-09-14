@@ -8,9 +8,9 @@ export const namespaced = true;
 export const state = () => ({
   page: null,
   isDialogLayout: false,
+  isDataApp: false,
   isReporting: false,
   generatedReportActionId: null,
-  isWebNode: false,
   resourceBaseUrl: "",
   webNodesLoading: [],
   pageValueGetters: {},
@@ -27,6 +27,14 @@ export const state = () => ({
 export const getters = {
   nodesReExecuting: (state) => state.nodesReExecuting,
   reExecutionUpdates: (state) => state.reExecutionUpdates,
+};
+
+const isComponentLayout = (pageContent) => {
+  const { webNodes = {}, nodeViews = {} } = pageContent || {};
+  const nodeIds = [...Object.keys(webNodes), ...Object.keys(nodeViews)];
+  return !["SINGLE", "VIEW", "DIALOG"].some((specialId) =>
+    nodeIds.includes(specialId),
+  );
 };
 
 export const mutations = {
@@ -50,7 +58,10 @@ export const mutations = {
     state.generatedReportActionId =
       page?.wizardPageContent?.webNodePageConfiguration?.generatedReportActionId;
     state.isReporting = Boolean(state.generatedReportActionId);
-    state.isWebNode = Boolean(webNodes && Object.keys(webNodes).length);
+    state.isDataApp =
+      isComponentLayout(page?.wizardPageContent) &&
+      !state.isReporting &&
+      !window.headless;
   },
   /**
    * Set base URL for any external libraries or resources served to the views.

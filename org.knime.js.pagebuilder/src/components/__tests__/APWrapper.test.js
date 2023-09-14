@@ -73,17 +73,6 @@ describe("APWrapper.vue", () => {
     expect(wrapper.findComponent(PageBuilder).exists()).toBeTruthy();
   });
 
-  it("renders headless class", () => {
-    let wrapper = shallowMount(APWrapper, context);
-    expect(wrapper.classes()).not.toContain("headless");
-
-    window.headless = true;
-    wrapper = shallowMount(APWrapper, context);
-    expect(wrapper.classes()).toContain("headless");
-
-    delete window.headless;
-  });
-
   describe("debug info and tooling", () => {
     it("hides debug/refresh buttons by default (without debug info)", () => {
       expect(window.getDebugInfo).toBeUndefined();

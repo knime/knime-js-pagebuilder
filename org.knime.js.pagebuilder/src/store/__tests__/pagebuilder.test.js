@@ -72,6 +72,73 @@ describe("PageBuilder store", () => {
     expect(store.state.page).toEqual(page);
   });
 
+  describe("isDataApp", () => {
+    it("sets isDataApp to true", () => {
+      let page = {
+        wizardPageContent: {
+          webNodes: { "1:2:3": {} },
+          nodeViews: { "4:5:6": {} },
+        },
+      };
+      store.dispatch("setPage", { page });
+      expect(store.state.isDataApp).toBeTruthy();
+    });
+
+    it("sets isDataApp to false on headless rendering", () => {
+      let page = {
+        wizardPageContent: {
+          webNodes: { "1:2:3": {} },
+          nodeViews: { "4:5:6": {} },
+        },
+      };
+      window.headless = true;
+      store.dispatch("setPage", { page });
+      expect(store.state.isDataApp).toBeFalsy();
+    });
+
+    it("sets isDataApp to false if single view", () => {
+      let page = {
+        wizardPageContent: {
+          nodeViews: { SINGLE: {} },
+        },
+      };
+      store.dispatch("setPage", { page });
+      expect(store.state.isDataApp).toBeFalsy();
+    });
+
+    it("sets isDataApp to false if dialog", () => {
+      let page = {
+        wizardPageContent: {
+          nodeViews: { DIALOG: {} },
+        },
+      };
+      store.dispatch("setPage", { page });
+      expect(store.state.isDataApp).toBeFalsy();
+    });
+
+    it("sets isDataApp to false if dialog and view", () => {
+      let page = {
+        wizardPageContent: {
+          nodeViews: { DIALOG: {}, VIEW: {} },
+        },
+      };
+      store.dispatch("setPage", { page });
+      expect(store.state.isDataApp).toBeFalsy();
+    });
+
+    it("sets isDataApp to false if reporting is active", () => {
+      let page = {
+        generateImageActionId: true,
+        wizardPageContent: {
+          webNodes: { "1:2:3": {} },
+          nodeViews: { "4:5:6": {} },
+        },
+      };
+      store.dispatch("setPage", { page });
+      expect(store.state.isDataApp).toBeFalsy();
+    });
+  });
+
   it("sets re-executing nodes", () => {
     let nodesReExecuting = ["1", "2"];
     expect(store.state.nodesReExecuting).toEqual([]);

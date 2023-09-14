@@ -32,9 +32,6 @@ export default {
     },
     classes() {
       let classes = ["row"];
-      if (window.headless) {
-        classes.push("headless");
-      }
       if (Array.isArray(this.rowConfig.additionalClasses)) {
         classes = classes.concat(this.rowConfig.additionalClasses);
       }

@@ -65,7 +65,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("pagebuilder", ["isWebNode"]),
+    ...mapState("pagebuilder", ["isDataApp"]),
     content() {
       return wrapViewContent(this.columnConfig.content);
     },
@@ -88,6 +88,10 @@ export default {
 
       if (Array.isArray(this.columnConfig.additionalClasses)) {
         classes = classes.concat(this.columnConfig.additionalClasses);
+      }
+
+      if (this.isDataApp) {
+        classes.push("data-app");
       }
 
       return classes;
@@ -154,6 +158,18 @@ export default {
 
   & > * {
     flex: 0 0 auto;
+  }
+}
+
+.data-app {
+  padding: 0 15px;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
   }
 }
 

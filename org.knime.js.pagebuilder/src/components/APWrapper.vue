@@ -22,9 +22,6 @@ export default {
     },
     classes() {
       let classes = ["ap-wrapper"];
-      if (window.headless || this.isReporting) {
-        classes.push("headless");
-      }
       return classes;
     },
   },
