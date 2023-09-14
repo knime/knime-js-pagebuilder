@@ -27,7 +27,7 @@
   "license": "UNLICENSED",
   "author": "KNIME AG, Zurich, Switzerland",
   "dependencies": {
-    "@knime/ui-extension-service": "0.15.0",
+    "@knime/ui-extension-service": "0.18.0",
     "consola": "2.15.3",
     "iframe-resizer": "4.2.10",
     "mime": "3.0.0",
