@@ -1,4 +1,4 @@
-# ![Image](https://www.knime.com/files/knime_logo_github_40x40_4layers.png) PageBuilder for KNIME Analytics Platform & KNIME Data Apps
+# ![Image](https://www.knime.com/sites/default/files/knime_logo_github_40x40_4layers.png) PageBuilder for KNIME Analytics Platform & KNIME Data Apps
 
 This repository contains the frontend components of the PageBuilder based on the [Vue] JavaScript framework and is used for layouting and rendering KNIME's JavaScript-based visualizations.
 
