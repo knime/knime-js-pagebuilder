@@ -1,5 +1,4 @@
 <script>
-import { mapState } from "vuex";
 import PageBuilder from "./PageBuilder.vue";
 import DebugButton from "./ui/DebugButton.vue";
 import RefreshButton from "./ui/RefreshButton.vue";
@@ -16,7 +15,6 @@ export default {
     };
   },
   computed: {
-    ...mapState("pagebuilder", ["isDialogLayout", "isReporting"]),
     debugPort() {
       return this.debugInfo?.remoteDebuggingPort;
     },
@@ -55,4 +53,9 @@ export default {
 @import url("webapps-common/ui/css/basics");
 @import url("webapps-common/ui/css/fonts");
 @import url("webapps-common/ui/css/grid");
+
+/* add small extra side padding for single or component views in AP view window */
+.ap-wrapper .view-layout {
+  padding: 0 5px;
+}
 </style>

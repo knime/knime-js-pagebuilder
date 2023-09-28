@@ -72,8 +72,8 @@ describe("PageBuilder store", () => {
     expect(store.state.page).toEqual(page);
   });
 
-  describe("isDataApp", () => {
-    it("sets isDataApp to true", () => {
+  describe("isViewLayout", () => {
+    it("sets isViewLayout to true", () => {
       let page = {
         wizardPageContent: {
           webNodes: { "1:2:3": {} },
@@ -81,10 +81,10 @@ describe("PageBuilder store", () => {
         },
       };
       store.dispatch("setPage", { page });
-      expect(store.state.isDataApp).toBeTruthy();
+      expect(store.state.isViewLayout).toBe(true);
     });
 
-    it("sets isDataApp to false on headless rendering", () => {
+    it("sets isViewLayout to false on headless rendering", () => {
       let page = {
         wizardPageContent: {
           webNodes: { "1:2:3": {} },
@@ -93,49 +93,63 @@ describe("PageBuilder store", () => {
       };
       window.headless = true;
       store.dispatch("setPage", { page });
-      expect(store.state.isDataApp).toBeFalsy();
+      expect(store.state.isViewLayout).toBe(false);
+      delete window.headless;
     });
 
-    it("sets isDataApp to false if single view", () => {
+    it("sets isViewLayout to true if single view", () => {
       let page = {
         wizardPageContent: {
           nodeViews: { SINGLE: {} },
         },
       };
       store.dispatch("setPage", { page });
-      expect(store.state.isDataApp).toBeFalsy();
+      expect(store.state.isViewLayout).toBe(true);
     });
 
-    it("sets isDataApp to false if dialog", () => {
+    it("sets isViewLayout to false if dialog", () => {
       let page = {
         wizardPageContent: {
-          nodeViews: { DIALOG: {} },
+          nodeViews: {
+            DIALOG: {
+              extensionType: "dialog",
+            },
+          },
         },
       };
       store.dispatch("setPage", { page });
-      expect(store.state.isDataApp).toBeFalsy();
+      expect(store.state.isViewLayout).toBe(false);
     });
 
-    it("sets isDataApp to false if dialog and view", () => {
+    it("sets isViewLayout to false if dialog and view", () => {
       let page = {
         wizardPageContent: {
-          nodeViews: { DIALOG: {}, VIEW: {} },
+          nodeViews: {
+            DIALOG: {
+              extensionType: "dialog",
+            },
+            VIEW: {
+              extensionType: "view",
+            },
+          },
         },
       };
       store.dispatch("setPage", { page });
-      expect(store.state.isDataApp).toBeFalsy();
+      expect(store.state.isViewLayout).toBe(false);
     });
 
-    it("sets isDataApp to false if reporting is active", () => {
+    it("sets isViewLayout to false if reporting is active", () => {
       let page = {
-        generateImageActionId: true,
         wizardPageContent: {
+          webNodePageConfiguration: {
+            generatedReportActionId: true,
+          },
           webNodes: { "1:2:3": {} },
           nodeViews: { "4:5:6": {} },
         },
       };
       store.dispatch("setPage", { page });
-      expect(store.state.isDataApp).toBeFalsy();
+      expect(store.state.isViewLayout).toBe(false);
     });
   });
 

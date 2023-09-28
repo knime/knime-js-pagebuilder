@@ -8,7 +8,7 @@ export const namespaced = true;
 export const state = () => ({
   page: null,
   isDialogLayout: false,
-  isDataApp: false,
+  isViewLayout: false,
   isReporting: false,
   generatedReportActionId: null,
   resourceBaseUrl: "",
@@ -29,12 +29,12 @@ export const getters = {
   reExecutionUpdates: (state) => state.reExecutionUpdates,
 };
 
-const isComponentLayout = (pageContent) => {
-  const { webNodes = {}, nodeViews = {} } = pageContent || {};
-  const nodeIds = [...Object.keys(webNodes), ...Object.keys(nodeViews)];
-  return !["SINGLE", "VIEW", "DIALOG"].some((specialId) =>
-    nodeIds.includes(specialId),
+const isViewLayout = (pageContent) => {
+  const { nodeViews = {} } = pageContent || {};
+  const nodeTypes = Object.keys(nodeViews).map(
+    (key) => nodeViews[key].extensionType,
   );
+  return !["dialog"].some((specialType) => nodeTypes.includes(specialType));
 };
 
 export const mutations = {
@@ -58,8 +58,8 @@ export const mutations = {
     state.generatedReportActionId =
       page?.wizardPageContent?.webNodePageConfiguration?.generatedReportActionId;
     state.isReporting = Boolean(state.generatedReportActionId);
-    state.isDataApp =
-      isComponentLayout(page?.wizardPageContent) &&
+    state.isViewLayout =
+      isViewLayout(page?.wizardPageContent) &&
       !state.isReporting &&
       !window.headless;
   },

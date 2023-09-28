@@ -45,10 +45,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("pagebuilder", ["isReporting", "isDataApp"]),
-    dataApp() {
-      return true;
-    },
+    ...mapState("pagebuilder", ["isReporting", "isViewLayout"]),
   },
   mounted() {
     if (this.isReporting) {
@@ -61,11 +58,15 @@ export default {
 };
 </script>
 
-<!-- knime-layout is used to extract the structure of the page for the report generation -->
+<!-- 
+  The id 'knime-layout' is used to extract the structure of the page for the report generation.
+  An additional class 'view-layout' is applied to give hints to pagebuilder wrappers e.g. to apply extra paddings in
+  case that reporting or image generation is not active.
+-->
 <template>
   <div
     id="knime-layout"
-    :class="['container-fluid', { 'data-app': isDataApp }]"
+    :class="['container-fluid', { 'view-layout': isViewLayout }]"
   >
     <Row
       v-for="(row, index) in layout.rows"
@@ -86,9 +87,5 @@ export default {
   & :deep(*::after) {
     box-sizing: border-box;
   }
-}
-
-.data-app {
-  padding: 0 calc(15px + var(--grid-gap-width));
 }
 </style>

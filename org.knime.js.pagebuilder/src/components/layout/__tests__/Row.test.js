@@ -38,17 +38,6 @@ describe("Row.vue", () => {
     );
   });
 
-  it("renders headless class", () => {
-    let wrapper = shallowMount(Row);
-    expect(wrapper.classes()).not.toContain("headless");
-
-    window.headless = true;
-    wrapper = shallowMount(Row);
-    expect(wrapper.classes()).toContain("headless");
-
-    delete window.headless;
-  });
-
   it("renders columns", () => {
     let columns = [{ widthXS: 6 }, { widthXS: 12 }];
 

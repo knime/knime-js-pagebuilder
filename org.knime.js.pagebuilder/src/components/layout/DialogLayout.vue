@@ -71,7 +71,7 @@ export default {
 <template>
   <div class="layout">
     <div class="item view">
-      <NodeView class="view-content" :view-config="viewContent" />
+      <NodeView class="view-content view-layout" :view-config="viewContent" />
       <Messages
         v-if="showMessages"
         class="messages"
