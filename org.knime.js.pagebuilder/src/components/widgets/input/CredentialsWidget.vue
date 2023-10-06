@@ -146,7 +146,6 @@ export default {
       #default="{ labelForId }"
       class="label"
       text="User"
-      large
     >
       <InputField
         :id="labelForId"
@@ -157,7 +156,7 @@ export default {
         @update:model-value="onUsernameChange"
       />
     </Label>
-    <Label #default="{ labelForId }" class="label" text="Password" large>
+    <Label #default="{ labelForId }" class="label" text="Password">
       <InputField
         :id="labelForId"
         ref="passwordForm"
