@@ -81,10 +81,10 @@ export default {
       });
     },
     displayError() {
-      return this.alert?.type === "error";
+      return this.alert?.type === "error" && !this.isReporting;
     },
     displayWarning() {
-      return this.alert?.type === "warn";
+      return this.alert?.type === "warn" && !this.isReporting;
     },
     pageIdPrefix() {
       return this.page?.wizardPageContent?.webNodePageConfiguration

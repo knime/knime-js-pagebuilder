@@ -394,6 +394,35 @@ describe("UIExtension.vue", () => {
     });
   });
 
+  describe("alerts in report", () => {
+    const mountOptions = {
+      global: {
+        mocks: {
+          $store: createPagebuilderStore({
+            isReporting: true,
+          }),
+        },
+      },
+      props: getMockComponentProps(),
+    };
+
+    it("does not display error alerts in reporting", async () => {
+      let mockErrorAlert = { message: "Shaken not stirred.", type: "error" };
+      let wrapper = shallowMount(UIExtension, mountOptions);
+      await wrapper.setData({ alert: mockErrorAlert });
+      let alertLocal = wrapper.findComponent(AlertLocal);
+      expect(alertLocal.exists()).toBeFalsy();
+    });
+
+    it("does not display warning alerts in reporting", async () => {
+      let mockWarningAlert = { message: "Bond, James Bond.", type: "warn" };
+      let wrapper = shallowMount(UIExtension, mountOptions);
+      await wrapper.setData({ alert: mockWarningAlert });
+      let warningButton = wrapper.findComponent(WarningLocal);
+      expect(warningButton.exists()).toBeFalsy();
+    });
+  });
+
   describe("styling", () => {
     it("respects resize classes", () => {
       viewConfig.resizeMethod = "aspectRatio1by1";
