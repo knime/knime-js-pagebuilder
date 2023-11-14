@@ -37,7 +37,3 @@ export default {
     <AlertGlobal v-if="!isDialogLayout && !isReporting" />
   </div>
 </template>
-
-<style>
-@import url("../assets/print.css");
-</style>
