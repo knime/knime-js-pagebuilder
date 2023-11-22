@@ -3,6 +3,7 @@
   "include": [
     "env.d.ts",
     "webapps-common/svg.d.ts", // for supporting SVG component imports; order is important
+    "webapps-common/ui/globals.d.ts",
     "src/**/*",
     "src/**/*.vue"
   ],

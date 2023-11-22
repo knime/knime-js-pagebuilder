@@ -263,12 +263,6 @@ export default {
 
 <style lang="postcss" scoped>
 .date-time-label {
-  /* remove the 10px label margin - they are provided by DateTimeInput which is required to have working
-  wrapping with margin */
-  & :deep(label) {
-    margin-bottom: 0;
-  }
-
   & .timezone {
     width: 100%;
     max-width: 15.3rem;
