@@ -1,5 +1,5 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
     "env.d.ts",
     "webapps-common/svg.d.ts", // for supporting SVG component imports; order is important
@@ -15,7 +15,8 @@
       "vue-slider-component": ["./src/vue-slider-component.d.ts"]
     },
     "allowJs": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "noEmit": true
   },
   "references": [
     {
