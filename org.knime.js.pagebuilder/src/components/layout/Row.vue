@@ -32,9 +32,6 @@ export default {
     },
     classes() {
       let classes = ["row"];
-      if (this.rowConfig.pageBreakAfter) {
-        classes.push("page-break-after");
-      }
       if (Array.isArray(this.rowConfig.additionalClasses)) {
         classes = classes.concat(this.rowConfig.additionalClasses);
       }
@@ -64,12 +61,5 @@ export default {
 .row {
   display: flex;
   flex-wrap: wrap;
-}
-
-@media print {
-  .row.page-break-after {
-    break-after: page;
-    page-break-after: always;
-  }
 }
 </style>

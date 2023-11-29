@@ -13,7 +13,6 @@ describe("Row.vue", () => {
           additionalClasses: [],
           additionalStyles: [],
           columns: [],
-          pageBreakAfter: false,
         },
       },
     });
@@ -37,18 +36,6 @@ describe("Row.vue", () => {
     expect(wrapper.attributes("style")).toBe(
       "color: red; border: 1px solid green;",
     );
-  });
-
-  it("renders page breaks", () => {
-    let wrapper = shallowMount(Row, {
-      props: {
-        rowConfig: {
-          type: "row",
-          pageBreakAfter: true,
-        },
-      },
-    });
-    expect(wrapper.attributes("class")).toBe("row page-break-after");
   });
 
   it("renders columns", () => {
