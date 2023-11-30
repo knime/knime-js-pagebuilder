@@ -74,6 +74,14 @@ describe("NumberWidget.vue", () => {
     expect(wrapper.isVisible()).toBeTruthy();
   });
 
+  it("calls the correct method to get the current value", () => {
+    let wrapper = mount(NumberWidget, {
+      props,
+    });
+    const input = wrapper.findComponent(NumberInput);
+    expect(typeof input.vm.getParsedValue).toBe("function");
+  });
+
   it("emits @updateWidget if child emits @input", () => {
     let wrapper = mount(NumberWidget, {
       props,
@@ -112,7 +120,7 @@ describe("NumberWidget.vue", () => {
           NumberInput: {
             template: "<div/>",
             methods: {
-              getValue: vi.fn().mockReturnValue(NaN),
+              getParsedValue: vi.fn().mockReturnValue(NaN),
             },
           },
         },
@@ -133,7 +141,7 @@ describe("NumberWidget.vue", () => {
           NumberInput: {
             template: "<div />",
             methods: {
-              getValue: vi.fn().mockReturnValue(null),
+              getParsedValue: vi.fn().mockReturnValue(null),
               validate: vi
                 .fn()
                 .mockReturnValue({ isValid: true, errorMessage: null }),
@@ -153,7 +161,7 @@ describe("NumberWidget.vue", () => {
           NumberInput: {
             template: "<div />",
             methods: {
-              getValue: vi.fn().mockReturnValue(null),
+              getParsedValue: vi.fn().mockReturnValue(null),
               validate: vi.fn().mockReturnValue({
                 isValid: false,
                 errorMessage: "test Error Message",
@@ -176,7 +184,7 @@ describe("NumberWidget.vue", () => {
           NumberInput: {
             template: "<div />",
             methods: {
-              getValue: vi.fn().mockReturnValue(validValue),
+              getParsedValue: vi.fn().mockReturnValue(validValue),
             },
           },
         },
@@ -193,7 +201,7 @@ describe("NumberWidget.vue", () => {
           NumberInput: {
             template: "<div />",
             methods: {
-              getValue: vi.fn().mockReturnValue("abc"),
+              getParsedValue: vi.fn().mockReturnValue("abc"),
             },
           },
         },
@@ -215,7 +223,7 @@ describe("NumberWidget.vue", () => {
           NumberInput: {
             template: "<div />",
             methods: {
-              getValue: vi.fn().mockReturnValue(invalidValue),
+              getParsedValue: vi.fn().mockReturnValue(invalidValue),
             },
           },
         },

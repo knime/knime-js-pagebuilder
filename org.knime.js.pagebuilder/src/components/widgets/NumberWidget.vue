@@ -95,7 +95,7 @@ export default {
     validate() {
       let isValid = true;
       let errorMessage;
-      let value = this.$refs.form.getValue();
+      let value = this.$refs.form.getParsedValue();
       if (isNaN(value)) {
         isValid = false;
         errorMessage = "Current value is not a number.";
