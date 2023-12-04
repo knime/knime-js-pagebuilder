@@ -32,28 +32,14 @@ describe("UIExtComponent.vue", () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    delete window[mockComponentId];
   });
 
-  // TODO UIEXT-218: Check if this test is still necessary with vue3
-  it.skip("renders ui extensions as Vue components", () => {
+  it("renders ui extensions as Vue components", () => {
     window[mockComponentId] = mockComponent;
     let wrapper = shallowMount(UIExtComponent, context);
     expect(wrapper.findComponent(UIExtComponent).exists()).toBeTruthy();
     expect(wrapper.findComponent(mockComponent).exists()).toBeTruthy();
-  });
-
-  // TODO UIEXT-218: Check if this test is still necessary with vue3
-  it.skip("skips loading a component library which is already loaded", () => {
-    window[mockComponentId] = mockComponent;
-    let loadComponentSpy = vi.spyOn(loadingModule, "loadComponentLibrary");
-
-    let wrapper = shallowMount(UIExtComponent, context);
-    expect(loadComponentSpy).not.toHaveBeenCalled();
-    expect(wrapper.vm.$options.components[mockComponentId].name).toBe(
-      mockComponentId,
-    );
-    expect(wrapper.vm.componentLoaded).toBe(true);
+    delete window[mockComponentId];
   });
 
   it("loads a component library", () => {

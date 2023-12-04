@@ -135,14 +135,20 @@ describe("UIExtension.vue", () => {
       ...context,
       props: getMockIFrameProps(),
     });
-    const uiExtIFrameBefore = wrapper.findComponent(UIExtIFrame).vm;
+    const uiExtIFrameEleInitial = wrapper.findComponent(UIExtIFrame).vm.$el;
+    expect(wrapper.findComponent(UIExtIFrame).vm.$el).toBe(
+      uiExtIFrameEleInitial,
+    );
+
     let { extensionConfig } = getMockIFrameProps();
     extensionConfig.resourceInfo.url =
       "http://localhost:8080/your_iframe_widget.html";
 
     await wrapper.setProps({ extensionConfig });
 
-    expect(wrapper.findComponent(UIExtIFrame).vm).not.toBe(uiExtIFrameBefore);
+    expect(wrapper.findComponent(UIExtIFrame).vm.$el).not.toBe(
+      uiExtIFrameEleInitial,
+    );
   });
 
   it("increments key on UIExtComponent when node info updates", async () => {
@@ -150,15 +156,19 @@ describe("UIExtension.vue", () => {
       ...context,
       props: getMockComponentProps(),
     });
-    const uiExtComponentBefore = wrapper.findComponent(UIExtComponent).vm;
+    const uiExtComponentEleInitial =
+      wrapper.findComponent(UIExtComponent).vm.$el;
+    expect(wrapper.findComponent(UIExtComponent).vm.$el).toBe(
+      uiExtComponentEleInitial,
+    );
     let { extensionConfig } = getMockComponentProps();
     extensionConfig.resourceInfo.url =
       "http://localhost:8080/your_vue_widget.html";
 
     await wrapper.setProps({ extensionConfig });
 
-    expect(wrapper.findComponent(UIExtComponent).vm).not.toBe(
-      uiExtComponentBefore,
+    expect(wrapper.findComponent(UIExtComponent).vm.$el).not.toBe(
+      uiExtComponentEleInitial,
     );
   });
 

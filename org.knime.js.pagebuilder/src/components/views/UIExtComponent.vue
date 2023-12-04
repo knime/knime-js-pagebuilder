@@ -13,11 +13,6 @@ export default {
       type: String,
       required: true,
     },
-    nodeId: {
-      default: null,
-      type: String,
-      required: true,
-    },
   },
   computed: {
     ...mapState("pagebuilder", ["isReporting"]),

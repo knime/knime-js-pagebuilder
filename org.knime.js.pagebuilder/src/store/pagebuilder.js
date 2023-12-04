@@ -23,12 +23,6 @@ export const state = () => ({
   imageGenerationWaiting: [],
 });
 
-// TODO: WEBP-791 remove single-property getters
-export const getters = {
-  nodesReExecuting: (state) => state.nodesReExecuting,
-  reExecutionUpdates: (state) => state.reExecutionUpdates,
-};
-
 const isViewLayout = (pageContent) => {
   const { nodeViews = {} } = pageContent || {};
   const nodeTypes = Object.keys(nodeViews).map(

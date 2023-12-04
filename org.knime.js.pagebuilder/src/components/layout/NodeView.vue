@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 import WebNode from "../views/WebNode.vue";
 import UIExtension from "../views/UIExtension.vue";
@@ -44,9 +44,14 @@ export default {
     },
   },
   computed: {
-    ...mapState("pagebuilder", ["page", "isDialogLayout", "isReporting"]),
+    ...mapState("pagebuilder", [
+      "page",
+      "isDialogLayout",
+      "isReporting",
+      "nodesReExecuting",
+      "reExecutionUpdates",
+    ]),
     ...mapState("pagebuilder/dialog", ["dirtyModelSettings"]),
-    ...mapGetters("pagebuilder", ["nodesReExecuting", "reExecutionUpdates"]),
     pageIdPrefix() {
       return this.page?.wizardPageContent?.webNodePageConfiguration
         ?.projectRelativePageIDSuffix;

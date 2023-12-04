@@ -231,7 +231,6 @@ export default {
     <UIExtComponent
       v-if="isUIExtComponent"
       :key="configKey + '-1'"
-      :node-id="nodeId"
       :resource-location="resourceLocation"
     />
     <UIExtIFrame

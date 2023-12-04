@@ -1,5 +1,6 @@
 import { expect, describe, beforeEach, it, vi } from "vitest";
 import { createStore } from "vuex";
+import muteConsole from "webapps-common/util/test-utils/muteConsole";
 
 import * as storeConfig from "@/store/pagebuilder";
 
@@ -256,16 +257,16 @@ describe("PageBuilder store", () => {
   });
 
   it("updates re-execution count when executing node ids are updated", () => {
-    expect(store.getters.nodesReExecuting).toStrictEqual([]);
-    expect(store.getters.reExecutionUpdates).toBe(0);
+    expect(store.state.nodesReExecuting).toStrictEqual([]);
+    expect(store.state.reExecutionUpdates).toBe(0);
     let nodesReExecuting = ["node1"];
     store.dispatch("setNodesReExecuting", nodesReExecuting);
-    expect(store.getters.nodesReExecuting).toStrictEqual(nodesReExecuting);
-    expect(store.getters.reExecutionUpdates).toBe(1);
+    expect(store.state.nodesReExecuting).toStrictEqual(nodesReExecuting);
+    expect(store.state.reExecutionUpdates).toBe(1);
     nodesReExecuting.push("node2");
     store.dispatch("setNodesReExecuting", nodesReExecuting);
-    expect(store.getters.nodesReExecuting).toStrictEqual(nodesReExecuting);
-    expect(store.getters.reExecutionUpdates).toBe(2);
+    expect(store.state.nodesReExecuting).toStrictEqual(nodesReExecuting);
+    expect(store.state.reExecutionUpdates).toBe(2);
   });
 
   it("allows setting resourceBaseUrl", () => {
@@ -325,7 +326,11 @@ describe("PageBuilder store", () => {
         },
       });
 
-      await expect(store.dispatch("getViewValues")).resolves.toStrictEqual({});
+      /* eslint-disable-next-line require-await */
+      const viewValues = await muteConsole(async () =>
+        store.dispatch("getViewValues"),
+      );
+      expect(viewValues).toStrictEqual({});
     });
   });
 
@@ -366,7 +371,7 @@ describe("PageBuilder store", () => {
         },
       };
 
-      store.commit("updateViewConfig", update);
+      muteConsole(() => store.commit("updateViewConfig", update));
       expect(node).toEqual({ foo: "bar" });
     });
 
@@ -687,7 +692,11 @@ describe("PageBuilder store", () => {
         },
       });
 
-      await expect(store.dispatch("getValidity")).resolves.toStrictEqual({});
+      /* eslint-disable-next-line require-await */
+      const validity = await muteConsole(async () =>
+        store.dispatch("getValidity"),
+      );
+      expect(validity).toStrictEqual({});
     });
   });
 });

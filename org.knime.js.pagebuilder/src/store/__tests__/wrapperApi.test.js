@@ -164,8 +164,10 @@ describe("wrapper API store", () => {
         pagebuilderMocks: { getViewValues, getValidity },
         alertMocks: { showAlert },
       });
+      await muteConsole(async () => {
+        await store.dispatch("triggerReExecution", { nodeId: "foo" });
+      });
 
-      await store.dispatch("triggerReExecution", { nodeId: "foo" });
       expect(getValidity).toHaveBeenCalled();
       expect(getViewValues).not.toHaveBeenCalled();
       expect(pollRPC).not.toHaveBeenCalled();
@@ -191,7 +193,10 @@ describe("wrapper API store", () => {
         alertMocks: { showAlert },
       });
 
-      await store.dispatch("triggerReExecution", { nodeId: "foo" });
+      await muteConsole(async () => {
+        await store.dispatch("triggerReExecution", { nodeId: "foo" });
+      });
+
       expect(getValidity).toHaveBeenCalled();
       expect(getViewValues).toHaveBeenCalled();
       expect(pollRPC).not.toHaveBeenCalled();
@@ -531,7 +536,9 @@ describe("wrapper API store", () => {
         alertMocks: { showAlert },
       });
 
-      await store.dispatch("pollRPC", config);
+      await muteConsole(async () => {
+        await store.dispatch("pollRPC", config);
+      });
       expect(singleRPC).toHaveBeenCalledWith(expect.anything(), config.config);
       expect(setPage).not.toHaveBeenCalled();
       expect(updatePage).not.toHaveBeenCalled();

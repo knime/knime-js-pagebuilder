@@ -1,4 +1,4 @@
-import { expect, describe, beforeAll, afterEach, it, vi } from "vitest";
+import { expect, describe, beforeEach, afterEach, it, vi } from "vitest";
 import { createStore } from "vuex";
 import { shallowMount } from "@vue/test-utils";
 
@@ -7,60 +7,18 @@ import PageBuilder from "@/components/PageBuilder.vue";
 import DebugButton from "@/components/ui/DebugButton.vue";
 import RefreshButton from "@/components/ui/RefreshButton.vue";
 
-import * as storeConfig from "@/store/pagebuilder";
-
 describe("APWrapper.vue", () => {
   let context;
 
-  const getWizardPageContent = ({
-    webNodes,
-    nodeViews,
-    webNodePageConfiguration,
-  } = {}) => ({
-    webNodes: webNodes || {
-      "1:0:1:0:0:7": {
-        foo: "bar",
-        viewRepresentation: {
-          "@class": "testing.notWidget",
-        },
-        nodeInfo: {
-          displayPossible: true,
-        },
+  const createContext = () => ({
+    global: {
+      mocks: {
+        $store: createStore(),
       },
-    },
-    nodeViews: nodeViews || {
-      DIALOG: {},
-      VIEW: {},
-    },
-    webNodePageConfiguration: webNodePageConfiguration || {
-      projectRelativePageIDSuffix: "1:0:1",
     },
   });
 
-  const createContext = ({
-    webNodes,
-    nodeViews,
-    webNodePageConfiguration,
-  } = {}) => {
-    let store = createStore({ modules: { pagebuilder: storeConfig } });
-    store.commit("pagebuilder/setPage", {
-      wizardPageContent: getWizardPageContent({
-        webNodes,
-        nodeViews,
-        webNodePageConfiguration,
-      }),
-    });
-
-    return {
-      global: {
-        mocks: {
-          $store: store,
-        },
-      },
-    };
-  };
-
-  beforeAll(() => {
+  beforeEach(() => {
     context = createContext();
   });
 
