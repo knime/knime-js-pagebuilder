@@ -1,16 +1,15 @@
 <script>
 import { markRaw, toRaw } from "vue";
 import { mapState } from "vuex";
-import {
-  KnimeService,
-  IFrameKnimeServiceAdapter,
-} from "@knime/ui-extension-service";
+
 import UIExtComponent from "./UIExtComponent.vue";
 import UIExtIFrame from "./UIExtIFrame.vue";
 import AlertLocal from "../ui/AlertLocal.vue";
 import WarningLocal from "../ui/WarningLocal.vue";
 import layoutMixin from "../mixins/layoutMixin";
 import NotDisplayable from "./NotDisplayable.vue";
+
+import { useBaseService, useIframeService } from "@/knime-svc";
 
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
@@ -34,6 +33,7 @@ export default {
     const getKnimeService = () => this.knimeService;
     return { getKnimeService };
   },
+  inject: ["apiLayer"],
   props: {
     extensionConfig: {
       default: () => ({}),
@@ -76,9 +76,14 @@ export default {
       return this.extensionConfig?.resourceInfo?.type === "VUE_COMPONENT_LIB";
     },
     resourceLocation() {
-      return this.$store.getters["api/uiExtResourceLocation"]({
-        resourceInfo: this.extensionConfig?.resourceInfo,
-      });
+      if (this.extensionConfig?.resourceInfo?.id === "textview") {
+        return "http://localhost:4000/TextView.umd.js";
+      }
+      // return "http://localhost:3333/NodeDialog.umd.js";
+      return "http://localhost:4001/ImageView.umd.js";
+      // return this.$store.getters["api/uiExtResourceLocation"]({
+      //   resourceInfo: this.extensionConfig?.resourceInfo,
+      // });
     },
     displayError() {
       return this.alert?.type === "error" && !this.isReporting;
@@ -138,37 +143,57 @@ export default {
   },
   methods: {
     initKnimeService() {
-      const ServiceConstructor = this.isUIExtComponent
-        ? KnimeService
-        : IFrameKnimeServiceAdapter;
-      const extensionConfig = {
-        ...toRaw(this.extensionConfig),
-        dialogSettings: toRaw(this.settingsOnClean),
-      };
-      let knimeService = new ServiceConstructor(
-        extensionConfig,
-        this.callService,
-        this.pushEvent,
-      );
-      if (this.isReporting) {
-        if (!this.isUIExtComponent) {
-          knimeService.registerImageGeneratedCallback((generatedImage) =>
-            this.$store.dispatch("pagebuilder/setReportingContent", {
-              nodeId: this.nodeId,
-              reportingContent: `<img style="width:${this.$el.offsetWidth}px" src="${generatedImage}" />`,
-            }),
-          );
-        }
-      } else if (this.extensionConfig?.generatedImageActionId) {
-        const actionId = this.extensionConfig.generatedImageActionId;
-        knimeService.registerImageGeneratedCallback((generatedImage) =>
-          window.EquoCommService.send(actionId, generatedImage),
-        );
-      }
-      this.knimeService = markRaw(knimeService);
+      const serviceFactory = this.isUIExtComponent
+        ? useBaseService(this.apiLayer)
+        : useIframeService(this.apiLayer);
+
+      const service = serviceFactory(this.extensionConfig);
+
+      this.knimeService = markRaw(service);
+
+      // NOTE: instead of a callback injected into the service to handle
+      // everything, we can define event listeners for specific push events by name.
+      // Then handlers become more concise and single-responsibility
+      // See: store/service.js is this where this event would be getting dispatched
+      service.addPushEventListener("server-event", this.pushEvent);
+
+      // NOTE: service registration would remain relevant in order to
+      // push events down to views via the services
       this.$store.dispatch("pagebuilder/service/registerService", {
         service: this.knimeService,
       });
+
+      // const ServiceConstructor = this.isUIExtComponent
+      //   ? KnimeService
+      //   : IFrameKnimeServiceAdapter;
+      // const extensionConfig = {
+      //   ...toRaw(this.extensionConfig),
+      //   dialogSettings: toRaw(this.settingsOnClean),
+      // };
+      // let knimeService = new ServiceConstructor(
+      //   extensionConfig,
+      //   this.callService,
+      //   this.pushEvent,
+      // );
+      // if (this.isReporting) {
+      //   if (!this.isUIExtComponent) {
+      //     knimeService.registerImageGeneratedCallback((generatedImage) =>
+      //       this.$store.dispatch("pagebuilder/setReportingContent", {
+      //         nodeId: this.nodeId,
+      //         reportingContent: `<img style="width:${this.$el.offsetWidth}px" src="${generatedImage}" />`,
+      //       }),
+      //     );
+      //   }
+      // } else if (this.extensionConfig?.generatedImageActionId) {
+      //   const actionId = this.extensionConfig.generatedImageActionId;
+      //   knimeService.registerImageGeneratedCallback((generatedImage) =>
+      //     window.EquoCommService.send(actionId, generatedImage),
+      //   );
+      // }
+      // this.knimeService = markRaw(knimeService);
+      // this.$store.dispatch("pagebuilder/service/registerService", {
+      //   service: this.knimeService,
+      // });
     },
     callService(nodeService, serviceRequest, requestParams) {
       return this.$store.dispatch("api/callService", {
@@ -226,8 +251,9 @@ export default {
 </script>
 
 <template>
-  <NotDisplayable v-if="isReportingButDoesNotSupportReporting" not-supported />
-  <div v-else :class="layoutClasses" :style="layoutStyle">
+  <!-- <NotDisplayable v-if="isReportingButDoesNotSupportReporting" not-supported />
+  <div v-else :class="layoutClasses" :style="layoutStyle"> -->
+  <div :class="layoutClasses" :style="layoutStyle">
     <UIExtComponent
       v-if="isUIExtComponent"
       :key="configKey + '-1'"
