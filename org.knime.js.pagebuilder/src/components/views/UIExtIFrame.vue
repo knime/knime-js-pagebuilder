@@ -14,11 +14,12 @@ export default {
     },
   },
   mounted() {
-    this.knimeService.updateEventListener();
-    this.knimeService.setIFrameWindow(this.$refs.iframe.contentWindow);
+    this.knimeService.setIframe(this.$refs.iframe);
+    // this.knimeService.updateEventListener();
+    // this.knimeService.setIFrameWindow(this.$refs.iframe.contentWindow);
   },
   beforeUnmount() {
-    this.knimeService.destroy();
+    // this.knimeService.destroy();
   },
 };
 </script>

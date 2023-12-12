@@ -20,7 +20,7 @@ export default {
       return this.getKnimeService();
     },
     extensionConfig() {
-      return this.knimeService?.extensionConfig;
+      return this.knimeService?.getConfig();
     },
     resourceInfo() {
       return this.extensionConfig?.resourceInfo;
