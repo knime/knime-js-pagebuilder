@@ -27,56 +27,5 @@
                relativePathTarget="org/knime/core/ui/pagebuilder/app/assets/">
          </webResource>
       </webResourceBundle>
-
-      <!-- vue2-based pagebuilder artifacts - only required for the WebPortal -->
-      <!-- the artifacts aren't built but checked-in -->
-      <webResourceBundle
-            debug="false"
-            exports="KnimePageLoader"
-            name="KNIME PageBuilder Resources"
-            usesDefine="false"
-            version="2.0.0"
-            webResourceBundleID="knimePageBuilder_2.0.0">
-         <webResource
-               relativePathSource="dist-vue2/knime-pagebuilder.umd.min.js"
-               relativePathTarget="org/knime/core/knime-pagebuilder2.js">
-         </webResource>
-         <webResource
-               relativePathSource="dist-vue2/knime-pagebuilder-credits.umd.min.js"
-               relativePathTarget="org/knime/core/knime-pagebuilder2-credits.js">
-         </webResource>
-      </webResourceBundle>
-      <webResourceBundle
-            debug="false"
-            exports="KnimePageLoader"
-            name="KNIME PageBuilder AP Wrapper"
-            usesDefine="false"
-            version="2.0.0"
-            webResourceBundleID="knimePageBuilder_2.0.0_AP">
-         <webResource
-               relativePathSource="dist-vue2/knime-pagebuilder2-ap.js"
-               relativePathTarget="org/knime/core/knime-pagebuilder2-ap.js">
-         </webResource>
-         <webResource
-               relativePathSource="dist-vue2/fonts/"
-               relativePathTarget="fonts/">
-         </webResource>
-      </webResourceBundle>
-      <webResourceBundle
-            debug="true"
-            exports="KnimePageLoader"
-            name="KNIME PageBuilder AP Wrapper Debug"
-            usesDefine="false"
-            version="2.0.0"
-            webResourceBundleID="knimePageBuilder_2.0.0_AP_DEBUG">
-         <webResource
-               relativePathSource="dist-vue2/knime-pagebuilder.umd.min.js.map"
-               relativePathTarget="org/knime/core/knime-pagebuilder.umd.min.js.map">
-         </webResource>
-         <webResource
-               relativePathSource="dist-vue2/knime-pagebuilder2-ap.js.map"
-               relativePathTarget="org/knime/core/knime-pagebuilder2-ap.js.map">
-         </webResource>
-      </webResourceBundle>
    </extension>
 </plugin>

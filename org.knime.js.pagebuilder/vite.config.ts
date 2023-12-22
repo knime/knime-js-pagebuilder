@@ -57,12 +57,7 @@ export default defineConfig(({ mode }) => {
     },
     test: {
       include: ["src/**/__tests__/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-      exclude: [
-        "**/node_modules/**",
-        "**/dist/**",
-        "**/dist-vue2/**",
-        "webapps-common/**",
-      ],
+      exclude: ["**/node_modules/**", "**/dist/**", "webapps-common/**"],
       environment: "jsdom",
       reporters: ["default", "junit"],
       deps: { inline: ["consola"] },
@@ -72,7 +67,6 @@ export default defineConfig(({ mode }) => {
         exclude: [
           "coverage/**",
           "dist/**",
-          "dist-vue2/**",
           "webapps-common/**",
           "lib/**",
           "test/assets/**",

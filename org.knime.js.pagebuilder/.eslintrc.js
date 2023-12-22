@@ -9,7 +9,7 @@ module.exports = {
   globals: {
     consola: true,
   },
-  ignorePatterns: ["mocks/", "dist-vue2/"],
+  ignorePatterns: ["mocks/"],
   settings: {
     "import/resolver": {
       alias: {
