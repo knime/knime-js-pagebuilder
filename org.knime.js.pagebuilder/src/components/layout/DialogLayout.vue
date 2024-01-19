@@ -3,6 +3,7 @@ import { mapGetters } from "vuex";
 
 import NodeView from "./NodeView.vue";
 import Messages from "webapps-common/ui/components/Messages.vue";
+import { UIExtensionPushEvents } from "@knime/ui-extension-service";
 
 export default {
   components: {
@@ -26,6 +27,11 @@ export default {
         return true;
       },
     },
+  },
+  data() {
+    return {
+      dispatchPushEventToView: null,
+    };
   },
   computed: {
     ...mapGetters({
@@ -64,6 +70,15 @@ export default {
     onClose(remove) {
       this.$store.dispatch("pagebuilder/alert/closeAlert", remove);
     },
+    onRegisterViewPushEventService(dispatchPushEvent) {
+      this.dispatchPushEventToView = dispatchPushEvent;
+    },
+    onPublishDailogData(data) {
+      this.dispatchPushEventToView?.({
+        type: UIExtensionPushEvents.EventTypes.DataEvent,
+        payload: data,
+      });
+    },
   },
 };
 </script>
@@ -71,7 +86,11 @@ export default {
 <template>
   <div class="layout">
     <div class="item view">
-      <NodeView class="view-content view-layout" :view-config="viewContent" />
+      <NodeView
+        class="view-content view-layout"
+        :view-config="viewContent"
+        @register-push-event-service="onRegisterViewPushEventService"
+      />
       <Messages
         v-if="showMessages"
         class="messages"
@@ -80,7 +99,10 @@ export default {
       />
     </div>
     <div class="item dialog">
-      <NodeView :view-config="dialogContent" />
+      <NodeView
+        :view-config="dialogContent"
+        @publish-data="onPublishDialogData"
+      />
     </div>
   </div>
 </template>

@@ -1,15 +1,12 @@
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
 
 import WebNode from "../views/WebNode.vue";
-import UIExtension from "../views/UIExtension.vue";
 import ViewExecutable from "../views/ViewExecutable.vue";
 import NotDisplayable from "../views/NotDisplayable.vue";
 import ExecutingOverlay from "../ui/ExecutingOverlay.vue";
-
-import { KnimeUtils } from "@knime/ui-extension-service";
-const { createJsonRpcRequest } = KnimeUtils;
+import UIExtensionAdapter from "../views/UIExtensionAdapter.vue";
 
 /**
  * A node-level member of the layout tree, this component is responsible for shared functionality
@@ -24,13 +21,10 @@ const { createJsonRpcRequest } = KnimeUtils;
 export default defineComponent({
   components: {
     WebNode,
-    UIExtension,
     NotDisplayable,
     ViewExecutable,
     ExecutingOverlay,
-  },
-  provide() {
-    return { apiLayer: this.apiLayer };
+    UIExtensionAdapter,
   },
   props: {
     /**
@@ -50,6 +44,7 @@ export default defineComponent({
       },
     },
   },
+  emits: ["publishData", "registerPushEventService"],
   computed: {
     ...mapState("pagebuilder", [
       "page",
@@ -149,67 +144,6 @@ export default defineComponent({
     showSpinner() {
       return this.reExecutionUpdates >= 2;
     },
-
-    // ideally this gets injected at the very top of the wrapper application
-    // where the integration with the API (backend calls) can be easily accessed
-    apiLayer() {
-      const store = this.$store;
-      return {
-        getResourceLocation(baseUrl, path) {
-          // TODO unfortunate coupling with pagebuilder internals - see NXT-1295
-          return store.getters["api/uiExtResourceLocation"]({
-            resourceInfo: {
-              baseUrl,
-              path,
-            },
-          });
-        },
-
-        async callNodeDataService(params) {
-          const response = await store.dispatch("api/callService", {
-            nodeService: "NodeService.callNodeDataService",
-            extensionConfig: {
-              projectId: params.projectId,
-              workflowId: params.workflowId,
-              nodeId: params.nodeId,
-              extensionType: params.extensionType,
-            },
-            serviceRequest: params.serviceType,
-            requestParams: params.dataServiceRequest,
-          });
-
-          const { result } = JSON.parse(response.result);
-          return result;
-        },
-
-        callPortDataService(params) {
-          return store.dispatch("api/callService", {
-            nodeService: "NodeService.callNodeDataService",
-            extensionConfig: {
-              projectId: params.projectId,
-              workflowId: params.workflowId,
-              nodeId: params.nodeId,
-              extensionType: "port",
-            },
-            serviceRequest: params.serviceType,
-            requestParams: params.dataServiceRequest,
-          });
-        },
-
-        updateDataPointSelection(params) {
-          return store.dispatch("api/callService", {
-            nodeService: "NodeService.callNodeDataService",
-            extensionConfig: {
-              projectId: params.projectId,
-              workflowId: params.workflowId,
-              nodeId: params.nodeId,
-            },
-            serviceRequest: params.mode,
-            requestParams: params.selections,
-          });
-        },
-      };
-    },
   },
 });
 </script>
@@ -233,7 +167,7 @@ export default defineComponent({
         :node-config="webNodeConfig"
         :node-id="nodeId"
       />
-      <UIExtension
+      <UIExtensionAdapter
         v-else-if="isUIExtension"
         :view-config="viewConfig"
         :class="{
@@ -243,6 +177,8 @@ export default defineComponent({
         }"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
+        @publish-data="$emit('publishData', $event)"
+        @register-push-event-service="$emit('registerPushEventService', $event)"
       />
       <ExecutingOverlay
         :show="showExecutionOverlay"

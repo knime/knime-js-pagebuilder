@@ -72,10 +72,7 @@ export const actions = {
     return Promise.all(
       Object.values(state.services)
         .filter((service) => service.serviceId !== callerId)
-        .map((service) =>
-          service.dispatchPushEvent({ name: "server-event", data: event }),
-        ),
-      // .map((service) => service.onServiceEvent(event)),
+        .map((service) => service.onServiceEvent(event)),
     );
   },
 };
