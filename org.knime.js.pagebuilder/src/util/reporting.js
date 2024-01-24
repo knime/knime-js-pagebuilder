@@ -1,3 +1,21 @@
+const isRuleApplied = (rule) => {
+  // if (rule instanceof CSSFontFaceRule) {
+  //   return true;
+  // }
+  if (
+    rule?.selectorText?.includes("root") ||
+    rule?.selectorText?.includes("body") ||
+    rule?.selectorText?.includes("html")
+  ) {
+    return true;
+  }
+  const elements = document.querySelectorAll(rule.selectorText);
+  if (elements?.length) {
+    return true;
+  }
+  return false;
+};
+
 const generateReportLayout = (reportingContent) => {
   const layout = document.querySelector("#knime-layout").cloneNode(true);
   layout.querySelectorAll(".reporting-replaceable").forEach((entry) => {
@@ -13,7 +31,9 @@ const generateReportLayout = (reportingContent) => {
   for (const sheet of document.styleSheets) {
     report += "<style>";
     for (const rule of sheet.cssRules) {
-      report += rule.cssText;
+      if (isRuleApplied(rule)) {
+        report += rule.cssText;
+      }
     }
     report += "</style>\n";
   }
