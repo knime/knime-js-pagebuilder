@@ -29,6 +29,7 @@ export default {
     resourceInfo: {
       type: Object as PropType<{ id: string }>,
       default: () => {},
+      required: true,
     },
     apiLayer: {
       type: Object as PropType<UIExtensionServiceAPILayer>,

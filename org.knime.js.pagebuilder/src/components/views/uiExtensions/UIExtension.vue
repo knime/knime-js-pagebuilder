@@ -124,6 +124,7 @@ export default {
     ref="uiext"
     :api-layer="serviceAPILayer"
     :resource-location="resourceLocation"
+    :resource-info="extensionConfig.resourceInfo"
     @service-created="onServiceCreated"
   />
   <UIExtIFrame

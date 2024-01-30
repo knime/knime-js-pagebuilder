@@ -96,8 +96,8 @@ export default {
             },
           });
         },
-        callNodeDataService: async (params) => {
-          const response = await this.$store.dispatch("api/callService", {
+        callNodeDataService: (params) => {
+          return this.$store.dispatch("api/callService", {
             nodeService: "NodeService.callNodeDataService",
             extensionConfig: {
               projectId: params.projectId,
@@ -108,9 +108,6 @@ export default {
             serviceRequest: params.serviceType,
             requestParams: params.dataServiceRequest,
           });
-
-          const { result } = JSON.parse(response.result);
-          return result;
         },
         updateDataPointSelection: (params) => {
           return this.$store.dispatch("api/callService", {
@@ -205,6 +202,8 @@ export default {
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
       :extension-config="extensionConfigWithDialogSettings"
+      :is-reporting="isReporting"
+      :is-dialog-layout="isDialogLayout"
     />
   </div>
 </template>
