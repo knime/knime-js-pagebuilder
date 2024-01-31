@@ -9,7 +9,6 @@ import { type ResourceTypes } from "./ResourceTypes";
 export type ResourceInfo = {
   id: string;
   type: ResourceTypes;
-  baseUrl: string;
   path?: string;
   url?: string;
 };

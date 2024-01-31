@@ -6,6 +6,7 @@ import layoutMixin from "../mixins/layoutMixin";
 import { type ExtensionConfig } from "./uiExtensions/types/ExtensionConfig";
 import type { UIExtensionAPILayer } from "./uiExtensions/types/UIExtensionAPILayer";
 import UIExtension from "./uiExtensions/UIExtension.vue";
+import NotDisplayable from "./NotDisplayable.vue";
 import type { Alert } from "@knime/ui-extension-service";
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
@@ -15,12 +16,15 @@ import type { Alert } from "@knime/ui-extension-service";
 export default {
   components: {
     UIExtension,
+    NotDisplayable,
   },
   mixins: [layoutMixin],
   props: {
     extensionConfig: {
       default: () => ({}),
-      type: Object as PropType<ExtensionConfig>,
+      type: Object as PropType<
+        ExtensionConfig & { resourceInfo: { baseUrl: string } }
+      >,
       validate(extensionConfig: any) {
         if (typeof extensionConfig !== "object") {
           return false;
@@ -80,6 +84,18 @@ export default {
       return this.pageIdPrefix
         ? `${this.pageIdPrefix}:${this.viewConfig.nodeID}`
         : this.viewConfig.nodeID;
+    },
+    /**
+     * This ID unique among node instances in a workflow but shared
+     * between KnimeService instances instantiated by the same node instance (i.e. between sessions, refreshes, reloads,
+     * etc.).
+     *
+     * @returns {String} the id derived from the provided service.
+     */
+    serviceId() {
+      const { nodeId, projectId, workflowId, extensionType } =
+        this.extensionConfig;
+      return `${nodeId}.${projectId}.${workflowId}.${extensionType}`;
     },
     isReportingButDoesNotSupportReporting() {
       return (
@@ -148,7 +164,10 @@ export default {
           }
         },
         registerPushEventService: ({ dispatchPushEvent }) => {
-          const service = { onServiceEvent: dispatchPushEvent };
+          const service = {
+            onServiceEvent: dispatchPushEvent,
+            serviceId: this.serviceId,
+          };
           this.$store.dispatch("pagebuilder/service/registerService", {
             service,
           });
@@ -164,10 +183,23 @@ export default {
          * @param {Object} alert - the alert to display.
          * @returns {Promise}
          */
-        sendAlert: (alert: Alert) => {
+        sendAlert: (alert: Alert, closeAlert?: () => void) => {
           return this.$store.dispatch("pagebuilder/alert/showAlert", {
             ...alert,
-            callback: this.closeAlert,
+            /**
+             * Callback function passed to the alert store to close the local alert when a global alert action is
+             * triggered.
+             */
+            callback: (
+              /**
+               * optionally if the local alert should be cleared.
+               */
+              remove?: Boolean,
+            ) => {
+              if (remove) {
+                closeAlert?.();
+              }
+            },
           });
         },
       };

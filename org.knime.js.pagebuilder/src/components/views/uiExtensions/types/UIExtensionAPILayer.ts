@@ -1,4 +1,5 @@
 import type {
+  Alert,
   UIExtensionPushEvents,
   UIExtensionServiceAPILayer,
 } from "@knime/ui-extension-service";
@@ -11,8 +12,8 @@ type UIExtensionAPILayer = Pick<
   | "publishData"
   | "updateDataPointSelection"
   | "getResourceLocation"
-  | "sendAlert"
 > & {
+  sendAlert: (alert: Alert, closeAlert?: () => void) => void;
   /**
    * @returns the respective deregistration method
    */

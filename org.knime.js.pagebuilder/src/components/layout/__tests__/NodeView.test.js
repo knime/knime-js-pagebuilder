@@ -4,7 +4,7 @@ import { shallowMount } from "@vue/test-utils";
 
 import NodeView from "@/components/layout/NodeView.vue";
 import WebNode from "@/components/views/WebNode.vue";
-import UIExtension from "@/components/views/UIExtension.vue";
+import UIExtensionAdapter from "@/components/views/UIExtensionAdapter.vue";
 import NotDisplayable from "@/components/views/NotDisplayable.vue";
 import ViewExecutable from "@/components/views/ViewExecutable.vue";
 import ExecutingOverlay from "@/components/ui/ExecutingOverlay.vue";
@@ -138,7 +138,7 @@ describe("NodeView.vue", () => {
         props: getWebNodeProps(),
       });
       expect(wrapper.findComponent(WebNode).exists()).toBeTruthy();
-      expect(wrapper.findComponent(UIExtension).exists()).toBeFalsy();
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBeFalsy();
       expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
     });
 
@@ -147,7 +147,7 @@ describe("NodeView.vue", () => {
         ...context,
         props: getUIExtProps(),
       });
-      expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBeTruthy();
       expect(wrapper.findComponent(WebNode).exists()).toBeFalsy();
       expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
     });
@@ -161,8 +161,8 @@ describe("NodeView.vue", () => {
         ...localContext,
         props: getSingleUIExtProps(),
       });
-      expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
-      expect(wrapper.findComponent(UIExtension).classes()).toContain(
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBeTruthy();
+      expect(wrapper.findComponent(UIExtensionAdapter).classes()).toContain(
         "single-view",
       );
     });
@@ -176,14 +176,14 @@ describe("NodeView.vue", () => {
         ...localContext,
         props: getUIExtProps(),
       });
-      expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
-      expect(wrapper.findComponent(UIExtension).classes()).not.toContain(
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBeTruthy();
+      expect(wrapper.findComponent(UIExtensionAdapter).classes()).not.toContain(
         "view-and-dialog",
       );
-      expect(wrapper.findComponent(UIExtension).classes()).not.toContain(
+      expect(wrapper.findComponent(UIExtensionAdapter).classes()).not.toContain(
         "single-view",
       );
-      expect(wrapper.findComponent(UIExtension).classes()).not.toContain(
+      expect(wrapper.findComponent(UIExtensionAdapter).classes()).not.toContain(
         "single-dialog",
       );
     });
@@ -197,8 +197,8 @@ describe("NodeView.vue", () => {
         ...localContext,
         props: getUIExtDialogProps(),
       });
-      expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
-      expect(wrapper.findComponent(UIExtension).classes()).not.toContain(
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBeTruthy();
+      expect(wrapper.findComponent(UIExtensionAdapter).classes()).not.toContain(
         "single-view",
       );
     });
@@ -251,7 +251,7 @@ describe("NodeView.vue", () => {
       expect(wrapper.vm.showViewExecutable).toBe(true);
       expect(wrapper.findComponent(ViewExecutable).exists()).toBe(true);
       expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
-      expect(wrapper.findComponent(UIExtension).exists()).toBe(false);
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBe(false);
     });
 
     it("renders view executable when model settings are dirty", async () => {
@@ -267,7 +267,7 @@ describe("NodeView.vue", () => {
       expect(wrapper.vm.showViewExecutable).toBe(false);
       expect(wrapper.findComponent(ViewExecutable).exists()).toBe(false);
       expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
-      expect(wrapper.findComponent(UIExtension).exists()).toBe(true);
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBe(true);
 
       await wrapper.vm.$store.dispatch(
         "pagebuilder/dialog/dirtySettings",
@@ -279,7 +279,7 @@ describe("NodeView.vue", () => {
       expect(wrapper.vm.showViewExecutable).toBe(true);
       expect(wrapper.findComponent(ViewExecutable).exists()).toBe(true);
       expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
-      expect(wrapper.findComponent(UIExtension).exists()).toBe(false);
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBe(false);
     });
 
     it("always renders the node dialog", () => {
@@ -296,7 +296,7 @@ describe("NodeView.vue", () => {
       expect(wrapper.vm.showViewExecutable).toBe(false);
       expect(wrapper.findComponent(ViewExecutable).exists()).toBe(false);
       expect(wrapper.findComponent(NotDisplayable).exists()).toBe(false);
-      expect(wrapper.findComponent(UIExtension).exists()).toBe(true);
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBe(true);
     });
 
     it("renders notDisplayable component for UI-Extensions when in configured state on Webportal", () => {
@@ -326,7 +326,7 @@ describe("NodeView.vue", () => {
         }),
         props: getWebNodeProps(),
       });
-      expect(wrapper.findComponent(UIExtension).exists()).toBeFalsy();
+      expect(wrapper.findComponent(UIExtensionAdapter).exists()).toBeFalsy();
       expect(wrapper.findComponent(WebNode).exists()).toBeFalsy();
       expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
     });

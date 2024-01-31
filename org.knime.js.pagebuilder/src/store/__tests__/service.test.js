@@ -1,7 +1,5 @@
 import { expect, describe, beforeEach, afterEach, it, vi } from "vitest";
 import { createStore } from "vuex";
-import { KnimeService } from "@knime/ui-extension-service";
-import { iFrameExtensionConfig } from "@@/test/assets/views/extensionConfig";
 import * as storeConfig from "@/store/service";
 
 describe("service store", () => {
@@ -23,23 +21,27 @@ describe("service store", () => {
   });
 
   describe("service store actions", () => {
+    const serviceId = "myServiceId";
+
     it("registers a service", async () => {
-      const service = new KnimeService(iFrameExtensionConfig, vi.fn());
+      const onServiceEvent = vi.fn();
+      const service = { onServiceEvent, serviceId };
       await store.dispatch("registerService", { service });
       expect(store.state.services[service.serviceId]).toStrictEqual(service);
     });
 
     it("dispatches push events", async () => {
-      const service = new KnimeService(iFrameExtensionConfig, vi.fn());
+      const onServiceEvent = vi.fn();
+      const service = { onServiceEvent, serviceId };
       await store.dispatch("registerService", { service });
-      let onEventSpy = vi.spyOn(service, "onServiceEvent");
       let mockEvent = { payload: "message" };
       await store.dispatch("pushEvent", { event: mockEvent });
-      expect(onEventSpy).toHaveBeenCalledWith(mockEvent);
+      expect(onServiceEvent).toHaveBeenCalledWith(mockEvent);
     });
 
     it("deregisters a service", async () => {
-      const service = new KnimeService(iFrameExtensionConfig, vi.fn());
+      const onServiceEvent = vi.fn();
+      const service = { onServiceEvent, serviceId };
       await store.dispatch("registerService", { service });
       expect(store.state.services[service.serviceId]).toStrictEqual(service);
       await store.dispatch("deregisterService", { service });

@@ -73,9 +73,9 @@ export default {
     onRegisterViewPushEventService(dispatchPushEvent) {
       this.dispatchPushEventToView = dispatchPushEvent;
     },
-    onPublishDailogData(data) {
+    onPublishDialogData(data) {
       this.dispatchPushEventToView?.({
-        type: UIExtensionPushEvents.EventTypes.DataEvent,
+        name: UIExtensionPushEvents.EventTypes.DataEvent,
         payload: data,
       });
     },

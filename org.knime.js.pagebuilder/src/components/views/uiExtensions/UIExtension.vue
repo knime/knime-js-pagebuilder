@@ -74,21 +74,23 @@ export default {
     this.deregisterOldService?.();
   },
   mounted() {
-    const nodeInfo = this.extensionConfig.nodeInfo;
-    const alertMessage =
-      nodeInfo?.nodeErrorMessage || nodeInfo?.nodeWarnMessage;
-    if (alertMessage) {
-      const isError = nodeInfo?.nodeErrorMessage;
-      const nodeId = this.extensionConfig.nodeId;
-      this.handleAlert({
-        message: alertMessage,
-        type: isError ? AlertType.ERROR : AlertType.WARN,
-        subtitle: "",
-        nodeId,
-      });
-    }
+    this.showMessageFromNodeInfo(this.extensionConfig.nodeInfo);
   },
   methods: {
+    showMessageFromNodeInfo(nodeInfo: ExtensionConfig["nodeInfo"]) {
+      const alertMessage =
+        nodeInfo?.nodeErrorMessage || nodeInfo?.nodeWarnMessage;
+      if (alertMessage) {
+        const isError = nodeInfo?.nodeErrorMessage;
+        const nodeId = this.extensionConfig.nodeId;
+        this.handleAlert({
+          message: alertMessage,
+          type: isError ? AlertType.ERROR : AlertType.WARN,
+          subtitle: "",
+          nodeId,
+        });
+      }
+    },
     onServiceCreated(service: {
       dispatchPushEvent: (event: UIExtensionPushEvents.PushEvent<any>) => void;
     }) {
@@ -102,17 +104,11 @@ export default {
         this.alert = alert;
       }
     },
-    /**
-     * Callback function passed to the alert store to close the local alert when a global alert action is
-     * triggered. Can be used locally if needed.
-     *
-     * @param {Boolean} [remove] - optionally if the local alert should be cleared.
-     * @returns {undefined}
-     */
-    closeAlert(remove?: boolean) {
-      if (remove) {
-        this.alert = null;
-      }
+    showAlert() {
+      this.apiLayer.sendAlert(this.alert!, this.closeAlert);
+    },
+    closeAlert() {
+      this.alert = null;
     },
   },
 };
@@ -121,7 +117,6 @@ export default {
 <template>
   <UIExtComponent
     v-if="isUIExtComponent"
-    ref="uiext"
     :api-layer="serviceAPILayer"
     :resource-location="resourceLocation"
     :resource-info="extensionConfig.resourceInfo"
@@ -129,20 +124,15 @@ export default {
   />
   <UIExtIFrame
     v-else
-    ref="uiext"
     :api-layer="serviceAPILayer"
     :resource-location="resourceLocation"
     @service-created="onServiceCreated"
   />
-  <AlertLocal
-    v-if="displayError"
-    active
-    @show-alert="apiLayer.sendAlert(alert!)"
-  />
+  <AlertLocal v-if="displayError" active @show-alert="showAlert" />
   <WarningLocal
     v-if="displayWarning"
     class="local-warning"
-    @click="apiLayer.sendAlert(alert!)"
+    @click="showAlert"
   />
 </template>
 
