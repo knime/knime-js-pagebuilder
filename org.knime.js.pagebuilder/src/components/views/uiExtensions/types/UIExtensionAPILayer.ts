@@ -12,6 +12,7 @@ type UIExtensionAPILayer = Pick<
   | "publishData"
   | "updateDataPointSelection"
   | "getResourceLocation"
+  | "close"
 > & {
   sendAlert: (alert: Alert, closeAlert?: () => void) => void;
   /**

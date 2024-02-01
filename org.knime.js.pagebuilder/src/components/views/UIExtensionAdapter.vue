@@ -8,6 +8,13 @@ import type { UIExtensionAPILayer } from "./uiExtensions/types/UIExtensionAPILay
 import UIExtension from "./uiExtensions/UIExtension.vue";
 import NotDisplayable from "./NotDisplayable.vue";
 import type { Alert } from "@knime/ui-extension-service";
+
+declare global {
+  export interface Window {
+    closeCEFWindow: (executeNode: boolean) => void;
+  }
+}
+
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
  * Also detects changes to it's configuration and increments a local counter to help with re-renders of iframe-based
@@ -201,6 +208,9 @@ export default {
               }
             },
           });
+        },
+        close(isMetaKeyPressed: boolean) {
+          window.closeCEFWindow(isMetaKeyPressed);
         },
       };
     },
