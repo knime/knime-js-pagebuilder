@@ -119,7 +119,6 @@ export default {
     v-if="isUIExtComponent"
     :api-layer="serviceAPILayer"
     :resource-location="resourceLocation"
-    :resource-info="extensionConfig.resourceInfo"
     @service-created="onServiceCreated"
   />
   <UIExtIFrame

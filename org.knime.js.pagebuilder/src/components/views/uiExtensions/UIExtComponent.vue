@@ -1,85 +1,93 @@
-<script lang="ts">
+<script lang="ts" setup>
 import {
   type UIExtensionServiceAPILayer,
   type UIExtensionPushEvents,
   type UIExtensionService,
   setUpEmbedderService,
+  JsonDataService,
 } from "@knime/ui-extension-service";
-import { markRaw, type PropType } from "vue";
-import { loadAsyncComponent } from "webapps-common/ui/util/loadComponentLibrary";
 
-export default {
-  components: {
-    // Any Vue-based component library
-  },
-  // using provide/inject instead of a prop to pass the knimeService to the children because
-  // 1) we don't want reactivity in this case
-  // 2) any deeply nested child of the UIComponent can get access to knimeService if needed
-  provide() {
-    this.initKnimeService();
-    const getKnimeService = () => this.knimeService;
-    return { getKnimeService };
-  },
-  props: {
-    resourceLocation: {
-      type: String,
-      required: true,
-    },
-    resourceInfo: {
-      type: Object as PropType<{ id: string }>,
-      required: true,
-    },
-    apiLayer: {
-      type: Object as PropType<UIExtensionServiceAPILayer>,
-      required: true,
-    },
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    serviceCreated: (_service: {
+import { markRaw, onMounted, ref } from "vue";
+import { useDynamicImport } from "./useDynamicImport";
+const { dynamicImport } = useDynamicImport();
+
+interface Props {
+  resourceLocation: string;
+  apiLayer: UIExtensionServiceAPILayer;
+}
+const props = defineProps<Props>();
+
+interface Emits {
+  (
+    e: "serviceCreated",
+    _service: {
       dispatchPushEvent: (event: UIExtensionPushEvents.PushEvent<any>) => void;
-    }) => true,
-  },
-  data() {
-    return {
-      knimeService: null as null | UIExtensionService,
-    };
-  },
-  computed: {
-    /**
-     * A unique identifier based on the factory class of a node. Will be shared with other node instances of the
-     * same type across an installation, but is guaranteed to be unique against other node-types (regardless of
-     * naming conflicts; i.e. two scatter plots with the node name "Scatter Plot").
-     *
-     * @returns {string} - unique id for the resource registered to this node.
-     */
-    componentId() {
-      return this.resourceInfo?.id;
     },
-  },
-  created() {
-    // @ts-ignore
-    this.$options.components[this.componentId] = loadAsyncComponent({
-      resourceLocation: this.resourceLocation,
-      componentName: this.componentId,
-    });
-  },
-  methods: {
-    initKnimeService() {
-      const embedderService = setUpEmbedderService(this.apiLayer);
-      this.knimeService = markRaw(embedderService.service);
-      this.$emit("serviceCreated", embedderService);
-    },
-  },
+  ): true;
+}
+const emit = defineEmits<Emits>();
+
+const activeDynamicView = ref<{ teardown: () => void } | null>(null);
+const container = ref<HTMLElement | null>(null);
+let knimeService: null | UIExtensionService = null;
+
+const initKnimeService = () => {
+  if (knimeService !== null) {
+    return;
+  }
+  const embedderService = setUpEmbedderService(props.apiLayer);
+  knimeService = markRaw(embedderService.service);
+  emit("serviceCreated", embedderService);
 };
+
+const loadView = async () => {
+  initKnimeService();
+
+  // TODO: NXT-2291 This is a hack as we only have one type right now
+  const shadowRootLibLocation = props.resourceLocation.replace(
+    ".umd.js",
+    ".js",
+  );
+
+  // load the dynamic view (es module) if its not already loaded
+  const dynamicView = await dynamicImport(shadowRootLibLocation);
+
+  // create dynamic view in shadow root
+  // teardown active view if we have one
+  if (activeDynamicView.value) {
+    activeDynamicView.value?.teardown();
+  }
+
+  // create or reuse shadow root
+  const shadowRoot = container.value!.shadowRoot
+    ? container.value!.shadowRoot
+    : container.value!.attachShadow({ mode: "open" });
+
+  const initialData = props.apiLayer.getConfig().initialData
+    ? await new JsonDataService(knimeService!).initialData()
+    : null;
+
+  // call module default exported function to load the view
+  activeDynamicView.value = dynamicView.default(
+    shadowRoot,
+    knimeService,
+    initialData,
+  );
+};
+
+onMounted(async () => {
+  await loadView();
+});
 </script>
 
 <template>
-  <component :is="componentId" class="ui-ext-component" />
+  <div ref="container" class="ui-ext-component" />
 </template>
 
 <style scoped>
 .ui-ext-component {
+  /** required for the table view */
+  height: 100%;
   overflow: hidden;
 }
 </style>
