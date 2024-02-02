@@ -76,9 +76,9 @@ export default defineConfig(({ mode }) => {
           "**/{vite,vitest,postcss,lint-staged}.config.{js,cjs,mjs,ts}",
           "**/.{eslint,prettier,stylelint}rc.{js,cjs,yml}",
         ],
+        reporter: ["html", "text", "lcov"],
       },
       outputFile: {
-        // TODO: UIEXT-218: Add a bitbucket-pipelines.yml file similar to other repos
         junit: "test-results/junit.xml", // needed for Bitbucket Pipeline, see https://support.atlassian.com/bitbucket-cloud/docs/test-reporting-in-pipelines/
       },
     },
