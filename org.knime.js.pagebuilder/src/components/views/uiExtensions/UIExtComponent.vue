@@ -22,18 +22,16 @@ export default {
   },
   props: {
     resourceLocation: {
-      default: null,
       type: String,
       required: true,
     },
     resourceInfo: {
       type: Object as PropType<{ id: string }>,
-      default: () => {},
       required: true,
     },
     apiLayer: {
       type: Object as PropType<UIExtensionServiceAPILayer>,
-      default: () => {},
+      required: true,
     },
   },
   emits: {
@@ -68,9 +66,9 @@ export default {
   },
   methods: {
     initKnimeService() {
-      const service = setUpEmbedderService(this.apiLayer);
-      this.knimeService = markRaw(service.service);
-      this.$emit("serviceCreated", service);
+      const embedderService = setUpEmbedderService(this.apiLayer);
+      this.knimeService = markRaw(embedderService.service);
+      this.$emit("serviceCreated", embedderService);
     },
   },
 };

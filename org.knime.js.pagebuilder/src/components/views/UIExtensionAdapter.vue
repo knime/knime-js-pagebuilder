@@ -9,11 +9,11 @@ import UIExtension from "./uiExtensions/UIExtension.vue";
 import NotDisplayable from "./NotDisplayable.vue";
 import type { Alert } from "@knime/ui-extension-service";
 
-declare global {
+/* declare global {
   export interface Window {
     closeCEFWindow: (executeNode: boolean) => void;
   }
-}
+} */
 
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
@@ -68,7 +68,9 @@ export default {
   data() {
     return {
       configKey: 0,
-      knimeService: null,
+      /**
+       * This is used within the {@link layoutMixin}
+       */
       isWidget: false,
     };
   },
@@ -166,7 +168,6 @@ export default {
               reportingContent: `<img style="width:${elementWidth}px" src="${generatedImage}" />`,
             });
           } else if (generatedImageActionId) {
-            // @ts-expect-error
             window.EquoCommService.send(generatedImageActionId, generatedImage);
           }
         },
