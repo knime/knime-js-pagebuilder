@@ -323,7 +323,7 @@ describe("UIExtension.vue", () => {
         selection,
       });
       expect(callServiceMock).toHaveBeenCalledWith(expect.anything(), {
-        nodeService: "updateDataPointSelection",
+        nodeService: "NodeService.updateDataPointSelection",
         extensionConfig: extensionConfigParams,
         serviceRequest: mode,
         requestParams: selection,

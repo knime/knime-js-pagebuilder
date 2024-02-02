@@ -136,7 +136,7 @@ export default {
         },
         updateDataPointSelection: (params) => {
           return this.$store.dispatch("api/callService", {
-            nodeService: "updateDataPointSelection",
+            nodeService: "NodeService.updateDataPointSelection",
             extensionConfig: {
               projectId: params.projectId,
               workflowId: params.workflowId,
