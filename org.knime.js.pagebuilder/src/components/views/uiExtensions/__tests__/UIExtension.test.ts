@@ -58,6 +58,20 @@ describe("UIExtension.vue", () => {
     expect(wrapper.findComponent(UIExtComponent).exists()).toBeFalsy();
   });
 
+  it("increments key on UIExtIFrame component when a new extension config is passes in", async () => {
+    props.extensionConfig = iFrameExtensionConfig;
+    const wrapper = shallowMount(UIExtension, { props });
+    const uiExtIFrameEleInitial = wrapper.findComponent(UIExtIFrame).vm.$el;
+
+    const newExtensionConfig = { ...iFrameExtensionConfig };
+
+    await wrapper.setProps({ extensionConfig: newExtensionConfig });
+
+    expect(wrapper.findComponent(UIExtIFrame).vm.$el).not.toBe(
+      uiExtIFrameEleInitial,
+    );
+  });
+
   describe("registration of push event service", () => {
     const service = {
       dispatchPushEvent: () => {},

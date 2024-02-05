@@ -1,41 +1,66 @@
-import { expect, describe, afterEach, it, vi } from "vitest";
+import { expect, afterEach, vi, describe, it } from "vitest";
 import flushPromises from "flush-promises";
-import { defineComponent } from "vue";
-import { shallowMount, mount } from "@vue/test-utils";
-import * as loadingModule from "webapps-common/ui/util/loadComponentLibrary";
+import { shallowMount } from "@vue/test-utils";
 import UIExtComponent from "../UIExtComponent.vue";
 import { UIExtensionServiceAPILayer } from "@knime/ui-extension-service";
 import * as ExtensionServiceModule from "@knime/ui-extension-service";
+import { createApp, defineComponent } from "vue";
+
+const MockComponent = defineComponent({
+  name: "MockComp",
+  template: "<div class='mock' />",
+});
+
+const dynamicImportMock = vi.fn();
+
+vi.mock("../useDynamicImport", () => {
+  return {
+    useDynamicImport: () => ({
+      dynamicImport: dynamicImportMock.mockResolvedValue({
+        default: (shadowRoot: ShadowRoot) => {
+          const holder = document.createElement("div");
+          const app = createApp(MockComponent);
+          app.mount(holder);
+          shadowRoot.appendChild(holder);
+          return { teardown: () => {} };
+        },
+      }),
+    }),
+  };
+});
 
 describe("UIExtComponent.vue", () => {
   const resourceInfo = {
     id: "org.knime.base.views.scatterplot.ScatterPlotNodeFactory",
   };
   const resourceLocation = "http://localhost:8080/my_widget.html";
-  const apiLayer = {} as UIExtensionServiceAPILayer;
+  const apiLayer = {
+    getConfig: () => ({
+      initialData: null,
+    }),
+  } as UIExtensionServiceAPILayer;
   const context = {
     props: { resourceLocation, resourceInfo, apiLayer },
   };
-  const mockComponentId = resourceInfo.id;
-  const mockComponent = defineComponent({
-    name: mockComponentId,
-    template: "<div/>",
-  });
 
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  it("renders ui extensions as Vue components", () => {
-    window[mockComponentId] = mockComponent;
+  it("renders", async () => {
     const wrapper = shallowMount(UIExtComponent, context);
+    await flushPromises();
+
+    expect(dynamicImportMock).toHaveBeenCalledWith(resourceLocation);
     expect(wrapper.findComponent(UIExtComponent).exists()).toBeTruthy();
-    expect(wrapper.findComponent(mockComponent).exists()).toBeTruthy();
-    delete window[mockComponentId];
+    const loadContainer = wrapper.find(".ui-ext-component");
+    const mockComponent =
+      loadContainer.element.shadowRoot!.querySelector(".mock");
+    expect(mockComponent).not.toBeNull();
   });
 
-  it("creates, provides and emits embeder service", () => {
-    const mockedBaseService = {};
+  it("creates, provides and emits embedder service", () => {
+    const mockedBaseService = {} as ExtensionServiceModule.UIExtensionService;
     const mockedEmbedderService = {
       dispatchPushEvent: () => {},
       service: mockedBaseService,
@@ -48,22 +73,5 @@ describe("UIExtComponent.vue", () => {
     expect(wrapper.emitted("serviceCreated")![0][0]).toBe(
       mockedEmbedderService,
     );
-    expect(wrapper.vm.knimeService).toBe(mockedBaseService);
-  });
-
-  it("loads a component library", async () => {
-    const loadComponentSpy = vi
-      .spyOn(loadingModule, "loadAsyncComponent")
-      .mockReturnValue(mockComponent as any);
-    const wrapper = mount(UIExtComponent, context);
-    expect(loadComponentSpy).toHaveBeenCalledWith({
-      resourceLocation,
-      componentName: mockComponentId,
-    });
-    await flushPromises();
-    expect(wrapper.vm.$options.components?.[mockComponentId].name).toBe(
-      mockComponentId,
-    );
-    expect(wrapper.findComponent(mockComponent).exists()).toBeTruthy();
   });
 });

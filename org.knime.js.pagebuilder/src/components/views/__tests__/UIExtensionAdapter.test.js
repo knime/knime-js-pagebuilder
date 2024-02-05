@@ -117,21 +117,6 @@ describe("UIExtension.vue", () => {
     expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
   });
 
-  it("increments key on UIExtension component when a new extension config is passes in", async () => {
-    const wrapper = shallowMount(UIExtensionAdapter, context);
-    const uiExtIFrameEleInitial = wrapper.findComponent(UIExtension).vm.$el;
-
-    const newExtensionConfig = getTestExtensionConfig();
-    newExtensionConfig.resourceInfo.url =
-      "http://localhost:8080/your_iframe_widget.html";
-
-    await wrapper.setProps({ extensionConfig: newExtensionConfig });
-
-    expect(wrapper.findComponent(UIExtension).vm.$el).not.toBe(
-      uiExtIFrameEleInitial,
-    );
-  });
-
   const getAPILayer = (wrapper) => {
     return wrapper.findComponent(UIExtension).props().apiLayer;
   };

@@ -48,6 +48,7 @@ export default {
   },
   data() {
     return {
+      configKey: 0,
       alert: null as null | Alert,
       deregisterOldService: null as null | (() => void),
     };
@@ -68,6 +69,12 @@ export default {
         config: this.extensionConfig,
         setAlert,
       });
+    },
+  },
+  watch: {
+    extensionConfig() {
+      this.deregisterOldService?.();
+      this.configKey += 1; // needed to force a complete re-rendering
     },
   },
   beforeUnmount() {
@@ -117,12 +124,14 @@ export default {
 <template>
   <UIExtComponent
     v-if="isUIExtComponent"
+    :key="`comp_${configKey}`"
     :api-layer="serviceAPILayer"
     :resource-location="resourceLocation"
     @service-created="onServiceCreated"
   />
   <UIExtIFrame
     v-else
+    :key="`iframe_${configKey}`"
     :api-layer="serviceAPILayer"
     :resource-location="resourceLocation"
     @service-created="onServiceCreated"

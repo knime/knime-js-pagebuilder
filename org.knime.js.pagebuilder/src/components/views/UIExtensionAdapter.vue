@@ -67,7 +67,6 @@ export default {
   /* eslint-enable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars  */
   data() {
     return {
-      configKey: 0,
       /**
        * This is used within the {@link layoutMixin}
        */
@@ -222,11 +221,6 @@ export default {
       };
     },
   },
-  watch: {
-    extensionConfig() {
-      this.configKey += 1; // needed to force a complete re-rendering
-    },
-  },
   mounted() {
     if (this.isReportingButDoesNotSupportReporting) {
       this.$store.dispatch("pagebuilder/setReportingContent", {
@@ -241,7 +235,6 @@ export default {
   <NotDisplayable v-if="isReportingButDoesNotSupportReporting" not-supported />
   <div v-else :class="layoutClasses" :style="layoutStyle">
     <UIExtension
-      :key="configKey"
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
       :extension-config="extensionConfigWithDialogSettings"
