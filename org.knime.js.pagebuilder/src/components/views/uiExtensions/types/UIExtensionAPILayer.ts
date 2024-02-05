@@ -15,7 +15,7 @@ type UIExtensionAPILayer = Pick<
   | "close"
   | "setSettingsWithCleanModelSettings"
   | "setDirtyModelSettings"
-  | "setIsApplied"
+  | "onApplied"
 > & {
   sendAlert: (alert: Alert, closeAlert?: () => void) => void;
   /**

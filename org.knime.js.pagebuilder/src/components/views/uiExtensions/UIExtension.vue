@@ -74,7 +74,7 @@ export default {
       return toServiceAPILayer(this.apiLayer, {
         config: {
           ...toRaw(this.extensionConfig),
-          ...toRaw(this.settingsOnClean),
+          dialogSettings: toRaw(this.settingsOnClean),
         },
         setAlert,
       });

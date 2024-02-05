@@ -23,6 +23,7 @@ describe("UIExtension.vue", () => {
     apiLayer: UIExtensionAPILayer;
     extensionConfig: ExtensionConfig;
     resourceLocation: string;
+    settingsOnClean?: any;
     isReporting?: true;
     isDialogLayout?: true;
   };
@@ -99,6 +100,20 @@ describe("UIExtension.vue", () => {
       expect(deregisterPushEventService).not.toHaveBeenCalled();
       wrapper.unmount();
       expect(deregisterPushEventService).toHaveBeenCalled();
+    });
+  });
+
+  it("provides extensionConfig and dialogSettings in getConfig method in the apiLayer", () => {
+    const dialogSettings = { agent: "007" };
+    props.settingsOnClean = dialogSettings;
+    const wrapper = shallowMount(UIExtension, {
+      props,
+    });
+    const serviceApiLayer = wrapper.findComponent(UIExtComponent).props()
+      .apiLayer as UIExtensionServiceAPILayer;
+    expect(serviceApiLayer.getConfig()).toStrictEqual({
+      ...componentExtensionConfig,
+      dialogSettings,
     });
   });
 

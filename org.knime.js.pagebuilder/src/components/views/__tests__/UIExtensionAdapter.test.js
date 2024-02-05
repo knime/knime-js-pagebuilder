@@ -25,6 +25,7 @@ import {
   DataServiceType,
   SelectionModes,
 } from "@knime/ui-extension-service";
+import flushPromises from "flush-promises";
 
 describe("UIExtension.vue", () => {
   const getResourceLocation = ({ resourceInfo: { path, baseUrl } }) =>
@@ -36,6 +37,9 @@ describe("UIExtension.vue", () => {
     registerServiceMock = vi.fn(),
     deregisterServiceMock = vi.fn(),
     setReportingContentMock = vi.fn(),
+    setApplySettingsMock = vi.fn(),
+    dirtySettingsMock = vi.fn(),
+    cleanSettingsMock = vi.fn(),
     settingsOnClean = undefined,
     isReporting = false,
   }) => {
@@ -58,6 +62,12 @@ describe("UIExtension.vue", () => {
           state: {
             ...dialogStoreConfig.state,
             settingsOnClean,
+          },
+          actions: {
+            ...dialogStoreConfig.actions,
+            setApplySettings: setApplySettingsMock,
+            dirtySettings: dirtySettingsMock,
+            cleanSettings: cleanSettingsMock,
           },
         },
         "pagebuilder/service": {
@@ -179,6 +189,100 @@ describe("UIExtension.vue", () => {
       expect(wrapper.emitted("registerPushEventService")[0][0]).toBe(
         dispatchPushEvent,
       );
+    });
+  });
+
+  it("calls setApplyData for a node dialog and provides an asynchronous method waiting for a call to onApplied", async () => {
+    const setApplySettingsMock = vi.fn();
+    const dispatchPushEvent = vi.fn();
+    const wrapper = shallowMount(UIExtensionAdapter, {
+      global: {
+        mocks: {
+          $store: createPagebuilderStore({
+            setApplySettingsMock,
+          }),
+        },
+      },
+      props,
+    });
+
+    getAPILayer(wrapper).registerPushEventService({ dispatchPushEvent });
+    expect(setApplySettingsMock).not.toHaveBeenCalled();
+
+    await wrapper.setProps({ isNodeDialog: true });
+    getAPILayer(wrapper).registerPushEventService({ dispatchPushEvent });
+    expect(setApplySettingsMock).toHaveBeenCalled();
+
+    const { applySettings } = setApplySettingsMock.mock.calls[0][1];
+    const result = applySettings();
+    let isResolved = false;
+    result.then(() => {
+      isResolved = true;
+    });
+    expect(dispatchPushEvent).toHaveBeenCalledWith({ name: "ApplyDataEvent" });
+    await flushPromises();
+    expect(isResolved).toBeFalsy();
+    getAPILayer(wrapper).onApplied();
+    await flushPromises();
+    expect(isResolved).toBeTruthy();
+  });
+
+  describe("dirty/clean settings", () => {
+    it("sets dirty model settings", () => {
+      const dirtySettingsMock = vi.fn();
+      const wrapper = shallowMount(UIExtensionAdapter, {
+        global: {
+          mocks: {
+            $store: createPagebuilderStore({
+              dirtySettingsMock,
+            }),
+          },
+        },
+        props,
+      });
+
+      getAPILayer(wrapper).setDirtyModelSettings();
+
+      expect(dirtySettingsMock).toHaveBeenCalledWith(expect.anything(), true);
+    });
+
+    it("sets settings with clean model settings", () => {
+      const cleanSettingsMock = vi.fn();
+      const wrapper = shallowMount(UIExtensionAdapter, {
+        global: {
+          mocks: {
+            $store: createPagebuilderStore({
+              cleanSettingsMock,
+            }),
+          },
+        },
+        props,
+      });
+      const cleanSettings = { agent: "007" };
+
+      getAPILayer(wrapper).setSettingsWithCleanModelSettings(cleanSettings);
+
+      expect(cleanSettingsMock).toHaveBeenCalledWith(
+        expect.anything(),
+        cleanSettings,
+      );
+    });
+
+    it("supplies dialog data to the extensionConfig if they are present", () => {
+      const dialogSettings = { foo: "bar" };
+      const wrapper = shallowMount(UIExtensionAdapter, {
+        global: {
+          mocks: {
+            $store: createPagebuilderStore({
+              settingsOnClean: dialogSettings,
+            }),
+          },
+        },
+        props,
+      });
+      expect(
+        wrapper.findComponent(UIExtension).props().settingsOnClean,
+      ).toStrictEqual(dialogSettings);
     });
   });
 
@@ -382,23 +486,6 @@ describe("UIExtension.vue", () => {
       ).toBeTruthy();
       expect(setReportingContentMock).toHaveBeenCalledTimes(0);
     });
-  });
-
-  it("supplies dialog data to the extensionConfig if they are present", () => {
-    const dialogSettings = { foo: "bar" };
-    const wrapper = shallowMount(UIExtensionAdapter, {
-      global: {
-        mocks: {
-          $store: createPagebuilderStore({
-            settingsOnClean: dialogSettings,
-          }),
-        },
-      },
-      props,
-    });
-    expect(
-      wrapper.findComponent(UIExtension).props().extensionConfig,
-    ).toStrictEqual({ ...props.extensionConfig, dialogSettings });
   });
 
   describe("styling", () => {

@@ -175,7 +175,7 @@ export default {
             window.EquoCommService.send(generatedImageActionId, generatedImage);
           }
         },
-        setIsApplied: () => {
+        onApplied: () => {
           this.resolveApplyDataPromise?.();
         },
         registerPushEventService: ({ dispatchPushEvent }) => {
