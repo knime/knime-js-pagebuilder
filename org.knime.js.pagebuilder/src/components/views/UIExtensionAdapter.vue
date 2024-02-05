@@ -54,6 +54,10 @@ export default {
       default: () => ({}),
       type: Object,
     },
+    isNodeDialog: {
+      type: Boolean,
+      default: false,
+    },
   },
   /* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars  */
   emits: {
@@ -71,6 +75,7 @@ export default {
        * This is used within the {@link layoutMixin}
        */
       isWidget: false,
+      resolveApplyDataPromise: null as null | (() => void),
     };
   },
   computed: {
@@ -170,11 +175,28 @@ export default {
             window.EquoCommService.send(generatedImageActionId, generatedImage);
           }
         },
+        setIsApplied: () => {
+          this.resolveApplyDataPromise?.();
+        },
         registerPushEventService: ({ dispatchPushEvent }) => {
           const service = {
             onServiceEvent: dispatchPushEvent,
             serviceId: this.serviceId,
           };
+          if (this.isNodeDialog) {
+            this.$store.dispatch("pagebuilder/dialog/setApplySettings", {
+              applySettings: () => {
+                dispatchPushEvent<UIExtensionPushEvents.EventTypes.ApplyDataEvent>(
+                  {
+                    name: UIExtensionPushEvents.EventTypes.ApplyDataEvent,
+                  },
+                );
+                return new Promise<void>((resolve) => {
+                  this.resolveApplyDataPromise = resolve;
+                });
+              },
+            });
+          }
           this.$store.dispatch("pagebuilder/service/registerService", {
             service,
           });

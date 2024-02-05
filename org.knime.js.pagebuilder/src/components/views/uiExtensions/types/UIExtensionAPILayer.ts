@@ -13,13 +13,16 @@ type UIExtensionAPILayer = Pick<
   | "updateDataPointSelection"
   | "getResourceLocation"
   | "close"
+  | "setIsApplied"
 > & {
   sendAlert: (alert: Alert, closeAlert?: () => void) => void;
   /**
    * @returns the respective deregistration method
    */
   registerPushEventService: (service: {
-    dispatchPushEvent: (event: UIExtensionPushEvents.PushEvent<any>) => void;
+    dispatchPushEvent: <T extends UIExtensionPushEvents.Name>(
+      event: UIExtensionPushEvents.PushEvent<T>,
+    ) => void;
   }) => () => void;
 };
 
