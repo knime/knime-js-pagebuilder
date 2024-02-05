@@ -1,13 +1,13 @@
 <script lang="ts">
 import { mapState } from "vuex";
-import { toRaw, type PropType } from "vue";
+import { type PropType } from "vue";
 
 import layoutMixin from "../mixins/layoutMixin";
 import { type ExtensionConfig } from "./uiExtensions/types/ExtensionConfig";
 import type { UIExtensionAPILayer } from "./uiExtensions/types/UIExtensionAPILayer";
 import UIExtension from "./uiExtensions/UIExtension.vue";
 import NotDisplayable from "./NotDisplayable.vue";
-import type { Alert } from "@knime/ui-extension-service";
+import { UIExtensionPushEvents, type Alert } from "@knime/ui-extension-service";
 
 /* declare global {
   export interface Window {
@@ -234,12 +234,12 @@ export default {
         close(isMetaKeyPressed: boolean) {
           window.closeCEFWindow(isMetaKeyPressed);
         },
-      };
-    },
-    extensionConfigWithDialogSettings(): ExtensionConfig {
-      return {
-        ...toRaw(this.extensionConfig),
-        dialogSettings: toRaw(this.settingsOnClean),
+        setSettingsWithCleanModelSettings: (cleanData: any) => {
+          this.$store.dispatch("pagebuilder/dialog/cleanSettings", cleanData);
+        },
+        setDirtyModelSettings: () => {
+          this.$store.dispatch("pagebuilder/dialog/dirtySettings", true);
+        },
       };
     },
   },
@@ -259,7 +259,8 @@ export default {
     <UIExtension
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
-      :extension-config="extensionConfigWithDialogSettings"
+      :extension-config="extensionConfig"
+      :settings-on-clean="settingsOnClean"
       :is-reporting="isReporting"
       :is-dialog-layout="isDialogLayout"
     />

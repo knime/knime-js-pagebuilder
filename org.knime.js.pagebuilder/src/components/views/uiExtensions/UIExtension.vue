@@ -9,6 +9,7 @@ import {
   type UIExtensionPushEvents,
 } from "@knime/ui-extension-service";
 import type { PropType } from "vue";
+import { toRaw } from "vue";
 import type { UIExtensionAPILayer } from "./types/UIExtensionAPILayer";
 import type { ExtensionConfig } from "./types/ExtensionConfig";
 import { toServiceAPILayer } from "./toServiceAPILayer";
@@ -32,6 +33,11 @@ export default {
     extensionConfig: {
       required: true,
       type: Object as PropType<ExtensionConfig>,
+    },
+    settingsOnClean: {
+      type: Object,
+      required: false,
+      default: null,
     },
     resourceLocation: {
       required: true,
@@ -66,7 +72,10 @@ export default {
     serviceAPILayer() {
       const setAlert = this.handleAlert.bind(this);
       return toServiceAPILayer(this.apiLayer, {
-        config: this.extensionConfig,
+        config: {
+          ...toRaw(this.extensionConfig),
+          ...toRaw(this.settingsOnClean),
+        },
         setAlert,
       });
     },
