@@ -4,6 +4,7 @@ import type {
 } from "@knime/ui-extension-service";
 import type { UIExtensionAPILayer } from "./types/UIExtensionAPILayer";
 import type { ExtensionConfig } from "./types/ExtensionConfig";
+import { toRaw } from "vue";
 
 export const toServiceAPILayer = (
   apiLayer: UIExtensionAPILayer,
@@ -18,6 +19,8 @@ export const toServiceAPILayer = (
   return {
     ...apiLayer,
     sendAlert: setAlert,
-    getConfig: () => config,
+    getConfig: () => {
+      return toRaw(config); // TODO Move to UI ExtensionService
+    },
   };
 };
