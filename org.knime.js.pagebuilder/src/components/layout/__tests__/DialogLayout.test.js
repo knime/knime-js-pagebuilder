@@ -160,4 +160,22 @@ describe("DialogLayout.vue", () => {
     messagesWrapper.vm.$emit("dismiss");
     expect(closeSpy).toHaveBeenCalled();
   });
+
+  it("pipes data published by the dialog to the view", () => {
+    const wrapper = shallowMount(DialogLayout, context);
+    const dispatchPushEventToView = vi.fn();
+    wrapper
+      .find(".view")
+      .findComponent(NodeView)
+      .vm.$emit("registerPushEventService", dispatchPushEventToView);
+    const publishedData = { agent: "007" };
+    wrapper
+      .find(".dialog")
+      .findComponent(NodeView)
+      .vm.$emit("publishData", publishedData);
+    expect(dispatchPushEventToView).toHaveBeenCalledWith({
+      name: "DataEvent",
+      payload: publishedData,
+    });
+  });
 });
