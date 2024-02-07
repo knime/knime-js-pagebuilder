@@ -72,6 +72,7 @@ export default defineConfig(({ mode }) => {
           "test/assets/**",
           "**/*.d.ts",
           "src/**/__tests__/**",
+          "src/**/types/**",
           "src/dev/**",
           "**/{vite,vitest,postcss,lint-staged}.config.{js,cjs,mjs,ts}",
           "**/.{eslint,prettier,stylelint}rc.{js,cjs,yml}",
