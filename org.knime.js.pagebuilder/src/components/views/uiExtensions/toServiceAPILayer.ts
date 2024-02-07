@@ -20,7 +20,7 @@ export const toServiceAPILayer = (
     ...apiLayer,
     sendAlert: setAlert,
     getConfig: () => {
-      return toRaw(config); // TODO Move to UI ExtensionService
+      return toRaw(config);
     },
   };
 };

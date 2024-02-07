@@ -17,15 +17,13 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-interface Emits {
-  (
-    e: "serviceCreated",
+const emit = defineEmits<{
+  serviceCreated: [
     _service: {
       dispatchPushEvent: (event: UIExtensionPushEvents.PushEvent<any>) => void;
     },
-  ): true;
-}
-const emit = defineEmits<Emits>();
+  ];
+}>();
 
 const activeDynamicView = ref<{ teardown: () => void } | null>(null);
 const container = ref<HTMLElement | null>(null);

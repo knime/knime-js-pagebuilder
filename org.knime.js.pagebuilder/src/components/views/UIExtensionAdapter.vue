@@ -201,7 +201,7 @@ export default {
               /**
                * optionally if the local alert should be cleared.
                */
-              remove?: Boolean,
+              remove?: boolean,
             ) => {
               if (remove) {
                 closeAlert?.();

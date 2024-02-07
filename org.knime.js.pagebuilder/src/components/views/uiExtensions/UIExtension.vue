@@ -86,7 +86,7 @@ export default {
   methods: {
     showMessageFromNodeInfo(nodeInfo: ExtensionConfig["nodeInfo"]) {
       const alertMessage =
-        nodeInfo?.nodeErrorMessage || nodeInfo?.nodeWarnMessage;
+        nodeInfo?.nodeErrorMessage ?? nodeInfo?.nodeWarnMessage;
       if (alertMessage) {
         const isError = nodeInfo?.nodeErrorMessage;
         const nodeId = this.extensionConfig.nodeId;

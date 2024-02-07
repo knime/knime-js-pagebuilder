@@ -33,6 +33,7 @@ onMounted(() => {
 <template>
   <iframe
     ref="iframe"
+    title="UIExtension Iframe"
     :src="resourceLocation"
     sandbox="allow-downloads allow-scripts allow-same-origin"
   />
