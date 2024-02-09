@@ -3,9 +3,9 @@ import { mapState } from "vuex";
 import { type PropType } from "vue";
 
 import layoutMixin from "../mixins/layoutMixin";
-import { type ExtensionConfig } from "./uiExtensions/types/ExtensionConfig";
-import type { UIExtensionAPILayer } from "./uiExtensions/types/UIExtensionAPILayer";
-import UIExtension from "./uiExtensions/UIExtension.vue";
+import { type ExtensionConfig } from "webapps-common/ui/uiExtensions/types/ExtensionConfig";
+import type { UIExtensionAPILayer } from "webapps-common/ui/uiExtensions/types/UIExtensionAPILayer";
+import UIExtension from "webapps-common/ui/uiExtensions/UIExtension.vue";
 import NotDisplayable from "./NotDisplayable.vue";
 import { UIExtensionPushEvents, type Alert } from "@knime/ui-extension-service";
 
