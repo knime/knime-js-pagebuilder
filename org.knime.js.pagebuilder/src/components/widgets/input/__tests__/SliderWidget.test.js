@@ -170,10 +170,11 @@ describe("SliderWidget.vue", () => {
   it("sets height if slider is vertical", async () => {
     expect(wrapper.vm.height).toBe(533);
 
-    nodeConfig.viewRepresentation.sliderSettings.orientation = "horizontal";
+    const newNodeConfig = structuredClone(nodeConfig);
+    newNodeConfig.viewRepresentation.sliderSettings.orientation = "horizontal";
 
     await wrapper.setProps({
-      nodeConfig: { ...nodeConfig },
+      nodeConfig: newNodeConfig,
     });
 
     expect(wrapper.vm.height).toBeNull();
@@ -183,9 +184,11 @@ describe("SliderWidget.vue", () => {
     expect(typeof wrapper.vm.tooltipFormat[0]).toBe("function");
     expect(wrapper.vm.tooltipFormat[0](1.234)).toBe("$1.23_");
 
-    nodeConfig.viewRepresentation.sliderSettings.tooltips = [true];
+    const newNodeConfig = structuredClone(nodeConfig);
+    newNodeConfig.viewRepresentation.sliderSettings.tooltips = [true];
+
     await wrapper.setProps({
-      nodeConfig: { ...nodeConfig },
+      nodeConfig: newNodeConfig,
     });
 
     expect(typeof wrapper.vm.tooltipFormat[0]).toBe("function");
@@ -193,7 +196,8 @@ describe("SliderWidget.vue", () => {
   });
 
   it("properly disables tooltips for multiple handles", async () => {
-    nodeConfig.viewRepresentation.sliderSettings.tooltips = [
+    const newNodeConfig = structuredClone(nodeConfig);
+    newNodeConfig.viewRepresentation.sliderSettings.tooltips = [
       false,
       {
         prefix: "$",
@@ -205,8 +209,9 @@ describe("SliderWidget.vue", () => {
         negativeBefore: "-",
       },
     ];
+
     await wrapper.setProps({
-      nodeConfig: { ...nodeConfig },
+      nodeConfig: newNodeConfig,
     });
     expect(wrapper.vm.tooltips).toStrictEqual([
       { tooltip: "none" },
