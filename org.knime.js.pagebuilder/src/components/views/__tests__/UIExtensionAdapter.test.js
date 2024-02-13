@@ -15,7 +15,7 @@ import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
 import * as dialogStoreConfig from "@/store/dialog";
-import UIExtension from "webapps-common/ui/uiExtensions/UIExtension.vue";
+import { UIExtension } from "webapps-common/ui/uiExtensions";
 import UIExtensionAdapter from "../UIExtensionAdapter.vue";
 import NotDisplayable from "../NotDisplayable.vue";
 import { getTestExtensionConfig } from "./configs/extensionConfig";

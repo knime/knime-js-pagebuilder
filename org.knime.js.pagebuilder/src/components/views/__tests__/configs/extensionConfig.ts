@@ -1,6 +1,8 @@
 import { ExtensionTypes } from "@knime/ui-extension-service";
-import { ExtensionConfig } from "webapps-common/ui/uiExtensions/types/ExtensionConfig";
-import { ResourceTypes } from "webapps-common/ui/uiExtensions/types/ResourceTypes";
+import {
+  type ExtensionConfig,
+  ResourceTypes,
+} from "webapps-common/ui/uiExtensions";
 
 export const getTestExtensionConfig: () => ExtensionConfig & {
   resourceInfo: { baseUrl: string };
