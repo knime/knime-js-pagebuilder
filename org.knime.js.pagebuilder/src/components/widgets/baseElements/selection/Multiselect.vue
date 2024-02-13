@@ -172,14 +172,14 @@ export default {
       v-if="isComboBox"
       :id="id"
       ref="form"
-      :initial-selected-ids="modelValue"
+      :model-value="modelValue"
       :size-visible-options="maxVisibleListEntries"
       :aria-label="label"
       :possible-values="possibleValues"
       :close-dropdown-on-selection="isReExecutionWidget"
       :is-valid="isValid"
       :title="description"
-      @update:selected-ids="onChange"
+      @update:model-value="onChange"
     />
   </div>
 </template>
