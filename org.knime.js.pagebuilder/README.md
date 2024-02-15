@@ -75,7 +75,7 @@ When committing your changes, a couple of commit hooks will run via [husky].
 
 #### Running unit tests
 
-This project contains unit tests written with [jest].
+This project contains unit tests written with [vitest].
 They are run with
 
 ```sh
@@ -199,7 +199,7 @@ Sets the current page object required to render a page.
 
 ###### Parameters:
 
-- `{ page }`  
+- `{ page }`
   Page configuration as provided by the Gateway API
 
 ###### Example:
@@ -233,7 +233,7 @@ resource paths of the JS views’ `javascriptLibraries` and `stylesheets` items.
 
 ###### Parameters:
 
-- `{ resourceBaseUrl }`  
+- `{ resourceBaseUrl }`
   Should be an absolute URL.
 
 ###### Example:
@@ -266,7 +266,7 @@ let viewValues = await this.$store.dispatch("pagebuilder/getViewValues");
 [Vue]: https://vuejs.org/
 [node]: https://knime-com.atlassian.net/wiki/spaces/SPECS/pages/905281540/Node.js+Installation
 [Vue library]: https://vitejs.dev/guide/build.html#library-mode
-[jest]: https://jestjs.io/en
+[vite]: https://vitest.dev/
 [LCOV]: https://github.com/linux-test-project/lcov
 [Clover]: http://openclover.org/
 [husky]: https://www.npmjs.com/package/husky

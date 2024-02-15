@@ -1,5 +1,10 @@
+import getHTML from "./getHTML";
+
 const generateReportLayout = (reportingContent) => {
-  const layout = document.querySelector("#knime-layout").cloneNode(true);
+  // we can't clone this as we would loose the shadow roots
+  const layout = document.querySelector("#knime-layout");
+
+  // replace provided content from the ui extension (e.g. an image)
   layout.querySelectorAll(".reporting-replaceable").forEach((entry) => {
     const nodeId = entry.getAttribute("node-id");
     if (reportingContent[nodeId]) {
@@ -9,15 +14,24 @@ const generateReportLayout = (reportingContent) => {
       );
     }
   });
-  let report = "";
+
+  // global styles
+  const styleSheets = [];
   for (const sheet of document.styleSheets) {
-    report += "<style>";
+    let style = "<style>";
     for (const rule of sheet.cssRules) {
-      report += rule.cssText;
+      style += rule.cssText;
     }
-    report += "</style>\n";
+    style += "</style>";
+    styleSheets.push(style);
   }
-  report += layout.outerHTML;
+
+  const report =
+    styleSheets.join("\n") +
+    getHTML(layout.parentElement, {
+      includeShadowRoots: true,
+    });
+
   return report;
 };
 
