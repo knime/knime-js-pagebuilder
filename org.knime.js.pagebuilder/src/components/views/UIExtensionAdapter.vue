@@ -83,8 +83,8 @@ export default {
   computed: {
     ...mapState("pagebuilder", ["page", "isDialogLayout", "isReporting"]),
     ...mapState("pagebuilder/dialog", ["settingsOnClean"]),
-    isUIExtComponent() {
-      return this.extensionConfig?.resourceInfo?.type === "VUE_COMPONENT_LIB";
+    isUIExtShadowApp() {
+      return this.extensionConfig?.resourceInfo?.type === "SHADOW_APP";
     },
     resourceLocation() {
       return this.$store.getters["api/uiExtResourceLocation"]({
@@ -163,7 +163,7 @@ export default {
         },
         imageGenerated: (generatedImage) => {
           const isReportingForIframeComponent =
-            this.isReporting && !this.isUIExtComponent;
+            this.isReporting && !this.isUIExtShadowApp;
 
           const generatedImageActionId =
             this.extensionConfig?.generatedImageActionId;

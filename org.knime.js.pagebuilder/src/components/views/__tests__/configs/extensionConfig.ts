@@ -19,7 +19,7 @@ export const getTestExtensionConfig: () => ExtensionConfig & {
   hasNodeView: false,
   resourceInfo: {
     id: "org.knime.base.views.scatterplot.ScatterPlotNodeFactory",
-    type: ResourceTypes.VUE_COMPONENT_LIB,
+    type: ResourceTypes.SHADOW_APP,
     url: "http://localhost:8080/my_widget.html",
     baseUrl: "myBaseUrl",
   },

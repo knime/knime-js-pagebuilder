@@ -5,7 +5,7 @@ export const componentExtensionConfig = {
   extensionType: "view",
   resourceInfo: {
     id: "org.knime.base.views.scatterplot.ScatterPlotNodeFactory",
-    type: "VUE_COMPONENT_LIB",
+    type: "SHADOW_APP",
     path: null,
     url: "http://localhost:8080/my_widget.html",
   },
