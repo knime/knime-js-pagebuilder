@@ -147,8 +147,8 @@ export default {
         progressCallback: this.setUploadProgress,
         context: this,
       });
-      this.uploading = false;
       if (errorResponse) {
+        this.uploading = false;
         this.uploadErrorMessage = errorResponse.cancelled
           ? "Upload cancelled."
           : "Upload failed.";
@@ -164,13 +164,11 @@ export default {
           "viewRepresentation.currentValue.fileName": this.localFileName,
         },
       });
+      this.uploading = false;
       return null;
     },
     setUploadProgress(progress) {
       this.uploadProgress = progress;
-      if (progress === 100) {
-        this.uploading = false;
-      }
     },
     validate() {
       let isValid = true;
@@ -233,7 +231,7 @@ export default {
           {{ fileName || "No file selected."
           }}<!--
           -->{{ fileSize ? ` (${fileSize.value} ${fileSize.symbol})` : "" }}
-          <CircleCheckIcon v-if="uploadProgress === 100" />
+          <CircleCheckIcon v-if="uploadProgress === 100 && !uploading" />
         </p>
       </div>
       <input
