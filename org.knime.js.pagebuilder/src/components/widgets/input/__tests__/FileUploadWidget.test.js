@@ -6,11 +6,12 @@ import FileUploadWidget from "@/components/widgets/input/FileUploadWidget.vue";
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
 import sleep from "webapps-common/util/sleep";
 
-const uploadResourceMock = vi
-  .fn()
-  .mockReturnValue(() =>
-    Promise.resolve({ errorResponse: false, response: {} }),
-  );
+const uploadResourceMock = vi.fn().mockReturnValue(
+  () =>
+    new Promise((resolve) => {
+      setTimeout(() => resolve({ errorResponse: false, response: {} }), 1000);
+    }),
+);
 const cancelUploadResourceMock = vi.fn().mockReturnValue(() => {});
 const file = { size: 1000, type: "image/png", name: "avatar.png" };
 const event = {
@@ -36,6 +37,8 @@ describe("FileUploadWidget.vue", () => {
         api: storeConfig,
       },
     });
+
+    delete window.KnimePageLoader;
 
     props = {
       nodeConfig: {
@@ -116,14 +119,18 @@ describe("FileUploadWidget.vue", () => {
   });
 
   it("uploads file correctly", async () => {
+    vi.useFakeTimers();
     let wrapper = mount(FileUploadWidget, {
       global: { mocks: { $store: store } },
       props,
     });
 
     expect(wrapper.vm.$data.localFileName).toBeNull();
+    expect(wrapper.vm.uploading).toBe(false);
     wrapper.vm.onChange(event);
+    expect(wrapper.vm.uploading).toBe(true);
     await wrapper.vm.$nextTick();
+    expect(wrapper.vm.uploading).toBe(true);
     expect(wrapper.vm.$data.localFileName).toBe("avatar.png");
     expect(wrapper.find(".show-bar").exists()).toBe(true);
     expect(wrapper.find(".upload-wrapper p svg").exists()).toBe(false);
@@ -135,10 +142,15 @@ describe("FileUploadWidget.vue", () => {
       "width: 2%;",
     );
     wrapper.vm.setUploadProgress(100);
+    expect(wrapper.vm.uploading).toBe(true);
+    await vi.runAllTimersAsync();
     await wrapper.vm.$nextTick();
+    expect(wrapper.vm.uploading).toBe(false);
     expect(wrapper.find(".show-bar").exists()).toBe(false);
     expect(wrapper.find(".upload-wrapper p svg").exists()).toBe(true);
     expect(wrapper.find(".upload-wrapper button").text()).toBe("Select file");
+
+    vi.useRealTimers();
   });
 
   it("keeps current file in case upload gets canceled", () => {
