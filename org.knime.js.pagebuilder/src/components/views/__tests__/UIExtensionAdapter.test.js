@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import {
   expect,
   describe,
@@ -15,7 +16,7 @@ import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
 import * as dialogStoreConfig from "@/store/dialog";
-import { UIExtension } from "webapps-common/ui/uiExtensions";
+import { UIExtension, DialogControls } from "webapps-common/ui/uiExtensions";
 import UIExtensionAdapter from "../UIExtensionAdapter.vue";
 import NotDisplayable from "../NotDisplayable.vue";
 import { getTestExtensionConfig } from "./configs/extensionConfig";
@@ -26,6 +27,14 @@ import {
   SelectionModes,
 } from "@knime/ui-extension-service";
 import flushPromises from "flush-promises";
+
+const metaOrCtrlKey = "metaKey";
+
+vi.mock("webapps-common/util/navigator", () => {
+  return {
+    getMetaOrCtrlKey: () => metaOrCtrlKey,
+  };
+});
 
 describe("UIExtension.vue", () => {
   const getResourceLocation = ({ resourceInfo: { path, baseUrl } }) =>
@@ -38,6 +47,7 @@ describe("UIExtension.vue", () => {
     deregisterServiceMock = vi.fn(),
     setReportingContentMock = vi.fn(),
     setApplySettingsMock = vi.fn(),
+    callApplySettingsMock = vi.fn(),
     dirtySettingsMock = vi.fn(),
     cleanSettingsMock = vi.fn(),
     settingsOnClean = undefined,
@@ -66,6 +76,7 @@ describe("UIExtension.vue", () => {
           actions: {
             ...dialogStoreConfig.actions,
             setApplySettings: setApplySettingsMock,
+            callApplySettings: callApplySettingsMock,
             dirtySettings: dirtySettingsMock,
             cleanSettings: cleanSettingsMock,
           },
@@ -103,19 +114,27 @@ describe("UIExtension.vue", () => {
 
   let context, props;
 
+  const createContext = ({ store, props }) => ({
+    props,
+    global: {
+      mocks: {
+        $store: store,
+      },
+      provide: {
+        store,
+      },
+    },
+  });
+
   beforeAll(() => {
     props = { extensionConfig: getTestExtensionConfig(), viewConfig };
-    context = {
+    context = createContext({
       props,
-      global: {
-        mocks: {
-          $store: createPagebuilderStore({
-            callServiceMock: vi.fn(),
-            registerServiceMock: vi.fn(),
-          }),
-        },
-      },
-    };
+      store: createPagebuilderStore({
+        callServiceMock: vi.fn(),
+        registerServiceMock: vi.fn(),
+      }),
+    });
   });
 
   afterEach(() => {
@@ -142,17 +161,16 @@ describe("UIExtension.vue", () => {
     beforeEach(() => {
       registerServiceMock = vi.fn();
       deregisterServiceMock = vi.fn();
-      wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: createPagebuilderStore({
-              registerServiceMock,
-              deregisterServiceMock,
-            }),
-          },
-        },
-        props,
-      });
+      wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store: createPagebuilderStore({
+            registerServiceMock,
+            deregisterServiceMock,
+          }),
+          props,
+        }),
+      );
       apiLayer = getAPILayer(wrapper);
     });
 
@@ -195,16 +213,16 @@ describe("UIExtension.vue", () => {
   it("calls setApplyData for a node dialog and provides an asynchronous method waiting for a call to onApplied", async () => {
     const setApplySettingsMock = vi.fn();
     const dispatchPushEvent = vi.fn();
-    const wrapper = shallowMount(UIExtensionAdapter, {
-      global: {
-        mocks: {
-          $store: createPagebuilderStore({
-            setApplySettingsMock,
-          }),
-        },
-      },
-      props,
-    });
+    const wrapper = shallowMount(
+      UIExtensionAdapter,
+      createContext({
+        store: createPagebuilderStore({
+          setApplySettingsMock,
+        }),
+
+        props,
+      }),
+    );
 
     getAPILayer(wrapper).registerPushEventService({ dispatchPushEvent });
     expect(setApplySettingsMock).not.toHaveBeenCalled();
@@ -230,16 +248,15 @@ describe("UIExtension.vue", () => {
   describe("dirty/clean settings", () => {
     it("sets dirty model settings", () => {
       const dirtySettingsMock = vi.fn();
-      const wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: createPagebuilderStore({
-              dirtySettingsMock,
-            }),
-          },
-        },
-        props,
-      });
+      const wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store: createPagebuilderStore({
+            dirtySettingsMock,
+          }),
+          props,
+        }),
+      );
 
       getAPILayer(wrapper).setDirtyModelSettings();
 
@@ -248,16 +265,15 @@ describe("UIExtension.vue", () => {
 
     it("sets settings with clean model settings", () => {
       const cleanSettingsMock = vi.fn();
-      const wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: createPagebuilderStore({
-              cleanSettingsMock,
-            }),
-          },
-        },
-        props,
-      });
+      const wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store: createPagebuilderStore({
+            cleanSettingsMock,
+          }),
+          props,
+        }),
+      );
       const cleanSettings = { agent: "007" };
 
       getAPILayer(wrapper).setSettingsWithCleanModelSettings(cleanSettings);
@@ -270,16 +286,15 @@ describe("UIExtension.vue", () => {
 
     it("supplies dialog data to the extensionConfig if they are present", () => {
       const dialogSettings = { foo: "bar" };
-      const wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: createPagebuilderStore({
-              settingsOnClean: dialogSettings,
-            }),
-          },
-        },
-        props,
-      });
+      const wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store: createPagebuilderStore({
+            settingsOnClean: dialogSettings,
+          }),
+          props,
+        }),
+      );
       expect(
         wrapper.findComponent(UIExtension).props().settingsOnClean,
       ).toStrictEqual(dialogSettings);
@@ -357,14 +372,14 @@ describe("UIExtension.vue", () => {
 
     beforeEach(() => {
       callServiceMock = vi.fn();
-      const wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: createPagebuilderStore({ callServiceMock }),
-          },
-        },
-        props,
-      });
+      const wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store: createPagebuilderStore({ callServiceMock }),
+
+          props,
+        }),
+      );
 
       callServiceMock.mockResolvedValue(mockData);
 
@@ -426,14 +441,14 @@ describe("UIExtension.vue", () => {
 
     beforeEach(() => {
       setReportingContentMock = vi.fn();
-      wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: createPagebuilderStore({ setReportingContentMock }),
-          },
-        },
-        props,
-      });
+      wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store: createPagebuilderStore({ setReportingContentMock }),
+
+          props,
+        }),
+      );
     });
 
     it("sets reporting content via apiLayer", () => {
@@ -447,17 +462,16 @@ describe("UIExtension.vue", () => {
 
     it("shows a 'not supported' label if a report is rendered but the ui-extension doesn't support it", () => {
       props.extensionConfig.generatedImageActionId = null;
-      const wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: createPagebuilderStore({
-              isReporting: true,
-              setReportingContentMock,
-            }),
-          },
-        },
-        props,
-      });
+      const wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store: createPagebuilderStore({
+            isReporting: true,
+            setReportingContentMock,
+          }),
+          props,
+        }),
+      );
 
       expect(wrapper.findComponent(NotDisplayable).exists()).toBeTruthy();
       expect(wrapper.findComponent(UIExtension).exists()).toBeFalsy();
@@ -468,17 +482,16 @@ describe("UIExtension.vue", () => {
 
     it("renders the ui-extension if a report is rendered and the ui-extension supports it", () => {
       props.extensionConfig.generatedImageActionId = "blub";
-      const wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: createPagebuilderStore({
-              isReporting: true,
-              setReportingContentMock,
-            }),
-          },
-        },
-        props,
-      });
+      const wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store: createPagebuilderStore({
+            isReporting: true,
+            setReportingContentMock,
+          }),
+          props,
+        }),
+      );
 
       expect(wrapper.findComponent(NotDisplayable).exists()).toBeFalsy();
       expect(
@@ -492,10 +505,14 @@ describe("UIExtension.vue", () => {
     it("respects resize classes", () => {
       viewConfig.resizeMethod = "aspectRatio1by1";
       let wrapper = shallowMount(UIExtensionAdapter, context);
-      expect(wrapper.find("div").attributes("class")).toBe("aspectRatio1by1");
+      expect(wrapper.find("div").attributes("class")).toContain(
+        "aspectRatio1by1",
+      );
       viewConfig.resizeMethod = "aspectRatio16by9";
       wrapper = shallowMount(UIExtensionAdapter, context);
-      expect(wrapper.find("div").attributes("class")).toBe("aspectRatio16by9");
+      expect(wrapper.find("div").attributes("class")).toContain(
+        "aspectRatio16by9",
+      );
     });
 
     it("renders with classes and styles", () => {
@@ -510,7 +527,9 @@ describe("UIExtension.vue", () => {
           },
         },
       });
-      expect(wrapper.attributes("class")).toBe("aspectRatio1by1 class1 class2");
+      expect(wrapper.attributes("class")).toContain(
+        "aspectRatio1by1 class1 class2",
+      );
       expect(wrapper.attributes("style")).toBe(
         "color: red; border: 1px solid green;",
       );
@@ -532,11 +551,118 @@ describe("UIExtension.vue", () => {
           },
         },
       });
-      expect(wrapper.attributes("class")).toBe("fill-container class1 class2");
+      expect(wrapper.attributes("class")).toContain(
+        "fill-container class1 class2",
+      );
       expect(wrapper.attributes("style")).toEqual(
         "color: red; border: 1px solid green; max-height: 200px;" +
           " max-width: 200px; min-height: 100px; min-width: 100px;",
       );
+    });
+  });
+
+  describe("apply + close", () => {
+    let wrapper, applyDataSpy, closeSpy, keyElement;
+
+    beforeEach(() => {
+      closeSpy = vi.fn();
+      applyDataSpy = vi.fn();
+      props.isNodeDialog = true;
+      const store = createPagebuilderStore({
+        callApplySettingsMock: applyDataSpy,
+      });
+      wrapper = shallowMount(UIExtensionAdapter, {
+        global: {
+          mocks: {
+            $store: store,
+          },
+          provide: {
+            store,
+          },
+        },
+        props,
+      });
+      window.closeCEFWindow = closeSpy;
+      keyElement = wrapper.find("div");
+    });
+
+    it("renders DialogControls", () => {
+      expect(wrapper.findComponent(DialogControls).exists()).toBeTruthy();
+    });
+
+    it("triggers close on DialogControls cancel", async () => {
+      await wrapper.findComponent(DialogControls).vm.$emit("cancel");
+      expect(closeSpy).toHaveBeenCalled();
+    });
+
+    it("triggers apply and close on DialogControls ok", async () => {
+      await wrapper.findComponent(DialogControls).vm.$emit("ok");
+      expect(applyDataSpy).toHaveBeenCalled();
+      await flushPromises();
+      expect(closeSpy).toHaveBeenCalled();
+    });
+
+    it("triggers close on escape", async () => {
+      await keyElement.trigger("keydown", { key: "Escape" });
+      expect(closeSpy).toHaveBeenCalledWith(false);
+    });
+
+    it("provides isMetaOrCtrlKeyPressed to DialogControls", async () => {
+      await keyElement.trigger("keydown", { [metaOrCtrlKey]: true });
+      expect(
+        wrapper.findComponent(DialogControls).props().isMetaKeyPressed,
+      ).toBe(true);
+    });
+
+    it("executes node when metaOrCtrlKey is pressed on close", async () => {
+      await keyElement.trigger("keydown", { [metaOrCtrlKey]: true });
+
+      wrapper.vm.close();
+
+      expect(closeSpy).toHaveBeenCalledWith(true);
+    });
+
+    it("does not executes node when metaOrCtrlKey was pressed and released again on closeDialog", async () => {
+      await keyElement.trigger("keydown", { [metaOrCtrlKey]: true });
+      await keyElement.trigger("keyup", { [metaOrCtrlKey]: false });
+
+      wrapper.vm.close();
+
+      expect(closeSpy).toHaveBeenCalledWith(false);
+    });
+
+    it("triggers on window keyboard event with body as target", () => {
+      const event = new Event("keydown");
+      event.key = "Escape";
+      event[metaOrCtrlKey] = false;
+      Object.defineProperty(event, "target", { value: document.body });
+      window.dispatchEvent(event);
+      expect(closeSpy).toHaveBeenCalledWith(false);
+    });
+
+    it("does not trigger on window keyboard event if target is not body", () => {
+      const event = new Event("keydown");
+      event.key = "Escape";
+      event[metaOrCtrlKey] = false;
+      Object.defineProperty(event, "target", { value: "not-the-body" });
+      window.dispatchEvent(event);
+      expect(closeSpy).not.toHaveBeenCalled();
+    });
+
+    it("triggers apply + close on enter", async () => {
+      await keyElement.trigger("keydown", { key: "Enter" });
+      expect(applyDataSpy).toHaveBeenCalled();
+      await flushPromises();
+      expect(closeSpy).toHaveBeenCalledWith(false);
+    });
+
+    it("triggers apply + close + execute on metaOrCtrlKey + enter", async () => {
+      await keyElement.trigger("keydown", {
+        key: "Enter",
+        [metaOrCtrlKey]: true,
+      });
+      expect(applyDataSpy).toHaveBeenCalled();
+      expect(closeSpy).toHaveBeenCalledWith(true);
     });
   });
 });

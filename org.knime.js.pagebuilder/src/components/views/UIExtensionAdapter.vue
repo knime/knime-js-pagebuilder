@@ -5,17 +5,13 @@ import { type PropType } from "vue";
 import layoutMixin from "../mixins/layoutMixin";
 import {
   UIExtension,
+  DialogControls,
   type ExtensionConfig,
   type UIExtensionAPILayer,
 } from "webapps-common/ui/uiExtensions";
 import NotDisplayable from "./NotDisplayable.vue";
 import { UIExtensionPushEvents, type Alert } from "@knime/ui-extension-service";
-
-/* declare global {
-  export interface Window {
-    closeCEFWindow: (executeNode: boolean) => void;
-  }
-} */
+import useCloseAndApplyHandling from "./useCloseAndApplyHandling";
 
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
@@ -26,6 +22,7 @@ export default {
   components: {
     UIExtension,
     NotDisplayable,
+    DialogControls,
   },
   mixins: [layoutMixin],
   props: {
@@ -69,6 +66,9 @@ export default {
         UIExtensionAPILayer["registerPushEventService"]
       >[0]["dispatchPushEvent"],
     ) => true,
+  },
+  setup() {
+    return useCloseAndApplyHandling();
   },
   /* eslint-enable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars  */
   data() {
@@ -257,7 +257,14 @@ export default {
 
 <template>
   <NotDisplayable v-if="isReportingButDoesNotSupportReporting" not-supported />
-  <div v-else :class="layoutClasses" :style="layoutStyle">
+  <div
+    v-else
+    :tabindex="-1"
+    :class="['ui-ext-adapter', ...layoutClasses]"
+    :style="layoutStyle"
+    @keydown="isNodeDialog && onKeyDown($event)"
+    @keyup="isNodeDialog && onKeyUp($event)"
+  >
     <UIExtension
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
@@ -266,9 +273,21 @@ export default {
       :is-reporting="isReporting"
       :is-dialog-layout="isDialogLayout"
     />
+    <DialogControls
+      v-if="isNodeDialog"
+      :is-write-protected="extensionConfig.writeProtected"
+      :is-meta-key-pressed="isMetaKeyPressed"
+      @ok="applyAndClose"
+      @cancel="close"
+    />
   </div>
 </template>
 
 <style lang="postcss" scoped>
 @import url("../mixins/layoutMixin.css");
+
+.ui-ext-adapter {
+  display: flex;
+  flex-direction: column;
+}
 </style>
