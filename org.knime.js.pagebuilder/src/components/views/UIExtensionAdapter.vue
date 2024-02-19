@@ -68,7 +68,15 @@ export default {
     ) => true,
   },
   setup() {
-    return useCloseAndApplyHandling();
+    const { applyAndClose, close, isMetaKeyPressed, onKeyDown, onKeyUp } =
+      useCloseAndApplyHandling();
+    return {
+      applyAndClose,
+      close,
+      isMetaKeyPressed,
+      onKeyDown,
+      onKeyUp,
+    };
   },
   /* eslint-enable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars  */
   data() {
