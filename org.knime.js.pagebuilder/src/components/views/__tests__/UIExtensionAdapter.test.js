@@ -571,17 +571,13 @@ describe("UIExtension.vue", () => {
       const store = createPagebuilderStore({
         callApplySettingsMock: applyDataSpy,
       });
-      wrapper = shallowMount(UIExtensionAdapter, {
-        global: {
-          mocks: {
-            $store: store,
-          },
-          provide: {
-            store,
-          },
-        },
-        props,
-      });
+      wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          store,
+          props,
+        }),
+      );
       window.closeCEFWindow = closeSpy;
       keyElement = wrapper.find("div");
     });

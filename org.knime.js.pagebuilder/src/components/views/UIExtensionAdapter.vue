@@ -233,9 +233,6 @@ export default {
             },
           });
         },
-        close(isMetaKeyPressed: boolean) {
-          window.closeCEFWindow(isMetaKeyPressed);
-        },
         setSettingsWithCleanModelSettings: (cleanData: any) => {
           this.$store.dispatch("pagebuilder/dialog/cleanSettings", cleanData);
         },
