@@ -85,7 +85,9 @@ export default {
        * This is used within the {@link layoutMixin}
        */
       isWidget: false,
-      resolveApplyDataPromise: null as null | (() => void),
+      resolveApplyDataPromise: null as
+        | null
+        | ((payload: { isApplied: boolean }) => void),
     };
   },
   computed: {
@@ -185,8 +187,8 @@ export default {
             window.EquoCommService.send(generatedImageActionId, generatedImage);
           }
         },
-        onApplied: () => {
-          this.resolveApplyDataPromise?.();
+        onApplied: (payload) => {
+          this.resolveApplyDataPromise?.(payload);
         },
         registerPushEventService: ({ dispatchPushEvent }) => {
           const service = {
@@ -201,7 +203,7 @@ export default {
                     name: UIExtensionPushEvents.EventTypes.ApplyDataEvent,
                   },
                 );
-                return new Promise<void>((resolve) => {
+                return new Promise<{ isApplied: boolean }>((resolve) => {
                   this.resolveApplyDataPromise = resolve;
                 });
               },

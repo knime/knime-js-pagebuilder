@@ -562,11 +562,14 @@ describe("UIExtension.vue", () => {
   });
 
   describe("apply + close", () => {
-    let wrapper, applyDataSpy, closeSpy, keyElement;
+    let wrapper, applyDataSpy, isApplied, closeSpy, keyElement;
 
     beforeEach(() => {
       closeSpy = vi.fn();
-      applyDataSpy = vi.fn();
+      isApplied = true;
+      applyDataSpy = vi
+        .fn()
+        .mockImplementation(() => Promise.resolve({ isApplied }));
       props.isNodeDialog = true;
       const store = createPagebuilderStore({
         callApplySettingsMock: applyDataSpy,
@@ -658,6 +661,7 @@ describe("UIExtension.vue", () => {
         [metaOrCtrlKey]: true,
       });
       expect(applyDataSpy).toHaveBeenCalled();
+      await flushPromises();
       expect(closeSpy).toHaveBeenCalledWith(true);
     });
   });

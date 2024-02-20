@@ -70,10 +70,17 @@ describe("ViewExecutable.vue", () => {
     const getMockComponentProps = () => ({
       extensionConfig: { ...componentExtensionConfig },
     });
-    let context, applySettingsMock, changeNodeStatesMock, showAlertMock;
+    let context,
+      applySettingsMock,
+      isApplied,
+      changeNodeStatesMock,
+      showAlertMock;
 
     beforeAll(() => {
-      applySettingsMock = vi.fn();
+      isApplied = true;
+      applySettingsMock = vi
+        .fn()
+        .mockImplementation(() => Promise.resolve({ isApplied }));
       changeNodeStatesMock = vi.fn();
       showAlertMock = vi.fn();
 
@@ -141,6 +148,17 @@ describe("ViewExecutable.vue", () => {
       });
       await wrapper.vm.executeViewSaveSettings();
       expect(changeNodeStatesMock).toHaveBeenCalled();
+    });
+
+    it("does not dispatch the changeNodeState call to the api store if applying failed", async () => {
+      let props = getMockComponentProps();
+      let wrapper = shallowMount(ViewExecutable, {
+        ...context,
+        props,
+      });
+      isApplied = false;
+      await wrapper.vm.executeViewSaveSettings();
+      expect(changeNodeStatesMock).not.toHaveBeenCalled();
     });
 
     it("save & Execute button is disabled if node cannot be executed", () => {

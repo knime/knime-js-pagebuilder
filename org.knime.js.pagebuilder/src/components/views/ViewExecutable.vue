@@ -57,11 +57,15 @@ export default {
   },
   methods: {
     async executeViewSaveSettings() {
-      await this.$store.dispatch("pagebuilder/dialog/callApplySettings");
-      await this.$store.dispatch("api/changeNodeStates", {
-        extensionConfig: this.extensionConfig,
-        action: "execute",
-      });
+      const { isApplied } = await this.$store.dispatch(
+        "pagebuilder/dialog/callApplySettings",
+      );
+      if (isApplied) {
+        await this.$store.dispatch("api/changeNodeStates", {
+          extensionConfig: this.extensionConfig,
+          action: "execute",
+        });
+      }
     },
     showAlert() {
       const nodeInfo = this.extensionConfig.nodeInfo;

@@ -14,8 +14,12 @@ export default () => {
   const close = () => window.closeCEFWindow(isMetaKeyPressed.value);
   const store = useStore();
   const applyAndClose = async () => {
-    await store.dispatch("pagebuilder/dialog/callApplySettings");
-    close();
+    const { isApplied } = await store.dispatch(
+      "pagebuilder/dialog/callApplySettings",
+    );
+    if (isApplied) {
+      close();
+    }
   };
   const onKeyDown = (e: KeyboardEvent) => {
     isMetaKeyPressed.value = e[getMetaOrCtrlKey()];
@@ -39,6 +43,7 @@ export default () => {
 
   onUnmounted(() => {
     window.removeEventListener("keyup", doIfBodyActive(onKeyUp));
+    window.removeEventListener("keydown", doIfBodyActive(onKeyDown));
   });
 
   return { close, applyAndClose, onKeyDown, onKeyUp, isMetaKeyPressed };
