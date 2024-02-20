@@ -5,10 +5,10 @@ import { type PropType } from "vue";
 import layoutMixin from "../mixins/layoutMixin";
 import {
   UIExtension,
-  DialogControls,
   type ExtensionConfig,
   type UIExtensionAPILayer,
 } from "webapps-common/ui/uiExtensions";
+import DialogControls from "./DialogControls.vue";
 import NotDisplayable from "./NotDisplayable.vue";
 import { UIExtensionPushEvents, type Alert } from "@knime/ui-extension-service";
 import useCloseAndApplyHandling from "./useCloseAndApplyHandling";

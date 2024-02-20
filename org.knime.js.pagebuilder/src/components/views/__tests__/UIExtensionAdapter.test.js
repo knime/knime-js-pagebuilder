@@ -16,7 +16,8 @@ import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
 import * as dialogStoreConfig from "@/store/dialog";
-import { UIExtension, DialogControls } from "webapps-common/ui/uiExtensions";
+import { UIExtension } from "webapps-common/ui/uiExtensions";
+import DialogControls from "../DialogControls.vue";
 import UIExtensionAdapter from "../UIExtensionAdapter.vue";
 import NotDisplayable from "../NotDisplayable.vue";
 import { getTestExtensionConfig } from "./configs/extensionConfig";
@@ -36,7 +37,7 @@ vi.mock("webapps-common/util/navigator", () => {
   };
 });
 
-describe("UIExtension.vue", () => {
+describe("UIExtensionAdapter.vue", () => {
   const getResourceLocation = ({ resourceInfo: { path, baseUrl } }) =>
     `uiExtResourceLocation(${baseUrl}, ${path}) (e.g. "http://localhost:8080/your_resource.html")`;
 
