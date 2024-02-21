@@ -200,7 +200,7 @@ export default {
               applySettings: () => {
                 dispatchPushEvent<UIExtensionPushEvents.EventTypes.ApplyDataEvent>(
                   {
-                    name: UIExtensionPushEvents.EventTypes.ApplyDataEvent,
+                    eventType: UIExtensionPushEvents.EventTypes.ApplyDataEvent,
                   },
                 );
                 return new Promise<{ isApplied: boolean }>((resolve) => {

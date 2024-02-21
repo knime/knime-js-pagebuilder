@@ -75,7 +75,7 @@ export default {
     },
     onPublishDialogData(data) {
       this.dispatchPushEventToView?.({
-        name: UIExtensionPushEvents.EventTypes.DataEvent,
+        eventType: UIExtensionPushEvents.EventTypes.DataEvent,
         payload: data,
       });
     },

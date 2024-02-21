@@ -174,7 +174,7 @@ describe("DialogLayout.vue", () => {
       .findComponent(NodeView)
       .vm.$emit("publishData", publishedData);
     expect(dispatchPushEventToView).toHaveBeenCalledWith({
-      name: "DataEvent",
+      eventType: "DataEvent",
       payload: publishedData,
     });
   });

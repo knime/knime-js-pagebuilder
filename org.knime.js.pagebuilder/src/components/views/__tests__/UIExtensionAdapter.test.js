@@ -238,7 +238,9 @@ describe("UIExtensionAdapter.vue", () => {
     result.then(() => {
       isResolved = true;
     });
-    expect(dispatchPushEvent).toHaveBeenCalledWith({ name: "ApplyDataEvent" });
+    expect(dispatchPushEvent).toHaveBeenCalledWith({
+      eventType: "ApplyDataEvent",
+    });
     await flushPromises();
     expect(isResolved).toBeFalsy();
     getAPILayer(wrapper).onApplied();
