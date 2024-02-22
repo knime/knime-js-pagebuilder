@@ -6,6 +6,7 @@
 // we currently do not use adoptedStylesheets but if we want to this is relevant: https://github.com/whatwg/html/issues/9962
 // chrome impl: https://chromestatus.com/feature/5102952270528512
 
+// NOTE: this API might change and it looks like we need to add `serializable` to the shadow roots
 type Options = { includeShadowRoots?: boolean; shadowRoots?: ShadowRoot[] };
 
 const getHTML = (element: Element, opts?: Options) => {
@@ -19,7 +20,7 @@ const getHTML = (element: Element, opts?: Options) => {
   }
 
   const shadowRootsHTML: Array<{
-    attachNode: string;
+    openTag: string;
     shadowTemplate: string;
   }> = [];
 
@@ -27,8 +28,9 @@ const getHTML = (element: Element, opts?: Options) => {
     let childElement;
     const shadow = node.shadowRoot || closedShadowHostMap.get(node);
     if (shadow) {
+      const { outerHTML } = node;
       shadowRootsHTML.push({
-        attachNode: node.outerHTML,
+        openTag: outerHTML.substring(0, outerHTML.indexOf(">") + 1),
         shadowTemplate: `<template shadowrootmode="${shadow.mode}">${shadow.innerHTML}</template>`,
       });
     }
@@ -42,13 +44,27 @@ const getHTML = (element: Element, opts?: Options) => {
   // do the walk
   walk(element);
 
-  // replace collected shadow roots
-  let out = html;
-  for (const { attachNode, shadowTemplate } of shadowRootsHTML) {
-    const openingTag = attachNode.substring(0, attachNode.indexOf(">") + 1);
-    out = out.replace(openingTag, openingTag + shadowTemplate);
+  let out = "";
+  let index = 0;
+  let openTagIndex;
+  for (const { openTag, shadowTemplate } of shadowRootsHTML) {
+    // find open tag
+    openTagIndex = html.indexOf(openTag, index);
+    if (openTagIndex < 0) {
+      continue;
+    }
+
+    // move to the end of the found index
+    openTagIndex += openTag.length;
+
+    // insert shadow template
+    out += html.substring(index, openTagIndex) + shadowTemplate;
+
+    // move index
+    index = openTagIndex;
   }
-  return out;
+  // all replaced out and the remaining html string
+  return out + html.substring(index);
 };
 
 export default getHTML;

@@ -2,6 +2,8 @@ import getHTML from "./getHTML";
 
 const generateReportLayout = (reportingContent) => {
   // we can't clone this as we would loose the shadow roots
+  // this can be re-added as soon as `clonable` has good browser support:
+  // https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow#clonable
   const layout = document.querySelector("#knime-layout");
 
   // replace provided content from the ui extension (e.g. an image)
