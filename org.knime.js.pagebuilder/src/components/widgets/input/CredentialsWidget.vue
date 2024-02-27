@@ -73,6 +73,12 @@ export default {
     value() {
       return this.valuePair || this.viewRep.defaultValue;
     },
+    username() {
+      return this.viewRep.usernameLabel || "User";
+    },
+    password() {
+      return this.viewRep.passwordLabel || "Password";
+    },
   },
   mounted() {
     this.checkServerCredentials();
@@ -145,7 +151,7 @@ export default {
       v-if="promptUsername"
       #default="{ labelForId }"
       class="label"
-      text="User"
+      :text="username"
     >
       <InputField
         :id="labelForId"
@@ -156,7 +162,7 @@ export default {
         @update:model-value="onUsernameChange"
       />
     </Label>
-    <Label #default="{ labelForId }" class="label" text="Password">
+    <Label #default="{ labelForId }" class="label" :text="password">
       <InputField
         :id="labelForId"
         ref="passwordForm"

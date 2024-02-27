@@ -213,6 +213,40 @@ describe("CredentialsWidget.vue", () => {
       );
     });
 
+    it("renders username and password default labels", () => {
+      let wrapper = shallowMount(CredentialsWidget, {
+        props: propsDefault,
+        global: {
+          stubs: { Label, Fieldset },
+        },
+      });
+      let labels = wrapper.findAllComponents(Label);
+      expect(labels[0].vm.text).toBe("User");
+      expect(labels[1].vm.text).toBe("Password");
+    });
+
+    it("renders username and password custom labels", () => {
+      let wrapper = shallowMount(CredentialsWidget, {
+        props: {
+          ...propsDefault,
+          nodeConfig: {
+            ...propsDefault.nodeConfig,
+            viewRepresentation: {
+              ...propsDefault.nodeConfig.viewRepresentation,
+              usernameLabel: "Bond",
+              passwordLabel: "007",
+            },
+          },
+        },
+        global: {
+          stubs: { Label, Fieldset },
+        },
+      });
+      let labels = wrapper.findAllComponents(Label);
+      expect(labels[0].vm.text).toBe("Bond");
+      expect(labels[1].vm.text).toBe("007");
+    });
+
     it("emits @updateWidget on username if child emits @input", () => {
       let wrapper = mount(CredentialsWidget, {
         props: propsDefault,
