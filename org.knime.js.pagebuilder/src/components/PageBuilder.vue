@@ -7,6 +7,7 @@ import * as serviceStoreConfig from "../store/service";
 import * as dialogStoreConfig from "../store/dialog";
 import Page from "./layout/Page.vue";
 import AlertGlobal from "./ui/AlertGlobal.vue";
+import "../assets/css/global-z-indices.css";
 
 export default {
   components: {
