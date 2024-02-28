@@ -279,6 +279,7 @@ export default {
       :settings-on-clean="settingsOnClean"
       :is-reporting="isReporting"
       :is-dialog-layout="isDialogLayout"
+      :shadow-app-style="{ 'flex-grow': 1 }"
     />
     <DialogControls
       v-if="isNodeDialog"
