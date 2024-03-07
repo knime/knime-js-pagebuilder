@@ -10,7 +10,11 @@ import {
 } from "webapps-common/ui/uiExtensions";
 import DialogControls from "./DialogControls.vue";
 import NotDisplayable from "./NotDisplayable.vue";
-import { UIExtensionPushEvents, type Alert } from "@knime/ui-extension-service";
+import {
+  UIExtensionPushEvents,
+  type Alert,
+  ViewState,
+} from "@knime/ui-extension-service";
 import useCloseAndApplyHandling from "./useCloseAndApplyHandling";
 
 /**
@@ -85,6 +89,7 @@ export default {
        * This is used within the {@link layoutMixin}
        */
       isWidget: false,
+      currentPublishedData: null,
       resolveApplyDataPromise: null as
         | null
         | ((payload: { isApplied: boolean }) => void),
@@ -163,6 +168,7 @@ export default {
           });
         },
         publishData: (data) => {
+          this.currentPublishedData = data;
           this.$emit("publishData", data);
         },
         setReportingContent: (reportingContent) => {
@@ -243,11 +249,15 @@ export default {
             },
           });
         },
-        setSettingsWithCleanModelSettings: (cleanData: any) => {
-          this.$store.dispatch("pagebuilder/dialog/cleanSettings", cleanData);
-        },
-        setDirtyModelSettings: () => {
-          this.$store.dispatch("pagebuilder/dialog/dirtySettings", true);
+        onDirtyStateChange: ({ view }) => {
+          if (view === ViewState.CONFIG || view === ViewState.IDLE) {
+            this.$store.dispatch("pagebuilder/dialog/dirtySettings", true);
+          } else {
+            this.$store.dispatch(
+              "pagebuilder/dialog/cleanSettings",
+              this.currentPublishedData,
+            );
+          }
         },
       };
     },

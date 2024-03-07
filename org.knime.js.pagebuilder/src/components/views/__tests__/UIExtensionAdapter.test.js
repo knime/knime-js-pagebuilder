@@ -24,8 +24,10 @@ import { getTestExtensionConfig } from "./configs/extensionConfig";
 import { viewConfig } from "./configs/viewConfig";
 import {
   AlertType,
+  ApplyState,
   DataServiceType,
   SelectionModes,
+  ViewState,
 } from "@knime/ui-extension-service";
 import flushPromises from "flush-promises";
 
@@ -249,7 +251,7 @@ describe("UIExtensionAdapter.vue", () => {
   });
 
   describe("dirty/clean settings", () => {
-    it("sets dirty model settings", () => {
+    it("sets dirty settings", () => {
       const dirtySettingsMock = vi.fn();
       const wrapper = shallowMount(
         UIExtensionAdapter,
@@ -261,7 +263,10 @@ describe("UIExtensionAdapter.vue", () => {
         }),
       );
 
-      getAPILayer(wrapper).setDirtyModelSettings();
+      getAPILayer(wrapper).onDirtyStateChange({
+        view: ViewState.CONFIG,
+        apply: ApplyState.CLEAN,
+      });
 
       expect(dirtySettingsMock).toHaveBeenCalledWith(expect.anything(), true);
     });
@@ -279,7 +284,11 @@ describe("UIExtensionAdapter.vue", () => {
       );
       const cleanSettings = { agent: "007" };
 
-      getAPILayer(wrapper).setSettingsWithCleanModelSettings(cleanSettings);
+      getAPILayer(wrapper).publishData(cleanSettings);
+      getAPILayer(wrapper).onDirtyStateChange({
+        view: ViewState.EXEC,
+        apply: ApplyState.CLEAN,
+      });
 
       expect(cleanSettingsMock).toHaveBeenCalledWith(
         expect.anything(),
