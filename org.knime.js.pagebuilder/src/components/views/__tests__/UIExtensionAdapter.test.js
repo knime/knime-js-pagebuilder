@@ -651,13 +651,6 @@ describe("UIExtensionAdapter.vue", () => {
       expect(closeSpy).not.toHaveBeenCalled();
     });
 
-    it("triggers apply + close on enter", async () => {
-      await keyElement.trigger("keydown", { key: "Enter" });
-      expect(applyDataSpy).toHaveBeenCalled();
-      await flushPromises();
-      expect(closeSpy).toHaveBeenCalledWith(false);
-    });
-
     it("triggers apply + close + execute on metaOrCtrlKey + enter", async () => {
       await keyElement.trigger("keydown", {
         key: "Enter",

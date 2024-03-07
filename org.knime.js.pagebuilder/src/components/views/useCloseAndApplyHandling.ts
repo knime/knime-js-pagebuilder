@@ -26,7 +26,7 @@ export default () => {
     if (e.defaultPrevented) {
       return;
     }
-    if (e.key === "Enter") {
+    if (isMetaKeyPressed.value && e.key === "Enter") {
       applyAndClose();
     }
     if (e.key === "Escape") {
