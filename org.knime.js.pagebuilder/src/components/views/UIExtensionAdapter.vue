@@ -1,13 +1,15 @@
 <script lang="ts">
 import { mapState } from "vuex";
-import { type PropType } from "vue";
+import { defineComponent, type PropType } from "vue";
 
 import layoutMixin from "../mixins/layoutMixin";
 import {
   UIExtension,
+  UIExtensionAlerts,
   type ExtensionConfig,
   type UIExtensionAPILayer,
 } from "webapps-common/ui/uiExtensions";
+
 import DialogControls from "./DialogControls.vue";
 import NotDisplayable from "./NotDisplayable.vue";
 import {
@@ -22,9 +24,10 @@ import useCloseAndApplyHandling from "./useCloseAndApplyHandling";
  * Also detects changes to it's configuration and increments a local counter to help with re-renders of iframe-based
  * components.
  */
-export default {
+export default defineComponent({
   components: {
     UIExtension,
+    UIExtensionAlerts,
     NotDisplayable,
     DialogControls,
   },
@@ -93,6 +96,7 @@ export default {
       resolveApplyDataPromise: null as
         | null
         | ((payload: { isApplied: boolean }) => void),
+      currentAlert: null as null | Alert,
     };
   },
   computed: {
@@ -230,24 +234,12 @@ export default {
          * @param {Object} alert - the alert to display.
          * @returns {Promise}
          */
-        sendAlert: (alert: Alert, closeAlert?: () => void) => {
-          return this.$store.dispatch("pagebuilder/alert/showAlert", {
-            ...alert,
-            /**
-             * Callback function passed to the alert store to close the local alert when a global alert action is
-             * triggered.
-             */
-            callback: (
-              /**
-               * optionally if the local alert should be cleared.
-               */
-              remove?: boolean,
-            ) => {
-              if (remove) {
-                closeAlert?.();
-              }
-            },
-          });
+        sendAlert: (alert: Alert) => {
+          if (this.isDialogLayout) {
+            this.displayAlert(alert);
+          } else {
+            this.currentAlert = alert;
+          }
         },
         onDirtyStateChange: ({ view }) => {
           if (view === ViewState.CONFIG || view === ViewState.IDLE) {
@@ -269,7 +261,36 @@ export default {
       });
     }
   },
-};
+  methods: {
+    displayAlert(alert: Alert | null) {
+      if (!alert) {
+        return;
+      }
+
+      this.$store.dispatch("pagebuilder/alert/showAlert", {
+        ...alert,
+        /**
+         * Callback function passed to the alert store to close the local alert when a global alert action is
+         * triggered.
+         */
+        callback: (
+          /**
+           * optionally if the local alert should be cleared.
+           */
+          remove?: boolean,
+        ) => {
+          if (remove) {
+            this.removeAlert();
+          }
+        },
+      });
+    },
+
+    removeAlert() {
+      this.currentAlert = null;
+    },
+  },
+});
 </script>
 
 <template>
@@ -291,6 +312,13 @@ export default {
       :is-dialog-layout="isDialogLayout"
       :shadow-app-style="{ 'flex-grow': 1 }"
     />
+
+    <UIExtensionAlerts
+      v-if="!isReporting"
+      :alert="currentAlert"
+      @display="displayAlert(currentAlert)"
+    />
+
     <DialogControls
       v-if="isNodeDialog"
       :is-write-protected="extensionConfig.writeProtected"
@@ -302,8 +330,6 @@ export default {
 </template>
 
 <style lang="postcss" scoped>
-@import url("../mixins/layoutMixin.css");
-
 .ui-ext-adapter {
   display: flex;
   flex-direction: column;

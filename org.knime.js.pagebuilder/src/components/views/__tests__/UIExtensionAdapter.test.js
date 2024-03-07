@@ -16,7 +16,7 @@ import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
 import * as dialogStoreConfig from "@/store/dialog";
-import { UIExtension } from "webapps-common/ui/uiExtensions";
+import { UIExtension, UIExtensionAlerts } from "webapps-common/ui/uiExtensions";
 import DialogControls from "../DialogControls.vue";
 import UIExtensionAdapter from "../UIExtensionAdapter.vue";
 import NotDisplayable from "../NotDisplayable.vue";
@@ -30,6 +30,7 @@ import {
   ViewState,
 } from "@knime/ui-extension-service";
 import flushPromises from "flush-promises";
+import { nextTick } from "vue";
 
 const metaOrCtrlKey = "metaKey";
 
@@ -333,22 +334,59 @@ describe("UIExtensionAdapter.vue", () => {
       type: AlertType.ERROR,
     };
 
-    it("sends alerts to the store", () => {
+    it("sends alerts to the store", async () => {
       apiLayer.sendAlert(mockAlert);
+
+      await nextTick();
+
+      const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
+      expect(alertsComponent.exists()).toBe(true);
+      alertsComponent.vm.$emit("display");
       expect(showAlertSpy).toHaveBeenCalled();
       const params = showAlertSpy.mock.calls[0][0];
       expect(params).toMatchObject(mockAlert);
     });
 
-    it("provides wrapped closeAlert method to the store", () => {
-      const closeAlert = vi.fn();
-      apiLayer.sendAlert(mockAlert, closeAlert);
+    it("provides wrapped closeAlert method to the store", async () => {
+      apiLayer.sendAlert(mockAlert);
+
+      await nextTick();
+      const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
+      expect(alertsComponent.exists()).toBe(true);
+
+      alertsComponent.vm.$emit("display");
       expect(showAlertSpy).toHaveBeenCalled();
       const { callback } = showAlertSpy.mock.calls[0][0];
       callback();
-      expect(closeAlert).not.toHaveBeenCalled();
+      await nextTick();
+
+      expect(alertsComponent.exists()).toBe(true);
+
       callback(true);
-      expect(closeAlert).toHaveBeenCalled();
+      await nextTick();
+
+      expect(alertsComponent.props("alert")).toBeNull();
+    });
+
+    it("does not show alerts if isDialogLayout is true", async () => {
+      wrapper.vm.$store.state.pagebuilder.isDialogLayout = true;
+      apiLayer.sendAlert(mockAlert);
+
+      await nextTick();
+      const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
+      expect(alertsComponent.props("alert")).toBeNull();
+      expect(showAlertSpy).toHaveBeenCalled();
+    });
+
+    it("does not show alerts if isReporting is true", async () => {
+      wrapper.vm.$store.state.pagebuilder.isDialogLayout = false;
+      wrapper.vm.$store.state.pagebuilder.isReporting = true;
+
+      apiLayer.sendAlert(mockAlert);
+
+      await nextTick();
+      const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
+      expect(alertsComponent.exists()).toBe(false);
     });
   });
 
