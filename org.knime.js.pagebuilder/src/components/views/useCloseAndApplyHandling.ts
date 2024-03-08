@@ -11,14 +11,15 @@ const doIfBodyActive =
 
 export default () => {
   const isMetaKeyPressed = ref(false);
-  const close = () => window.closeCEFWindow(isMetaKeyPressed.value);
+  const close = (params?: { executeNode: boolean }) =>
+    window.closeCEFWindow(params?.executeNode ?? false);
   const store = useStore();
   const applyAndClose = async () => {
     const { isApplied } = await store.dispatch(
       "pagebuilder/dialog/callApplySettings",
     );
     if (isApplied) {
-      close();
+      close({ executeNode: isMetaKeyPressed.value });
     }
   };
   const onKeyDown = (e: KeyboardEvent) => {

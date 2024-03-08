@@ -616,14 +616,6 @@ describe("UIExtensionAdapter.vue", () => {
       ).toBe(true);
     });
 
-    it("executes node when metaOrCtrlKey is pressed on close", async () => {
-      await keyElement.trigger("keydown", { [metaOrCtrlKey]: true });
-
-      wrapper.vm.close();
-
-      expect(closeSpy).toHaveBeenCalledWith(true);
-    });
-
     it("does not executes node when metaOrCtrlKey was pressed and released again on closeDialog", async () => {
       await keyElement.trigger("keydown", { [metaOrCtrlKey]: true });
       await keyElement.trigger("keyup", { [metaOrCtrlKey]: false });
