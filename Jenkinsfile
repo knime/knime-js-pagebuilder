@@ -13,6 +13,8 @@ properties([
 try {
     node('maven && java17') {
         knimetools.defaultTychoBuild(updateSiteProject: 'org.knime.update.js.pagebuilder', disableOWASP: true)
+
+        owasp.sendNodeJSSBOMs('5.3.0-beta-0-c2c9a5d6')
         
         // disabled; tests will move to Bitbucket Pipelines
         //junit '**/coverage/junit.xml'

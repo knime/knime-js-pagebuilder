@@ -93,6 +93,17 @@
 						</configuration>
 					</execution>
 
+					<execution>
+						<id>npm run sbom</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run sbom</arguments>
+						</configuration>
+					</execution>
+
 					<!-- Disabled, will be moved to Bitbucket Pipelines
 						<execution>
 						<id>npm run coverage</id>

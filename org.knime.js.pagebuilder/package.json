@@ -22,7 +22,8 @@
     "coverage": "TZ='Europe/Berlin' vitest --coverage",
     "_TODO_opensourcecredits": "npm run --prefix webapps-common/ opensourcecredits",
     "_TODO_build:credits": "npm run opensourcecredits && vue-cli-service build --target lib --formats umd-min --name knime-pagebuilder-credits src/components/PageBuilderCredits.vue",
-    "prepare": "cd .. && husky install ./org.knime.js.pagebuilder/.husky"
+    "prepare": "cd .. && husky install ./org.knime.js.pagebuilder/.husky",
+    "sbom": "npx @cyclonedx/cyclonedx-npm --output-file bom.json --ignore-npm-errors --omit dev"
   },
   "license": "UNLICENSED",
   "author": "KNIME AG, Zurich, Switzerland",
@@ -37,6 +38,7 @@
     "webapps-common": "file:webapps-common"
   },
   "devDependencies": {
+    "@cyclonedx/cyclonedx-npm": "1.16.1",
     "@knime/eslint-config": "8.0.7",
     "@tsconfig/node18": "^18.2.2",
     "@types/node": "18.14.2",
