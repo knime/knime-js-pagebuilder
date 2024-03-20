@@ -154,6 +154,7 @@ export default {
   max-width: calc(4 * 100% / 12);
   background-color: var(--knime-gray-ultra-light);
   border-left: 1px solid var(--knime-silver-sand);
+  height: 100vh;
 }
 
 .view {

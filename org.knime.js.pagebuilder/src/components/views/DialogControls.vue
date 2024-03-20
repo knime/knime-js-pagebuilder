@@ -24,7 +24,7 @@ const emit = defineEmits(["cancel", "ok"]);
   display: flex;
   justify-content: space-between;
   height: var(--controls-height);
-  padding: 14px 20px 4px;
+  padding: 14px 20px;
   background-color: var(--knime-gray-ultra-light);
   border-top: 1px solid var(--knime-silver-sand);
 }
