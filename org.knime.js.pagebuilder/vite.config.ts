@@ -4,6 +4,8 @@ import type { UserConfig, BuildOptions } from "vite";
 import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+// @ts-ignore
+import { svgoConfig } from "webapps-common/config/svgo.config";
 
 // https://vitejs.dev/config/
 // https://vitest.dev/config/
@@ -45,7 +47,7 @@ export default defineConfig(({ mode }) => {
 
   const config: UserConfig = {
     base: "./",
-    plugins: [vue(), svgLoader()],
+    plugins: [vue(), svgLoader({ svgoConfig })],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
