@@ -2,12 +2,13 @@
   "name": "knime-pagebuilder",
   "version": "1.0.0",
   "description": "PageBuilder for KNIME® Analytics Platform & Data Apps",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build:*",
     "build:app": "vite build",
     "build:lib": "vite build --mode lib",
-    "type-check": "vue-tsc --noEmit",
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "run-p 'lint:* -- --fix'",
     "lint:js": "eslint . --cache --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
     "lint:css": "stylelint --cache '**/*.{css,vue}'",
@@ -30,6 +31,8 @@
   "dependencies": {
     "@knime/ui-extension-service": "0.28.0",
     "consola": "2.15.3",
+    "date-fns": "2.30.0",
+    "date-fns-tz": "2.0.0",
     "iframe-resizer": "4.3.9",
     "mime": "4.0.1",
     "vue": "3.4.21",

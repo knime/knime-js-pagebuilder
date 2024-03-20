@@ -1,0 +1,29 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "vite-env.d.ts",
+    "webapps-common/ui/globals.d.ts",
+    "src/**/*",
+    "webapps-common/**/*",
+    "webapps-common/**/*.vue"
+  ],
+  "exclude": [
+    "src/**/__tests__/*",
+    "webapps-common/**/__tests__/*",
+    "webapps-common/demo/*"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "lib": ["ES2023.Array", "DOM", "DOM.Iterable"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@@/*": ["./*"],
+      "vue-slider-component": ["./src/vue-slider-component.d.ts"]
+    },
+    "allowJs": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "verbatimModuleSyntax": false
+  }
+}
