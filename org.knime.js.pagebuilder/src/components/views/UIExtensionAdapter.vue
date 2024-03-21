@@ -93,6 +93,7 @@ export default defineComponent({
        */
       isWidget: false,
       currentPublishedData: null,
+      dialogControlsShouldBeVisible: true,
       resolveApplyDataPromise: null as
         | null
         | ((payload: { isApplied: boolean }) => void),
@@ -251,6 +252,9 @@ export default defineComponent({
             );
           }
         },
+        setControlsVisibility: ({ shouldBeVisible }) => {
+          this.dialogControlsShouldBeVisible = shouldBeVisible;
+        },
       };
     },
   },
@@ -320,7 +324,7 @@ export default defineComponent({
     />
 
     <DialogControls
-      v-if="isNodeDialog"
+      v-if="isNodeDialog && dialogControlsShouldBeVisible"
       :is-write-protected="extensionConfig.writeProtected"
       :is-meta-key-pressed="isMetaKeyPressed"
       @ok="applyAndClose"

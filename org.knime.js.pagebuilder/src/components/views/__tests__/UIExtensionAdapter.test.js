@@ -639,6 +639,18 @@ describe("UIExtensionAdapter.vue", () => {
       expect(wrapper.findComponent(DialogControls).exists()).toBeTruthy();
     });
 
+    it("shows and hides DialogControls depending on apiLayer calls", async () => {
+      const apiLayer = getAPILayer(wrapper);
+
+      apiLayer.setControlsVisibility({ shouldBeVisible: false });
+      await wrapper.vm.$nextTick();
+      expect(wrapper.findComponent(DialogControls).exists()).toBeFalsy();
+
+      apiLayer.setControlsVisibility({ shouldBeVisible: true });
+      await wrapper.vm.$nextTick();
+      expect(wrapper.findComponent(DialogControls).exists()).toBeTruthy();
+    });
+
     it("triggers close on DialogControls cancel", async () => {
       await wrapper.findComponent(DialogControls).vm.$emit("cancel");
       expect(closeSpy).toHaveBeenCalled();
