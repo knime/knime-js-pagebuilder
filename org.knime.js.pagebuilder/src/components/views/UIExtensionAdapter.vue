@@ -330,6 +330,8 @@ export default defineComponent({
 </template>
 
 <style lang="postcss" scoped>
+@import url("../mixins/layoutMixin.css");
+
 .ui-ext-adapter {
   display: flex;
   flex-direction: column;
