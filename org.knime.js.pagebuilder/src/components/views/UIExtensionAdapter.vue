@@ -311,7 +311,7 @@ export default defineComponent({
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
       :extension-config="extensionConfig"
-      :settings-on-clean="settingsOnClean"
+      :initial-shared-data="settingsOnClean"
       :is-reporting="isReporting"
       :is-dialog-layout="isDialogLayout"
       :shadow-app-style="{ 'flex-grow': 1 }"

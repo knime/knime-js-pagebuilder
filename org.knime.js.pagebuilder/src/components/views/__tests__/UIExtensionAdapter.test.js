@@ -298,7 +298,7 @@ describe("UIExtensionAdapter.vue", () => {
     });
 
     it("supplies dialog data to the extensionConfig if they are present", () => {
-      const dialogSettings = { foo: "bar" };
+      const dialogSettings = { data: { foo: "bar" } };
       const wrapper = shallowMount(
         UIExtensionAdapter,
         createContext({
@@ -309,7 +309,7 @@ describe("UIExtensionAdapter.vue", () => {
         }),
       );
       expect(
-        wrapper.findComponent(UIExtension).props().settingsOnClean,
+        wrapper.findComponent(UIExtension).props().initialSharedData,
       ).toStrictEqual(dialogSettings);
     });
   });
