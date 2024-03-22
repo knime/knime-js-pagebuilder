@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => {
     lib: {
       entry: fileURLToPath(new URL("src/lib.js", import.meta.url)),
       name: "PageBuilder",
-      fileName: "PageBuilder",
+      fileName: () => "PageBuilder.umd.js", // need to enforce the .js file ending, as the default would now be .cjs
       formats: ["umd"],
     },
     rollupOptions: {
