@@ -307,7 +307,7 @@ export default defineComponent({
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
       :extension-config="extensionConfig"
-      :initial-data-change="settingsOnClean"
+      :settings-on-clean="settingsOnClean"
       :is-reporting="isReporting"
       :is-dialog-layout="isDialogLayout"
       :shadow-app-style="{ 'flex-grow': 1 }"
