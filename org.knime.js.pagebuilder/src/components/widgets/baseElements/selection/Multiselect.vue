@@ -1,9 +1,8 @@
 <script>
-import MultiselectListBox from "webapps-common/ui/components/forms/MultiselectListBox.vue";
 import Twinlist from "webapps-common/ui/components/forms/Twinlist.vue";
-import Checkboxes from "webapps-common/ui/components/forms/Checkboxes.vue";
 import ComboBox from "webapps-common/ui/components/forms/ComboBox.vue";
-
+import SearchableCheckboxes from "webapps-common/ui/components/forms/SearchableCheckboxes.vue";
+import SearchableList from "webapps-common/ui/components/forms/SearchableList.vue";
 /**
  * Multiselect Component
  *
@@ -16,10 +15,10 @@ import ComboBox from "webapps-common/ui/components/forms/ComboBox.vue";
  */
 export default {
   components: {
-    Checkboxes,
     ComboBox,
-    MultiselectListBox,
     Twinlist,
+    SearchableCheckboxes,
+    SearchableList,
   },
   props: {
     isValid: {
@@ -62,6 +61,10 @@ export default {
     description: {
       type: String,
       default: "",
+    },
+    showSearch: {
+      type: Boolean,
+      default: false,
     },
     label: {
       type: String,
@@ -133,7 +136,7 @@ export default {
 
 <template>
   <div>
-    <Checkboxes
+    <searchableCheckboxes
       v-if="isCheckboxes"
       :id="id"
       ref="form"
@@ -143,6 +146,7 @@ export default {
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
+      :show-search="showSearch"
       @update:model-value="onChange"
     />
     <Twinlist
@@ -156,9 +160,10 @@ export default {
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
+      :show-search="showSearch"
       @update:model-value="onChange"
     />
-    <MultiselectListBox
+    <SearchableList
       v-if="isList"
       :id="id"
       ref="form"
@@ -168,6 +173,7 @@ export default {
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
+      :show-search="showSearch"
       @update:model-value="onChange"
     />
     <ComboBox

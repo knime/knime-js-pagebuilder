@@ -61,6 +61,9 @@ export default {
     description() {
       return this.viewRep.description || null;
     },
+    enableSearch() {
+      return Boolean(this.viewRep.enableSearch);
+    },
     maxVisibleListEntries() {
       if (this.viewRep.limitNumberVisOptions) {
         return this.viewRep.numberVisOptions;
@@ -112,6 +115,7 @@ export default {
       :possible-values="possibleColumns"
       :is-valid="isValid"
       :title="description"
+      :show-search="enableSearch"
       @update:model-value="onChange"
     />
     <ErrorMessage :error="errorMessage" />

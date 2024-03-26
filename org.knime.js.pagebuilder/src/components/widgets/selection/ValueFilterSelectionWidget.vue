@@ -71,6 +71,9 @@ export default {
     value() {
       return this.isColumnValid ? this.valuePair[VALUE_KEY_NAME] : [];
     },
+    enableSearch() {
+      return Boolean(this.viewRep.enableSearch);
+    },
     column() {
       return this.valuePair[COLUMN_KEY_NAME];
     },
@@ -168,6 +171,7 @@ export default {
           :is-valid="isValid"
           :description="description"
           :label="label"
+          :show-search="enableSearch"
           @update:model-value="onChange"
         />
         <ErrorMessage :error="errorMessage" />
