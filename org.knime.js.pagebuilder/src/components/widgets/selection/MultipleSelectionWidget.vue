@@ -62,6 +62,9 @@ export default {
     value() {
       return this.valuePair[DATA_TYPE];
     },
+    enableSearch() {
+      return Boolean(this.viewRep.enableSearch);
+    },
     isList() {
       return this.viewRep.type === "List";
     },
@@ -111,6 +114,7 @@ export default {
         :is-valid="isValid"
         :description="description"
         :label="label"
+        :show-search="enableSearch"
         @update:model-value="onChange"
       />
       <ErrorMessage :error="errorMessage" />

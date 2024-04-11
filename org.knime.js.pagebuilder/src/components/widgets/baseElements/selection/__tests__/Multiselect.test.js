@@ -2,8 +2,8 @@ import { expect, describe, beforeEach, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
 
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
-import Checkboxes from "webapps-common/ui/components/forms/Checkboxes.vue";
-import MultiselectListBox from "webapps-common/ui/components/forms/MultiselectListBox.vue";
+import SearchableCheckboxes from "webapps-common/ui/components/forms/SearchableCheckboxes.vue";
+import SearchableList from "webapps-common/ui/components/forms/SearchableList.vue";
 import Twinlist from "webapps-common/ui/components/forms/Twinlist.vue";
 import Checkbox from "webapps-common/ui/components/forms/Checkbox.vue";
 import ComboBox from "webapps-common/ui/components/forms/ComboBox.vue";
@@ -11,9 +11,9 @@ import MultiselectWebappsCommon from "webapps-common/ui/components/forms/Multise
 
 describe("Multiselect.vue", () => {
   let propsTwinlist,
-    propsCheckboxHorizontal,
-    propsCheckboxVertical,
-    propsMultiselectListBox,
+    propsSearchableCheckboxesHorizontal,
+    propsSearchableCheckboxesVertical,
+    propsSearchablelist,
     propsComboBox;
 
   beforeEach(() => {
@@ -32,8 +32,9 @@ describe("Multiselect.vue", () => {
       limitNumberVisOptions: true,
       numberVisOptions: 4,
       isValid: false,
+      showSearch: false,
     };
-    propsMultiselectListBox = {
+    propsSearchablelist = {
       value: ["List 3", "List 4", "List 7"],
       possibleValueList: [
         "List 1",
@@ -49,16 +50,18 @@ describe("Multiselect.vue", () => {
       limitNumberVisOptions: true,
       numberVisOptions: 5,
       isValid: false,
+      showSearch: false,
     };
-    propsCheckboxVertical = {
+    propsSearchableCheckboxesVertical = {
       value: ["CBV 2", "CBV 4", "CBV 6"],
       possibleValueList: ["CBV 1", "CBV 2", "CBV 3", "CBV 4", "CBV 5", "CBV 6"],
       type: "Check boxes (vertical)",
       limitNumberVisOptions: false,
       numberVisOptions: 10,
       isValid: false,
+      showSearch: false,
     };
-    propsCheckboxHorizontal = {
+    propsSearchableCheckboxesHorizontal = {
       value: ["CBH 1", "CBH 4"],
       possibleValueList: [
         "CBH 1",
@@ -73,6 +76,7 @@ describe("Multiselect.vue", () => {
       limitNumberVisOptions: false,
       numberVisOptions: 10,
       isValid: false,
+      showSearch: false,
     };
     propsComboBox = {
       value: ["ComboBox 1", "ComboBox 4"],
@@ -101,19 +105,19 @@ describe("Multiselect.vue", () => {
     expect(wrapper.isVisible()).toBeTruthy();
 
     let wrapper2 = shallowMount(Multiselect, {
-      props: propsCheckboxHorizontal,
+      props: propsSearchableCheckboxesHorizontal,
     });
     expect(wrapper2.html()).toBeTruthy();
     expect(wrapper2.isVisible()).toBeTruthy();
 
     let wrapper3 = shallowMount(Multiselect, {
-      props: propsCheckboxVertical,
+      props: propsSearchableCheckboxesVertical,
     });
     expect(wrapper3.html()).toBeTruthy();
     expect(wrapper3.isVisible()).toBeTruthy();
 
     let wrapper4 = shallowMount(Multiselect, {
-      props: propsMultiselectListBox,
+      props: propsSearchablelist,
     });
     expect(wrapper4.html()).toBeTruthy();
     expect(wrapper4.isVisible()).toBeTruthy();
@@ -125,48 +129,100 @@ describe("Multiselect.vue", () => {
     expect(wrapper5.isVisible()).toBeTruthy();
   });
 
-  describe("checkboxes", () => {
+  describe("searchableCheckboxes", () => {
     it("render horizontal", () => {
-      propsCheckboxHorizontal.isValid = true;
+      let localProps = {
+        ...propsSearchableCheckboxesHorizontal,
+        isValid: true,
+      };
       let wrapper = mount(Multiselect, {
-        props: propsCheckboxHorizontal,
+        props: localProps,
       });
 
-      let checkboxes = wrapper.findComponent(Checkboxes);
-      expect(checkboxes.exists()).toBeTruthy();
-      expect(checkboxes.props("alignment")).toBe("horizontal");
+      let searchableCheckboxes = wrapper.findComponent(SearchableCheckboxes);
+      expect(searchableCheckboxes.exists()).toBeTruthy();
+      expect(searchableCheckboxes.props("alignment")).toBe("horizontal");
       expect(wrapper.findAllComponents(Checkbox).length).toBe(7);
     });
 
-    it("render vertical", () => {
-      propsCheckboxVertical.isValid = true;
-      let wrapper = shallowMount(Multiselect, {
-        props: propsCheckboxVertical,
+    it("horizontal SearchableCheckboxes is not searchable by default", () => {
+      let wrapper = mount(Multiselect, {
+        props: propsSearchableCheckboxesHorizontal,
       });
 
-      let checkboxes = wrapper.findComponent(Checkboxes);
-      expect(checkboxes.exists()).toBeTruthy();
-      expect(checkboxes.props("alignment")).toBe("vertical");
+      let searchableCheckboxes = wrapper.findComponent(SearchableCheckboxes);
+      expect(searchableCheckboxes.find(".search-wrapper").exists()).toBe(false);
+    });
+
+    it("horizontal SearchableCheckboxes can be searchable", () => {
+      let localProps = {
+        ...propsSearchableCheckboxesHorizontal,
+        showSearch: true,
+      };
+      let wrapper = mount(Multiselect, {
+        props: localProps,
+      });
+
+      let searchableCheckboxes = wrapper.findComponent(SearchableCheckboxes);
+      expect(searchableCheckboxes.find(".search-wrapper").exists()).toBe(true);
+    });
+
+    it("render vertical", () => {
+      let localProps = {
+        ...propsSearchableCheckboxesVertical,
+        isValid: true,
+      };
+      let wrapper = mount(Multiselect, {
+        props: localProps,
+      });
+
+      let searchableCheckboxes = wrapper.findComponent(SearchableCheckboxes);
+      expect(searchableCheckboxes.exists()).toBeTruthy();
+      expect(searchableCheckboxes.props("alignment")).toBe("vertical");
     });
 
     it("fail on invalid type (alignment)", () => {
-      propsCheckboxVertical.type = "Check boxes (vulcano)";
+      let localProps = {
+        ...propsSearchableCheckboxesVertical,
+        type: "Check boxes (vulcano)",
+      };
       let wrapper = mount(Multiselect, {
-        props: propsCheckboxVertical,
+        props: localProps,
       });
 
       expect(wrapper.vm.checkBoxesAlignment).toBeNull();
-      expect(wrapper.findComponent(Checkboxes).exists()).toBe(false);
+      expect(wrapper.findComponent(SearchableCheckboxes).exists()).toBe(false);
+    });
+
+    it("vertical SearchableCheckboxes is not searchable by default", () => {
+      let wrapper = mount(Multiselect, {
+        props: propsSearchableCheckboxesVertical,
+      });
+
+      let searchableCheckboxes = wrapper.findComponent(SearchableCheckboxes);
+      expect(searchableCheckboxes.find(".search-wrapper").exists()).toBe(false);
+    });
+
+    it("vertical SearchableCheckboxes can be searchable", () => {
+      let localProps = {
+        ...propsSearchableCheckboxesVertical,
+        showSearch: true,
+      };
+      let wrapper = mount(Multiselect, {
+        props: localProps,
+      });
+
+      let searchableCheckboxes = wrapper.findComponent(SearchableCheckboxes);
+      expect(searchableCheckboxes.find(".search-wrapper").exists()).toBe(true);
     });
 
     it("emits @update:modelValue", () => {
-      let props = propsCheckboxVertical;
       let wrapper = shallowMount(Multiselect, {
-        props,
+        props: propsSearchableCheckboxesVertical,
       });
 
       const testValue = ["VALUE1", "VALUE2"];
-      const comp = wrapper.findComponent(Checkboxes);
+      const comp = wrapper.findComponent(SearchableCheckboxes);
       comp.vm.$emit("update:modelValue", testValue);
 
       expect(wrapper.emitted("update:modelValue")).toBeTruthy();
@@ -176,43 +232,55 @@ describe("Multiselect.vue", () => {
     });
   });
 
-  describe("listbox", () => {
+  describe("searchableList", () => {
     it("renders list box component", () => {
-      propsMultiselectListBox.isValid = true;
+      let localProps = { ...propsSearchablelist, isValid: true };
       let wrapper = shallowMount(Multiselect, {
-        props: propsMultiselectListBox,
+        props: localProps,
       });
 
-      expect(wrapper.findComponent(MultiselectListBox).exists()).toBeTruthy();
+      expect(wrapper.findComponent(SearchableList).exists()).toBeTruthy();
+    });
+
+    it("is not searchable by default", () => {
+      let wrapper = shallowMount(Multiselect, {
+        props: propsSearchablelist,
+      });
+
+      const searchableList = wrapper.findComponent(SearchableList);
+      expect(searchableList.find(".search-wrapper").exists()).toBe(false);
+    });
+
+    it("can be searchable", () => {
+      let localProps = { ...propsSearchablelist, showSearch: true };
+      let wrapper = mount(Multiselect, {
+        props: localProps,
+      });
+
+      const searchableList = wrapper.findComponent(SearchableList);
+      expect(searchableList.find(".search-wrapper").exists()).toBe(true);
     });
 
     it("does not render duplicate entries", () => {
-      propsMultiselectListBox.possibleValueList = [
-        "1",
-        "2",
-        "3",
-        "3",
-        "3",
-        "4",
-      ];
+      let localProps = {
+        ...propsSearchablelist,
+        possibleValueList: ["1", "2", "3", "3", "3", "4"],
+      };
       let wrapper = mount(Multiselect, {
-        props: propsMultiselectListBox,
+        props: localProps,
       });
       // duplicate entry will not be shown twice
-      const choicesUnique = [
-        ...new Set(propsMultiselectListBox.possibleValueList),
-      ].length;
+      const choicesUnique = [...new Set(localProps.possibleValueList)].length;
       expect(wrapper.vm.possibleValues.length).toBe(choicesUnique);
     });
 
     it("emits @update:modelValue", () => {
-      let props = propsMultiselectListBox;
       let wrapper = shallowMount(Multiselect, {
-        props,
+        props: propsSearchablelist,
       });
 
       const testValue = ["VALUE1", "VALUE2"];
-      const comp = wrapper.findComponent(MultiselectListBox);
+      const comp = wrapper.findComponent(SearchableList);
       comp.vm.$emit("update:modelValue", testValue);
 
       expect(wrapper.emitted("update:modelValue")).toBeTruthy();
@@ -224,19 +292,42 @@ describe("Multiselect.vue", () => {
 
   describe("twinlist", () => {
     it("renders component", () => {
+      let localProps = { ...propsTwinlist, isValid: true };
       propsTwinlist.isValid = true;
       let wrapper = shallowMount(Multiselect, {
-        props: propsTwinlist,
+        props: localProps,
       });
 
       expect(wrapper.findComponent(Twinlist).exists()).toBeTruthy();
     });
 
-    it("size defaults to 0", () => {
-      propsTwinlist.isValid = true;
-      propsTwinlist.limitNumberVisOptions = false;
+    it("is not searchable by default", () => {
       let wrapper = shallowMount(Multiselect, {
         props: propsTwinlist,
+      });
+
+      const twinlist = wrapper.findComponent(Twinlist);
+      expect(twinlist.find(".search-wrapper").exists()).toBe(false);
+    });
+
+    it("can be searchable", () => {
+      let localProps = { ...propsTwinlist, showSearch: true };
+      let wrapper = mount(Multiselect, {
+        props: localProps,
+      });
+
+      const twinlist = wrapper.findComponent(Twinlist);
+      expect(twinlist.find(".search-wrapper").exists()).toBe(true);
+    });
+
+    it("size defaults to 0", () => {
+      let localProps = {
+        ...propsTwinlist,
+        isValid: true,
+        limitNumberVisOptions: false,
+      };
+      let wrapper = shallowMount(Multiselect, {
+        props: localProps,
       });
 
       let rb = wrapper.findComponent(Twinlist);
@@ -244,9 +335,10 @@ describe("Multiselect.vue", () => {
     });
 
     it("emits @update:modelValue", () => {
-      let props = propsTwinlist;
+      let localProps = { ...propsTwinlist, isValid: true };
+      propsTwinlist.isValid = true;
       let wrapper = shallowMount(Multiselect, {
-        props,
+        props: localProps,
       });
 
       const testValue = ["VALUE1", "VALUE2"];

@@ -1,7 +1,7 @@
 <script>
-import MultiselectListBox from "webapps-common/ui/components/forms/MultiselectListBox.vue";
+import SearchableList from "webapps-common/ui/components/forms/SearchableList.vue";
 import Twinlist from "webapps-common/ui/components/forms/Twinlist.vue";
-import Checkboxes from "webapps-common/ui/components/forms/Checkboxes.vue";
+import SearchableCheckboxes from "webapps-common/ui/components/forms/SearchableCheckboxes.vue";
 import ComboBox from "webapps-common/ui/components/forms/ComboBox.vue";
 import { isEqual } from "lodash-es";
 
@@ -17,14 +17,18 @@ import { isEqual } from "lodash-es";
  */
 export default {
   components: {
-    Checkboxes,
+    SearchableCheckboxes,
     ComboBox,
-    MultiselectListBox,
+    SearchableList,
     Twinlist,
   },
   props: {
     isValid: {
       default: true,
+      type: Boolean,
+    },
+    showSearch: {
+      default: false,
       type: Boolean,
     },
     id: {
@@ -136,16 +140,18 @@ export default {
 
 <template>
   <div>
-    <Checkboxes
+    <SearchableCheckboxes
       v-if="isCheckboxes"
       :id="id"
       ref="form"
       :model-value="modelValue"
+      :size="maxVisibleListEntries"
       :alignment="checkBoxesAlignment"
       :aria-label="label"
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
+      :show-search="showSearch"
       @update:model-value="onChange"
     />
     <Twinlist
@@ -159,9 +165,10 @@ export default {
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
+      :show-search="showSearch"
       @update:model-value="onChange"
     />
-    <MultiselectListBox
+    <SearchableList
       v-if="isList"
       :id="id"
       ref="form"
@@ -171,6 +178,7 @@ export default {
       :possible-values="possibleValues"
       :is-valid="isValid"
       :title="description"
+      :show-search="showSearch"
       @update:model-value="onChange"
     />
     <ComboBox
