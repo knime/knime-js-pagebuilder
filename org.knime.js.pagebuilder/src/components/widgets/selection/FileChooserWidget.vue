@@ -144,6 +144,7 @@ export default {
       try {
         let { response, errorResponse } = await this.repositoryAPI({
           path: rootPath,
+          filter: null,
         });
         const defaultPaths = this.defaultPaths;
         this.dataReady = true;
