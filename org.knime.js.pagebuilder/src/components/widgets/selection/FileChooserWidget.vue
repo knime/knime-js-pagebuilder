@@ -129,7 +129,8 @@ export default {
         async requestRepository(rootPath) {
             try {
                 let { response, errorResponse } = await this.repositoryAPI({
-                    path: rootPath
+                    path: rootPath,
+                    filter: null
                 });
                 const defaultPaths = this.defaultPaths;
                 this.dataReady = true;
