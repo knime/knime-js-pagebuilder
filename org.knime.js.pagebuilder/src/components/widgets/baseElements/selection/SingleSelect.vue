@@ -2,6 +2,7 @@
 import RadioButtons from "webapps-common/ui/components/forms/RadioButtons.vue";
 import ListBox from "webapps-common/ui/components/forms/ListBox.vue";
 import Dropdown from "webapps-common/ui/components/forms/Dropdown.vue";
+import { isEqual } from "lodash-es";
 
 /**
  * SingleSelect Component
@@ -108,7 +109,9 @@ export default {
   },
   methods: {
     onChange(value) {
-      this.$emit("update:modelValue", value);
+      if (!isEqual(value, this.modelValue)) {
+        this.$emit("update:modelValue", value);
+      }
     },
     /**
      * Has a selection?

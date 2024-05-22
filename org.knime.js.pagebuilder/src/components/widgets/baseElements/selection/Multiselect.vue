@@ -3,6 +3,7 @@ import MultiselectListBox from "webapps-common/ui/components/forms/MultiselectLi
 import Twinlist from "webapps-common/ui/components/forms/Twinlist.vue";
 import Checkboxes from "webapps-common/ui/components/forms/Checkboxes.vue";
 import ComboBox from "webapps-common/ui/components/forms/ComboBox.vue";
+import { isEqual } from "lodash-es";
 
 /**
  * Multiselect Component
@@ -113,7 +114,9 @@ export default {
   },
   methods: {
     onChange(value) {
-      this.$emit("update:modelValue", value);
+      if (!isEqual(value, this.modelValue)) {
+        this.$emit("update:modelValue", value);
+      }
     },
     hasSelection() {
       return this.$refs.form.hasSelection();
