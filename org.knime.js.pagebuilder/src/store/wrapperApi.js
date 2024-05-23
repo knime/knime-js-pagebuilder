@@ -4,7 +4,8 @@ const { createJsonRpcRequest } = KnimeUtils;
 export const namespaced = true;
 
 let pollingTimeout; // global target for assigning setTimeout ids
-const POLLING_INTERVAL = 2000; // ms between polling actions
+const POLLING_INTERVAL = 500; // ms between polling actions
+const INITIAL_POLL_TIMEOUT = 100; // first poll for updates should happen almost immediately for fast execution
 
 /**
  * This store is a standing layer for Wizard Execution functionality in the AP. Together with the main.js APWrapper
@@ -137,6 +138,7 @@ export const actions = {
           }, {}),
         ]),
       },
+      initial: true,
     });
   },
 
@@ -300,7 +302,7 @@ export const actions = {
    *          }
    * @returns {undefined}
    */
-  async pollRPC({ dispatch }, { pollAction, callback, config }) {
+  async pollRPC({ dispatch }, { pollAction, callback, config, initial }) {
     let { result, error } = await dispatch("singleRPC", config);
 
     if (!result || error) {
@@ -310,7 +312,10 @@ export const actions = {
       });
       return;
     }
-    let { shouldPoll, pollInterval = POLLING_INTERVAL } =
+    const defaultPollInterval = initial
+      ? INITIAL_POLL_TIMEOUT
+      : POLLING_INTERVAL;
+    let { shouldPoll, pollInterval = defaultPollInterval } =
       (await dispatch(callback, result)) || {};
     if (shouldPoll) {
       consola.debug("WrapperAPI store: polling action", pollAction);

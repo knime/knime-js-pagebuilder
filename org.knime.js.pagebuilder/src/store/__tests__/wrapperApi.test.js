@@ -148,6 +148,7 @@ describe("wrapper API store", () => {
           },
         },
         pollAction: "updatePage",
+        initial: true,
       });
       expect(showAlert).not.toHaveBeenCalled();
     });
