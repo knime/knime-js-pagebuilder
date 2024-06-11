@@ -5,6 +5,9 @@ import Label from "webapps-common/ui/components/forms/Label.vue";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 import Button from "webapps-common/ui/components/Button.vue";
 
+const REFRESH_COUNTER_KEY = "refreshCounter";
+const TIME_STAMP_KEY = "refreshTimestamp";
+
 /**
  * Refresh button widget.
  *
@@ -37,6 +40,12 @@ export default {
     },
   },
   emits: ["updateWidget"],
+  data() {
+    return {
+      counter: 0,
+      date: new Date(),
+    };
+  },
   computed: {
     ...mapState("pagebuilder", ["nodesReExecuting"]),
     viewRep() {
@@ -45,11 +54,23 @@ export default {
     isExecuting() {
       return Boolean(this.nodesReExecuting?.length);
     },
+    isoFormattedDate() {
+      return this.date.toISOString();
+    },
   },
   methods: {
-    onClick() {
+    onChange() {
+      this.counter++;
+      this.date = new Date();
+      let update = {};
+      update[`viewRepresentation.currentValue.${REFRESH_COUNTER_KEY}`] =
+        this.counter;
+      update[`viewRepresentation.currentValue.${TIME_STAMP_KEY}`] =
+        this.isoFormattedDate;
+
       this.$emit("updateWidget", {
         nodeId: this.nodeId,
+        update,
       });
     },
   },
@@ -63,7 +84,7 @@ export default {
       compact
       class="refresh-button"
       :disabled="isExecuting"
-      @click="onClick"
+      @click="onChange"
     >
       {{ viewRep.buttonText }}
     </Button>

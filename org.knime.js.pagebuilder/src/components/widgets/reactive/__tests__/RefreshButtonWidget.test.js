@@ -99,11 +99,42 @@ describe("RefreshButtonWidget.vue", () => {
     expect(wrapper.findComponent(ErrorMessage).text()).toBe(errorMessage);
   });
 
+  it("has a reactive counter", () => {
+    let wrapper = mount(RefreshButtonWidget, { ...context, props });
+
+    expect(wrapper.vm.counter).toBe(0);
+    wrapper.vm.onChange();
+    expect(wrapper.vm.counter).toBe(1);
+  });
+
+  it("has a reactive timestamp", () => {
+    let wrapper = mount(RefreshButtonWidget, { ...context, props });
+
+    const initTimeStamp = wrapper.vm.date;
+
+    expect(wrapper.vm.date).toBeInstanceOf(Date);
+    expect(wrapper.vm.date).toStrictEqual(initTimeStamp);
+
+    wrapper.vm.onChange();
+
+    const updatedTimeStamp = wrapper.vm.date;
+    expect(wrapper.vm.date).toStrictEqual(updatedTimeStamp);
+    expect(updatedTimeStamp !== initTimeStamp).toBeTruthy();
+  });
+
   it("emits an updateWidget event on click", async () => {
     let wrapper = mount(RefreshButtonWidget, { ...context, props });
     await wrapper.find(".refresh-button").trigger("click");
+
+    const counter = wrapper.vm.counter;
+    const timeStamp = wrapper.vm.date.toISOString();
+
     expect(wrapper.emitted("updateWidget")[0][0]).toStrictEqual({
       nodeId: "13:0:12",
+      update: {
+        "viewRepresentation.currentValue.refreshCounter": counter,
+        "viewRepresentation.currentValue.refreshTimestamp": timeStamp,
+      },
     });
   });
 
