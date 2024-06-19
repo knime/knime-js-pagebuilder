@@ -1,4 +1,4 @@
-import { expect, describe, beforeEach, it } from "vitest";
+import { expect, describe, beforeEach, beforeAll, it, vi } from "vitest";
 /* eslint-disable max-lines */
 import { mount } from "@vue/test-utils";
 
@@ -14,6 +14,14 @@ describe("DateTimeWidget.vue", () => {
     propsUseExecTimes,
     propsDateNoDate,
     context;
+
+  beforeAll(() => {
+    global.ResizeObserver = vi.fn().mockImplementation(() => ({
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn(),
+    }));
+  });
 
   beforeEach(() => {
     context = {

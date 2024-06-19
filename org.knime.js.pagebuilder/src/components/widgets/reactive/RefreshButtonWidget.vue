@@ -8,6 +8,8 @@ import Button from "webapps-common/ui/components/Button.vue";
 const REFRESH_COUNTER_KEY = "refreshCounter";
 const TIME_STAMP_KEY = "refreshTimestamp";
 
+const DATA_TYPE = REFRESH_COUNTER_KEY;
+
 /**
  * Refresh button widget.
  *
@@ -34,6 +36,12 @@ export default {
         return nodeId !== "";
       },
     },
+    valuePair: {
+      default: () => ({
+        [DATA_TYPE]: 0,
+      }),
+      type: Object,
+    },
     errorMessage: {
       type: String,
       default: null,
@@ -42,7 +50,7 @@ export default {
   emits: ["updateWidget"],
   data() {
     return {
-      counter: 0,
+      counter: this.valuePair[DATA_TYPE],
       date: new Date(),
     };
   },

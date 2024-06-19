@@ -36,10 +36,18 @@ describe("RefreshButtonWidget.vue", () => {
           buttonText: "Imma button!",
           description: "Imma description!",
           label: "Imma label!",
-        },
-        viewValue: {
-          "@class":
-            "org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewValue",
+          defaultValue: {
+            "@class":
+              "org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewValue",
+            refreshCounter: 7,
+            refreshTimestamp: "",
+          },
+          currentValue: {
+            "@class":
+              "org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewValue",
+            refreshCounter: 7,
+            refreshTimestamp: "",
+          },
         },
         customCSS: "",
         initMethodName: "init",
@@ -62,6 +70,12 @@ describe("RefreshButtonWidget.vue", () => {
         namespace: "knimeRefreshButtonWidget",
       },
       nodeId: "13:0:12",
+      valuePair: {
+        "@class":
+          "org.knime.js.base.node.widget.reactive.refresh.RefreshButtonWidgetViewValue",
+        refreshCounter: 7,
+        refreshTimestamp: "",
+      },
     };
   });
 
@@ -102,9 +116,9 @@ describe("RefreshButtonWidget.vue", () => {
   it("has a reactive counter", () => {
     let wrapper = mount(RefreshButtonWidget, { ...context, props });
 
-    expect(wrapper.vm.counter).toBe(0);
+    expect(wrapper.vm.counter).toBe(7);
     wrapper.vm.onChange();
-    expect(wrapper.vm.counter).toBe(1);
+    expect(wrapper.vm.counter).toBe(8);
   });
 
   it("has a reactive timestamp", () => {

@@ -6,6 +6,10 @@ module.exports = {
     "@knime/eslint-config/vue3-typescript",
     "@knime/eslint-config/vitest",
   ],
+  env: {
+    node: true,
+    browser: true,
+  },
   globals: {
     consola: true,
   },
