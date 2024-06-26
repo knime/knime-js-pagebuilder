@@ -1,5 +1,3 @@
-import consola from "consola";
-
 export const namespaced = true;
 
 export const state = () => ({
