@@ -1,4 +1,4 @@
-import { ExtensionTypes } from "@knime/ui-extension-service";
+import { ExtensionTypes, RenderingType } from "@knime/ui-extension-service";
 import {
   type ExtensionConfig,
   ResourceTypes,
@@ -22,5 +22,8 @@ export const getTestExtensionConfig: () => ExtensionConfig & {
     type: ResourceTypes.SHADOW_APP,
     url: "http://localhost:8080/my_widget.html",
     baseUrl: "myBaseUrl",
+  },
+  renderingConfig: {
+    type: RenderingType.DEFAULT,
   },
 });

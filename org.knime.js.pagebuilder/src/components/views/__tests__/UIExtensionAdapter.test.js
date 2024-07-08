@@ -1,13 +1,5 @@
 /* eslint-disable max-lines */
-import {
-  expect,
-  describe,
-  beforeAll,
-  afterEach,
-  it,
-  vi,
-  beforeEach,
-} from "vitest";
+import { expect, describe, afterEach, it, vi, beforeEach } from "vitest";
 import { createStore } from "vuex";
 import { shallowMount } from "@vue/test-utils";
 vi.mock("@knime/ui-extension-service");
@@ -26,6 +18,7 @@ import {
   AlertType,
   ApplyState,
   DataServiceType,
+  RenderingType,
   SelectionModes,
   ViewState,
 } from "@knime/ui-extension-service";
@@ -130,7 +123,7 @@ describe("UIExtensionAdapter.vue", () => {
     },
   });
 
-  beforeAll(() => {
+  beforeEach(() => {
     props = { extensionConfig: getTestExtensionConfig(), viewConfig };
     context = createContext({
       props,
@@ -511,7 +504,10 @@ describe("UIExtensionAdapter.vue", () => {
     });
 
     it("shows a 'not supported' label if a report is rendered but the ui-extension doesn't support it", () => {
-      props.extensionConfig.generatedImageActionId = null;
+      props.extensionConfig.renderingConfig = {
+        type: RenderingType.REPORT,
+        canBeUsedInReport: false,
+      };
       const wrapper = shallowMount(
         UIExtensionAdapter,
         createContext({
@@ -531,7 +527,10 @@ describe("UIExtensionAdapter.vue", () => {
     });
 
     it("renders the ui-extension if a report is rendered and the ui-extension supports it", () => {
-      props.extensionConfig.generatedImageActionId = "blub";
+      props.extensionConfig.renderingConfig = {
+        type: RenderingType.REPORT,
+        canBeUsedInReport: true,
+      };
       const wrapper = shallowMount(
         UIExtensionAdapter,
         createContext({

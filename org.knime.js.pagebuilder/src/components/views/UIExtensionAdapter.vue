@@ -16,6 +16,9 @@ import {
   UIExtensionPushEvents,
   type Alert,
   ViewState,
+  ImageRenderingConfig,
+  RenderingType,
+  ReportRenderingConfig,
 } from "@knime/ui-extension-service";
 import useCloseAndApplyHandling from "./useCloseAndApplyHandling";
 
@@ -134,7 +137,9 @@ export default defineComponent({
     },
     isReportingButDoesNotSupportReporting() {
       return (
-        this.isReporting && this.extensionConfig.generatedImageActionId === null
+        this.isReporting &&
+        !(this.extensionConfig?.renderingConfig as ReportRenderingConfig)
+          ?.canBeUsedInReport
       );
     },
     apiLayer(): UIExtensionAPILayer {
@@ -183,19 +188,12 @@ export default defineComponent({
           });
         },
         imageGenerated: (generatedImage) => {
-          const isReportingForIframeComponent =
-            this.isReporting && !this.isUIExtShadowApp;
-
-          const generatedImageActionId =
-            this.extensionConfig?.generatedImageActionId;
-          if (isReportingForIframeComponent) {
-            const elementWidth = this.$el.offsetWidth;
-            this.$store.dispatch("pagebuilder/setReportingContent", {
-              nodeId: this.nodeId,
-              reportingContent: `<img style="width:${elementWidth}px" src="${generatedImage}" />`,
-            });
-          } else if (generatedImageActionId) {
-            window.EquoCommService.send(generatedImageActionId, generatedImage);
+          const { renderingConfig } = this.extensionConfig;
+          if (renderingConfig?.type === RenderingType.IMAGE) {
+            window.EquoCommService.send(
+              (renderingConfig as ImageRenderingConfig).actionId,
+              generatedImage,
+            );
           }
         },
         onApplied: (payload) => {
