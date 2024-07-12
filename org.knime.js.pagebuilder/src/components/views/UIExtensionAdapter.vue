@@ -16,7 +16,7 @@ import {
   UIExtensionPushEvents,
   type Alert,
   ViewState,
-  ImageRenderingConfig,
+  ImageGenerationRenderingConfig,
   RenderingType,
   ReportRenderingConfig,
 } from "@knime/ui-extension-service";
@@ -191,7 +191,7 @@ export default defineComponent({
           const { renderingConfig } = this.extensionConfig;
           if (renderingConfig?.type === RenderingType.IMAGE) {
             window.EquoCommService.send(
-              (renderingConfig as ImageRenderingConfig).actionId,
+              (renderingConfig as ImageGenerationRenderingConfig).actionId,
               generatedImage,
             );
           }
