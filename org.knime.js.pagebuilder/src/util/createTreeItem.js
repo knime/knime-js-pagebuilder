@@ -1,4 +1,4 @@
-import * as icons from "webapps-common/ui/util/fileTypeIcons";
+import { isIconExisting } from "@knime/utils";
 import { getFileExtension, getNameFromPath } from "./fileUtils";
 
 let getIcon, createTreeItemRecursively, checkDefaultPaths;
@@ -122,11 +122,11 @@ checkDefaultPaths = (defaultPaths, treeItem) => {
 };
 
 /**
- * Checks if the icon exists in the webapps-common file, otherwise returns a file icon
+ * Checks if the icon exists in the @knime/utils file, otherwise returns a file icon
  * @param {String} [fileEnding] the file ending for which an icon is required
  * @returns {String} returns either the icon name or a default file icon name if the icon is not present
  */
 getIcon = (fileEnding) => {
   let candidate = `${fileEnding}Icon`;
-  return icons.isIconExisting(candidate) ? candidate : "fileIcon";
+  return isIconExisting(candidate) ? candidate : "fileIcon";
 };

@@ -1,7 +1,7 @@
 <script>
 import { mapState } from "vuex";
-import FunctionButton from "webapps-common/ui/components/FunctionButton.vue";
-import InspectorIcon from "webapps-common/ui/assets/img/icons/code-html.svg";
+import { FunctionButton } from "@knime/components";
+import InspectorIcon from "@knime/styles/img/icons/code-html.svg";
 
 export default {
   components: {

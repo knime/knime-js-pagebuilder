@@ -8,7 +8,7 @@ import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
 import * as dialogStoreConfig from "@/store/dialog";
-import { UIExtension, UIExtensionAlerts } from "webapps-common/ui/uiExtensions";
+import { UIExtension, UIExtensionAlerts } from "@knime/ui-extensions-renderer";
 import DialogControls from "../DialogControls.vue";
 import UIExtensionAdapter from "../UIExtensionAdapter.vue";
 import NotDisplayable from "../NotDisplayable.vue";
@@ -27,9 +27,13 @@ import { nextTick } from "vue";
 
 const metaOrCtrlKey = "metaKey";
 
-vi.mock("webapps-common/util/navigator", () => {
+vi.mock("@knime/utils", async (importOriginal) => {
+  const actual = await importOriginal();
   return {
-    getMetaOrCtrlKey: () => metaOrCtrlKey,
+    ...actual,
+    navigatorUtils: {
+      getMetaOrCtrlKey: () => metaOrCtrlKey,
+    },
   };
 });
 

@@ -2,7 +2,7 @@ import { expect, describe, beforeEach, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 
 import FileDownloadWidget from "@/components/widgets/output/FileDownloadWidget.vue";
-import FileLink from "webapps-common/ui/components/FileLink.vue";
+import { FileLink } from "@knime/components";
 import { createStore } from "vuex";
 
 const downloadResourceLinkMock = vi.fn();

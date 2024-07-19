@@ -1,7 +1,6 @@
 <script>
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { Label, Fieldset } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import Fieldset from "webapps-common/ui/components/forms/Fieldset.vue";
 import Multiselect from "../baseElements/selection/Multiselect.vue";
 
 const DATA_TYPE = "value";

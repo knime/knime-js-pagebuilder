@@ -2,15 +2,18 @@ import { expect, describe, beforeAll, it, vi } from "vitest";
 import { shallowMount, mount } from "@vue/test-utils";
 
 import PopoverMessage from "@/components/ui/PopoverMessage.vue";
-import Label from "webapps-common/ui/components/forms/Label.vue";
-import Button from "webapps-common/ui/components/Button.vue";
-
-vi.mock("~/webapps-common/util/copyText");
+import { Label, Button } from "@knime/components";
 
 describe("PopoverMessage", () => {
   let wrapper;
 
   beforeAll(() => {
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: vi.fn(),
+      },
+    });
+
     wrapper = shallowMount(PopoverMessage, {
       props: {
         type: "error",
@@ -40,8 +43,7 @@ describe("PopoverMessage", () => {
     expect(wrapper.emitted("closeAlert"));
   });
 
-  it("copies text", () => {
-    document.execCommand = vi.fn();
+  it("copies text", async () => {
     const dispatchMock = vi.fn();
     wrapper = shallowMount(PopoverMessage, {
       props: {
@@ -58,7 +60,7 @@ describe("PopoverMessage", () => {
         },
       },
     });
-    wrapper.vm.copyText();
+    await wrapper.vm.copyText();
     expect(dispatchMock).toHaveBeenCalledWith(
       "notification/show",
       {

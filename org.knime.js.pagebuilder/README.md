@@ -13,12 +13,6 @@ It has two build outputs:
 
 - Install [Node.js][node], see version in [package.json](package.json).
 
-Pull the contained [git submodules](https://stackoverflow.com/a/4438292/5134084) with
-
-```sh
-git submodule update --init
-```
-
 ### Install dependencies
 
 ```sh
@@ -128,7 +122,7 @@ The PageBuilder expects that the embedding app provides the following:
 - Vue, Vuex and Consola compatible to the versions defined in [`package.json`](package.json)
 - global `window.Vue` object
 - global `window.consola` instance for logging
-- CSS variables as defined in the `webapps-common` project.
+- CSS variables as defined in the `@knime/styles` project.
   They are not included in the build in order to avoid duplication.
 - calls the method 'initStore' as described in the next section, before PageBuilder store actions and the component are
   being used

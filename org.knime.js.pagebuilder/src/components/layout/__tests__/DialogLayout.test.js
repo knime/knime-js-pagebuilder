@@ -4,7 +4,7 @@ import { shallowMount, mount } from "@vue/test-utils";
 
 import DialogLayout from "@/components/layout/DialogLayout.vue";
 import NodeView from "@/components/layout/NodeView.vue";
-import Messages from "webapps-common/ui/components/Messages.vue";
+import { Messages } from "@knime/components";
 
 import * as storeConfig from "@/store/pagebuilder";
 import * as alertStoreConfig from "@/store/alert";

@@ -5,8 +5,8 @@ import { markRaw } from "vue";
 import TreeSelect from "@/components/widgets/baseElements/selection/TreeSelect.vue";
 import TreeSelectItem from "@/components/widgets/baseElements/selection/TreeSelectItem.vue";
 
-import customIcon from "webapps-common/ui/assets/img/icons/activity.svg";
-import customSelectedIcon from "webapps-common/ui/assets/img/icons/cart.svg";
+import customIcon from "@knime/styles/img/icons/activity.svg";
+import customSelectedIcon from "@knime/styles/img/icons/cart.svg";
 
 describe("TreeSelect.vue", () => {
   let props;

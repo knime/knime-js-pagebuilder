@@ -1,5 +1,5 @@
 <script>
-import Button from "webapps-common/ui/components/Button.vue";
+import { Button } from "@knime/components";
 import ExecutingOverlay from "../ui/ExecutingOverlay.vue";
 import ExecutableImage from "../../assets/executable-plot.svg";
 

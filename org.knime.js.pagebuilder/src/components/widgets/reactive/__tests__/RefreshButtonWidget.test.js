@@ -3,9 +3,8 @@ import { createStore } from "vuex";
 import { mount } from "@vue/test-utils";
 import RefreshButtonWidget from "@/components/widgets/reactive/RefreshButtonWidget.vue";
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { Label, Button } from "@knime/components";
 import * as storeConfig from "@/store/pagebuilder";
-import Button from "webapps-common/ui/components/Button.vue";
 
 describe("RefreshButtonWidget.vue", () => {
   let props, store, context;

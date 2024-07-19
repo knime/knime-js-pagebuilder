@@ -1,11 +1,8 @@
 <script>
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { Label, Dropdown, Button } from "@knime/components";
+import { DateTimeInput } from "@knime/components/date-time-input";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import DateTimeInput from "webapps-common/ui/components/forms/DateTimeInput.vue";
-import Dropdown from "webapps-common/ui/components/forms/Dropdown.vue";
-import Button from "webapps-common/ui/components/Button.vue";
-import updateTime from "webapps-common/util/updateTime";
-import getLocalTimeZone from "webapps-common/util/localTimezone";
+import { getLocalTimeZone, updateTime } from "@knime/utils";
 
 import { format, zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
 

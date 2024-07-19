@@ -1,7 +1,7 @@
 import { expect, describe, beforeAll, it } from "vitest";
 import NotDisplayable from "@/components/views/NotDisplayable.vue";
 import { shallowMount } from "@vue/test-utils";
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { Label } from "@knime/components";
 
 describe("NotDisplayable.vue", () => {
   let wrapper;

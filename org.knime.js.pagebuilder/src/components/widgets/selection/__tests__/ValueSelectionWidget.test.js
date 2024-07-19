@@ -1,6 +1,6 @@
 import { expect, describe, beforeEach, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
-import Dropdown from "webapps-common/ui/components/forms/Dropdown.vue";
+import { Dropdown } from "@knime/components";
 import propsColumnLockedListImport from "@@/test/assets/propsDataColumnLockedList";
 import propsRadioHorizontalImport from "@@/test/assets/propsDataRadioHorizontal";
 import propsRadioVerticalImport from "@@/test/assets/propsDataRadioVertical";

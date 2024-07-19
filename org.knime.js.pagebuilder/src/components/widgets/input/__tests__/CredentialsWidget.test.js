@@ -2,9 +2,7 @@ import { expect, describe, beforeEach, it, vi } from "vitest";
 import { shallowMount, mount } from "@vue/test-utils";
 
 import CredentialsWidget from "@/components/widgets/input/CredentialsWidget.vue";
-import InputField from "webapps-common/ui/components/forms/InputField.vue";
-import Label from "webapps-common/ui/components/forms/Label.vue";
-import Fieldset from "webapps-common/ui/components/forms/Fieldset.vue";
+import { InputField, Label, Fieldset } from "@knime/components";
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
 
 describe("CredentialsWidget.vue", () => {

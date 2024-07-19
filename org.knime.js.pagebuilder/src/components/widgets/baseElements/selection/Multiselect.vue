@@ -1,8 +1,10 @@
 <script>
-import SearchableList from "webapps-common/ui/components/forms/SearchableList.vue";
-import Twinlist from "webapps-common/ui/components/forms/Twinlist.vue";
-import SearchableCheckboxes from "webapps-common/ui/components/forms/SearchableCheckboxes.vue";
-import ComboBox from "webapps-common/ui/components/forms/ComboBox.vue";
+import {
+  SearchableList,
+  Twinlist,
+  SearchableCheckboxes,
+  ComboBox,
+} from "@knime/components";
 import { isEqual } from "lodash-es";
 
 /**

@@ -2,7 +2,7 @@ import { expect, describe, beforeEach, it, vi } from "vitest";
 import { shallowMount, mount } from "@vue/test-utils";
 
 import NumberWidget from "@/components/widgets/NumberWidget.vue";
-import NumberInput from "webapps-common/ui/components/forms/NumberInput.vue";
+import { NumberInput } from "@knime/components";
 
 describe("NumberWidget.vue", () => {
   let props;
