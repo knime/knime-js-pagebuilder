@@ -3,7 +3,7 @@ import { expect, describe, beforeEach, beforeAll, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 
 import DateTimeWidget from "@/components/widgets/input/DateTimeWidget.vue";
-import DateTimeInput from "webapps-common/ui/components/forms/DateTimeInput.vue";
+import { DateTimeInput } from "@knime/components/date-time-input";
 import { format, differenceInCalendarDays } from "date-fns";
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
 

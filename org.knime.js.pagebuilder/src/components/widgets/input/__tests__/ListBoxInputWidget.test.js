@@ -2,7 +2,7 @@ import { expect, describe, beforeEach, it, vi } from "vitest";
 import { shallowMount, mount } from "@vue/test-utils";
 
 import ListBoxInputWidget from "@/components/widgets/input/ListBoxInputWidget.vue";
-import TextArea from "webapps-common/ui/components/forms/TextArea.vue";
+import { TextArea } from "@knime/components";
 
 describe("ListBoxInputWidget.vue", () => {
   let propsEmailRegexLineSplit, propsCharSplit, propsCSVSplit;

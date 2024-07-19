@@ -6,7 +6,7 @@ import * as apiStoreConfig from "@/store/wrapperApi";
 import * as alertStoreConfig from "@/store/alert";
 import ViewExecutable from "@/components/views/ViewExecutable.vue";
 import ExecutingOverlay from "@/components/ui/ExecutingOverlay.vue";
-import Button from "webapps-common/ui/components/Button.vue";
+import { Button } from "@knime/components";
 import { componentExtensionConfig } from "@@/test/assets/views/extensionConfig";
 
 describe("ViewExecutable.vue", () => {

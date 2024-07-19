@@ -1,7 +1,6 @@
 <script>
-import Fieldset from "webapps-common/ui/components/forms/Fieldset.vue";
+import { Fieldset, Twinlist } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import Twinlist from "webapps-common/ui/components/forms/Twinlist.vue";
 
 const VALUE_KEY = "columns";
 

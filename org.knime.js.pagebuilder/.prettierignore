@@ -1,6 +1,5 @@
 package-lock.json
-webapps-common
 coverage
 dist
+target
 test-results
-**/opensourcecredits/used-packages.json

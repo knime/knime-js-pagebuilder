@@ -1,7 +1,7 @@
 import { expect, describe, beforeEach, it } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 
-import Checkbox from "webapps-common/ui/components/forms/Checkbox.vue";
+import { Checkbox } from "@knime/components";
 import BooleanWidget from "@/components/widgets/input/BooleanWidget.vue";
 
 describe("BooleanWidget.vue", () => {

@@ -1,9 +1,7 @@
 <script>
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { Label, Fieldset, Dropdown } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import Fieldset from "webapps-common/ui/components/forms/Fieldset.vue";
 import SingleSelect from "../baseElements/selection/SingleSelect.vue";
-import Dropdown from "webapps-common/ui/components/forms/Dropdown.vue";
 
 const VALUE_KEY_NAME = "value";
 const COLUMN_KEY_NAME = "column";

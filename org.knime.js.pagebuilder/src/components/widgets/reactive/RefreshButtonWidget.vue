@@ -1,9 +1,8 @@
 <script>
 import { mapState } from "vuex";
 
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { Label, Button } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import Button from "webapps-common/ui/components/Button.vue";
 
 const REFRESH_COUNTER_KEY = "refreshCounter";
 const TIME_STAMP_KEY = "refreshTimestamp";

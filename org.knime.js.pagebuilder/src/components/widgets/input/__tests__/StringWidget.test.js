@@ -2,8 +2,7 @@ import { expect, describe, beforeEach, it, vi } from "vitest";
 import { shallowMount, mount } from "@vue/test-utils";
 
 import StringWidget from "@/components/widgets/input/StringWidget.vue";
-import InputField from "webapps-common/ui/components/forms/InputField.vue";
-import TextArea from "webapps-common/ui/components/forms/TextArea.vue";
+import { InputField, TextArea } from "@knime/components";
 
 describe("StringWidget.vue", () => {
   let propsInput, propsDateTextArea;

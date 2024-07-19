@@ -1,6 +1,5 @@
 <script>
-import TextArea from "webapps-common/ui/components/forms/TextArea.vue";
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { TextArea, Label } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const DATA_TYPE = "string";

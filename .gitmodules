@@ -1,3 +1,0 @@
-[submodule "org.knime.js.pagebuilder/webapps-common"]
-	path = org.knime.js.pagebuilder/webapps-common
-	url = ../webapps-common

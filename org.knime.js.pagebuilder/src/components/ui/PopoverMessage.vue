@@ -1,16 +1,12 @@
 <script>
-import Label from "webapps-common/ui/components/forms/Label.vue";
-import Button from "webapps-common/ui/components/Button.vue";
-import FunctionButton from "webapps-common/ui/components/FunctionButton.vue";
+import { Label, Button, FunctionButton } from "@knime/components";
 
-import SignWarningIcon from "webapps-common/ui/assets/img/icons/sign-warning.svg";
-import CircleWarningIcon from "webapps-common/ui/assets/img/icons/circle-warning.svg";
-import CircleMinus from "webapps-common/ui/assets/img/icons/circle-minus.svg";
-import CloseIcon from "webapps-common/ui/assets/img/icons/close.svg";
-import DropdownIcon from "webapps-common/ui/assets/img/icons/arrow-dropdown.svg";
-import CopyIcon from "webapps-common/ui/assets/img/icons/copy.svg";
-
-import { copyText } from "webapps-common/util/copyText";
+import SignWarningIcon from "@knime/styles/img/icons/sign-warning.svg";
+import CircleWarningIcon from "@knime/styles/img/icons/circle-warning.svg";
+import CircleMinus from "@knime/styles/img/icons/circle-minus.svg";
+import CloseIcon from "@knime/styles/img/icons/close.svg";
+import DropdownIcon from "@knime/styles/img/icons/arrow-dropdown.svg";
+import CopyIcon from "@knime/styles/img/icons/copy.svg";
 
 // Arbitrary length limit to determine if messages should be expandable or displayed initially.
 const MAX_EXPANDED_MESSAGE_LENGTH = 280;
@@ -100,8 +96,10 @@ export default {
      *
      * @returns {undefined}
      */
-    copyText() {
-      copyText(this.$refs.messageContent.textContent);
+    async copyText() {
+      await navigator.clipboard.writeText(
+        this.$refs.messageContent.textContent,
+      );
       this.$store.dispatch(
         "notification/show",
         {

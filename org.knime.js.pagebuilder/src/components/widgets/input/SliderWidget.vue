@@ -1,6 +1,6 @@
 <script>
 import Slider from "../baseElements/input/Slider.vue";
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { Label } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 import formatTooltip from "../../../util/tooltipFormatter";
 import { createTicks } from "../../../util/widgetUtil/slider/tickUtil";

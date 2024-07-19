@@ -7,8 +7,7 @@ import * as interactiveConfig from "@/store/interactivity";
 import InteractiveValueWidget from "@/components/widgets/interactive/InteractiveValueWidget.vue";
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
 import SingleSelect from "@/components/widgets/baseElements/selection/SingleSelect.vue";
-import Label from "webapps-common/ui/components/forms/Label.vue";
-import Fieldset from "webapps-common/ui/components/forms/Fieldset.vue";
+import { Label, Fieldset } from "@knime/components";
 
 describe("InteractiveValueWidget.vue", () => {
   let props, store, context;

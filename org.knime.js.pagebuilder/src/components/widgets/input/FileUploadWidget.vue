@@ -1,10 +1,9 @@
 <script>
 import { partial } from "filesize";
-import Label from "webapps-common/ui/components/forms/Label.vue";
+import { Label, Button } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import Button from "webapps-common/ui/components/Button.vue";
 import { getFileExtension } from "../../../util/fileUtils";
-import CircleCheckIcon from "webapps-common/ui/assets/img/icons/circle-check.svg";
+import CircleCheckIcon from "@knime/styles/img/icons/circle-check.svg";
 
 const DATA_TYPE = "path";
 /**

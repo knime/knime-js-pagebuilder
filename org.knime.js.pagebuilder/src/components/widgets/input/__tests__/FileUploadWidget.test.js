@@ -4,7 +4,7 @@ import { createStore } from "vuex";
 
 import FileUploadWidget from "@/components/widgets/input/FileUploadWidget.vue";
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
-import sleep from "webapps-common/util/sleep";
+import { sleep } from "@knime/utils";
 
 const uploadResourceMock = vi.fn().mockReturnValue(
   () =>

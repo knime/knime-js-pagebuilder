@@ -5,7 +5,7 @@ import vue from "@vitejs/plugin-vue";
 import svgLoader from "vite-svg-loader";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 // @ts-ignore
-import { svgoConfig } from "webapps-common/config/svgo.config";
+import { svgoConfig } from "@knime/styles/config/svgo.config";
 
 // https://vitejs.dev/config/
 // https://vitest.dev/config/
@@ -59,7 +59,7 @@ export default defineConfig(({ mode }) => {
     },
     test: {
       include: ["src/**/__tests__/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-      exclude: ["**/node_modules/**", "**/dist/**", "webapps-common/**"],
+      exclude: ["**/node_modules/**", "**/dist/**"],
       environment: "jsdom",
       reporters: ["default", "junit"],
       deps: { inline: ["consola"] },
@@ -69,7 +69,6 @@ export default defineConfig(({ mode }) => {
         exclude: [
           "coverage/**",
           "dist/**",
-          "webapps-common/**",
           "lib/**",
           "test/assets/**",
           "**/*.d.ts",

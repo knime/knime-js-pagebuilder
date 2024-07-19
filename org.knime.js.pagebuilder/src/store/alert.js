@@ -34,7 +34,7 @@ export const actions = {
 
 export const getters = {
   /**
-   * Convenience getter to format the current alert for use with the common Message component from webapps-common.
+   * Convenience getter to format the current alert for use with the common Message component from @knime/components.
    *
    * @param {Object} state - vuex alert store state.
    * @returns {Object | null} [message] - the alert in message-format if one is set; else null.

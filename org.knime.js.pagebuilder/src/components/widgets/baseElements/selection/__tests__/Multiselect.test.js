@@ -2,12 +2,14 @@ import { expect, describe, beforeEach, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
 
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
-import SearchableCheckboxes from "webapps-common/ui/components/forms/SearchableCheckboxes.vue";
-import SearchableList from "webapps-common/ui/components/forms/SearchableList.vue";
-import Twinlist from "webapps-common/ui/components/forms/Twinlist.vue";
-import Checkbox from "webapps-common/ui/components/forms/Checkbox.vue";
-import ComboBox from "webapps-common/ui/components/forms/ComboBox.vue";
-import MultiselectWebappsCommon from "webapps-common/ui/components/forms/Multiselect.vue";
+import {
+  SearchableCheckboxes,
+  SearchableList,
+  Twinlist,
+  Checkbox,
+  ComboBox,
+  Multiselect as MultiselectWebappsCommon,
+} from "@knime/components";
 
 describe("Multiselect.vue", () => {
   let propsTwinlist,

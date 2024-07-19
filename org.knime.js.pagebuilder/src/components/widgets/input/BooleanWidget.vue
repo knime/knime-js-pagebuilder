@@ -1,5 +1,5 @@
 <script>
-import Checkbox from "webapps-common/ui/components/forms/Checkbox.vue";
+import { Checkbox } from "@knime/components";
 
 const DATA_TYPE = "boolean";
 

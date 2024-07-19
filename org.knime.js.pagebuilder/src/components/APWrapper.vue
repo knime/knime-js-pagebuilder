@@ -49,10 +49,10 @@ export default {
 
 <style lang="postcss">
 @import url("modern-normalize/modern-normalize.css");
-@import url("webapps-common/ui/css/variables");
-@import url("webapps-common/ui/css/basics");
-@import url("webapps-common/ui/css/fonts");
-@import url("webapps-common/ui/css/grid");
+@import url("@knime/styles/css/variables");
+@import url("@knime/styles/css/basics");
+@import url("@knime/styles/css/fonts");
+@import url("@knime/styles/css/grid");
 
 /* add small extra side padding for single or component views in AP view window */
 .ap-wrapper .view-layout {

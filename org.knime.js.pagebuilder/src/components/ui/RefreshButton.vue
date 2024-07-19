@@ -1,7 +1,7 @@
 <script>
 import { mapState } from "vuex";
-import FunctionButton from "webapps-common/ui/components/FunctionButton.vue";
-import RefreshIcon from "webapps-common/ui/assets/img/icons/load.svg";
+import { FunctionButton } from "@knime/components";
+import RefreshIcon from "@knime/styles/img/icons/load.svg";
 
 export default {
   components: {

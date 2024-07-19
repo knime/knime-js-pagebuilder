@@ -287,7 +287,7 @@ export default {
         this.currentKeyboardNavNode.$el.querySelector(".tree-wholerow"),
       );
     },
-    // NOTE: this method can be moved to webapps-common as util - and can be used instead of the method
+    // NOTE: this method can be moved to @knime/utils or @knime/components - and can be used instead of the method
     //       scrollToCurrent of MultiSelectListBox and ListBox
     scrollToElement(scrollArea, element) {
       if (scrollArea.scrollHeight > scrollArea.clientHeight) {

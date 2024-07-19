@@ -1,5 +1,5 @@
 <script>
-import packages from "webapps-common/buildtools/opensourcecredits/used-packages.json";
+import packages from "@@/licenses/used-packages.json";
 
 /**
  * Wrapper component that is built as a separate library. The purpose of this renderless
@@ -8,7 +8,7 @@ import packages from "webapps-common/buildtools/opensourcecredits/used-packages.
  * is registered with the global Vue instance, but is never intended to be rendered.
  */
 export default {
-  packages, // JSON packages created by the collect-license script in webapps-common
+  packages, // JSON packages created by the license-check tool from @knime/licenses
 };
 </script>
 
