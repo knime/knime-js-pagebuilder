@@ -479,6 +479,33 @@ describe("UIExtensionAdapter.vue", () => {
     });
   });
 
+  describe("imageGenerated", () => {
+    it("calls EquoCommService.send with correct action id and image", () => {
+      const sendMock = vi.fn();
+      window.EquoCommService = {
+        send: sendMock,
+      };
+      const actionId = "ImageGenerationActionId";
+      props.extensionConfig.renderingConfig = {
+        type: RenderingType.IMAGE,
+        actionId,
+      };
+      const wrapper = shallowMount(
+        UIExtensionAdapter,
+        createContext({
+          props,
+          store: createPagebuilderStore({}),
+        }),
+      );
+      const apiLayer = getAPILayer(wrapper);
+      const generatedImage = "data:image/png;base64,ABCDEF";
+
+      apiLayer.imageGenerated(generatedImage);
+
+      expect(sendMock).toHaveBeenCalledWith(actionId, generatedImage);
+    });
+  });
+
   describe("reporting", () => {
     let setReportingContentMock, wrapper;
 
