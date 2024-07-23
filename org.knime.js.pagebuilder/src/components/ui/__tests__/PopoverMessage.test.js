@@ -135,6 +135,7 @@ describe("PopoverMessage", () => {
                     at b.init (http://localhost:3000/knime/rest/v4/jobs/3cfb485f-b17c-4635-bee1-c39175bff07c/workflow/wizard/web-resources/org/knime/core/require.js:5:5738)
                     at http://localhost:3000/knime/rest/v4/jobs/3cfb485f-b17c-4635-bee1-c39175bff07c/workflow/wizard/web-resources/org/knime/core/require.js:5:11262`,
       },
+      attachTo: document.body,
     });
 
     expect(wrapper.find(".expand-button").exists()).toBe(true);
