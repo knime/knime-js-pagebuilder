@@ -1,18 +1,4 @@
 import getHTML from "./getHTML";
-const isRuleApplied = (rule) => {
-  if (rule instanceof CSSFontFaceRule || rule instanceof CSSPageRule) {
-    return true;
-  }
-  if (
-    ["root", "body", "html"].some((selector) => {
-      return Boolean(rule.selectorText?.includes(selector));
-    })
-  ) {
-    return true;
-  }
-  const elements = document.querySelectorAll(rule.selectorText);
-  return Boolean(elements?.length);
-};
 
 const generateReportLayout = (reportingContent) => {
   // we can't clone this as we would loose the shadow roots
@@ -36,9 +22,7 @@ const generateReportLayout = (reportingContent) => {
   for (const sheet of document.styleSheets) {
     let style = "<style>";
     for (const rule of sheet.cssRules) {
-      if (isRuleApplied(rule)) {
-        style += rule.cssText;
-      }
+      style += rule.cssText;
     }
     style += "</style>";
     styleSheets.push(style);
