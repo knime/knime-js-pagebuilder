@@ -1,7 +1,7 @@
 <script>
 import Fieldset from "webapps-common/ui/components/forms/Fieldset.vue";
+import Multiselect from "../baseElements/selection/Multiselect.vue";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import Twinlist from "webapps-common/ui/components/forms/Twinlist.vue";
 
 const VALUE_KEY = "columns";
 
@@ -10,9 +10,9 @@ const VALUE_KEY = "columns";
  */
 export default {
   components: {
-    Twinlist,
     Fieldset,
     ErrorMessage,
+    Multiselect,
   },
   props: {
     nodeConfig: {
@@ -52,23 +52,11 @@ export default {
     label() {
       return this.viewRep.label;
     },
-    possibleColumns() {
-      return [...new Set(this.viewRep.possibleColumns)].map((x) => ({
-        id: x,
-        text: x,
-      }));
-    },
     description() {
       return this.viewRep.description || null;
     },
     enableSearch() {
       return Boolean(this.viewRep.enableSearch);
-    },
-    maxVisibleListEntries() {
-      if (this.viewRep.limitNumberVisOptions) {
-        return this.viewRep.numberVisOptions;
-      }
-      return 0; // default: show all
     },
     value() {
       return this.valuePair[VALUE_KEY];
@@ -106,15 +94,16 @@ export default {
 
 <template>
   <Fieldset :text="label">
-    <Twinlist
+    <Multiselect
       ref="form"
-      left-label="Excludes"
-      right-label="Includes"
       :model-value="value"
-      :size="maxVisibleListEntries"
-      :possible-values="possibleColumns"
+      type="Twinlist"
+      :number-vis-options="viewRep.numberVisOptions"
+      :limit-number-vis-options="viewRep.limitNumberVisOptions"
+      :possible-value-list="viewRep.possibleColumns"
       :is-valid="isValid"
-      :title="description"
+      :description="description"
+      :label="label"
       :show-search="enableSearch"
       @update:model-value="onChange"
     />
