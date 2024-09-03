@@ -8,7 +8,7 @@ import {
   UIExtensionAlerts,
   type ExtensionConfig,
   type UIExtensionAPILayer,
-} from "@knime/ui-extensions-renderer";
+} from "@knime/ui-extension-renderer";
 
 import DialogControls from "./DialogControls.vue";
 import NotDisplayable from "./NotDisplayable.vue";

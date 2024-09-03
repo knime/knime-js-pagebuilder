@@ -2,7 +2,7 @@ import { ExtensionTypes, RenderingType } from "@knime/ui-extension-service";
 import {
   type ExtensionConfig,
   ResourceTypes,
-} from "@knime/ui-extensions-renderer";
+} from "@knime/ui-extension-renderer";
 
 export const getTestExtensionConfig: () => ExtensionConfig & {
   resourceInfo: { baseUrl: string };

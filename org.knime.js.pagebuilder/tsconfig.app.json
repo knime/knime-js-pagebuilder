@@ -5,7 +5,8 @@
     "src/**/*",
     "src/**/*.vue",
     "test/assets/**/*",
-    "node_modules/@knime/**/*.vue"
+    "node_modules/@knime/**/*.vue",
+    "node_modules/@knime/**/node_modules/@knime/**/*.vue"
   ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {

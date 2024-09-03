@@ -8,7 +8,7 @@ import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
 import * as dialogStoreConfig from "@/store/dialog";
-import { UIExtension, UIExtensionAlerts } from "@knime/ui-extensions-renderer";
+import { UIExtension, UIExtensionAlerts } from "@knime/ui-extension-renderer";
 import DialogControls from "../DialogControls.vue";
 import UIExtensionAdapter from "../UIExtensionAdapter.vue";
 import NotDisplayable from "../NotDisplayable.vue";
