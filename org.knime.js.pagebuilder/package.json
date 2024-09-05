@@ -29,10 +29,10 @@
   "license": "UNLICENSED",
   "author": "KNIME AG, Zurich, Switzerland",
   "dependencies": {
-    "@knime/components": "1.0.13",
+    "@knime/components": "1.1.5",
     "@knime/styles": "1.0.3",
-    "@knime/ui-extension-service": "0.38.0",
     "@knime/ui-extension-renderer": "1.1.0",
+    "@knime/ui-extension-service": "0.38.0",
     "@knime/utils": "1.0.8",
     "consola": "3.2.3",
     "date-fns": "2.30.0",
