@@ -193,7 +193,12 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .node-view {
-  height: 100%;
+  @media screen {
+    /* height 100% does not mix well with flex-box on print 
+     (https://issues.chromium.org/issues/365922171) */
+    height: 100%;
+  }
+
   background-color: var(--knime-white);
 }
 
