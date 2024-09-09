@@ -11,5 +11,8 @@
 }
 
 .fill-container {
-  height: 100%;
+  @media screen {
+    /* height 100% does not mix well with flex-box on print */
+    height: 100%;
+  }
 }
