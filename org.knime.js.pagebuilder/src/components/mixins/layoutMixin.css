@@ -12,7 +12,22 @@
 
 .fill-container {
   @media screen {
-    /* height 100% does not mix well with flex-box on print */
+    /* height 100% does not mix well with flex-box on print
+    (https://issues.chromium.org/issues/365922171)
+    */
     height: 100%;
+  }
+
+  @media print {
+    /* 
+    * We limit the height of any image in a report to 100vh to avoid page breaks within an image.
+    * Page breaks within images within a flex box container lead to 
+    * erroneous print behavior in chrome (https://issues.chromium.org/issues/365957545)
+    */
+    :deep(img) {
+      max-height: 100vh;
+      object-fit: cover;
+      object-position: top;
+    }
   }
 }
