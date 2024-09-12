@@ -10,7 +10,13 @@ const layoutMixin = {
         classes.push("reporting-replaceable");
       }
       // add aspect ratio sizing classes;
-      if (this.resizeMethod.startsWith("aspectRatio")) {
+      // Because of faulty print behavior in case of large table views wrapped in aspect
+      // ratio containers we exclude this case from the aspect ratio classes
+      // (related to https://issues.chromium.org/issues/365922171)
+      if (
+        this.resizeMethod.startsWith("aspectRatio") &&
+        !(this.isReporting && this.resourceLocation?.endsWith("TableView.js"))
+      ) {
         classes.push(this.resizeMethod);
       } else if (this.resizeMethod.startsWith("view")) {
         classes.push("fill-container");
