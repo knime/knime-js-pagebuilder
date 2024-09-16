@@ -1,13 +1,16 @@
 .aspectRatio16by9 {
   aspect-ratio: 16 / 9;
+  overflow: hidden;
 }
 
 .aspectRatio4by3 {
   aspect-ratio: 4 / 3;
+  overflow: hidden;
 }
 
 .aspectRatio1by1 {
   aspect-ratio: 1 / 1;
+  overflow: hidden;
 }
 
 .fill-container {
