@@ -1,6 +1,5 @@
 import { setProp } from "../util/nestedProperty";
 import overrideRequired from "../util/overrideRequired";
-import getLayoutNodeIds from "../util/getLayoutNodeIds";
 import { generateReportLayout } from "../util/reporting";
 
 export const namespaced = true;
@@ -242,19 +241,6 @@ export const actions = {
     let { selectionTranslators: translators } = webNodePageConfiguration || {};
     if (translators) {
       dispatch("interactivity/updateSelectionTranslators", { translators });
-    }
-    let currentLayoutNodeIds = getLayoutNodeIds(state.page);
-    // need to use node ids from new layout (and not provided nodeIds) because layout node ids are absolute.
-    let newLayoutNodeIds = getLayoutNodeIds(page);
-    if (
-      newLayoutNodeIds.some((nodeId) => !currentLayoutNodeIds.includes(nodeId))
-    ) {
-      dispatch("alert/showAlert", {
-        type: "warn",
-        message:
-          "Currently, nodes are missing from the composite view layout. " +
-          "That could interfere with reactive nodes.",
-      });
     }
   },
 

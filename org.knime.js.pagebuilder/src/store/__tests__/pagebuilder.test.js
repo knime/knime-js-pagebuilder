@@ -639,15 +639,6 @@ describe("PageBuilder store", () => {
         store.dispatch("updatePage", { page: newPage, nodeIds: ["id1"] });
         expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
       });
-
-      it("dispatches alert when new layout contains nodes which the original layout does not", () => {
-        expect(alertStoreConfig.actions.showAlert).not.toHaveBeenCalled();
-        let newPage = getPage();
-        newPage.wizardPageContent.webNodePageConfiguration.layout.rows[0].columns[0].content =
-          [{ nodeID: "id5" }];
-        store.dispatch("updatePage", { page: newPage, nodeIds: ["id5"] });
-        expect(alertStoreConfig.actions.showAlert).toHaveBeenCalled();
-      });
     });
   });
 
