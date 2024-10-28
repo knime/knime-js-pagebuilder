@@ -86,7 +86,7 @@ describe("layoutMixin.js", () => {
         mixins: [layoutMixin],
       });
       expect(wrapper.vm.layoutStyle).toBe(
-        "max-height:300px;max-width:300px;min-height:100px;min-width:100px",
+        "max-height:300px;height:100%;max-width:300px;min-height:100px;min-width:100px",
       );
     });
 
@@ -105,7 +105,7 @@ describe("layoutMixin.js", () => {
         mixins: [layoutMixin],
       });
       expect(wrapper.vm.layoutStyle).toBe(
-        "max-height:300px;max-width:300px;min-height:100px;min-width:100px",
+        "max-height:300px;height:100%;max-width:300px;min-height:100px;min-width:100px",
       );
     });
 

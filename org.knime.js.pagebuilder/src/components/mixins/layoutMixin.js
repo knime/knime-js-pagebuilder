@@ -3,6 +3,11 @@ const layoutMixin = {
     resizeMethod() {
       return this.viewConfig.resizeMethod || "";
     },
+    isReportTableView() {
+      return (
+        this.isReporting && this.resourceLocation?.endsWith("TableView.js")
+      );
+    },
     layoutClasses() {
       let classes = [];
       // TODO make a data attribute instead of class
@@ -15,7 +20,7 @@ const layoutMixin = {
       // (related to https://issues.chromium.org/issues/365922171)
       if (
         this.resizeMethod.startsWith("aspectRatio") &&
-        !(this.isReporting && this.resourceLocation?.endsWith("TableView.js"))
+        !this.isReportTableView
       ) {
         classes.push(this.resizeMethod);
       } else if (this.resizeMethod.startsWith("view")) {
@@ -43,8 +48,15 @@ const layoutMixin = {
           minHeight = null,
           minWidth = null,
         } = this.viewConfig;
-        if (maxHeight !== null) {
-          style.push(`max-height:${maxHeight}px`);
+        if (maxHeight !== null && !this.isReportTableView) {
+          style.push(`max-height:${maxHeight}px;`);
+          /**
+           * We set height 100% on fill-container only on @media screen to prevent overflow issues
+           * on print for large elements including page breaks (https://issues.chromium.org/issues/365922171).
+           * But without these 100% height, e.g. the shrink
+           * behavior of other elements does not work anymore (e.g. ImageView).
+           */
+          style.push("height:100%;");
         }
         if (maxWidth !== null) {
           style.push(`max-width:${maxWidth}px`);

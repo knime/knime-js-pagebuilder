@@ -605,7 +605,7 @@ describe("UIExtensionAdapter.vue", () => {
         "fill-container class1 class2",
       );
       expect(wrapper.attributes("style")).toEqual(
-        "color: red; border: 1px solid green; max-height: 200px;" +
+        "color: red; border: 1px solid green; max-height: 200px; height: 100%;" +
           " max-width: 200px; min-height: 100px; min-width: 100px;",
       );
     });
