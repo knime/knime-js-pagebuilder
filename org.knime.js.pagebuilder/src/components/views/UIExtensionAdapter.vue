@@ -39,7 +39,10 @@ export default defineComponent({
     extensionConfig: {
       default: () => ({}),
       type: Object as PropType<
-        ExtensionConfig & { resourceInfo: { baseUrl: string } }
+        ExtensionConfig & {
+          resourceInfo: { baseUrl: string };
+          canBeEnlarged?: boolean;
+        }
       >,
       validate(extensionConfig: any) {
         if (typeof extensionConfig !== "object") {
@@ -108,6 +111,9 @@ export default defineComponent({
     ...mapState("pagebuilder/dialog", ["settingsOnClean"]),
     isUIExtShadowApp() {
       return this.extensionConfig?.resourceInfo?.type === "SHADOW_APP";
+    },
+    isEnlargedDialog() {
+      return this.extensionConfig?.canBeEnlarged && this.isNodeDialog;
     },
     resourceLocation() {
       return this.$store.getters["api/uiExtResourceLocation"]({
@@ -253,6 +259,12 @@ export default defineComponent({
         setControlsVisibility: ({ shouldBeVisible }) => {
           this.dialogControlsShouldBeVisible = shouldBeVisible;
         },
+        showDataValueView: () => {
+          // Do noting
+        },
+        closeDataValueView: () => {
+          // Do noting
+        },
       };
     },
   },
@@ -308,7 +320,10 @@ export default defineComponent({
     <UIExtension
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
-      :extension-config="extensionConfig"
+      :extension-config="{
+        ...extensionConfig,
+        startEnlarged: isEnlargedDialog,
+      }"
       :initial-shared-data="settingsOnClean"
       :is-reporting="isReporting"
       :is-dialog-layout="isDialogLayout"

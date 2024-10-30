@@ -147,6 +147,15 @@ describe("UIExtensionAdapter.vue", () => {
     expect(wrapper.findComponent(UIExtension).exists()).toBeTruthy();
   });
 
+  it("sets startEnlargedProperty for large dialogs", () => {
+    props.isNodeDialog = true;
+    props.extensionConfig.canBeEnlarged = true;
+    const wrapper = shallowMount(UIExtensionAdapter, context);
+    expect(
+      wrapper.findComponent(UIExtension).props().extensionConfig.startEnlarged,
+    ).toBeTruthy();
+  });
+
   const getAPILayer = (wrapper) => {
     return wrapper.findComponent(UIExtension).props().apiLayer;
   };
