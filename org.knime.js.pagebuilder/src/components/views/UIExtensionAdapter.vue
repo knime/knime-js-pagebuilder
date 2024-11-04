@@ -1,6 +1,6 @@
 <script lang="ts">
 import { mapState } from "vuex";
-import { defineComponent, type PropType } from "vue";
+import { defineComponent, toRaw, type PropType } from "vue";
 
 import layoutMixin from "../mixins/layoutMixin";
 import {
@@ -299,10 +299,10 @@ export default defineComponent({
         },
       });
     },
-
     removeAlert() {
       this.currentAlert = null;
     },
+    toRaw,
   },
 });
 </script>
@@ -321,7 +321,7 @@ export default defineComponent({
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
       :extension-config="{
-        ...extensionConfig,
+        ...toRaw(extensionConfig),
         startEnlarged: isEnlargedDialog,
       }"
       :initial-shared-data="settingsOnClean"
