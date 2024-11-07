@@ -31,6 +31,8 @@ export const classToComponentMap = {
     "DateTimeWidget",
   "org.knime.js.base.node.base.input.fileupload.FileUploadNodeRepresentation":
     "FileUploadWidget",
+  "org.knime.js.base.node.base.input.fileupload.MultipleFileUploadNodeRepresentation":
+    "MultipleFileUploadWidget",
 
   // selection widgets
   "org.knime.js.base.node.widget.selection.single.SingleSelectionWidgetRepresentation":

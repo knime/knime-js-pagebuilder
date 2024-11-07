@@ -4,16 +4,7 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
-    "lib": ["ES2023.Array"],
-    "types": ["node", "jsdom"],
-    "paths": {
-      "@/*": ["./src/*"],
-      "@@/*": ["./*"],
-      "vue-slider-component": ["./src/vue-slider-component.d.ts"]
-    },
-    "jsx": "preserve",
-    "allowJs": true,
-    "noEmit": true,
-    "verbatimModuleSyntax": false
+    "lib": ["ES2023.Array", "DOM", "DOM.Iterable"],
+    "types": ["node", "jsdom"]
   }
 }

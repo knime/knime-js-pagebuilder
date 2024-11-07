@@ -7,6 +7,7 @@ import CredentialsWidget from "./input/CredentialsWidget.vue";
 import DateTimeWidget from "./input/DateTimeWidget.vue";
 import DoubleWidget from "./input/DoubleWidget.vue";
 import FileUploadWidget from "./input/FileUploadWidget.vue";
+import MultipleFileUploadWidget from "./input/MultipleFileUploadWidget.vue";
 import IntegerWidget from "./input/IntegerWidget.vue";
 import ListBoxInputWidget from "./input/ListBoxInputWidget.vue";
 import SliderWidget from "./input/SliderWidget.vue";
@@ -68,6 +69,7 @@ export default {
     DateTimeWidget,
     DoubleWidget,
     FileUploadWidget,
+    MultipleFileUploadWidget,
     IntegerWidget,
     ListBoxInputWidget,
     SliderWidget,

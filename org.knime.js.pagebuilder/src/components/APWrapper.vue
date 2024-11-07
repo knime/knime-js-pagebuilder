@@ -34,11 +34,29 @@ export default {
 
     PageBuilder.initStore(this.$store);
   },
+  methods: {
+    preventGlobalDrag(event) {
+      event.preventDefault();
+      this.$refs.preventDrag.style.cursor = "not-allowed";
+    },
+    preventGlobalDrop(event) {
+      event.preventDefault();
+    },
+    resetCursor() {
+      this.$refs.preventDrag.style.cursor = "auto";
+    },
+  },
 };
 </script>
 
 <template>
-  <div :class="classes">
+  <div
+    ref="preventDrag"
+    :class="classes"
+    @dragover.prevent="preventGlobalDrag"
+    @drop="preventGlobalDrop"
+    @dragleave="resetCursor"
+  >
     <PageBuilder />
     <template v-if="debugPort">
       <DebugButton :debug-port="debugPort" />
