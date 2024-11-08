@@ -1,11 +1,47 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { Label, Dropzone } from "@knime/components";
+import { v4 as uuid } from "uuid";
+
+declare global {
+  interface Window {
+    KnimePageLoader?: any;
+  }
+}
+import {
+  Label,
+  Dropzone,
+  UploadItem,
+  UploadItemStatus,
+  ProgressList,
+  UploadProgressPanelItem,
+} from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import { getFileExtension } from "../../../util/fileUtils";
 import { useStore } from "vuex";
 
 const DATA_TYPE = "path";
+
+const FILE_UPLOAD_OBJECT_IDENTIFIER =
+  "org.knime.js.base.node.base.input.fileupload.FileUploadObject";
+
+interface FileValue {
+  "@class": typeof FILE_UPLOAD_OBJECT_IDENTIFIER;
+  id: string;
+  path: string;
+  fileName: string;
+  fileSize: number;
+}
+
+const createFileValue = (data: Omit<FileValue, "@class">): FileValue => ({
+  "@class": FILE_UPLOAD_OBJECT_IDENTIFIER,
+  ...data,
+});
+
+const UploadState: { [key in UploadItemStatus]: UploadItemStatus } = {
+  inprogress: "inprogress",
+  cancelled: "cancelled",
+  failed: "failed",
+  complete: "complete",
+} as const;
 
 interface Props {
   nodeConfig: {
@@ -16,8 +52,7 @@ interface Props {
   alignment?: "horizontal" | "vertical";
   isValid?: boolean;
   valuePair?: {
-    path?: string;
-    fileName?: string;
+    files?: FileValue[];
     [key: string]: any;
   };
   errorMessage?: string | null;
@@ -26,9 +61,15 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   alignment: "horizontal",
   isValid: true,
-  valuePair: () => ({ [DATA_TYPE]: "" }),
+  valuePair: () => ({ files: [] }),
   errorMessage: null,
 });
+
+const uploadItems = ref<UploadItem[]>([]);
+
+const isUploading = computed(() =>
+  uploadItems.value.some((item) => item.status === UploadState.inprogress),
+);
 
 const emit = defineEmits<{
   (
@@ -44,13 +85,8 @@ const emit = defineEmits<{
 // State
 const store = useStore();
 const uploadAPI = ref<any>(null);
-const uploadProgress = ref(0);
-const uploading = ref(false);
 const uploadErrorMessage = ref<string | null>(null);
 const initialized = ref(false);
-const localFileName = ref<string | null>(null);
-const localFileSize = ref<number | null>(null);
-// const input = ref<HTMLInputElement | null>(null);
 
 // Computed
 const viewRep = computed(() => props.nodeConfig.viewRepresentation);
@@ -58,11 +94,10 @@ const label = computed(() => viewRep.value.label as string);
 const description = computed(() => viewRep.value.description as string);
 const multiple = computed(() => viewRep.value.multiple as boolean);
 const fileTypes = computed(() => viewRep.value.fileTypes as string[]);
-// const disabled = computed(() => false); // option not needed right now, for later use
-const path = computed(() => props.valuePair?.path);
-const fileName = computed(
-  () => props.valuePair?.fileName || localFileName.value || "No file selected.",
-);
+const required = computed(() => viewRep.value.required as boolean);
+const disabled = computed(() => viewRep.value.disabled as boolean);
+const empty = computed(() => uploadItems.value.length === 0);
+const files = computed(() => props.valuePair?.files as FileValue[]);
 
 /* const fileSize = computed(() => {
   if (!localFileSize.value) {
@@ -86,9 +121,9 @@ consola.info("uploadManagerResult", uploadManagerResult);
 */
 
 // Methods
-const setUploadProgress = (progress: number) => {
+/* const setUploadProgress = (progress: number) => {
   uploadProgress.value = progress;
-};
+}; */
 
 const dropzoneHeight = computed(() => {
   return multiple.value ? "160px" : "92px";
@@ -106,29 +141,29 @@ const validate = () => {
     return { isValid };
   }
 
-  if (fileTypes.value?.length && fileName.value) {
-    isValid = fileTypes.value
-      ?.map((type: string) => type?.toLowerCase())
-      .includes(`.${getFileExtension(fileName.value)?.toLowerCase()}`);
+  // if (fileTypes.value?.length && fileName.value) {
+  //   isValid = fileTypes.value
+  //     ?.map((type: string) => type?.toLowerCase())
+  //     .includes(`.${getFileExtension(fileName.value)?.toLowerCase()}`);
 
-    if (!isValid) {
-      errorMessage =
-        "The type of the selected file does not match the allowed file " +
-        `types (${fileTypes.value.join(", ")}).`;
-    }
-  }
+  //   if (!isValid) {
+  //     errorMessage =
+  //       "The type of the selected file does not match the allowed file " +
+  //       `types (${fileTypes.value.join(", ")}).`;
+  //   }
+  // }
 
   if (!initialized.value) {
     initialized.value = true;
     return { isValid, errorMessage };
   }
 
-  if (uploading.value) {
+  if (isUploading.value) {
     isValid = false;
     errorMessage = "Upload still in progress.";
-  } else if (!path.value) {
+  } else if (required.value && !files.value?.length) {
     isValid = false;
-    errorMessage = "Input is required.";
+    errorMessage = "File is required.";
   }
 
   return {
@@ -145,66 +180,69 @@ const abortUpload = () => {
   store.getters["api/cancelUploadResource"]({ nodeId: props.nodeId });
 }; */
 
-const onChange = async (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  if (!target) {
-    return null;
+const onUploadComplete = (item: UploadItem, path: string) => {
+  const newFileValue: FileValue[] = [];
+  if (multiple.value) {
+    newFileValue.push(...files.value);
   }
-
-  const file = target.files?.[0];
-  if (!file) {
-    return null;
-  }
-
-  uploading.value = true;
-  uploadErrorMessage.value = null;
-  localFileName.value = file.name;
-  localFileSize.value = file.size;
-
-  if (window?.KnimePageLoader) {
-    const reader = new FileReader();
-    reader.onload = (res) => {
-      setUploadProgress(100);
-      emit("updateWidget", {
-        nodeId: props.nodeId,
-        type: DATA_TYPE,
-        update: {
-          "viewRepresentation.currentValue.path": res.target?.result as string,
-          "viewRepresentation.currentValue.fileName": localFileName.value,
-        },
-      });
-      uploading.value = false;
-    };
-    reader.readAsDataURL(file);
-    return null;
-  }
-
-  const { response, errorResponse } = await uploadAPI.value({
-    nodeId: props.nodeId,
-    resource: file,
-    progressCallback: setUploadProgress,
-    context: getCurrentInstance(),
-  });
-
-  if (errorResponse) {
-    uploading.value = false;
-    uploadErrorMessage.value = errorResponse.cancelled
-      ? "Upload cancelled."
-      : "Upload failed.";
-    localFileName.value = null;
-    localFileSize.value = null;
-    return null;
-  }
-
+  newFileValue.push(
+    createFileValue({
+      id: item.id,
+      fileName: item.name,
+      path,
+      fileSize: item.size,
+    }),
+  );
   emit("updateWidget", {
     nodeId: props.nodeId,
     type: DATA_TYPE,
     update: {
-      "viewRepresentation.currentValue.path": response.location,
-      "viewRepresentation.currentValue.fileName": localFileName.value,
+      "viewRepresentation.currentValue.files": newFileValue,
     },
   });
-  uploading.value = false;
+};
+
+const onRemove = (item: UploadItem) => {
+  // TODO: delete from API?
+  const index = uploadItems.value.findIndex((i) => i.id === item.id);
+  if (index !== -1) {
+    uploadItems.value.splice(index, 1);
+  }
+};
+
+const onCancel = (item: UploadItem) => {
+  const index = uploadItems.value.findIndex((i) => i.id === item.id);
+  if (index !== -1) {
+    uploadItems.value[index].status = UploadState.cancelled;
+    uploadItems.value[index].progress = 0;
+  }
+};
+
+const onFileAdded = (file: File) => {
+  const uploadItem: UploadItem = {
+    id: uuid(),
+    name: file.name,
+    size: file.size,
+    progress: 1,
+    status: UploadState.inprogress,
+  };
+  uploadItems.value.push(uploadItem);
+
+  if (window?.KnimePageLoader) {
+    let reader = new FileReader();
+    reader.onload = (res) => {
+      const index = uploadItems.value.findIndex((i) => i.id === uploadItem.id);
+      if (index !== -1) {
+        uploadItems.value[index].status = UploadState.complete;
+        uploadItems.value[index].progress = 100;
+      }
+      onUploadComplete(uploadItem, res.target!.result as string);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const onChange = () => {
   return null;
 };
 
@@ -224,11 +262,26 @@ defineExpose({
     <Label :text="label" large>
       <div class="upload-wrapper">
         <Dropzone
+          :multiple="multiple"
           label-text="Choose files or drop here"
           :supported-formats="fileTypes"
           :layout="layout"
           :style="{ height: dropzoneHeight }"
-        />
+          :disabled="disabled"
+          @file-added="onFileAdded"
+        >
+          <ProgressList v-if="!empty" style="width: 100%">
+            <UploadProgressPanelItem
+              v-for="item in uploadItems"
+              :key="item.id"
+              :item="item"
+              :allow-cancel="true"
+              :allow-remove="true"
+              @remove="onRemove(item)"
+              @cancel="onCancel(item)"
+            />
+          </ProgressList>
+        </Dropzone>
       </div>
     </Label>
     <ErrorMessage :error="uploadErrorMessage || errorMessage" />
