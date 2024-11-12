@@ -91,42 +91,22 @@ const initialized = ref(false);
 // Computed
 const viewRep = computed(() => props.nodeConfig.viewRepresentation);
 const label = computed(() => viewRep.value.label as string);
-const description = computed(() => viewRep.value.description as string);
 const multiple = computed(() => viewRep.value.multiple as boolean);
 const fileTypes = computed(() => viewRep.value.fileTypes as string[]);
 const required = computed(() => viewRep.value.required as boolean);
 const disabled = computed(() => viewRep.value.disabled as boolean);
-const empty = computed(() => uploadItems.value.length === 0);
 const files = computed(() => props.valuePair?.files as FileValue[]);
-
-/* const fileSize = computed(() => {
-  if (!localFileSize.value) {
-    return null;
-  }
-  return partial({
-    output: "object",
-  })(localFileSize.value);
-});
-
-const progressStyle = computed(() =>
-  isNaN(uploadProgress.value) ? "width:0%;" : `width:${uploadProgress.value}%;`,
-);
-
-const uploadManagerResult = useUploadManager({
-  prepareUpload: { parentId: "", files: [] },
-});
-
-consola.info("uploadManagerResult", uploadManagerResult);
-
-*/
-
-// Methods
-/* const setUploadProgress = (progress: number) => {
-  uploadProgress.value = progress;
-}; */
+for (const file of files.value) {
+  uploadItems.value.push({
+    id: file.id,
+    name: file.fileName,
+    size: file.fileSize,
+  });
+}
+const empty = computed(() => uploadItems.value.length === 0);
 
 const dropzoneHeight = computed(() => {
-  return multiple.value ? "160px" : "92px";
+  return multiple.value ? "320px" : "94px";
 });
 
 const layout = computed(() => {
@@ -140,18 +120,6 @@ const validate = () => {
   if (!uploadAPI.value) {
     return { isValid };
   }
-
-  // if (fileTypes.value?.length && fileName.value) {
-  //   isValid = fileTypes.value
-  //     ?.map((type: string) => type?.toLowerCase())
-  //     .includes(`.${getFileExtension(fileName.value)?.toLowerCase()}`);
-
-  //   if (!isValid) {
-  //     errorMessage =
-  //       "The type of the selected file does not match the allowed file " +
-  //       `types (${fileTypes.value.join(", ")}).`;
-  //   }
-  // }
 
   if (!initialized.value) {
     initialized.value = true;
@@ -171,14 +139,6 @@ const validate = () => {
     errorMessage: isValid ? null : errorMessage,
   };
 };
-
-/* const triggerInput = () => {
-  input.value?.click();
-};
-
-const abortUpload = () => {
-  store.getters["api/cancelUploadResource"]({ nodeId: props.nodeId });
-}; */
 
 const onUploadComplete = (item: UploadItem, path: string) => {
   const newFileValue: FileValue[] = [];
@@ -208,6 +168,21 @@ const onRemove = (item: UploadItem) => {
   if (index !== -1) {
     uploadItems.value.splice(index, 1);
   }
+  const newFileValue: FileValue[] = [];
+  if (multiple.value) {
+    newFileValue.push(...files.value);
+    const fileIndex = newFileValue.findIndex((i) => i.id === item.id);
+    if (fileIndex !== -1) {
+      newFileValue.splice(index, 1);
+    }
+  }
+  emit("updateWidget", {
+    nodeId: props.nodeId,
+    type: DATA_TYPE,
+    update: {
+      "viewRepresentation.currentValue.files": newFileValue,
+    },
+  });
 };
 
 const onCancel = (item: UploadItem) => {
@@ -218,27 +193,35 @@ const onCancel = (item: UploadItem) => {
   }
 };
 
-const onFileAdded = (file: File) => {
-  const uploadItem: UploadItem = {
-    id: uuid(),
-    name: file.name,
-    size: file.size,
-    progress: 1,
-    status: UploadState.inprogress,
-  };
-  uploadItems.value.push(uploadItem);
-
-  if (window?.KnimePageLoader) {
-    let reader = new FileReader();
-    reader.onload = (res) => {
-      const index = uploadItems.value.findIndex((i) => i.id === uploadItem.id);
-      if (index !== -1) {
-        uploadItems.value[index].status = UploadState.complete;
-        uploadItems.value[index].progress = 100;
-      }
-      onUploadComplete(uploadItem, res.target!.result as string);
+const onFilesSelected = (files: File[]) => {
+  for (const file of files) {
+    const uploadItem: UploadItem = {
+      id: uuid(),
+      name: file.name,
+      size: file.size,
+      progress: 1,
+      status: UploadState.inprogress,
     };
-    reader.readAsDataURL(file);
+    if (multiple.value) {
+      uploadItems.value.unshift(uploadItem);
+    } else {
+      uploadItems.value = [uploadItem];
+    }
+
+    if (window?.KnimePageLoader) {
+      let reader = new FileReader();
+      reader.onload = (res) => {
+        const index = uploadItems.value.findIndex(
+          (i) => i.id === uploadItem.id,
+        );
+        if (index !== -1) {
+          uploadItems.value[index].status = UploadState.complete;
+          uploadItems.value[index].progress = 100;
+        }
+        onUploadComplete(uploadItem, res.target!.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   }
 };
 
@@ -258,25 +241,32 @@ defineExpose({
 </script>
 
 <template>
-  <div :class="alignment" :title="description">
+  <div :class="alignment">
     <Label :text="label" large>
       <div class="upload-wrapper">
         <Dropzone
           :multiple="multiple"
           label-text="Choose files or drop here"
-          :supported-formats="fileTypes"
+          :accept="fileTypes"
           :layout="layout"
           :style="{ height: dropzoneHeight }"
+          :empty="empty"
           :disabled="disabled"
-          @file-added="onFileAdded"
+          :error="!isValid"
+          @files-selected="onFilesSelected"
         >
-          <ProgressList v-if="!empty" style="width: 100%">
+          <ProgressList
+            v-if="!empty"
+            class="upload-item-list"
+            style="width: 100%"
+          >
             <UploadProgressPanelItem
               v-for="item in uploadItems"
               :key="item.id"
               :item="item"
               :allow-cancel="true"
               :allow-remove="true"
+              :allow-delete="true"
               @remove="onRemove(item)"
               @cancel="onCancel(item)"
             />
@@ -289,93 +279,10 @@ defineExpose({
 </template>
 
 <style lang="postcss" scoped>
-p {
-  font-size: 13px;
-  line-height: 18px;
-  margin: 0;
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  word-break: break-word;
-
-  &.disabled {
-    opacity: 0.5;
-  }
-
-  & svg {
-    width: 16px;
-    height: 16px;
-    stroke-width: calc(32px / 16);
-    stroke: var(--theme-color-success);
-    margin-left: 5px;
-    flex-shrink: 0;
-  }
-}
-
-input {
-  user-select: none;
-  display: flex;
-  opacity: 0;
-  position: absolute;
-  z-index: -1;
-}
-
-.progress-bar-wrapper {
-  opacity: 0;
-  width: 50%;
-  display: flex;
-  align-items: flex-start;
-  margin-top: 10px;
-  height: 10px;
-  border-radius: var(--theme-slider-border-radius);
-  position: relative;
-  transition: opacity linear 0.3s 0.3s;
-
-  &.show-bar {
-    opacity: 1;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    height: 1px;
-    background: var(--knime-silver-sand);
-    width: 100%;
-    display: block;
-  }
-
-  & .progress-bar {
-    height: 100%;
-    background-color: var(--theme-slider-background-color);
-    max-width: 100%;
-    border-radius: var(--theme-slider-border-radius);
-    transition: width 0.5s;
-    z-index: 1;
-
-    & span {
-      font-size: 13px;
-      line-height: 18px;
-      top: -3px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      text-shadow: 0 0 var(--knime-white);
-    }
-  }
-}
-
-.horizontal {
-  & .upload-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-
-    & p {
-      margin-left: 10px;
-      margin-top: 0;
-    }
+.upload-wrapper {
+  & .upload-item-list {
+    max-height: calc(4 * 60px); /* 4 items height */
+    overflow-y: auto;
   }
 }
 </style>
