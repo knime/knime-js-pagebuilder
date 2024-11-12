@@ -36,6 +36,10 @@ const createFileValue = (data: Omit<FileValue, "@class">): FileValue => ({
   ...data,
 });
 
+interface AbortableUploadItem extends UploadItem {
+  abortController?: AbortController;
+}
+
 const UploadState: { [key in UploadItemStatus]: UploadItemStatus } = {
   inprogress: "inprogress",
   cancelled: "cancelled",
@@ -49,7 +53,6 @@ interface Props {
     viewRepresentation: any;
   };
   nodeId: string;
-  alignment?: "horizontal" | "vertical";
   isValid?: boolean;
   valuePair?: {
     files?: FileValue[];
@@ -59,13 +62,12 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  alignment: "horizontal",
   isValid: true,
   valuePair: () => ({ files: [] }),
   errorMessage: null,
 });
 
-const uploadItems = ref<UploadItem[]>([]);
+const uploadItems = ref<AbortableUploadItem[]>([]);
 
 const isUploading = computed(() =>
   uploadItems.value.some((item) => item.status === UploadState.inprogress),
@@ -95,7 +97,7 @@ const multiple = computed(() => viewRep.value.multiple as boolean);
 const fileTypes = computed(() => viewRep.value.fileTypes as string[]);
 const required = computed(() => viewRep.value.required as boolean);
 const disabled = computed(() => viewRep.value.disabled as boolean);
-const files = computed(() => props.valuePair?.files as FileValue[]);
+const files = computed(() => (props.valuePair?.files ?? []) as FileValue[]);
 for (const file of files.value) {
   uploadItems.value.push({
     id: file.id,
@@ -106,7 +108,7 @@ for (const file of files.value) {
 const empty = computed(() => uploadItems.value.length === 0);
 
 const dropzoneHeight = computed(() => {
-  return multiple.value ? "320px" : "94px";
+  return multiple.value ? "320px" : "94px"; // fixed value for 4 or 1 items high
 });
 
 const layout = computed(() => {
@@ -188,18 +190,97 @@ const onRemove = (item: UploadItem) => {
 const onCancel = (item: UploadItem) => {
   const index = uploadItems.value.findIndex((i) => i.id === item.id);
   if (index !== -1) {
-    uploadItems.value[index].status = UploadState.cancelled;
-    uploadItems.value[index].progress = 0;
+    const item = uploadItems.value[index];
+    item.status = UploadState.cancelled;
+    delete item.progress;
+    item.abortController?.abort();
   }
+};
+
+const uploadLocal = (file: File, uploadItem: AbortableUploadItem) => {
+  let reader = new FileReader();
+  reader.onload = (res) => {
+    const index = uploadItems.value.findIndex((i) => i.id === uploadItem.id);
+    if (index !== -1 && res.target) {
+      uploadItems.value[index].status = UploadState.complete;
+      uploadItems.value[index].progress = 100;
+      onUploadComplete(uploadItem, res.target.result as string);
+      delete uploadItems.value[index].progress;
+    }
+  };
+  reader.onprogress = (event) => {
+    const index = uploadItems.value.findIndex((i) => i.id === uploadItem.id);
+    if (index !== -1 && event.lengthComputable) {
+      uploadItems.value[index].progress = (event.loaded / event.total) * 100;
+    }
+  };
+  reader.onerror = (event) => {
+    const index = uploadItems.value.findIndex((i) => i.id === uploadItem.id);
+    if (index !== -1) {
+      uploadItems.value[index].abortController?.abort();
+      uploadItems.value[index].status = UploadState.failed;
+      delete uploadItems.value[index].progress;
+      consola.error("File upload failed", event);
+    }
+  };
+  uploadItem.abortController = reader as unknown as AbortController;
+  reader.readAsDataURL(file);
+};
+
+const uploadRemote = (file: File, uploadItem: AbortableUploadItem) => {
+  uploadItem.abortController = new AbortController();
+  uploadAPI
+    .value({
+      nodeId: props.nodeId,
+      resource: file,
+      abortController: uploadItem.abortController,
+      progressCallback: (progress: number) => {
+        const index = uploadItems.value.findIndex(
+          (i) => i.id === uploadItem.id,
+        );
+        if (index !== -1) {
+          uploadItems.value[index].progress = progress;
+        }
+      },
+    })
+    .then(
+      ({
+        response,
+        errorResponse,
+      }: {
+        response?: { location: string };
+        errorResponse?: {};
+      }) => {
+        const index = uploadItems.value.findIndex(
+          (i) => i.id === uploadItem.id,
+        );
+        if (index !== -1) {
+          const item = uploadItems.value[index];
+          if (errorResponse) {
+            if (item.status === UploadState.cancelled) {
+              return; // expected to fail if cancelled
+            }
+            item.status = UploadState.failed;
+            item.progress = 0;
+            consola.error("File upload failed", errorResponse);
+          } else if (response) {
+            item.status = UploadState.complete;
+            item.progress = 100;
+            onUploadComplete(uploadItem, response!.location);
+            delete item.progress;
+          }
+        }
+      },
+    );
 };
 
 const onFilesSelected = (files: File[]) => {
   for (const file of files) {
-    const uploadItem: UploadItem = {
+    const uploadItem: AbortableUploadItem = {
       id: uuid(),
       name: file.name,
       size: file.size,
-      progress: 1,
+      progress: 0,
       status: UploadState.inprogress,
     };
     if (multiple.value) {
@@ -209,18 +290,9 @@ const onFilesSelected = (files: File[]) => {
     }
 
     if (window?.KnimePageLoader) {
-      let reader = new FileReader();
-      reader.onload = (res) => {
-        const index = uploadItems.value.findIndex(
-          (i) => i.id === uploadItem.id,
-        );
-        if (index !== -1) {
-          uploadItems.value[index].status = UploadState.complete;
-          uploadItems.value[index].progress = 100;
-        }
-        onUploadComplete(uploadItem, res.target!.result as string);
-      };
-      reader.readAsDataURL(file);
+      uploadLocal(file, uploadItem);
+    } else {
+      uploadRemote(file, uploadItem);
     }
   }
 };
@@ -241,7 +313,7 @@ defineExpose({
 </script>
 
 <template>
-  <div :class="alignment">
+  <div>
     <Label :text="label" large>
       <div class="upload-wrapper">
         <Dropzone
@@ -264,9 +336,9 @@ defineExpose({
               v-for="item in uploadItems"
               :key="item.id"
               :item="item"
-              :allow-cancel="true"
-              :allow-remove="true"
-              :allow-delete="true"
+              allow-cancel
+              allow-remove
+              allow-delete
               @remove="onRemove(item)"
               @cancel="onCancel(item)"
             />
