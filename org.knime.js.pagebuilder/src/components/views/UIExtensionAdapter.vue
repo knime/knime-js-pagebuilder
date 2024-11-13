@@ -115,6 +115,12 @@ export default defineComponent({
     isEnlargedDialog() {
       return this.extensionConfig?.canBeEnlarged && this.isNodeDialog;
     },
+    extensionConfigWithStartEnlarged() {
+      return {
+        ...toRaw(this.extensionConfig),
+        startEnlarged: this.isEnlargedDialog,
+      };
+    },
     resourceLocation() {
       return this.$store.getters["api/uiExtResourceLocation"]({
         resourceInfo: this.extensionConfig?.resourceInfo,
@@ -302,7 +308,6 @@ export default defineComponent({
     removeAlert() {
       this.currentAlert = null;
     },
-    toRaw,
   },
 });
 </script>
@@ -320,10 +325,7 @@ export default defineComponent({
     <UIExtension
       :api-layer="apiLayer"
       :resource-location="resourceLocation"
-      :extension-config="{
-        ...toRaw(extensionConfig),
-        startEnlarged: isEnlargedDialog,
-      }"
+      :extension-config="extensionConfigWithStartEnlarged"
       :initial-shared-data="settingsOnClean"
       :is-reporting="isReporting"
       :is-dialog-layout="isDialogLayout"
