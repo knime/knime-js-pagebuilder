@@ -175,7 +175,10 @@ export default {
   },
   async mounted() {
     // TODO AP-19689 Remove if 'required' functionality implemented
-    if (this.nodeConfig.viewRepresentation.required) {
+    if (
+      this.nodeConfig.viewRepresentation.required &&
+      this.widgetName !== MultipleFileUploadWidget.__name
+    ) {
       this.updateWebNode({
         nodeId: this.nodeId,
         update: {

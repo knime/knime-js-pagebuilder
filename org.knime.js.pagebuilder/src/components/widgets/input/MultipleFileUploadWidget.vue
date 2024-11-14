@@ -119,9 +119,9 @@ const validate = () => {
   let isValid = true;
   let errorMessage = null;
 
-  if (!uploadAPI.value) {
+  /* if (!uploadAPI.value) {
     return { isValid };
-  }
+  } */
 
   if (!initialized.value) {
     initialized.value = true;
