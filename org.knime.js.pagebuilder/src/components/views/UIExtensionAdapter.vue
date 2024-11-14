@@ -246,7 +246,7 @@ export default defineComponent({
          * @returns {Promise}
          */
         sendAlert: (alert: Alert) => {
-          if (this.isDialogLayout) {
+          if (this.isDialogLayout || this.isNodeDialog) {
             this.displayAlert(alert);
           } else {
             this.currentAlert = alert;
