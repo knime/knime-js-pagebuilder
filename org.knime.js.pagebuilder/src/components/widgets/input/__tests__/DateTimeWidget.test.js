@@ -480,7 +480,7 @@ describe("DateTimeWidget.vue", () => {
   });
 
   describe("events and actions", () => {
-    it("emits @updateWidget if timezone changes", () => {
+    it("emits @updateWidget if timezone changes while keeping the local time", () => {
       let wrapper = mount(DateTimeWidget, {
         props: propsAll,
         stubs: {
@@ -495,8 +495,11 @@ describe("DateTimeWidget.vue", () => {
       expect(
         wrapper.emitted("updateWidget")[1][0].update[
           "viewRepresentation.currentValue"
-        ].zonestring,
-      ).toBe("Asia/Bangkok");
+        ],
+      ).toStrictEqual({
+        zonestring: "Asia/Bangkok",
+        datestring: "2020-05-03T09:54:55.000",
+      });
     });
 
     it("now button sets date, time and timezone to current values and location", () => {
@@ -556,47 +559,71 @@ describe("DateTimeWidget.vue", () => {
       ).toBe(0);
     });
 
-    it("emits @updateWidget if DateTimeInput emits @input", () => {
-      let wrapper = mount(DateTimeWidget, {
-        props: propsAll,
-        stubs: {
-          "client-only": "<div><slot /></div>",
-        },
-        ...context,
-      });
-
-      const testValue = "2020-10-14T13:32:45.153";
-      const input = wrapper.findComponent(DateTimeInput);
-      input.vm.$emit("update:modelValue", new Date(testValue));
-
-      expect(wrapper.emitted("updateWidget")).toBeTruthy();
-      expect(wrapper.emitted("updateWidget")[1][0]).toStrictEqual({
-        nodeId: propsAll.nodeId,
-        update: {
-          "viewRepresentation.currentValue": {
-            datestring: testValue,
-            zonestring: "Europe/Rome",
+    it.each([
+      {
+        timezone: "UTC",
+        offset: 0,
+      },
+      {
+        timezone: "Europe/Rome",
+        offset: 2,
+      },
+    ])(
+      "emits @updateWidget if DateTimeInput emits @input",
+      ({ timezone, offset }) => {
+        let wrapper = mount(DateTimeWidget, {
+          props: {
+            ...propsAll,
+            valuePair: {
+              datestring: "2020-01-01T00:00:00.000",
+              zonestring: timezone,
+            },
           },
-        },
-      });
-    });
+          stubs: {
+            "client-only": "<div><slot /></div>",
+          },
+          ...context,
+        });
+
+        const input = wrapper.findComponent(DateTimeInput);
+        const testHours = 13;
+        input.vm.$emit(
+          "update:modelValue",
+          Date.UTC(2020, 9, 14, testHours, 32, 45, 153),
+        );
+
+        expect(wrapper.emitted("updateWidget")).toBeTruthy();
+        expect(wrapper.emitted("updateWidget")[0][0]).toStrictEqual({
+          nodeId: propsAll.nodeId,
+          update: {
+            "viewRepresentation.currentValue": {
+              datestring: `2020-10-14T${testHours + offset}:32:45.153`,
+              zonestring: timezone,
+            },
+          },
+        });
+      },
+    );
   });
 
   describe("methods", () => {
-    it("parses knime date and timezone strings", () => {
-      let wrapper = mount(DateTimeWidget, {
-        props: propsAll,
-        stubs: {
-          "client-only": "<div><slot /></div>",
-        },
-        ...context,
-      });
-      const res = wrapper.vm.parseKnimeDateString(
-        "2020-10-10T13:32:45.153[Europe/Berlin]",
-      );
-      expect(res.datestring).toBe("2020-10-10T13:32:45.153");
-      expect(res.zonestring).toBe("Europe/Berlin");
-    });
+    it.each(["+02:00", "+02", "+0200", "Z"])(
+      "parses knime date and timezone strings",
+      (offset) => {
+        let wrapper = mount(DateTimeWidget, {
+          props: propsAll,
+          stubs: {
+            "client-only": "<div><slot /></div>",
+          },
+          ...context,
+        });
+        const res = wrapper.vm.parseKnimeDateString(
+          `2020-10-10T13:32:45.153${offset}[Europe/Rome]`,
+        );
+        expect(res.datestring).toBe("2020-10-10T13:32:45.153");
+        expect(res.zonestring).toBe("Europe/Rome");
+      },
+    );
 
     it("parses broken knime date and timezone strings", () => {
       let wrapper = mount(DateTimeWidget, {
@@ -606,7 +633,9 @@ describe("DateTimeWidget.vue", () => {
         },
         ...context,
       });
-      const res = wrapper.vm.parseKnimeDateString("2020-10-10T13:32:45.153[");
+      const res = wrapper.vm.parseKnimeDateString(
+        "2020-10-10T13:32:45.153[UTC]",
+      );
       expect(res.datestring).toBe("");
       expect(res.zonestring).toBe("");
     });
@@ -645,7 +674,7 @@ describe("DateTimeWidget.vue", () => {
     it("invalidates if min bound is not kept", () => {
       propsAll.nodeConfig.viewRepresentation.usemin = true;
       propsAll.nodeConfig.viewRepresentation.min =
-        "2020-10-10T13:32:45.153[Europe/Berlin]";
+        "2020-10-10T13:32:45.153+02:00[Europe/Berlin]";
       propsAll.nodeConfig.viewRepresentation.usemax = false;
       let wrapper = mount(DateTimeWidget, {
         props: propsAll,
@@ -665,7 +694,7 @@ describe("DateTimeWidget.vue", () => {
     it("invalidates if max bound is not kept", () => {
       propsAll.nodeConfig.viewRepresentation.usemax = true;
       propsAll.nodeConfig.viewRepresentation.max =
-        "2020-04-10T13:32:45.153[Europe/Berlin]";
+        "2020-04-10T13:32:45.153+02:00[Europe/Berlin]";
       propsAll.nodeConfig.viewRepresentation.usemin = false;
       let wrapper = mount(DateTimeWidget, {
         props: propsAll,

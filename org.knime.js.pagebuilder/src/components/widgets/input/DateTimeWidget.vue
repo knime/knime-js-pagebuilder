@@ -4,7 +4,8 @@ import { DateTimeInput } from "@knime/components/date-time-input";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 import { getLocalTimeZone, updateTime } from "@knime/utils";
 
-import { format, zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
+import { format } from "date-fns-tz";
+import { fromZonedTime, toZonedTime } from "@/util/widgetUtil/dateTime";
 
 /**
  * DateTimeWidget.
@@ -109,7 +110,7 @@ export default {
       return this.parseKnimeDateString(this.value.datestring);
     },
     dateObject() {
-      return zonedTimeToUtc(this.dateValue.datestring, this.timezone);
+      return fromZonedTime(this.dateValue.datestring, this.timezone);
     },
     timezone() {
       return this.dateValue.zonestring;
@@ -126,9 +127,9 @@ export default {
           this.viewRep.min,
         );
         if (this.viewRep.useminexectime) {
-          return zonedTimeToUtc(this.execTime, this.localTimeZone);
+          return this.execTime;
         }
-        return zonedTimeToUtc(datestring, zonestring);
+        return fromZonedTime(datestring, zonestring);
       }
       return null;
     },
@@ -138,9 +139,9 @@ export default {
           this.viewRep.max,
         );
         if (this.viewRep.usemaxexectime) {
-          return zonedTimeToUtc(this.execTime, this.localTimeZone);
+          return this.execTime;
         }
-        return zonedTimeToUtc(datestring, zonestring);
+        return fromZonedTime(datestring, zonestring);
       }
       return null;
     },
@@ -161,7 +162,9 @@ export default {
      * @returns {{zonestring: String, datestring: String}}
      */
     parseKnimeDateString(dateAndZoneString) {
-      let match = dateAndZoneString.match(/(.+)\[(.+)]/) || [null, "", ""];
+      let match = dateAndZoneString.match(
+        /(.+?)(?:Z|[+-]\d\d:?(?:\d\d)?)\[(.+)]/,
+      ) || [null, "", ""];
       return {
         datestring: match[1],
         zonestring: match[2],
@@ -171,8 +174,11 @@ export default {
       return format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS");
     },
     onChange(date, timezone) {
-      let zonedDate = utcToZonedTime(date, timezone);
-      let value = this.formatDate(zonedDate);
+      let zonedDate = toZonedTime(date, timezone);
+      // this.formatDate takes the local timezone into account, so we do not want to use it here
+      let value = zonedDate.toISOString().replace("Z", "");
+      this.dateValue.datestring = value;
+      this.dateValue.zonestring = timezone;
       this.publishUpdate(value, timezone);
     },
     publishUpdate(datestring, zonestring) {
@@ -190,7 +196,17 @@ export default {
       this.onChange(date, this.timezone);
     },
     onTimezoneChange(timezone) {
-      this.onChange(this.dateObject, timezone);
+      const existingTimeAsZonedTime = toZonedTime(
+        this.dateObject,
+        this.timezone,
+      );
+      const shiftedTime = fromZonedTime(existingTimeAsZonedTime, timezone);
+      /**
+       * Calling
+       * this.onChange(this.dateObject, timezone);
+       * would instead update the date object with the new timezone, which is not what we want.
+       */
+      this.onChange(shiftedTime, timezone);
     },
     nowButtonClicked() {
       let now = new Date(Date.now());
