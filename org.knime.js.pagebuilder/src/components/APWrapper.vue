@@ -54,6 +54,9 @@ export default {
 @import url("@knime/styles/css/fonts");
 @import url("@knime/styles/css/grid");
 
+/* Required, e.g., for the TextWidget.vue component */
+@import url("@knime/styles/css/headlines");
+
 /* add small extra side padding for single or component views in AP view window */
 .ap-wrapper .view-layout {
   padding: 0 5px;
