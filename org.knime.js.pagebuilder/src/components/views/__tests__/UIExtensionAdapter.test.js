@@ -336,9 +336,12 @@ describe("UIExtensionAdapter.vue", () => {
 
     const mockAlert = {
       message: "Shaken not stirred.",
-      nodeId: "123",
       type: AlertType.ERROR,
     };
+    const alertGlobalParams = expect.objectContaining({
+      subtitle: "Shaken not stirred.",
+      type: AlertType.ERROR,
+    });
 
     it("sends alerts to the store", async () => {
       apiLayer.sendAlert(mockAlert);
@@ -347,10 +350,8 @@ describe("UIExtensionAdapter.vue", () => {
 
       const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
       expect(alertsComponent.exists()).toBe(true);
-      alertsComponent.vm.$emit("display");
-      expect(showAlertSpy).toHaveBeenCalled();
-      const params = showAlertSpy.mock.calls[0][0];
-      expect(params).toMatchObject(mockAlert);
+      alertsComponent.vm.$emit("displayError", mockAlert);
+      expect(showAlertSpy).toHaveBeenCalledWith(alertGlobalParams);
     });
 
     it("provides wrapped closeAlert method to the store", async () => {
@@ -360,7 +361,7 @@ describe("UIExtensionAdapter.vue", () => {
       const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
       expect(alertsComponent.exists()).toBe(true);
 
-      alertsComponent.vm.$emit("display");
+      alertsComponent.vm.$emit("displayError", mockAlert);
       expect(showAlertSpy).toHaveBeenCalled();
       const { callback } = showAlertSpy.mock.calls[0][0];
       callback();
@@ -374,14 +375,14 @@ describe("UIExtensionAdapter.vue", () => {
       expect(alertsComponent.props("alert")).toBeNull();
     });
 
-    it("does not show alerts if isDialogLayout is true", async () => {
+    it("does show alerts immediately if isDialogLayout is true", async () => {
       wrapper.vm.$store.state.pagebuilder.isDialogLayout = true;
       apiLayer.sendAlert(mockAlert);
 
       await nextTick();
       const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
-      expect(alertsComponent.props("alert")).toBeNull();
-      expect(showAlertSpy).toHaveBeenCalled();
+      expect(alertsComponent.exists()).toBeFalsy();
+      expect(showAlertSpy).toHaveBeenCalledWith(alertGlobalParams);
     });
 
     it("does not show alerts if isReporting is true", async () => {

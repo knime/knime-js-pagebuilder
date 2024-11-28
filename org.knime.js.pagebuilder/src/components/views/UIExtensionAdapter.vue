@@ -19,8 +19,16 @@ import {
   ImageGenerationRenderingConfig,
   RenderingType,
   ReportRenderingConfig,
+  ErrorAlert,
+  WarningAlert,
+  AlertType,
 } from "@knime/ui-extension-service";
 import useCloseAndApplyHandling from "./useCloseAndApplyHandling";
+import {
+  errorToGlobalAlertParams,
+  type GlobalAlertParams,
+  warningToGlobalAlertParams,
+} from "./util/globalAlert";
 
 /**
  * Wrapper for all UIExtensions. Determines the type of component to render (either native/Vue-based or iframe-based).
@@ -41,6 +49,7 @@ export default defineComponent({
       type: Object as PropType<
         ExtensionConfig & {
           resourceInfo: { baseUrl: string };
+          nodeInfo?: { nodeName: string };
           canBeEnlarged?: boolean;
         }
       >,
@@ -154,6 +163,9 @@ export default defineComponent({
           ?.canBeUsedInReport
       );
     },
+    showAlertsImmediately() {
+      return this.isDialogLayout || this.isNodeDialog;
+    },
     apiLayer(): UIExtensionAPILayer {
       return {
         getResourceLocation: (path) => {
@@ -246,7 +258,7 @@ export default defineComponent({
          * @returns {Promise}
          */
         sendAlert: (alert: Alert) => {
-          if (this.isDialogLayout || this.isNodeDialog) {
+          if (this.showAlertsImmediately) {
             this.displayAlert(alert);
           } else {
             this.currentAlert = alert;
@@ -282,13 +294,32 @@ export default defineComponent({
     }
   },
   methods: {
-    displayAlert(alert: Alert | null) {
-      if (!alert) {
-        return;
+    displayAlert(alert: Alert) {
+      if (alert.type === AlertType.ERROR) {
+        this.displayError(alert);
+      } else {
+        this.displayWarnings(alert);
       }
-
+    },
+    displayError(errorAlert: ErrorAlert) {
+      this.displayGlobalAlertOverlay(errorToGlobalAlertParams(errorAlert));
+    },
+    displayWarnings(warning: WarningAlert) {
+      this.displayGlobalAlertOverlay(warningToGlobalAlertParams(warning));
+    },
+    displayGlobalAlertOverlay(alert: GlobalAlertParams) {
       this.$store.dispatch("pagebuilder/alert/showAlert", {
-        ...alert,
+        type: alert.type,
+        subtitle: alert.subtitle,
+        message: alert.message,
+        nodeId: this.extensionConfig.nodeId,
+        nodeInfo: {
+          /**
+           * With an empty truthy string as default we circumvent the "Missing Node" headline we get in case of dialog error alerts
+           */
+          nodeName: this.extensionConfig?.nodeInfo?.nodeName ?? " ",
+          ...this.extensionConfig?.nodeInfo,
+        },
         /**
          * Callback function passed to the alert store to close the local alert when a global alert action is
          * triggered.
@@ -333,9 +364,9 @@ export default defineComponent({
     />
 
     <UIExtensionAlerts
-      v-if="!isReporting"
+      v-if="!isReporting && !showAlertsImmediately"
       :alert="currentAlert"
-      @display="displayAlert(currentAlert)"
+      @display="displayAlert($event)"
     />
 
     <DialogControls
