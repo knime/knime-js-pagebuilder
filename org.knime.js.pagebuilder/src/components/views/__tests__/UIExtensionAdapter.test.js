@@ -350,7 +350,7 @@ describe("UIExtensionAdapter.vue", () => {
 
       const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
       expect(alertsComponent.exists()).toBe(true);
-      alertsComponent.vm.$emit("displayError", mockAlert);
+      alertsComponent.vm.$emit("display", mockAlert);
       expect(showAlertSpy).toHaveBeenCalledWith(alertGlobalParams);
     });
 
@@ -361,7 +361,7 @@ describe("UIExtensionAdapter.vue", () => {
       const alertsComponent = wrapper.findComponent(UIExtensionAlerts);
       expect(alertsComponent.exists()).toBe(true);
 
-      alertsComponent.vm.$emit("displayError", mockAlert);
+      alertsComponent.vm.$emit("display", mockAlert);
       expect(showAlertSpy).toHaveBeenCalled();
       const { callback } = showAlertSpy.mock.calls[0][0];
       callback();
