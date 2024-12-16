@@ -401,11 +401,11 @@ describe("UIExtensionAdapter.vue", () => {
   });
 
   describe("getResourceLocation", () => {
-    it("combines path with give base url", () => {
+    it("combines path with give base url", async () => {
       const wrapper = shallowMount(UIExtensionAdapter, context);
       const path = "myPath";
       const apiLayer = getAPILayer(wrapper);
-      expect(apiLayer.getResourceLocation(path)).toBe(
+      expect(await apiLayer.getResourceLocation(path)).toBe(
         getResourceLocation({
           resourceInfo: {
             path,

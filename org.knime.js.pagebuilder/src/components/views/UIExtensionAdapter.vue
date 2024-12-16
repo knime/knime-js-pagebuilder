@@ -140,12 +140,14 @@ export default defineComponent({
     apiLayer(): UIExtensionAPILayer {
       return {
         getResourceLocation: (path) => {
-          return this.$store.getters["api/uiExtResourceLocation"]({
-            resourceInfo: {
-              baseUrl: this.extensionConfig.resourceInfo.baseUrl,
-              path,
-            },
-          });
+          return Promise.resolve(
+            this.$store.getters["api/uiExtResourceLocation"]({
+              resourceInfo: {
+                baseUrl: this.extensionConfig.resourceInfo.baseUrl,
+                path,
+              },
+            }),
+          );
         },
         callNodeDataService: (params) => {
           return this.$store.dispatch("api/callService", {
