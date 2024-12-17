@@ -5,7 +5,7 @@ import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 import { getLocalTimeZone, updateTime } from "@knime/utils";
 
 import { format } from "date-fns-tz";
-import { fromZonedTime, toZonedTime } from "@/util/widgetUtil/dateTime";
+import { fromZonedTime, toZonedTime } from "../../../util/widgetUtil/dateTime";
 
 /**
  * DateTimeWidget.
