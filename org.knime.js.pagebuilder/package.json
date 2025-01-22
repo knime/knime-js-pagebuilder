@@ -31,8 +31,8 @@
   "dependencies": {
     "@knime/components": "1.9.2",
     "@knime/styles": "1.1.1",
-    "@knime/ui-extension-renderer": "1.2.0",
-    "@knime/ui-extension-service": "1.1.0",
+    "@knime/ui-extension-renderer": "2.0.3",
+    "@knime/ui-extension-service": "2.0.1",
     "@knime/utils": "1.1.1",
     "consola": "3.2.3",
     "date-fns": "2.30.0",

@@ -4,7 +4,7 @@ import {
   USER_ERROR_CODE,
   WarningAlert,
   WarningData,
-} from "@knime/ui-extension-service";
+} from "@knime/ui-extension-renderer/api";
 
 /**
  * We have to limit the message length to 160 characters,

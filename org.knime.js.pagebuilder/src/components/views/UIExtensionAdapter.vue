@@ -8,21 +8,17 @@ import {
   UIExtensionAlerts,
   type ExtensionConfig,
   type UIExtensionAPILayer,
-} from "@knime/ui-extension-renderer";
+} from "@knime/ui-extension-renderer/vue";
 
 import DialogControls from "./DialogControls.vue";
 import NotDisplayable from "./NotDisplayable.vue";
 import {
-  UIExtensionPushEvents,
   type Alert,
-  ViewState,
   ImageGenerationRenderingConfig,
-  RenderingType,
   ReportRenderingConfig,
   ErrorAlert,
   WarningAlert,
-  AlertType,
-} from "@knime/ui-extension-service";
+} from "@knime/ui-extension-renderer/api";
 import useCloseAndApplyHandling from "./useCloseAndApplyHandling";
 import {
   errorToGlobalAlertParams,
@@ -215,7 +211,7 @@ export default defineComponent({
         },
         imageGenerated: (generatedImage) => {
           const { renderingConfig } = this.extensionConfig;
-          if (renderingConfig?.type === RenderingType.IMAGE) {
+          if (renderingConfig?.type === "IMAGE") {
             window.EquoCommService.send(
               (renderingConfig as ImageGenerationRenderingConfig).actionId,
               generatedImage,
@@ -233,11 +229,9 @@ export default defineComponent({
           if (this.isNodeDialog) {
             this.$store.dispatch("pagebuilder/dialog/setApplySettings", {
               applySettings: () => {
-                dispatchPushEvent<UIExtensionPushEvents.EventTypes.ApplyDataEvent>(
-                  {
-                    eventType: UIExtensionPushEvents.EventTypes.ApplyDataEvent,
-                  },
-                );
+                dispatchPushEvent<"ApplyDataEvent">({
+                  eventType: "ApplyDataEvent",
+                });
                 return new Promise<{ isApplied: boolean }>((resolve) => {
                   this.resolveApplyDataPromise = resolve;
                 });
@@ -267,7 +261,7 @@ export default defineComponent({
           }
         },
         onDirtyStateChange: ({ view }) => {
-          if (view === ViewState.CONFIG || view === ViewState.IDLE) {
+          if (view === "configured" || view === "idle") {
             this.$store.dispatch("pagebuilder/dialog/dirtySettings", true);
           } else {
             this.$store.dispatch(
@@ -297,7 +291,7 @@ export default defineComponent({
   },
   methods: {
     displayAlert(alert: Alert) {
-      if (alert.type === AlertType.ERROR) {
+      if (alert.type === "error") {
         this.displayError(alert);
       } else {
         this.displayWarnings(alert);

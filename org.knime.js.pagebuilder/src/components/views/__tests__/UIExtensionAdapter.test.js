@@ -8,20 +8,15 @@ import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
 import * as dialogStoreConfig from "@/store/dialog";
-import { UIExtension, UIExtensionAlerts } from "@knime/ui-extension-renderer";
+import {
+  UIExtension,
+  UIExtensionAlerts,
+} from "@knime/ui-extension-renderer/vue";
 import DialogControls from "../DialogControls.vue";
 import UIExtensionAdapter from "../UIExtensionAdapter.vue";
 import NotDisplayable from "../NotDisplayable.vue";
 import { getTestExtensionConfig } from "./configs/extensionConfig";
 import { viewConfig } from "./configs/viewConfig";
-import {
-  AlertType,
-  ApplyState,
-  DataServiceType,
-  RenderingType,
-  SelectionModes,
-  ViewState,
-} from "@knime/ui-extension-service";
 import flushPromises from "flush-promises";
 import { nextTick } from "vue";
 
@@ -271,8 +266,8 @@ describe("UIExtensionAdapter.vue", () => {
       );
 
       getAPILayer(wrapper).onDirtyStateChange({
-        view: ViewState.CONFIG,
-        apply: ApplyState.CLEAN,
+        view: "configured",
+        apply: "clean",
       });
 
       expect(dirtySettingsMock).toHaveBeenCalledWith(expect.anything(), true);
@@ -293,8 +288,8 @@ describe("UIExtensionAdapter.vue", () => {
 
       getAPILayer(wrapper).publishData(cleanSettings);
       getAPILayer(wrapper).onDirtyStateChange({
-        view: ViewState.EXEC,
-        apply: ApplyState.CLEAN,
+        view: "executed",
+        apply: "clean",
       });
 
       expect(cleanSettingsMock).toHaveBeenCalledWith(
@@ -336,11 +331,11 @@ describe("UIExtensionAdapter.vue", () => {
 
     const mockAlert = {
       message: "Shaken not stirred.",
-      type: AlertType.ERROR,
+      type: "error",
     };
     const alertGlobalParams = expect.objectContaining({
       subtitle: "Shaken not stirred.",
-      type: AlertType.ERROR,
+      type: "error",
     });
 
     it("sends alerts to the store", async () => {
@@ -451,7 +446,7 @@ describe("UIExtensionAdapter.vue", () => {
         extensionType: "view",
       };
 
-      const serviceType = DataServiceType.INITIAL_DATA;
+      const serviceType = "initial_data";
       const dataServiceRequest = "myDataServiceRequest";
 
       const returnedData = await apiLayer.callNodeDataService({
@@ -475,7 +470,7 @@ describe("UIExtensionAdapter.vue", () => {
         workflowId: "myWorkflowId",
       };
 
-      const mode = SelectionModes.ADD;
+      const mode = "ADD";
       const selection = ["1", "3"];
 
       const returnedData = await apiLayer.updateDataPointSelection({
@@ -501,7 +496,7 @@ describe("UIExtensionAdapter.vue", () => {
       };
       const actionId = "ImageGenerationActionId";
       props.extensionConfig.renderingConfig = {
-        type: RenderingType.IMAGE,
+        type: "IMAGE",
         actionId,
       };
       const wrapper = shallowMount(
@@ -546,7 +541,7 @@ describe("UIExtensionAdapter.vue", () => {
 
     it("shows a 'not supported' label if a report is rendered but the ui-extension doesn't support it", () => {
       props.extensionConfig.renderingConfig = {
-        type: RenderingType.REPORT,
+        type: "REPORT",
         canBeUsedInReport: false,
       };
       const wrapper = shallowMount(
@@ -569,7 +564,7 @@ describe("UIExtensionAdapter.vue", () => {
 
     it("renders the ui-extension if a report is rendered and the ui-extension supports it", () => {
       props.extensionConfig.renderingConfig = {
-        type: RenderingType.REPORT,
+        type: "REPORT",
         canBeUsedInReport: true,
       };
       const wrapper = shallowMount(
