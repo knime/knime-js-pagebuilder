@@ -3,7 +3,6 @@ import { mapGetters } from "vuex";
 
 import NodeView from "./NodeView.vue";
 import { Messages } from "@knime/components";
-import { UIExtensionPushEvents } from "@knime/ui-extension-service";
 
 export default {
   components: {
@@ -75,7 +74,7 @@ export default {
     },
     onPublishDialogData(data) {
       this.dispatchPushEventToView?.({
-        eventType: UIExtensionPushEvents.EventTypes.DataEvent,
+        eventType: "DataEvent",
         payload: data,
       });
     },

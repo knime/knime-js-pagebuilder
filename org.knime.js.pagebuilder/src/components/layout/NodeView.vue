@@ -7,7 +7,6 @@ import ViewExecutable from "../views/ViewExecutable.vue";
 import NotDisplayable from "../views/NotDisplayable.vue";
 import ExecutingOverlay from "../ui/ExecutingOverlay.vue";
 import UIExtensionAdapter from "../views/UIExtensionAdapter.vue";
-import { RenderingType } from "@knime/ui-extension-service";
 
 /**
  * A node-level member of the layout tree, this component is responsible for shared functionality
@@ -104,7 +103,7 @@ export default defineComponent({
     isImageGeneration() {
       return (
         this.isUIExtension &&
-        this.uiExtensionConfig?.renderingConfig?.type === RenderingType.IMAGE
+        this.uiExtensionConfig?.renderingConfig?.type === "IMAGE"
       );
     },
     viewAvailable() {

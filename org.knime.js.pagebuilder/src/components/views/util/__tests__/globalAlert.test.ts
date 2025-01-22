@@ -1,12 +1,11 @@
 import {
-  AlertType,
   INTERNAL_ERROR_CODE,
   InternalErrorAlert,
   OtherErrorAlert,
   USER_ERROR_CODE,
   UserErrorAlert,
   WarningAlert,
-} from "@knime/ui-extension-service";
+} from "@knime/ui-extension-renderer/api";
 import { describe, expect, it } from "vitest";
 import {
   errorToGlobalAlertParams,
@@ -24,7 +23,7 @@ describe("globalAlert", () => {
           details: null,
         },
         message: "message",
-        type: AlertType.ERROR,
+        type: "error",
       };
       expect(errorToGlobalAlertParams(error)).toStrictEqual({
         type: "error",
@@ -39,7 +38,7 @@ describe("globalAlert", () => {
           details: "details",
         },
         message: "message",
-        type: AlertType.ERROR,
+        type: "error",
       };
       expect(errorToGlobalAlertParams(error)).toStrictEqual({
         type: "error",
@@ -55,7 +54,7 @@ describe("globalAlert", () => {
           details: null,
         },
         message: LONG_STRING,
-        type: AlertType.ERROR,
+        type: "error",
       };
       expect(errorToGlobalAlertParams(error)).toStrictEqual({
         type: "error",
@@ -70,7 +69,7 @@ describe("globalAlert", () => {
           details: "details",
         },
         message: LONG_STRING,
-        type: AlertType.ERROR,
+        type: "error",
       };
       expect(errorToGlobalAlertParams(error)).toStrictEqual({
         type: "error",
@@ -88,7 +87,7 @@ describe("globalAlert", () => {
           typeName: "org.knime.some.Type",
         },
         message: "message",
-        type: AlertType.ERROR,
+        type: "error",
       };
 
       expect(errorToGlobalAlertParams(error)).toStrictEqual({
@@ -107,7 +106,7 @@ describe("globalAlert", () => {
           typeName: "org.knime.some.Type",
         },
         message: LONG_STRING,
-        type: AlertType.ERROR,
+        type: "error",
       };
 
       expect(errorToGlobalAlertParams(error)).toStrictEqual({
@@ -122,7 +121,7 @@ describe("globalAlert", () => {
     it("formats error alert with short message", () => {
       const error: OtherErrorAlert = {
         message: "message",
-        type: AlertType.ERROR,
+        type: "error",
       };
 
       expect(errorToGlobalAlertParams(error)).toStrictEqual({
@@ -134,7 +133,7 @@ describe("globalAlert", () => {
     it("formats error alert with long message", () => {
       const error: OtherErrorAlert = {
         message: LONG_STRING,
-        type: AlertType.ERROR,
+        type: "error",
       };
 
       expect(errorToGlobalAlertParams(error)).toStrictEqual({
@@ -153,7 +152,7 @@ describe("globalAlert", () => {
             details: "details",
           },
         ],
-        type: AlertType.WARN,
+        type: "warn",
       };
       expect(warningToGlobalAlertParams(warning)).toStrictEqual({
         subtitle: "message",
@@ -169,7 +168,7 @@ describe("globalAlert", () => {
             message: "message",
           },
         ],
-        type: AlertType.WARN,
+        type: "warn",
       };
       expect(warningToGlobalAlertParams(warning)).toStrictEqual({
         message: "message",
@@ -187,7 +186,7 @@ describe("globalAlert", () => {
             message: "message2",
           },
         ],
-        type: AlertType.WARN,
+        type: "warn",
       };
       expect(warningToGlobalAlertParams(warning)).toStrictEqual({
         subtitle: "2 warnings",
@@ -203,7 +202,7 @@ describe("globalAlert", () => {
             message: LONG_STRING,
           },
         ],
-        type: AlertType.WARN,
+        type: "warn",
       };
       expect(warningToGlobalAlertParams(warning)).toStrictEqual({
         subtitle: "Expand for details",
