@@ -45,6 +45,7 @@ const UploadState: Partial<{ [key in UploadItemStatus]: UploadItemStatus }> = {
   cancelled: "cancelled",
   failed: "failed",
   complete: "complete",
+  processing: "processing",
 } as const;
 
 interface Props {

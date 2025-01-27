@@ -33,7 +33,7 @@
     "@knime/styles": "1.1.1",
     "@knime/ui-extension-renderer": "2.0.3",
     "@knime/ui-extension-service": "2.0.1",
-    "@knime/utils": "1.1.1",
+    "@knime/utils": "1.2.4",
     "consola": "3.2.3",
     "date-fns": "2.30.0",
     "date-fns-tz": "2.0.0",
