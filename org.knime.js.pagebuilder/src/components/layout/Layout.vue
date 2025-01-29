@@ -49,6 +49,8 @@ export default {
   },
   mounted() {
     if (this.isReporting) {
+      // Do not show a scrollbar while generating the report which might appear when the generation takes too long
+      document.body.style.overflow = "hidden";
       // notify store that layout is rendered for report generation
       this.$store.dispatch("pagebuilder/setReportingContent", {
         nodeId: "layout",
