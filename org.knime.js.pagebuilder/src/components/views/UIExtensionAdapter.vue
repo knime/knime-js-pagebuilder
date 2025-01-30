@@ -239,14 +239,30 @@ export default defineComponent({
               },
             });
           }
+
+          const id = {
+            projectId: this.extensionConfig.projectId,
+            workflowId: this.extensionConfig.workflowId,
+            nodeId: this.extensionConfig.nodeId,
+          };
+          // TODO NXT-3319 Right now the detached pageBuilder will use the pagebuilder store, but the embedded one will use the
+          // knime-ui one.
+          this.$store.dispatch("api/registerService", {
+            service: dispatchPushEvent,
+            id,
+          });
           this.$store.dispatch("pagebuilder/service/registerService", {
             service,
           });
           this.$emit("registerPushEventService", dispatchPushEvent);
-          return () =>
+          return () => {
             this.$store.dispatch("pagebuilder/service/deregisterService", {
               service,
             });
+            this.$store.dispatch("api/deregisterService", {
+              id,
+            });
+          };
         },
         /**
          * Dispatches an event to show the local alert details with the global alert via store action.
