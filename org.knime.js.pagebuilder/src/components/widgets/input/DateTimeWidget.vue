@@ -285,7 +285,7 @@ export default {
   & .zone-wrapper {
     display: flex;
     margin-top: 10px;
-    vertical-align: center;
+    vertical-align: middle;
 
     & .now-button {
       height: 30px;

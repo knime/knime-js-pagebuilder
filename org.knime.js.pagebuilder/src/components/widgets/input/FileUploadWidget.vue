@@ -257,7 +257,7 @@ p {
   margin-top: 10px;
   display: flex;
   align-items: center;
-  word-break: break-word;
+  overflow-wrap: break-word;
 
   &.disabled {
     opacity: 0.5;
