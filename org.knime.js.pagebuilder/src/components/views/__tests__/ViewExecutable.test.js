@@ -1,13 +1,15 @@
-import { expect, describe, beforeAll, afterEach, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { mount, shallowMount } from "@vue/test-utils";
 import { createStore } from "vuex";
-import { shallowMount, mount } from "@vue/test-utils";
+
+import { Button } from "@knime/components";
+
+import { componentExtensionConfig } from "@@/test/assets/views/extensionConfig";
+import ExecutingOverlay from "@/components/ui/ExecutingOverlay.vue";
+import ViewExecutable from "@/components/views/ViewExecutable.vue";
+import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
-import * as alertStoreConfig from "@/store/alert";
-import ViewExecutable from "@/components/views/ViewExecutable.vue";
-import ExecutingOverlay from "@/components/ui/ExecutingOverlay.vue";
-import { Button } from "@knime/components";
-import { componentExtensionConfig } from "@@/test/assets/views/extensionConfig";
 
 describe("ViewExecutable.vue", () => {
   it("renders", () => {

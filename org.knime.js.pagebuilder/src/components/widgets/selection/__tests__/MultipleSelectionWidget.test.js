@@ -1,8 +1,8 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
 
-import MultipleSelectionWidget from "@/components/widgets/selection/MultipleSelectionWidget.vue";
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
+import MultipleSelectionWidget from "@/components/widgets/selection/MultipleSelectionWidget.vue";
 
 describe("MultipleSelectionWidget.vue", () => {
   let propsTwinlist,

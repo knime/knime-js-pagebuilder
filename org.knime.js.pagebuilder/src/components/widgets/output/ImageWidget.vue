@@ -1,5 +1,6 @@
 <script>
 import { Label } from "@knime/components";
+
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 /**

@@ -1,6 +1,7 @@
 <script>
-import { RadioButtons, ListBox, Dropdown } from "@knime/components";
 import { isEqual } from "lodash-es";
+
+import { Dropdown, ListBox, RadioButtons } from "@knime/components";
 
 /**
  * SingleSelect Component

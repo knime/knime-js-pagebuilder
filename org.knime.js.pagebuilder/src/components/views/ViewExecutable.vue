@@ -1,7 +1,8 @@
 <script>
 import { Button } from "@knime/components";
-import ExecutingOverlay from "../ui/ExecutingOverlay.vue";
+
 import ExecutableImage from "../../assets/executable-plot.svg";
+import ExecutingOverlay from "../ui/ExecutingOverlay.vue";
 
 /**
  * Stylized overlay displayed in the Dialog-Preview when the node is not executed or requires

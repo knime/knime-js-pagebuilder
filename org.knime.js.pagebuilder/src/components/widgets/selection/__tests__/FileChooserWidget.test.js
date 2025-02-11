@@ -1,9 +1,9 @@
-import { expect, describe, beforeAll, beforeEach, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createStore } from "vuex";
 
-import FileChooserWidget from "@/components/widgets/selection/FileChooserWidget.vue";
 import TreeSelect from "@/components/widgets/baseElements/selection/TreeSelect.vue";
+import FileChooserWidget from "@/components/widgets/selection/FileChooserWidget.vue";
 
 const propsTemplate = {
   nodeConfig: {

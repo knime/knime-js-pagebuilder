@@ -1,12 +1,11 @@
 <script>
-import { Label, Button, FunctionButton } from "@knime/components";
-
-import SignWarningIcon from "@knime/styles/img/icons/sign-warning.svg";
-import CircleWarningIcon from "@knime/styles/img/icons/circle-warning.svg";
-import CircleMinus from "@knime/styles/img/icons/circle-minus.svg";
-import CloseIcon from "@knime/styles/img/icons/close.svg";
+import { Button, FunctionButton, Label } from "@knime/components";
 import DropdownIcon from "@knime/styles/img/icons/arrow-dropdown.svg";
+import CircleMinus from "@knime/styles/img/icons/circle-minus.svg";
+import CircleWarningIcon from "@knime/styles/img/icons/circle-warning.svg";
+import CloseIcon from "@knime/styles/img/icons/close.svg";
 import CopyIcon from "@knime/styles/img/icons/copy.svg";
+import SignWarningIcon from "@knime/styles/img/icons/sign-warning.svg";
 
 // Arbitrary length limit to determine if messages should be expandable or displayed initially.
 const MAX_EXPANDED_MESSAGE_LENGTH = 280;

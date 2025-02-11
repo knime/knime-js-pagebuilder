@@ -1,4 +1,4 @@
-import { expect, describe, beforeEach, afterEach, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createStore } from "vuex";
 
 import * as storeConfig from "@/store/alert";

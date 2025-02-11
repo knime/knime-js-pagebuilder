@@ -1,11 +1,12 @@
 <script>
-import { Label, Dropdown, Button } from "@knime/components";
+import { format } from "date-fns-tz";
+
+import { Button, Dropdown, Label } from "@knime/components";
 import { DateTimeInput } from "@knime/components/date-time-input";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 import { getLocalTimeZone, updateTime } from "@knime/utils";
 
-import { format } from "date-fns-tz";
 import { fromZonedTime, toZonedTime } from "../../../util/widgetUtil/dateTime";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 /**
  * DateTimeWidget.
@@ -285,7 +286,6 @@ export default {
   & .zone-wrapper {
     display: flex;
     margin-top: 10px;
-    vertical-align: center;
 
     & .now-button {
       height: 30px;

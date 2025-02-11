@@ -1,6 +1,8 @@
 <script>
 import { defineAsyncComponent } from "vue";
+
 import wrapViewContent from "../../util/wrapViewContent";
+
 import NodeView from "./NodeView.vue";
 
 const maxGridWidth = 12;

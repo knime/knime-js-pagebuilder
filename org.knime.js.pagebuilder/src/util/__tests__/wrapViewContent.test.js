@@ -1,4 +1,5 @@
-import { expect, describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import wrapViewContent from "@/util/wrapViewContent";
 
 const localWrapView = (item) => ({

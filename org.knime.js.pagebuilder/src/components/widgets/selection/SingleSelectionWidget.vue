@@ -1,7 +1,8 @@
 <script>
-import { Label, Fieldset } from "@knime/components";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
+import { Fieldset, Label } from "@knime/components";
+
 import SingleSelect from "../baseElements/selection/SingleSelect.vue";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const DATA_TYPE_KEY = "value";
 

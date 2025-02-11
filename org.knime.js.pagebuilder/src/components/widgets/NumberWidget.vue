@@ -1,5 +1,6 @@
 <script>
-import { NumberInput, Label } from "@knime/components";
+import { Label, NumberInput } from "@knime/components";
+
 import ErrorMessage from "./baseElements/text/ErrorMessage.vue";
 
 /**

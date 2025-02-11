@@ -1,8 +1,9 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
-import { shallowMount, mount } from "@vue/test-utils";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { mount, shallowMount } from "@vue/test-utils";
+
+import { NumberInput } from "@knime/components";
 
 import NumberWidget from "@/components/widgets/NumberWidget.vue";
-import { NumberInput } from "@knime/components";
 
 describe("NumberWidget.vue", () => {
   let props;

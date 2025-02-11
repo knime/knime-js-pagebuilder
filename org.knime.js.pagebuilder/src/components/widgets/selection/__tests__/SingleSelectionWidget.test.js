@@ -1,8 +1,8 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
-import { shallowMount, mount } from "@vue/test-utils";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { mount, shallowMount } from "@vue/test-utils";
 
-import SingleSelectionWidget from "@/components/widgets/selection/SingleSelectionWidget.vue";
 import SingleSelect from "@/components/widgets/baseElements/selection/SingleSelect.vue";
+import SingleSelectionWidget from "@/components/widgets/selection/SingleSelectionWidget.vue";
 
 describe("SingleSelectionWidget.vue", () => {
   let propsRadioHorizontal, propsRadioVertical, propsDropdown, propsList;

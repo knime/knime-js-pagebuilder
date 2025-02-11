@@ -1,24 +1,27 @@
 /* eslint-disable max-lines */
-import { expect, describe, afterEach, it, vi, beforeEach } from "vitest";
-import { createStore } from "vuex";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { nextTick } from "vue";
 import { shallowMount } from "@vue/test-utils";
+import flushPromises from "flush-promises";
+import { createStore } from "vuex";
+
 vi.mock("@knime/ui-extension-service");
-import * as pagebuilderStoreConfig from "@/store/pagebuilder";
-import * as alertStoreConfig from "@/store/alert";
-import * as serviceStoreConfig from "@/store/service";
-import * as apiStoreConfig from "@/store/wrapperApi";
-import * as dialogStoreConfig from "@/store/dialog";
 import {
   UIExtension,
   UIExtensionAlerts,
 } from "@knime/ui-extension-renderer/vue";
+
+import * as alertStoreConfig from "@/store/alert";
+import * as dialogStoreConfig from "@/store/dialog";
+import * as pagebuilderStoreConfig from "@/store/pagebuilder";
+import * as serviceStoreConfig from "@/store/service";
+import * as apiStoreConfig from "@/store/wrapperApi";
 import DialogControls from "../DialogControls.vue";
-import UIExtensionAdapter from "../UIExtensionAdapter.vue";
 import NotDisplayable from "../NotDisplayable.vue";
+import UIExtensionAdapter from "../UIExtensionAdapter.vue";
+
 import { getTestExtensionConfig } from "./configs/extensionConfig";
 import { viewConfig } from "./configs/viewConfig";
-import flushPromises from "flush-promises";
-import { nextTick } from "vue";
 
 const metaOrCtrlKey = "metaKey";
 

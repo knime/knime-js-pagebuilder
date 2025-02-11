@@ -1,13 +1,12 @@
-import { expect, describe, afterEach, it, vi, beforeAll } from "vitest";
-import { createStore } from "vuex";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
-
-import WebNodeIFrame from "@/components/views/WebNodeIFrame.vue";
-import AlertLocal from "@/components/ui/AlertLocal.vue";
-
-import * as storeConfig from "@/store/pagebuilder";
-import * as alertStoreConfig from "@/store/alert";
 import { iframeResizer } from "iframe-resizer";
+import { createStore } from "vuex";
+
+import AlertLocal from "@/components/ui/AlertLocal.vue";
+import WebNodeIFrame from "@/components/views/WebNodeIFrame.vue";
+import * as alertStoreConfig from "@/store/alert";
+import * as storeConfig from "@/store/pagebuilder";
 
 // extra mock to simulate a loaded view script
 vi.mock(

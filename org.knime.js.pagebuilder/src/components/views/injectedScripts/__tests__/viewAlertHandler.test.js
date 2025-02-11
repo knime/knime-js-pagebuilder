@@ -1,4 +1,5 @@
-import { expect, describe, beforeAll, afterEach, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+
 import viewAlertHandlerSrc from "@/components/views/injectedScripts/viewAlertHandler?raw";
 
 describe("view alert handler", () => {

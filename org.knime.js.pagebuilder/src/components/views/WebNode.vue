@@ -1,13 +1,15 @@
 <script>
 import { mapState } from "vuex";
-import WebNodeIFrame from "./WebNodeIFrame.vue";
+
+import layoutMixin from "../mixins/layoutMixin";
 import Widget from "../widgets/Widget.vue";
 import {
   classToComponentMap,
   legacyExclusions,
 } from "../widgets/widgets.config";
-import layoutMixin from "../mixins/layoutMixin";
+
 import NotDisplayable from "./NotDisplayable.vue";
+import WebNodeIFrame from "./WebNodeIFrame.vue";
 
 /**
  * Wrapper for a WebNode based visualization implementation or a Widget. Determines the type of component to render,

@@ -1,6 +1,6 @@
-import { expect, describe, it, beforeAll } from "vitest";
-import { createStore } from "vuex";
+import { beforeAll, describe, expect, it } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+import { createStore } from "vuex";
 
 import WebNode from "@/components/views/WebNode.vue";
 import WebNodeIFrame from "@/components/views/WebNodeIFrame.vue";

@@ -1,8 +1,8 @@
-import { expect, describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 
-import Row from "@/components/layout/Row.vue";
 import Column from "@/components/layout/Column.vue";
+import Row from "@/components/layout/Row.vue";
 
 describe("Row.vue", () => {
   it("renders without classes and styles", () => {

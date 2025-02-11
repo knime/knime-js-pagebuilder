@@ -1,4 +1,5 @@
 import { isIconExisting } from "@knime/utils";
+
 import { getFileExtension, getNameFromPath } from "./fileUtils";
 
 let getIcon, createTreeItemRecursively, checkDefaultPaths;

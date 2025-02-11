@@ -1,9 +1,11 @@
 <script>
 import { partial } from "filesize";
-import { Label, Button } from "@knime/components";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import { getFileExtension } from "../../../util/fileUtils";
+
+import { Button, Label } from "@knime/components";
 import CircleCheckIcon from "@knime/styles/img/icons/circle-check.svg";
+
+import { getFileExtension } from "../../../util/fileUtils";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const DATA_TYPE = "path";
 /**
@@ -257,7 +259,7 @@ p {
   margin-top: 10px;
   display: flex;
   align-items: center;
-  word-break: break-word;
+  overflow-wrap: anywhere;
 
   &.disabled {
     opacity: 0.5;

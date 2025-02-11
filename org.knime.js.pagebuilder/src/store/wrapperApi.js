@@ -1,4 +1,5 @@
 import { KnimeUtils } from "@knime/ui-extension-service";
+
 const { createJsonRpcRequest } = KnimeUtils;
 
 export const namespaced = true;

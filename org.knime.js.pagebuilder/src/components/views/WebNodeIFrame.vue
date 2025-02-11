@@ -1,13 +1,14 @@
 <script>
-import { mapState, mapGetters } from "vuex";
-import AlertLocal from "../ui/AlertLocal.vue";
 import { iframeResizer } from "iframe-resizer";
+import iframeResizerContentSrc from "iframe-resizer/js/iframeResizer.contentWindow.js?raw"; // eslint-disable-line import/extensions
+import { mapGetters, mapState } from "vuex";
+
+import AlertLocal from "../ui/AlertLocal.vue";
 
 /* eslint-disable import/extensions */
-import scriptLoaderSrc from "./injectedScripts/scriptLoader.js?raw";
-import messageListenerSrc from "./injectedScripts/messageListener.js?raw";
-import iframeResizerContentSrc from "iframe-resizer/js/iframeResizer.contentWindow.js?raw";
 import loadingErrorHandlerSrc from "./injectedScripts/loadErrorHandler.js?raw";
+import messageListenerSrc from "./injectedScripts/messageListener.js?raw";
+import scriptLoaderSrc from "./injectedScripts/scriptLoader.js?raw";
 import viewAlertHandlerSrc from "./injectedScripts/viewAlertHandler.js?raw";
 /* eslint-enable import/extensions */
 

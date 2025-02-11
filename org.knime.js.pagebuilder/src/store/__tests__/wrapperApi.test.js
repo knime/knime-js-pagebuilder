@@ -1,10 +1,12 @@
-import { expect, describe, afterAll, it, vi } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
 import { createStore } from "vuex";
-import * as wrapperApiConfig from "@/store/wrapperApi";
-import * as pagebuilderConfig from "@/store/pagebuilder";
-import * as alertConfig from "@/store/alert";
-import { iFrameExtensionConfig } from "@@/test/assets/views/extensionConfig";
+
 import { muteConsole } from "@knime/utils/test-utils";
+
+import { iFrameExtensionConfig } from "@@/test/assets/views/extensionConfig";
+import * as alertConfig from "@/store/alert";
+import * as pagebuilderConfig from "@/store/pagebuilder";
+import * as wrapperApiConfig from "@/store/wrapperApi";
 
 describe("wrapper API store", () => {
   const EMPTY = expect.undefined;

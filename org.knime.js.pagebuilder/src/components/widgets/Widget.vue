@@ -7,13 +7,18 @@ import CredentialsWidget from "./input/CredentialsWidget.vue";
 import DateTimeWidget from "./input/DateTimeWidget.vue";
 import DoubleWidget from "./input/DoubleWidget.vue";
 import FileUploadWidget from "./input/FileUploadWidget.vue";
-import MultipleFileUploadWidget from "./input/MultipleFileUploadWidget.vue";
 import IntegerWidget from "./input/IntegerWidget.vue";
 import ListBoxInputWidget from "./input/ListBoxInputWidget.vue";
+import MultipleFileUploadWidget from "./input/MultipleFileUploadWidget.vue";
 import SliderWidget from "./input/SliderWidget.vue";
 import StringWidget from "./input/StringWidget.vue";
-
 // selection widgets
+import InteractiveRangeWidget from "./interactive/InteractiveRangeWidget.vue";
+import InteractiveValueWidget from "./interactive/InteractiveValueWidget.vue";
+import FileDownloadWidget from "./output/FileDownloadWidget.vue";
+import ImageWidget from "./output/ImageWidget.vue";
+import TextWidget from "./output/TextWidget.vue";
+import RefreshButtonWidget from "./reactive/RefreshButtonWidget.vue";
 import ColumnFilterSelectionWidget from "./selection/ColumnFilterSelectionWidget.vue";
 import ColumnSelectionWidget from "./selection/ColumnSelectionWidget.vue";
 import FileChooserWidget from "./selection/FileChooserWidget.vue";
@@ -23,16 +28,10 @@ import ValueFilterSelectionWidget from "./selection/ValueFilterSelectionWidget.v
 import ValueSelectionWidget from "./selection/ValueSelectionWidget.vue";
 
 // output widgets
-import FileDownloadWidget from "./output/FileDownloadWidget.vue";
-import ImageWidget from "./output/ImageWidget.vue";
-import TextWidget from "./output/TextWidget.vue";
 
 // interactive widgets
-import InteractiveRangeWidget from "./interactive/InteractiveRangeWidget.vue";
-import InteractiveValueWidget from "./interactive/InteractiveValueWidget.vue";
 
 // reactive widgets
-import RefreshButtonWidget from "./reactive/RefreshButtonWidget.vue";
 
 /**
  * A Widget node view. This top level component sits at

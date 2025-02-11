@@ -1,9 +1,10 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
-import { shallowMount, mount } from "@vue/test-utils";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { mount, shallowMount } from "@vue/test-utils";
 
-import CredentialsWidget from "@/components/widgets/input/CredentialsWidget.vue";
-import { InputField, Label, Fieldset } from "@knime/components";
+import { Fieldset, InputField, Label } from "@knime/components";
+
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
+import CredentialsWidget from "@/components/widgets/input/CredentialsWidget.vue";
 
 describe("CredentialsWidget.vue", () => {
   let propsDefault, propsServer;

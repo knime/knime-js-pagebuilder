@@ -1,8 +1,9 @@
 <script>
 import { mapGetters } from "vuex";
 
-import NodeView from "./NodeView.vue";
 import { Messages } from "@knime/components";
+
+import NodeView from "./NodeView.vue";
 
 export default {
   components: {

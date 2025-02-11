@@ -1,5 +1,6 @@
 <script>
-import { Label, Dropdown, Fieldset } from "@knime/components";
+import { Dropdown, Fieldset, Label } from "@knime/components";
+
 import Multiselect from "../baseElements/selection/Multiselect.vue";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 

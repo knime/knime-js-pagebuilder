@@ -1,5 +1,6 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import { useStore } from "vuex";
+
 import { navigatorUtils } from "@knime/utils";
 
 const doIfBodyActive =

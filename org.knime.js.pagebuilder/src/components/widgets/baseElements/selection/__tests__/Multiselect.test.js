@@ -1,15 +1,16 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
 
-import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
 import {
-  SearchableCheckboxes,
-  SearchableList,
-  Twinlist,
   Checkbox,
   ComboBox,
   Multiselect as MultiselectWebappsCommon,
+  SearchableCheckboxes,
+  SearchableList,
+  Twinlist,
 } from "@knime/components";
+
+import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
 
 describe("Multiselect.vue", () => {
   let propsTwinlist,

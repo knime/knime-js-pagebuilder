@@ -1,7 +1,8 @@
 <script>
 import { Label } from "@knime/components";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
+
 import { getProp } from "../../../util/nestedProperty";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const DEFAULT_VALUE_KEY = "viewRepresentation.text";
 

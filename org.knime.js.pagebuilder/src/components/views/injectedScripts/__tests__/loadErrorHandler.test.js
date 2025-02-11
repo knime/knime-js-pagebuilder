@@ -1,4 +1,5 @@
-import { expect, describe, beforeAll, afterEach, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+
 import loadErrorHandlerSrc from "@/components/views/injectedScripts/loadErrorHandler?raw";
 
 describe("load error handler", () => {

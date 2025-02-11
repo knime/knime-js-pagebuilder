@@ -1,10 +1,9 @@
-import { expect, describe, beforeAll, afterEach, it, vi } from "vitest";
-import { createStore } from "vuex";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+import { createStore } from "vuex";
 
 import Column from "@/components/layout/Column.vue";
 import NodeView from "@/components/layout/NodeView.vue";
-
 import * as storeConfig from "@/store/pagebuilder";
 // this is required because the Row component is imported asynchronously in Column, cf.
 // https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components

@@ -1,13 +1,13 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
 import { createStore } from "vuex";
 
-import * as interactiveConfig from "@/store/interactivity";
+import { Fieldset, Label } from "@knime/components";
 
-import InteractiveValueWidget from "@/components/widgets/interactive/InteractiveValueWidget.vue";
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
 import SingleSelect from "@/components/widgets/baseElements/selection/SingleSelect.vue";
-import { Label, Fieldset } from "@knime/components";
+import InteractiveValueWidget from "@/components/widgets/interactive/InteractiveValueWidget.vue";
+import * as interactiveConfig from "@/store/interactivity";
 
 describe("InteractiveValueWidget.vue", () => {
   let props, store, context;

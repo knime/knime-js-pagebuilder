@@ -1,19 +1,18 @@
 import {
-  expect,
-  describe,
+  afterEach,
   beforeAll,
   beforeEach,
-  afterEach,
+  describe,
+  expect,
   it,
   vi,
 } from "vitest";
-import { createStore } from "vuex";
 import { shallowMount } from "@vue/test-utils";
+import { createStore } from "vuex";
 
 import WebNodeIFrame from "@/components/views/WebNodeIFrame.vue";
-
-import * as storeConfig from "@/store/pagebuilder";
 import * as alertStoreConfig from "@/store/alert";
+import * as storeConfig from "@/store/pagebuilder";
 
 // extra mock to simulate a loaded view script
 vi.mock(

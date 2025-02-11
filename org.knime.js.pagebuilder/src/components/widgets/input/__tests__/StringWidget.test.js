@@ -1,8 +1,9 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
-import { shallowMount, mount } from "@vue/test-utils";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { mount, shallowMount } from "@vue/test-utils";
+
+import { InputField, TextArea } from "@knime/components";
 
 import StringWidget from "@/components/widgets/input/StringWidget.vue";
-import { InputField, TextArea } from "@knime/components";
 
 describe("StringWidget.vue", () => {
   let propsInput, propsDateTextArea;

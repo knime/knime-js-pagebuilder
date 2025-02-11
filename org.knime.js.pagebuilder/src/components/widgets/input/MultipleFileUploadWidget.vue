@@ -1,23 +1,24 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { v4 as uuid } from "uuid";
+import { useStore } from "vuex";
+
+import {
+  Dropzone,
+  Label,
+  ProgressList,
+  UploadItem,
+  UploadItemStatus,
+  UploadProgressPanelItem,
+} from "@knime/components";
+
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 declare global {
   interface Window {
     KnimePageLoader?: any;
   }
 }
-import {
-  Label,
-  Dropzone,
-  UploadItem,
-  UploadItemStatus,
-  ProgressList,
-  UploadProgressPanelItem,
-} from "@knime/components";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import { useStore } from "vuex";
-
 const DATA_TYPE = "path";
 
 const FILE_UPLOAD_OBJECT_IDENTIFIER =

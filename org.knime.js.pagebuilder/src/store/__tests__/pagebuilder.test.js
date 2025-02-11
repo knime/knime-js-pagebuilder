@@ -1,5 +1,6 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createStore } from "vuex";
+
 import { muteConsole } from "@knime/utils/test-utils";
 
 import * as storeConfig from "@/store/pagebuilder";

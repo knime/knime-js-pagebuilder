@@ -1,9 +1,9 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
-import { shallowMount, mount } from "@vue/test-utils";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { mount, shallowMount } from "@vue/test-utils";
 
-import SliderWidget from "@/components/widgets/input/SliderWidget.vue";
 import Slider from "@/components/widgets/baseElements/input/Slider.vue";
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
+import SliderWidget from "@/components/widgets/input/SliderWidget.vue";
 
 describe("SliderWidget.vue", () => {
   let nodeConfig, nodeId, isValid, wrapper;

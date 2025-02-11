@@ -1,11 +1,10 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
-import { createStore } from "vuex";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+import { createStore } from "vuex";
 
 import Widget from "@/components/widgets/Widget.vue";
-import { getProp, setProp } from "@/util/nestedProperty";
-
 import * as storeConfig from "@/store/pagebuilder";
+import { getProp, setProp } from "@/util/nestedProperty";
 
 describe("Widget.vue", () => {
   let store, context, nodeConfig, wrapper;

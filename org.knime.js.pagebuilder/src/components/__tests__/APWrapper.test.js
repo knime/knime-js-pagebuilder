@@ -1,6 +1,6 @@
-import { expect, describe, beforeEach, afterEach, it, vi } from "vitest";
-import { createStore } from "vuex";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+import { createStore } from "vuex";
 
 import APWrapper from "@/components/APWrapper.vue";
 import PageBuilder from "@/components/PageBuilder.vue";

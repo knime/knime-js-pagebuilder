@@ -1,8 +1,9 @@
-import { expect, describe, beforeAll, it, vi } from "vitest";
-import { shallowMount, mount } from "@vue/test-utils";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import { mount, shallowMount } from "@vue/test-utils";
+
+import { Button, Label } from "@knime/components";
 
 import PopoverMessage from "@/components/ui/PopoverMessage.vue";
-import { Label, Button } from "@knime/components";
 
 describe("PopoverMessage", () => {
   let wrapper;

@@ -1,9 +1,8 @@
 <script>
-import itemIcon from "@knime/styles/img/icons/file-question.svg";
-import folderIcon from "@knime/styles/img/icons/folder.svg";
 import arrowNextIcon from "@knime/styles/img/icons/arrow-next.svg";
+import itemIcon from "@knime/styles/img/icons/file-question.svg";
 import fileIcon from "@knime/styles/img/icons/file-text.svg";
-
+import folderIcon from "@knime/styles/img/icons/folder.svg";
 import { icons } from "@knime/utils";
 
 const TREE_OPEN_TRANSITION_TIME = 300; // ms

@@ -1,7 +1,7 @@
-import consola from "consola";
-window.consola = consola;
-
 import { vi } from "vitest";
+import consola from "consola";
+
+window.consola = consola;
 
 // TODO: WEBP-585 remove mock
 Object.defineProperty(window, "matchMedia", {

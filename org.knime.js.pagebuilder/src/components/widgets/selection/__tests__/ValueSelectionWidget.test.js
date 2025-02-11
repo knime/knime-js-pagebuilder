@@ -1,11 +1,13 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
+
 import { Dropdown } from "@knime/components";
+
 import propsColumnLockedListImport from "@@/test/assets/propsDataColumnLockedList";
-import propsRadioHorizontalImport from "@@/test/assets/propsDataRadioHorizontal";
-import propsRadioVerticalImport from "@@/test/assets/propsDataRadioVertical";
 import propsDropdownImport from "@@/test/assets/propsDataDropdown";
 import propsListImport from "@@/test/assets/propsDataList";
+import propsRadioHorizontalImport from "@@/test/assets/propsDataRadioHorizontal";
+import propsRadioVerticalImport from "@@/test/assets/propsDataRadioVertical";
 import ValueSelectionWidget from "@/components/widgets/selection/ValueSelectionWidget.vue";
 
 describe("ValueSelectionWidget.vue", () => {

@@ -1,28 +1,29 @@
 <script lang="ts">
+import { type PropType, defineComponent, toRaw } from "vue";
 import { mapState } from "vuex";
-import { defineComponent, toRaw, type PropType } from "vue";
+
+import {
+  type Alert,
+  ErrorAlert,
+  ImageGenerationRenderingConfig,
+  ReportRenderingConfig,
+  WarningAlert,
+} from "@knime/ui-extension-renderer/api";
+import {
+  type ExtensionConfig,
+  UIExtension,
+  type UIExtensionAPILayer,
+  UIExtensionAlerts,
+} from "@knime/ui-extension-renderer/vue";
 
 import layoutMixin from "../mixins/layoutMixin";
-import {
-  UIExtension,
-  UIExtensionAlerts,
-  type ExtensionConfig,
-  type UIExtensionAPILayer,
-} from "@knime/ui-extension-renderer/vue";
 
 import DialogControls from "./DialogControls.vue";
 import NotDisplayable from "./NotDisplayable.vue";
-import {
-  type Alert,
-  ImageGenerationRenderingConfig,
-  ReportRenderingConfig,
-  ErrorAlert,
-  WarningAlert,
-} from "@knime/ui-extension-renderer/api";
 import useCloseAndApplyHandling from "./useCloseAndApplyHandling";
 import {
-  errorToGlobalAlertParams,
   type GlobalAlertParams,
+  errorToGlobalAlertParams,
   warningToGlobalAlertParams,
 } from "./util/globalAlert";
 

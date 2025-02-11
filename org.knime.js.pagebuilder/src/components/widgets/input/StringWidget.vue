@@ -1,5 +1,6 @@
 <script>
-import { InputField, TextArea, Label } from "@knime/components";
+import { InputField, Label, TextArea } from "@knime/components";
+
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const DATA_TYPE = "string";

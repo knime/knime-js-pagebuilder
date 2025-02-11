@@ -1,4 +1,4 @@
-import { expect, describe, beforeEach, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";

@@ -1,5 +1,6 @@
 <script>
 import { mapState } from "vuex";
+
 import Popover from "./Popover.vue";
 import PopoverMessage from "./PopoverMessage.vue";
 

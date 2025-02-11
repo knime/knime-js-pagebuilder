@@ -1,4 +1,4 @@
-import { expect, describe, beforeEach, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
 
 import ImageWidget from "@/components/widgets/output/ImageWidget.vue";

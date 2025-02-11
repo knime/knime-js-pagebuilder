@@ -1,9 +1,10 @@
+import { describe, expect, it } from "vitest";
+
 import {
   checkDefaultPaths,
   default as createTreeItemRecursively,
   getIcon,
 } from "@/util/createTreeItem";
-import { describe, expect, it } from "vitest";
 
 describe("Tests the createTreeItem functionality", () => {
   it("tests the creation of a empty tree object", () => {

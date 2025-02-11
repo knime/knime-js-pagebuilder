@@ -1,13 +1,13 @@
-import { expect, describe, beforeAll, afterEach, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { mount, shallowMount } from "@vue/test-utils";
 import { createStore } from "vuex";
-import { shallowMount, mount } from "@vue/test-utils";
+
+import { Messages } from "@knime/components";
 
 import DialogLayout from "@/components/layout/DialogLayout.vue";
 import NodeView from "@/components/layout/NodeView.vue";
-import { Messages } from "@knime/components";
-
-import * as storeConfig from "@/store/pagebuilder";
 import * as alertStoreConfig from "@/store/alert";
+import * as storeConfig from "@/store/pagebuilder";
 
 const mockAlert = {
   message: "",

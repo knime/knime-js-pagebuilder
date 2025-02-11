@@ -1,4 +1,4 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 
 import IntegerWidget from "@/components/widgets/input/IntegerWidget.vue";

@@ -1,5 +1,6 @@
 <script>
 import { mapState } from "vuex";
+
 import Row from "./Row.vue";
 
 /**

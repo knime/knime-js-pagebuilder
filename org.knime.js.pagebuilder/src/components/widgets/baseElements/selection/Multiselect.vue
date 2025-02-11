@@ -1,11 +1,12 @@
 <script>
+import { isEqual } from "lodash-es";
+
 import {
+  ComboBox,
+  SearchableCheckboxes,
   SearchableList,
   Twinlist,
-  SearchableCheckboxes,
-  ComboBox,
 } from "@knime/components";
-import { isEqual } from "lodash-es";
 
 /**
  * Multiselect Component

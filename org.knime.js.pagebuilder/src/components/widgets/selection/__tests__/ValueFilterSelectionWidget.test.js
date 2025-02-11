@@ -1,8 +1,8 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 
-import ValueFilterSelectionWidget from "@/components/widgets/selection/ValueFilterSelectionWidget.vue";
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
+import ValueFilterSelectionWidget from "@/components/widgets/selection/ValueFilterSelectionWidget.vue";
 
 describe("ValueFilterSelectionWidget.vue", () => {
   let props, propsColumnLocked;

@@ -1,3 +1,5 @@
+import { describe, expect, it } from "vitest";
+
 import {
   INTERNAL_ERROR_CODE,
   InternalErrorAlert,
@@ -6,7 +8,7 @@ import {
   UserErrorAlert,
   WarningAlert,
 } from "@knime/ui-extension-renderer/api";
-import { describe, expect, it } from "vitest";
+
 import {
   errorToGlobalAlertParams,
   warningToGlobalAlertParams,

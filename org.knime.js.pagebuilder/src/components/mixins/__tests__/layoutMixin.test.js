@@ -1,6 +1,8 @@
-import { expect, describe, it } from "vitest";
-import layoutMixin from "../layoutMixin";
+import { describe, expect, it } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+
+import layoutMixin from "../layoutMixin";
+
 import MockComponent from "./mockComponent.vue";
 
 describe("layoutMixin.js", () => {

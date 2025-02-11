@@ -1,5 +1,6 @@
 <script>
-import { Fieldset, Label, InputField } from "@knime/components";
+import { Fieldset, InputField, Label } from "@knime/components";
+
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const SERVER_ERROR_MESSAGE =

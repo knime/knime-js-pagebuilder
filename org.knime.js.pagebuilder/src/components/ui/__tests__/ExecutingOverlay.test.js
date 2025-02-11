@@ -1,4 +1,4 @@
-import { expect, describe, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 
 import ExecutingOverlay from "@/components/ui/ExecutingOverlay.vue";

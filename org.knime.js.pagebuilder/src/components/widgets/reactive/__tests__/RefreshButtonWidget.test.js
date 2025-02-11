@@ -1,9 +1,11 @@
-import { expect, describe, beforeAll, beforeEach, it } from "vitest";
-import { createStore } from "vuex";
+import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { mount } from "@vue/test-utils";
-import RefreshButtonWidget from "@/components/widgets/reactive/RefreshButtonWidget.vue";
+import { createStore } from "vuex";
+
+import { Button, Label } from "@knime/components";
+
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
-import { Label, Button } from "@knime/components";
+import RefreshButtonWidget from "@/components/widgets/reactive/RefreshButtonWidget.vue";
 import * as storeConfig from "@/store/pagebuilder";
 
 describe("RefreshButtonWidget.vue", () => {

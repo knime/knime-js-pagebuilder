@@ -1,10 +1,11 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createStore } from "vuex";
 
-import FileUploadWidget from "@/components/widgets/input/FileUploadWidget.vue";
-import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
 import { sleep } from "@knime/utils";
+
+import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
+import FileUploadWidget from "@/components/widgets/input/FileUploadWidget.vue";
 
 const uploadResourceMock = vi.fn().mockReturnValue(
   () =>

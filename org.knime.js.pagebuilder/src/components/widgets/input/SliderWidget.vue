@@ -1,9 +1,10 @@
 <script>
-import Slider from "../baseElements/input/Slider.vue";
 import { Label } from "@knime/components";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
+
 import formatTooltip from "../../../util/tooltipFormatter";
 import { createTicks } from "../../../util/widgetUtil/slider/tickUtil";
+import Slider from "../baseElements/input/Slider.vue";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const DATA_TYPE = "double";
 const MINIMUM_SLIDER_STEP = 0.0000001;

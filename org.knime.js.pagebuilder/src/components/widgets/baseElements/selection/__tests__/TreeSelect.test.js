@@ -1,12 +1,12 @@
-import { expect, describe, beforeEach, it } from "vitest";
-import { mount, shallowMount } from "@vue/test-utils";
+import { beforeEach, describe, expect, it } from "vitest";
 import { markRaw } from "vue";
-
-import TreeSelect from "@/components/widgets/baseElements/selection/TreeSelect.vue";
-import TreeSelectItem from "@/components/widgets/baseElements/selection/TreeSelectItem.vue";
+import { mount, shallowMount } from "@vue/test-utils";
 
 import customIcon from "@knime/styles/img/icons/activity.svg";
 import customSelectedIcon from "@knime/styles/img/icons/cart.svg";
+
+import TreeSelect from "@/components/widgets/baseElements/selection/TreeSelect.vue";
+import TreeSelectItem from "@/components/widgets/baseElements/selection/TreeSelectItem.vue";
 
 describe("TreeSelect.vue", () => {
   let props;

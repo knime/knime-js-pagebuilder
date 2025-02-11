@@ -1,4 +1,5 @@
 import formatTooltip from "../../tooltipFormatter";
+
 import { createSubTicks } from "./subTickUtil";
 
 /**

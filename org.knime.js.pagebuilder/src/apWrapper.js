@@ -2,8 +2,9 @@
 // Standalone build for the KNIME AP Integration
 
 import * as Vue from "vue";
-import { createStore } from "vuex";
 import consola from "consola";
+import { createStore } from "vuex";
+
 import APWrapper from "./components/APWrapper.vue";
 import * as wrapperApiStore from "./store/wrapperApi";
 

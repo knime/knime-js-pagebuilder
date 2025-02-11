@@ -1,7 +1,8 @@
 <script>
 import { mapState } from "vuex";
 
-import { Label, Button } from "@knime/components";
+import { Button, Label } from "@knime/components";
+
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const REFRESH_COUNTER_KEY = "refreshCounter";

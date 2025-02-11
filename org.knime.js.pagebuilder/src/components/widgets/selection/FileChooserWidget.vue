@@ -1,19 +1,19 @@
 <script>
 import { markRaw, shallowRef } from "vue";
+
 import { Label } from "@knime/components";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
-import TreeSelect from "../baseElements/selection/TreeSelect.vue";
-
-import fileIcon from "@knime/styles/img/icons/file-text.svg";
 import cogIcon from "@knime/styles/img/icons/cog.svg";
-import workflowIcon from "@knime/styles/img/icons/workflow.svg";
+import fileIcon from "@knime/styles/img/icons/file-text.svg";
 import folderIcon from "@knime/styles/img/icons/folder.svg";
+import workflowIcon from "@knime/styles/img/icons/workflow.svg";
 
-import {
-  trimSchema as utilTrimSchema,
-  getRootPath as utilGetRootPath,
-} from "../../../util/fileUtils";
 import { default as utilCreateTreeItem } from "../../../util/createTreeItem";
+import {
+  getRootPath as utilGetRootPath,
+  trimSchema as utilTrimSchema,
+} from "../../../util/fileUtils";
+import TreeSelect from "../baseElements/selection/TreeSelect.vue";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const DATA_TYPE = "items";
 const SCHEMA = "knime";

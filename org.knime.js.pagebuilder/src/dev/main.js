@@ -1,6 +1,6 @@
 import { createApp } from "vue";
-import { createStore } from "vuex";
 import consola from "consola";
+import { createStore } from "vuex";
 
 import App from "./DevApp.vue";
 

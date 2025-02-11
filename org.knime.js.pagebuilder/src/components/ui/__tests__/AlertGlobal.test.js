@@ -1,11 +1,10 @@
-import { expect, describe, beforeAll, beforeEach, it, vi } from "vitest";
-import { createStore } from "vuex";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
+import { createStore } from "vuex";
 
 import AlertGlobal from "@/components/ui/AlertGlobal.vue";
 import Popover from "@/components/ui/Popover.vue";
 import PopoverMessage from "@/components/ui/PopoverMessage.vue";
-
 import * as storeConfig from "@/store/alert";
 
 const SAMPLE_ALERT = {

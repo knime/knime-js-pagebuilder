@@ -2,11 +2,11 @@
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
 
-import WebNode from "../views/WebNode.vue";
-import ViewExecutable from "../views/ViewExecutable.vue";
-import NotDisplayable from "../views/NotDisplayable.vue";
 import ExecutingOverlay from "../ui/ExecutingOverlay.vue";
+import NotDisplayable from "../views/NotDisplayable.vue";
 import UIExtensionAdapter from "../views/UIExtensionAdapter.vue";
+import ViewExecutable from "../views/ViewExecutable.vue";
+import WebNode from "../views/WebNode.vue";
 
 /**
  * A node-level member of the layout tree, this component is responsible for shared functionality

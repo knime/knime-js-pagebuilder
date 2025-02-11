@@ -1,9 +1,10 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
+import { createStore } from "vuex";
+
+import { FileLink } from "@knime/components";
 
 import FileDownloadWidget from "@/components/widgets/output/FileDownloadWidget.vue";
-import { FileLink } from "@knime/components";
-import { createStore } from "vuex";
 
 const downloadResourceLinkMock = vi.fn();
 

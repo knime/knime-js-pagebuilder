@@ -1,11 +1,12 @@
-import { expect, describe, beforeEach, beforeAll, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 /* eslint-disable max-lines */
 import { mount } from "@vue/test-utils";
+import { differenceInCalendarDays, format } from "date-fns";
 
-import DateTimeWidget from "@/components/widgets/input/DateTimeWidget.vue";
 import { DateTimeInput } from "@knime/components/date-time-input";
-import { format, differenceInCalendarDays } from "date-fns";
+
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
+import DateTimeWidget from "@/components/widgets/input/DateTimeWidget.vue";
 
 describe("DateTimeWidget.vue", () => {
   let propsAll,

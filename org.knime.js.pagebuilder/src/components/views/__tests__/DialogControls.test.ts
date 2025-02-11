@@ -1,7 +1,9 @@
-import { mount, type VueWrapper } from "@vue/test-utils";
 import { beforeEach, describe, expect, it } from "vitest";
-import DialogControls from "../DialogControls.vue";
+import { type VueWrapper, mount } from "@vue/test-utils";
+
 import { Button } from "@knime/components";
+
+import DialogControls from "../DialogControls.vue";
 
 describe("DialogControls", () => {
   let wrapper: VueWrapper<any, any>,

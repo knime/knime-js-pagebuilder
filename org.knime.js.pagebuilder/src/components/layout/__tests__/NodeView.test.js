@@ -1,16 +1,15 @@
-import { expect, describe, beforeAll, it, vi, afterEach } from "vitest";
-import { createStore } from "vuex";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+import { createStore } from "vuex";
 
 import NodeView from "@/components/layout/NodeView.vue";
-import WebNode from "@/components/views/WebNode.vue";
-import UIExtensionAdapter from "@/components/views/UIExtensionAdapter.vue";
-import NotDisplayable from "@/components/views/NotDisplayable.vue";
-import ViewExecutable from "@/components/views/ViewExecutable.vue";
 import ExecutingOverlay from "@/components/ui/ExecutingOverlay.vue";
-
-import * as pagebuilderConfig from "@/store/pagebuilder";
+import NotDisplayable from "@/components/views/NotDisplayable.vue";
+import UIExtensionAdapter from "@/components/views/UIExtensionAdapter.vue";
+import ViewExecutable from "@/components/views/ViewExecutable.vue";
+import WebNode from "@/components/views/WebNode.vue";
 import * as dialogConfig from "@/store/dialog";
+import * as pagebuilderConfig from "@/store/pagebuilder";
 
 describe("NodeView.vue", () => {
   let context;

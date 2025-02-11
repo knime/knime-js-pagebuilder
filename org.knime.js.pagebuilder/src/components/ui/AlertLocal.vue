@@ -1,6 +1,7 @@
 <script>
-import Popover from "./Popover.vue";
 import SignWarningIcon from "@knime/styles/img/icons/sign-warning.svg";
+
+import Popover from "./Popover.vue";
 
 /**
  * This is the local alert/error management component created for use with the NodeViewIFrame. Its main use is to

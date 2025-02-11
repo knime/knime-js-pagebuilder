@@ -1,4 +1,5 @@
-import { expect, describe, beforeAll, afterEach, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+
 import { sleep } from "@knime/utils";
 
 import messageListenerSrc from "@/components/views/injectedScripts/messageListener?raw";

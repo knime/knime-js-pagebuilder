@@ -1,8 +1,9 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 
-import ColumnFilterWidget from "@/components/widgets/selection/ColumnFilterSelectionWidget.vue";
 import { Twinlist } from "@knime/components";
+
+import ColumnFilterWidget from "@/components/widgets/selection/ColumnFilterSelectionWidget.vue";
 
 describe("ColumnFilterSelectionWidget.vue", () => {
   let props;

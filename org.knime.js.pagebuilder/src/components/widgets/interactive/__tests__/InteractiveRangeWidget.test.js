@@ -1,11 +1,10 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
 import { createStore } from "vuex";
 
-import * as interactiveConfig from "@/store/interactivity";
-
-import InteractiveRangeWidget from "@/components/widgets/interactive/InteractiveRangeWidget.vue";
 import SliderWidget from "@/components/widgets/input/SliderWidget.vue";
+import InteractiveRangeWidget from "@/components/widgets/interactive/InteractiveRangeWidget.vue";
+import * as interactiveConfig from "@/store/interactivity";
 
 describe("InteractiveRangeWidget.vue", () => {
   let props, store, context;

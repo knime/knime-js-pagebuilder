@@ -1,7 +1,9 @@
-import { expect, describe, beforeAll, it } from "vitest";
-import NotDisplayable from "@/components/views/NotDisplayable.vue";
+import { beforeAll, describe, expect, it } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+
 import { Label } from "@knime/components";
+
+import NotDisplayable from "@/components/views/NotDisplayable.vue";
 
 describe("NotDisplayable.vue", () => {
   let wrapper;

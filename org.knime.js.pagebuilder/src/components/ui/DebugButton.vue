@@ -1,5 +1,6 @@
 <script>
 import { mapState } from "vuex";
+
 import { FunctionButton } from "@knime/components";
 import InspectorIcon from "@knime/styles/img/icons/code-html.svg";
 

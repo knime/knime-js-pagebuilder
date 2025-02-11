@@ -1,7 +1,9 @@
 <script>
 import mime from "mime/lite";
+
+import { FileLink, Label } from "@knime/components";
+
 import { getFileExtension } from "../../../util/fileUtils";
-import { Label, FileLink } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 /**

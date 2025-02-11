@@ -1,8 +1,8 @@
-import { expect, describe, beforeEach, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { mount } from "@vue/test-utils";
+import VueSlider from "vue-slider-component";
 
 import Slider from "@/components/widgets/baseElements/input/Slider.vue";
-import VueSlider from "vue-slider-component";
 
 describe("Slider.vue", () => {
   let context, props;

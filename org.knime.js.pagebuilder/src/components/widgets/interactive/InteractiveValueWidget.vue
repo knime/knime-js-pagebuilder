@@ -1,8 +1,9 @@
 <script>
-import { Label, Fieldset } from "@knime/components";
-import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
+import { Fieldset, Label } from "@knime/components";
+
 import Multiselect from "../baseElements/selection/Multiselect.vue";
 import SingleSelect from "../baseElements/selection/SingleSelect.vue";
+import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 
 const UPDATE_KEY = "viewValue.filter.columns.0.values";
 

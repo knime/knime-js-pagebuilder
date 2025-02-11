@@ -1,8 +1,8 @@
-import { expect, describe, beforeEach, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 
-import ColumnSelectionWidget from "@/components/widgets/selection/ColumnSelectionWidget.vue";
 import SingleSelect from "@/components/widgets/baseElements/selection/SingleSelect.vue";
+import ColumnSelectionWidget from "@/components/widgets/selection/ColumnSelectionWidget.vue";
 import SingleSelectionWidget from "@/components/widgets/selection/SingleSelectionWidget.vue";
 
 describe("ColumnSelectionWidget.vue", () => {
