@@ -40,7 +40,7 @@ interface AbortableUploadItem extends UploadItem {
   abortController?: AbortController;
 }
 
-const UploadState: { [key in UploadItemStatus]: UploadItemStatus } = {
+const UploadState: Partial<{ [key in UploadItemStatus]: UploadItemStatus }> = {
   inprogress: "inprogress",
   cancelled: "cancelled",
   failed: "failed",
