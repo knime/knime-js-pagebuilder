@@ -170,6 +170,7 @@ export default {
           :description="description"
           :label="label"
           :show-search="enableSearch"
+          :ignore-invalid-values="viewRep.ignoreInvalidValues"
           @update:model-value="onChange"
         />
         <ErrorMessage :error="errorMessage" />
