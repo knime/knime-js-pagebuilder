@@ -17,7 +17,6 @@ definitions:
         clone:
           depth: full # SonarCloud scanner needs the full history to assign issues properly
         script:
-          - git submodule update --init --recursive
           - cd org.knime.js.pagebuilder
           - npm ci
           - npm run ci:lint-format

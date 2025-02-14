@@ -111,7 +111,7 @@ mvn clean install
 ## Embedding the PageBuilder in apps
 
 The PageBuilder can be used in Vue/Nuxt apps like a regular Vue component.
-In the KNIME WebPortal the built version is loaded during runtime via HTTP.
+In KNIME Data Apps Portal / WebPortal the built version is loaded during runtime via HTTP.
 
 Integrating the source as a Git submodule and building it with the embedding app also works.
 

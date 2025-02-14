@@ -12,13 +12,16 @@ import ListBoxInputWidget from "./input/ListBoxInputWidget.vue";
 import MultipleFileUploadWidget from "./input/MultipleFileUploadWidget.vue";
 import SliderWidget from "./input/SliderWidget.vue";
 import StringWidget from "./input/StringWidget.vue";
-// selection widgets
+// interactive widgets
 import InteractiveRangeWidget from "./interactive/InteractiveRangeWidget.vue";
 import InteractiveValueWidget from "./interactive/InteractiveValueWidget.vue";
+// output widgets
 import FileDownloadWidget from "./output/FileDownloadWidget.vue";
 import ImageWidget from "./output/ImageWidget.vue";
 import TextWidget from "./output/TextWidget.vue";
+// reactive widgets
 import RefreshButtonWidget from "./reactive/RefreshButtonWidget.vue";
+// selection widgets
 import ColumnFilterSelectionWidget from "./selection/ColumnFilterSelectionWidget.vue";
 import ColumnSelectionWidget from "./selection/ColumnSelectionWidget.vue";
 import FileChooserWidget from "./selection/FileChooserWidget.vue";
@@ -26,12 +29,6 @@ import MultipleSelectionWidget from "./selection/MultipleSelectionWidget.vue";
 import SingleSelectionWidget from "./selection/SingleSelectionWidget.vue";
 import ValueFilterSelectionWidget from "./selection/ValueFilterSelectionWidget.vue";
 import ValueSelectionWidget from "./selection/ValueSelectionWidget.vue";
-
-// output widgets
-
-// interactive widgets
-
-// reactive widgets
 
 /**
  * A Widget node view. This top level component sits at
