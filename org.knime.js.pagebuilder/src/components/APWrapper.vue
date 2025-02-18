@@ -19,8 +19,7 @@ export default {
       return this.debugInfo?.remoteDebuggingPort;
     },
     classes() {
-      let classes = ["ap-wrapper"];
-      return classes;
+      return ["ap-wrapper"];
     },
   },
   created() {

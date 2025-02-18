@@ -238,7 +238,7 @@ export default {
         changeObj.callback();
       }
       if (this.isReactive && this.isValid) {
-        this.triggerReExecution({ nodeId: this.nodeId });
+        await this.triggerReExecution({ nodeId: this.nodeId });
       }
     },
     getValue() {

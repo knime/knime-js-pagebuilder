@@ -37,10 +37,7 @@ export default defineComponent({
         if (typeof viewConfig !== "object") {
           return false;
         }
-        if (!viewConfig.hasOwnProperty("nodeID")) {
-          return false;
-        }
-        return true;
+        return viewConfig.hasOwnProperty("nodeID");
       },
     },
   },
