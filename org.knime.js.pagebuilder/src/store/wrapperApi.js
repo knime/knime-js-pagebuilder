@@ -90,7 +90,7 @@ export const actions = {
    * @returns {undefined}
    */
   async triggerReExecution({ dispatch }, { nodeId }) {
-    consola.debug("WrapperAPI store: trigger re-execution");
+    consola.debug("WrapperAPI store: trigger re-execution", nodeId);
     /* CLIENT (View/Widget) VALIDATION */
     let validPage = await dispatch("pagebuilder/getValidity", null, {
       root: true,
@@ -245,7 +245,9 @@ export const actions = {
     if (typeof window.jsonrpc === "function") {
       // SWT browser communication (request-response)
       try {
-        consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
+        consola.debug(
+          `WrapperAPI store: dispatch RPC: ${JSON.stringify(rpcConfig)}`,
+        );
         ({ result, error } = JSON.parse(
           window.jsonrpc(JSON.stringify(rpcConfig)),
         ));
@@ -255,7 +257,9 @@ export const actions = {
     } else if (window.EquoCommService) {
       // CEF browser communication (request-response)
       try {
-        consola.debug(`WrapperAPI store: dispatch RPC: ${rpcConfig}`);
+        consola.debug(
+          `WrapperAPI store: dispatch RPC:  ${JSON.stringify(rpcConfig)}`,
+        );
         ({ result, error } = JSON.parse(
           await window.EquoCommService.send(
             `org.knime.js.cef.jsonrpc#${window.cefBrowserInstanceId}`,
