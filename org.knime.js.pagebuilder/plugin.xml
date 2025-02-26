@@ -15,6 +15,18 @@
                relativePathTarget="org/knime/core/ui/pagebuilder/lib/PageBuilder.umd.js">
          </webResource>
       </webResourceBundle>
+     <webResourceBundle
+       debug="false"
+       exports="KnimePageLoader"
+       name="KNIME PageBuilder Resources to attach the PageBuilder as shadow app"
+       usesDefine="false"
+       version="2.0.0"
+       webResourceBundleID="knimePageBuilder_2.0.0_shadow_app">
+       <webResource
+         relativePathSource="dist/shadowAppLib/PageBuilderShadowApp.esm.js"
+         relativePathTarget="org/knime/core/ui/pagebuilder/shadowAppLib/PageBuilderShadowApp.esm.js">
+       </webResource>
+     </webResourceBundle>
       <webResourceBundle
             debug="false"
             exports="KnimePageLoader"

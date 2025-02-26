@@ -1,7 +1,8 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 import { createStore } from "vuex";
 
+import { initStore } from "@/PageBuilderAPI";
 import PageBuilder from "@/components/PageBuilder.vue";
 import Page from "@/components/layout/Page.vue";
 import AlertGlobal from "@/components/ui/AlertGlobal.vue";
@@ -11,7 +12,7 @@ describe("PageBuilder.vue", () => {
 
   beforeEach(() => {
     store = createStore();
-    PageBuilder.initStore(store);
+    initStore(store);
     page = {
       wizardExecutionState: "INTERACTION_REQUIRED",
       wizardPageContent: {},
@@ -19,9 +20,7 @@ describe("PageBuilder.vue", () => {
     store.commit("pagebuilder/setPage", page);
     context = {
       global: {
-        mocks: {
-          $store: store,
-        },
+        plugins: [store],
       },
     };
   });
@@ -63,5 +62,27 @@ describe("PageBuilder.vue", () => {
     let wrapper = shallowMount(PageBuilder, context);
 
     expect(wrapper.findComponent(Page).exists()).toBeFalsy();
+  });
+
+  it("subscribes to setPage changes and increments the pageKey ref", () => {
+    const wrapper = shallowMount(PageBuilder, context);
+    const pageKey = wrapper.vm.pageKey;
+
+    store.commit("pagebuilder/setPage", {});
+
+    expect(wrapper.vm.pageKey).toBe(pageKey + 1);
+  });
+
+  it("clears subscriptions on unmount", () => {
+    const unsubscribeMock = vi.fn();
+    const subscribeSpy = vi
+      .spyOn(store, "subscribe")
+      .mockImplementation(() => unsubscribeMock);
+    const wrapper = shallowMount(PageBuilder, context);
+    expect(subscribeSpy).toHaveBeenCalled();
+
+    wrapper.unmount();
+
+    expect(unsubscribeMock).toHaveBeenCalledTimes(1);
   });
 });

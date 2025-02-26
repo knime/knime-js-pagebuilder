@@ -1,42 +1,41 @@
-<script>
-import { mapState } from "vuex";
+<script setup>
+import { onMounted, onUnmounted, ref } from "vue";
+import { useStore } from "vuex";
 
-import * as alertStoreConfig from "../store/alert";
-import * as dialogStoreConfig from "../store/dialog";
-import * as interactivityStoreConfig from "../store/interactivity";
-import * as pagebuilderStoreConfig from "../store/pagebuilder";
-import * as serviceStoreConfig from "../store/service";
-
-import Page from "./layout/Page.vue";
-import AlertGlobal from "./ui/AlertGlobal.vue";
+import Page from "@/components/layout/Page.vue";
+import AlertGlobal from "@/components/ui/AlertGlobal.vue";
 import "../assets/css/global-z-indices.css";
 
-export default {
-  components: {
-    Page,
-    AlertGlobal,
-  },
-  initStore(store) {
-    // this method is to be called by the embedding app, cf. README
-    store.registerModule("pagebuilder", pagebuilderStoreConfig);
-    store.registerModule("pagebuilder/interactivity", interactivityStoreConfig);
-    store.registerModule("pagebuilder/alert", alertStoreConfig);
-    store.registerModule("pagebuilder/service", serviceStoreConfig);
-    store.registerModule("pagebuilder/dialog", dialogStoreConfig);
-  },
-  computed: {
-    ...mapState("pagebuilder", ["isDialogLayout", "isReporting"]),
-    hasPage() {
-      let page = this.$store.state.pagebuilder.page;
-      return Boolean(page?.wizardPageContent);
-    },
-  },
-};
+const pageKey = ref(0);
+const store = useStore();
+
+const hasPage = ref(Boolean(store.state.pagebuilder.page?.wizardPageContent));
+const isDialogLayout = ref(store.state.pagebuilder.isDialogLayout);
+const isReporting = ref(store.state.pagebuilder.isReporting);
+
+let unsubscribe;
+onMounted(() => {
+  // This is a workaround as the reactivity system does not detect changes.
+  // Most probably due to registering modules after the store is created.
+  // see: https://github.com/vuejs/vuex/pull/2201
+  unsubscribe = store.subscribe((mutation) => {
+    if (mutation.type === "pagebuilder/setPage") {
+      hasPage.value = Boolean(store.state.pagebuilder.page?.wizardPageContent);
+      isDialogLayout.value = store.state.pagebuilder.isDialogLayout;
+      isReporting.value = store.state.pagebuilder.isReporting;
+      pageKey.value++;
+    }
+  });
+});
+
+onUnmounted(() => {
+  unsubscribe();
+});
 </script>
 
 <template>
   <div>
-    <Page v-if="hasPage" />
+    <Page v-if="hasPage" :key="pageKey" />
     <AlertGlobal v-if="!isDialogLayout && !isReporting" />
   </div>
 </template>

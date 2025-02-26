@@ -39,7 +39,7 @@ export const mutations = {
    * @return {undefined}
    */
   setPage(state, page) {
-    state.page = page;
+    state.page = { ...page };
     state.reportingContent = {};
     state.imageGenerationWaiting = [];
     const webNodes = page?.wizardPageContent?.webNodes;
@@ -90,7 +90,6 @@ export const mutations = {
    * @param {Object} param - update event object.
    * @param {String} param.nodeId - the nodeID from the workflow which is used to serialize the node
    *      in the store.
-   * @type {UpdateValuePath}
    * @param {Object.<UpdateValuePath, Object>} [param.update] - the optional update to apply to the page state.
    *      The property referenced by the provided {@type UpdateValuePath} will be set to the provided value
    *      {@type Object}. If no update is provided, the event is considered reactive and the existing configuration

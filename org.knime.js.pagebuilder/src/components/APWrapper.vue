@@ -1,4 +1,6 @@
 <script>
+import { initStore } from "../PageBuilderAPI";
+
 import PageBuilder from "./PageBuilder.vue";
 import DebugButton from "./ui/DebugButton.vue";
 import RefreshButton from "./ui/RefreshButton.vue";
@@ -31,7 +33,7 @@ export default {
       }
     }
 
-    PageBuilder.initStore(this.$store);
+    initStore(this.$store);
   },
 };
 </script>

@@ -96,7 +96,7 @@ npm run audit
 
 ## Building
 
-The following command builds two outputs, the Vue app and also [Vue library] which both are saved to `/dist`.
+The following command builds three outputs, the Vue app and also two [Vue library]s which all are saved to `/dist`.
 
 ```sh
 npm run build
@@ -112,6 +112,7 @@ mvn clean install
 
 The PageBuilder can be used in Vue/Nuxt apps like a regular Vue component.
 In KNIME Data Apps Portal / WebPortal the built version is loaded during runtime via HTTP.
+In KNIME-Ui the PageBuilder is embedded as a shadow app to show component views.
 
 Integrating the source as a Git submodule and building it with the embedding app also works.
 
@@ -128,6 +129,8 @@ The PageBuilder expects that the embedding app provides the following:
   being used
 
 ### Usage example
+
+#### Nuxt.js
 
 For example, in a Nuxt app, the following middleware registers the `PageBuilder` component globally and initializes
 the PageBuilder store:
@@ -175,6 +178,53 @@ Then the component can be used in templates:
 ```xml
 <template>
     <PageBuilder />
+</template>
+```
+
+#### As shadow app
+
+In KNIME-Ui the PageBuilder is embedded as a shadow app to show component views. The library with embedded css is used here to ease the usage of the PageBuilder as ShadowApp.
+The PageBuilder library exposes a `createShadowApp` method that takes a `shadowRoot` and a `store` as arguments.
+The `shadowRoot` is the root element of the shadow DOM where the PageBuilder will be mounted.
+The `store` is the Vuex store of the embedding app (used already in `initStore`).
+The function will return an object to unmount the `shadowApp`.
+
+Usage:
+
+```vue
+<script setup lang="ts">
+import { createApp, onBeforeUnmount, onMounted, ref } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+const shadowHost = ref<HTMLElement | null>(null);
+let shadowAppControl: { unmount: () => void } | null = null;
+
+const pageBuilderLoader = {
+  // load the PageBuilder library
+  // call the initStore method of the PageBuilder library
+  // make it available here to use initShadowApp
+};
+
+onMounted(async () => {
+  try {
+    const shadowRoot = shadowHost.value.attachShadow({ mode: "open" });
+    shadowAppControl = pageBuilderLoader.createShadowApp(shadowRoot, store);
+  } catch (error) {
+    consola.error(
+      "ComponentViewLoader: Failed to initialize PageBuilder",
+      error,
+    );
+  }
+});
+
+onBeforeUnmount(() => {
+  shadowAppControl?.unmount();
+});
+</script>
+
+<template>
+  <div ref="shadowHost" />
 </template>
 ```
 

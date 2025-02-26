@@ -1,3 +1,7 @@
-import PageBuilder from "./components/PageBuilder.vue";
+import { initStore } from "./PageBuilderAPI";
+import * as PageBuilderComponent from "./components/PageBuilder.vue";
 
-export { PageBuilder };
+export const PageBuilder = {
+  component: PageBuilderComponent,
+  initStore,
+};
