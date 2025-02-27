@@ -1,4 +1,5 @@
 import { expect, describe, beforeEach, it, vi } from "vitest";
+import { nextTick } from "vue";
 import { mount, shallowMount } from "@vue/test-utils";
 
 import MultipleSelectionWidget from "@/components/widgets/selection/MultipleSelectionWidget.vue";
@@ -71,6 +72,7 @@ describe("MultipleSelectionWidget.vue", () => {
           type: "Twinlist",
           limitNumberVisOptions: true,
           numberVisOptions: 4,
+          ignoreInvalidValues: true,
         },
         viewValue: null,
         customCSS: "",
@@ -141,6 +143,7 @@ describe("MultipleSelectionWidget.vue", () => {
           type: "List",
           limitNumberVisOptions: true,
           numberVisOptions: 5,
+          ignoreInvalidValues: true,
         },
         viewValue: null,
         customCSS: "",
@@ -209,6 +212,7 @@ describe("MultipleSelectionWidget.vue", () => {
           type: "Check boxes (vertical)",
           limitNumberVisOptions: false,
           numberVisOptions: 10,
+          ignoreInvalidValues: true,
         },
         viewValue: null,
         customCSS: "",
@@ -278,6 +282,7 @@ describe("MultipleSelectionWidget.vue", () => {
           type: "Check boxes (horizontal)",
           limitNumberVisOptions: false,
           numberVisOptions: 10,
+          ignoreInvalidValues: true,
         },
         viewValue: null,
         customCSS: "",
@@ -482,6 +487,31 @@ describe("MultipleSelectionWidget.vue", () => {
         isValid: false,
         errorMessage: "Current selection is invalid.",
       });
+    });
+
+    it("it emits validateWidget when the possible values change and invalid selected values should not be ignored", async () => {
+      propsMultiselectListBox.nodeConfig.viewRepresentation.ignoreInvalidValues = false;
+      let wrapper = mount(MultipleSelectionWidget, {
+        props: {
+          ...propsMultiselectListBox,
+          valuePair: {
+            value: ["List 1", "List 4"],
+          },
+        },
+      });
+
+      await wrapper.setProps({
+        nodeConfig: {
+          ...propsMultiselectListBox.nodeConfig,
+          viewRepresentation: {
+            ...propsMultiselectListBox.nodeConfig.viewRepresentation,
+            possibleChoices: ["List 1", "List 2", "List 3"],
+          },
+        },
+      });
+
+      await nextTick();
+      expect(wrapper.emitted().validateWidget).toBeTruthy();
     });
   });
 });

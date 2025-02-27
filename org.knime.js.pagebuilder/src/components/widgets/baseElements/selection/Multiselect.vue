@@ -78,10 +78,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    ignoreInvalidValues: {
-      type: Boolean,
-      default: false,
-    },
   },
   emits: ["update:modelValue"],
   computed: {
@@ -158,7 +154,6 @@ export default {
       :is-valid="isValid"
       :title="description"
       :show-search="showSearch"
-      :filter-chosen-values-on-possible-values-change="ignoreInvalidValues"
       @update:model-value="onChange"
     />
     <Twinlist
@@ -173,7 +168,6 @@ export default {
       :is-valid="isValid"
       :title="description"
       :show-search="showSearch"
-      :filter-chosen-values-on-possible-values-change="ignoreInvalidValues"
       @update:model-value="onChange"
     />
     <SearchableList
@@ -187,7 +181,6 @@ export default {
       :is-valid="isValid"
       :title="description"
       :show-search="showSearch"
-      :filter-chosen-values-on-possible-values-change="ignoreInvalidValues"
       @update:model-value="onChange"
     />
     <ComboBox

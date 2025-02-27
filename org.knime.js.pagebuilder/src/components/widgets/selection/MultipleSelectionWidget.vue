@@ -1,4 +1,6 @@
 <script>
+import { nextTick } from "vue";
+
 import { Label, Fieldset } from "@knime/components";
 import ErrorMessage from "../baseElements/text/ErrorMessage.vue";
 import Multiselect from "../baseElements/selection/Multiselect.vue";
@@ -47,7 +49,7 @@ export default {
       default: null,
     },
   },
-  emits: ["updateWidget"],
+  emits: ["updateWidget", "validateWidget"],
   computed: {
     viewRep() {
       return this.nodeConfig.viewRepresentation;
@@ -67,6 +69,18 @@ export default {
     isList() {
       return this.viewRep.type === "List";
     },
+  },
+  mounted() {
+    if (!this.viewRep.ignoreInvalidValues) {
+      this.$watch("viewRep.possibleChoices", (newValue) => {
+        if (this.value?.some((item) => !newValue?.includes(item))) {
+          // wait until the child component incorporated the new values
+          nextTick(() => {
+            this.$emit("validateWidget");
+          });
+        }
+      });
+    }
   },
   methods: {
     onChange(value) {
@@ -114,7 +128,6 @@ export default {
         :description="description"
         :label="label"
         :show-search="enableSearch"
-        :ignore-invalid-values="viewRep.ignoreInvalidValues"
         @update:model-value="onChange"
       />
       <ErrorMessage :error="errorMessage" />
