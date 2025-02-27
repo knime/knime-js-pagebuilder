@@ -298,6 +298,7 @@ export default {
       :value-pair="valuePair"
       :error-message="serverValidationErrorMessage || errorMessage"
       @update-widget="publishUpdate"
+      @validate-widget="validate"
     />
   </div>
 </template>

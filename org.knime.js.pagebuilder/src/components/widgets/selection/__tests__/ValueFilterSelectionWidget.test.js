@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { nextTick } from "vue";
 import { mount } from "@vue/test-utils";
 
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
@@ -334,6 +335,35 @@ describe("ValueFilterSelectionWidget.vue", () => {
         isValid: false,
         errorMessage: "Selection is invalid or missing.",
       });
+    });
+
+    it("it emits validateWidget when the possible values change and invalid selected values should not be ignored", async () => {
+      props.nodeConfig.viewRepresentation.ignoreInvalidValues = false;
+      let wrapper = mount(ValueFilterSelectionWidget, {
+        props: {
+          ...props,
+          valuePair: {
+            values: ["Cluster_0", "Cluster_1", "Cluster_2", "Cluster_3"],
+            column: "Cluster Membership",
+          },
+        },
+      });
+
+      await wrapper.setProps({
+        nodeConfig: {
+          ...props.nodeConfig,
+          viewRepresentation: {
+            ...props.nodeConfig.viewRepresentation,
+            possibleColumns: ["Cluster Membership"],
+            possibleValues: {
+              "Cluster Membership": ["Cluster_0", "Cluster_4"],
+            },
+          },
+        },
+      });
+
+      await nextTick();
+      expect(wrapper.emitted().validateWidget).toBeTruthy();
     });
   });
 });
