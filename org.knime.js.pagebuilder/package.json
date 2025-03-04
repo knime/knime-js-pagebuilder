@@ -29,7 +29,7 @@
   "license": "UNLICENSED",
   "author": "KNIME AG, Zurich, Switzerland",
   "dependencies": {
-    "@knime/components": "1.18.1",
+    "@knime/components": "1.19.0",
     "@knime/styles": "1.2.0",
     "@knime/ui-extension-renderer": "2.0.7",
     "@knime/ui-extension-service": "2.1.1",
