@@ -183,50 +183,10 @@ Then the component can be used in templates:
 
 #### As shadow app
 
-In KNIME-Ui the PageBuilder is embedded as a shadow app to show component views. The library with embedded css is used here to ease the usage of the PageBuilder as ShadowApp.
-The PageBuilder library exposes a `createShadowApp` method that takes a `shadowRoot` and a `store` as arguments.
-The `shadowRoot` is the root element of the shadow DOM where the PageBuilder will be mounted.
-The `store` is the Vuex store of the embedding app (used already in `initStore`).
-The function will return an object to unmount the `shadowApp`.
-
-Usage:
-
-```vue
-<script setup lang="ts">
-import { createApp, onBeforeUnmount, onMounted, ref } from "vue";
-import { useStore } from "vuex";
-
-const store = useStore();
-const shadowHost = ref<HTMLElement | null>(null);
-let shadowAppControl: { unmount: () => void } | null = null;
-
-const pageBuilderLoader = {
-  // load the PageBuilder library
-  // call the initStore method of the PageBuilder library
-  // make it available here to use initShadowApp
-};
-
-onMounted(async () => {
-  try {
-    const shadowRoot = shadowHost.value.attachShadow({ mode: "open" });
-    shadowAppControl = pageBuilderLoader.createShadowApp(shadowRoot, store);
-  } catch (error) {
-    consola.error(
-      "ComponentViewLoader: Failed to initialize PageBuilder",
-      error,
-    );
-  }
-});
-
-onBeforeUnmount(() => {
-  shadowAppControl?.unmount();
-});
-</script>
-
-<template>
-  <div ref="shadowHost" />
-</template>
-```
+In KNIME-Ui the PageBuilder is embedded as a shadow app to show component views.
+The "shadowApp" library embed css and can be used to ease the usage of the PageBuilder as ShadowApp.
+The PageBuilder library exposes a `createShadowApp` method that returns a control object that can mount the PageBuilder to a `shadowRoot`
+and a function that will load a new page to be shown in the PageBuilder.
 
 ### API
 

@@ -1,5 +1,5 @@
 <script>
-import { initStore } from "../PageBuilderAPI";
+import { initStore } from "@/store/initStore";
 
 import PageBuilder from "./PageBuilder.vue";
 import DebugButton from "./ui/DebugButton.vue";

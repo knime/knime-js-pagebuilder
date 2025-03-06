@@ -39,7 +39,7 @@ export const mutations = {
    * @return {undefined}
    */
   setPage(state, page) {
-    state.page = { ...page };
+    state.page = page;
     state.reportingContent = {};
     state.imageGenerationWaiting = [];
     const webNodes = page?.wizardPageContent?.webNodes;

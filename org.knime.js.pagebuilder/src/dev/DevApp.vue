@@ -1,4 +1,5 @@
 <script>
+import { initStore } from "@/store/initStore";
 import PageBuilder from "../components/PageBuilder.vue";
 
 export default {
@@ -28,7 +29,7 @@ export default {
   },
   created() {
     let store = this.$store;
-    PageBuilder.initStore(store);
+    initStore(store);
     // load default page mock
     if (localStorage && localStorage.pageIndex) {
       this.currentPageIndex = Number(localStorage.getItem("pageIndex"));

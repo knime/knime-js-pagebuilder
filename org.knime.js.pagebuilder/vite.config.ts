@@ -47,11 +47,11 @@ export default defineConfig(({ mode }) => {
       formats: ["umd"],
     },
     rollupOptions: {
-      external: ["consola", "vue"],
+      external: ["vue", "consola"],
       output: {
         globals: {
-          consola: "consola",
           vue: "Vue",
+          consola: "consola",
         },
       },
     },

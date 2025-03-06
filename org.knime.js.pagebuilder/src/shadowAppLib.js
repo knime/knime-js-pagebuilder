@@ -1,6 +1,3 @@
-import { createShadowApp, initStore } from "./PageBuilderAPI";
+import { createPageBuilderApp } from "./shadowAppAPI";
 
-export const PageBuilder = {
-  initStore,
-  createShadowApp,
-};
+export { createPageBuilderApp };

@@ -1,9 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { createStore } from "vuex";
 
-import { createShadowApp, initStore } from "@/PageBuilderAPI";
+import { createPageBuilderApp } from "@/shadowAppAPI";
 
-describe("createShadowApp", () => {
+describe("getPageBuilderControl", () => {
   beforeEach(() => {
     // @ts-ignore
     global.__INLINE_CSS_CODE__ = "/* some CSS code */";
@@ -14,15 +13,22 @@ describe("createShadowApp", () => {
     delete global.__INLINE_CSS_CODE__;
   });
 
-  it("mounts Vue app inside shadow root with store and styles", () => {
+  it("mounts Vue app inside shadow root with store and styles", async () => {
     const host = document.createElement("div");
     const shadowRoot = host.attachShadow({ mode: "open" });
 
-    const mockStore = createStore({});
-    initStore(mockStore);
-    const shadowApp = createShadowApp(shadowRoot, mockStore);
+    const control = await createPageBuilderApp(
+      {
+        namespaced: true,
+        actions: {
+          mount: () => {},
+        },
+      },
+      "",
+    );
 
-    expect(shadowApp).toBeDefined();
+    expect(control).toBeDefined();
+    control.mountShadowApp(shadowRoot);
 
     const container = shadowRoot.querySelector("div");
     expect(container).toBeDefined();

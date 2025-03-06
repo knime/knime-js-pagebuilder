@@ -2,10 +2,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 import { createStore } from "vuex";
 
-import { initStore } from "@/PageBuilderAPI";
 import PageBuilder from "@/components/PageBuilder.vue";
 import Page from "@/components/layout/Page.vue";
 import AlertGlobal from "@/components/ui/AlertGlobal.vue";
+import { initStore } from "@/store/initStore";
 
 describe("PageBuilder.vue", () => {
   let store, context, page;
