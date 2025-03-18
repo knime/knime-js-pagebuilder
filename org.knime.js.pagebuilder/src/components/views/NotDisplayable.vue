@@ -24,6 +24,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    overwriteNotSupportedMessage: {
+      type: String,
+      default: "This view is not supported.",
+    },
   },
   computed: {
     nodeAnnotation() {
@@ -49,7 +53,7 @@ export default {
 <template>
   <div :class="{ 'not-supported': notSupported }">
     <template v-if="notSupported">
-      <span> This view is not supported. </span>
+      {{ overwriteNotSupportedMessage }}
     </template>
     <template v-else-if="showError">
       <SignWarningIcon class="icon" />

@@ -59,6 +59,7 @@ export default {
   },
   computed: {
     ...mapState("pagebuilder", ["isReporting"]),
+    ...mapState("api", ["disallowWebNodes"]),
     nodeState() {
       return this.nodeConfig?.nodeInfo?.nodeState;
     },
@@ -81,6 +82,20 @@ export default {
           (this.legacyModeDisabled && this.widgetComponentName),
       );
     },
+    isDisabledTextOutputWidget() {
+      return (
+        this.nodeConfig?.viewRepresentation?.["@class"] ===
+        "org.knime.js.base.node.widget.output.text.TextOutputWidgetRepresentation"
+      );
+    },
+    overwriteNotSupportedMessage() {
+      return this.isDisabledTextOutputWidget
+        ? `The ${this.nodeConfig?.nodeInfo?.nodeName} is disabled in the browser environment. Please use the 'Text View' node instead.`
+        : `${this.nodeConfig?.nodeInfo?.nodeName} cannot be shown.`;
+    },
+    replaceViewWithPlaceholder() {
+      return this.isDisabledTextOutputWidget || this.disallowWebNodes;
+    },
   },
   watch: {
     nodeConfig() {
@@ -101,12 +116,21 @@ export default {
   <div :class="layoutClasses" :style="layoutStyle">
     <NotDisplayable v-if="isReporting" not-supported />
     <Widget
-      v-else-if="isWidget"
+      v-else-if="isWidget && !isDisabledTextOutputWidget"
       :widget-name="widgetComponentName"
       :node-config="nodeConfig"
       :node-id="nodeId"
     />
-    <WebNodeIFrame v-else :key="nodeViewIFrameKey" v-bind="$props" />
+    <WebNodeIFrame
+      v-else-if="!disallowWebNodes"
+      :key="nodeViewIFrameKey"
+      v-bind="$props"
+    />
+    <NotDisplayable
+      v-else
+      :not-supported="true"
+      :overwrite-not-supported-message="overwriteNotSupportedMessage"
+    />
   </div>
 </template>
 

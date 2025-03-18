@@ -30,7 +30,10 @@ export const createPageBuilderApp = async (
   apiStoreConfig: Module<any, any>,
   resourceBaseUrl: string,
 ): Promise<PageBuilderControl> => {
-  consola.debug("Creating Pagebuilder store and app");
+  consola.debug(
+    "Creating Pagebuilder store and app with resourceUrl ",
+    resourceBaseUrl,
+  );
 
   if (!validateStoreConfig(apiStoreConfig)) {
     throw new Error("Invalid store configuration");
