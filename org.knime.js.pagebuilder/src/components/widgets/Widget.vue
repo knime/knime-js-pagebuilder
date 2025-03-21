@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 // input widgets
 import BooleanWidget from "./input/BooleanWidget.vue";
@@ -168,6 +168,14 @@ export default {
     isReactive() {
       return this.nodeConfig.viewRepresentation.triggerReExecution;
     },
+    ...mapState("pagebuilder", ["nodesReExecuting"]),
+    ...mapState("api", ["disableWidgetsWhileExecuting"]),
+    isExecuting() {
+      return Boolean(this.nodesReExecuting?.length);
+    },
+    disableWhileExecuting() {
+      return this.isExecuting && this.disableWidgetsWhileExecuting;
+    },
   },
   async mounted() {
     // TODO AP-19689 Remove if 'required' functionality implemented
@@ -175,7 +183,7 @@ export default {
       this.nodeConfig.viewRepresentation.required &&
       this.widgetName !== MultipleFileUploadWidget.__name
     ) {
-      this.updateWebNode({
+      await this.updateWebNode({
         nodeId: this.nodeId,
         update: {
           "viewRepresentation.required": false,
@@ -190,7 +198,7 @@ export default {
       });
     }
     if (this.hasValueGetter) {
-      this.$store.dispatch("pagebuilder/addValueGetter", {
+      await this.$store.dispatch("pagebuilder/addValueGetter", {
         nodeId: this.nodeId,
         valueGetter: this.getValue,
       });
@@ -289,7 +297,12 @@ export default {
 </script>
 
 <template>
-  <div class="widget">
+  <div
+    class="widget"
+    :class="{
+      disabled: disableWhileExecuting,
+    }"
+  >
     <Component
       :is="widgetName"
       ref="widget"
@@ -310,5 +323,11 @@ export default {
   background-color: white;
   border: none;
   padding-top: 10px; /* provides default spacing between page content */
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
 }
 </style>

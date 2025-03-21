@@ -291,10 +291,10 @@ export default defineComponent({
           this.dialogControlsShouldBeVisible = shouldBeVisible;
         },
         showDataValueView: () => {
-          // Do noting
+          // Do nothing
         },
         closeDataValueView: () => {
-          // Do noting
+          // Do nothing
         },
       };
     },

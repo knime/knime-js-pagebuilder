@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { Module, StoreOptions, createStore } from "vuex";
+import { type Module, type StoreOptions, createStore } from "vuex";
 
 import PageBuilderComponent from "./components/PageBuilder.vue";
 import * as alertStoreConfig from "./store/alert";
@@ -10,7 +10,11 @@ import * as serviceStoreConfig from "./store/service";
 
 const validateStoreConfig = (storeConfig: StoreOptions<any>) => {
   if (!storeConfig.actions?.mount) {
-    consola.error("storeConfig.actions.mount is missing");
+    consola.warn("storeConfig.actions.mount is missing");
+    return false;
+  }
+  if (!storeConfig.actions?.onChange) {
+    consola.warn("storeConfig.actions.onChange is missing");
     return false;
   }
   return true;
@@ -23,6 +27,9 @@ export type PageBuilderControl = {
     workflowId: string,
     nodeId: string,
   ) => Promise<void>;
+  isDirty: () => Promise<boolean>;
+  hasPage: () => boolean;
+  updateAndReexecute: () => Promise<void>;
   unmountShadowApp: () => void;
 };
 
@@ -36,7 +43,9 @@ export const createPageBuilderApp = async (
   );
 
   if (!validateStoreConfig(apiStoreConfig)) {
-    throw new Error("Invalid store configuration");
+    throw new Error(
+      `Invalid store configuration ${JSON.stringify(apiStoreConfig)}`,
+    );
   }
 
   const app = createApp(PageBuilderComponent);
@@ -63,8 +72,16 @@ export const createPageBuilderApp = async (
     resourceBaseUrl,
   });
 
+  let alreadyMountedOnce = false;
+
   return {
     mountShadowApp: (shadowRoot: ShadowRoot) => {
+      if (alreadyMountedOnce) {
+        consola.warn(
+          "Pagebuilder shadow app already mounted once and CANNOT be reused. Please reuse createPageBuilderApp function.",
+        );
+        return;
+      }
       consola.debug("Mounting Pagebuilder shadow app");
 
       const container = document.createElement("div");
@@ -76,6 +93,8 @@ export const createPageBuilderApp = async (
       shadowRoot.appendChild(style);
 
       app.mount(container);
+
+      alreadyMountedOnce = true;
     },
     loadPage: async (projectId: string, workflowId: string, nodeId: string) => {
       consola.debug(
@@ -85,6 +104,16 @@ export const createPageBuilderApp = async (
         nodeId,
       );
       await store.dispatch("api/mount", { projectId, workflowId, nodeId });
+    },
+    isDirty: () => {
+      return store.dispatch("pagebuilder/isDirty");
+    },
+    updateAndReexecute: async () => {
+      consola.debug("Updating and re-executing PageBuilder");
+      await store.dispatch("api/triggerReExecution", {});
+    },
+    hasPage: () => {
+      return Boolean(store.state.pagebuilder.page?.wizardPageContent);
     },
     unmountShadowApp: () => {
       consola.debug("Unmounting Pagebuilder shadow app");

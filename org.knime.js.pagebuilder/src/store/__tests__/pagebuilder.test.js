@@ -1,11 +1,11 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createStore } from "vuex";
 
 import { muteConsole } from "@knime/utils/test-utils";
 
 import * as storeConfig from "@/store/pagebuilder";
+import { generateUniqueStringFromViewValue } from "@/store/pagebuilder";
 
-// TODO UIEXT-218: Get rid of timeout workaround. Also they even sometimes fail
 describe("PageBuilder store", () => {
   let store;
 
@@ -283,22 +283,22 @@ describe("PageBuilder store", () => {
   });
 
   describe("node value getters", () => {
-    it("allows adding valueGetter via action", () => {
+    it("allows adding valueGetter via action", async () => {
       let nodeId = "0.0.7";
       let valueGetter = function () {
         return Promise.resolve("foo");
       };
       expect(store.state.pageValueGetters[nodeId]).toBeUndefined();
-      store.dispatch("addValueGetter", { nodeId, valueGetter });
+      await store.dispatch("addValueGetter", { nodeId, valueGetter });
       expect(store.state.pageValueGetters[nodeId]).toEqual(valueGetter);
     });
 
-    it("allows removing valueGetter via action", () => {
+    it("allows removing valueGetter via action", async () => {
       let nodeId = "0.0.7";
       let valueGetter = function () {
         return Promise.resolve("bar");
       };
-      store.dispatch("addValueGetter", { nodeId, valueGetter });
+      await store.dispatch("addValueGetter", { nodeId, valueGetter });
       expect(store.state.pageValueGetters[nodeId]).toEqual(valueGetter);
       store.dispatch("removeValueGetter", { nodeId });
       expect(store.state.pageValueGetters[nodeId]).toBeUndefined();
@@ -307,7 +307,7 @@ describe("PageBuilder store", () => {
     it("allows getting view values via action", async () => {
       let nodeId = "0.0.7";
       let sampleVal = { int: 42 };
-      store.dispatch("addValueGetter", {
+      await store.dispatch("addValueGetter", {
         nodeId,
         valueGetter() {
           return Promise.resolve({ nodeId, value: sampleVal });
@@ -320,7 +320,7 @@ describe("PageBuilder store", () => {
 
     it("returns empty object when getting view values fails", async () => {
       let nodeId = "0.0.7";
-      store.dispatch("addValueGetter", {
+      await store.dispatch("addValueGetter", {
         nodeId,
         valueGetter() {
           return Promise.reject(new Error("error"));
@@ -689,6 +689,184 @@ describe("PageBuilder store", () => {
         store.dispatch("getValidity"),
       );
       expect(validity).toStrictEqual({});
+    });
+  });
+
+  describe("dirty state management", () => {
+    const nodeId = "testNode";
+    const initialValue = { foo: "initialValue" };
+    const updatedValue = { foo: "updatedValue" };
+
+    beforeEach(() => {
+      store = createStore(storeConfig);
+      vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    describe("mutation Integration", () => {
+      it("auto-adds to clean state when adding value getter", async () => {
+        const valueGetter = vi.fn().mockResolvedValue({ value: initialValue });
+        await store.dispatch("addValueGetter", { nodeId, valueGetter });
+
+        expect(store.state.cleanViewValuesState[nodeId]).toBe(
+          generateUniqueStringFromViewValue(initialValue),
+        );
+      });
+
+      it("removes from clean state when removing value getter", async () => {
+        await store.dispatch("addValueGetter", {
+          nodeId,
+          valueGetter: vi.fn().mockResolvedValue({ value: initialValue }),
+        });
+        expect(store.state.cleanViewValuesState[nodeId]).toBe(
+          generateUniqueStringFromViewValue(initialValue),
+        );
+
+        store.dispatch("removeValueGetter", { nodeId });
+        expect(store.state.cleanViewValuesState[nodeId]).toBeUndefined();
+      });
+
+      it("warns on duplicate clean state additions", () => {
+        const consolaWarn = vi.spyOn(consola, "debug");
+        store.commit("addToCleanViewValuesState", {
+          nodeId,
+          value: initialValue,
+        });
+        store.commit("addToCleanViewValuesState", {
+          nodeId,
+          value: updatedValue,
+        });
+
+        expect(consolaWarn).toHaveBeenCalled();
+        consolaWarn.mockRestore();
+      });
+
+      it("warns on duplicate clean state removals", () => {
+        const consolaWarn = vi.spyOn(consola, "warn");
+        store.commit("removeFromCleanViewValuesState", {
+          nodeId: "nodeForWhichNoCleanValueExists",
+          value: "notImportant",
+        });
+
+        expect(consolaWarn).toHaveBeenCalled();
+        consolaWarn.mockRestore();
+      });
+
+      it("does not create a clean initial state when loading of web node does not finish", async () => {
+        store.commit("setWebNodeLoading", { nodeId, loading: true });
+
+        const valueGetter = vi.fn().mockResolvedValue({ value: initialValue });
+        const actionPromise = store.dispatch("addValueGetter", {
+          nodeId,
+          valueGetter,
+        });
+
+        await vi.advanceTimersByTimeAsync(3000);
+
+        await actionPromise;
+
+        expect(store.state.cleanViewValuesState[nodeId]).toBeUndefined();
+      });
+    });
+
+    describe("isDirty", () => {
+      it("returns false when no nodes exist", async () => {
+        const isDirty = await store.dispatch("isDirty");
+        expect(isDirty).toBe(false);
+      });
+
+      it("returns false when values match clean state", async () => {
+        const valueGetter = vi.fn().mockResolvedValue({ value: initialValue });
+
+        await store.dispatch("addValueGetter", { nodeId, valueGetter });
+
+        const isDirty = await store.dispatch("isDirty");
+        expect(isDirty).toBe(false);
+      });
+
+      it("returns true when any node is dirty", async () => {
+        let valueGetter = vi
+          .fn()
+          .mockResolvedValueOnce({ value: initialValue })
+          .mockResolvedValue({
+            value: updatedValue,
+          });
+        await store.dispatch("addValueGetter", { nodeId, valueGetter });
+
+        expect(await store.dispatch("isDirty")).toBe(true);
+      });
+
+      it("handles missing value getters gracefully", async () => {
+        const consolaWarn = vi.spyOn(consola, "debug");
+        store.commit("addToCleanViewValuesState", {
+          nodeId,
+          value: initialValue,
+        });
+
+        expect(consolaWarn).not.toHaveBeenCalled();
+        const isDirty = await store.dispatch("isDirty");
+
+        expect(isDirty).toBe(false);
+        expect(consolaWarn).toHaveBeenCalled();
+        consolaWarn.mockRestore();
+      });
+
+      it("handles value comparison with different ordering", async () => {
+        const valueGetter = vi
+          .fn()
+          .mockResolvedValueOnce({
+            value: { b: 2, a: { c: 3, d: 4 } },
+          })
+          .mockResolvedValue({
+            value: { a: { d: 4, c: 3 }, b: 2 },
+          });
+        await store.dispatch("addValueGetter", { nodeId, valueGetter });
+
+        const isDirty = await store.dispatch("isDirty");
+        expect(isDirty).toBe(false);
+      });
+    });
+
+    describe("resetDirtyState", () => {
+      it("can reset dirty state", async () => {
+        const valueGetter = vi
+          .fn()
+          .mockResolvedValueOnce({ value: initialValue })
+          .mockResolvedValue({
+            value: updatedValue,
+          });
+        await store.dispatch("addValueGetter", { nodeId, valueGetter });
+
+        expect(await store.dispatch("isDirty")).toBe(true);
+
+        await store.dispatch("resetDirtyState", { nodeId });
+
+        expect(await store.dispatch("isDirty")).toBe(false);
+      });
+
+      it("handles missing nodes gracefully", async () => {
+        const consolaWarn = vi.spyOn(consola, "debug");
+        await store.dispatch("resetDirtyState", { nodeId: "nonExistent" });
+        expect(consolaWarn).toHaveBeenCalled();
+        consolaWarn.mockRestore();
+      });
+
+      it("handles async value fetching errors", () => {
+        const errorGetter = vi.fn().mockRejectedValue(new Error("Async error"));
+        muteConsole(async () => {
+          const consolaWarn = vi.spyOn(consola, "warn");
+          await store.dispatch("addValueGetter", {
+            nodeId,
+            valueGetter: errorGetter,
+          });
+          await store.dispatch("resetDirtyState", { nodeId });
+          expect(consolaWarn).toHaveBeenCalled();
+          consolaWarn.mockRestore();
+        });
+      });
     });
   });
 });
