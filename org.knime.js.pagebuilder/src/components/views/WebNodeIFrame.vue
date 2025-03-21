@@ -475,7 +475,7 @@ export default {
     },
 
     getValue() {
-      return new Promise((resolve, reject) => {
+      const test = new Promise((resolve, reject) => {
         this.getValueCallback = ({ error, value }) => {
           window.clearTimeout(this.cancelValueGetter);
           if (error) {
@@ -485,6 +485,7 @@ export default {
             resolve({ nodeId: this.nodeId, value });
           }
         };
+
         this.document.defaultView.postMessage(
           {
             nodeId: this.nodeId,
@@ -501,6 +502,8 @@ export default {
           reject(new Error(errorMessage));
         }, valueGetterTimeout);
       });
+
+      return test;
     },
 
     setValidationError(errorMessage) {
