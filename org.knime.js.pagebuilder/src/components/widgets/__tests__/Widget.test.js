@@ -1,5 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { nextTick } from "vue";
 import { shallowMount } from "@vue/test-utils";
+import flushPromises from "flush-promises";
 import { createStore } from "vuex";
 
 import Widget from "@/components/widgets/Widget.vue";
@@ -83,10 +85,10 @@ describe("Widget.vue", () => {
 
   const getNodeConfig = () => JSON.parse(JSON.stringify(nodeConfigBlueprint));
 
-  beforeEach(() => {
+  beforeEach(async () => {
     nodeConfig = getNodeConfig();
 
-    store = createStore({ modules: { pagebuilder: storeConfig } });
+    store = createStore({ modules: { pagebuilder: { ...storeConfig } } });
     store.registerModule("api", {
       namespaced: true,
       actions: {
@@ -140,6 +142,7 @@ describe("Widget.vue", () => {
         widgetName: "SliderWidget",
       },
     });
+    await flushPromises();
   });
 
   it("renders and updates the required field in the viewRepresentation", () => {
@@ -362,7 +365,8 @@ describe("Widget.vue", () => {
     ).toBe("undefined");
   });
 
-  it("registers a validator with the store", () => {
+  it("registers a validator with the store", async () => {
+    await nextTick();
     expect(
       typeof wrapper.vm.$store.state.pagebuilder.pageValidators[nodeId],
     ).toBe("function");
