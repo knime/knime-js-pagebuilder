@@ -25,6 +25,7 @@ describe("getPageBuilderControl", () => {
         },
       },
       "",
+      () => {},
     );
 
     expect(control).toBeDefined();

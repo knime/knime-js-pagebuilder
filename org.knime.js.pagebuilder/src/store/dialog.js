@@ -29,6 +29,7 @@ export const mutations = {
    * @returns {undefined}
    */
   setApplySettings(state, applySettings) {
+    console.log("setApplySettings", applySettings);
     state.applySettings = applySettings;
   },
 };
@@ -61,6 +62,7 @@ export const actions = {
    * @returns {Promise<any>} - a Promise calling the applySettings method.
    */
   callApplySettings({ state }) {
+    console.log("callApplySettings", state.applySettings);
     return state.applySettings();
   },
 };

@@ -20,6 +20,8 @@ export const state = () => ({
 
   reportingContent: {},
   imageGenerationWaiting: [],
+
+  cleanViewValuesState: {},
 });
 
 const isViewLayout = (pageContent) => {
@@ -27,7 +29,7 @@ const isViewLayout = (pageContent) => {
   const nodeTypes = Object.keys(nodeViews).map(
     (key) => nodeViews[key].extensionType,
   );
-  return !["dialog"].some((specialType) => nodeTypes.includes(specialType));
+  return !nodeTypes.includes("dialog");
 };
 
 export const mutations = {
@@ -189,6 +191,37 @@ export const mutations = {
   addImageGenerationWaiting(state, { nodeId }) {
     state.imageGenerationWaiting.push(nodeId);
   },
+
+  addToCleanViewValuesState(state, { nodeId, value }) {
+    // TODO: introduce a more robust method:
+    // one idea let widgets/nodes create their own value that do not suffer from generic serialization issues
+    const stringifiedNodeViewValue = JSON.stringify(value);
+    consola.debug("Add new clean state for node " + nodeId + " -> " + stringifiedNodeViewValue);
+    if (state.cleanViewValuesState[nodeId] === undefined) {
+      state.cleanViewValuesState[nodeId] = stringifiedNodeViewValue;
+    } else {
+      consola.error(
+        "Tried to add a new initial node view value for " +
+          nodeId +
+          " to the clean state, but it already exists. Existing value: " +
+          state.cleanViewValuesState[nodeId] +
+          " New value: " +
+          stringifiedNodeViewValue +
+          ". Will overwrite the existing value. This is most probably an implementation error.",
+      );
+    }
+  },
+
+  removeFromCleanViewValuesState(state, nodeId ) {
+    // TODO: introduce a more robust method:
+    // one idea let widgets/nodes create their own value that do not suffer from generic serialization issues
+    consola.debug("Remove obsolete clean state for node " + nodeId);
+    if (state.cleanViewValuesState[nodeId] === undefined) {
+      consola.error("No such clean state for node " + nodeId + " found.")
+    } else {
+      delete state.cleanViewValuesState[nodeId];
+    }
+  },
 };
 
 export const actions = {
@@ -277,13 +310,28 @@ export const actions = {
     commit("setWebNodeLoading", { nodeId, loading });
   },
 
-  addValueGetter({ commit }, { nodeId, valueGetter }) {
+  async addValueGetter({ commit, dispatch }, { nodeId, valueGetter }) {
     consola.trace("PageBuilder: add value getter via action: ", nodeId);
-    commit("addValueGetter", { nodeId, valueGetter });
+    commit("addValueGetter", {
+      nodeId,
+      valueGetter: () => {
+        console.log("valueGetter called: ", nodeId);
+        return valueGetter();
+      },
+    });
+    const initialValue = await valueGetter();
+    console.log("addValueGetter, new initialValue: ", initialValue);
+    if (initialValue.value) {
+      commit("addToCleanViewValuesState", {
+        nodeId,
+        value: initialValue.value,
+      });
+    }
   },
 
   removeValueGetter({ commit }, { nodeId }) {
     consola.trace("PageBuilder: remove value getter via action: ", nodeId);
+    commit("removeFromCleanViewValuesState",nodeId)
     commit("removeValueGetter", nodeId);
   },
 
@@ -383,6 +431,61 @@ export const actions = {
       nodesReExecuting,
     );
     commit("setNodesReExecuting", nodesReExecuting);
+  },
+
+  async isDirty({ dispatch, state }, _) {
+    consola.debug("PageBuilder: checking if page is dirty");
+    const cleanViewValues = state.cleanViewValuesState;
+    if (cleanViewValues === undefined) {
+      consola.warn("initial view values undefined");
+      return false;
+    }
+
+    const nodesToCheck = Object.keys(cleanViewValues);
+
+    if (nodesToCheck.length === 0) {
+      consola.warn("No nodes to check. No initial state?");
+      return false;
+    }
+
+    const gettersOfNodesToCheck = Object.entries(state.pageValueGetters)
+      .filter(([nodeId]) => nodesToCheck.includes(nodeId))
+      .reduce((agg, [nodeId, getter]) => {
+        agg[nodeId] = getter;
+        return agg;
+      }, {});
+
+    console.log("gettersOfNodesToCheck: ", gettersOfNodesToCheck);
+    console.log("nodesToCheck: ", nodesToCheck);
+
+    const allGettersPresent = nodesToCheck.every(
+      (nodeId) => gettersOfNodesToCheck[nodeId] !== undefined,
+    );
+
+    if (!allGettersPresent) {
+      console.log("Not all getters present");
+      consola.warn("Not all getters present");
+      return;
+    }
+
+    const isDirty = (await Promise.all(nodesToCheck.map(async (nodeId) => {
+      console.log("Check dirtyness of nodeId: ", nodeId);
+
+      const newViewValue = await gettersOfNodesToCheck[nodeId]();
+      const valueToCompare = JSON.stringify(newViewValue.value);
+      console.log("newViewValue to compare: ", valueToCompare);
+      console.log("cleanViewValues[nodeId]: ", cleanViewValues[nodeId]);
+
+      if (valueToCompare !== cleanViewValues[nodeId]) {
+        consola.log("Node " + nodeId + " is dirty");
+        console.log("Node " + nodeId + " is dirty");
+        return true;
+      }
+      return false;
+    }))).some((isDirty) => isDirty);
+
+    console.log("isDirty PAGEBUILDERR STORE: ", isDirty);
+    return isDirty;
   },
 
   setReportingContent({ state, commit }, { nodeId, reportingContent }) {

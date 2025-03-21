@@ -23,12 +23,15 @@ export type PageBuilderControl = {
     workflowId: string,
     nodeId: string,
   ) => Promise<void>;
+  isDirty: (isDirty : boolean) => Promise<boolean>;
+  updateAndReexecute: (componentRoot : string) => Promise<void>;
   unmountShadowApp: () => void;
 };
 
 export const createPageBuilderApp = async (
   apiStoreConfig: Module<any, any>,
   resourceBaseUrl: string,
+  onChange: (isDirty: boolean) => void,
 ): Promise<PageBuilderControl> => {
   consola.debug("Creating Pagebuilder store and app");
 
@@ -36,7 +39,9 @@ export const createPageBuilderApp = async (
     throw new Error("Invalid store configuration");
   }
 
-  const app = createApp(PageBuilderComponent);
+  const app = createApp(PageBuilderComponent, {
+    onChange,
+  });
   const store = createStore({
     modules: {
       api: apiStoreConfig,
@@ -60,8 +65,16 @@ export const createPageBuilderApp = async (
     resourceBaseUrl,
   });
 
+  let alreadyMountedOnce = false;
+
   return {
     mountShadowApp: (shadowRoot: ShadowRoot) => {
+      if (alreadyMountedOnce) {
+        consola.error(
+          "Pagebuilder shadow app already mounted once and CANNOT be reused. Please reuse createPageBuilderApp function.",
+        );
+        return;
+      }
       consola.debug("Mounting Pagebuilder shadow app");
 
       const container = document.createElement("div");
@@ -73,6 +86,8 @@ export const createPageBuilderApp = async (
       shadowRoot.appendChild(style);
 
       app.mount(container);
+
+      alreadyMountedOnce = true;
     },
     loadPage: async (projectId: string, workflowId: string, nodeId: string) => {
       consola.debug(
@@ -82,6 +97,15 @@ export const createPageBuilderApp = async (
         nodeId,
       );
       await store.dispatch("api/mount", { projectId, workflowId, nodeId });
+    },
+    isDirty: async () => {
+      const test = await store.dispatch("pagebuilder/isDirty");
+      console.log("API:Checking if Pagebuilder is dirty", test);
+      return test;
+    },
+    updateAndReexecute: async (componentRoot: string) => {
+      consola.debug("Updating and re-executing PageBuilder for componentRoot"+ componentRoot);
+      await store.dispatch("api/triggerCompleteReExecution");
     },
     unmountShadowApp: () => {
       consola.debug("Unmounting Pagebuilder shadow app");

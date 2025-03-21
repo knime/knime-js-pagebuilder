@@ -175,7 +175,7 @@ export default {
       this.nodeConfig.viewRepresentation.required &&
       this.widgetName !== MultipleFileUploadWidget.__name
     ) {
-      this.updateWebNode({
+      await this.updateWebNode({
         nodeId: this.nodeId,
         update: {
           "viewRepresentation.required": false,
