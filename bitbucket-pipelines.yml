@@ -3,7 +3,7 @@ image: node:22.11.0 # using 22.11.0 because the experimental feature for importi
 definitions:
   services:
     docker:
-      memory: 6000
+      memory: 7100
   caches:
     sonar: ~/.sonar/cache
   steps:
@@ -13,7 +13,7 @@ definitions:
           - node
           - sonar
           - docker # used by sonar pipes
-        size: 2x # needed for additional memory requirements
+        size: 4x # needed for additional memory requirements
         clone:
           depth: full # SonarCloud scanner needs the full history to assign issues properly
         script:
@@ -23,9 +23,12 @@ definitions:
           - npm run coverage
           - pipe: sonarsource/sonarcloud-scan:2.0.0
             variables:
-              SONAR_SCANNER_OPTS: -Xmx4G
+              SONAR_SCANNER_OPTS: -Xmx3G
           - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
-          - npm run build
+          - npm run type-check
+          - npm run build:app
+          - npm run build:lib
+          - npm run build:shadow-app-lib
           - npm run audit
         artifacts:
           - org.knime.js.pagebuilder/dist/**
