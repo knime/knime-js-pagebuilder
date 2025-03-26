@@ -131,9 +131,11 @@ export const mutations = {
     if (index === -1 && loading) {
       // add nodeId to list of loading views if not already present
       state.webNodesLoading.push(nodeId);
+      console.log("Added node to loading views: ", nodeId);
     } else if (index >= 0 && !loading) {
       // remove nodeId from list of loading views if present
       state.webNodesLoading.splice(index, 1);
+      console.log("Removed node from loading views: ", nodeId);
     }
   },
 
@@ -216,7 +218,10 @@ export const mutations = {
     // TODO: introduce a more robust method:
     // one idea let widgets/nodes create their own value that do not suffer from generic serialization issues
     consola.debug("Remove obsolete clean state for node " + nodeId);
+    console.log("cleanViewValuesState: ", state.cleanViewValuesState);
+    console.log("nodeId: ", nodeId);
     if (state.cleanViewValuesState[nodeId] === undefined) {
+      console.log("No such clean state for node " + nodeId + " found.");
       consola.error("No such clean state for node " + nodeId + " found.")
     } else {
       delete state.cleanViewValuesState[nodeId];
@@ -310,7 +315,7 @@ export const actions = {
     commit("setWebNodeLoading", { nodeId, loading });
   },
 
-  async addValueGetter({ commit, dispatch }, { nodeId, valueGetter }) {
+  async addValueGetter({ commit, state }, { nodeId, valueGetter }) {
     consola.trace("PageBuilder: add value getter via action: ", nodeId);
     commit("addValueGetter", {
       nodeId,
@@ -319,6 +324,16 @@ export const actions = {
         return valueGetter();
       },
     });
+
+    // until the component isnt mounted we cannot get the initial value
+    // so we need to wait for the component to be mounted
+    // the array webNodesLoading is used to keep track of the nodes that are still loading
+    // when the array doesnt contain the node which we want to get values from retry later
+
+    while(state.webNodesLoading.includes(nodeId)){
+      await new Promise((resolve) => setTimeout(resolve,
+        100));
+    }
     const initialValue = await valueGetter();
     console.log("addValueGetter, new initialValue: ", initialValue);
     if (initialValue.value) {

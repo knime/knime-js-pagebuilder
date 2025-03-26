@@ -402,6 +402,7 @@ export default {
     },
 
     messageFromIframe(event) {
+      console.log("Get message from IFrame",event)
       if (!event || !event.origin) {
         return;
       }
@@ -436,6 +437,7 @@ export default {
           nodeId: this.nodeId,
           loading: false,
         });
+
       } else if (data.type === "validate") {
         this.validateCallback(data);
       } else if (data.type === "getValue") {
@@ -475,16 +477,30 @@ export default {
     },
 
     getValue() {
-      return new Promise((resolve, reject) => {
+      console.log("getValue called")
+      const test = new Promise((resolve, reject) => {
+        console.log("GetValue promise set up")
         this.getValueCallback = ({ error, value }) => {
+          console.log("\nWEBNODE GETVALUE")
           window.clearTimeout(this.cancelValueGetter);
           if (error) {
+            console.log("Error in getValue",error)
             this.setLocalError(error);
             reject(new Error(error));
           } else {
+            console.log("\n\nRESOLVED VALUE",value)
             resolve({ nodeId: this.nodeId, value });
           }
         };
+
+        console.log("Sending postMessage",{
+          nodeId: this.nodeId,
+          namespace: this.nodeConfig.namespace,
+          getViewValueMethodName: this.nodeConfig.getViewValueMethodName,
+          type: "getValue",
+        })
+
+        console.log("Document.defaultView",this.document.defaultView)
         this.document.defaultView.postMessage(
           {
             nodeId: this.nodeId,
@@ -494,13 +510,22 @@ export default {
           },
           this.origin,
         );
+        console.log("Post message sent")
         this.cancelValueGetter = window.setTimeout(() => {
           let errorMessage =
             "Value could not be retrieved in the allocated time.";
           this.setLocalError(errorMessage);
           reject(new Error(errorMessage));
         }, valueGetterTimeout);
+
+        console.log("Timeout set, promise created")
       });
+
+      console.log("test direct access")
+      // const directTest = window[this.nodeConfig.namespace][this.nodeConfig.getViewValueMethodName]();
+      //console.log("Direct test",directTest)
+      console.log("Returning test",test)
+      return test;
     },
 
     setValidationError(errorMessage) {
