@@ -89,12 +89,7 @@ export default {
       );
     },
     overwriteNotSupportedMessage() {
-      return this.isDisabledTextOutputWidget
-        ? `The ${this.nodeConfig?.nodeInfo?.nodeName} is disabled in the browser environment. Please use the 'Text View' node instead.`
-        : `${this.nodeConfig?.nodeInfo?.nodeName} cannot be shown.`;
-    },
-    replaceViewWithPlaceholder() {
-      return this.isDisabledTextOutputWidget || this.disallowWebNodes;
+      return `${this.nodeConfig?.nodeInfo?.nodeName} is not supported in browser editing.`;
     },
   },
   watch: {
@@ -128,7 +123,7 @@ export default {
     />
     <NotDisplayable
       v-else
-      :not-supported="true"
+      not-supported
       :overwrite-not-supported-message="overwriteNotSupportedMessage"
     />
   </div>
