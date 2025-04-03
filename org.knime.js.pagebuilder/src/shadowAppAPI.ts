@@ -29,7 +29,11 @@ export type PageBuilderControl = {
   ) => Promise<void>;
   isDirty: (isDirty: boolean) => Promise<boolean>;
   hasPage: () => boolean;
-  updateAndReexecute: () => Promise<void>;
+  updateAndReexecute: (
+    projectId: string,
+    workflowId: string,
+    nodeId: string,
+  ) => Promise<void>;
   unmountShadowApp: () => void;
 };
 
@@ -106,9 +110,19 @@ export const createPageBuilderApp = async (
     isDirty: () => {
       return store.dispatch("pagebuilder/isDirty");
     },
-    updateAndReexecute: async () => {
+    updateAndReexecute: async (
+      projectId: string,
+      workflowId: string,
+      nodeId: string,
+    ) => {
       consola.debug("Updating and re-executing PageBuilder");
-      await store.dispatch("api/triggerReExecution", {});
+      await store.dispatch("api/handleTriggerReExecution", {
+        componentNodeIdentifier: {
+          projectId,
+          workflowId,
+          nodeId,
+        },
+      });
     },
     hasPage: () => {
       return Boolean(store.state.pagebuilder.page?.wizardPageContent);
