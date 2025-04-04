@@ -17,35 +17,31 @@ export default {
   },
   data() {
     return {
-      debugPage: "",
+      debugUrl: "",
+      multipleTargets: false,
     };
   },
   computed: {
     ...mapState("pagebuilder", ["isDialogLayout"]),
-    // Composed URL to either open the correct debugger or the overview page
-    debugUrl() {
-      return `http://localhost:${this.debugPort}${this.debugPage}`;
-    },
   },
   async mounted() {
     // get all existing debugger instances
-    let debuggerInstances = await fetch(
-      `http://localhost:${this.debugPort}/json/list?t=${new Date().getTime()}`,
-    ).then((response) => response.json());
-
-    // when there is only 1 instance we open it (otherwise the list of all instances is displayed)
-    if (debuggerInstances.length === 1) {
-      this.debugPage = debuggerInstances[0].devtoolsFrontendUrl;
-    }
+    const remoteDebuggingUrl = `http://localhost:${this.debugPort}`;
+    const response = await fetch(`${remoteDebuggingUrl}/json`);
+    const targets = await response.json();
+    targets.forEach((target) => {
+      if (target.type === "page" && target.title === "KNIME PageBuilder") {
+        if (this.debugUrl) {
+          this.multipleTargets = true;
+        } else {
+          this.debugUrl = `${remoteDebuggingUrl}${target.devtoolsFrontendUrl}`;
+        }
+      }
+    });
   },
   methods: {
-    openBrowser(url) {
-      if (window.openBrowser) {
-        window.openBrowser(url);
-      } else {
-        // eslint-disable-next-line no-console
-        console.warn("No 'openBrowser'-browser function available");
-      }
+    openNewWindow(url) {
+      window.open(url, "_blank");
     },
   },
 };
@@ -57,7 +53,8 @@ export default {
     target="_blank"
     class="button"
     title="Open developer tools"
-    @click="openBrowser(debugUrl)"
+    :disabled="multipleTargets"
+    @click="openNewWindow(debugUrl)"
   >
     <InspectorIcon />
   </FunctionButton>
