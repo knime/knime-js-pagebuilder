@@ -1,7 +1,7 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import { useStore } from "vuex";
 
-import { navigatorUtils } from "@knime/utils";
+import { getMetaOrCtrlKey } from "@knime/utils";
 
 const doIfBodyActive =
   (fn: (event: KeyboardEvent) => void) => (event: KeyboardEvent) => {
@@ -24,7 +24,7 @@ export default () => {
     }
   };
   const onKeyDown = (e: KeyboardEvent) => {
-    isMetaKeyPressed.value = e[navigatorUtils.getMetaOrCtrlKey()];
+    isMetaKeyPressed.value = e[getMetaOrCtrlKey()];
     if (e.defaultPrevented) {
       return;
     }
@@ -36,7 +36,7 @@ export default () => {
     }
   };
   const onKeyUp = (e: KeyboardEvent) => {
-    isMetaKeyPressed.value = e[navigatorUtils.getMetaOrCtrlKey()];
+    isMetaKeyPressed.value = e[getMetaOrCtrlKey()];
   };
   onMounted(() => {
     window.addEventListener("keyup", doIfBodyActive(onKeyUp));

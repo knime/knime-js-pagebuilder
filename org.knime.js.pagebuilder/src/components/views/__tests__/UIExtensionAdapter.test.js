@@ -29,9 +29,7 @@ vi.mock("@knime/utils", async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    navigatorUtils: {
-      getMetaOrCtrlKey: () => metaOrCtrlKey,
-    },
+    getMetaOrCtrlKey: () => metaOrCtrlKey,
   };
 });
 
