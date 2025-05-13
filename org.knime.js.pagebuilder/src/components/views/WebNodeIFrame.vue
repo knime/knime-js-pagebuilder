@@ -63,6 +63,7 @@ export default {
       currentJobId: "wizardExecution/currentJobId", // Expected values include null (no job) or undefined (AP execution).
       authParameter: "oauth/authParameter",
     }),
+    ...mapState("api", ["alwaysTearDownKnimePageBuilderAPI"]),
     iframeId() {
       // provide a sensible id for the iframe, otherwise iframe-resizer sets it to a generic name
       return this.nodeId && `node-${this.nodeId.replace(/(:)/g, "-")}`;
@@ -104,30 +105,44 @@ export default {
     },
   },
 
-  mounted() {
-    if (this.autoHeight) {
-      this.initIFrameResize();
-    }
-    this.$store.dispatch("pagebuilder/setWebNodeLoading", {
+  async mounted() {
+    await this.$store.dispatch("pagebuilder/setWebNodeLoading", {
       nodeId: this.nodeId,
       loading: true,
     });
-    window.addEventListener("message", this.messageFromIframe);
 
     this.document = this.$refs.iframe.contentDocument;
+
+    // If used in the embedded mode in knime-ui it is possible for the component to be unmounted quickly
+    // so that the iframe is not available anymore. In this case we need to stop the loading/setup process.
+    if (!this.document) {
+      await this.$store.dispatch("pagebuilder/setWebNodeLoading", {
+        nodeId: this.nodeId,
+        loading: false,
+      });
+      return;
+    }
+    if (this.autoHeight) {
+      this.initIFrameResize();
+    }
+
+    window.addEventListener("message", this.messageFromIframe);
     this.injectContent();
-    this.$store.dispatch("pagebuilder/addValidator", {
-      nodeId: this.nodeId,
-      validator: this.validate,
-    });
-    this.$store.dispatch("pagebuilder/addValueGetter", {
-      nodeId: this.nodeId,
-      valueGetter: this.getValue,
-    });
-    this.$store.dispatch("pagebuilder/addValidationErrorSetter", {
-      nodeId: this.nodeId,
-      errorSetter: this.setValidationError,
-    });
+
+    await Promise.all([
+      this.$store.dispatch("pagebuilder/addValidator", {
+        nodeId: this.nodeId,
+        validator: this.validate,
+      }),
+      this.$store.dispatch("pagebuilder/addValueGetter", {
+        nodeId: this.nodeId,
+        valueGetter: this.getValue,
+      }),
+      this.$store.dispatch("pagebuilder/addValidationErrorSetter", {
+        nodeId: this.nodeId,
+        errorSetter: this.setValidationError,
+      }),
+    ]);
 
     // create global API which is accessed by knimeService running inside the iframe.
     // This global API should only be used/extended for cases where window.postMessage can't be used
@@ -218,18 +233,25 @@ export default {
     }
   },
 
-  beforeUnmount() {
+  async beforeUnmount() {
     window.removeEventListener("message", this.messageFromIframe);
-    this.$store.dispatch("pagebuilder/removeValidator", {
-      nodeId: this.nodeId,
-    });
-    this.$store.dispatch("pagebuilder/removeValueGetter", {
-      nodeId: this.nodeId,
-    });
-    this.$store.dispatch("pagebuilder/removeValidationErrorSetter", {
-      nodeId: this.nodeId,
-    });
-    if (window.KnimePageBuilderAPI?.teardown(this.currentJobId)) {
+
+    await Promise.all([
+      this.$store.dispatch("pagebuilder/removeValidator", {
+        nodeId: this.nodeId,
+      }),
+      this.$store.dispatch("pagebuilder/removeValueGetter", {
+        nodeId: this.nodeId,
+      }),
+      this.$store.dispatch("pagebuilder/removeValidationErrorSetter", {
+        nodeId: this.nodeId,
+      }),
+    ]);
+
+    if (
+      window.KnimePageBuilderAPI?.teardown(this.currentJobId) ||
+      this.alwaysTearDownKnimePageBuilderAPI
+    ) {
       delete window.KnimePageBuilderAPI;
     }
   },
@@ -336,8 +358,8 @@ export default {
         if (accessToken) {
           src += `?${this.authParameter}=${accessToken}`;
         }
-        return `<script src="${src}" 
-                        onload="knimeLoader(true)" 
+        return `<script src="${src}"
+                        onload="knimeLoader(true)"
                         onerror="knimeLoader(false)">
                         <\/script>`; // eslint-disable-line no-useless-escape
       });
@@ -401,7 +423,7 @@ export default {
       iframeResizer(resizeSettings, this.$refs.iframe);
     },
 
-    messageFromIframe(event) {
+    async messageFromIframe(event) {
       if (!event || !event.origin) {
         return;
       }
@@ -432,7 +454,7 @@ export default {
           },
           this.origin,
         );
-        this.$store.dispatch("pagebuilder/setWebNodeLoading", {
+        await this.$store.dispatch("pagebuilder/setWebNodeLoading", {
           nodeId: this.nodeId,
           loading: false,
         });

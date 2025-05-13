@@ -1,5 +1,6 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+import flushPromises from "flush-promises";
 import { iframeResizer } from "iframe-resizer";
 import { createStore } from "vuex";
 
@@ -60,8 +61,18 @@ describe("WebNodeIFrame.vue", () => {
     mockUpload,
     wrapper;
 
+  const mockedStoreConfig = {
+    ...storeConfig,
+    actions: {
+      ...storeConfig.actions,
+      setWebNodeLoading: vi.fn(),
+      addValidator: vi.fn(),
+      addValueGetter: vi.fn(),
+      addValidationErrorSetter: vi.fn(),
+    },
+  };
+
   beforeAll(() => {
-    storeConfig.actions.setWebNodeLoading = vi.fn();
     mockGetPublishedData = vi.fn();
     interactivityConfig = {
       namespaced: true,
@@ -121,9 +132,10 @@ describe("WebNodeIFrame.vue", () => {
           .mockReturnValue("sample/sketcher/path/sketcher.html"),
       },
     };
+
     store = createStore({
       modules: {
-        pagebuilder: storeConfig,
+        pagebuilder: mockedStoreConfig,
         "pagebuilder/interactivity": interactivityConfig,
         api: apiConfig,
         settings: settingsConfig,
@@ -182,7 +194,7 @@ describe("WebNodeIFrame.vue", () => {
   });
 
   describe("resource injection", () => {
-    it("injects scripts and styles", () => {
+    it("injects scripts and styles", async () => {
       let iframeConfig = {
         attachTo: document.body,
         ...context,
@@ -200,6 +212,7 @@ describe("WebNodeIFrame.vue", () => {
         },
       };
       wrapper = shallowMount(WebNodeIFrame, iframeConfig);
+      await flushPromises();
 
       let html = wrapper.vm.document.documentElement.innerHTML;
       expect(html).toMatch("messageListener.js mock");
@@ -231,11 +244,13 @@ describe("WebNodeIFrame.vue", () => {
       // check if iframe resizer was also injected
       iframeConfig.props.viewConfig.resizeMethod = "viewLowestElement";
       wrapper = shallowMount(WebNodeIFrame, iframeConfig);
+      await flushPromises();
+
       html = wrapper.vm.document.documentElement.innerHTML;
       expect(html).toMatch("iframeResizer.js mock");
     });
 
-    it("handles resource loading", () => {
+    it("handles resource loading", async () => {
       wrapper = shallowMount(WebNodeIFrame, {
         ...context,
         attachTo: document.body,
@@ -252,6 +267,7 @@ describe("WebNodeIFrame.vue", () => {
           nodeId: "0:0:7",
         },
       });
+      await flushPromises();
 
       const postMessageSpy = vi.spyOn(
         wrapper.vm.document.defaultView,
@@ -260,7 +276,7 @@ describe("WebNodeIFrame.vue", () => {
 
       // fake resource loading
       // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260
-      wrapper.vm.messageFromIframe({
+      await wrapper.vm.messageFromIframe({
         origin: window.origin,
         data: { nodeId: "0:0:7", type: "load" },
       });
@@ -278,7 +294,7 @@ describe("WebNodeIFrame.vue", () => {
       );
     });
 
-    it("sets view loading on store", () => {
+    it("sets view loading on store", async () => {
       wrapper = shallowMount(WebNodeIFrame, {
         ...context,
         attachTo: document.body,
@@ -295,18 +311,20 @@ describe("WebNodeIFrame.vue", () => {
           nodeId: "0:0:7",
         },
       });
+      await flushPromises();
+
       // before resource loading
-      let calls = storeConfig.actions.setWebNodeLoading.mock.calls;
+      let calls = mockedStoreConfig.actions.setWebNodeLoading.mock.calls;
       let lastCall = calls[calls.length - 1];
       expect(lastCall[1]).toMatchObject({ nodeId: "0:0:7", loading: true });
 
       // mock resource loading done
-      wrapper.vm.messageFromIframe({
+      await wrapper.vm.messageFromIframe({
         origin: window.origin,
         data: { nodeId: "0:0:7", type: "load" },
       });
 
-      calls = storeConfig.actions.setWebNodeLoading.mock.calls;
+      calls = mockedStoreConfig.actions.setWebNodeLoading.mock.calls;
       lastCall = calls[calls.length - 1];
       expect(lastCall[1]).toMatchObject({ nodeId: "0:0:7", loading: false });
     });
@@ -357,7 +375,7 @@ describe("WebNodeIFrame.vue", () => {
   });
 
   describe("view value retrieval", () => {
-    it("handles getValue call", () => {
+    it("handles getValue call", async () => {
       wrapper = shallowMount(WebNodeIFrame, {
         ...context,
         attachTo: document.body,
@@ -372,6 +390,8 @@ describe("WebNodeIFrame.vue", () => {
           nodeId: "0:0:7",
         },
       });
+      await flushPromises();
+
       vi.spyOn(wrapper.vm.document.defaultView, "postMessage");
       wrapper.vm.getValue();
       expect(wrapper.vm.document.defaultView.postMessage).toHaveBeenCalledWith(
@@ -385,7 +405,7 @@ describe("WebNodeIFrame.vue", () => {
       );
     });
 
-    it("resolves getValue promise", () => {
+    it("resolves getValue promise", async () => {
       wrapper = shallowMount(WebNodeIFrame, {
         ...context,
         attachTo: document.body,
@@ -400,11 +420,12 @@ describe("WebNodeIFrame.vue", () => {
           nodeId: "0:0:7",
         },
       });
+      await flushPromises();
       let valuePromise = wrapper.vm.getValue();
 
       // fake value returned
       // hack because jsdom does not implement the `origin` property, see https://github.com/jsdom/jsdom/issues/1260
-      wrapper.vm.messageFromIframe({
+      await wrapper.vm.messageFromIframe({
         origin: window.origin,
         data: { nodeId: "0:0:7", type: "getValue", value: { integer: 42 } },
       });
@@ -415,7 +436,7 @@ describe("WebNodeIFrame.vue", () => {
       });
     });
 
-    it("rejects getValue promise on error", () => {
+    it("rejects getValue promise on error", async () => {
       wrapper = shallowMount(WebNodeIFrame, {
         ...context,
         attachTo: document.body,
@@ -430,11 +451,12 @@ describe("WebNodeIFrame.vue", () => {
           nodeId: "0:0:7",
         },
       });
+      await flushPromises();
       let valuePromise = wrapper.vm.getValue();
       let errorMessage = "some error message";
 
       // fake error returned
-      wrapper.vm.messageFromIframe({
+      await wrapper.vm.messageFromIframe({
         origin: window.origin,
         data: { nodeId: "0:0:7", type: "getValue", error: errorMessage },
       });
@@ -454,7 +476,7 @@ describe("WebNodeIFrame.vue", () => {
   describe("webNodeIFrame alerts", () => {
     let nodeId = "0:0:7";
 
-    it("manages its own alert state", () => {
+    it("manages its own alert state", async () => {
       let localWrapper = shallowMount(WebNodeIFrame, {
         ...context,
         attachTo: document.body,
@@ -471,6 +493,7 @@ describe("WebNodeIFrame.vue", () => {
           nodeId,
         },
       });
+      await flushPromises();
       let alertData = {
         nodeId,
         message: "test",
@@ -492,7 +515,7 @@ describe("WebNodeIFrame.vue", () => {
       localWrapper.unmount();
     });
 
-    it("handles show alert events", () => {
+    it("handles show alert events", async () => {
       let showAlertMock = vi.fn();
       let localWrapper = shallowMount(WebNodeIFrame, {
         global: {
@@ -529,7 +552,7 @@ describe("WebNodeIFrame.vue", () => {
           nodeId,
         },
       });
-
+      await flushPromises();
       let alertData = {
         nodeId,
         message: "test",

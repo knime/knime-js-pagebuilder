@@ -190,40 +190,53 @@ export default {
         },
       });
     }
+
+    const pendingPromises = [];
     // prevent incompatible widgets (i.e. output) from registering methods with store
     if (this.hasValidationErrorMessage) {
-      this.$store.dispatch("pagebuilder/addValidationErrorSetter", {
-        nodeId: this.nodeId,
-        errorSetter: this.setValidationError,
-      });
+      pendingPromises.push(
+        this.$store.dispatch("pagebuilder/addValidationErrorSetter", {
+          nodeId: this.nodeId,
+          errorSetter: this.setValidationError,
+        }),
+      );
     }
     if (this.hasValueGetter) {
-      await this.$store.dispatch("pagebuilder/addValueGetter", {
-        nodeId: this.nodeId,
-        valueGetter: this.getValue,
-      });
+      pendingPromises.push(
+        this.$store.dispatch("pagebuilder/addValueGetter", {
+          nodeId: this.nodeId,
+          valueGetter: this.getValue,
+        }),
+      );
     }
     if (this.hasValidator) {
-      this.$store.dispatch("pagebuilder/addValidator", {
-        nodeId: this.nodeId,
-        validator: this.validate,
-      });
-      await this.validate();
+      const addAndValidate = async () => {
+        await this.$store.dispatch("pagebuilder/addValidator", {
+          nodeId: this.nodeId,
+          validator: this.validate,
+        });
+        return this.validate();
+      };
+      pendingPromises.push(addAndValidate());
+    }
+
+    if (pendingPromises.length) {
+      await Promise.all(pendingPromises);
     }
   },
-  beforeUnmount() {
+  async beforeUnmount() {
     if (this.hasValidationErrorMessage) {
-      this.$store.dispatch("pagebuilder/removeValidationErrorSetter", {
+      await this.$store.dispatch("pagebuilder/removeValidationErrorSetter", {
         nodeId: this.nodeId,
       });
     }
     if (this.hasValidator) {
-      this.$store.dispatch("pagebuilder/removeValidator", {
+      await this.$store.dispatch("pagebuilder/removeValidator", {
         nodeId: this.nodeId,
       });
     }
     if (this.hasValueGetter) {
-      this.$store.dispatch("pagebuilder/removeValueGetter", {
+      await this.$store.dispatch("pagebuilder/removeValueGetter", {
         nodeId: this.nodeId,
       });
     }

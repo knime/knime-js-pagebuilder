@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+import flushPromises from "flush-promises";
 import { createStore } from "vuex";
 
 import WebNodeIFrame from "@/components/views/WebNodeIFrame.vue";
@@ -42,7 +43,6 @@ describe("WebNodeIFrame.vue", () => {
     mockUpload;
 
   beforeEach(() => {
-    storeConfig.actions.setWebNodeLoading = vi.fn();
     mockGetPublishedData = vi.fn();
     interactivityConfig = {
       namespaced: true,
@@ -90,9 +90,20 @@ describe("WebNodeIFrame.vue", () => {
           .mockReturnValue("sample/sketcher/path/sketcher.html"),
       },
     };
+
+    const mockedStoreConfig = {
+      ...storeConfig,
+      actions: {
+        ...storeConfig.actions,
+        setWebNodeLoading: vi.fn(),
+        addValidator: vi.fn(),
+        addValueGetter: vi.fn(),
+        addValidationErrorSetter: vi.fn(),
+      },
+    };
     store = createStore({
       modules: {
-        pagebuilder: storeConfig,
+        pagebuilder: mockedStoreConfig,
         "pagebuilder/interactivity": interactivityConfig,
         api: apiConfig,
         settings: settingsConfig,
@@ -137,7 +148,7 @@ describe("WebNodeIFrame.vue", () => {
     vi.restoreAllMocks();
   });
 
-  it("registers/de-registers methods with store", () => {
+  it("registers/de-registers methods with store", async () => {
     let addValidator,
       addValueGetter,
       addValidationErrorSetter,
@@ -214,6 +225,7 @@ describe("WebNodeIFrame.vue", () => {
         nodeId,
       },
     });
+    await flushPromises();
 
     expect(addValidator).toHaveBeenCalledWith(expect.anything(), {
       nodeId,
@@ -243,7 +255,7 @@ describe("WebNodeIFrame.vue", () => {
   describe("pageBuilder API", () => {
     let wrapper;
 
-    let createLocalWrapper = (jobId) => {
+    let createLocalWrapper = async (jobsId) => {
       let localWizardConfig = {
         namespaced: true,
         state: {
@@ -261,9 +273,20 @@ describe("WebNodeIFrame.vue", () => {
           },
         },
       };
+      const mockedStoreConfig = {
+        ...storeConfig,
+        actions: {
+          ...storeConfig.actions,
+          setWebNodeLoading: vi.fn(),
+          addValidator: vi.fn(),
+          addValueGetter: vi.fn(),
+          addValidationErrorSetter: vi.fn(),
+        },
+      };
+
       let localStore = createStore({
         modules: {
-          pagebuilder: storeConfig,
+          pagebuilder: mockedStoreConfig,
           "pagebuilder/interactivity": interactivityConfig,
           api: apiConfig,
           settings: settingsConfig,
@@ -271,8 +294,8 @@ describe("WebNodeIFrame.vue", () => {
           "pagebuilder/alert": alertStoreConfig,
         },
       });
-      if (jobId) {
-        localStore.commit("wizardExecution/setJobId", jobId);
+      if (jobsId) {
+        localStore.commit("wizardExecution/setJobId", jobsId);
       }
       localStore.commit(
         "pagebuilder/setResourceBaseUrl",
@@ -305,7 +328,7 @@ describe("WebNodeIFrame.vue", () => {
           },
         },
       };
-      return shallowMount(WebNodeIFrame, {
+      const wrapper = shallowMount(WebNodeIFrame, {
         ...localContext,
         attachTo: document.body,
         props: {
@@ -315,9 +338,11 @@ describe("WebNodeIFrame.vue", () => {
           nodeId: "0:0:7",
         },
       });
+      await flushPromises();
+      return wrapper;
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
       wrapper = shallowMount(WebNodeIFrame, {
         ...context,
         attachTo: document.body,
@@ -328,6 +353,7 @@ describe("WebNodeIFrame.vue", () => {
           nodeId: "0:0:7",
         },
       });
+      await flushPromises();
     });
 
     afterEach(() => {
@@ -357,9 +383,10 @@ describe("WebNodeIFrame.vue", () => {
       expect(window.KnimePageBuilderAPI).toBeDefined();
     });
 
-    it("registers but doesn't unregister global PageBuilder API between pages if Job ID stays the same", () => {
+    it("registers but doesn't unregister global PageBuilder API between pages if Job ID stays the same", async () => {
       let jobId = "1234-5678-9012-3456";
-      let localWrapper = createLocalWrapper(jobId);
+      let localWrapper = await createLocalWrapper(jobId);
+      await flushPromises();
 
       expect(window.KnimePageBuilderAPI).toBeDefined();
       expect(localWrapper.vm.currentJobId).toBe(jobId);
@@ -368,10 +395,10 @@ describe("WebNodeIFrame.vue", () => {
       expect(window.KnimePageBuilderAPI).toBeDefined();
     });
 
-    it("registers & unregisters global PageBuilder API when JobIDs change", () => {
+    it("registers & unregisters global PageBuilder API when JobIDs change", async () => {
       let jobId = "1234-5678-9012-3456";
       let jobId2 = "0987-6543-2109-8765";
-      let localWrapper = createLocalWrapper(jobId);
+      let localWrapper = await createLocalWrapper(jobId);
 
       expect(window.KnimePageBuilderAPI).toBeDefined();
       expect(localWrapper.vm.currentJobId).toBe(jobId);
@@ -382,13 +409,14 @@ describe("WebNodeIFrame.vue", () => {
       expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
       expect(localWrapper.vm.currentJobId).toBe(jobId2);
       localWrapper.unmount();
+      await flushPromises();
       expect(window.KnimePageBuilderAPI).toBeUndefined();
     });
 
-    it("registers & unregisters global PageBuilder API when JobID changes to null from navigation", () => {
+    it("registers & unregisters global PageBuilder API when JobID changes to null from navigation", async () => {
       let jobId = "1234-5678-9012-3456";
       let jobId2 = null;
-      let localWrapper = createLocalWrapper(jobId);
+      let localWrapper = await createLocalWrapper(jobId);
 
       expect(window.KnimePageBuilderAPI).toBeDefined();
       expect(localWrapper.vm.currentJobId).toBe(jobId);
@@ -399,6 +427,7 @@ describe("WebNodeIFrame.vue", () => {
       expect(window.KnimePageBuilderAPI.currentJobId).toBe(jobId);
       expect(localWrapper.vm.currentJobId).toBe(jobId2);
       localWrapper.unmount();
+      await flushPromises();
       expect(window.KnimePageBuilderAPI).toBeUndefined();
     });
 

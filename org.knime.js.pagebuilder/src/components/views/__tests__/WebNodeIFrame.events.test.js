@@ -8,6 +8,7 @@ import {
   vi,
 } from "vitest";
 import { shallowMount } from "@vue/test-utils";
+import flushPromises from "flush-promises";
 import { createStore } from "vuex";
 
 import WebNodeIFrame from "@/components/views/WebNodeIFrame.vue";
@@ -159,7 +160,7 @@ describe("WebNodeIFrame.vue", () => {
       setValidationErrorCallbackMock,
       nodeId;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       nodeId = "0:0:7";
 
       wrapper = shallowMount(WebNodeIFrame, {
@@ -178,6 +179,7 @@ describe("WebNodeIFrame.vue", () => {
           nodeId,
         },
       });
+      await flushPromises();
 
       validateCallbackMock = vi.fn();
       getValueCallbackMock = vi.fn();
