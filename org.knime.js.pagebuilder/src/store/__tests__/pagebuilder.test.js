@@ -32,6 +32,15 @@ describe("PageBuilder store", () => {
     },
   };
 
+  const page = {
+    wizardExecutionState: "INTERACTION_REQUIRED",
+    wizardPageContent: {
+      version: "2.0",
+      webNodePageConfiguration: {},
+      webNodes: {},
+    },
+  };
+
   beforeEach(() => {
     store = createStore(storeConfig);
     store.registerModule("interactivity", interactivityStoreConfig);
@@ -49,27 +58,11 @@ describe("PageBuilder store", () => {
   });
 
   it("allows setting page", () => {
-    let page = {
-      wizardExecutionState: "INTERACTION_REQUIRED",
-      wizardPageContent: {
-        version: "2.0",
-        webNodePageConfiguration: {},
-        webNodes: {},
-      },
-    };
     store.commit("setPage", page);
     expect(store.state.page).toEqual(page);
   });
 
   it("allows setting page via action", () => {
-    let page = {
-      wizardExecutionState: "INTERACTION_REQUIRED",
-      wizardPageContent: {
-        version: "2.0",
-        webNodePageConfiguration: {},
-        webNodes: {},
-      },
-    };
     store.dispatch("setPage", { page });
     expect(store.state.page).toEqual(page);
   });
@@ -729,8 +722,8 @@ describe("PageBuilder store", () => {
         expect(store.state.cleanViewValuesState[nodeId]).toBeUndefined();
       });
 
-      it("warns on duplicate clean state additions", () => {
-        const consolaWarn = vi.spyOn(consola, "debug");
+      it("logs as debug message on duplicate clean state additions and overwrites the old value", () => {
+        const consolaDebug = vi.spyOn(consola, "debug");
         store.commit("addToCleanViewValuesState", {
           nodeId,
           value: initialValue,
@@ -740,19 +733,19 @@ describe("PageBuilder store", () => {
           value: updatedValue,
         });
 
-        expect(consolaWarn).toHaveBeenCalled();
-        consolaWarn.mockRestore();
+        expect(consolaDebug).toHaveBeenCalled();
+        consolaDebug.mockRestore();
       });
 
       it("warns on duplicate clean state removals", () => {
-        const consolaWarn = vi.spyOn(consola, "warn");
+        const consolaDebug = vi.spyOn(consola, "debug");
         store.commit("removeFromCleanViewValuesState", {
           nodeId: "nodeForWhichNoCleanValueExists",
           value: "notImportant",
         });
 
-        expect(consolaWarn).toHaveBeenCalled();
-        consolaWarn.mockRestore();
+        expect(consolaDebug).toHaveBeenCalled();
+        consolaDebug.mockRestore();
       });
 
       it("does not create a clean initial state when loading of web node does not finish", async () => {
@@ -831,6 +824,20 @@ describe("PageBuilder store", () => {
     });
 
     describe("resetDirtyState", () => {
+      const pageWithDefaultValue = (defaultValue) => ({
+        page: {
+          wizardPageContent: {
+            webNodes: {
+              [nodeId]: {
+                viewRepresentation: {
+                  defaultValue,
+                },
+              },
+            },
+          },
+        },
+      });
+
       it("can reset dirty state", async () => {
         const valueGetter = vi
           .fn()
@@ -838,20 +845,36 @@ describe("PageBuilder store", () => {
           .mockResolvedValue({
             value: updatedValue,
           });
-        await store.dispatch("addValueGetter", { nodeId, valueGetter });
 
+        await store.dispatch("addValueGetter", { nodeId, valueGetter });
         expect(await store.dispatch("isDirty")).toBe(true);
 
         await store.dispatch("resetDirtyState", { nodeId });
-
         expect(await store.dispatch("isDirty")).toBe(false);
       });
 
-      it("handles missing nodes gracefully", async () => {
-        const consolaWarn = vi.spyOn(consola, "debug");
-        await store.dispatch("resetDirtyState", { nodeId: "nonExistent" });
-        expect(consolaWarn).toHaveBeenCalled();
-        consolaWarn.mockRestore();
+      it("can infer default values", async () => {
+        await store.dispatch("setPage", pageWithDefaultValue(initialValue));
+        const valueGetter = vi
+          .fn()
+          .mockResolvedValueOnce({ value: initialValue })
+          .mockResolvedValue({
+            value: updatedValue,
+          });
+
+        await store.dispatch("addValueGetter", { nodeId, valueGetter });
+        expect(await store.dispatch("isDefault")).toBe(false);
+
+        await store.dispatch("setPage", pageWithDefaultValue(updatedValue));
+        expect(await store.dispatch("isDefault")).toBe(true);
+      });
+
+      it("skips default check if no default value is set", async () => {
+        await store.dispatch("setPage", pageWithDefaultValue(undefined));
+        const valueGetter = vi.fn().mockResolvedValue({ value: initialValue });
+
+        await store.dispatch("addValueGetter", { nodeId, valueGetter });
+        expect(await store.dispatch("isDefault")).toBe(true);
       });
 
       it("handles async value fetching errors", () => {

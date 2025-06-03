@@ -517,8 +517,7 @@ export default {
           this.origin,
         );
         this.cancelValueGetter = window.setTimeout(() => {
-          let errorMessage =
-            "Value could not be retrieved in the allocated time.";
+          let errorMessage = `Value could not be retrieved in the allocated time for node ${this.nodeId}`;
           this.setLocalError(errorMessage);
           reject(new Error(errorMessage));
         }, valueGetterTimeout);

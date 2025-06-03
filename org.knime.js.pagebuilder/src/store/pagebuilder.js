@@ -1,3 +1,5 @@
+import { toValue } from "vue";
+
 import { sleep } from "@knime/utils";
 
 import { setProp } from "../util/nestedProperty";
@@ -216,25 +218,23 @@ export const mutations = {
   },
 
   addToCleanViewValuesState(state, { nodeId, value }) {
-    const stringifiedNodeViewValue = generateUniqueStringFromViewValue(value);
-    // eslint-disable-next-line no-undefined
-    if (state.cleanViewValuesState[nodeId] === undefined) {
-      state.cleanViewValuesState[nodeId] = stringifiedNodeViewValue;
-    } else {
+    const newValue = generateUniqueStringFromViewValue(value);
+    if (state.cleanViewValuesState[nodeId]) {
       consola.debug(
-        `Tried to add a new initial node view value for ${nodeId} to the clean state, but it already exists. Will overwrite the existing value.`,
+        `Clean view values for node ${nodeId} already set. Overwriting with new value.`,
         {
-          existingValue: state.cleanViewValuesState[nodeId],
-          newValue: stringifiedNodeViewValue,
+          oldValue: state.cleanViewValuesState[nodeId],
+          newValue,
         },
       );
     }
+    state.cleanViewValuesState[nodeId] = newValue;
   },
 
-  removeFromCleanViewValuesState(state, nodeId) {
+  removeFromCleanViewValuesState(state, { nodeId }) {
     // eslint-disable-next-line no-undefined
     if (state.cleanViewValuesState[nodeId] === undefined) {
-      consola.warn(`No such clean state for node ${nodeId} found.`);
+      consola.debug(`No such clean state for node ${nodeId} found.`);
     } else {
       delete state.cleanViewValuesState[nodeId];
     }
@@ -294,6 +294,10 @@ export const actions = {
   },
 
   updateNodeViewConfig({ commit, dispatch }, { nodeView }) {
+    consola.trace(
+      "PageBuilder: Update node view config via action: ",
+      nodeView,
+    );
     const newViewConfig = {
       viewType: "nodeViews",
       update: nodeView,
@@ -325,6 +329,24 @@ export const actions = {
       loading,
     );
     commit("setWebNodeLoading", { nodeId, loading });
+  },
+
+  async waitForWebNodeLoaded({ state }) {
+    // The `webNodesLoading` array tracks nodes whose components are still mounting.
+    // We wait in a loop until the node is removed from `webNodesLoading`, indicating
+    // the component is ready. If it takes too long (30 retries = 3 seconds), we fail.
+    // eslint-disable-next-line no-magic-numbers
+    let remainingRetries = 30;
+    const waitingTimeForNodesInMs = 100;
+    while (state.webNodesLoading.length > 0) {
+      remainingRetries--;
+      if (remainingRetries === 0) {
+        consola.warn("Could not finish loading webNodes after 30 retries");
+        return false;
+      }
+      await sleep(waitingTimeForNodesInMs);
+    }
+    return true;
   },
 
   async addValueGetter({ commit, state }, { nodeId, valueGetter }) {
@@ -366,7 +388,9 @@ export const actions = {
 
   removeValueGetter({ commit }, { nodeId }) {
     consola.trace("PageBuilder: remove value getter via action: ", nodeId);
-    commit("removeFromCleanViewValuesState", nodeId);
+    commit("removeFromCleanViewValuesState", {
+      nodeId,
+    });
     commit("removeValueGetter", nodeId);
   },
 
@@ -462,8 +486,15 @@ export const actions = {
     commit("setNodesReExecuting", nodesReExecuting);
   },
 
-  async isDirty({ state }, _) {
-    consola.debug("PageBuilder: checking if page is dirty");
+  async getAllViewValueGetters({ state, dispatch }) {
+    consola.debug("PageBuilder: getting all getters from nodes in clean state");
+
+    const nodesLoaded = await dispatch("waitForWebNodeLoaded");
+    if (!nodesLoaded) {
+      consola.debug("Web nodes not loaded yet. Cannot get getters.");
+      return false;
+    }
+
     const cleanViewValues = state.cleanViewValuesState;
     // eslint-disable-next-line no-undefined
     if (cleanViewValues === undefined) {
@@ -491,61 +522,100 @@ export const actions = {
     );
 
     if (!allGettersPresent) {
-      consola.debug("Not all getters present. Will not check dirtyness.");
+      consola.debug("Not all getters present.");
       return false;
+    }
+
+    return gettersOfNodesToCheck;
+  },
+
+  async isDirty({ state, dispatch }, _) {
+    consola.debug("PageBuilder: checking if page is dirty");
+
+    const gettersOfNodesToCheck = await dispatch("getAllViewValueGetters");
+
+    if (!gettersOfNodesToCheck) {
+      consola.debug("Issues during getter evaluation. Cannot check dirtyness.");
+      return false; // If we cannot determine dirtyness, we assume it is not dirty.
     }
 
     return (
       await Promise.all(
-        nodesToCheck.map(async (nodeId) => {
+        Object.keys(gettersOfNodesToCheck).map(async (nodeId) => {
           const newViewValue = await gettersOfNodesToCheck[nodeId]();
           const valueToCompare = generateUniqueStringFromViewValue(
             newViewValue.value,
           );
 
-          return valueToCompare !== cleanViewValues[nodeId];
+          return valueToCompare !== state.cleanViewValuesState[nodeId];
         }),
       )
     ).some(Boolean);
   },
 
-  async resetDirtyState({ commit, state }, { nodeId }) {
-    consola.debug("PageBuilder: resetting dirty state for nodeId: ", nodeId);
+  async isDefault({ state, dispatch }, _) {
+    consola.debug("PageBuilder: checking if page is default");
 
-    const getter = state.pageValueGetters[nodeId];
+    const gettersOfNodesToCheck = await dispatch("getAllViewValueGetters");
 
-    if (!getter) {
+    if (!gettersOfNodesToCheck) {
       consola.debug(
-        "No getter or state found for nodeId: ",
-        nodeId,
-        ". Will not reset dirty state.",
+        "Issues during getter evaluation. Cannot check defaultness.",
       );
+      return true; // If we cannot determine defaultness, we assume it is default.
+    }
+
+    return (
+      await Promise.all(
+        Object.keys(gettersOfNodesToCheck).map(async (nodeId) => {
+          const newViewValue = await gettersOfNodesToCheck[nodeId]();
+          const valueToCompare = generateUniqueStringFromViewValue(
+            newViewValue.value,
+          );
+
+          const defaultViewValue = toValue(
+            state.page.wizardPageContent.webNodes[nodeId].viewRepresentation
+              .defaultValue,
+          );
+
+          if (!defaultViewValue) {
+            return true;
+          }
+
+          const defaultValue =
+            generateUniqueStringFromViewValue(defaultViewValue);
+
+          return valueToCompare === defaultValue;
+        }),
+      )
+    ).every(Boolean);
+  },
+
+  async resetDirtyState({ commit, state, dispatch }) {
+    consola.debug("PageBuilder: resetting dirty state.");
+
+    const nodesLoaded = await dispatch("waitForWebNodeLoaded");
+    if (!nodesLoaded) {
+      consola.debug("Web nodes not loaded yet. Cannot reset dirty state.");
       return;
     }
 
-    try {
-      const newViewValue = await getter();
-
-      if (!newViewValue) {
-        consola.debug(
-          "No newViewValue found for nodeId: ",
-          nodeId,
-          " will reset nonetheless.",
+    Object.entries(state.pageValueGetters).forEach(([nodeId, getter]) => {
+      // Older nodes sometimes fail to provide a value. In that case we skip the reset.
+      // But as these nodes do not provide a clean value either, we do not need to reset them.
+      getter()
+        .then((viewValue) => {
+          commit("addToCleanViewValuesState", {
+            nodeId,
+            value: viewValue.value,
+          });
+        })
+        .catch((e) =>
+          consola.warn(
+            `Could not reset dirty state for node ${nodeId} because of error: ${e}`,
+          ),
         );
-      }
-
-      commit("removeFromCleanViewValuesState", nodeId);
-      commit("addToCleanViewValuesState", {
-        nodeId,
-        value: newViewValue?.value,
-      });
-    } catch (error) {
-      consola.warn(
-        "Error while resetting dirty state for nodeId: ",
-        nodeId,
-        error,
-      );
-    }
+    });
   },
 
   setReportingContent({ state, commit }, { nodeId, reportingContent }) {

@@ -31,8 +31,10 @@ onMounted(() => {
   unsubscribeOnChangeHandler = store.subscribeAction(async (action) => {
     if (action.type === "pagebuilder/updateWebNode") {
       const isDirty = await store.dispatch("pagebuilder/isDirty");
+      const isDefault = await store.dispatch("pagebuilder/isDefault");
       await store.dispatch("api/onChange", {
         isDirty,
+        isDefault,
       });
     }
   });

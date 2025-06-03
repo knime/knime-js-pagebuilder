@@ -89,7 +89,7 @@ export default {
       );
     },
     overwriteNotSupportedMessage() {
-      return `${this.nodeConfig?.nodeInfo?.nodeName} is not supported in browser editing.`;
+      return `${this.nodeConfig?.nodeInfo?.nodeName} is not supported in the embedded composite view.`;
     },
   },
   watch: {

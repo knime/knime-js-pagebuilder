@@ -28,7 +28,9 @@ export type PageBuilderControl = {
     nodeId: string,
   ) => Promise<void>;
   isDirty: () => Promise<boolean>;
+  isDefault: () => Promise<boolean>;
   hasPage: () => boolean;
+  applyToDefaultAndExecute: () => Promise<void>;
   updateAndReexecute: () => Promise<void>;
   unmountShadowApp: () => void;
 };
@@ -78,7 +80,8 @@ export const createPageBuilderApp = async (
     mountShadowApp: (shadowRoot: ShadowRoot) => {
       if (alreadyMountedOnce) {
         consola.warn(
-          "Pagebuilder shadow app already mounted once and CANNOT be reused. Please reuse createPageBuilderApp function.",
+          "Pagebuilder shadow app already mounted once and CANNOT be reused. " +
+            "Please reuse createPageBuilderApp function.",
         );
         return;
       }
@@ -105,15 +108,19 @@ export const createPageBuilderApp = async (
       );
       await store.dispatch("api/mount", { projectId, workflowId, nodeId });
     },
-    isDirty: () => {
-      return store.dispatch("pagebuilder/isDirty");
-    },
+
+    isDirty: () => store.dispatch("pagebuilder/isDirty"),
+    isDefault: () => store.dispatch("pagebuilder/isDefault"),
+    hasPage: () => Boolean(store.state.pagebuilder.page?.wizardPageContent),
+
     updateAndReexecute: async () => {
-      consola.debug("Updating and re-executing PageBuilder");
       await store.dispatch("api/triggerReExecution", {});
     },
-    hasPage: () => {
-      return Boolean(store.state.pagebuilder.page?.wizardPageContent);
+    applyToDefaultAndExecute: async () => {
+      consola.debug(
+        "Applying temporary values to default and executing PageBuilder",
+      );
+      await store.dispatch("api/applyAsDefault", {});
     },
     unmountShadowApp: () => {
       consola.debug("Unmounting Pagebuilder shadow app");

@@ -147,6 +147,13 @@ describe("createPageBuilderApp", () => {
     expect(mockDispatch).toHaveBeenCalledWith("api/triggerReExecution", {});
   });
 
+  it("dispatches api/applyAsDefault", async () => {
+    const { control } = await mountAndGetValidControl();
+
+    await control.applyToDefaultAndExecute();
+    expect(mockDispatch).toHaveBeenCalledWith("api/applyAsDefault", {});
+  });
+
   it("returns false when no page exists", async () => {
     const { control } = await mountAndGetValidControl();
 
