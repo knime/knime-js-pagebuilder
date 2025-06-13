@@ -143,7 +143,7 @@ describe("createPageBuilderApp", () => {
   it("dispatches api/triggerReExecution", async () => {
     const { control } = await mountAndGetValidControl();
 
-    await control.updateAndReexecute();
+    await control.applyAndExecute();
     expect(mockDispatch).toHaveBeenCalledWith("api/triggerReExecution", {});
   });
 

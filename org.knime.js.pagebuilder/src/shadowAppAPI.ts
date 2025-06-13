@@ -20,7 +20,7 @@ const validateStoreConfig = (storeConfig: StoreOptions<any>) => {
   return true;
 };
 
-export type PageBuilderControl = {
+export type PageBuilderApi = {
   mountShadowApp: (shadowRoot: ShadowRoot) => void;
   loadPage: (
     projectId: string,
@@ -31,14 +31,14 @@ export type PageBuilderControl = {
   isDefault: () => Promise<boolean>;
   hasPage: () => boolean;
   applyToDefaultAndExecute: () => Promise<void>;
-  updateAndReexecute: () => Promise<void>;
+  applyAndExecute: () => Promise<void>;
   unmountShadowApp: () => void;
 };
 
 export const createPageBuilderApp = async (
   apiStoreConfig: Module<any, any>,
   resourceBaseUrl: string,
-): Promise<PageBuilderControl> => {
+): Promise<PageBuilderApi> => {
   consola.debug(
     "Creating Pagebuilder store and app with resourceUrl ",
     resourceBaseUrl,
@@ -113,13 +113,10 @@ export const createPageBuilderApp = async (
     isDefault: () => store.dispatch("pagebuilder/isDefault"),
     hasPage: () => Boolean(store.state.pagebuilder.page?.wizardPageContent),
 
-    updateAndReexecute: async () => {
+    applyAndExecute: async () => {
       await store.dispatch("api/triggerReExecution", {});
     },
     applyToDefaultAndExecute: async () => {
-      consola.debug(
-        "Applying temporary values to default and executing PageBuilder",
-      );
       await store.dispatch("api/applyAsDefault", {});
     },
     unmountShadowApp: () => {
