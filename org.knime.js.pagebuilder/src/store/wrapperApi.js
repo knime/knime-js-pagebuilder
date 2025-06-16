@@ -131,13 +131,16 @@ export const actions = {
       callback: "setPage",
       config: {
         nodeId,
-        rpcConfig: createJsonRpcRequest("ReexecutionService.reexecutePage", [
-          nodeId,
-          Object.keys(viewValues).reduce((obj, nId) => {
-            obj[nId] = JSON.stringify(viewValues[nId]);
-            return obj;
-          }, {}),
-        ]),
+        rpcConfig: createJsonRpcRequest(
+          "ReexecutionService.triggerComponentReexecution",
+          [
+            nodeId,
+            Object.keys(viewValues).reduce((obj, nId) => {
+              obj[nId] = JSON.stringify(viewValues[nId]);
+              return obj;
+            }, {}),
+          ],
+        ),
       },
       initial: true,
     });

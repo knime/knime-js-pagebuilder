@@ -145,7 +145,7 @@ describe("wrapper API store", () => {
           rpcConfig: {
             id: expect.any(Number),
             jsonrpc: "2.0",
-            method: "ReexecutionService.reexecutePage",
+            method: "ReexecutionService.triggerComponentReexecution",
             params: ["foo", { foo: "1" }],
           },
         },
