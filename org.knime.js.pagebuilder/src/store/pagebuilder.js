@@ -394,7 +394,7 @@ export const actions = {
     commit("removeValueGetter", nodeId);
   },
 
-  async getViewValues({ state }) {
+  async getViewValues({ state }, stringify = false) {
     let valuePromises = Object.values(state.pageValueGetters).map((getter) =>
       getter(),
     );
@@ -402,7 +402,13 @@ export const actions = {
     try {
       const values = await Promise.all(valuePromises);
       return values.reduce((acc, element) => {
-        acc[element.nodeId] = element.value;
+        if (stringify) {
+          acc[element.nodeId] = generateUniqueStringFromViewValue(
+            element.value,
+          );
+        } else {
+          acc[element.nodeId] = element.value;
+        }
         return acc;
       }, {});
     } catch (e) {
