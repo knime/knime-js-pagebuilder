@@ -394,7 +394,54 @@ export const actions = {
     commit("removeValueGetter", nodeId);
   },
 
+  async getAllViewValueGetters({ state, dispatch }) {
+    consola.debug("PageBuilder: getting all getters from nodes in clean state");
+
+    const nodesLoaded = await dispatch("waitForWebNodeLoaded");
+    if (!nodesLoaded) {
+      consola.debug("Web nodes not loaded yet. Cannot get getters.");
+      return false;
+    }
+
+    const cleanViewValues = state.cleanViewValuesState;
+    // eslint-disable-next-line no-undefined
+    if (cleanViewValues === undefined) {
+      consola.debug("Initial view values undefined");
+      return false;
+    }
+
+    const nodesToCheck = Object.keys(cleanViewValues);
+
+    if (nodesToCheck.length === 0) {
+      consola.debug("No nodes to check. No initial state?");
+      return false;
+    }
+
+    const gettersOfNodesToCheck = Object.entries(state.pageValueGetters)
+      .filter(([nodeId]) => nodesToCheck.includes(nodeId))
+      .reduce((acc, [nodeId, getter]) => {
+        acc[nodeId] = getter;
+        return acc;
+      }, {});
+
+    const allGettersPresent = nodesToCheck.every(
+      // eslint-disable-next-line no-undefined
+      (nodeId) => gettersOfNodesToCheck[nodeId] !== undefined,
+    );
+
+    if (!allGettersPresent) {
+      consola.debug("Not all getters present.");
+      return false;
+    }
+
+    return gettersOfNodesToCheck;
+  },
+
   async getViewValues({ state }, stringify = false) {
+    consola.debug(
+      "PageBuilder: getViewValues. Stringified values: ",
+      stringify,
+    );
     let valuePromises = Object.values(state.pageValueGetters).map((getter) =>
       getter(),
     );
@@ -492,71 +539,39 @@ export const actions = {
     commit("setNodesReExecuting", nodesReExecuting);
   },
 
-  async getAllViewValueGetters({ state, dispatch }) {
-    consola.debug("PageBuilder: getting all getters from nodes in clean state");
-
-    const nodesLoaded = await dispatch("waitForWebNodeLoaded");
-    if (!nodesLoaded) {
-      consola.debug("Web nodes not loaded yet. Cannot get getters.");
-      return false;
-    }
-
-    const cleanViewValues = state.cleanViewValuesState;
-    // eslint-disable-next-line no-undefined
-    if (cleanViewValues === undefined) {
-      consola.debug("Initial view values undefined");
-      return false;
-    }
-
-    const nodesToCheck = Object.keys(cleanViewValues);
-
-    if (nodesToCheck.length === 0) {
-      consola.debug("No nodes to check. No initial state?");
-      return false;
-    }
-
-    const gettersOfNodesToCheck = Object.entries(state.pageValueGetters)
-      .filter(([nodeId]) => nodesToCheck.includes(nodeId))
-      .reduce((acc, [nodeId, getter]) => {
-        acc[nodeId] = getter;
-        return acc;
-      }, {});
-
-    const allGettersPresent = nodesToCheck.every(
-      // eslint-disable-next-line no-undefined
-      (nodeId) => gettersOfNodesToCheck[nodeId] !== undefined,
-    );
-
-    if (!allGettersPresent) {
-      consola.debug("Not all getters present.");
-      return false;
-    }
-
-    return gettersOfNodesToCheck;
-  },
-
-  async isDirty({ state, dispatch }, _) {
-    consola.debug("PageBuilder: checking if page is dirty");
+  async getDirtyNodes({ state, dispatch }) {
+    consola.debug("PageBuilder: getting dirty nodes");
 
     const gettersOfNodesToCheck = await dispatch("getAllViewValueGetters");
 
     if (!gettersOfNodesToCheck) {
-      consola.debug("Issues during getter evaluation. Cannot check dirtyness.");
-      return false; // If we cannot determine dirtyness, we assume it is not dirty.
+      consola.debug("Issues during getter evaluation. Cannot get dirty nodes.");
+      return {};
     }
 
-    return (
-      await Promise.all(
-        Object.keys(gettersOfNodesToCheck).map(async (nodeId) => {
-          const newViewValue = await gettersOfNodesToCheck[nodeId]();
-          const valueToCompare = generateUniqueStringFromViewValue(
-            newViewValue.value,
-          );
+    const dirtyNodesViewValues = await Promise.all(
+      Object.entries(gettersOfNodesToCheck).map(async ([nodeId, getter]) => {
+        const newViewValue = await getter();
+        const valueToCompare = generateUniqueStringFromViewValue(
+          newViewValue.value,
+        );
 
-          return valueToCompare !== state.cleanViewValuesState[nodeId];
-        }),
-      )
-    ).some(Boolean);
+        return valueToCompare === state.cleanViewValuesState[nodeId]
+          ? null
+          : {
+              [nodeId]: valueToCompare,
+            };
+      }),
+    );
+
+    return dirtyNodesViewValues
+      .filter(Boolean)
+      .reduce((acc, node) => ({ ...acc, ...node }), {});
+  },
+
+  async isDirty({ dispatch }, _) {
+    consola.debug("PageBuilder: checking if page is dirty");
+    return Object.keys(await dispatch("getDirtyNodes")).length > 0;
   },
 
   async isDefault({ state, dispatch }, _) {
