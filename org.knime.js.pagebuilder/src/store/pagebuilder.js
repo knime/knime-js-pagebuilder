@@ -25,6 +25,7 @@ export const state = () => ({
   reportingContent: {},
   imageGenerationWaiting: [],
 
+  trackDirtyState: false,
   cleanViewValuesState: {},
 });
 
@@ -217,6 +218,10 @@ export const mutations = {
     state.imageGenerationWaiting.push(nodeId);
   },
 
+  setTrackDirtyState(state, { trackDirtyState }) {
+    state.trackDirtyState = trackDirtyState;
+  },
+
   addToCleanViewValuesState(state, { nodeId, value }) {
     const newValue = generateUniqueStringFromViewValue(value);
     if (state.cleanViewValuesState[nodeId]) {
@@ -355,6 +360,10 @@ export const actions = {
       nodeId,
       valueGetter,
     });
+
+    if (!state.trackDirtyState) {
+      return;
+    }
 
     // The component must finish mounting before we can retrieve the initial value.
     // The `webNodesLoading` array tracks nodes whose components are still mounting.

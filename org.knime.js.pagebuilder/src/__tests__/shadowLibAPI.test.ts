@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createPageBuilderApp } from "@/shadowAppAPI";
 
 const mockDispatch = vi.hoisted(() => vi.fn());
+const mockCommit = vi.hoisted(() => vi.fn());
 let storeConfig: any = vi.hoisted(() => null);
 
 const mockCreateStore = vi.hoisted(() =>
@@ -10,9 +11,11 @@ const mockCreateStore = vi.hoisted(() =>
     storeConfig = config;
     return {
       dispatch: mockDispatch,
+      commit: mockCommit,
       state: {
         pagebuilder: {
           page: null,
+          trackDirtyState: false,
         },
       },
     };
@@ -163,6 +166,7 @@ describe("createPageBuilderApp", () => {
   it("returns true when page has content", async () => {
     mockCreateStore.mockImplementationOnce(() => ({
       dispatch: mockDispatch,
+      commit: mockCommit,
       state: {
         pagebuilder: {
           page: { wizardPageContent: "content" },

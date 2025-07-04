@@ -70,6 +70,8 @@ export const createPageBuilderApp = async (
   });
 
   app.use(store);
+
+  store.commit("pagebuilder/setTrackDirtyState", { trackDirtyState: true });
   await store.dispatch("pagebuilder/setResourceBaseUrl", {
     resourceBaseUrl,
   });
