@@ -692,6 +692,7 @@ describe("PageBuilder store", () => {
 
     beforeEach(() => {
       store = createStore(storeConfig);
+      store.commit("setTrackDirtyState", { trackDirtyState: true });
       vi.useFakeTimers();
     });
 
