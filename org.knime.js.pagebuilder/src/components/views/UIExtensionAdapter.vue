@@ -296,6 +296,15 @@ export default defineComponent({
         closeDataValueView: () => {
           // Do nothing
         },
+        callKnimeUiApi: async (method, params) => {
+          return {
+            isSome: true,
+            result: await this.$store.dispatch("api/callKnimeUiApi", {
+              method,
+              params,
+            }),
+          };
+        },
       };
     },
   },

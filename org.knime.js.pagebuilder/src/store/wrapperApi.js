@@ -53,6 +53,12 @@ export const actions = {
     });
   },
 
+  callKnimeUiApi({ dispatch }, { method, params }) {
+    return dispatch("singleRPC", {
+      rpcConfig: createJsonRpcRequest(method, Object.values(params)),
+    });
+  },
+
   /* RE-EXECUTION ACTIONS */
 
   /**
