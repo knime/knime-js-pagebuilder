@@ -60,6 +60,7 @@ describe("wrapper API store", () => {
           params: [
             extensionConfig.projectId,
             extensionConfig.workflowId,
+            "current-state",
             extensionConfig.nodeId,
             extensionConfig.extensionType,
             serviceRequest,
@@ -90,6 +91,7 @@ describe("wrapper API store", () => {
           params: [
             extensionConfig.projectId,
             extensionConfig.workflowId,
+            "current-state",
             extensionConfig.nodeId,
             serviceRequest,
             requestParams,

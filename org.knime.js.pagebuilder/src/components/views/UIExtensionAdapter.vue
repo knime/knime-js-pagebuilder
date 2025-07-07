@@ -296,6 +296,24 @@ export default defineComponent({
         closeDataValueView: () => {
           // Do nothing
         },
+        callKnimeUiApi: async (method, params) => {
+          // comment on the name of the store-action:
+          // the name is chosen just for consistency and will be re-factored with FEATKNAP-167
+          const result = await this.$store.dispatch("api/callKnimeUiApi", {
+            method,
+            params,
+          });
+          if (result) {
+            return {
+              isSome: true,
+              result,
+            };
+          } else {
+            return {
+              isSome: false,
+            };
+          }
+        },
       };
     },
   },

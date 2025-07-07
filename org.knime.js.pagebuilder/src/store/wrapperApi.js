@@ -38,6 +38,10 @@ export const actions = {
     let rpcParams = [
       extensionConfig.projectId,
       extensionConfig.workflowId,
+      // 'current-state' is a special version-id to reference the current draft
+      // (see, e.g., org.knime.core.util.hub.CurrentState.getIdentifier()).
+      // It's fixed to the current-state because detached views aren't supported for versions, yet (NXT-3670).
+      "current-state",
       extensionConfig.nodeId,
       extensionConfig.extensionType,
       serviceRequest,
@@ -46,11 +50,18 @@ export const actions = {
     if (nodeService.includes("updateDataPointSelection")) {
       // Match the method signature to the selection service expected format (no extension type).
       // eslint-disable-next-line no-magic-numbers
-      rpcParams.splice(3, 1);
+      rpcParams.splice(4, 1);
     }
     return dispatch("singleRPC", {
       rpcConfig: createJsonRpcRequest(nodeService, rpcParams),
     });
+  },
+
+  async callKnimeUiApi({ dispatch }, { method, params }) {
+    const response = await dispatch("singleRPC", {
+      rpcConfig: createJsonRpcRequest(method, Object.values(params)),
+    });
+    return response.result;
   },
 
   /* RE-EXECUTION ACTIONS */
