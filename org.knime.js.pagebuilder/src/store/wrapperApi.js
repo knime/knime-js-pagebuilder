@@ -38,6 +38,7 @@ export const actions = {
     let rpcParams = [
       extensionConfig.projectId,
       extensionConfig.workflowId,
+      "current-state",
       extensionConfig.nodeId,
       extensionConfig.extensionType,
       serviceRequest,
@@ -46,17 +47,18 @@ export const actions = {
     if (nodeService.includes("updateDataPointSelection")) {
       // Match the method signature to the selection service expected format (no extension type).
       // eslint-disable-next-line no-magic-numbers
-      rpcParams.splice(3, 1);
+      rpcParams.splice(4, 1);
     }
     return dispatch("singleRPC", {
       rpcConfig: createJsonRpcRequest(nodeService, rpcParams),
     });
   },
 
-  callKnimeUiApi({ dispatch }, { method, params }) {
-    return dispatch("singleRPC", {
+  async callKnimeUiApi({ dispatch }, { method, params }) {
+    const response = await dispatch("singleRPC", {
       rpcConfig: createJsonRpcRequest(method, Object.values(params)),
     });
+    return response.result;
   },
 
   /* RE-EXECUTION ACTIONS */
