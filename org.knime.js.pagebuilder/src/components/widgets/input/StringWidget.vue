@@ -50,6 +50,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   computed: {
@@ -135,6 +139,7 @@ export default {
       :is-valid="isValid"
       :title="description"
       :pattern="regex"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
     <ErrorMessage :error="errorMessage" />

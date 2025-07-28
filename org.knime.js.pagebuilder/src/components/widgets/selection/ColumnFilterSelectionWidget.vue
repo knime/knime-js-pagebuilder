@@ -44,6 +44,10 @@ export default {
       default: null,
       type: String,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   computed: {
@@ -106,6 +110,7 @@ export default {
       :description="description"
       :label="label"
       :show-search="enableSearch"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
     <ErrorMessage :error="errorMessage" />

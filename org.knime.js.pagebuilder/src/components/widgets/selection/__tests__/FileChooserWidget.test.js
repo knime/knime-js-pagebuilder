@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createStore } from "vuex";
@@ -237,6 +238,14 @@ describe("FileChooserWidget.vue AP", () => {
       isValid: true,
       errorMessage: "",
     });
+  });
+
+  it("passes disabled prop to TreeSelect", () => {
+    let wrapper = mount(FileChooserWidget, {
+      props: { ...props, disabled: true },
+    });
+
+    expect(wrapper.findComponent(TreeSelect).props("disabled")).toBe(true);
   });
 });
 

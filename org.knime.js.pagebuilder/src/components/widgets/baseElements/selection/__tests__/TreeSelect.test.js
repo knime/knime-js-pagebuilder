@@ -488,4 +488,12 @@ describe("TreeSelect.vue", () => {
     scrollToElement(area, el);
     expect(area.scrollTop).toBe(40); // just offsetTop
   });
+
+  it("passes its disabled prop to children as disabledRoot prop", () => {
+    const wrapper = mount(TreeSelect, { props: { ...props, disabled: true } });
+
+    expect(wrapper.findComponent(TreeSelectItem).props("disabledRoot")).toBe(
+      true,
+    );
+  });
 });

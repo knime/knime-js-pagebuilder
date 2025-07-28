@@ -3,6 +3,7 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { differenceInCalendarDays, format } from "date-fns";
 
+import { Button, Dropdown } from "@knime/components";
 import { DateTimeInput } from "@knime/components/date-time-input";
 
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
@@ -727,6 +728,29 @@ describe("DateTimeWidget.vue", () => {
       expect(wrapper.findComponent(ErrorMessage).text()).toStrictEqual(
         testErrorMsg,
       );
+    });
+  });
+
+  describe("disabled", () => {
+    it("disables all fields when disabled prop is true", () => {
+      let wrapper = mount(DateTimeWidget, {
+        props: { ...propsAll, disabled: true },
+      });
+
+      const inputComponents = wrapper.findAllComponents(DateTimeInput);
+      inputComponents.forEach((component) => {
+        expect(component.props("disabled")).toBe(true);
+      });
+
+      const dropdownComponents = wrapper.findAllComponents(Dropdown);
+      dropdownComponents.forEach((component) => {
+        expect(component.props("disabled")).toBe(true);
+      });
+
+      const buttonComponents = wrapper.findAllComponents(Button);
+      buttonComponents.forEach((component) => {
+        expect(component.props("disabled")).toBe(true);
+      });
     });
   });
 });

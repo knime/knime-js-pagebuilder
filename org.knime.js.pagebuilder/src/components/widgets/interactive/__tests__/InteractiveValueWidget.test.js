@@ -97,6 +97,15 @@ describe("InteractiveValueWidget.vue", () => {
       });
       expect(wrapperOther.findComponent(Fieldset)).toBeTruthy();
     });
+
+    it("is disabled when disabled property is true", () => {
+      let wrapper = mount(InteractiveValueWidget, {
+        ...context,
+        props: { ...props, disabled: true },
+      });
+
+      expect(wrapper.findComponent(SingleSelect).props("disabled")).toBe(true);
+    });
   });
 
   describe("multiselect components", () => {
@@ -124,6 +133,16 @@ describe("InteractiveValueWidget.vue", () => {
         props,
       });
       expect(wrapperOther.findComponent(Fieldset)).toBeTruthy();
+    });
+
+    it("is disabled when disabled property is true", () => {
+      props.nodeConfig.viewRepresentation.multipleValues = true;
+      let wrapper = mount(InteractiveValueWidget, {
+        ...context,
+        props: { ...props, disabled: true },
+      });
+
+      expect(wrapper.findComponent(Multiselect).props("disabled")).toBe(true);
     });
   });
 

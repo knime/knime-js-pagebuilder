@@ -64,6 +64,10 @@ export default {
       type: String,
       default: () => "",
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["update:modelValue"],
   data() {
@@ -143,6 +147,7 @@ export default {
       :possible-values="possibleChoices"
       :is-valid="isValid"
       :title="description"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
     <ListBox
@@ -155,6 +160,7 @@ export default {
       :possible-values="possibleChoices"
       :is-valid="isValid"
       :title="description"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
     <Dropdown
@@ -166,6 +172,7 @@ export default {
       :possible-values="possibleChoices"
       :is-valid="isValid"
       :title="description"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
   </div>

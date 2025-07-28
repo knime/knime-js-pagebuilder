@@ -48,6 +48,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   data() {
@@ -248,6 +252,7 @@ export default {
       :show-milliseconds="showMilliseconds"
       :is-valid="isValid"
       :timezone="showZone ? timezone : localTimeZone"
+      :disabled="disabled"
       @update:model-value="onDateChange"
     />
     <div class="zone-wrapper">
@@ -258,6 +263,7 @@ export default {
         :model-value="timezone"
         class="timezone"
         :possible-values="possibleTimeZones"
+        :disabled="disabled"
         @update:model-value="onTimezoneChange"
       />
       <Button
@@ -266,6 +272,7 @@ export default {
         primary
         compact
         class="now-button"
+        :disabled="disabled"
         @click="nowButtonClicked"
       >
         {{ showTime ? "Now" : "Today" }}

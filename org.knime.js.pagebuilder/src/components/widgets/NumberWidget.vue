@@ -61,6 +61,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   computed: {
@@ -131,6 +135,7 @@ export default {
         :max="max"
         :is-valid="isValid"
         :title="description"
+        :disabled="disabled"
         @update:model-value="onChange"
       />
     </Label>

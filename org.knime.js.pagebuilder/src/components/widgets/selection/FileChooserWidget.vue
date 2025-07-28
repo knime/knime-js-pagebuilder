@@ -57,6 +57,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   data() {
@@ -305,6 +309,7 @@ export default {
         :is-valid="isValid"
         :allow-transition="true"
         :title="description"
+        :disabled="disabled"
         @item-click="onChange"
       />
       <ErrorMessage :error="errorMessage" />

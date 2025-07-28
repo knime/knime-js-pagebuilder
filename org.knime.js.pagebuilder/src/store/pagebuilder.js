@@ -27,6 +27,8 @@ export const state = () => ({
 
   trackDirtyState: false,
   cleanViewValuesState: {},
+
+  disableWidgets: false,
 });
 
 const isViewLayout = (pageContent) => {
@@ -83,6 +85,9 @@ export const mutations = {
       isViewLayout(page?.wizardPageContent) &&
       !state.isReporting &&
       !window.headless;
+    if (page?.disableWidgets) {
+      state.disableWidgets = page.disableWidgets;
+    }
   },
   /**
    * Set base URL for any external libraries or resources served to the views.

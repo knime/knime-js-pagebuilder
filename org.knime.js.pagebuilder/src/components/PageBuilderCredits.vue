@@ -1,5 +1,5 @@
 <script>
-import packages from "@@/licenses/used-packages.json";
+import packages from "../../licenses/used-packages.json";
 
 /**
  * Wrapper component that is built as a separate library. The purpose of this renderless

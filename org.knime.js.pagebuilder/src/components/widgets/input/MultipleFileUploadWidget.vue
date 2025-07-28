@@ -24,13 +24,13 @@ const DATA_TYPE = "path";
 const FILE_UPLOAD_OBJECT_IDENTIFIER =
   "org.knime.js.base.node.base.input.fileupload.FileUploadObject";
 
-interface FileValue {
+type FileValue = {
   "@class": typeof FILE_UPLOAD_OBJECT_IDENTIFIER;
   id: string;
   path: string;
   fileName: string;
   fileSize: number;
-}
+};
 
 const createFileValue = (data: Omit<FileValue, "@class">): FileValue => ({
   "@class": FILE_UPLOAD_OBJECT_IDENTIFIER,
@@ -49,7 +49,7 @@ const UploadState: Partial<{ [key in UploadItemStatus]: UploadItemStatus }> = {
   processing: "processing",
 } as const;
 
-interface Props {
+type Props = {
   nodeConfig: {
     nodeInfo: any;
     viewRepresentation: any;
@@ -61,12 +61,14 @@ interface Props {
     [key: string]: any;
   };
   errorMessage?: string | null;
-}
+  disabled?: boolean;
+};
 
 const props = withDefaults(defineProps<Props>(), {
   isValid: true,
   valuePair: () => ({ files: [] }),
   errorMessage: null,
+  disabled: false,
 });
 
 const uploadItems = ref<AbortableUploadItem[]>([]);
@@ -98,7 +100,7 @@ const label = computed(() => viewRep.value.label as string);
 const multiple = computed(() => viewRep.value.multiple as boolean);
 const fileTypes = computed(() => viewRep.value.fileTypes as string[]);
 const required = computed(() => viewRep.value.required as boolean);
-const disabled = computed(() => viewRep.value.disabled as boolean);
+const disabledConfig = computed(() => viewRep.value.disabled as boolean);
 const files = computed(() => (props.valuePair?.files ?? []) as FileValue[]);
 for (const file of files.value) {
   uploadItems.value.push({
@@ -325,7 +327,7 @@ defineExpose({
           :layout="layout"
           :style="{ height: dropzoneHeight }"
           :empty="empty"
-          :disabled="disabled"
+          :disabled="disabledConfig || disabled"
           :error="!isValid"
           @files-selected="onFilesSelected"
         >
@@ -348,7 +350,7 @@ defineExpose({
         </Dropzone>
       </div>
     </Label>
-    <ErrorMessage :error="uploadErrorMessage || errorMessage" />
+    <ErrorMessage :error="uploadErrorMessage || errorMessage || undefined" />
   </div>
 </template>
 

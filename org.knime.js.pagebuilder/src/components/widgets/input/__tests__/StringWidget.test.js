@@ -372,4 +372,12 @@ describe("StringWidget.vue", () => {
 
     expect(wrapper.vm.validate().errorMessage).toBe("Input is required.");
   });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(StringWidget, {
+      props: { ...propsInput, disabled: true },
+    });
+
+    expect(wrapper.findComponent(InputField).props("disabled")).toBe(true);
+  });
 });

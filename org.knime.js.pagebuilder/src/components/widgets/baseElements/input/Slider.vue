@@ -70,6 +70,10 @@ export default {
       default: false,
       type: Boolean,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["update:modelValue"],
   methods: {
@@ -131,6 +135,7 @@ export default {
       :contained="contained"
       :lazy="true"
       :enable-cross="false"
+      :disabled="disabled"
       x-ms-format-detection="none"
       @change="onChange"
     />
@@ -151,10 +156,16 @@ export default {
   & :deep(.vue-slider-disabled) {
     opacity: 0.5;
     cursor: not-allowed;
+
+    & .vue-slider-dot-disabled,
+    & .vue-slider-rail {
+      cursor: not-allowed;
+    }
   }
 
   /* rail style */
   & :deep(.vue-slider-rail) {
+    position: relative;
     cursor: pointer;
     background-color: var(--knime-stone-gray);
     border-radius: 0;
@@ -172,6 +183,7 @@ export default {
 
   /* process style */
   & :deep(.vue-slider-process) {
+    position: absolute;
     cursor: pointer;
     background-color: var(--theme-slider-background-color);
     border-radius: var(--theme-slider-bar-radius, 3.5px);
@@ -210,6 +222,7 @@ export default {
 
   /* mark style */
   & :deep(.vue-slider-mark) {
+    position: absolute;
     cursor: pointer;
     z-index: 1;
   }
@@ -253,6 +266,7 @@ export default {
 
   /* dot style */
   & :deep(.vue-slider-dot) {
+    position: absolute;
     cursor: pointer;
     height: 29px !important;
     width: 13px !important;
@@ -283,6 +297,16 @@ export default {
 
   & :deep(.vue-slider-dot-handle) {
     display: none;
+  }
+
+  & :deep(.vue-slider-dot-tooltip) {
+    position: absolute;
+  }
+
+  & :deep(.vue-slider-dot-tooltip-top) {
+    top: -10px;
+    left: 50%;
+    transform: translate(-50%, -100%);
   }
 
   & :deep(.vue-slider-dot-tooltip-inner) {

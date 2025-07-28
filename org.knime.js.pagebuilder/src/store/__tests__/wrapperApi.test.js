@@ -3,10 +3,10 @@ import { createStore } from "vuex";
 
 import { muteConsole } from "@knime/utils/test-utils";
 
-import { iFrameExtensionConfig } from "@@/test/assets/views/extensionConfig";
 import * as alertConfig from "@/store/alert";
 import * as pagebuilderConfig from "@/store/pagebuilder";
 import * as wrapperApiConfig from "@/store/wrapperApi";
+import { iFrameExtensionConfig } from "@/test/assets/views/extensionConfig";
 
 describe("wrapper API store", () => {
   const EMPTY = expect.undefined;

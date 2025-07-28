@@ -1,6 +1,14 @@
+/* eslint-disable max-lines */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 import { mount, shallowMount } from "@vue/test-utils";
+
+import {
+  ComboBox,
+  MultiselectListBox,
+  SearchableCheckboxes,
+  Twinlist,
+} from "@knime/components";
 
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
 import MultipleSelectionWidget from "@/components/widgets/selection/MultipleSelectionWidget.vue";
@@ -512,6 +520,44 @@ describe("MultipleSelectionWidget.vue", () => {
 
       await nextTick();
       expect(wrapper.emitted().validateWidget).toBeTruthy();
+    });
+  });
+
+  describe("disabled", () => {
+    it("is disabled as checkboxes when disabled property is true", () => {
+      let wrapper = mount(MultipleSelectionWidget, {
+        props: { ...propsCheckboxHorizontal, disabled: true },
+      });
+
+      expect(
+        wrapper.findComponent(SearchableCheckboxes).props("disabled"),
+      ).toBe(true);
+    });
+
+    it("is disabled as a Twinlist when disabled property is true", () => {
+      let wrapper = mount(MultipleSelectionWidget, {
+        props: { ...propsTwinlist, disabled: true },
+      });
+
+      expect(wrapper.findComponent(Twinlist).props("disabled")).toBe(true);
+    });
+
+    it("is disabled as a ComboBox when disabled property is true", () => {
+      let wrapper = mount(MultipleSelectionWidget, {
+        props: { ...propsComboBox, disabled: true },
+      });
+
+      expect(wrapper.findComponent(ComboBox).props("disabled")).toBe(true);
+    });
+
+    it("is disabled as a MultiselectListBox when disabled property is true", () => {
+      let wrapper = mount(MultipleSelectionWidget, {
+        props: { ...propsMultiselectListBox, disabled: true },
+      });
+
+      expect(wrapper.findComponent(MultiselectListBox).props("disabled")).toBe(
+        true,
+      );
     });
   });
 });

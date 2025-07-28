@@ -79,6 +79,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["update:modelValue"],
   computed: {
@@ -155,6 +159,7 @@ export default {
       :is-valid="isValid"
       :title="description"
       :show-search="showSearch"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
     <Twinlist
@@ -169,6 +174,7 @@ export default {
       :is-valid="isValid"
       :title="description"
       :show-search="showSearch"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
     <SearchableList
@@ -182,6 +188,7 @@ export default {
       :is-valid="isValid"
       :title="description"
       :show-search="showSearch"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
     <ComboBox
@@ -195,6 +202,7 @@ export default {
       :close-dropdown-on-selection="isReExecutionWidget"
       :is-valid="isValid"
       :title="description"
+      :disabled="disabled"
       @update:model-value="onChange"
     />
   </div>

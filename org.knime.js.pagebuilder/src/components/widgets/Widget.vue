@@ -168,13 +168,16 @@ export default {
     isReactive() {
       return this.nodeConfig.viewRepresentation.triggerReExecution;
     },
-    ...mapState("pagebuilder", ["nodesReExecuting"]),
+    ...mapState("pagebuilder", ["nodesReExecuting", "disableWidgets"]),
     ...mapState("api", ["disableWidgetsWhileExecuting"]),
     isExecuting() {
       return Boolean(this.nodesReExecuting?.length);
     },
     disableWhileExecuting() {
       return this.isExecuting && this.disableWidgetsWhileExecuting;
+    },
+    disabled() {
+      return this.disableWhileExecuting || this.disableWidgets;
     },
   },
   async mounted() {
@@ -310,12 +313,7 @@ export default {
 </script>
 
 <template>
-  <div
-    class="widget"
-    :class="{
-      disabled: disableWhileExecuting,
-    }"
-  >
+  <div class="widget" :class="{ disabled }">
     <Component
       :is="widgetName"
       ref="widget"
@@ -323,6 +321,7 @@ export default {
       :is-valid="isValid"
       :value-pair="valuePair"
       :error-message="serverValidationErrorMessage || errorMessage"
+      :disabled="disabled"
       @update-widget="publishUpdate"
       @validate-widget="validate"
     />

@@ -384,4 +384,18 @@ describe("SliderWidget.vue", () => {
       "Current input is invalid.",
     );
   });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(SliderWidget, {
+      props: {
+        nodeConfig,
+        nodeId,
+        isValid,
+        valuePair: nodeConfig.viewRepresentation.currentValue,
+        disabled: true,
+      },
+    });
+
+    expect(wrapper.findComponent(Slider).props("disabled")).toBe(true);
+  });
 });

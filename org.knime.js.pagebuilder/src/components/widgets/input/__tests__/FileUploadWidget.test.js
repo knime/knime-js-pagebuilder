@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createStore } from "vuex";
 
+import { Button } from "@knime/components";
 import { sleep } from "@knime/utils";
 
 import ErrorMessage from "@/components/widgets/baseElements/text/ErrorMessage.vue";
@@ -370,5 +371,15 @@ describe("FileUploadWidget.vue", () => {
           "data:application/octet-stream;base64,dGVzdGluZw==",
       },
     });
+  });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(FileUploadWidget, {
+      global: { mocks: { $store: store } },
+      props: { ...props, disabled: true },
+    });
+
+    expect(wrapper.findComponent(Button).props("disabled")).toBe(true);
+    expect(wrapper.find("input").attributes("disabled")).toBeDefined();
   });
 });

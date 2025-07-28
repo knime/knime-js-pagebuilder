@@ -385,4 +385,12 @@ describe("ListBoxInputWidget.vue", () => {
       expect(wrapper.vm.validate().errorMessage).toBe("Input is required.");
     });
   });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(ListBoxInputWidget, {
+      props: { ...propsEmailRegexLineSplit, disabled: true },
+    });
+
+    expect(wrapper.findComponent(TextArea).props("disabled")).toBe(true);
+  });
 });

@@ -3,12 +3,13 @@ import { mount, shallowMount } from "@vue/test-utils";
 
 import { Dropdown } from "@knime/components";
 
-import propsColumnLockedListImport from "@@/test/assets/propsDataColumnLockedList";
-import propsDropdownImport from "@@/test/assets/propsDataDropdown";
-import propsListImport from "@@/test/assets/propsDataList";
-import propsRadioHorizontalImport from "@@/test/assets/propsDataRadioHorizontal";
-import propsRadioVerticalImport from "@@/test/assets/propsDataRadioVertical";
 import ValueSelectionWidget from "@/components/widgets/selection/ValueSelectionWidget.vue";
+import propsColumnLockedListImport from "@/test/assets/propsDataColumnLockedList";
+import propsDropdownImport from "@/test/assets/propsDataDropdown";
+import propsListImport from "@/test/assets/propsDataList";
+import propsRadioHorizontalImport from "@/test/assets/propsDataRadioHorizontal";
+import propsRadioVerticalImport from "@/test/assets/propsDataRadioVertical";
+import SingleSelect from "../../baseElements/selection/SingleSelect.vue";
 
 describe("ValueSelectionWidget.vue", () => {
   let propsColumnLockedList,
@@ -252,5 +253,14 @@ describe("ValueSelectionWidget.vue", () => {
         errorMessage: "Selection is invalid or missing.",
       });
     });
+  });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(ValueSelectionWidget, {
+      props: { ...propsDropdown, disabled: true },
+    });
+
+    expect(wrapper.findComponent(Dropdown).props("disabled")).toBe(true);
+    expect(wrapper.findComponent(SingleSelect).props("disabled")).toBe(true);
   });
 });

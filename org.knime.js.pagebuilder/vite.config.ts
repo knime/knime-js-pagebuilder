@@ -116,7 +116,6 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
-        "@@": fileURLToPath(new URL(".", import.meta.url)),
       },
       dedupe: [
         "vue", // needed for DateTimeWidget v-calendar to work
