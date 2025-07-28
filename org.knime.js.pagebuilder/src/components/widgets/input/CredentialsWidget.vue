@@ -41,6 +41,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   data() {
@@ -158,6 +162,7 @@ export default {
         :model-value="value.username"
         :is-valid="isValid"
         :title="description"
+        :disabled="disabled"
         @update:model-value="onUsernameChange"
       />
     </Label>
@@ -169,6 +174,7 @@ export default {
         :model-value="value.magicDefaultPassword"
         :is-valid="isValid"
         :title="description"
+        :disabled="disabled"
         @update:model-value="onPasswordChange"
       />
     </Label>

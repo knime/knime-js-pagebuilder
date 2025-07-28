@@ -7,6 +7,7 @@ import { createStore } from "vuex";
 import Widget from "@/components/widgets/Widget.vue";
 import * as storeConfig from "@/store/pagebuilder";
 import { getProp, setProp } from "@/util/nestedProperty";
+import SliderWidget from "../input/SliderWidget.vue";
 
 describe("Widget.vue", () => {
   let store, context, nodeConfig, wrapper;
@@ -485,5 +486,42 @@ describe("Widget.vue", () => {
     });
 
     expect(triggerSpy).toHaveBeenCalled();
+  });
+
+  it("adds disabled class and forwards disabled prop if disableWidgets state prop is true", () => {
+    store.state.pagebuilder.disableWidgets = true;
+
+    let localWrapper = shallowMount(Widget, {
+      ...context,
+      global: {
+        ...context.global,
+        stubs: {
+          RefreshButton: {
+            name: "refresh",
+            template: "<div />",
+            ref: "widget",
+            methods: {
+              validate: vi.fn().mockReturnValue(Promise.resolve(true)),
+            },
+          },
+        },
+      },
+      props: {
+        nodeConfig: {
+          ...nodeConfig,
+          viewRepresentation: {
+            ...nodeConfig.viewRepresentation,
+            triggerReExecution: true,
+          },
+        },
+        nodeId: "id1",
+        widgetName: "SliderWidget",
+      },
+    });
+
+    expect(localWrapper.element.classList).toContain("disabled");
+    expect(localWrapper.findComponent(SliderWidget).props("disabled")).toBe(
+      true,
+    );
   });
 });

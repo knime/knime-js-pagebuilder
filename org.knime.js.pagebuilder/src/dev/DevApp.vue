@@ -13,7 +13,7 @@ export default {
   },
   computed: {
     pageMocks() {
-      const mocks = import.meta.glob("@@/mocks/*.json", { eager: true });
+      const mocks = import.meta.glob("@/mocks/*.json", { eager: true });
       return Object.keys(mocks)
         .sort()
         .map((file) => ({

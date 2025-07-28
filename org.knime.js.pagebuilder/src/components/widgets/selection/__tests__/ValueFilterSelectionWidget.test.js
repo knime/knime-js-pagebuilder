@@ -2,6 +2,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
 import { mount } from "@vue/test-utils";
 
+import { Dropdown } from "@knime/components";
+
 import Multiselect from "@/components/widgets/baseElements/selection/Multiselect.vue";
 import ValueFilterSelectionWidget from "@/components/widgets/selection/ValueFilterSelectionWidget.vue";
 
@@ -365,5 +367,14 @@ describe("ValueFilterSelectionWidget.vue", () => {
       await nextTick();
       expect(wrapper.emitted().validateWidget).toBeTruthy();
     });
+  });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(ValueFilterSelectionWidget, {
+      props: { ...props, disabled: true },
+    });
+
+    expect(wrapper.findComponent(Dropdown).props("disabled")).toBe(true);
+    expect(wrapper.findComponent(Multiselect).props("disabled")).toBe(true);
   });
 });

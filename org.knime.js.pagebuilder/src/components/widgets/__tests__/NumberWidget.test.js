@@ -234,4 +234,12 @@ describe("NumberWidget.vue", () => {
       "Current value is outside allowed range.",
     );
   });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(NumberWidget, {
+      props: { ...props, disabled: true },
+    });
+
+    expect(wrapper.findComponent(NumberInput).props("disabled")).toBe(true);
+  });
 });

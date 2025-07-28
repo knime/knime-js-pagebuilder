@@ -4,6 +4,7 @@ import { mount } from "@vue/test-utils";
 import { Twinlist } from "@knime/components";
 
 import ColumnFilterWidget from "@/components/widgets/selection/ColumnFilterSelectionWidget.vue";
+import Multiselect from "../../baseElements/selection/Multiselect.vue";
 
 describe("ColumnFilterSelectionWidget.vue", () => {
   let props;
@@ -216,5 +217,13 @@ describe("ColumnFilterSelectionWidget.vue", () => {
         errorMessage: "Current selection is invalid.",
       });
     });
+  });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(ColumnFilterWidget, {
+      props: { ...props, disabled: true },
+    });
+
+    expect(wrapper.findComponent(Multiselect).props("disabled")).toBe(true);
   });
 });

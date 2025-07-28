@@ -224,4 +224,12 @@ describe("ColumnSelectionWidget.vue", () => {
       });
     });
   });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(ColumnSelectionWidget, {
+      props: { ...propsColumnSelectionList, disabled: true },
+    });
+
+    expect(wrapper.findComponent(SingleSelect).props("disabled")).toBe(true);
+  });
 });

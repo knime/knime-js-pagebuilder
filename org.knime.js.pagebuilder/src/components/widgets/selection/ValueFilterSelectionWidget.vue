@@ -54,6 +54,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget", "validateWidget"],
   computed: {
@@ -163,6 +167,7 @@ export default {
           :is-valid="isColumnValid"
           aria-label="Column"
           :possible-values="possibleColumns"
+          :disabled="disabled"
           @update:model-value="onColumnChange"
         />
       </template>
@@ -185,6 +190,7 @@ export default {
           :description="description"
           :label="label"
           :show-search="enableSearch"
+          :disabled="disabled"
           @update:model-value="onChange"
         />
         <ErrorMessage :error="errorMessage" />

@@ -1,9 +1,8 @@
+// @ts-expect-error
+import tzParseTimezone from "@date-fns-tz/_lib/tzParseTimezone";
+// @ts-expect-error
+import tzPattern from "@date-fns-tz/_lib/tzPattern";
 import { type OptionsWithTZ, toDate } from "date-fns-tz";
-
-// @ts-expect-error
-import tzParseTimezone from "@@/node_modules/date-fns-tz/_lib/tzParseTimezone";
-// @ts-expect-error
-import tzPattern from "@@/node_modules/date-fns-tz/_lib/tzPattern";
 /**
  * This method is used to circumvent the following open issue in date-fns-tz
  * https://github.com/marnusw/date-fns-tz/issues/302

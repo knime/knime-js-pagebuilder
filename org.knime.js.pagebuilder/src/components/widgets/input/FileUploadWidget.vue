@@ -57,6 +57,10 @@ export default {
       default: null,
       type: String,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   data() {
@@ -82,9 +86,6 @@ export default {
     },
     fileTypes() {
       return this.viewRep.fileTypes;
-    },
-    disabled() {
-      return false; // option not needed right now, for later use
     },
     path() {
       return this.valuePair?.path;
@@ -239,6 +240,7 @@ export default {
         ref="input"
         type="file"
         :accept="fileTypes.join(',')"
+        :disabled="disabled"
         @change="onChange"
       />
       <div :class="['progress-bar-wrapper', { 'show-bar': uploading }]">

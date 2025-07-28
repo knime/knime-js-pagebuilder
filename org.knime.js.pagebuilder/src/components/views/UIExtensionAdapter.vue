@@ -104,7 +104,7 @@ export default defineComponent({
        * This is used within the {@link layoutMixin}
        */
       isWidget: false,
-      currentPublishedData: null,
+      currentPublishedData: null as null | unknown,
       dialogControlsShouldBeVisible: true,
       resolveApplyDataPromise: null as
         | null

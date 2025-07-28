@@ -4,12 +4,12 @@ import { createStore } from "vuex";
 
 import { Button } from "@knime/components";
 
-import { componentExtensionConfig } from "@@/test/assets/views/extensionConfig";
 import ExecutingOverlay from "@/components/ui/ExecutingOverlay.vue";
 import ViewExecutable from "@/components/views/ViewExecutable.vue";
 import * as alertStoreConfig from "@/store/alert";
 import * as serviceStoreConfig from "@/store/service";
 import * as apiStoreConfig from "@/store/wrapperApi";
+import { componentExtensionConfig } from "@/test/assets/views/extensionConfig";
 
 describe("ViewExecutable.vue", () => {
   it("renders", () => {

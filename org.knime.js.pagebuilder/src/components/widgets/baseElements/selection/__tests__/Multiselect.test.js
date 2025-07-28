@@ -233,6 +233,16 @@ describe("Multiselect.vue", () => {
         testValue,
       );
     });
+
+    it("is disabled when disabled property is true", () => {
+      let wrapper = mount(Multiselect, {
+        props: { ...propsSearchableCheckboxesHorizontal, disabled: true },
+      });
+
+      expect(
+        wrapper.findComponent(SearchableCheckboxes).props("disabled"),
+      ).toBe(true);
+    });
   });
 
   describe("searchableList", () => {
@@ -289,6 +299,16 @@ describe("Multiselect.vue", () => {
       expect(wrapper.emitted("update:modelValue")).toBeTruthy();
       expect(wrapper.emitted("update:modelValue")[0][0]).toStrictEqual(
         testValue,
+      );
+    });
+
+    it("is disabled when disabled property is true", () => {
+      let wrapper = mount(Multiselect, {
+        props: { ...propsSearchablelist, disabled: true },
+      });
+
+      expect(wrapper.findComponent(SearchableList).props("disabled")).toBe(
+        true,
       );
     });
   });
@@ -353,6 +373,14 @@ describe("Multiselect.vue", () => {
         testValue,
       );
     });
+
+    it("is disabled when disabled property is true", () => {
+      let wrapper = mount(Multiselect, {
+        props: { ...propsTwinlist, disabled: true },
+      });
+
+      expect(wrapper.findComponent(Twinlist).props("disabled")).toBe(true);
+    });
   });
 
   describe("comboBox", () => {
@@ -387,6 +415,14 @@ describe("Multiselect.vue", () => {
         wrapper.findComponent(MultiselectWebappsCommon).vm.showOptions,
       ).toBeFalsy();
       expect(closeOptionsMock).toHaveBeenCalled();
+    });
+
+    it("is disabled when disabled property is true", () => {
+      let wrapper = mount(Multiselect, {
+        props: { ...propsComboBox, disabled: true },
+      });
+
+      expect(wrapper.findComponent(ComboBox).props("disabled")).toBe(true);
     });
   });
 });

@@ -36,6 +36,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["item-click", "item-toggle"],
   data() {
@@ -326,6 +330,7 @@ export default {
           :allow-transition="allowTransition"
           :height="itemHeight"
           :parent-item="data"
+          :disabled-root="disabled"
           :on-item-click="onItemClick"
           :on-item-toggle="onItemToggle"
           :on-hover-item="onHoverItem"

@@ -35,6 +35,10 @@ export default {
       }),
       type: Object,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   computed: {
@@ -77,6 +81,7 @@ export default {
     label-size="large"
     :model-value="value"
     :title="description"
+    :disabled="disabled"
     @update:model-value="onChange"
   >
     <span :title="label">{{ label }}</span>

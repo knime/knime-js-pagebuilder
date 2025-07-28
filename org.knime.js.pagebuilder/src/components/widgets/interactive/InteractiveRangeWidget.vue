@@ -44,6 +44,10 @@ export default {
       }),
       type: [Object, Array],
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   computed: {
@@ -146,6 +150,7 @@ export default {
     v-bind="$props"
     :value-pair="value"
     :invert-process="invertProcess"
+    :disabled="disabled"
     @update-widget="onChange"
   />
 </template>

@@ -50,6 +50,10 @@ export default {
       type: Function,
       default: () => false,
     },
+    disabledRoot: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -74,7 +78,7 @@ export default {
     anchorClasses() {
       return [
         "tree-anchor",
-        { "tree-disabled": this.model.disabled },
+        { "tree-disabled": this.model.disabled || this.disabledRoot },
         { "tree-selected": this.model.selected },
         { "tree-hovered": this.isHover || this.isKeyNav },
       ];
@@ -173,7 +177,7 @@ export default {
       }
     },
     handleItemClick(e) {
-      if (this.model.disabled) {
+      if (this.model.disabled || this.disabledRoot) {
         return;
       }
       this.onItemClick(this, this.model, e);
@@ -229,6 +233,7 @@ export default {
         :allow-transition="allowTransition"
         :height="height"
         :parent-item="model.children"
+        :disabled-root="disabledRoot"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
         :on-hover-item="onHoverItem"

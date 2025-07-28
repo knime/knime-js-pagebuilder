@@ -110,4 +110,12 @@ describe("Slider.vue", () => {
       isValid: false,
     });
   });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = mount(Slider, {
+      props: { ...props, disabled: true },
+    });
+
+    expect(wrapper.findComponent(VueSlider).props("disabled")).toBe(true);
+  });
 });

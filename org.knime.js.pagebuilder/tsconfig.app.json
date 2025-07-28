@@ -4,7 +4,6 @@
     "vite-env.d.ts",
     "src/**/*",
     "src/**/*.vue",
-    "test/assets/**/*",
     "node_modules/@knime/**/*.vue",
     "node_modules/@knime/**/node_modules/@knime/**/*.vue"
   ],
@@ -16,7 +15,6 @@
     "lib": ["ES2023.Array", "DOM", "DOM.Iterable"],
     "paths": {
       "@/*": ["./src/*"],
-      "@@/*": ["./*"],
       "vue-slider-component": ["./src/vue-slider-component.d.ts"]
     },
     "allowJs": true,

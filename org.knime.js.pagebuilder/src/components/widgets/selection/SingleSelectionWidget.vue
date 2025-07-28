@@ -46,6 +46,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   computed: {
@@ -121,6 +125,7 @@ export default {
         :title="description"
         :possible-value-list="viewRep.possibleChoices"
         :label="label"
+        :disabled="disabled"
         @update:model-value="onChange"
       />
       <ErrorMessage :error="errorMessage" />

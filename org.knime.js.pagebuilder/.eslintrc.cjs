@@ -19,7 +19,6 @@ module.exports = {
       "eslint-import-resolver-custom-alias": {
         alias: {
           "@": "./src",
-          "@@": ".",
         },
       },
     },

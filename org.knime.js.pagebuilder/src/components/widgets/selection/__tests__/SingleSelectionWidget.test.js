@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mount, shallowMount } from "@vue/test-utils";
 
+import { Dropdown, ListBox, RadioButtons } from "@knime/components";
+
 import SingleSelect from "@/components/widgets/baseElements/selection/SingleSelect.vue";
 import SingleSelectionWidget from "@/components/widgets/selection/SingleSelectionWidget.vue";
 
@@ -447,6 +449,32 @@ describe("SingleSelectionWidget.vue", () => {
         isValid: false,
         errorMessage: "Current selection is invalid.",
       });
+    });
+  });
+
+  describe("disabled", () => {
+    it("is disabled as radio buttons when disabled property is true", () => {
+      let wrapper = mount(SingleSelectionWidget, {
+        props: { ...propsRadioHorizontal, disabled: true },
+      });
+
+      expect(wrapper.findComponent(RadioButtons).props("disabled")).toBe(true);
+    });
+
+    it("is disabled as a list when disabled property is true", () => {
+      let wrapper = mount(SingleSelectionWidget, {
+        props: { ...propsList, disabled: true },
+      });
+
+      expect(wrapper.findComponent(ListBox).props("disabled")).toBe(true);
+    });
+
+    it("is disabled as a dropdown when disabled property is true", () => {
+      let wrapper = mount(SingleSelectionWidget, {
+        props: { ...propsDropdown, disabled: true },
+      });
+
+      expect(wrapper.findComponent(Dropdown).props("disabled")).toBe(true);
     });
   });
 });

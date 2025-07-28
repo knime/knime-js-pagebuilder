@@ -81,6 +81,10 @@ export default {
       default: null,
       type: String,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   computed: {
@@ -325,6 +329,7 @@ export default {
           `slider-${sliderSettings.orientation}`,
           { 'tooltip-slider': tooltips },
         ]"
+        :disabled="disabled"
         @update:model-value="onChange"
       />
       <ErrorMessage

@@ -119,6 +119,14 @@ describe("SingleSelect.vue", () => {
         testValue,
       );
     });
+
+    it("is disabled when disabled property is true", () => {
+      let wrapper = mount(SingleSelect, {
+        props: { ...propsRadioHorizontal, disabled: true },
+      });
+
+      expect(wrapper.findComponent(RadioButtons).props("disabled")).toBe(true);
+    });
   });
 
   describe("list", () => {
@@ -184,6 +192,14 @@ describe("SingleSelect.vue", () => {
         testValue,
       );
     });
+
+    it("is disabled when disabled property is true", () => {
+      let wrapper = mount(SingleSelect, {
+        props: { ...propsList, disabled: true },
+      });
+
+      expect(wrapper.findComponent(ListBox).props("disabled")).toBe(true);
+    });
   });
 
   describe("dropdown", () => {
@@ -218,6 +234,14 @@ describe("SingleSelect.vue", () => {
       expect(wrapper.emitted("update:modelValue")[0][0]).toStrictEqual(
         testValue,
       );
+    });
+
+    it("is disabled when disabled property is true", () => {
+      let wrapper = mount(SingleSelect, {
+        props: { ...propsDropdown, disabled: true },
+      });
+
+      expect(wrapper.findComponent(Dropdown).props("disabled")).toBe(true);
     });
   });
 

@@ -46,6 +46,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   data() {
@@ -91,7 +95,7 @@ export default {
       primary
       compact
       class="refresh-button"
-      :disabled="isExecuting"
+      :disabled="disabled || isExecuting"
       @click="onChange"
     >
       {{ viewRep.buttonText }}

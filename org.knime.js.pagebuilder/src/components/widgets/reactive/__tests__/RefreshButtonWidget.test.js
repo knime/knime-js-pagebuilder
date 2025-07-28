@@ -164,4 +164,12 @@ describe("RefreshButtonWidget.vue", () => {
       wrapper.findComponent(Button).element.hasAttributes("disabled"),
     ).toBeTruthy();
   });
+
+  it("disables the button when disabled property is true", () => {
+    let wrapper = mount(RefreshButtonWidget, {
+      ...context,
+      props: { ...props, disabled: true },
+    });
+    expect(wrapper.findComponent(Button).props("disabled")).toBe(true);
+  });
 });

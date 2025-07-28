@@ -211,4 +211,14 @@ describe("InteractiveRangeWidget.vue", () => {
       expect(wrapperBroken.vm.validate().isValid).toBe(false);
     });
   });
+
+  it("is disabled when disabled property is true", () => {
+    props.nodeConfig.viewRepresentation.multipleValues = true;
+    let wrapper = mount(InteractiveRangeWidget, {
+      ...context,
+      props: { ...props, disabled: true },
+    });
+
+    expect(wrapper.findComponent(SliderWidget).props("disabled")).toBe(true);
+  });
 });

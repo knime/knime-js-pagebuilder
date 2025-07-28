@@ -45,6 +45,10 @@ export default {
       type: String,
       default: null,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["updateWidget"],
   computed: {
@@ -156,6 +160,7 @@ export default {
           :rows="numberVisOptions"
           :is-valid="isValid"
           :title="description"
+          :disabled="disabled"
           @update:model-value="onChange"
         />
         <ErrorMessage :error="errorMessage" />

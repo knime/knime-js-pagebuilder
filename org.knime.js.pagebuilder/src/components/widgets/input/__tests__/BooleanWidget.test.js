@@ -105,4 +105,12 @@ describe("BooleanWidget.vue", () => {
       expect(wrapper.vm.validate().isValid).toBe(false);
     });
   });
+
+  it("is disabled when disabled property is true", () => {
+    let wrapper = shallowMount(BooleanWidget, {
+      props: { ...props, disabled: true },
+    });
+
+    expect(wrapper.findComponent(Checkbox).props("disabled")).toBe(true);
+  });
 });

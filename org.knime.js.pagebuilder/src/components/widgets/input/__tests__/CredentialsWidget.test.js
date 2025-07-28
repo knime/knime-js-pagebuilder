@@ -491,5 +491,16 @@ describe("CredentialsWidget.vue", () => {
         "KNIME Server login credentials could not be fetched!",
       );
     });
+
+    it("disables both username and password input fields when disabled prop is true", () => {
+      let wrapper = mount(CredentialsWidget, {
+        props: { ...propsDefault, disabled: true },
+      });
+
+      const inputComponents = wrapper.findAllComponents(InputField);
+      inputComponents.forEach((component) => {
+        expect(component.props("disabled")).toBe(true);
+      });
+    });
   });
 });
