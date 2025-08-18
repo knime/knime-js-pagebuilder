@@ -50,6 +50,7 @@ export default {
 
 <style lang="postcss">
 @import url("modern-normalize/modern-normalize.css");
+@import url("@knime/kds-styles/kds-variables.css");
 @import url("@knime/styles/css/variables");
 @import url("@knime/styles/css/basics");
 @import url("@knime/styles/css/fonts");
@@ -57,6 +58,10 @@ export default {
 
 /* Required, e.g., for the TextWidget.vue component */
 @import url("@knime/styles/css/headlines");
+
+html {
+  color-scheme: light;
+}
 
 /* add small extra side padding for single or component views in AP view window */
 .ap-wrapper .view-layout {
