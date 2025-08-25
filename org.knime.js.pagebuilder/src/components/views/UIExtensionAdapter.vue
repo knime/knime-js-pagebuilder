@@ -1,5 +1,5 @@
 <script lang="ts">
-import { type PropType, defineComponent, toRaw } from "vue";
+import { type PropType, defineComponent, nextTick, toRaw } from "vue";
 import { mapState } from "vuex";
 
 import {
@@ -176,6 +176,24 @@ export default defineComponent({
           );
         },
         callNodeDataService: (params) => {
+          if (!this.isNodeDialog && params.serviceType === "apply_data") {
+            this.currentPublishedData = JSON.parse(params.dataServiceRequest);
+            console.log(
+              `UIExtension [${this.viewConfig.nodeID}]: Triggering reexecution`,
+            );
+            this.$store.dispatch("pagebuilder/triggerReExecution", {
+              nodeId: this.viewConfig.nodeID,
+            });
+            return Promise.resolve({
+              result: JSON.stringify({
+                isApplied: true,
+              }),
+            });
+          }
+          console.log(
+            `UIExtension [${this.viewConfig.nodeID}]: Calling node data service`,
+            params,
+          );
           return this.$store.dispatch("api/callService", {
             nodeService: "NodeService.callNodeDataService",
             extensionConfig: {
@@ -201,8 +219,25 @@ export default defineComponent({
           });
         },
         publishData: (data) => {
+          console.log(
+            `UIExtension publishData [${this.extensionConfig.nodeId}]:`,
+            {
+              data,
+            },
+          );
+          const isFirstPublish = this.currentPublishedData === null;
           this.currentPublishedData = data;
-          this.$emit("publishData", data);
+          if (this.isNodeDialog) {
+            this.$emit("publishData", data);
+            return;
+          }
+          if (isFirstPublish) {
+            this.initializeWidget();
+          }
+          this.$store.dispatch("pagebuilder/updateWebNode", {
+            nodeId: this.viewConfig.nodeID,
+            type: "uiExtension",
+          });
         },
         setReportingContent: (reportingContent) => {
           return this.$store.dispatch("pagebuilder/setReportingContent", {
@@ -227,17 +262,21 @@ export default defineComponent({
             onServiceEvent: dispatchPushEvent,
             serviceId: this.serviceId,
           };
+          const applySettings = () => {
+            dispatchPushEvent<"ApplyDataEvent">({
+              eventType: "ApplyDataEvent",
+            });
+            return new Promise<{ isApplied: boolean }>((resolve) => {
+              this.resolveApplyDataPromise = resolve;
+            });
+          };
+
           if (this.isNodeDialog) {
             this.$store.dispatch("pagebuilder/dialog/setApplySettings", {
-              applySettings: () => {
-                dispatchPushEvent<"ApplyDataEvent">({
-                  eventType: "ApplyDataEvent",
-                });
-                return new Promise<{ isApplied: boolean }>((resolve) => {
-                  this.resolveApplyDataPromise = resolve;
-                });
-              },
+              applySettings,
             });
+          } else {
+            this.currentPublishedData = null;
           }
 
           const id = {
@@ -283,7 +322,7 @@ export default defineComponent({
           } else {
             this.$store.dispatch(
               "pagebuilder/dialog/cleanSettings",
-              this.currentPublishedData,
+              this.currentPublishedData, // TODO: Now probably broken because we set currentPublishedData to null above.
             );
           }
         },
@@ -325,6 +364,24 @@ export default defineComponent({
     }
   },
   methods: {
+    initializeWidget() {
+      // Register value getter for non-dialog UIExtensions
+      console.log(
+        `UIExtension [${this.viewConfig.nodeID}]: Registering value getter`,
+      );
+      this.$store.dispatch("pagebuilder/addValueGetter", {
+        nodeId: this.viewConfig.nodeID,
+        valueGetter: () => {
+          console.log(
+            `UIExtension valueGetter [${this.viewConfig.nodeID}]: Returning data: ${JSON.stringify(this.currentPublishedData)}`,
+          );
+          return Promise.resolve({
+            nodeId: this.viewConfig.nodeID,
+            value: this.currentPublishedData,
+          });
+        },
+      });
+    },
     displayAlert(alert: Alert) {
       if (alert.type === "error") {
         this.displayError(alert);
@@ -375,6 +432,7 @@ export default defineComponent({
 </script>
 
 <template>
+  Current published data: {{ currentPublishedData }}
   <NotDisplayable v-if="isReportingButDoesNotSupportReporting" not-supported />
   <div
     v-else

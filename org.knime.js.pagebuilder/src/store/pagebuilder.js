@@ -134,6 +134,9 @@ export const mutations = {
     state,
     { nodeId, update, config, type, viewType = "webNodes" } = {},
   ) {
+    if (type === "uiExtension") {
+      return;
+    }
     // Update viewValues and other nested properties.
     if (update) {
       let currentWebNode = state.page.wizardPageContent[viewType][nodeId];
@@ -229,6 +232,7 @@ export const mutations = {
 
   addToCleanViewValuesState(state, { nodeId, value }) {
     const newValue = generateUniqueStringFromViewValue(value);
+    console.log("Adding to clean value states: ", { nodeId, newValue });
     if (state.cleanViewValuesState[nodeId]) {
       consola.debug(
         `Clean view values for node ${nodeId} already set. Overwriting with new value.`,
@@ -580,6 +584,8 @@ export const actions = {
       }),
     );
 
+    console.log("Add dirty nodes to state: ", dirtyNodesViewValues);
+
     return dirtyNodesViewValues
       .filter(Boolean)
       .reduce((acc, node) => ({ ...acc, ...node }), {});
@@ -610,9 +616,15 @@ export const actions = {
             newViewValue.value,
           );
 
+          const webNode = state.page.wizardPageContent.webNodes[nodeId];
+
+          if (!webNode) {
+            // UI Extension TODO: Link followup ticket regarding default values
+            return true;
+          }
+
           const defaultViewValue = toValue(
-            state.page.wizardPageContent.webNodes[nodeId].viewRepresentation
-              .defaultValue,
+            webNode.viewRepresentation.defaultValue,
           );
 
           if (!defaultViewValue) {
