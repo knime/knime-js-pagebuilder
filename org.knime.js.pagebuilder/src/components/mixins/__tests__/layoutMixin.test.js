@@ -26,7 +26,10 @@ describe("layoutMixin.js", () => {
         },
         mixins: [layoutMixin],
       });
-      expect(wrapper.vm.layoutClasses).toEqual(["aspectRatio16by9"]);
+      expect(wrapper.vm.layoutClasses).toEqual([
+        "aspect-ratio",
+        "aspectRatio16by9",
+      ]);
     });
 
     it("adds fill-container class if resize method is auto", () => {
@@ -52,6 +55,7 @@ describe("layoutMixin.js", () => {
         mixins: [layoutMixin],
       });
       expect(wrapper.vm.layoutClasses).toEqual([
+        "aspect-ratio",
         "aspectRatio16by9",
         "class1",
         "class2",

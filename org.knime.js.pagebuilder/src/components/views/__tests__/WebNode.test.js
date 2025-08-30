@@ -88,13 +88,17 @@ describe("WebNode.vue", () => {
         props: mockProps,
         ...context,
       });
-      expect(wrapper.find("div").attributes("class")).toBe("aspectRatio1by1");
+      expect(wrapper.find("div").attributes("class")).toBe(
+        "aspect-ratio aspectRatio1by1",
+      );
       mockProps.viewConfig.resizeMethod = "aspectRatio16by9";
       wrapper = shallowMount(WebNode, {
         props: mockProps,
         ...context,
       });
-      expect(wrapper.find("div").attributes("class")).toBe("aspectRatio16by9");
+      expect(wrapper.find("div").attributes("class")).toBe(
+        "aspect-ratio aspectRatio16by9",
+      );
     });
 
     it("renders with classes and styles", () => {
@@ -110,7 +114,9 @@ describe("WebNode.vue", () => {
         },
         ...context,
       });
-      expect(wrapper.attributes("class")).toBe("aspectRatio1by1 class1 class2");
+      expect(wrapper.attributes("class")).toBe(
+        "aspect-ratio aspectRatio1by1 class1 class2",
+      );
       expect(wrapper.attributes("style")).toBe(
         "color: red; border: 1px solid green;",
       );

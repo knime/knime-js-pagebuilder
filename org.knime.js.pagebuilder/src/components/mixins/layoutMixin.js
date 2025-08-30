@@ -22,7 +22,7 @@ const layoutMixin = {
         this.resizeMethod.startsWith("aspectRatio") &&
         !this.isReportTableView
       ) {
-        classes.push(this.resizeMethod);
+        classes.push("aspect-ratio", this.resizeMethod);
       } else if (this.resizeMethod.startsWith("view")) {
         classes.push("fill-container");
       }
