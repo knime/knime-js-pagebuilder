@@ -84,6 +84,10 @@ export default {
       this.$emit("updateWidget", changeEventObj);
     },
     validate() {
+      if (!this.$refs.form) {
+        // guard against null ref access outside of lifecycle hooks
+        return { isValid: true, errorMessage: null };
+      }
       if (this.viewRep.possibleChoices.length === 0) {
         return { isValid: false, errorMessage: "No choices were specified." };
       }

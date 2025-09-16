@@ -165,8 +165,8 @@ export default {
         let length = 0;
         let childHeight = 0;
         if (this.model.opened) {
-          length = this.$refs.children.length;
-          for (let children of this.$refs.children) {
+          length = this.$refs.children?.length ?? 0;
+          for (let children of this.$refs.children ?? []) {
             childHeight += children.maxHeight;
           }
         }

@@ -110,6 +110,10 @@ export default {
       return valuesArray;
     },
     validate() {
+      if (!this.$refs.form) {
+        // guard against null ref access outside of lifecycle hooks
+        return { isValid: true, errorMessage: null };
+      }
       let values = this.getSplitValues();
       let err = (msg, item) => ({
         isValid: false,

@@ -97,7 +97,7 @@ export default {
      */
     async copyText() {
       await navigator.clipboard.writeText(
-        this.$refs.messageContent.textContent,
+        this.$refs.messageContent?.textContent ?? "",
       );
       this.$store.dispatch(
         "notification/show",

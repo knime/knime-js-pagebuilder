@@ -135,7 +135,7 @@ export default {
      * @returns {Boolean}
      */
     hasValidator() {
-      return typeof this.$refs.widget.validate === "function";
+      return typeof this.$refs.widget?.validate === "function";
     },
     /**
      * This method checks if the widget is compatible with the getValue method. Some widgets (like output widgets)
@@ -144,7 +144,7 @@ export default {
      * @returns {Boolean}
      */
     hasValueGetter() {
-      return typeof this.$refs.widget.onChange === "function";
+      return typeof this.$refs.widget?.onChange === "function";
     },
     /**
      * Check for valid nodeConfig for setting validation failure messages.
@@ -160,7 +160,7 @@ export default {
     isInteractiveWidget() {
       return (
         typeof this.valuePair === "undefined" &&
-        typeof this.$refs.widget.getValue === "function"
+        typeof this.$refs.widget?.getValue === "function"
       );
     },
     /* Method to recognize all re-execution widgets as widgets which are configured to be
@@ -269,7 +269,7 @@ export default {
       return new Promise((resolve, reject) => {
         try {
           let value = this.isInteractiveWidget
-            ? this.$refs.widget.getValue()
+            ? this.$refs.widget?.getValue()
             : this.valuePair;
           if (typeof value === "undefined") {
             reject(new Error("Value of widget could not be retrieved."));
@@ -286,7 +286,9 @@ export default {
         let isValid = true;
         let errorMessage = null;
         try {
-          ({ isValid, errorMessage } = this.$refs.widget.validate());
+          if (this.$refs.widget) {
+            ({ isValid, errorMessage } = this.$refs.widget.validate());
+          }
         } catch (error) {
           isValid = false;
           errorMessage = "Something is not right. Please check this element.";

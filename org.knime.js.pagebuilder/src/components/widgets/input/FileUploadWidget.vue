@@ -206,7 +206,7 @@ export default {
       };
     },
     triggerInput() {
-      this.$refs.input.click();
+      this.$refs.input?.click();
     },
     abortUpload() {
       this.$store.getters["api/cancelUploadResource"]({ nodeId: this.nodeId });

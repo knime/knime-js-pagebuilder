@@ -130,14 +130,14 @@ export default {
       }
     },
     hasSelection() {
-      return this.$refs.form.hasSelection();
+      return this.$refs.form?.hasSelection() ?? false;
     },
     /**
      * Validation
      * @returns {Object}
      */
     validate() {
-      return typeof this.$refs.form.validate === "function"
+      return typeof this.$refs.form?.validate === "function"
         ? this.$refs.form.validate()
         : { isValid: true };
     },

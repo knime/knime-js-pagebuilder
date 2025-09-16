@@ -78,7 +78,7 @@ export default {
   emits: ["update:modelValue"],
   methods: {
     getValue() {
-      return this.$refs.slider.getValue();
+      return this.$refs.slider?.getValue();
     },
     onChange() {
       this.$emit("update:modelValue", this.getValue());

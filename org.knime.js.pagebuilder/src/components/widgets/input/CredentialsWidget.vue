@@ -126,6 +126,13 @@ export default {
       }
     },
     validate() {
+      if (
+        !this.$refs.passwordForm ||
+        (this.promptUsername && !this.$refs.usernameForm)
+      ) {
+        // guard against null ref access outside of lifecycle hooks
+        return { isValid: true, errorMessage: null };
+      }
       let passwordForm = this.$refs.passwordForm;
       let usernameForm = this.$refs.usernameForm;
       let { isValid } = passwordForm.validate();

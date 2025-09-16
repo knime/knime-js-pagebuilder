@@ -11,11 +11,15 @@ export default {
   },
   methods: {
     validate() {
+      if (!this.$refs.widget) {
+        // guard against null ref access outside of lifecycle hooks
+        return { isValid: true, errorMessage: null };
+      }
       return this.$refs.widget.validate();
     },
     onChange(value) {
       // only needed for hasValueGetter() of Widget.vue
-      return this.$refs.widget.onChange(value);
+      this.$refs.widget?.onChange(value);
     },
   },
 };

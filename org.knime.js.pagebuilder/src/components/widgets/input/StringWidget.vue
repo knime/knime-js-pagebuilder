@@ -96,6 +96,10 @@ export default {
       this.$emit("updateWidget", changeEventObj);
     },
     validate() {
+      if (!this.$refs.form) {
+        // guard against null ref access outside of lifecycle hooks
+        return { isValid: true, errorMessage: null };
+      }
       let isValid = true;
       let errorMessage;
       if (this.viewRep.required && !this.$refs.form.getValue()) {

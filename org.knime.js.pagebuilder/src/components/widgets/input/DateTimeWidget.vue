@@ -222,6 +222,10 @@ export default {
       this.onChange(now, this.localTimeZone);
     },
     validate() {
+      if (!this.$refs.dateInput) {
+        // guard against null ref access outside of lifecycle hooks
+        return { isValid: true, errorMessage: null };
+      }
       // call validate on date input
       let validateDateInputCmp = this.$refs.dateInput.validate();
       let isValid = Boolean(validateDateInputCmp.isValid);
