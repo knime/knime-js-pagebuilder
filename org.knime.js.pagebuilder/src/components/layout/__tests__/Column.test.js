@@ -294,35 +294,6 @@ describe("Column.vue", () => {
     });
   });
 
-  it("renders HTML", () => {
-    let html = "<span>foo</span>";
-    let html2 = "<span>bar</span>";
-    context.props.columnConfig = {
-      content: [
-        {
-          type: "html",
-          value: html,
-        },
-        {
-          type: "JSONLayoutHTMLContent",
-          value: html2,
-        },
-      ],
-    };
-    const wrapper = shallowMount(Column, context);
-
-    const [views, rows, divs] = [
-      wrapper.findAllComponents(NodeView),
-      wrapper.findAllComponents(Row),
-      wrapper.find("div").findAll("div"),
-    ];
-    expect(views.length).toBe(0);
-    expect(rows.length).toBe(0);
-    expect(divs.length).toBe(2);
-    expect(divs.at(0).html()).toContain(html);
-    expect(divs.at(1).html()).toContain(html2);
-  });
-
   it("always re-renders NodeView components", async () => {
     // this is important so the iframe of NodeViewIFrame gets unmounted and re-created correctly
 

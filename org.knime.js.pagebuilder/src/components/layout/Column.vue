@@ -130,14 +130,6 @@ export default {
           :row-config="row"
         />
       </template>
-      <!-- eslint-disable vue/no-v-html  -->
-      <div
-        v-else-if="
-          item.type === 'html' || item.type === 'JSONLayoutHTMLContent'
-        "
-        :key="index + '-' + item.type + '-3'"
-        v-html="item.value"
-      />
     </template>
   </div>
 </template>
