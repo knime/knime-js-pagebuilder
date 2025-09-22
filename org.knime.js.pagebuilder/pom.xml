@@ -15,7 +15,7 @@
 	<packaging>eclipse-plugin</packaging>
 
 	<properties>
-		<revision>5.7.0</revision>
+		<revision>5.8.0</revision>
 		<node.version>v22.11.0</node.version>
 		<npm.version>10.9.1</npm.version>
 	</properties>
