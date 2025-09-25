@@ -111,7 +111,7 @@ export default {
   <div :class="layoutClasses" :style="layoutStyle">
     <NotDisplayable v-if="isReporting" not-supported />
     <Widget
-      v-else-if="isWidget && !isDisabledTextOutputWidget"
+      v-else-if="isWidget && !(isDisabledTextOutputWidget && disallowWebNodes)"
       :widget-name="widgetComponentName"
       :node-config="nodeConfig"
       :node-id="nodeId"
