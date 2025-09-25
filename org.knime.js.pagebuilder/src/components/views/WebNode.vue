@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     ...mapState("pagebuilder", ["isReporting"]),
-    ...mapState("api", ["disallowWebNodes"]),
+    ...mapState("api", ["disallowLegacyWidgets"]),
     nodeState() {
       return this.nodeConfig?.nodeInfo?.nodeState;
     },
@@ -82,7 +82,7 @@ export default {
           (this.legacyModeDisabled && this.widgetComponentName),
       );
     },
-    isDisabledTextOutputWidget() {
+    isLegacyWidget() {
       return (
         this.nodeConfig?.viewRepresentation?.["@class"] ===
         "org.knime.js.base.node.widget.output.text.TextOutputWidgetRepresentation"
@@ -111,13 +111,13 @@ export default {
   <div :class="layoutClasses" :style="layoutStyle">
     <NotDisplayable v-if="isReporting" not-supported />
     <Widget
-      v-else-if="isWidget && !isDisabledTextOutputWidget"
+      v-else-if="isWidget && !(isLegacyWidget && disallowLegacyWidgets)"
       :widget-name="widgetComponentName"
       :node-config="nodeConfig"
       :node-id="nodeId"
     />
     <WebNodeIFrame
-      v-else-if="!disallowWebNodes"
+      v-else-if="!disallowLegacyWidgets"
       :key="nodeViewIFrameKey"
       v-bind="$props"
     />

@@ -6,6 +6,7 @@ import WebNode from "@/components/views/WebNode.vue";
 import WebNodeIFrame from "@/components/views/WebNodeIFrame.vue";
 import Widget from "@/components/widgets/Widget.vue";
 import * as storeConfig from "@/store/pagebuilder";
+import NotDisplayable from "../NotDisplayable.vue";
 
 describe("WebNode.vue", () => {
   let context;
@@ -35,8 +36,18 @@ describe("WebNode.vue", () => {
     return baseProps;
   };
 
-  const createContext = () => {
-    const store = createStore({ modules: { pagebuilder: storeConfig } });
+  const createContext = (disallowLegacyWidgets = false) => {
+    const store = createStore({
+      modules: {
+        pagebuilder: storeConfig,
+        api: {
+          namespaced: true,
+          state: () => ({
+            disallowLegacyWidgets,
+          }),
+        },
+      },
+    });
 
     return {
       global: {
@@ -221,6 +232,62 @@ describe("WebNode.vue", () => {
       expect(wrapper.vm.widgetComponentName).toBeTruthy();
       expect(wrapper.vm.legacyModeDisabled).toBeFalsy();
       expect(wrapper.vm.isWidget).toBeTruthy();
+    });
+  });
+
+  describe("legacy widget handling", () => {
+    it("displays legacy widgets when allowed", () => {
+      const context = createContext(false /* allow legacy widgets */);
+      const mockProps = getMockWidgetProps();
+
+      // legacy widget
+      mockProps.nodeConfig.viewRepresentation["@class"] =
+        "org.knime.js.base.node.widget.output.text.TextOutputWidgetRepresentation";
+      let wrapper = shallowMount(WebNode, {
+        props: mockProps,
+        ...context,
+      });
+      expect(wrapper.vm.isWidget).toBeTruthy();
+      expect(wrapper.vm.isLegacyWidget).toBeTruthy();
+      expect(wrapper.findComponent(Widget).exists()).toBeTruthy();
+
+      // WebNodeIFrame (i.e. not a 'widget')
+      mockProps.nodeConfig.viewRepresentation["@class"] =
+        "this.is.a.class.that.does.not.exist";
+      wrapper = shallowMount(WebNode, {
+        props: mockProps,
+        ...context,
+      });
+      expect(wrapper.vm.isWidget).toBeFalsy();
+      expect(wrapper.vm.isLegacyWidget).toBeFalsy();
+      expect(wrapper.findComponent(WebNodeIFrame).exists()).toBeTruthy();
+    });
+
+    it("doesn't display legacy widgets when not allowed", () => {
+      const context = createContext(true /* disallow legacy widgets */);
+      const mockProps = getMockWidgetProps();
+
+      // legacy widget
+      mockProps.nodeConfig.viewRepresentation["@class"] =
+        "org.knime.js.base.node.widget.output.text.TextOutputWidgetRepresentation";
+      let wrapper = shallowMount(WebNode, {
+        props: mockProps,
+        ...context,
+      });
+      expect(wrapper.vm.isWidget).toBeTruthy();
+      expect(wrapper.vm.isLegacyWidget).toBeTruthy();
+      expect(wrapper.findComponent(NotDisplayable).exists()).toBeTruthy();
+
+      // WebNodeIFrame (i.e. not a 'widget')
+      mockProps.nodeConfig.viewRepresentation["@class"] =
+        "this.is.a.class.that.does.not.exist";
+      wrapper = shallowMount(WebNode, {
+        props: mockProps,
+        ...context,
+      });
+      expect(wrapper.vm.isWidget).toBeFalsy();
+      expect(wrapper.vm.isLegacyWidget).toBeFalsy();
+      expect(wrapper.findComponent(NotDisplayable).exists()).toBeTruthy();
     });
   });
 });
