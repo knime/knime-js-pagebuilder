@@ -3,6 +3,7 @@ import { defineAsyncComponent } from "vue";
 
 import wrapViewContent from "../../util/wrapViewContent";
 
+import HtmlView from "./HtmlView.vue";
 import NodeView from "./NodeView.vue";
 
 const maxGridWidth = 12;
@@ -46,6 +47,7 @@ export default {
     NodeView,
     // TODO check if this is the best way to handle circular components in Vue3
     Row: defineAsyncComponent(() => import("./Row.vue")),
+    HtmlView,
   },
   props: {
     /**
@@ -130,6 +132,14 @@ export default {
           :row-config="row"
         />
       </template>
+      <!-- eslint-disable vue/no-v-html  -->
+      <HtmlView
+        v-else-if="
+          item.type === 'html' || item.type === 'JSONLayoutHTMLContent'
+        "
+        :key="index + '-' + item.type + '-3'"
+        :value="item.value"
+      />
     </template>
   </div>
 </template>
