@@ -134,6 +134,9 @@ export const mutations = {
     state,
     { nodeId, update, config, type, viewType = "webNodes" } = {},
   ) {
+    if (type === "uiExtension") {
+      return;
+    }
     // Update viewValues and other nested properties.
     if (update) {
       let currentWebNode = state.page.wizardPageContent[viewType][nodeId];
@@ -610,9 +613,15 @@ export const actions = {
             newViewValue.value,
           );
 
+          const webNode = state.page.wizardPageContent.webNodes[nodeId];
+
+          if (!webNode) {
+            // TODO AP-25095: enable 'apply as default' for ui-extensions
+            return true;
+          }
+
           const defaultViewValue = toValue(
-            state.page.wizardPageContent.webNodes[nodeId].viewRepresentation
-              .defaultValue,
+            webNode.viewRepresentation.defaultValue,
           );
 
           if (!defaultViewValue) {

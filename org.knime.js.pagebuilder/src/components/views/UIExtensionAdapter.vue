@@ -176,6 +176,17 @@ export default defineComponent({
           );
         },
         callNodeDataService: (params) => {
+          if (!this.isNodeDialog && params.serviceType === "apply_data") {
+            this.currentPublishedData = JSON.parse(params.dataServiceRequest);
+            this.$store.dispatch("pagebuilder/triggerReExecution", {
+              nodeId: this.viewConfig.nodeID,
+            });
+            return Promise.resolve({
+              result: JSON.stringify({
+                isApplied: true,
+              }),
+            });
+          }
           return this.$store.dispatch("api/callService", {
             nodeService: "NodeService.callNodeDataService",
             extensionConfig: {
@@ -201,8 +212,20 @@ export default defineComponent({
           });
         },
         publishData: (data) => {
+          const isFirstPublish = this.currentPublishedData === null;
           this.currentPublishedData = data;
-          this.$emit("publishData", data);
+          if (this.isNodeDialog) {
+            this.$emit("publishData", data);
+            return;
+          }
+          if (isFirstPublish) {
+            this.initializeWidget();
+          }
+          // workaround to indirectly call 'api/onChange' (see PageBuilder.vue#onMounted)
+          this.$store.dispatch("pagebuilder/updateWebNode", {
+            nodeId: this.viewConfig.nodeID,
+            type: "uiExtension",
+          });
         },
         setReportingContent: (reportingContent) => {
           return this.$store.dispatch("pagebuilder/setReportingContent", {
@@ -325,6 +348,18 @@ export default defineComponent({
     }
   },
   methods: {
+    initializeWidget() {
+      // Register value getter for non-dialog UIExtensions
+      this.$store.dispatch("pagebuilder/addValueGetter", {
+        nodeId: this.viewConfig.nodeID,
+        valueGetter: () => {
+          return Promise.resolve({
+            nodeId: this.viewConfig.nodeID,
+            value: this.currentPublishedData,
+          });
+        },
+      });
+    },
     displayAlert(alert: Alert) {
       if (alert.type === "error") {
         this.displayError(alert);
