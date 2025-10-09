@@ -274,7 +274,7 @@ describe("UIExtensionAdapter.vue", () => {
       expect(dirtySettingsMock).toHaveBeenCalledWith(expect.anything(), true);
     });
 
-    it("sets settings with clean model settings", () => {
+    it("sets settings with clean model settings", async () => {
       const cleanSettingsMock = vi.fn();
       const wrapper = shallowMount(
         UIExtensionAdapter,
@@ -285,6 +285,7 @@ describe("UIExtensionAdapter.vue", () => {
           props,
         }),
       );
+      await wrapper.setProps({ isNodeDialog: true });
       const cleanSettings = { agent: "007" };
 
       getAPILayer(wrapper).publishData(cleanSettings);
@@ -394,9 +395,10 @@ describe("UIExtensionAdapter.vue", () => {
   });
 
   describe("publishData", () => {
-    it("emits published data", () => {
+    it("emits published data", async () => {
       const myData = { some: "data" };
       const wrapper = shallowMount(UIExtensionAdapter, context);
+      await wrapper.setProps({ isNodeDialog: true });
       const apiLayer = getAPILayer(wrapper);
       apiLayer.publishData(myData);
       expect(wrapper.emitted("publishData")[0][0]).toBe(myData);
