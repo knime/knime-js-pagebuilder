@@ -174,6 +174,7 @@ export default defineComponent({
             !isNodeDialog && !isSingleView && !isInComponentView,
         }"
         :is-node-dialog="isNodeDialog"
+        :is-single-view="isSingleView"
         :extension-config="uiExtensionConfig"
         :node-id="nodeId"
         @publish-data="$emit('publishData', $event)"

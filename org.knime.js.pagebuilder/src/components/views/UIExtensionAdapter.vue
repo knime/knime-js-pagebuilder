@@ -76,6 +76,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    isSingleView: {
+      type: Boolean,
+      default: false,
+    },
   },
   /* eslint-disable @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars  */
   emits: {
@@ -176,7 +180,11 @@ export default defineComponent({
           );
         },
         callNodeDataService: (params) => {
-          if (!this.isNodeDialog && params.serviceType === "apply_data") {
+          if (
+            !this.isNodeDialog &&
+            !this.isSingleView &&
+            params.serviceType === "apply_data"
+          ) {
             this.currentPublishedData = JSON.parse(params.dataServiceRequest);
             this.$store.dispatch("pagebuilder/triggerReExecution", {
               nodeId: this.viewConfig.nodeID,
