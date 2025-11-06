@@ -11,7 +11,7 @@ properties([
 ])
 
 try {
-    node('maven && java17') {
+    node('maven && java21') {
         knimetools.defaultTychoBuild(updateSiteProject: 'org.knime.update.js.pagebuilder', disableOWASP: true)
 
         owasp.sendNodeJSSBOMs(readMavenPom(file: 'pom.xml').properties['revision'])
