@@ -107,6 +107,7 @@ export default {
       :file-ext="fileExt"
       :mime-type="fileType"
       :size="size"
+      mode="external"
     />
     <ErrorMessage :error="errorMessage" />
   </div>
