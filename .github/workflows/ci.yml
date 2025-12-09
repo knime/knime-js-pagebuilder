@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - "releases/**"
+
+jobs:
+  lint-test-build:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: org.knime.js.pagebuilder
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # full history for SonarCloud
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          cache-dependency-path: org.knime.js.pagebuilder/package-lock.json
+          node-version-file: "org.knime.js.pagebuilder/package.json"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint and format
+        run: npm run ci:lint-format
+
+      - name: Run coverage
+        run: npm run coverage
+
+      - name: Sonar scan
+        if: github.actor != 'dependabot[bot]'
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: org.knime.js.pagebuilder
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Build app
+        run: npm run build:app
+
+      - name: Build lib
+        run: npm run build:lib
+
+      - name: Build shadow app lib
+        run: npm run build:shadow-app-lib
+
+      - name: Audit
+        run: npm run audit
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pagebuilder-dist
+          path: org.knime.js.pagebuilder/dist/**
