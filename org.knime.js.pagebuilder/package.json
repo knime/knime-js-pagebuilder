@@ -37,7 +37,7 @@
     "@knime/ui-extension-service": "2.5.1",
     "@knime/utils": "1.6.0",
     "consola": "3.2.3",
-    "date-fns": "2.30.0",
+    "date-fns": "4.1.0",
     "date-fns-tz": "2.0.0",
     "filesize": "^10.0.6",
     "iframe-resizer": "4.3.9",
