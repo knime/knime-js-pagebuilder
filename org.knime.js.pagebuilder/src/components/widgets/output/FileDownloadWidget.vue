@@ -107,7 +107,7 @@ export default {
       :file-ext="fileExt"
       :mime-type="fileType"
       :size="size"
-      mode="external"
+      :mode="runningInAPWrapper ? 'download' : 'external'"
     />
     <ErrorMessage :error="errorMessage" />
   </div>
