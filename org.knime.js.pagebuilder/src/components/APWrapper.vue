@@ -51,6 +51,7 @@ export default {
 <style lang="postcss">
 @import url("modern-normalize/modern-normalize.css");
 @import url("@knime/kds-styles/kds-variables.css");
+@import url("@knime/kds-styles/kds-legacy-theme.css");
 @import url("@knime/styles/css/variables");
 @import url("@knime/styles/css/basics");
 @import url("@knime/styles/css/fonts");
