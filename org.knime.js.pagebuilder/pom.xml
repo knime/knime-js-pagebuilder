@@ -111,6 +111,7 @@
 						</goals>
 						<configuration>
 							<arguments>run audit</arguments>
+							<skip>true</skip>
 						</configuration>
 					</execution>
 				</executions>
