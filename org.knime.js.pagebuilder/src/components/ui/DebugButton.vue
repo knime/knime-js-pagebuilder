@@ -34,7 +34,7 @@ export default {
         if (this.debugUrl) {
           this.multipleTargets = true;
         } else {
-          this.debugUrl = `${remoteDebuggingUrl}${target.devtoolsFrontendUrl}`;
+          this.debugUrl = target.devtoolsFrontendUrl;
         }
       }
     });
