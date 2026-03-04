@@ -3,6 +3,7 @@ import { URL, fileURLToPath } from "node:url";
 import type { BuildOptions, PluginOption, UserConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vitest/config";
+import sbom from "rollup-plugin-sbom";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import svgLoader from "vite-svg-loader";
 
@@ -17,7 +18,7 @@ import { svgoConfig } from "@knime/styles/config/svgo.config";
  */
 const libBuildMode = "lib";
 const shadowAppLibBuildMode = "shadow-app-lib";
-const standaloneBuildMode = "app";
+const standaloneBuildMode = "production";
 
 // https://vitejs.dev/config/
 // https://vitest.dev/config/
@@ -72,6 +73,16 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       svgLoader({ svgoConfig }),
+      ...(mode === standaloneBuildMode
+        ? [
+            sbom({
+              outFormats: ["json"],
+              outDir: "sbom",
+              includeWellKnown: false,
+              generateSerial: true,
+            }),
+          ]
+        : []),
       ...(mode === shadowAppLibBuildMode
         ? [
             {
@@ -160,10 +171,6 @@ export default defineConfig(({ mode }) => {
   } else if (mode === shadowAppLibBuildMode) {
     config.build = shadowLibBuild;
   } else {
-    if (mode !== standaloneBuildMode && mode !== "test") {
-      // eslint-disable-next-line no-console
-      console.error(`Unknown build mode: ${mode}. Using default build mode.`);
-    }
     config.build = wrapperBuild;
   }
   return config;

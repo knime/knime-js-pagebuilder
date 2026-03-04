@@ -16,7 +16,7 @@ It has two build outputs:
 ### Install dependencies
 
 ```sh
-npm i
+pnpm i
 ```
 
 and then use the following commands.
@@ -24,7 +24,7 @@ and then use the following commands.
 ### Launch development server
 
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 #### Development with mocked pages
@@ -51,7 +51,7 @@ When developing the [WebPortal], a web server with the built version of the libr
 this via the command:
 
 ```sh
-npm run dev:webportal
+pnpm run dev:webportal
 ```
 
 This does not create an app on its own, only the library for usage in [WebPortal] dev mode. It starts a web server,
@@ -73,16 +73,16 @@ This project contains unit tests written with [vitest].
 They are run with
 
 ```sh
-npm run test:unit
+pnpm run test:unit
 ```
 
-During development, you can use `npm run test:unit -- --watch` to have the unit tests run automatically whenever a
+During development, you can use `pnpm run test:unit -- --watch` to have the unit tests run automatically whenever a
 source file changes.
 
 You can generate a coverage report with
 
 ```sh
-npm run coverage
+pnpm run coverage
 ```
 
 The output can be found in the `coverage` folder. It contains a browseable html report as well as raw coverage data in
@@ -91,7 +91,7 @@ The output can be found in the `coverage` folder. It contains a browseable html 
 ### Running security audit
 
 ```sh
-npm run audit
+pnpm run audit
 ```
 
 ## Building
@@ -99,7 +99,7 @@ npm run audit
 The following command builds three outputs, the Vue app and also two [Vue library]s which all are saved to `/dist`.
 
 ```sh
-npm run build
+pnpm run build
 ```
 
 This project can also be built via a maven build wrapper

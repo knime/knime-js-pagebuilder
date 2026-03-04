@@ -1,9 +1,9 @@
 import {
-  ErrorAlert,
+  type ErrorAlert,
   INTERNAL_ERROR_CODE,
   USER_ERROR_CODE,
-  WarningAlert,
-  WarningData,
+  type WarningAlert,
+  type WarningData,
 } from "@knime/ui-extension-renderer/api";
 
 /**

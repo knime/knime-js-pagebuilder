@@ -2,8 +2,8 @@
 import { type PropType, defineComponent, toRaw } from "vue";
 import { mapState } from "vuex";
 
-import {
-  type Alert,
+import type {
+  Alert,
   ErrorAlert,
   ImageGenerationRenderingConfig,
   ReportRenderingConfig,

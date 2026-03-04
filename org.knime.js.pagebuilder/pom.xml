@@ -17,7 +17,7 @@
 	<properties>
 		<revision>5.12.0</revision>
 		<node.version>v22.11.0</node.version>
-		<npm.version>10.9.1</npm.version>
+		<pnpm.version>10.7.0</pnpm.version>
 	</properties>
 
 	<build>
@@ -43,26 +43,34 @@
 						</goals>
 						<configuration>
 							<nodeVersion>${node.version}</nodeVersion>
-							<npmVersion>${npm.version}</npmVersion>
 						</configuration>
 					</execution>
 
 					<execution>
-						<id>npm ci</id>
+						<id>install node and pnpm</id>
 						<phase>initialize</phase>
 						<goals>
-							<goal>npm</goal>
+							<goal>install-node-and-pnpm</goal>
 						</goals>
 						<configuration>
-							<arguments>ci</arguments>
+							<nodeVersion>${node.version}</nodeVersion>
+							<pnpmVersion>${pnpm.version}</pnpmVersion>
 						</configuration>
 					</execution>
 
 					<execution>
-						<id>npm run build</id>
+						<id>pnpm install</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>pnpm</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>pnpm build</id>
 						<phase>compile</phase>
 						<goals>
-							<goal>npm</goal>
+							<goal>pnpm</goal>
 						</goals>
 						<configuration>
 							<arguments>run build</arguments>
@@ -70,48 +78,13 @@
 					</execution>
 
 					<execution>
-						<id>npm run sbom</id>
+						<id>pnpm move-sbom</id>
 						<phase>compile</phase>
 						<goals>
-							<goal>npm</goal>
+							<goal>pnpm</goal>
 						</goals>
 						<configuration>
-							<arguments>run sbom</arguments>
-						</configuration>
-					</execution>
-
-					<!-- Disabled, will be moved to Bitbucket Pipelines
-						<execution>
-						<id>npm run coverage</id>
-						<phase>test</phase>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run coverage ci</arguments> <- add dashes again when re-enabling
-						</configuration>
-					</execution>
-					<execution>
-						<id>npm run lint</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run lint:ci</arguments>
-						</configuration>
-					</execution>
-					-->
-
-					<execution>
-						<id>npm run audit</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run audit</arguments>
-							<skip>true</skip>
+							<arguments>run move-sbom</arguments>
 						</configuration>
 					</execution>
 				</executions>

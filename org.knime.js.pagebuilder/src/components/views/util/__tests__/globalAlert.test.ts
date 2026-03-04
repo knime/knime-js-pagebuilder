@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import {
   INTERNAL_ERROR_CODE,
-  InternalErrorAlert,
-  OtherErrorAlert,
+  type InternalErrorAlert,
+  type OtherErrorAlert,
   USER_ERROR_CODE,
-  UserErrorAlert,
-  WarningAlert,
+  type UserErrorAlert,
+  type WarningAlert,
 } from "@knime/ui-extension-renderer/api";
 
 import {

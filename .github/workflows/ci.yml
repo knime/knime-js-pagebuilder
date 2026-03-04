@@ -22,21 +22,25 @@ jobs:
         with:
           fetch-depth: 0 # full history for SonarCloud
 
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: org.knime.js.pagebuilder/package.json
+
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
-          cache-dependency-path: org.knime.js.pagebuilder/package-lock.json
+          cache-dependency-path: org.knime.js.pagebuilder/pnpm-lock.yaml
           node-version-file: "org.knime.js.pagebuilder/package.json"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
 
       - name: Lint and format
-        run: npm run ci:lint-format
+        run: pnpm run ci:lint-format
 
       - name: Run coverage
-        run: npm run coverage
+        run: pnpm run coverage
 
       - name: Sonar scan
         if: github.actor != 'dependabot[bot]'
@@ -47,20 +51,22 @@ jobs:
           projectBaseDir: org.knime.js.pagebuilder
 
       - name: Type check
-        run: npm run type-check
+        run: pnpm run type-check
 
       - name: Build app
-        run: npm run build:app
+        run: pnpm run build:app
 
       - name: Build lib
-        run: npm run build:lib
+        run: pnpm run build:lib
 
       - name: Build shadow app lib
-        run: npm run build:shadow-app-lib
+        run: pnpm run build:shadow-app-lib
 
-      # TODO enable after switching to pnpm
-      #- name: Audit
-      #  run: npm run audit
+      - name: SBom
+        run: pnpm run move-sbom
+
+      - name: Audit
+        run: pnpm run audit
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v6

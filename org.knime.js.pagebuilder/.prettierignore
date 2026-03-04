@@ -1,6 +1,7 @@
-package-lock.json
 coverage
 dist
 target
 test-results
 licenses
+pnpm-lock.yaml
+.pnpm-store
