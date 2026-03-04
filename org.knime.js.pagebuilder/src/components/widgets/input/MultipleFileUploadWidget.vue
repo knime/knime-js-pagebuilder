@@ -7,8 +7,8 @@ import {
   Dropzone,
   Label,
   ProgressList,
-  UploadItem,
-  UploadItemStatus,
+  type UploadItem,
+  type UploadItemStatus,
   UploadProgressPanelItem,
 } from "@knime/components";
 
@@ -121,7 +121,7 @@ const layout = computed(() => {
 
 const validate = () => {
   let isValid = true;
-  let errorMessage = null;
+  let errorMessage: string | null = null;
 
   /* if (!uploadAPI.value) {
     return { isValid };

@@ -16,6 +16,7 @@ const isDialogLayout = ref(store.state.pagebuilder.isDialogLayout);
 const isReporting = ref(store.state.pagebuilder.isReporting);
 
 onMounted(() => {
+  console.log("PageBuilder.vue -> log");
   // This is a workaround as the reactivity system does not detect changes.
   // Most probably due to registering modules after the store is created.
   // see: https://github.com/vuejs/vuex/pull/2201

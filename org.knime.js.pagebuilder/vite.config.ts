@@ -3,6 +3,7 @@ import { URL, fileURLToPath } from "node:url";
 import type { BuildOptions, PluginOption, UserConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vitest/config";
+import sbom from "rollup-plugin-sbom";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import svgLoader from "vite-svg-loader";
 
@@ -72,6 +73,12 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       svgLoader({ svgoConfig }),
+      sbom({
+        outFormats: ["json"],
+        outDir: "sbom",
+        includeWellKnown: false,
+        generateSerial: true,
+      }),
       ...(mode === shadowAppLibBuildMode
         ? [
             {

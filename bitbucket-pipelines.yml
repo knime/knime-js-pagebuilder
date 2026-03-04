@@ -18,18 +18,19 @@ definitions:
           depth: full # SonarCloud scanner needs the full history to assign issues properly
         script:
           - cd org.knime.js.pagebuilder
-          - npm ci
-          - npm run ci:lint-format
-          - npm run coverage
+          - pnpm ci
+          - pnpm run ci:lint-format
+          - pnpm run coverage
           - pipe: sonarsource/sonarcloud-scan:2.0.0
             variables:
               SONAR_SCANNER_OPTS: -Xmx3G
           - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
-          - npm run type-check
-          - npm run build:app
-          - npm run build:lib
-          - npm run build:shadow-app-lib
-          - npm run audit
+          - pnpm run type-check
+          - pnpm run build:app
+          - pnpm run build:lib
+          - pnpm run build:shadow-app-lib
+          - pnpm run move-sbom
+          - pnpm run audit
         artifacts:
           - org.knime.js.pagebuilder/dist/**
 
