@@ -25,7 +25,6 @@ export default {
     },
   },
   created() {
-    console.log("We're here");
     if (window.getDebugInfo) {
       try {
         this.debugInfo = JSON.parse(window.getDebugInfo());
