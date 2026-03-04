@@ -18,7 +18,7 @@ definitions:
           depth: full # SonarCloud scanner needs the full history to assign issues properly
         script:
           - cd org.knime.js.pagebuilder
-          - pnpm ci
+          - pnpm install
           - pnpm run ci:lint-format
           - pnpm run coverage
           - pipe: sonarsource/sonarcloud-scan:2.0.0
