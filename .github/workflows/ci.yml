@@ -22,6 +22,10 @@ jobs:
         with:
           fetch-depth: 0 # full history for SonarCloud
 
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: org.knime.js.pagebuilder/package.json
+
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
