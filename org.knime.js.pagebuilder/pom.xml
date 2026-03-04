@@ -87,41 +87,6 @@
 							<arguments>run move-sbom</arguments>
 						</configuration>
 					</execution>
-
-					<!-- Disabled, will be moved to Bitbucket Pipelines
-						<execution>
-						<id>npm run coverage</id>
-						<phase>test</phase>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run coverage ci</arguments> <- add dashes again when re-enabling
-						</configuration>
-					</execution>
-					<execution>
-						<id>npm run lint</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run lint:ci</arguments>
-						</configuration>
-					</execution>
-					-->
-
-					<execution>
-						<id>npm run audit</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run audit</arguments>
-							<skip>true</skip>
-						</configuration>
-					</execution>
 				</executions>
 			</plugin>
 
