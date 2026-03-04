@@ -171,10 +171,6 @@ export default defineConfig(({ mode }) => {
   } else if (mode === shadowAppLibBuildMode) {
     config.build = shadowLibBuild;
   } else {
-    if (mode !== standaloneBuildMode && mode !== "test") {
-      // eslint-disable-next-line no-console
-      console.error(`Unknown build mode: ${mode}. Using default build mode.`);
-    }
     config.build = wrapperBuild;
   }
   return config;

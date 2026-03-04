@@ -123,10 +123,6 @@ const validate = () => {
   let isValid = true;
   let errorMessage: string | null = null;
 
-  /* if (!uploadAPI.value) {
-    return { isValid };
-  } */
-
   if (!initialized.value) {
     initialized.value = true;
     return { isValid, errorMessage };

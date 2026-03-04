@@ -2,7 +2,7 @@
   "extends": "./tsconfig.app.json",
   "exclude": [],
   "compilerOptions": {
-    "lib": ["ES2023"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "types": ["node", "jsdom"]
   }
 }

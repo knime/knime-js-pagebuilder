@@ -18,6 +18,8 @@ definitions:
           depth: full # SonarCloud scanner needs the full history to assign issues properly
         script:
           - cd org.knime.js.pagebuilder
+          - npm install -g corepack
+          - corepack enable
           - pnpm install
           - pnpm run ci:lint-format
           - pnpm run coverage
