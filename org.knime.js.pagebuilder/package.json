@@ -9,7 +9,7 @@
     "build:app": "vite build",
     "build:lib": "vite build --mode lib",
     "build:shadow-app-lib": "vite build --mode shadow-app-lib",
-    "move-sbom": "mv ./dist/app/sbom/bom.json ./app/bom.json && mv ./dist/lib/sbom/bom.json ./lib/bom.json && mv ./dist/shadowAppLib/sbom/bom.json ./shadowAppLib/bom.json",
+    "move-sbom": "mv ./dist/app/sbom/bom.json ./bom.json",
     "type-check": "vue-tsc -p tsconfig.vitest.json",
     "lint": "run-p 'lint:* --fix'",
     "lint:js": "eslint . --cache --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",

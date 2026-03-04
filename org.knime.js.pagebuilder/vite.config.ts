@@ -18,7 +18,7 @@ import { svgoConfig } from "@knime/styles/config/svgo.config";
  */
 const libBuildMode = "lib";
 const shadowAppLibBuildMode = "shadow-app-lib";
-const standaloneBuildMode = "app";
+const standaloneBuildMode = "production";
 
 // https://vitejs.dev/config/
 // https://vitest.dev/config/
@@ -73,12 +73,16 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       svgLoader({ svgoConfig }),
-      sbom({
-        outFormats: ["json"],
-        outDir: "sbom",
-        includeWellKnown: false,
-        generateSerial: true,
-      }),
+      ...(mode === standaloneBuildMode
+        ? [
+            sbom({
+              outFormats: ["json"],
+              outDir: "sbom",
+              includeWellKnown: false,
+              generateSerial: true,
+            }),
+          ]
+        : []),
       ...(mode === shadowAppLibBuildMode
         ? [
             {
