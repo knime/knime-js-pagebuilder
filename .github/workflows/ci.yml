@@ -34,7 +34,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install
 
       - name: Lint and format
         run: pnpm run ci:lint-format
