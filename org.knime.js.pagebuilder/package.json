@@ -23,7 +23,6 @@
     "coverage": "TZ='Europe/Berlin' vitest --coverage",
     "_TODO_build:credits": "npm run opensourcecredits && vue-cli-service build --target lib --formats umd-min --name knime-pagebuilder-credits src/components/PageBuilderCredits.vue",
     "prepare": "cd .. && husky ./org.knime.js.pagebuilder/.husky",
-    "postinstall": "license-check -o licenses/used-packages.json",
     "sbom": "npx @cyclonedx/cyclonedx-npm --output-file bom.json --ignore-npm-errors --omit dev"
   },
   "license": "UNLICENSED",
@@ -39,7 +38,7 @@
     "date-fns-tz": "2.0.0",
     "filesize": "^10.0.6",
     "iframe-resizer": "4.3.9",
-    "lodash-es": "4.17.21",
+    "lodash-es": "4.17.23",
     "mime": "4.0.1",
     "uuid": "11.0.2",
     "vue": "3.4.21",
@@ -49,7 +48,7 @@
   "devDependencies": {
     "@cyclonedx/cyclonedx-npm": "1.16.1",
     "@knime/eslint-config": "8.1.0",
-    "@knime/licenses": "1.0.6",
+    "@knime/licenses": "1.5.0",
     "@tsconfig/node20": "20.1.4",
     "@types/jsdom": "21.1.7",
     "@types/lodash-es": "4.17.12",
@@ -76,10 +75,15 @@
     "vitest": "1.4.0",
     "vue-tsc": "2.0.28"
   },
+  "overrides": {
+    "@knime/components": {
+      "lodash-es": "4.17.23"
+    }
+  },
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "volta": {
-    "node": "20.11.1"
+    "node": "22.22.1"
   }
 }
