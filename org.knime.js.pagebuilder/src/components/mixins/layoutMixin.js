@@ -3,9 +3,11 @@ const layoutMixin = {
     resizeMethod() {
       return this.viewConfig.resizeMethod || "";
     },
-    isReportTableView() {
+    isReportTableOrTileView() {
       return (
-        this.isReporting && this.resourceLocation?.endsWith("TableView.js")
+        this.isReporting &&
+        (this.resourceLocation?.endsWith("TableView.js") ||
+          this.resourceLocation?.endsWith("TileView.js"))
       );
     },
     layoutClasses() {
@@ -20,7 +22,7 @@ const layoutMixin = {
       // (related to https://issues.chromium.org/issues/365922171)
       if (
         this.resizeMethod.startsWith("aspectRatio") &&
-        !this.isReportTableView
+        !this.isReportTableOrTileView
       ) {
         classes.push("aspect-ratio", this.resizeMethod);
       } else if (this.resizeMethod.startsWith("view")) {
@@ -48,7 +50,7 @@ const layoutMixin = {
           minHeight = null,
           minWidth = null,
         } = this.viewConfig;
-        if (maxHeight !== null && !this.isReportTableView) {
+        if (maxHeight !== null && !this.isReportTableOrTileView) {
           style.push(`max-height:${maxHeight}px;`);
           /**
            * We set height 100% on fill-container only on @media screen to prevent overflow issues
